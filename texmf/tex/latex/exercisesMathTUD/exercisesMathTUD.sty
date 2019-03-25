@@ -1,11 +1,5 @@
-% This work is licensed under the Creative Commons
-% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
-% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
-% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-
-% (c) Eric Kunze, 2019
-
-\ProvidesPackage{exercisesMathTUD}[2019/03/25]
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exercisesMathTUD}[2019/03/09]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PACKAGE DESCRIPTION |
@@ -25,14 +19,15 @@
 % - \group : specification of your exercise group - usually the exact date of the exercise (display only in homework mode)
 % - \period : specification of the current period of student's year (displayed only in presentExercise mode)
 %
-%----------------------
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Outer geometry settings
-\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
-\setlength{\parindent}{0pt}
+% Packages for makro handling
+\RequirePackage{kvoptions}
+\RequirePackage{xifthen}
+\RequirePackage{xparse}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Packages for font setting
@@ -46,20 +41,18 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Packages for makro handling
-\RequirePackage{kvoptions}
-\RequirePackage{xifthen}
-\RequirePackage{xparse}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options for exercisesMathTUD package
-\DeclareBoolOption{homework}
-\DeclareComplementaryOption{presentExercise}{homework}
-% Then presentExercise sets the switch of homework to false, and presentExercise=false enables the homework switch.
 
-\ProcessKeyvalOptions*
+\newif\ifhomework
+\homeworkfalse
+\DeclareOptionX{homework}{%
+    \homeworktrue%
+}
+\DeclareOptionX{presentExercise}{%
+    \homeworkfalse
+}
 
+\ProcessOptionsX
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New font OpenSans included
@@ -96,41 +89,48 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defining pagestyle (header and footer)
+\pagestyle{plain}
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Defining the title-header depending on the package option
 \newcommand{\header}{Header failed!}
 
-\ifthenelse{\boolean{exercisesMathTUD@homework}}{%
-%then >> homework is true
-\renewcommand{\header}{%
-    {\osfamily%
-    \fcolorbox{black}{cdblue!20}{%
-		\begin{minipage}{0.5\49extwidth}
-			{\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
-			\textbf{\modul} -- Übungsblatt \theblattcount
-		\end{minipage}%
-		\begin{minipage}{0.5\textwidth}
-			\flushright \textbf{\name} (Matr.-Nr. \matnr)\\
-			Ü-Gruppe: \group
-		\end{minipage}%
-    }}%
-}%
-}{%
-%else >> present_exercise is true
-\renewcommand{\header}{%
-    {\osfamily%
-    \fcolorbox{black}{cdblue!20}{%
-		\begin{minipage}{0.49\textwidth}
-			{\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
-            \textbf{\modul}%
-		\end{minipage}%
-		\begin{minipage}{0.5\textwidth}
-			\flushright \textbf{\name} \\%
-			Übungsleiter: \tutor \\%
-            \period%
-        \end{minipage}%
-    }}%
-}%
-}
+\ifhomework
+    %then >> homework is true
+    \renewcommand{\header}{%
+        {\osfamily%
+            \fcolorbox{black}{cdblue!20}{%
+                \begin{minipage}{0.49\textwidth}
+                    {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
+                    \textbf{\modul} -- Übungsblatt \theblattcount
+                \end{minipage}%
+                \begin{minipage}{0.5\textwidth}
+                    \flushright \textbf{\name} (Matr.-Nr. \matnr)\\
+                    Ü-Gruppe: \group
+                \end{minipage}%
+        }}%
+    }%
+\else
+    %else >> present_exercise is true
+    \renewcommand{\header}{%
+        {\osfamily%
+            \fcolorbox{black}{cdblue!20}{%
+                \begin{minipage}{0.49\textwidth}
+                    {\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
+                    \textbf{\modul}%
+                \end{minipage}%
+                \begin{minipage}{0.5\textwidth}
+                    \flushright \textbf{\name} \\%
+                    Übungsleiter: \tutor \\%
+                    \period%
+                \end{minipage}%
+        }}%
+    }%
+\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -214,7 +214,7 @@
             \end{minipage}%
             \begin{minipage}{3cm}
                 \flushright \scorebox{#2}%
-            \end{minipage} \\[-12pt]%
+            \end{minipage} \\[6pt]%
         }%end inner if
     }%end outer if
 }{}
@@ -283,4 +283,4 @@ skipbelow=\skiparound,%
 \newcommand{\subtask}[1]{\subsection*{#1}}
 
 
-\endinput
+%\endinput
