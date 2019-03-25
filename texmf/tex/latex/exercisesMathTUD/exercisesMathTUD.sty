@@ -1,0 +1,280 @@
+\ProvidesPackage{exercisesMathTUD}[2019/03/09]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE DESCRIPTION |
+% ---------------------
+% This package provides environments for typesetting the results of exercises at TU Dresden.
+% There are two general package options which generally just change the title of every page:
+% - homework: sets 'Hausaufgabe' as the main title and the specific setting of your exercise groups
+% - presentExercise: stes the current exercise number as the main tilte and some attributes of the module
+%
+%----------------------
+%
+% Attention: the following commands have to be redefined by \renewcommand{cmd}{def} after loading the package:
+% - \name : your full name (is going to be displayed in both options)
+% - \matnr : your personal student's number (Matrikel-Nummer) ( displayed only in homework mode)
+% - \modul : the modul you are the exercises writing for (both options)
+% - \tutor : name of your tutor (displayed only in presentExercise option)
+% - \group : specification of your exercise group - usually the exact date of the exercise (display only in homework mode)
+% - \period : specification of the current period of student's year (displayed only in presentExercise mode)
+%
+%----------------------
+%
+% Additionally we provide a new font OpenSans with the commands \textos{...} and \osfamily.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Outer geometry settings
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for font setting
+\RequirePackage[T1]{fontenc}
+\RequirePackage[ngerman]{babel}
+\RequirePackage[utf8]{inputenc}
+
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for makro handling
+\RequirePackage{kvoptions}
+\RequirePackage{xifthen}
+\RequirePackage{xparse}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Options for exercisesMathTUD package
+\DeclareBoolOption{homework}
+\DeclareComplementaryOption{presentExercise}{homework}
+% Then presentExercise sets the switch of homework to false, and presentExercise=false enables the homework switch.
+
+\ProcessKeyvalOptions*
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New font OpenSans included
+% \RequirePackage[scale=0.9]{opensans}
+% \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+% \DeclareTextFontCommand{\textos}{\osfamily}
+% for more informations: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages and colour settings
+\RequirePackage{xcolor}
+\definecolor{lightgrey}{gray}{0.89}
+\definecolor{darkgrey}{gray}{0.6}
+
+\definecolor{myblue}{rgb}{50,85,150}
+\definecolor{lightred}{rgb}{1,0.6,0.6}
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Counter
+\newcounter{taskcount}
+\newcounter{blattcount}
+
+\numberwithin{page}{blattcount}
+
+\counterwithout{themcount}{section}
+
+\counterwithout{equation}{section}
+\counterwithin{equation}{blattcount}
+\counterwithin{figure}{blattcount}
+\counterwithin{table}{blattcount}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defining the title-header depending on the package option
+\newcommand{\header}{Header failed!}
+
+\ifthenelse{\boolean{exercisesMathTUD@homework}}{%
+%then >> homework is true
+\renewcommand{\header}{%
+    {\osfamily%
+    \fcolorbox{black}{cdblue!20}{%
+		\begin{minipage}{0.5\49extwidth}
+			{\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
+			\textbf{\modul} -- Übungsblatt \theblattcount
+		\end{minipage}%
+		\begin{minipage}{0.5\textwidth}
+			\flushright \textbf{\name} (Matr.-Nr. \matnr)\\
+			Ü-Gruppe: \group
+		\end{minipage}%
+    }}%
+}%
+}{%
+%else >> present_exercise is true
+\renewcommand{\header}{%
+    {\osfamily%
+    \fcolorbox{black}{cdblue!20}{%
+		\begin{minipage}{0.49\textwidth}
+			{\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
+            \textbf{\modul}%
+		\end{minipage}%
+		\begin{minipage}{0.5\textwidth}
+			\flushright \textbf{\name} \\%
+			Übungsleiter: \tutor \\%
+            \period%
+        \end{minipage}%
+    }}%
+}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Environment for a new exercise sheet
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,decorations.pathreplacing}
+% Inspired by http://www.texample.net/tikz/examples/hand-drawn-lines/
+\usetikzlibrary{decorations.pathmorphing}
+\pgfdeclaredecoration{penciline}{initial}{
+    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,
+    auto corner on length=1mm,]{
+        \pgfpathcurveto%
+        {% From
+            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+            {\pgfdecorationsegmentamplitude}
+        }
+        {%  Control 1
+            \pgfmathrand
+            \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+            {\pgfqpoint{-\pgfdecorationsegmentaspect
+                    \pgfdecoratedinputsegmentremainingdistance}%
+                {\pgfmathresult\pgfdecorationsegmentamplitude}
+            }
+        }
+        {%TO
+            \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+        }
+    }
+    \state{final}{}
+}
+\tikzset{handdrawn/.style={decorate,decoration=penciline}}
+\tikzset{every shadow/.style={fill=none,shadow xshift=0pt,shadow yshift=0pt}}
+
+\NewEnviron{doodlebox}[2]{%
+    \begin{tikzpicture}[decoration=penciline, decorate]%
+        \pgfmathsetseed{1237}%
+        \node (n1) [decorate,draw=#1, fill=#2,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
+    \end{tikzpicture}%
+}
+\NewEnviron{doodle}[1]{%
+    \begin{tikzpicture}[decoration=penciline, decorate]%
+    \pgfmathsetseed{1237}%
+    \node (n1) [decorate,draw=#1, fill=#1!10,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
+    \end{tikzpicture}%
+}
+
+
+\newcommand{\scorebox}[1]{%
+    \begin{tikzpicture}[decoration=penciline, decorate]%
+    \pgfmathsetseed{1237}%
+    \node (n1) [decorate,draw=cdorange, fill=cdorange!10,thick,align=center, inner ysep=3mm, inner xsep=2mm] at (0,0) {\osfamily\bfseries\large #1 BE};
+    \end{tikzpicture}%
+}
+
+
+\NewDocumentEnvironment{exercisePage}{O{} O{}}{%
+    \pagebreak%
+    \stepcounter{blattcount}%
+    \setcounter{page}{1}%
+    \header \\[6pt] % header comment is defined depending on homework / present exercise above
+    \setcounter{figure}{0}%
+    \setcounter{equation}{0}%
+    \setcounter{table}{0}%
+    %
+    \ifthenelse{\isempty{#1}}{%
+        \ifthenelse{\isempty{#2}}{%
+            % topic and score is empty
+            %\vspace{12pt}%
+        }{%
+            % topic is empty but score is injected
+            \scorebox{#2} \\[-12pt]%
+        }%end inner if
+    }{%
+        \ifthenelse{\isempty{#2}}{%
+            % topic is injected but score is empty
+            {\osfamily \itshape Thema: #1} \par%
+        }{%
+            % topic and score are injected
+            \begin{minipage}{\textwidth - 3cm}
+                {\osfamily \itshape Thema: #1}%
+            \end{minipage}%
+            \begin{minipage}{3cm}
+                \flushright \scorebox{#2}%
+            \end{minipage} \\[-12pt]%
+        }%end inner if
+    }%end outer if
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem environments for exercises ans solutions
+
+% >> Exercise
+\theoremstyle{break}
+\theoremheaderfont{\osfamily\normalsize\bfseries\upshape}
+\theorembodyfont{\normalfont\normalsize}
+\theoremseparator{}
+\theoremsymbol{}
+\newmdtheoremenv[%
+backgroundcolor=cdblue!5,%
+linecolor=cddarkblue,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\sffamily\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=\skiparound,%
+skipbelow=\skiparound,%
+]{exercise}[taskcount]{Übung}
+%
+% >> Solution
+\newtheoremstyle{solutionstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{solutionstyle}
+\theoremheaderfont{\normalfont\normalsize\bfseries}
+\theorembodyfont{\normalfont}
+\theoremseparator{\textbf{.}}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{solution}{Lösung}
+
+
+
+% TODO : provide an option for complete exercise stuff - presentExercise follwed by the related homework
+% >> solution:  maybe pagesel or includeonly commands
+
+% (done) : equation numbering, figure, table, ...
+
+% (done) : background colour of header
+
+% (done) : provide new headlines
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat*{\section}{\bfseries\osfamily\Large}%{}{20pt}{}%
+\titlespacing*{\section}{0pt}{12pt}{0pt}
+\titleformat*{\subsection}{\itshape\osfamily\large}
+\titlespacing*{\subsection}{0pt}{0pt}{6pt}
+
+\newcommand{\task}[1]{\section*{#1}}
+\newcommand{\subtask}[1]{\subsection*{#1}}
+
+
+\endinput
