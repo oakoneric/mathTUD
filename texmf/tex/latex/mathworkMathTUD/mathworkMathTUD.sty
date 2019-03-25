@@ -65,8 +65,13 @@
 
 \DeclareOptionX*{\PackageWarning{mathoperator}{Unknown option >\CurrentOption<}}
 
-\ProcessOptionsX
+\newif\ifsmallequationskip
+\smallequationskipfalse
+\DeclareOptionX{smallequationskip}{%
+    \smallequationskiptrue%
+}
 
+\ProcessOptionsX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -79,6 +84,24 @@
 \RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
 \RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         ABSTÄNDE                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\smallequationskip}{%
+    %\setlength\abovedisplayshortskip{0pt plus 3pt}%
+    %\setlength\belowdisplayshortskip{4pt plus 2pt minus 2pt}%
+    \setlength\abovedisplayskip{5pt plus 1pt minus 2pt}%
+    \setlength\belowdisplayskip{5pt plus 1pt minus 2pt}%
+}
+
+% default values:
+% \abovedisplayskip      % 10pt plus 2pt minus 5pt
+% \abovedisplayshortskip % 0pt plus 3pt
+% \belowdisplayskip      % 10pt plus 2pt minus 5pt
+% \belowdisplayshortskip % 6pt plus 3pt minus 3pt
+\ifsmallequationskip
+    \smallequationskip
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         THEOREME                                    %
