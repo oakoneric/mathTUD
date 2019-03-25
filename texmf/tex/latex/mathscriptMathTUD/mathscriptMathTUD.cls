@@ -324,7 +324,7 @@
 %% changes pagestyle; instead of empty page the normal footer is printed
 %\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{plainChapter}}{}{}
 
-\pagestyle{fancy}
+\pagestyle{plain}
 \pagenumbering{arabic}
 
 %% remember chapter-title in \leftmark and \rightmark
