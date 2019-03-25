@@ -74,17 +74,17 @@
 \ProcessOptionsX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{amsfonts}
+%\RequirePackage{amsmath}
+%\RequirePackage{amssymb}
+%\RequirePackage{amsfonts}
 
 \RequirePackage{scalerel,stackengine}
 
 \RequirePackage{aligned-overset}
 
-\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
-\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+%\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+%\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         ABSTÄNDE                                    %
@@ -262,6 +262,20 @@ nobreak,%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          CORRECT REFERENCES                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{algorithmus}{Algorithmus}{Algorithmen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                          PROOF ENVIRONMENTS                         %
@@ -429,7 +443,7 @@ nobreak,%
 % >> number theory
 \newcommand{\teilt}{\mid}
 \newcommand{\teiltnicht}{\nmid}
-\newcommand{\rest}[1]{\integer / #1 \integer} % Restklassen Z/(*)Z
+\newcommand{\rest}[1]{\Z / #1 \Z} % Restklassen Z/(*)Z
 % >> metric spaces
 \newcommand{\folge}[2][]{\left\{ #2 \right\}_{#1}} % sequence (*)_*
 \newcommand{\dist}[2]{\mathrm{d} \! \left( #1 , #2 \right)} % d(*,*)

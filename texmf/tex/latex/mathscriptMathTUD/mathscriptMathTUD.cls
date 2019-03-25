@@ -9,7 +9,7 @@
 % https://github.com/henrydatei/TUD_MATH_BA
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{mathscriptMathTUD}[2018/08/05 mathscript]
+\ProvidesClass{mathscriptMathTUD}[2018/08/05]
 
 % programming related packages
 \RequirePackage{zref-base}
@@ -201,6 +201,7 @@
 \RequirePackage{amsmath,amssymb,amsfonts,mathtools}
 \RequirePackage{blkarray}
 
+
 % add some font-related stuff
 \RequirePackage{lmodern}
 \RequirePackage{latexsym}
@@ -217,11 +218,15 @@
 \RequirePackage{nicefrac}
 \RequirePackage{units}		% units and fractions
 
+\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % graphics-related packages
-\RequirePackage[table,dvipsnames]{xcolor}
-\RequirePackage{tudscrcolor} % official colours in cooperate design TUD
+\RequirePackage[table,dvipsnames]{tudscrcolor} 
+%\RequirePackage[table,dvipsnames]{xcolor}
+% official colours in cooperate design TUD
 % (done) define colours -- use official tud colours
 % main colours:
 % cddarkblue, cdblue, cdgray, cdindigo, cdpurple, cddarkgreen, cdgreen, cdorange
