@@ -189,7 +189,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New font OpenSans included
-\RequirePackage[scale=0.9]{opensans}
+\RequirePackage[scale=1]{opensans}
 \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
 \DeclareTextFontCommand{\textos}{\osfamily}
 % for more informations: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
