@@ -386,7 +386,6 @@
 \newcommand{\professorship}{\hfill}
 \newcommand{\lecturer}{\hfill}
 
-
 \newcommand{\titlesettings}[1]{%
     \ifthenelse{\equal{#1}{dark}}{%
         \pagecolor{cddarkblue!90}%

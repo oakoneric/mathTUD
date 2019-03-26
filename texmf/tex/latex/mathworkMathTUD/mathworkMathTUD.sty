@@ -92,8 +92,8 @@
 \newcommand{\smallequationskip}{%
     %\setlength\abovedisplayshortskip{0pt plus 3pt}%
     %\setlength\belowdisplayshortskip{4pt plus 2pt minus 2pt}%
-    \setlength\abovedisplayskip{5pt plus 1pt minus 2pt}%
-    \setlength\belowdisplayskip{5pt plus 1pt minus 2pt}%
+    \setlength\abovedisplayskip{3pt plus 1pt minus 2pt}%
+    \setlength\belowdisplayskip{3pt plus 1pt minus 2pt}%
 }
 
 % default values:
@@ -274,6 +274,8 @@ nobreak,%
 \crefname{beispiel}{Beispiel}{Beispiele}
 \crefname{erinnerung}{Erinnerung}{Erinnerungen}
 \crefname{algorithmus}{Algorithmus}{Algorithmen}
+
+%\crefformat{equation}{#2Gleichung~(#1)#3}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -414,28 +416,30 @@ nobreak,%
 	\right.}
 
 % >> logic
-\newcommand{\follows}{\enskip \Rightarrow \enskip} % =>
-\newcommand{\equivalent}{\enskip \Leftrightarrow \enskip} % <=>
+\newcommand{\follows}{\ensuremath{\enskip \Rightarrow \enskip}} % =>
+\newcommand{\equivalent}{\ensuremath{\enskip \Leftrightarrow \enskip}} % <=>
+\newcommand{\defequiv}{\ensuremath{\enskip \mathrel{:\Leftrightarrow}} \enskip} % :<=>
+\newcommand{\defeq}{\ensuremath{\mathrel{:=}}} % :=
 
 % >> linear algebra - vector spaces
 \newcommand{\basisB}{\mathcal{B}} % cal symbol for basis b
 \newcommand{\darstMat}[2]{M_{\mathcal{#1}} (#2)} % % first parameter: basis, second parameter: mapping symbol
 \newcommand{\MBf}{\darstMat{\basisB}{f}}
 \newcommand{\one}{\mathbbm{1}}  % unitary matrix
-\newcommand{\isomorph}{\cong}
+\newcommand{\isomorph}{\mathrel{\cong}}
 \newcommand{\erz}[1]{\langle #1 \rangle} % generating system
 \newcommand{\scal}[2]{\langle #1\, ,\, #2 \rangle} % scalar product
 \newcommand{\transpose}[1]{\left( #1 \right)^{\top}} % transpose symbol with (*)
 \newcommand{\trans}[1]{#1^{\top}} % transpose symbol without (*)
 
 % >> groups / rings / fields
-\newcommand{\normalteiler}{\trianglelefteqslant}
-\newcommand{\nichtnormal}{\ntrianglelefteqslant}
-\newcommand{\echtnormal}{\vartriangleleft}
+\newcommand{\normalteiler}{\mathrel{\trianglelefteqslant}}
+\newcommand{\nichtnormal}{\mathrel{\ntrianglelefteqslant}}
+\newcommand{\echtnormal}{\mathrel{\vartriangleleft}}
 
-\newcommand{\ideal}{\trianglelefteqslant}
-\newcommand{\nichtideal}{\ntrianglelefteqslant}
-\newcommand{\echtideal}{\vartriangleleft}
+\newcommand{\ideal}{\mathrel{\trianglelefteqslant}}
+\newcommand{\nichtideal}{\mathrel{\ntrianglelefteqslant}}
+\newcommand{\echtideal}{\mathrel{\vartriangleleft}}
 
 \newcommand{\einheit}[1]{{#1}^{\times}}
 \newcommand{\Rx}{\einheit{R}}			% Einheiten Ring
@@ -447,8 +451,8 @@ nobreak,%
 \newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
 
 % >> number theory
-\newcommand{\teilt}{\mid}
-\newcommand{\teiltnicht}{\nmid}
+\newcommand{\teilt}{\mathrel{\mid}}
+\newcommand{\teiltnicht}{\mathrel{\nmid}}
 \newcommand{\rest}[1]{\Z / #1 \Z} % Restklassen Z/(*)Z
 % >> metric spaces
 \newcommand{\folge}[2][]{\left\{ #2 \right\}_{#1}} % sequence (*)_*
