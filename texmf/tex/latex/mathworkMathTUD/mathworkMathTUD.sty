@@ -300,7 +300,13 @@ nobreak,%
 % >> Equivalences
 \newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
 \newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
-\newenvironment{proof-equivalence}{\begin{description}}{\end{description}}
+\newenvironment{proof-equivalence}[1][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\begin{description}}%
+        {\begin{description}[topsep=-\parskip]}%
+}{%
+        \end{description}%
+}%
 \newenvironment{proof_equiv}{\begin{proof}\begin{description}}{\end{description}\end{proof}}
 
 % >> inductions
