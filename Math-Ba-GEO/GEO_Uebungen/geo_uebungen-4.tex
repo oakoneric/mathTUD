@@ -1,0 +1,148 @@
+\begin{exercisePage}[Sylow-Sätze, einfache Gruppen, auflösbare Gruppen]
+	%
+	\setcounter{taskcount}{65}
+	% Aufgabe V66
+	\begin{exercise} [Vorbereitung]
+		Sei $\Delta := \menge{(g,g) : g \in G}$. Dann ist $\Delta \leq G \times G$. Ist $G$ abelsch, so ist $\Delta \normalteiler G \times G$ und $(G \times G)/\Delta \isomorph G$. Ist $G$ nicht abelsch, so ist $\Delta \nichtnormal G \times G$
+	\end{exercise}
+	\begin{solution}
+		Wir präsentieren hier nur die Lösung für den Teil $(G \times G)/\Delta \isomorph G$. Betrachte dazu die Abbildung
+		\begin{align*}
+			\bigabb{f}{G \times G}{G}{(g_1, g_2)}{f(g_1, g_2) = g_1 * g_2^{-1}}
+		\end{align*}
+		Da $G$ abelsch ist, ist $f$ ein Gruppenhomomorphismus:
+		\begin{align*}
+			\forall g_1, g_2, g_3, g_4 \in G : f((g_1, g_2) * (g_3, g_4)) 
+			&= f(g_1 g_3, g_2 g_4) \\
+			&= g_1 g_3 *\left( g_2 g_4 \right)^{-1} \\
+			&= g_1 g_2^{-1} g_3 g_4^{-1} \\
+			&= f(g_1, g_2) * f(g_3, g_4)
+		\end{align*}
+		Es ist klar, dass $f$ surjektiv ist, da alle $g \in G$ dargestellt werden können als $f(g_1, 1) = g$. Außerdem gilt
+		\begin{align*}
+			\Ker(f) &= \menge{(g_1, g_2) \in G \times G : f(g_1, g_2) = 1} \\
+			&= \menge{(g_1, g_2) \in G \times G : g_1 * g_2^{-1} = 1} \\
+			&= \menge{(g_1, g_2) \in G \times G : g_1 = g_2} \\
+			&= \Delta
+		\end{align*}
+		Mit 3.9 aus der Vorlesung schließen wir nun $(G \times G) / \Ker(f) \isomorph \Image(f) \equivalent (G \times G) / \Delta \isomorph G$.
+	\end{solution}
+
+	\setcounter{taskcount}{67}
+
+	% Aufgabe Ü68
+	%
+	\begin{exercise}
+		Bestimmen Sie die Anzahl der $k$-Zykel $\sigma \in S_n$ für $k \in \N$.
+	\end{exercise}
+	\begin{solution}
+		Es seien $n \geq 1$ und $k \geq 1$. Ist $k > n$, so gibt es keinen $k$-Zykel in $S_n$. Ist $k \leq n$, so gibt es genau
+		\begin{equation*}
+			\frac{n*(n-1)*(n-2) * (n-k+1)}{k}
+		\end{equation*}
+		$k$-Zykel in $S_n$, bzw. in anderer Darstellungsweise ist die Anzahl der $k$-Zykel in $S_n$
+		\begin{equation*}
+			\frac{n!}{(n-k)! * k}
+		\end{equation*}
+		Betrachte zur Veranschaulichung 
+		\begin{equation*}
+			(a_1 \, a_2 \cdots a_k) = (a_2 \, a_3 \cdots a_k \, a_1) = (a_3 \, a_4 \cdots a_k \, a_1 \, a_2) = \cdots
+		\end{equation*}
+	\end{solution}
+
+    \pagebreak
+	% Aufgabe Ü69
+	%
+	\begin{exercise}
+		Ist $G$ endlich und einfach und $H \leq G$ mit $n = (G:H) \geq 2$, so ist $\# G \teilt n!$.
+	\end{exercise}
+	\begin{solution}
+		Betrachte die folgende Abbildung
+		\begin{align*}
+			\bigabb{\psi}{H \backslash G \times G}{G}{(Hg_1, g_2)}{(Hg_1)^{g_2} = H g_1 g_2}
+		\end{align*}
+		$\psi$ ist eine Wirkung:
+		\begin{enumerate}[label=(\roman*)]
+			\item $\forall g \in G : \quad (Hg)^1 = Hg*1 = Hg$
+			\item $\forall g_1, g_2, g_3 \in G: \quad \left((Hg_1)^{g_2}\right)^{g_3} = \left( Hg_1 g_2 \right)^{g_3} = H g_1 g_2 g_3 = \left( H g_1 \right)^{g_2 * g_3}$
+		\end{enumerate}
+		Betrachte den Kern der Wirkung 
+		\begin{align*}
+			\bigabb{\phi}{G}{S_{(H \backslash G)}}{g}{\phi(g) : H \backslash G \to H \backslash G, Hl \mapsto (Hl)^g} \text{ (vgl. 6.3)}
+		\end{align*}
+		mit $\Ker(\phi) = \menge{g \in G \mid \forall l \in G : (Hl)^g = Hl}$ \\
+		Da $G$ einfach ist und $\Ker(\phi) \normalteiler G$, gilt $\Ker(\phi) = 1$ oder $\Ker(\phi) = G$. Ist $\Ker(\phi) = 1$, so ist $G \isomorph \Image(G)$ nach 3.9, insbesondere gilt $\# G = \# \Image(\phi)$ und $\card{S_{H \backslash G}} = (G:H)! = n!$. Ist $\Ker(\phi) = G$, so gilt $H = G$:
+		\begin{itemize}
+			\item $H \subseteq G$ ist klar
+			\item $G \subseteq H$. Es reicht zu zeigen, dass $\Ker(\phi) \subseteq H$ gilt. Sei $g \in \Ker(\phi)$, d.h. für alle $l \in G$ ist $Hlg = Hl$. Insbesondere ist für $l=1$ dann $Hg=H$, d.h. also $g \in H$.
+		\end{itemize}
+	Es ist also $G=H$, was jedoch falsch ist, da $(G:H) \geq 2$. Somit ist $\Ker(\phi) = G$ nicht möglich.
+	\end{solution}
+
+	% Aufgabe Ü70
+	%
+	\begin{exercise}
+		Keine Gruppe der Ordnung $312$, $12$ oder $300$ ist einfach.
+	\end{exercise}
+	\begin{solution}
+		Wir zeigen die Eigenschaft nicht einfach zu sein für die entsprechenden Gruppen nacheinander.
+		\begin{enumerate}[label=(\arabic*)]
+			\item Sei $G$ eine Gruppe der Ordnung $312 = 2 * 156 = 2*2*78 = 2*2*2*39 = 2^3*3*13$. Sei $n_{13}$ die Anzahl der $13$-Sylowgruppen von $G$. Nach den Sylowsätzen gilt $n_{13} \equiv 1 \mod 13$ und $n_{13} \teilt 24$. Die Teiler von $24$ sind genau $1,24,2,12,3,8,4,6$. Deswegen ist $n_{13} = 1$, d.h. es gibt genau eine $13$-Sylowgruppe $N_{13}$ von $G$. Mit 8.7 ist $N_{13} \normalteiler G$. Da $\# G = 312$ und $\# N_{13} = 13$, ist $1 \neq N_{13} \neq G$, also ist $G$ nicht einfach.
+			\item Ist $G$ eine endliche Gruppe der Ordnung $12 =2^3 * 3$. Es seien $n_2$ die Anzahl der $2$-Sylowgruppen von $G$ und $n_3$ die Anzahl der $3$-Sylowgruppen von $G$. Nach den Sylowsätzen gilt
+			\begin{align*}
+			\begin{cases}
+			n_2 \equiv 1 \mod 12 \\ n_2 \teilt 3
+			\end{cases} 
+			\quad \text{und} \quad
+			\begin{cases}
+			n_3 \equiv 1 \mod 3 \\ n_3 \teilt 4
+			\end{cases}
+			\end{align*}
+			d.h. $n_2 \in \menge{1,3}$ und $n_3 \in \menge{1,4}$. Ist $n_3 = 4$, so schreibe $N_1$, $N_2$, $N_3$, $N_4$ für die vier $3$-Sylowgruppen von $G$. Da $\card{N_1} = \card{N_2} = \card{N_3} = \card{N_4} = 3$ und $N_i \cap N_j = 1$ für $i \neq j$ (da $3$ prim ist), besitzt $G$ mindestens acht Elemente der Ordnung $3$:
+			\begin{itemize}[label=$-$]
+				\item $N_1 = \menge{1, a_1, b_1}$ mit $\ord(a_1) = 3 = \ord(b_1)$
+				\item $N_2 = \menge{1, a_2, b_2}$ mit $\ord(a_2) = 3 = \ord(b_2)$
+			\end{itemize}
+			Ist $a_1 = a_2$, so ist $\card{N_1 \cap N_2} \geq 2$, was falsch ist. Sei nun $n_2 = 3$. Schreibe $K_1, K_2, K_3$ für die drei $2$-Sylowgruppen von $G$. Da $\card{K_1} = \card{K_2} = \card{K_3} = 4$, besitzt $G$ mindestens vier Elemente von Ordnung $2$ oder $4$. Insgesamt gilt $n_3 = 4$ und $n_2 = 3$ $\follows 12 = \# G = 8+4+1 = 13$ ($8$ Elemente der Ordnung $3$, $4$ Elemente der Ordnung $2$ oder $4$ und ein neutrales Element), was falsch ist. Deswegen gilt $n_3 = 1$ oder $n_2 = 1$. In jedem Fall ist $G$ aber nicht einfach.
+			\item Es sei $G$ eine endliche Gruppe der Ordnung $300 = 30*10 = 5*6*5*2 = 2^2*3*5^2$. Es sei $n_5$ die Anzahl der $5$-Sylowgruppen von $G$. Nach den Sylowsätzen gilt $n_5 \equiv 1 \mod 5$ und $n_5 \teilt 12$, d.h. auf jeden Fall ist $n_5 \in \menge{1,6}$. Es sei $N_5$ eine $5$-Sylowgruppe von $G$. Ist $n_5 = 6$, so ist $(G:\N_G(N_5)) = 6$ (vgl. 8.6). Ist $G$ auch einfach so gilt $\# G = 300 = 2^2*3*5^2 \teilt 6! =2^4*3^2*5$ (vgl. Ü49), was falsch ist (vergleiche die beiden Primfaktorenzerlegungen). Deswegen gilt $n_5 = 1$ oder $G$ ist nicht einfach. In jedem Fall aber ist $G$ nicht einfach.
+		\end{enumerate}
+	\end{solution}
+	
+	\setcounter{taskcount}{80}
+	%
+	% Präsenzaufgaben
+	% Aufgabe P81
+	%
+	\begin{exercise}[Präsenz]
+		Geben Sie ein Beispiel einer endlichen Gruppe $G$, die
+		\begin{enumerate}[nolistsep, label=(\roman*)]
+			\item einfach und auflösbar ist
+			\item nicht einfach und auflösbar ist
+			\item einfach und nicht auflösbar ist
+			\item nicht einfach und nicht auflösbar ist.
+		\end{enumerate}
+	\end{exercise}
+	\begin{solution}
+		Wir geben jeweils ein Beispiel an und zeigen, dass die entsprechenden Eigenschaften gelten.
+		\begin{enumerate}[label=(\roman*)]
+			\item Die Gruppe $\rest{2}$ ist einfach (vgl. 9.3). Dann besitzt $\rest{2}$ die Kompositionsreihe $1 \normalteiler \rest{2}$ und $(\rest{2})/1 = \rest{2}$ ist zyklisch. Somit ist $\rest{2}$ auflösbar.
+			\item Die Gruppe $\rest{4}$ ist nicht einfach, da $\rest{4}$ einen Normalteiler der Ordnung $2$ besitzt. Außerdem besitzt $\rest{4}$ die Normalreihe $1 \echtnormal \rest{2} \echtnormal \rest{4}$, die eine Kompositionsreihe ist, da
+			\begin{itemize}[label=$-$]
+				\item $(\rest{4})/(\rest{2}) \isomorph \rest{2}$ ist einfach
+				\item $(\rest{2})/1 \isomorph \rest{2}$ ist einfach
+			\end{itemize}
+			Da die Faktoren dieser Kompositonsreihe zyklisch sind, ist $\rest{4}$ auflösbar.
+			\item Mit 9.11 ist $A_5$ einfach. Deswegen besitzt $A_5$ \textit{genau} eine Kompositonsreihe $1 \echtnormal A_5$. Da $A_5 / 1 \isomorph A_5$ nicht zyklisch ist, ist $A_5$ nicht auflösbar.
+			\item Die Gruppe $S_5$ ist nicht einfach, da $(S_5 : A_5) = 2$ und $A_5 \echtnormal S_5$. Da die Normalteiler der $S_5$ genau $1$, $A_5$ und $S_5$ sind und $S_5$ nicht einfach ist, besitzt die $S_5$ genau eine Kompositionsreihe, nämlich $1 \echtnormal A_5 \echtnormal S_5$. Es gilt $S_5 / A_5 \isomorph \rest{2}$ und $A_5 / 1 \isomorph A_5$ ist nicht zyklisch. Deswegen ist die $S_5$ nicht auflösbar.
+		\end{enumerate}
+	\end{solution}
+
+	% Aufgabe P81
+	%
+	\begin{exercise}[Präsenz]
+		Für welche $n \geq 1$ ist $S_n \isomorph A_n \times C_2$?
+	\end{exercise}
+	\begin{solution}
+		Leider gab es dazu keine Lösung in der Übung.
+	\end{solution}
+\end{exercisePage}

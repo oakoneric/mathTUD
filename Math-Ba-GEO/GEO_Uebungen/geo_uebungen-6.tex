@@ -1,0 +1,275 @@
+%\setcounter{blattcount}{6}
+\begin{exercisePage}[Kongruenzen, Einheitengruppen, Teilbarkeit]
+	\setcounter{taskcount}{105}
+%
+    \newcommand{\zsqrt}{\ensuremath{\Z [\sqrt{-5}]} }
+%
+    \begin{lemma} \label{lemma: 113_einheiten_zsqrt-5}
+        Sei $x \in \zsqrt$. Genau dann ist $x$ eine Einheit, wenn $N(x) = 1$ (vgl. \cref{eq: 113_abbildung_gradfunktion}).
+    \end{lemma}
+    \begin{proof}
+        Schreibe $x = a + b*\sqrt{-5}$ mit $a,b \in \Z$.
+        \begin{proof-equivalence}[nopreskip]
+            \hinrichtung Ist $x$ eine Einheit, so gibt es $y \in \zsqrt$ mit $xy = 1$. Dann gilt $1 = N(1) = N(xy) = N(x) * N(y)$ (Multiplikativität von $N$ ist noch zu zeigen). Da $N(x) \in \N$ gilt $N(x) = 1$.
+            \rueckrichtung Ist $N(x) = 1$, so ist $a^2 + 5b^2 = 1$. Ist $b \neq 0$, so gilt $a^2 + 5b^2 \geq 5$, was falsch ist. Deswegen gilt $b=0$ und $a^2=1$, d.h. $x = \pm 1$. In jedem Fall ist $x$ eine Einheit.
+        \end{proof-equivalence}
+    \end{proof}
+
+    \begin{lemma} \label{lemma: 113_irreduzibelzsqrt-5}
+        $\xi = 1 + \sqrt{-5}$ ist irreduzibel in \zsqrt.
+    \end{lemma}
+    \begin{proof}
+        Es ist $N(\xi) = 6 \neq 1$. Deswegen ist $\xi$ keine Einheit nach \cref{lemma: 113_einheiten_zsqrt-5}. Schreibe $\xi = 1 + \sqrt{-5} = xy$ mit $x,y \in \zsqrt$ und $x = a + ib, y = c + id$ mit $a,b,c,d \in \Z$. Dann gilt
+        \begin{equation*}
+            6 = N(\xi) = N(xy) = N(x) * N(y) = (a^2 + 5b^2) (c^2 + 5d^2)
+        \end{equation*}
+        Deswegen gilt $a^2 + 5b^2 \in \menge{1,2,3,6}$. Ist $b \neq 0$, so gilt $a^2 + 5b^2 \geq 5$, d.h. $a^2 + 5b^2 = 6$ und damit $y = c^2 + 5d^2 = 1$, also $y$ eine Einheit. Ist $b = 0$, so ist $a^2 + 5b^2 = a^2 \in \menge{0,1,4,9, \dots}$. Deswegen ist $a=1$ und $x$ somit eine Einheit. In jedem Fall ist $\xi = 1 + \sqrt{-5}$ irreduzibel.
+    \end{proof}
+
+    % Ü106
+	\begin{exercise}[Vorbereitung]
+		Berechnen Sie $\ggT(n, 2019)$ mit dem euklidischen Algorithmus, wobei $n$ Ihr Geburtsjahr ist.
+	\end{exercise}
+	\begin{solution}
+		Sei $n=1999$. Dann folgt mit dem euklidischen Algorithmus:
+		\begin{align*}
+			2019 &= 1*1999 + 20 \\
+			1999 &= 99*20  + 19 \\
+			20   &= 1*19   + 1 \\
+			19   &= 19*1   + 0 
+		\end{align*}
+		Damit ist $\ggT(1999,2019) = 1$, was bereits klar ist, da $1999$ prim ist.
+	\end{solution}
+    
+    \pagebreak
+    
+    % Ü107
+	\begin{exercise}[Vorbereitung]
+		Bestimmen Sie $x,y \in \Z$ mit
+		\begin{align} \label{eq: 107_gleichung_ggt}
+		13x + 17y = \ggT(13,17) 
+		\end{align}
+		Bestimmen Sie außerdem $x,y \in \Z$ mit 
+		\begin{align} \label{eq: 107_gleichung_=3}
+		13x + 17y = 3 
+		\end{align}
+	\end{exercise}
+	\begin{solution}
+		Mit dem euklidischen Algorithmus folgt
+		\begin{align*}
+			17 &= 1*13 + 4 \\
+			13 &= 4* 4 + 1 \\
+			4  &= 4* 1 + 0
+		\end{align*}
+		Durch Rückwärtseinsetzen der Reste ausgehend von der vorletzten Gleichung erhalte wir
+		\begin{align*}
+			1 &= 13 - 3*4 \\
+			&= 13 - 3*(17-13) \\
+			&= 4*13 - 3*17
+		\end{align*}
+		Somit ist $(x,y) = (4,-3)$ eine Lösung von \cref{eq: 107_gleichung_ggt}. Multiplizieren wir die Gleichung mit dem Faktor $3$, so ist $(x,y) = (12,-9)$ eine Lösung von \cref{eq: 107_gleichung_=3}.
+	\end{solution}
+    
+    % Ü108
+	\begin{exercise}[Vorbereitung]
+		$\polynom{\Z}$ und $\polynomring{K}{X,Y}$ sind keine Hauptidealringe.
+	\end{exercise}
+	\begin{solution}
+		Um zu zeigen, dass $\polynom{\Z}$ kein Hauptidealring ist, betrachten wir das Ideal $(2,X)$ und zeigen, dass dies wirklich ein Ideal ist. Wir zeigen hier nur die Abgeschlossenheit unter Multiplikation mit Elementen aus $\polynom{\Z}$. Sei dazu $f \in \polynom{\Z}$, dann ist 
+		\begin{align*}
+			f * (a * 2 + b * X) = f*a*2 + f*b*X = \underbrace{(f*a)}_{\in \polynom{\Z}} * 2 + \underbrace{(f*b)}_{\in \polynom{\Z}} * X \in (2,X)
+		\end{align*}
+		Für $\polynomring{K}{X,Y}$ ist beispielsweise $(X,Y)$ ein Ideal und damit $\polynomring{K}{X,Y}$ kein Hauptidealring.
+	\end{solution}
+
+	\setcounter{taskcount}{109}
+	
+    \pagebreak
+    
+    % Ü110
+	\begin{exercise}
+		Definiere $R_0 = R$ und $R_{i+1} := \polynomring{R_i}{X_{i+1}}$. Dann ist $R_n \isomorph \polynomring{R}{X_1, \dots , X_n}$.
+	\end{exercise}
+	\begin{solution}
+		Wir lösen die Aufgabe durch vollständige Induktion über $n \geq 0$. Für $n=0$ gilt $R_0 = R$. Für $n=1$ gilt $R_1 = \polynomring{R_0}{X_1} = \polynomring{R}{X_1}$. Sei daher nun $n > 1$. Wir setzen voraus, dass es Isomorphismen $\abb{\Phi_n}{R_n}{\polynomring{R}{X_1, \dots, X_n}}$ sowie $\abb{\Psi_n}{\polynomring{R}{X_1, \dots, X_n}}{R_n}$ gibt mit
+		\begin{subequations}
+			\begin{align}
+			\begin{split}
+			\Phi_n \circ \Psi_n &= \id_{\polynomring{R}{X_1, \dots, X_n}} \\
+			\Psi_n \circ \Phi_n &= \id_{R_n}
+			\end{split} \label{eq: 110_komp_psi_phi}\\
+			\begin{split}
+				\Phi_n |_R &= \id_R \\
+				\Psi_n |_R &= \id_R 
+			\end{split} \label{eq: 110_einschraenkung_psi_phi}\\
+			\Psi_n(X_i) &= \Phi_n(X_i) = X_i \text{ für alle } i \in \menge{1, \dots, n} \label{eq: 110_psi_phi_gleich}
+			\end{align}
+		\end{subequations}
+		Betrachte die Abbildung $\abb{\iota}{R}{R_{n+1}}, x \mapsto x$. Mit Ü89 gibt es dann $\abb{\Psi_{n+1}}{\polynomring{R}{X_1, \dots X_{n+1}}}{R_{n+1}}$ mit $\Psi_{n+1}(X_i) = X_i$ für alle $i \in \menge{1, \dots, n+1}$ und $\Psi_{n+1}(x)=\iota(x) = x$ für alle $x \in R$.
+		
+		Betrachte die Abbildung 
+		\begin{align} \label{eq: 110_def_kappa}
+			\bigabb{\kappa}{R_n}{\polynomring{R}{X_1, \dots, X_{n+1}}}{x}{\Phi_n(x)}
+		\end{align}
+		Mit Ü89 gibt es $\abb{\Phi_{n+1}}{\polynomring{R_n}{X_{i+1}}}{\polynomring{R}{X_1, \dots, X_{n+1}}}$ mit 
+		\begin{subequations}
+			\begin{align}
+				\Phi_{n+1}(X_{n+1}) &= X_{n+1} \text{ und} \label{eq: 110_eig_phi_n+1_poly} \\
+				\Phi_{n+1}(x)       &= \Phi_n(x) \text{ für alle } x \in R_n \label{eq: 110_eig_phi_n+1_x}
+			\end{align}
+		\end{subequations}
+		Da $\Psi_n(x) \overset{\labelcref{eq: 110_einschraenkung_psi_phi}}{=} x$ für jedes $x \in R$ und $\Psi_n(X_i) \overset{\labelcref{eq: 110_psi_phi_gleich}}{=} X_i$ für jedes $i \in \menge{1, \dots, n}$ gilt auch $\Psi_{n+1} |_{\polynomring{R}{X_1, \dots, X_n}} = \Psi_n$. Für jedes $x \in R_n$ gilt
+        \begin{align}
+            \left(\Psi_{n+1} \circ \Phi_{n+1} \right)(x) 
+            = \left(\Psi_{n+1} \circ \Phi_{n} \right)(x)
+            = \left(\Psi_{n} \circ \Phi_{n} \right)(x) 
+            = x
+        \end{align}
+        Es gilt auch 
+        \begin{equation*}
+            \left(\Psi_{n+1} \circ \Phi_{n+1} \right)(X_{n+1}) 
+            = \Psi_{n+1} (X_{n+1})
+            = X_{n+1}
+        \end{equation*}
+		Deswegen gilt $\Psi_{n+1} \circ \Phi_{n+1} = \id_{\polynomring{R_n}{X_n}} = \id_{R_{n+1}}$. Für jedes $x \in R$ gilt
+         \begin{equation*}
+             \left(\Phi_{n+1} \circ \Psi_{n+1} \right) (x) = \Phi_{n+1}(x) = \Phi_n(x) = x
+         \end{equation*}
+         und für jedes $i \in \menge{1, \dots, n+1}$
+         \begin{equation*}
+             \left( \Phi_{n+1} \circ \Psi_{n+1} \right) (X_i) = \Phi_{n+1}(X_i) = \Phi_n(X_i) = X_i
+         \end{equation*}
+         Deswegen gilt $\Phi_{n+1} \circ \Psi_{n+1} = \id_{\polynomring{R}{X_1, \dots, X_n}}$.
+	\end{solution}
+    
+    \pagebreak
+    
+    % Ü111
+	\begin{exercise}
+		Es sei $R$ nullteilerfrei und $\abb{\iota}{R}{K:= \quot(R)}$. Beweisen Sie die universelle Eigenschaft des Quotientenkörpers: Ist $L$ ein Körper und $\phi \in \Hom(R,L)$ injektiv, so gibt es genau ein $\phi' \in \Hom(K,L)$ mit $\phi' \circ \iota = \phi$.
+	\end{exercise}
+	\begin{solution}
+		Es seien $L$ ein Körper und $\phi \in \Hom(R, L)$ injektiv. Da $\phi$ injektiv ist, ist $\phi(b) \neq 0$ für alle $b \in R\, \ohneNull$. Betrachte die Abbildung
+		\begin{equation*}
+			\bigabb{\psi}{K}{L}{\frac{a}{b}}{\psi \left(\frac{a}{b} \right) = \phi(a) * \phi(b)^{-1}}
+		\end{equation*}
+		%\paragraph{Die Abbildung $\psi$ ist wohldefiniert.} 
+		\begin{itemize}[leftmargin=*]
+            \item \textit{Die Abbildung $\psi$ ist wohldefiniert.} \\
+            Ist $\lfrac{a}{b} = \lfrac{c}{d} \in K$ mit $a,c \in R$ und $b,d \in R \, \ohneNull$, so gilt $ad = bc$ in $R$. Dann gilt $\phi(a) * \phi(d) = \phi(ad) = \phi(bc) = \phi(b) * \phi(c)$, d.h. $\phi(a) * \phi(b)^{-1} = \phi(c) * \phi(d)^{-1}$. Damit ist $\phi$ wohldefiniert.
+            \item \textit{$\psi$ ist Ringhomomorphismus.}
+            \begin{enumerate}[label=(\alph*)]
+                \item Für $a,c \in R$ und $b,d \in R \ohneNull$ gilt
+                \begin{equation*}
+                    \begin{aligned}
+                        \psi \left( \frac{a}{b} + \frac{c}{d} \right) 
+                        = \psi \left( \frac{ad + bc}{bd} \right) 
+                        &= \phi(ad + bc) * \phi(bd)^{-1}\\
+                        &= \left( \phi(a)\phi(d) + \phi(b) \phi(c) \right) * \phi(d)^{-1} \phi(b)^{1} \\
+                        &= \phi(a)\phi(d) * \phi(d)^{-1} \phi(b)^{-1} + \phi(b) \phi(c) * \phi(d)^{-1} \phi(b)^{1} \\
+                        &= \phi(a) * \phi(b)^{-1} + \phi(c) * \phi(d)^{-1} \\
+                        &= \psi \left( \frac{a}{b} \right) + \psi \left( \frac{c}{d} \right) \\
+                    \end{aligned}
+                \end{equation*}
+                \item Es gilt $\psi(1) = \psi \left( \frac{1}{1} \right) = \phi(1) * \phi(1)^{-1} = 1$.
+                \item Für $a,c \in R$ und $b,d \in R \ohneNull$ gilt
+                \begin{equation*}
+                \begin{aligned}
+                \psi \left( \frac{a}{b} * \frac{c}{d} \right) 
+                = \psi \left( \frac{ac}{bd} \right) 
+                = \phi(ac) * \phi(bd)^{-1}
+                = \phi(a)\phi(c) * \phi(d)^{-1} \phi(b)^{1} 
+                &= \phi(a)\phi(b)^{-1} * \phi(c) * \phi(d)^{-1} \\
+                &= \psi \left( \frac{a}{b} \right) * \psi \left( \frac{c}{d} \right) \\
+                \end{aligned}
+                \end{equation*}
+            \end{enumerate}
+        \item Für jedes $a \in R$ gilt $( \phi \circ \iota)(a) = \psi(\frac{a}{1}) = \phi(a) * \phi(1)^{-1} = \phi(a)$.
+        \item \textit{$\psi$ ist eindeutig bestimmt.} \\
+        Es sei $\psi_1 \in \Hom(K,L)$ mit $\psi_1 \circ \iota = \phi$. Für jedes $a \in R$ gilt dann
+        \begin{equation*}
+            \psi_1 \left( \frac{a}{1} \right) = \left( \psi_1 \circ \iota \right) (a) = \phi(a) = \left( \psi \circ \iota \right) (a) = \psi \left( \frac{a}{1} \right)
+        \end{equation*} 
+        Ist $a \neq 0$, so gilt
+        \begin{equation*}
+            \psi_1 \left( \frac{1}{a} \right) = \psi_1 \left( \left( \frac{a}{1} \right) ^{-1} \right) = \psi_1 \left(\frac{a}{1} \right)^{-1} = \psi \left( \frac{a}{1} \right)^{-1} = \psi \left( \left( \frac{a}{1} \right) ^{-1} \right) = \psi \left( \frac{1}{a} \right)
+        \end{equation*} 
+        Da $\psi_1$ und $\psi$ Homomorphismen sind, gilt $\psi_1 = \psi$.
+        \end{itemize}
+	\end{solution}
+
+    \pagebreak
+    
+    % Ü112
+    \begin{exercise}
+        $\Z [i] := \menge{x + iy \colon x,y \in \Z}$ ist ein Teilring von $\C$, der euklidisch ist.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item Es ist einfach zu zeigen, dass $\Z [i]$ ein Teilring von $\C$ ist.
+            \item Betrachte die Abbildung
+            \begin{equation*}
+                \bigabb{N}{\Z [i] \ohneNull}{\N}{a+ib}{a^2 + b^2}
+            \end{equation*}
+            Es seien $z_1 \in \Z [i]$ und $z_2 \in Z [i] \ohneNull$. Betrachte $\frac{z_1}{z_2} \in \C$ und schreibe $\frac{z_1}{z_2} = x + iy$ mit $x,y \in \R$. Aber es gibt $a,b \in Z$ mit $-\lfrac{1}{2} \leq x-a \leq \lfrac{1}{2}$ und $-\lfrac{1}{2} \leq y-b \leq \lfrac{1}{2}$. Schreibe $q = a+ib \in \Z [i]$ und $r = z_1 -q z_2 \in \Z [i]$ (da $\Z [i]$ Teilring von $\C$ ist). Ist $r \neq 0$, so gilt
+            \begin{equation*}
+                \begin{aligned}
+                N(r) = r * \quer{r} 
+                &= \left( z_1 - q z_2 \right)\left( \quer{z_1} - \quer{q} \quer{z_2} \right) \\
+                &= z_2 \quer{z_2} * \left( \frac{z_1}{z_2} - q \right) \left( \frac{\quer{z_1}}{\quer{z_2}} - \quer{q} \right) \\
+                &= N(z_2) (x+iy - a - ib) (x-iy + a + ib) \\
+                &= N(z_2) \left( (x-a)+i(y-b) \right) \left( (x-a) - i(y-b) \right) \\
+                &= N(z_2) \left( (x-a)^2 + (y-b)^2 \right) \\
+                &\leq N(z_2) \left( \frac{1}{4} + \frac{1}{4} \right) \\
+                &= \lfrac{1}{2} N(z_2) \\
+                &< N(z_2) \qquad ( \text{da } N(z_2) \neq 0)
+                \end{aligned}
+            \end{equation*}
+            Deswegen ist $\Z [i]$ euklidisch.
+        \end{itemize}
+    \end{solution}
+
+    % Ü113
+    \begin{exercise}
+        $\zsqrt := \menge{x+y\sqrt{-5} \colon x,y \in \Z}$ ist ein Teilring von $\C$, der nicht faktoriell ist.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item Es ist einfach zu zeigen, dass \zsqrt ein Teilring von $\C$ ist.
+            \item Betrachte die Abbildung
+            \begin{align} 
+                \bigabb{N}{\zsqrt}{\N}{a+b\sqrt{-5}}{a^2+5b^2} \label{eq: 113_abbildung_gradfunktion}
+            \end{align}
+            Ist \zsqrt faktoriell, so ist $1 + \sqrt{-5}$ prim nach \cref{lemma: 113_irreduzibelzsqrt-5}. Da $\left( 1 + \sqrt{-5} \right) \left( 1 - \sqrt{-5} \right) = 6 = 2*3$, gilt $1 + \sqrt{-5} \teilt 2$ oder $1 + \sqrt{-5} \teilt 3$. Gilt $1 + \sqrt{-5} \teilt 2$, so gibt es $x \in \zsqrt$ mit $2 = x \left( 1 + \sqrt{-5} \right)$. Insbesondere ist $4 = N(2) = N(x) * N \left(1 + \sqrt{-5} \right) = 6 * N(x)$, d.h. $2 =  3*N(x)$, was falsch ist, da $N(x) \in \N$. Der andere Fall ist analog. Deswegen ist \zsqrt nicht faktoriell.
+        \end{itemize}
+    \end{solution}
+
+    \pagebreak
+    
+    % Ü114
+    \begin{exercise}[Präsenz]
+        Bestimmen Sie die Lösungen der folgenden Kongruenzen in $\Z$:
+        \begin{align*}
+            x &\equiv 1 \mod 3 & y &\equiv 1 \mod 2 & z &\equiv 1 \mod 4 \\
+            x &\equiv 2 \mod 5 & y &\equiv 2 \mod 3 & z &\equiv 2 \mod 6 \\
+            x &\equiv 3 \mod 7 & y &\equiv 3 \mod 4 & z &\equiv 3 \mod 9 \\
+        \end{align*}
+    \end{exercise}
+    \begin{solution}
+        Wir lösen nur das erste System von Kongruenzen: \\
+        Es gilt $3*5*7 = 105$. Bestimme $u,v \in \Z$ mit $3u + \lfrac{105}{3} * v = 1$, d.h. $3u+35v = 1$. Es ist klar, dass $u=12$ und $v=-1$ eine Lösung ist. Dann ist $-35 \equiv 1 \mod 3$, $-35 \equiv 0 \mod 5$ und $-35 \equiv 0 \mod 7$. Analog bestimmen wir $21 \equiv 1 \mod 5$, $21 \equiv 0 \mod 3$, $21 \equiv 0 \mod 7$, sowie $15 \equiv 1 \mod 7$, $15 \equiv 0 \mod 3$, $15 \equiv 0 \mod 5$. Betrachte $(-35)*1 + 2*21 + 3*15 = 52$. Dann gilt $52 + 105m \equiv 1 \mod 3$, $52 + 105m \equiv 2 \mod 5$ und $52 + 105m \equiv 3 \mod 7$ für jedes $m \in \Z$. \\
+        Umgekehrt sei $x \in \Z$ mit $x \equiv 1 \mod 3$, $x \equiv 2 \mod 5$ und $x \equiv 3 \mod 7$. Da $52$ Lösung ist, gilt $x =52 \mod 3$, $x = 52 \mod 5$ und $x = 52 \mod 7$, sowie $\kgV(3,5,7) = 105$, d.h. es gilt $x \teilt 52$, somit existiert $n \in \Z$ mit $x = 52 + 105n$.
+    \end{solution}
+
+    \begin{exercise}[Präsenz]
+        Für jedes $n \geq 1$ gibt es $x \in \N$, für das keine der Zahlen $x+1 , \dots , x+n$ prim ist.
+    \end{exercise}
+    \begin{proof}
+        Sei $y = (n+1)!$. Dann gilt für $y+i$ mit $i \in \menge{2, \dots, n+1}$, dass 
+        \begin{align}
+            i \teilt (n+1)! \label{eq: 130_teilbarkeit}
+        \end{align}
+        Somit gilt auch $i \teilt y+i$ für alle $i \in \menge{2, \dots , n+1}$ wegen \labelcref{eq: 130_teilbarkeit} und $i \teilt i$. Da $n \geq 1$ vorausgesetzt war, ist auch stets $y+1 > i$ und $i$ somit ein echter Teiler von $y$. Damit sind die Zahlen $y+i$ für $i \in \menge{2, \dots , n+1}$ nicht prim. Dann erfüllt $x := y+1$ die Anforderungen.
+    \end{proof}
+\undef\zsqrt
+\end{exercisePage}

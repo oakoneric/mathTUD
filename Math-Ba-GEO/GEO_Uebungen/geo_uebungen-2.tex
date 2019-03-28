@@ -1,0 +1,73 @@
+\begin{exercisePage}[Normalteiler, abelsche Gruppen, Produkte]
+%
+\setcounter{taskcount}{23}
+%
+\begin{exercise}
+	Es seien $G$ eine Gruppe und $H$ eine Untergruppe von $G$. Wenn $G/H$ mit dem Komplexprodukt eine Gruppe bildet, so ist $H\unlhd G$.
+\end{exercise}
+\begin{solution}
+	Angenommen, $G/H$ mit dem Komplexprodukt wäre eine Gruppe. 
+	
+	Zunächst zeigen wir, dass $H$ das neutrale Element von $G/H$ ist. Es sei $g_0H$ das neutrale Element von $G/H$. Für jedes $g\in G$ gilt $gH * g_0H=g_0H * gH=gH$. Insbesondere gilt $g * g_0=g * 1 * g_0 * 1\in gH * g_0H=gH$, das heißt es existiert $h\in H$ mit $gg_0=g * H$. Deswegen gilt $g_0=h$, somit $g_0H=H$.
+	
+	Jetzt zeigen wir, dass $H$ Normalteiler von $G$ ist. Sei $g\in G$. Aus $H * gH=gH$ folgt $gH\subseteq H * gH=gH$, das heißt $H\subseteq gHg^{-1}$. Analog bekommen wir $H\subseteq g^{-1}Hg$, das heißt $gHg^{-1}\subseteq H$. Deswegen gilt $gHg^{-1}=H$, also $gH=Hg$. Mit 3.3 schließen wir, dass $H \normalteiler G$.
+\end{solution}
+
+\begin{exercise}
+	Für jedes $n \in \N$ mit $n \ge 2$ ist $S_n= \erz{(1 \, 2)} \ltimes A_n$.
+\end{exercise}
+\begin{solution}
+	Es sei $n\in \N$ mit $n \ge 2$. Nach 5.6 ist zu zeigen, dass $A_n \normalteiler S_n$, $A_n \cap \erz{(1\, 2)} = \menge{\id}$ und $\erz{(1\, 2)} * A_n = S_n$ gelten. Da $A_n$ der Kern des Homomorphismus $\abb{\sgn}{S_n}{\mu_2}$ ist, gilt $A_n \normalteiler S_n$ (vgl. 3.5). Aus $(1\, 2)\notin A_n$ folgt $A_n \cap \erz{(1\, 2)} =\menge{\id}$. Dann zeigen wir, dass $H=\erz{(1\, 2)} * A_n = S_n$ gilt. Es sei $\sigma\in S_n$. Ist $\sigma\in A_n$, so gilt $\sigma = \id *\sigma \in H$. Ist $\sigma \notin A_n$, so gelten $(1\, 2) * \sigma \in A_n$ und $\sigma=(1\, 2) * ((1\, 2) * \sigma) \in H$.
+	
+	AlterNiver Beweis für die dritte Eigenschaft: Wir wissen, dass $A_n \lneqq H \leq S_n$, und da $(S_n \colon A_n)=2$ prim ist, folgt aufgrund der Multiplikativität des Index schon, dass $H = S_n$.
+\end{solution}
+
+\begin{exercise}
+	Zeigen Sie: Es gibt bis auf Isomorphie genau zwei Gruppen der Ordnung 6, nämlich $C_6$ und $S_3$.
+\end{exercise}
+\begin{solution}
+	Sei $G$ eine endliche Gruppe der Ordnung 6. Aus dem Satz von Lagrange gilt $\ord(g)\in\{1,2,3,6\}$ für jedes $g\in G$.
+	\begin{itemize}[leftmargin=*]
+		\item Ist $\ord(g)\in\{1,2\}$ für jedes $g\in G$, so ist $G$ abelsch (vgl. W2). Aus 4.8 und $\#G=6$ folgt $G\cong C_6$, was unmöglich ist, da $C_6$ ein Element der Ordnung 6 hat.
+		\item Somit gibt es ein $g\in G$ mit $\ord(g)\in\{3,6\}$. In beiden Fällen, gibt es ein $g_1\in G$ mit $\ord(g_1)=3$ (ist $\ord(g)=6$, so ist $\ord(g^2)=3$). Außerdem gibt es $g_2\in G$ mit $\ord(g_2)=2$ (vgl. H10). Dann bekommen wir: $\langle g_1\rangle\unlhd G$ (vgl. P41), $\langle g_1\rangle\cap \langle g_2\rangle=\{1\}$ (da $\ggT(2,3)=1$) und $\langle g_1\rangle\cdot\langle g_2\rangle=G$ mit dem selben Argument wie in Ü25. Somit ist $G=\langle g_2\rangle\ltimes\langle g_1\rangle$ (vgl. 5.6). Aus 5.12 folgt dann $G\cong C_6$ oder $G\cong S_3$.
+	\end{itemize}
+\end{solution}
+
+\pagebreak
+
+\begin{exercise}
+	Zu welcher Ihnen bekannten Gruppe ist $\Aut(V_4)$ isomorph?
+\end{exercise}
+\begin{solution}
+	Aus W4 ergibt sich $\Aut(V_4)\cong \Aut((\mathbb{Z}/2\mathbb{Z})^2)=\Aut(\mathbb{F}_2^2)$ (siehe auch V44). Aber $\mathbb{F}_2^2$ ist ein $\mathbb{F}_2$-Vektorraum und die Automorphismen der Gruppe $\mathbb{F}_2^2$ sind genau die $\mathbb{F}_2$-Automorphismen des $\mathbb{F}_2$-Vektorraums $\mathbb{F}_2^2$. Somit ist $\Aut(V_4)\cong \GL_2(\mathbb{F}_2)$, die eine nicht abelsche Gruppe der Ordnung 6 ist (zählen Sie einfach die Elemente der $\GL(\mathbb{F}_2)$ auf). Mit Ü27 schließen wir, dass $\Aut(V_4)\cong S_3$.
+	
+	Direkt sieht man dies so: Die $V_4$ hat neben dem neutralen Element $e$ der Ordnung 1 noch drei Elemente der Ordnung 2, und jede Permutation $\sigma$ dieser 3 Elemente der Ordnung 2 setzt sich durch $\sigma(e)=e$ zu einer Permutation der Menge $V_4$ fort. Nun muss man allerdings nachprüfen, dass $\sigma: V_4\to V_4$ auch tatsächlich ein Gruppenhomomorphismus ist.
+\end{solution}
+
+\setcounter{taskcount}{40}
+
+\begin{exercise}[Präsenz]
+	Sei $H\le G$. Zeige oder widerlege:
+	\begin{enumerate}[label=\alph*)]
+		\item $(G\colon H) = 2\Rightarrow H\unlhd G$
+		\item $(G\colon H) = 3\Rightarrow H\unlhd G$
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}[leftmargin=*, label=\alph*)]
+		\item richtig. Angenommen $H \nichtnormal G$. Sei $h\in H$ mit $hH=H=Hh$ und $g \in G \setminus H$ mit $gH \neq Hg$. Wegen $(G\colon H)=2$ gilt $gH=H$, das heißt $\exists H \in H$ mit $gh \in H$. Dann folgt
+		\begin{equation}
+			\underbrace{gh}_{\in H} * \underbrace{h^{-1}}_{\in H} = g \in H
+		\end{equation}
+		was im Widerspruch zu $g\in G \setminus H$ steht. Also ist $H \normalteiler G$.
+		\item falsch, zum Beispiel $(S_3 \colon \erz{(1\, 2)})=3$, aber
+		\begin{equation*}
+			(1\, 3)\langle (1\, 2)\rangle) = \{(1\, 3),(1\, 3\, 2)\} \text{ und }
+			\langle (1\, 2)\rangle)(1\, 3) = \{(1\, 3),(1\, 2\, 3)\}
+		\end{equation*}
+	\end{enumerate}
+\end{solution}
+
+% TODO fix endmark in last task
+
+\end{exercisePage}

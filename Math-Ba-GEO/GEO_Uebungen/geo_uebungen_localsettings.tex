@@ -1,0 +1,51 @@
+%
+% ================================ 
+% | LOCAL SETTINGS               |
+% ================================
+
+% >> Überschriften
+\renewcommand{\aufgabe}[1]{{\Large \textsf{\textbf{Aufgabe #1}}}}
+\renewcommand{\teilaufgabe}[1]{\textsf{\textit{{\large Teilaufgabe (#1)}}}}
+% Überschriften bereits in tex_theoreme definiert, hier überschrieben
+
+% >> Übungsblätter Eigenschaften
+\renewcommand{\uebungsgruppe}{Tag x. DS, (un)gerade Woche}
+\renewcommand{\name}{Eric Kunze}
+\renewcommand{\matrikelnr}{4679202}
+\renewcommand{\modul}{Geometrie}
+\renewcommand{\uebungsleiter}{Dr. F. Legrand}
+% Eigenschaften sind in tex_theoreme definiert, hier überschrieben
+
+% >> Sichtbarkeit von Countern
+\numberwithin{themcount}{section}
+%\counterwithout{section}{chapter}	% Befehl funktioniert nur mit Klasse scrreprt (Standard in Vorlage aber scrartcl)
+\numberwithin{page}{blattcount}	% Aufgabenblattnummer erscheint vor der Seitenzahl (environment "hausaufgabe" wird benötigt - setzen des page-counters)
+
+% >> Hervorhebungen
+\newcommand{\begriff}[1]{\textit{#1}}
+
+% >> Nummerierung der Gleichungen
+\renewcommand*{\theequation}{\arabic{equation}}
+
+% >> Aufzählungszeichen und Nummerierung
+\renewcommand{\labelitemi}{$\vartriangleright$}
+\renewcommand{\labelenumi}{\alph{enumi})}
+
+% >> Variantionen des Dreiecks als Aufzählungszeichen
+% $\blacktriangleright$
+% $\vartriangleright$
+% $\triangleright$ 
+
+% >> Aufzählungszeichen für Formel in der gleichen Zeile
+\def\Item{\item~\vspace{-1\normalbaselineskip}}
+
+% >> Fußnoten
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+% >> Multiplkationszeichen: Malpunkt statt *
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
+% >> mathemtische Zeichen
+\renewcommand{\follows}{\enspace \Rightarrow \enspace}
+\renewcommand{\equivalent}{\enspace \Leftrightarrow \enspace}
+

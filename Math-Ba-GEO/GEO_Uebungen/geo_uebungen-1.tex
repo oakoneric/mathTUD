@@ -1,0 +1,105 @@
+\begin{exercisePage}[Gruppen, Ordnung und Index, symmetrische Gruppe]
+%
+\setcounter{taskcount}{5}
+%
+% Aufgabe Ü6
+
+\begin{exercise}
+	Ist $\# G = p$ eine Primzahl, so ist $G = \erz{g}$ für ein $g \in G$.
+\end{exercise}
+\begin{solution}
+	Da $p \geq 2$ ist, existiert ein vom neutralen Element verschiedenes Element $g \in G$. \\
+	$\follows \erz{g} \leq G$ \\
+	Nach dem Satz von Lagrange gilt $\ord(g) \mid \# G = p$. Da $g$ nicht das neutrale Element der Gruppe $G$ ist, muss $\ord(g) = \# \erz{g} \geq 2$  und damit $\ord(g) = \# \erz{g} = p$. Folglich ist also $G = \erz{g}$.
+\end{solution}
+%
+% Aufgabe Ü7
+\begin{exercise}
+	Sei $f: G \to H$ ein Epimorphismus endlicher Gruppen. Zeigen Sie, dass $\card{f^{-1}(h)} = \card{\Ker(f)}$ für jedes $h \in H$. Schließen Sie, dass $\# G = \# H * \# \Ker(f)$.
+\end{exercise}
+\begin{solution}
+	Es sei $h \in H$. \\
+	$f$ surjektiv $\follows \exists \, g_0 \in G : f(g_0)=h$ \\
+	Für $g \in \Ker (f)$ gilt 
+	\begin{equation*}
+		f(g*g_0) = f(g) * f(g_0) = 1 * h = h
+	\end{equation*}
+	d.h. die Abbildung $\phi :  \Ker(f) \to f^{-1}(h), g \mapsto \phi(g) := g * g_0$ ist wohldefiniert.
+	\begin{itemize}
+		\item $\phi$ ist surjektiv: Sei $g \in f^{-1}(h)$. Dann haben wir
+		\begin{equation*}
+			f(g*g_0^{-1}) = f(g) * f(g_0)^{-1} = h * h^{-1} = 1,
+		\end{equation*}
+		d.h. $g*g_0^{-1} \in \Ker(f)$ und $\phi(g*g_0^{-1})=g*g_0^{-1}*g_0 = g$.
+		\item $\phi$ ist injektiv: Es seien $g_1,g_2 \in \Ker(f)$ mit $\phi(g_1) = \phi(g_2)$, d.h. $g_1 * g_0 = g_2 * g_0$ \\
+		$\follows g_1 = g_2$.
+		\item Dann ist $\phi$ bijektiv, d.h. $\card{f^{-1}(h)} = \card{\Ker(f)}$. \par \medskip
+		%
+		Die Urbilder von $h$ sind disjunkt, denn: $\quad$
+		Für $h \neq h' \in H$ haben wir
+		\begin{align*}
+			f^{-1}(h) & = \{ g \in G : f(g) = h \} \\
+			f^{-1}(h') & = \{ g \in G : f(g) = h' \}
+		\end{align*}
+		Ist $g \in f^{-1}(h) \cap f^{-1}(h')$, so ist $h = f(g) = h'$ im Widerspruch zur Annahme $h \neq h'$. \par
+		%
+		Aus $G = \biguplus \limits_{h \in H}{f^{-1}(h)}$ folgt 
+		\begin{equation*}
+			\card{G} = \card{\biguplus \limits_{h \in H}{f^{-1}(h)}} 
+            = \sum\limits_{h \in H}{\card{f^{-1}(h)}}
+			= \sum\limits_{h \in H}{\card{\Ker(f)}}
+			= \card{\Ker(f)} * \card{H}
+		\end{equation*}
+	\end{itemize}
+\end{solution}
+%
+\pagebreak
+%
+% Aufgabe Ü8
+\begin{exercise}
+	Zeigen Sie: Für $k,n \in \N$ ist $\ord(k+n\Z) = \frac{\kgV(k,n)}{k} = \frac{n}{\ggT(k,n)}$.
+\end{exercise}
+\begin{solution}
+	Es seien $k \in \N$ und $n \in \N \backslash \{0\}$. Außerdem sei $d = \ggT(k,n)$. Dann existieren $k_1, n_1 \in \N$ mit 
+	\begin{align*}
+		\begin{array}{rcc}
+		k &=& d * k_1 \\ n &=& d * n_1 \\ \ggT(k_1, n_1) &=& 1
+		\end{array}
+	\end{align*}
+	Für $m \in \N \backslash \{ 0 \}$ gilt 
+	\begin{align*}
+		m * (k + n\Z) = n\Z & \equivalent n \mid  m*k \\
+		& \equivalent d * n_1 \mid m * d * k_1 \\
+		& \equivalent n_1 \mid m * k_1 \\
+		& \equivalent n_1 \mid m
+	\end{align*}
+	Dann ist $\ord(k + n\Z) = n_1 = \frac{n}{\ggT(k,n)}$.
+\end{solution}
+%
+\setcounter{taskcount}{16}
+%
+% Aufgabe P17
+\begin{exercise} [Präsenz]
+	Zeigen oder widerlegen Sie: \\
+	Genau dann kommutieren Zykel $\tau_1, \tau_2 \in S_n$, wenn sie disjunkt sind.
+\end{exercise}
+\begin{solution}
+	Die Rückrichtung ist richtig laut Vorlesung (vgl. 1.13). Für die Hinrichtung verwenden wir folgendes Gegenbeispiel: Sei $\tau_1=(1 \enspace 2) = \tau_2$. Dann ist $\tau_1 \circ \tau_2 = \tau_2 \circ \tau_1$ aber offensichtlich ist $\tau_1 \cap \tau_2 = \tau_1 = \tau_2 \neq \emptyset$.
+\end{solution}
+
+% Aufgabe P18
+\begin{exercise} [Präsenz]
+	Zeigen oder widerlegen Sie:
+	\begin{enumerate}
+		\item Sind $K,N \leq G$, so ist $K \cup N \leq G$.
+		\item Sind $K,N \leq G$, so ist $K * N \leq G$.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item Die Aussage ist falsch. Sei dazu $K := (2\Z, +)$ und $N := (3\Z, +)$. Dann ist $2 \in 2\Z$ und $3 \in 3\Z$, aber $2+3 = 5 \notin K \cup N$ und $K \cup N$ ist somit nicht abgeschlossen bezüglich der Addition.
+		\item Auch diese Aussage ist falsch. Betrachte dazu $K:= \menge{\id , (1 \, 2)} \leq S_3$ und $N := \menge{\id , (1 \, 3)} \leq S_3$. Dann ist $K*N = \menge{\id, (1 \, 2), (1 \, 2), (1 \, 2)(1 \, 3) = (1 \, 3 \, 2)} \nleq S_3$ nach dem Satz von Lagrange, da $\card{KN} = 4 \teiltnicht 6 = \# S_3$.
+	\end{enumerate}
+\end{solution}
+
+\end{exercisePage}

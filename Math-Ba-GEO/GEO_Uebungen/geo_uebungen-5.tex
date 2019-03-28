@@ -1,0 +1,192 @@
+\begin{exercisePage}[auflösbare Gruppen, Ringe und Ideale]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+    \begin{lemma} \label{lemma: 87_normalteilerA4}
+        Die Normalteiler der $A_4$ sind genau $1$, $V_4$ und $A_4$.
+    \end{lemma}
+    \begin{proof}
+        Dass alle drei Untergruppen Normalteiler sind, ist klar. Betrachten wir die Umkehrung. Sei dazu $N \normalteiler A_4$. Mit dem Satz von Lagrange gilt $\# N \in \menge{1,2,3,4,6,12}$. Ist $\# N = 1$, so ist $N=1$, insbesondere ist $N \normalteiler A_4$. Ist $\# N = 12$, so ist $N=A_4$. Deswegen ist $N \normalteiler A_4$. \\
+        Ist $\# N = 6$, so gibt es einen Widerspruch zu H11. \\
+        Ist $\# N = 4$, so ist $N = \menge{ \id , (1 \, 2)(3 \, 4) , (1 \, 3)(2 \, 4) , (1 \, 4)(3 \, 2)} = V_4$. \\
+        Ist $\# N = 2$, so gibt es $(a \, b)(c \, d)$ mit $N = \menge{ \id , (a \, b)(c \, d)}$. Da $(a \, b \, c) \circ (a \, b) \circ (c \, d) \circ (a \, c \, b) = (a \, d)(b \, c) \notin N$, ist $N \nichtnormal A_4$. \\
+        Ist $\# N = 3$, so gibt es einen Widerspruch (wie im Fall $\# N = 2$).
+    \end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \setcounter{taskcount}{83}
+    
+    % V84
+    \begin{exercise}[Vorbereitung]
+        Ist $\# G \leq 9$, so ist $G$ auflösbar.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*, nolistsep]
+            \item Für $\# G = 1$ ist die Auflösbarkeit klar.
+            \item Für $\# G \in \menge{2,3,5,7}$ ist $G$ zyklisch und damit auflösbar.
+            \item Für $\# G \in \menge{4,9}$ ist $G$ abelsch und somit auflösbar.
+            \item Für $\# G = 8 =  2^3$ ist $G$ eine $p$-Gruppe und damit auflösbar.
+            \item Ist $\# G = 6$, so ist $G \isomorph C_6$, welche abelsch ist, oder $G \isomorph S_3$, die nach Beispiel der Vorlesung auflösbar ist (vgl. auch Ü27).
+        \end{itemize}
+        In jedem Fall ist $G$ also auflösbar.
+    \end{solution}
+
+    \begin{exercise}[Vorbereitung]
+        Prüfen Sie nach, dass die Abbildung im Beweis von II.1.12 tatsächlich ein Ringhomomorphismus ist. Für $\phi \in \Hom(R,S)$ ist diese definiert als
+        \begin{align*}
+            \bigabb{\phi_s}{\polynomR}{S}{\sum_{i \geq 0} a_i X^i}{\sum_{i \geq 0} \phi(a_i) s^i}
+        \end{align*}
+    \end{exercise}
+    \begin{solution}
+        Seien $f = \sum_{i \geq 0} a_i X^i, g = \sum_{i \geq 0} b_i X^i \in \polynomR$. Dann ist
+       \begin{align*}
+           \phi_s(f+g) 
+           &= \phi_s \left( \sum_{i \geq 0} a_i X^i + \sum_{i \geq 0} b_i X^i \right) \\
+           &= \phi_s \left( \sum_{i \geq 0} (a_i + b_i) X^i \right) \\
+           &= \sum_{i \geq 0} \phi(a_i + b_i) s^i \\
+           \overset{\phi \in \Hom}&{=} \sum_{i \geq 0} \left( \phi(a_i) +\phi(b_i) \right) s^i \\
+           &= \sum_{i \geq 0} \phi(a_i) s^i + \sum_{i \geq 0} \phi(b_i) s^i \\
+           &= \phi_s(f) + \phi(s(g)
+       \end{align*}
+       Die Multiplikativität folgt dann analog.
+    \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \setcounter{taskcount}{85}
+
+    % Ü86
+    \begin{exercise}
+        Ist $\# G = pq$ mit Primzahlen $p$ und $q$, so ist $G$ auflösbar.
+    \end{exercise}
+    \begin{solution}
+        Es seien $p$ und $q$ Primzahlen und $G$ eine Gruppe mit $\# G = p*q$.
+        \begin{itemize}[leftmargin=*]
+            \item Ist $p=q$, so ist $\# G = p^2$ und $G$ deswegen abelsch. Insbesondere ist $G$ auflösbar.
+            \item Ist $p \neq q$, so gilt $G \isomorph C_p \ltimes_\alpha C_q$ oder $G \isomorph C_q \ltimes_\alpha C_p$ (vgl. 8.9). Mit 10.7 schließen wir, dass $G$ auflösbar ist.
+        \end{itemize}
+    \end{solution}
+
+    % Ü87
+    \begin{exercise}
+        Bestimmen Sie die Kommutatorgruppen $S_n'$ und $A_n'$ für $n \geq 2$.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item Sei $n \geq 5$. Da $S_n' \normalteiler S_n$ und die Normalteiler von $S_n$ sind $1, A_n, S_n$. Damit ist $S_n' \in \menge{1,A_n,S_n}$. Ist $S_n' = 1$, so ist $S_n$ abelsch, was falsch ist. Es gilt $S_n' \subseteq A_n$. Deswegen ist $S_n' = A_n$. Da $n \geq 5$ gilt, ist $A_n$ einfach. Deswegen gilt $A_n' \in \menge{1,A_n}$. Ist $A_n' = 1$, so ist $A_n$ abelsch, was falsch ist. Deswegen gilt $A_n' = A_n$.
+            \item Ist $n = 2$, so gelten $S_2 \isomorph C_2$ und $A_2 = 1$. Insbesondere sind $S_2$ und $A_2$ abelsch, d.h. $S_n' = A_n' = 1$.
+            \item Ist $n = 3$, so gilt $S_3' = A_3$ (analog zum ersten Fall). Außerdem ist $A_3 \isomorph C_3$. Insbesondere ist $A_3$ abelsch, also $A_3' = 1$.
+            \item Ist $n = 4$, so ist $S_4' \in \menge{1,V_4,A_4,S_4}$ (vgl. H72). Da $S_4$ auflösbar ist, aber nicht abelsch, gilt $S_4 ' \in \menge{V_4,A_4}$. Aber es ist
+            \begin{align*}
+                \left[ (3 \, 4) , (1 \, 3 \, 2) \right] = ( 3 \, 4) (1 \, 2 \, 3) (3 \, 4) (1 \, 3 \, 2) = (1 \, 3 \, 2) \circ (3 \, 4) \circ ( 1 \, 2 \, 3) \circ ( 3 \, 4) = (1) (2 \, 4 \, 3) \in S_4' \setminus V_4
+            \end{align*}  
+            Deswegen gilt $S_4 ' = A_4$. \\
+            Mit \cref{lemma: 87_normalteilerA4} ist $A_4' \in \menge{1,V_4,A_4}$. Da $A_4$ auflösbar, aber nicht abelsch ist, gilt $A_4' = V_4$.
+        \end{itemize}
+    \end{solution}
+
+    % Ü88
+    \newcommand{\gruppegl}{\ensuremath{\GL_2(\rest{3})}}
+    \begin{exercise}
+        Die Gruppe $\GL_2(\rest{3})$ ist auflösbar.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item Wir zeigen, dass jede Gruppe der Ordnung $12$ auflösbar ist. Es sei $G$ eine endliche Gruppe der Ordnung $12$. Mit Ü70 folgt, dass $G$ nicht einfach ist, d.h. $G$ besitzt einen Normalteiler $N \normalteiler G$ mit $\# N \in \menge{2,3,4,6}$. Mit V84 sind alle $N$ auflösbar und $\lfrac{G}{N}$ auflösbar. Mit 10.7 schließen wir, dass auch $G$ auflösbar ist.
+            \item Die Gruppe \gruppegl besitzt Ordnung $(3^2-1) * (3^2-3) = 8*6=48$. Betrachte die Determinante $\abb{\det}{\gruppegl}{\einheit{(\rest{3})}}$, die Gruppenhomomorphismus ist. Da $\det(\gruppegl)=\einheit{(\rest{3})}$, gilt $\# \Ker(\det) = 24$. Es ist klar, dass 
+            \begin{align*}
+                \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \text{ und }
+                \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}
+            \end{align*}
+            Elemente von $\zentrum{\Ker(\det)}$ sind. Außerdem ist $\Ker(\det)$ nicht abelsch, weil
+            \begin{align*}
+                \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} *
+                \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix} &=
+                \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix} \\
+                \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix} *
+                \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} &=
+                \begin{pmatrix} 1 & 1 \\ 1 & 2 \end{pmatrix}
+            \end{align*}
+            Deswegen gilt $\# \zentrum(\Ker(\det)) \in \menge{2,3,4,6,8,12}$. Mit V84 und dem ersten Punkt oben folgt, dass $\zentrum(\Ker(\det))$ auflösbar ist. Deswegen ist $\lfrac{\Ker(\det)}{\zentrum(\Ker(\det))}$ auflösbar. Mit 10.7 bekommen wir, dass $\Ker(\det)$ auflösbar ist. Aber $\lfrac{\gruppegl}{\Ker(\det)}$ hat Ordnung $2$ und ist somit auflösbar. Mit 10.7 schließen wir erneut, dass \gruppegl auflösbar ist. 
+        \end{itemize}
+        {\itshape Bemerkung zur Gruppenordnung: Betrachtet man $\left( \begin{smallmatrix} a & b \\ c & d \end{smallmatrix} \right)$, dann hat man sowohl für $a$ und $c$ je drei Möglichkeiten, muss aber eine davon wieder abziehen, da $\left( \begin{smallmatrix}  0 \\ 0 \end{smallmatrix} \right)$ keine zulässige Spalte ist. Für $b$ und $d$ muss man schließlich noch die linear abhängigen Möglichkeiten abziehen.}
+    \end{solution}
+    \undef\gruppegl
+
+    % Ü89
+    
+    \newcommand{\RXi}{\polynomring{R}{X_i \colon i \in I}}
+    \begin{exercise}
+        Formulieren und beweisen Sie die universelle Eigenschaft des Polynomrings $\polynomring{R}{X_i \colon i \in I}$.
+    \end{exercise}
+    \begin{solution}
+        Es seien $R$ ein Ring und $I \neq \emptyset$ eine Menge. Betrachte den Polynomring $\polynomring{R}{X_i \colon I}$. Weiter Seien $S$ ein Ring und $\abb{\phi}{R}{S}$ ein Ringhomomorphismus sowie $s_i \in S$ für jedes $i \in I$.
+        
+        \textit{zu zeigen:}
+        Es gibt genau einen Ringhomomorphismus $\abb{\phi_{(s_i)}}{\polynomring{R}{X_i \colon I}}{S}$, der sowohl $\phi_{(s_i)} |_R = \phi$ als auch $\phi_{(s_i)}(X_i)=s_i$ für jedes $i \in I$ erfüllt.
+        
+        \textit{Beweis:} Betrachte die folgende Abbildung
+        \begin{align*}
+            \bigabb{\phi_{(s_i)}}{\polynomring{R}{X_i \colon I}}{S}%
+                                 {\sum_\mu a_\mu X^\mu}        {\sum_\mu \phi(a_\mu) \prod_i s_i ^{\mu_i}}
+        \end{align*}
+       Für jedes $r \in R$ gilt $\phi_{(s_i)}(r) = \phi(r)$ (klar), d.h. $\phi_{(s_i)} |_R = \phi$. Insbesondere gilt $\phi_{(s_i)}(1) = 1$. Seien $\sum_\mu a_\mu X^\mu, \sum_\mu b_\mu X^\mu \in \RXi$. \\
+       Dann gilt
+       \begin{align*}
+           \phi_{(s_i)} \left( \sum_\mu a_\mu X^\mu + \sum_\mu b_\mu X^\mu \right) 
+           &= \phi_{(s_i)} \left( \sum_\mu (a_\mu + b_\mu) X^\mu \right) \\
+           &= \sum_\mu \phi(a_\mu + b_\mu) * \prod_i s_i^{\mu_i} \\
+           &= \sum_\mu \phi(a_\mu) + \phi(b_\mu) * \prod_i s_i^{\mu_i} \\
+           &= \left( \sum_\mu \phi(a_\mu) \prod_i s_i^{\mu_i} \right) + \left( \sum_\mu \phi(b_\mu) \prod_i s_i^{\mu_i} \right) \\
+           &= \phi_{(s_i)} \left( \sum_\mu a_\mu X^\mu \right) +  \phi_{(s_i)} \left( \sum_\mu b_\mu X^\mu \right)
+       \end{align*}
+       Analog zeigen wir die Multiplikativität, d.h. 
+       \begin{align*}
+           \phi_{(s_i)} \left( \sum_\mu a_\mu X^\mu * \sum_\mu b_\mu X^\mu \right) = \phi_{(s_i)} \left( \sum_\mu a_\mu X^\mu \right) *  \phi_{(s_i)} \left( \sum_\mu b_\mu X^\mu \right)
+       \end{align*}
+       Deswegen ist $\phi_{(s_i)}$ ein Ringhomomorphismus. Für jedes $i \in I$ gilt $\phi_{(s_i)}(X_i) = \phi(1) * s_i^1 = s_i$.
+       Für die Eindeutigkeit sei $\abb{\psi}{\RXi}{S}$ ein Ringhomomorphismus mit $\psi |_R = \phi$ und $\psi(X_i) = s_i$ für jedes $i \in I$. Für jedes $\sum_\mu a_\mu X^\mu \in \RXi$ gilt
+       \begin{align*}
+           \psi \left( \sum_\mu a_\mu X^\mu \right) 
+           &= \sum_\mu \psi(a_\mu)  * \psi \left( X^\mu \right) \\
+           &= \sum_\mu \phi(a_\mu) * \psi \left( \prod_i X_i^{\mu_i} \right) \\
+           &= \sum_\mu \phi(a_\mu) * \prod_i \psi(X_i)^{\mu_i} \\
+           &= \sum_\mu \phi(a_\mu) * \prod_i x_i^{\mu_i} \\
+           &= \phi_{(s_i)} \left( \sum_\mu a_\mu X^\mu \right)
+       \end{align*}
+    \end{solution}
+    \undef\RXi
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \setcounter{taskcount}{103}
+    
+    % P104
+    \begin{exercise}[Präsenz]
+        Sei $R = \polynom{\Z}$. Geben Sie ein Beispiel eines maximalen Ideals und ein Beispiel eines Primideals $(0) \neq \mathfrak{p} \ideal R$, das nicht maximal ist.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item Betrachte das Ideal $I$ von $\polynom{\Z}$, das von $X$ und $2$ erzeugt wird (d.h. $I = (2,X)$), sowie die Abbildung
+            \begin{align*}
+                \bigabb{\phi}{\polynom{\Z}}{\rest{2}}{\sum_{i=0}^m a_i X^i}{a_0 \mod 2}
+            \end{align*}
+            Es ist klar, dass $\phi$ Ringhomomorphismus ist und surjektiv. Bestimme den Kern. Sei $\sum_{i=0}^m a_i X^i \in \Ker(\phi)$. Dann gibt es $b_0 \in \Z$ mit $a_0 = 2 b_0$. Dann gilt
+            \begin{align*}
+                \sum_{i=0}^m a_i X^i = a_0 + \sum_{i=1}^m a_i X^i = 2b_0 + X * \sum_{i=1}^m a_i X^{i-1} \quad \in I
+            \end{align*}
+            Umgekehrt seien $P(X), Q(X) \in \polynom{\Z}$. Dann gilt 
+            \begin{align*}
+                \phi \left( 2*P(X) + X * Q(X) \right) = \phi(2) * \phi(P(X)) + \phi(X) * \phi(Q(X)) = 0 + 0 = 0
+            \end{align*} 
+            Deswegen ist $\Ker(\phi) = I$. Mit 2.8 bekommen wir $\lfrac{\polynom{\Z}}{I} = \rest{2}$, was ein Körper ist. Deswegen ist $I$ maximal (vgl. 2.11).
+            \item Analog zeigen wir, dass $\mathfrak{p} = X * \polynom{\Z}$ prim, aber nicht maximal ist.
+        \end{itemize}
+    \end{solution}
+    
+    % P105
+    \begin{exercise}[Präsenz]
+        Beweisen oder widerlegen Sie: Ist $I$ ein Ideal / Primideal / maximales Ideal von $R$, so ist $I \cap R_0$ ein Ideal / Primideal / maximales Ideal von $R_0$
+    \end{exercise}
+    \begin{solution}
+        Dazu gab es leider keine Lösung in der Übung.
+    \end{solution}
+\end{exercisePage}

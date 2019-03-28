@@ -1,0 +1,162 @@
+\begin{exercisePage}[Bruchringe, Irreduzibilität]
+	%
+    \begin{lemma} \label{lemma: 7_teilbarkeitmitggT}
+        Es seien $a,b,c \in \Z$ mit $a \neq 0$, $a \teilt bc$ und $\ggT(a,b) = 1$. Dann gilt $a \teilt c$.
+    \end{lemma}
+    \begin{proof}
+        Da $\ggT(a,b) = 1$, gibt es $u,b \in \Z$ mit $au + bv = 1$. Dann gilt $c = c*1 = c*(au+bv) = cau + cbv \equiv cbv \equiv 0 \mod a$. 
+    \end{proof}
+
+    \begin{lemma} \label{lemma: 136_konjugierteNullstelle}
+        Sei $f \in \polynom{\R}$. Dann gilt für alle $z \in \C$: $\qquad$ $f(z) = 0 \quad \Longleftrightarrow \quad f\left(\quer{z}\right) = 0$
+    \end{lemma}
+    \begin{proof}
+        Es seien $f \in \polynom{\R}$ und $z \in \C$ mit $f(z) = 0$. Schreibe $f(X) = a_n X^n + a_{n-1} X^{n-1} + \cdots + a_1 X + a_0$ mit $a_n, \dots, a_0 \in \R$. Da $f(z) = 0$ gilt 
+        \begin{align*}
+        0 
+        &= a_n z^n + a_{n-1} z^{n-1} + \cdots + a_1 z + a_0 \\
+        &= a_n \quer{z}^n + a_{n-1} \quer{z}^{n-1} + \cdots + a_1 \quer{z} + a_0 \\
+        &= f(\quer{z})
+        \end{align*}
+        Deswegen ist $\quer{z}$ Nullstelle von $f$.
+    \end{proof}
+
+	\setcounter{taskcount}{130}
+	
+	\begin{exercise}[Vorbereitung]
+		Bestimmen Sie die Lösungen der folgenden Kongruenzen in $\Z$:
+		\begin{align*}
+			x &\equiv 1 \mod 3 & y&\equiv 1 \mod 2 & z&\equiv 1 \mod 4 & u &\equiv 1 \mod 4 \\
+			x &\equiv 2 \mod 5 & y&\equiv 2 \mod 3 & z&\equiv 2 \mod 6 & u &\equiv 1 \mod 6 \\
+			x &\equiv 3 \mod 7 & y&\equiv 3 \mod 4 & z&\equiv 3 \mod 9 & u &\equiv 1 \mod 9
+		\end{align*}
+	\end{exercise}
+	
+	\stepcounter{taskcount}
+	
+	\begin{exercise}[Vorbereitung]
+		Zerlegen Sie $X^4-2 \in \polynom{\R}$ in seine Primfaktoren.
+	\end{exercise}
+    \begin{solution}
+        \textit{Wiederholung: $f \in \polynom{\R}$ prim \defequiv $f \in \einheit{\polynom{\R}}$ und $f \teilt ab \mathrel{\rightarrow} f \teilt a \mathrel{\lor} f \teilt b$}
+        \begin{align*}
+            f = X^4 -2 = \left( X^2 + \sqrt{2} \right) \left( X^2 - \sqrt{2} \right) = \left( X^2 + \sqrt{2} \right) \left( X - \sqrt[4]{2} \right)\left( X + \sqrt[4]{2} \right)
+        \end{align*}
+    \end{solution}
+
+	\begin{exercise} %%% FERTIG %%%
+		Ist $x = \frac{a}{b} \in \Q$ eine Nullstelle von $f=\sum\nolimits_{i=0}^{n}{a_i X^i} \in \polynom{\Z}$ mit $\ggT(a,b) = 1$, so gelten $a \teilt a_0$ und $b \teilt a_n$.
+	\end{exercise}
+	
+	\begin{solution}
+		Es seien $a, b \in \Z$ mit $b \neq 0$, $\ggT(a,b) = 1$ und $f\left(\frac{a}{b}\right) = 0$. Dann ist 
+		\begin{equation*}
+			0 = f\left(\frac{a}{b}\right) = \sum_{i=0}^{n}{a_i* \frac{a^i}{b^i}} \equivalent 0 = b^n * f\left(\frac{a}{b}\right) = \sum_{i=0}^{n}{a_i * a^i * b^{n-i}}
+		\end{equation*}
+		Insbesondere gelten $a \teilt a_0 b^n$ und $b \teilt a_n a^n$. Mit \cref{lemma: 7_teilbarkeitmitggT} folgt $a \teilt a_0 b^{n-1}$ und $b \teilt a_n a^{n-1}$. Per Induktion zeigt man nun noch. dass $a \teilt a_0$ und $b \teilt a_n$.
+	\end{solution}
+
+	\begin{exercise}
+		Die folgenden Polynome sind in den jeweiligen Ringen irreduzibel:
+		\begin{enumerate}[leftmargin=*, noitemsep, label=(\alph*)]
+			\item $X^3 + 39X^2 - 4X + 8 \in \polynom{\Q}$
+            \item $2X^4 + 200X^3 + 2000X^2 + 20000X + 20 \in \polynom{\Q}$
+            \item $X^5 - 64 \in \polynom{\Q}$
+            \item $X^2Y + XY^2 - X - Y + 1 \in \polynomring{\Q}{X,Y}$
+		\end{enumerate}
+	\end{exercise}
+    \begin{solution}
+        \begin{enumerate}[leftmargin=*, label=(\alph*)]
+            \item Ist das Poylnom irreduzibel über $\Q$, so besitzt es eine Nullstelle $x \in \Q$. Schreibe $x = \lfrac{a}{b}$ mit $a,b \in \Z$, $b \neq 0$ und $\ggT(a,b) = 1$. Mit Ü134 gilt $a \teilt 8$ und $b \teilt 1$, dh. $x \in \menge{8,-8,4,-4,2,-2,1,-1}$. Aber man zeigt leicht, dass
+            \begin{align*}
+            f( 8) &\neq 0 & f( 4) &\neq 0 & f( 2) &\neq 0 & f( 1) &\neq 0 \\
+            f(-8) &\neq 0 & f(-4) &\neq 0 & f(-2) &\neq 0 & f(-1) &\neq 0
+            \end{align*}
+            Deswegen ist $f$ irreduzibel über $\Q$.
+            \item Sei $f(X) = 2X^4 + 200X^3 + 2000X^2 + 20000X + 20 \in \polynom{\Q}$. Da $2 \in \einheit{\polynom{\Q}}$, gilt: 
+            \begin{align*}
+                f \text{ irreduzibel über } \Q \equivalent \lfrac{1}{2} \, f = X^4 + 100X^3 + 1000X^2 + 10000X + 10 \text{ irreduzibel über } \Q
+            \end{align*}
+            Mit dem Satz von Eisenstein ($p=2$) ist $\lfrac{1}{2} f$ irreduzibel über $\Q$, also auch $f$ irreduzibel über $\Q$.
+            \item Sei $f(X) = X^5 - 64 \in \polynom{\Q}$. Da $64 \neq x^5$ für alle $x \in \Q$, besitzt $f$ keine Nullstelle in $\Q$. Deswegen gilt: Ist $f$ irreduzibel über $\Q$, so gibt es $a,b,c,d,e \in \Q$ mit $X^5 - 64 = (X^2 + aX + b) (X^3 + cX + dX + e)$. Jetzt gilt
+            \begin{align*}
+                X^5 -2 = \frac{(X^5 - 2) * 32}{32} &= \frac{(2X)^5 - 64}{32} \\
+                &= \frac{1}{32} \left( (2X)^2 - a* (2X) - b) \right) \left( (2X)^3 + c(2X)^2 + d*(2X) + e \right) \\
+                &= \left( \frac{4X^2+2aX+b}{4} \right) \left( \frac{8X^3+4cX^2+2dX+e}{8} \right) \\
+                &= \left( X^2 + \frac{a}{2} X + \frac{b}{4} \right) \left( X^3 + \frac{c}{2} X^2 + \frac{d}{4} X + \frac{e}{8} \right)
+            \end{align*}
+            Insbesondere ist $X^5-2$ reduzibel über $\Q$. Mit dem Satz von Eisenstein ($p=2$) ist $X^5 - 2$ irreduzibel über $\Q$, ein Widerspruch. Deswegen ist $f(X) = X^5 - 64$ irreduzibel über $\Q$.
+            \item Sei $f(X,Y)X^2Y + XY^2 - X - Y + 1 \in \polynomring{\Q}{X,Y}$
+            \begin{enumerate}[label=(\roman*)]
+                \item Zeige, dass $X^2 + X(Y^2 - 1) + (-Y + 1) \in \polynom{\polynomring{\Q}{Y}}$ irreduzibel ist. Benutze den Satz von Eisenstein (mit dem Primelement $Y-1$). Deswegen ist $X^2 + X(Y^2-1)+(-Y+1)$ irreduzibel über $\polynom{\Q}$.
+                \item Analog ist $Y^2 + Y(X^2-1)+(1-X)$ irreduzibel über $\polynom{\Q}$. 
+  \pagebreak
+                \item Zeige, dass $X^2Y + XY^2 -X-Y+1$ irreduzibel über $\polynomring{\Q}{X,Y}$ ist. Dazu schreiben wir $f(X,Y) = A(X,Y) * B(X,Y)$ mit $A,B \in \polynomring{\Q}{X,Y}$. Aus (i) und (ii) folgt
+                \begin{align*}
+                    \deg_X(A) = 2 \text{ und } \deg_X(B) = 0 \quad \text{ oder } \quad \deg_X(A) = 0 \text{ und } \deg_X(B) = 2
+                \end{align*}
+                und
+                \begin{align*}
+                    \deg_Y(A) = 2 \text{ und } \deg_Y(B) = 0 \quad \text{ oder } \quad \deg_Y(A) = 0 \text{ und } \deg_Y(B) = 2
+                \end{align*}
+                \begin{itemize}[leftmargin=*]
+                    \item $\deg_X(A) = 2$, $\deg_X(B) = 0$, $\deg_Y(A) = 2$, $\deg_Y(B) = 0$. Dann ist $B(X,Y) \in \Q$. Deswegen ist $f$ irreduzibel über $\polynomring{\Q}{X,Y}$.
+                    \item $\deg_X(A) = 0$, $\deg_X(B) = 2$, $\deg_Y(A) = 0$, $\deg_Y(B) = 2$. $\leadsto$ analog zum ersten Fall
+                    \item $\deg_X(A) = 2 = \deg_Y(B)$, $\deg_Y(A) = 0 = \deg_X(B)$. Dann ist $f(X,Y) = A(X) * B(Y)$. Schreibe $A(X) = X^2 + aX + b$ und $B(Y) = Y^2 + cY + d$. Dann gilt $A(X)*B(Y) = X^2 Y^2 + \cdots$, ein Widerspruch. Deswegen ist dieser Fall unmöglich.
+                    \item $\deg_X(A) = 0 = \deg_Y(B)$, $\deg_Y(A) = 2 = \deg_X(B)$. $\leadsto$ analog zum dritten Fall
+                \end{itemize}
+            \end{enumerate}
+        \end{enumerate}
+    \end{solution}
+
+    % Ü136
+    \begin{exercise}
+        Ist $f \in \polynom{\R}$ und $z \in \C$ mit $f(z) = 0$, so ist auch $f(\quer{z}) = 0$. Nutzen Sie dies sowie den Fundamentalsatz der Algebra, um zu zeigen, dass alle irreduziblen $f \in \polynom{\R}$ Grad $1$ oder $2$ haben.
+    \end{exercise}
+    \begin{solution}
+        Wir zeigen die folgende Aussage: $f$ irreduzibel in \equivalent $\deg(f) \in \menge{1,2}$.
+        Es sei $f \in \polynom{\R}$ irreduzibel über $\R$. Weiter sei $\lambda \in \C$ mit $f(\lambda) = 0$ nach dem Fundamentalsatz der Algebra. 
+        \begin{itemize}
+            \item Ist $\lambda \in \R$, so gilt $(X - \lambda) \teilt f(X)$. Da $f$ irreduzibel ist, folgt, dass $\deg(f) = 1$.
+            \item Ist $\lambda \in \C \setminus \R$, so ist mit \cref{lemma: 136_konjugierteNullstelle} auch $f(\quer{\lambda}) = 0$. Schreibe $f(X) = (X - \lambda) * g(X)$ mit $g \in \polynom{\C}$. Da $(X - \quer{\lambda}) \teilt f(X)$ und $\ggT(X - \lambda , X - \quer{\lambda}) = 1$ gilt: $(X - \quer{\lambda}) \teilt g(X)$, d.h. es gibt $q \in \polynom{\C}$ mit $g(x) = (X - \quer{\lambda}) * q(X)$. Somit ist also $f(X) = (X - \lambda) (X - \quer{\lambda}) * q(X) = X^2 - (\underbrace{\lambda + \quer{\lambda}}_{\in \R}) * X + \underbrace{\lambda \quer{\lambda}}_{\in \R} \in \polynom{\R}$. Mit der Eindeutigkeit der Polynomdivision folgt schlussendlich, dass $q(X) \in \polynom{\R}$. Da $f$ irreduzibel in $\polynom{\R}$
+            ist, schließen wir, dass $\deg(f) = 2$ gilt.
+        \end{itemize}
+    \end{solution}
+    \setcounter{taskcount}{144}
+
+\pagebreak
+    
+    % P145
+    \begin{exercise}[Präsenz]
+        Finden Sie eine Primfaktorenzerlegung von $X^4+1$ in $\polynom{\C}$, $\polynom{\R}$ und $\polynom{\Q}$.
+    \end{exercise}
+    \begin{solution}
+        \begin{itemize}[leftmargin=*]
+            \item in $\polynom{\C}$: $X^4 + 1$ hat vier Nullstellen, also $f(X) = (X - \lambda_1)(X - \lambda_2)(X - \lambda_3)(X - \lambda_4)$, wobei $(X - \lambda_i)$ stets irreduzibel ist für alle $i \in \menge{1,2,3,4}$.
+            \begin{align*}
+                X^4 + 1 = \left( X + e^{\lfrac{1}{4} i \pi} \right)	
+                          \left( X - e^{\lfrac{3}{4} i \pi} \right)
+                          \left( X - e^{\lfrac{5}{4} i \pi} \right)
+                          \left( X - e^{\lfrac{7}{4} i \pi} \right)
+            \end{align*}
+            \item in $\polynom{\R}$: Es gilt
+            \begin{align*}
+                X^4 + 2 =  X^4 + 1 - 2X^2 + 2X^2 = (X^2 - 1)^2 + 2X^2 = \left( X^2 - \sqrt{2} X + 1 \right) \left( X^2 + \sqrt{2} X + 1 \right)
+            \end{align*}
+            Für jedes $x \in \R$ gilt
+            \begin{align*}
+                x^2 - \sqrt{2} x + 1 &= \left( x - \frac{1}{\sqrt{2}} \right)^2 + \frac{1}{2} > 0 \\
+                x^2 + \sqrt{2} x + 1 &= \left( x + \frac{1}{\sqrt{2}} \right)^2 + \frac{1}{2} > 0 
+            \end{align*}
+            Deswegen sind $X^2 \pm \sqrt{2} X + 1$ irreduzibel über $\R$.
+            \item in $\polynom{Q}$: Ist $X^4 + 1$ irreduzibel über $\Q$, so gibt es normierte Polynome $A(X), B(X) \in \polynom{\Q}$ mit Grad $2$ und $X^4 + 1 = A(X) B(X)$ (da $X^4+1 \neq 0$ für alle $x \in \Q$). Da $x^4 \neq - 1$ für alle $x \in \R$, sind $A(X)$ und $B(X)$ irreduzibel über $\R$. Aus der Eindeutigkeit der Primfaktorenzerlegung über $\polynom{\R}$ folgt
+            \begin{align*}
+                A(X) = X^2 \pm \sqrt{2} * X + 1 \text{ und } B(X) = X^2 \mp \sqrt{2} * X + 1
+            \end{align*}
+            In jedem Fall bekommen wir einen Widerspruch, da $\sqrt{2} \notin \Q$. Deswegen ist $X^4 + 1$ irreduzibel über $\polynom{\Q}$.
+        \end{itemize}
+    \end{solution}
+
+    % P146
+    % TODO
+\end{exercisePage}

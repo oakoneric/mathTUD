@@ -1,0 +1,128 @@
+\begin{exercisePage}[Gruppenwirkungen, Sylowgruppen]
+%
+\setcounter{taskcount}{46}
+%
+\begin{exercise}
+	Für $n \geq 2$ ist $S_n=\erz{(12),(12 \dots n)}$.
+\end{exercise}
+\begin{solution}
+	Sei $G = \erz{(12), (12\dots n)}$ und $c = (12 \dots n)$. Nach Ü26 gilt für alle $i \in \menge{0, \dots, n-2}$: 
+	\begin{align*}
+		c \circ (12) \circ c^{-1} = (c^i(1) \enspace c^i(2) ) = (i+1 \enspace i+2)
+	\end{align*}
+	Dann gilt $\menge{(12),(23),(34), \dots , (n-1 \enspace n)} \subseteq G$. Aus V44 folgt dann $G = S_n$.
+\end{solution}
+%
+\begin{exercise}
+	Sei $S \in \Syl_p(G)$. Zeigen Sie: Ist $(G:S) < p$, so ist $S \normalteiler G$.
+\end{exercise}
+\begin{solution}
+	Schreibe $\# G = p^n * m$ mit $n \geq 0$ und $p \teiltnicht m$. Es sei $n_p$ die Kardinalität von $\Syl_p(G)$. Aus den Sylow-Sätzen folgt $n_p = 1 \mod p$ und $n_p \teilt m = (G:S)$ (da $\card{S} = p^n$ und nach Lagrange ist $(G:S) = \card{G} : \card{S} = p^n*m : p^n =m$). Insbesondere gilt $n_p \leq (G:S)$ und $p \teilt n_p -1$. Ist $n_p \neq 1$, so ist $p \leq n_p -1 \leq n_p \leq (G:S)$, was unmöglich ist. Deswegen ist $n_p = 1$, d.h. $S \normalteiler G$ (vgl. 8.7: $S \normalteiler G \enspace \Leftrightarrow \enspace \# \Syl_p(G) = 1$)
+\end{solution}
+%
+\begin{exercise}
+	Seien $H_1, H_2 \leq G$. Die Wirkung von $\Gamma := H_1 \times H_2$ auf $X:=H_1 H_2 \subseteq G$ durch $x^{(h_1,h_2)} := h_1^{-1}*x*h_2$ ist transitiv. Bestimmen Sie $\Gamma_1 = \Stab(1)$ und folgern Sie, dass
+	\begin{align*}
+		\card{H_1 H_2} = \frac{\card{H_1} * \card{H_2}}{\card{H_1 \cap H_2}}
+	\end{align*}
+\end{exercise}
+\begin{solution}
+	\begin{itemize}[leftmargin=*]
+		\item Betrachte die Abbildung
+		\begin{equation*}
+			\bigabb{\psi}{H_1 H_2 \times (H_1 \times H_2)}{H_1 H_2}{(x, (h_1,h_2))}{h_1^{-1}*x*h_2}
+		\end{equation*}
+		Für jedes $x \in H_1 H_2$ gilt $x = g_1*g_2$ mit $g_1 \in H_1$ und $g_2 \in H_2$. Dann gilt
+		\begin{equation*}
+			h_1^{-1} * x * h_2 = \underbrace{h_1^{-1} g_1}_{\in H_1} * \underbrace{g_2 h_2}_{\in H_2} \in H_1 H_2
+		\end{equation*}
+		Deswegen ist $\psi$ definiert.
+ \pagebreak
+        \item $\psi$ ist Wirkung.
+		\begin{itemize}
+			\item Für alle $x \in H_1 H_2$ ist $X^{(1,1)} = 1^{-1} * x * 1 = x$
+			\item Für alle $(g_1, g_2), (h_1, h_2), (l_1, l_2) \in H_1 \times H_2$ gilt
+			\begin{align*}
+				((g_1 g_2)^{(h_1, h_2)})^{(l_1, l_2)} 
+				&= (h_1^{-1} g_1 g_2 h_2)^{(l_1, l_2)} 
+				= l_1^{-1} h_1^{-1} g_1 g_2 h_2 l_2 \\
+				&= (h_1 l_1)^{-1} g_1 g_2 (h_2 l_2) = (g_1 g_2)^{(h_1 l_1 , h_2 l_2)} \\
+				&= (g_1 g_2)^{(h_1,h_2)*(l_1,l_2)}
+			\end{align*}
+		\end{itemize}
+	\item $\psi$ ist transitiv: Es seien $x,y \in H_1 H_2$. Schreibe wieder $x = g_1 g_2$ mit $g_1 \in H_1, g_2 \in H_2$ und $y = l_1 l_2$ mit $l_1 \in H_1, l_2 \in H_2$. Dann gilt
+	\begin{equation*}
+		y = l_1 l_2 = l_1 g_1^{-1} g_1 g_2 g_2^{-1} l_2 = \underbrace{(g_1 l_1^{-1})^{-1}}_{\in H_1} * x * \underbrace{(g_2^{-1} l_2)}_{\in H_2}
+	\end{equation*}
+	\item Es gilt: 
+	\begin{align*}
+		\Stab(1) &= \menge{(g_1, g_2) \in H_1 \times H_2 : 1^{(g_1,g_2)} = 1} \\
+		&= \menge{(g_1, g_2) \in H_1 \times H_2 : g_1^{-1} * 1 * g_2 = 1} \\
+		&= \menge{(g_1, g_2) \in H_1 \times H_2 : g_1 = g_2} \\
+		&\isomorph H_1 \cap H_2
+	\end{align*}
+	\item Deswegen gilt 
+	\begin{align*}
+		\card{H_1 * H_2} \overset{\text{{\scriptsize transitiv}}}&{=} \# 1^{H_1 \times H_2} \overset{6.11}{=} (H_1 \times H_2 \colon \Stab(1)) \\
+		\overset{\text{\scriptsize Lagrange}}&{=} \frac{\card{H_1 \times H_2}}{\card{\Stab(1)}} = \frac{\card{H_1}*\card{H_2}}{\card{H_1 \cap H_2}}
+	\end{align*}
+	\end{itemize}
+\end{solution}
+%
+\begin{exercise}
+	Jede Gruppe der Ordnung 20 ist isomorph zu einem semidirekten Produkt $C_4 \ltimes_{\alpha} C_5$ oder $V_4 \ltimes_{\alpha} C_5$.
+\end{exercise}
+\begin{solution}
+	Es sein $G$ eine endliche Gruppe und $n_5$ die Anzahl der 5-Sylowgruppen von $G$. Nach den Sylow-Sätzen ist $n_5 = 1 \mod 5$ und $n_5 \teilt 4$. Deswegen gilt $n_5 = 1$. $G$ hat genau eine 5-Sylowgruppe, die wir mit $N_5$ bezeichnen. Nach 8.7 ist $N_5 \normalteiler G$. Es sei $N_2$ eine 2-Sylowgruppe von $G$; es gilt $\card{N_2} = 4$ (vgl. dazu 8.2: $\# G = p^k * m$ mit $p \teiltnicht m \Rightarrow 20 = 2^2*5 \Rightarrow H \in \Syl_2(G) \Rightarrow \card{H} = p^k = 4$). Da $\ggT(4,5)=1$ gilt $\card{N_5 \cap N_2} = 1$, d.h. $N_5 \cap N_2 = \menge{1}$. Es gilt auch
+	\begin{align*}
+		\card{N_5 * N_2} = \frac{\card{N_5}*\card{N_2}}{\card{N_5 \cap N_2}} = \frac{5*4}{1} = 20 = \card{G}
+	\end{align*}
+	d.h. $N_5 * N_2 = G$. Mit 5.6 bekommen wir $G \isomorph N_2 \ltimes_{\alpha} N_5$. Aber wegen $N_5 \isomorph C_5$ und $N_2 \isomorph C_3$ oder $N_2 \isomorph V_4$ (vgl. dazu 7.7 und 4.8 und V4) gilt $C_4 \ltimes_{\alpha} C_5$ oder $V_4 \ltimes_{\alpha} C_5$.
+\end{solution}
+%
+\pagebreak
+%
+\setcounter{taskcount}{62}
+%
+% Aufgabe P63
+\begin{exercise}[Präsenz]
+	Geben Sie ein Beispiel einer Gruppe $G$ und einer $G$-Menge $X$ mit $G_x = \Stab(x) \nichtnormal G$ für ein $x \in X$.
+\end{exercise}
+\begin{solution}
+	Sei $n \geq 3$. Betrachte die natürliche Wirkung von $S_n$ auf $\menge{1, \dots , n}$
+	\begin{align*}
+		\bigabb{\psi}{\menge{1, \dots , n} \times S_n}{S_n}{(\sigma, i)}{i^{\sigma} = \sigma(i)}
+	\end{align*}
+	Es gilt $\Stab(n) = \menge{\sigma \in S_n : \sigma(n) = n}$. Aber $\Stab(n) \nichtnormal S_n$:
+	\begin{align*}
+		(1 \enspace n) \circ \underbrace{(1 \enspace 2 \cdots n-1)}_{\in \Stab(n)} \circ (1 \enspace n) \overset{\text{Ü26}}{=} (n \enspace 2 \cdots n-1) \notin \Stab(n)
+	\end{align*}
+\end{solution}
+%
+% Aufgabe P64
+\begin{exercise}[Präsenz]
+	Sei $G$ eine endliche Gruppe und $p$ eine Primzahl. Genau dann ist $G$ eine $p$-Gruppe, wenn $\ord(g)$ für jedes $g \in G$ eine $p$-Potenz ist.
+\end{exercise}
+\begin{solution}
+	Wir betrachten beide Richtungen der Äquivalenz.
+	\begin{itemize}
+		\item[($\Rightarrow$)] Ist $G$ ein $p$-Gruppe, so ist $\ord(p)$ Teiler der Ordnung von $G$ für jedes $g \in G$ (Lagrange), d.h. $\ord(g)$ ist eine $p$-Potenz für jedes $g \in G$, da $\# G$ eine $p$-Potenz ist.
+		\item [($\Leftarrow$)] Umgekehrt sei $G$ eine endliche Gruppe mit 
+		\begin{align} \label{eq: primpotenzordnung}
+			\forall g \in G \enspace \exists n \in \N: \ord(g) = p^n \tag{$\star$}
+		\end{align}
+		Es sei $q$ eine Primzahl, die $\# G$ teilt. Nach dem Satz von Cauchy (7.3) gilt: $\exists g \in G : \ord(g) = q$. Aus \cref{eq: primpotenzordnung} folgt $\ord(g) = q = p$. Deswegen ist $G$ eine $p$-Gruppe.
+	\end{itemize}
+\end{solution}
+%
+% Aufgabe P65
+\begin{exercise}[Präsenz]
+	Es seien $G$ eine endliche Gruppe der Ordnung 39 und $X$ eine $G$-Menge der Kardinalität 23. Zeigen Sie, dass $X$ einen Fixpunkt unter $G$ hat.
+\end{exercise}
+\begin{solution}
+	Aus $\#G =39$ und $\card{X} = 23$, dem Satz von Lagrange und 6.11 gilt $\# x^G \in \menge{1,3,13,39}$ für alle $x \in X$. Es seien $a$ die Anzahl der Bahnen der Kardinalität 1, $b$ die Anzahl der Bahnen der Kardinalität 3, $c$ die Anzahl der Bahnen der Kardinalität 13. Dann gilt $23 = a + 3b + 13c$, insbesondere gilt $c \in \menge{0,1}$ (da $13*2 =26 > 23$). Ist $c=0$, so gilt $23=a+3b$. Ist $a=0$, so ist $23 = 3b$, was unmöglich ist, also $a \geq 1$. Ist $c=1$, so gilt $a+3b=10$. Ist $a=0$, so gilt $3b=10$, was unmöglich ist. Deswegen gilt $a \geq 1$.
+\end{solution}
+
+\textbf{Bemerkung:} Der Stabilisator $G_{x_0}$ besteht aus den $g \in G$, die $x_0$ als Fixpunkt haben.
+
+\end{exercisePage}
