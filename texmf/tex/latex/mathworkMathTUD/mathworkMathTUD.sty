@@ -444,9 +444,15 @@ nobreak,%
 \newcommand{\einheit}[1]{{#1}^{\times}}
 \newcommand{\Rx}{\einheit{R}}			% Einheiten Ring
 
+\NewDocumentCommand{\polynom}{O{R} O{X}}{#1 \left[ #2 \right]}
+% following commands just for compatibility
 \newcommand{\polynomring}[2]{#1 \left[ #2 \right]}  % Polynomring *[*]
-\newcommand{\polynom}[1]{\polynomring{#1}{X}} % Polynomring *[X]
+%\newcommand{\polynom}[1]{\polynomring{#1}{X}} % Polynomring *[X]
 \newcommand{\polynomR}{\polynom{R}}   % Polynomring R[X]
+% in older documents insert 
+% \renewcommand{\polynom}[1]{#1 $\left[ X \right]$}
+% for old \polynom-command
+
 
 \newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
 
