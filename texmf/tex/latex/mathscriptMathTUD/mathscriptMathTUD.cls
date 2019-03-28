@@ -373,36 +373,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                            TITLEPAGE                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\setname}{\hfill}
-\newcommand{\setmatnr}{\hfill}
-\newcommand{\setemail}{\href{mailto:example@mail.com}{\ttfamily \hfill}}
+\newcommand{\name}{\hfill}
+\newcommand{\matnr}{\hfill}
+\newcommand{\email}{\href{mailto:example@mail.com}{\ttfamily \hfill}}
 
-\newcommand{\setmodul}{\hfill}
-\newcommand{\setperiod}{\hfill}
+\newcommand{\modul}{\hfill}
+\newcommand{\period}{\hfill}
 
-\newcommand{\settutor}{\hfill}
-\newcommand{\setgroup}{\hfill}
+\newcommand{\tutor}{\hfill}
+\newcommand{\group}{\hfill}
 
-\newcommand{\setlecturer}{\hfill}
-\newcommand{\setfaculty}{\hfill}
-\newcommand{\setinstitute}{\hfill}
-\newcommand{\setprofessorship}{\hfill}
-
-\newcommand{\name}[1][hfill]{\renewcommand{\setname}{#1}}
-\newcommand{\matnr}[1][hfill]{\renewcommand{\setmatnr}{#1}}
-\newcommand{\email}[1][\href{mailto:example@mail.com}{\ttfamily \hfill}]{\renewcommand{\setemail}{#1}}
-
-\newcommand{\modul}[1][hfill]{\renewcommand{\setmodul}{#1}}
-\newcommand{\period}[1][hfill]{\renewcommand{\setperiod}{#1}}
-
-\newcommand{\tutor}[1][hfill]{\renewcommand{\settutor}{#1}}
-\newcommand{\group}[1][hfill]{\renewcommand{\setgroup}{#1}}
-
-\newcommand{\lecturer}[1][hfill]{\renewcommand{\setlecturer}{#1}}
-\newcommand{\faculty}[1][hfill]{\renewcommand{\setfaculty}{#1}}
-\newcommand{\institute}[1][hfill]{\renewcommand{\setinstitute}{#1}}
-\newcommand{\professorship}[1][hfill]{\renewcommand{\setprofessorship}{#1}}
-
+\newcommand{\lecturer}{\hfill}
+\newcommand{\faculty}{\hfill}
+\newcommand{\institute}{\hfill}
+\newcommand{\professorship}{\hfill}
 
 \newcommand{\titlesettings}[1]{%
     \ifthenelse{\equal{#1}{dark}}{%
@@ -421,13 +405,13 @@
         \includegraphics[scale=0.6]{TUD-white.pdf}}%
     {\includegraphics[scale=0.6]{TUD-blue.pdf}}
     \vspace{3mm} \hrule \vspace{-1mm}
-    \small{\textbf{Fakultät \setfaculty} Institut für \setinstitute, Professur für \setprofessorship}
+    \small{\textbf{Fakultät \faculty} Institut für \institute, Professur für \professorship}
     \vspace{0.6mm} \hrule
 }
 
 \newcommand{\titletitle}[1][]{%
     \vspace{5cm}
-    {\Huge\bfseries \MakeUppercase \setmodul \par}
+    {\Huge\bfseries \MakeUppercase \modul \par}
     %
     \ifthenelse{\isempty{#1}}{}{
         \vspace{0.5cm}%
@@ -435,16 +419,16 @@
     }
     %
     \vspace{1.5cm}
-    \textbf{{\Large \setlecturer}} \\
+    \textbf{{\Large \lecturer}} \\
     \vspace{0.5cm}
-    {\large \setperiod}
+    {\large \period}
 }
 
 \newcommand{\titlefoot}{%
     \vfill%
     \begin{tabular}{lll}
-        Autor  & : & \setname \\
-        E-Mail & : & \setemail \\
+        Autor  & : & \name \\
+        E-Mail & : & \email \\
     \end{tabular}%
 }
 
