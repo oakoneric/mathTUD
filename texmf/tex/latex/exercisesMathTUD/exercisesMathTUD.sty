@@ -104,11 +104,11 @@
     \renewcommand{\header}{%
         {\osfamily%
             \fcolorbox{black}{cdblue!20}{%
-                \begin{minipage}{0.49\textwidth}
+                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
                     \textbf{\modul} -- Übungsblatt \theblattcount
                 \end{minipage}%
-                \begin{minipage}{0.5\textwidth}
+                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     \flushright \textbf{\name} (Matr.-Nr. \matnr)\\
                     Ü-Gruppe: \group
                 \end{minipage}%
@@ -119,11 +119,11 @@
     \renewcommand{\header}{%
         {\osfamily%
             \fcolorbox{black}{cdblue!20}{%
-                \begin{minipage}{0.49\textwidth}
+                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     {\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
                     \textbf{\modul}%
                 \end{minipage}%
-                \begin{minipage}{0.5\textwidth}
+                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     \flushright \textbf{\name} \\%
                     Übungsleiter: \tutor \\%
                     \period%
@@ -202,12 +202,12 @@
             %\vspace{12pt}%
         }{%
             % topic is empty but score is injected
-            \scorebox{#2} \\[-12pt]%
+            {\flushright \scorebox{#2} \par} %\vspace{-12pt}%
         }%end inner if
     }{%
         \ifthenelse{\isempty{#2}}{%
             % topic is injected but score is empty
-            {\osfamily \itshape Thema: #1} \\[12pt]%
+            {\osfamily \itshape Thema: #1} \par%\\[12pt]%
         }{%
             % topic and score are injected
             \begin{minipage}{\textwidth - 3cm}
@@ -215,7 +215,7 @@
             \end{minipage}%
             \begin{minipage}{3cm}
                 \flushright \scorebox{#2}%
-            \end{minipage} \\[6pt]%
+            \end{minipage} \par %\\[6pt]%
         }%end inner if
     }%end outer if
 }{}
