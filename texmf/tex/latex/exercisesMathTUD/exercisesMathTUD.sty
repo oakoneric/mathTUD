@@ -9,16 +9,6 @@
 % - homework: sets 'Hausaufgabe' as the main title and the specific setting of your exercise groups
 % - presentExercise: stes the current exercise number as the main tilte and some attributes of the module
 %
-%----------------------
-%
-% Attention: the following commands have to be redefined by \renewcommand{cmd}{def} after loading the package:
-% - \name : your full name (is going to be displayed in both options)
-% - \matnr : your personal student's number (Matrikel-Nummer) ( displayed only in homework mode)
-% - \modul : the modul you are the exercises writing for (both options)
-% - \tutor : name of your tutor (displayed only in presentExercise option)
-% - \group : specification of your exercise group - usually the exact date of the exercise (display only in homework mode)
-% - \period : specification of the current period of student's year (displayed only in presentExercise mode)
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -106,11 +96,11 @@
             \fcolorbox{black}{cdblue!20}{%
                 \begin{minipage}{0.49\textwidth}
                     {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
-                    \textbf{\modul} -- Übungsblatt \theblattcount
+                    \textbf{\setmodul} -- Übungsblatt \theblattcount
                 \end{minipage}%
                 \begin{minipage}{0.5\textwidth}
-                    \flushright \textbf{\name} (Matr.-Nr. \matnr)\\
-                    Ü-Gruppe: \group
+                    \flushright \textbf{\setname} (Matr.-Nr. \setmatnr)\\
+                    Ü-Gruppe: \setgroup
                 \end{minipage}%
         }}%
     }%
@@ -121,12 +111,12 @@
             \fcolorbox{black}{cdblue!20}{%
                 \begin{minipage}{0.49\textwidth}
                     {\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
-                    \textbf{\modul}%
+                    \textbf{\setmodul}%
                 \end{minipage}%
                 \begin{minipage}{0.5\textwidth}
-                    \flushright \textbf{\name} \\%
-                    Übungsleiter: \tutor \\%
-                    \period%
+                    \flushright \textbf{\setname} \\%
+                    Übungsleiter: \settutor \\%
+                    \setperiod%
                 \end{minipage}%
         }}%
     }%
@@ -247,6 +237,7 @@ linecolor=cddarkblue,%
 %skipbelow=5pt,%
 skipabove=\skiparound,%
 skipbelow=\skiparound,%
+nobreak,%
 ]{exercise}[taskcount]{Übung}
 %
 % >> Solution
