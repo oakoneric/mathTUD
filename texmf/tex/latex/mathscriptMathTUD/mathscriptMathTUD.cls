@@ -20,6 +20,11 @@
 \RequirePackage{xkeyval}
 \RequirePackage{xifthen}
 
+\RequirePackage{silence}
+\WarningFilter{wasysym}{Font shape `U/wasy/b/n'}
+\WarningFilter{latex}{Command \@starttoc}
+\WarningFilter{latex}{You have requested}
+\WarningFilter{latex}{Some font}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                          TITLE STYLES                              %
