@@ -1,0 +1,68 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ %
+    ngerman, %
+    a4paper, %
+    sectionreset, %
+    chapterstyle=framed, %
+    sectionstyle=pure, %
+    titlefont=osfamily %
+]{../../texmf/tex/latex/mathscriptMathTUD/mathscriptMathTUD}
+
+\usepackage[order=firstname, fractionappearence=lowerraise]{../../texmf/tex/latex/mathworkMathTUD/mathworkMathTUD}
+%\usepackage[presentExercise]{../../texmf/tex/latex/exercisesMathTUD/exercisesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+%%%%%%%%% stochastic based commands %%%%%%%%%
+\input{stoch_makros}
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\renewcommand{\name}{Eric Kunze}
+\renewcommand{\matnr}{4779202}
+\renewcommand{\email}{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\renewcommand{\modul}{Stochastik}
+\renewcommand{\period}{Sommersemester 2019}
+
+%\renewcommand{\tutor}{Dr. Legrand}
+%\renewcommand{\group}{Tag x. DS, (un)gerade Woche}
+
+\renewcommand{\lecturer}{Prof. Dr. Anita Behme}
+\renewcommand{\faculty}{Mathematik}
+\renewcommand{\institute}{Stochastik}
+\renewcommand{\professorship}{Angewandte Stochastik}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\MakeTitle[dark]
+    
+\tableofcontents
+
+\setcounter{chapter}{-1}
+\include{stoch_0_einleitung}
+\include{stoch_1_grundbegriffe}
+
+
+
+\end{document}
