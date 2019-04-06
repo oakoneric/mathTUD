@@ -378,20 +378,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                            TITLEPAGE                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\name}{\hfill}
-\newcommand{\matnr}{\hfill}
-\newcommand{\email}{\href{mailto:example@mail.com}{\ttfamily \hfill}}
+\newcommand*{\thename}{\hfill}
+\newcommand*{\thematnr}{\hfill}
+\newcommand*{\theemail}{\href{mailto:example@mail.com}{\ttfamily \hfill}}
 
-\newcommand{\modul}{\hfill}
-\newcommand{\period}{\hfill}
+\newcommand*{\themodul}{\hfill}
+\newcommand*{\theperiod}{\hfill}
 
-\newcommand{\tutor}{\hfill}
-\newcommand{\group}{\hfill}
+\newcommand*{\thetutor}{\hfill}
+\newcommand*{\thegroup}{\hfill}
 
-\newcommand{\lecturer}{\hfill}
-\newcommand{\faculty}{\hfill}
-\newcommand{\institute}{\hfill}
-\newcommand{\professorship}{\hfill}
+\newcommand*{\thelecturer}{\hfill}
+\newcommand*{\thefaculty}{\hfill}
+\newcommand*{\theinstitute}{\hfill}
+\newcommand*{\theprofessorship}{\hfill}
+
+\newcommand*{\name}[1]{\renewcommand{\thename}{#1}}
+\newcommand*{\matnr}[1]{\renewcommand{\thematnr}{#1}}
+\newcommand*{\email}[1]{\renewcommand{\theemail}{#1}}
+
+\newcommand*{\modul}[1]{\renewcommand{\themodul}{#1}}
+\newcommand*{\period}[1]{\renewcommand{\theperiod}{#1}}
+
+\newcommand*{\tutor}[1]{\renewcommand{\thetutor}{#1}}
+\newcommand*{\group}[1]{\renewcommand{\thegroup}{#1}}
+
+\newcommand*{\lecturer}[1]{\renewcommand{\thelecturer}{#1}}
+\newcommand*{\faculty}[1]{\renewcommand{\thefaculty}{#1}}
+\newcommand*{\institute}[1]{\renewcommand{\theinstitute}{#1}}
+\newcommand*{\professorship}[1]{\renewcommand{\theprofessorship}{#1}}
 
 \newcommand{\titlesettings}[1]{%
     \ifthenelse{\equal{#1}{dark}}{%
@@ -410,13 +425,13 @@
         \includegraphics[scale=0.6]{TUD-white.pdf}}%
     {\includegraphics[scale=0.6]{TUD-blue.pdf}}
     \vspace{3mm} \hrule \vspace{-1mm}
-    \small{\textbf{Fakultät \faculty} Institut für \institute, Professur für \professorship}
+    \small{\textbf{Fakultät \thefaculty} Institut für \theinstitute, Professur für \theprofessorship}
     \vspace{0.6mm} \hrule
 }
 
 \newcommand{\titletitle}[1][]{%
     \vspace{5cm}
-    {\Huge\bfseries \MakeUppercase \modul \par}
+    {\Huge\bfseries \MakeUppercase \themodul \par}
     %
     \ifthenelse{\isempty{#1}}{}{
         \vspace{0.5cm}%
@@ -424,16 +439,16 @@
     }
     %
     \vspace{1.5cm}
-    \textbf{{\Large \lecturer}} \\
+    \textbf{{\Large \thelecturer}} \\
     \vspace{0.5cm}
-    {\large \period}
+    {\large \theperiod}
 }
 
 \newcommand{\titlefoot}{%
     \vfill%
     \begin{tabular}{lll}
-        Autor  & : & \name \\
-        E-Mail & : & \email \\
+        Autor  & : & \thename \\
+        E-Mail & : & \theemail \\
     \end{tabular}%
 }
 
@@ -455,6 +470,14 @@
     \end{titlepage}
     \nopagecolor
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          HIGHLIGHTING                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \endinput

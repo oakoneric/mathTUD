@@ -318,7 +318,7 @@ nobreak,%
         \item[\textbf{(IA)}]%
     }{%
         %parameter exists
-        \item[\textbf{(IA)}] {#1 :} \hfill \\%
+        \item[\textbf{(IA)}] {#1 :} %\hfill \\%
     }%
 }
 
@@ -330,7 +330,7 @@ nobreak,%
         \item[\textbf{(IS)}]
     }{%
         % parameter exists
-        \item[\textbf{(IS)}] {#1 :} \\
+        \item[\textbf{(IS)}] {#1 :} %\\
     }%
 }
 
@@ -455,6 +455,7 @@ nobreak,%
 
 
 \newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
+\newcommand{\MinPol}[2]{\Minpol\left( #1 \mathrel{|} #2\right)}
 
 % >> number theory
 \newcommand{\teilt}{\mathrel{\mid}}
@@ -482,6 +483,9 @@ nobreak,%
 % >> measure theory
 
 % >> numerical mathematics
+
+% >> stochastic
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
@@ -540,6 +544,7 @@ nobreak,%
 \DeclareMathOperator{\LC}{LC} % Leitkoeffizient
 
 \DeclareMathOperator{\Mat}{Mat} % Matrix
+\DeclareMathOperator{\Minpol}{MinPol} % Minimalpolynon
 \DeclareMathOperator{\normalenraum}{N} % Normalenraum
 \DeclareMathOperator{\normalisator}{N} % Mormalisator
 
@@ -580,7 +585,7 @@ nobreak,%
 
 %%%%%% UVW
 \DeclareMathOperator{\UG}{UG} % Untergruppe (subgroup)
-\DeclareMathOperator{\Uni}{U} % Unitary Group
+\DeclareMathOperator{\Uni}{U} % Unitary Group / uniform distribution
 
 %%%%%% XYZ
 \DeclareMathOperator{\ZR}{ZR} % Zeilenraum
