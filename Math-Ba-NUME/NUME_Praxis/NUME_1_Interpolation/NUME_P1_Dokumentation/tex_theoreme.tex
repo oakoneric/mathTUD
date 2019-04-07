@@ -1,0 +1,225 @@
+%
+% ================================ 
+% | THEOREME & UMGEBUNGEN        |
+% ================================
+
+% >> Counter für Umgebungen
+\newcounter{themcount}
+\newcounter{defcount}
+\newcounter{taskcount}
+\newcounter{blattcount}
+%\renewcommand{\thethemcount}{\relax}
+
+% >> Eigenschaften für Übungsblätter
+\newcommand{\uebungsgruppe}{Tag x. DS, (un)gerade Woche}
+\newcommand{\name}{Eric Kunze}
+\newcommand{\matrikelnr}{4679202}
+\newcommand{\modul}{\hfill}
+\newcommand{\uebungsleiter}{\hfill}
+
+% >> Überschriften
+\newcommand{\aufgabe}[1]{{\Large \textsf{\textbf{Aufgabe #1}}}}
+\newcommand{\teilaufgabe}[1]{\textsf{\textit{{\large Teilaufgabe (#1)}}}}
+
+% >> Farben
+\definecolor{lightgrey}{gray}{0.89}
+\definecolor{darkgrey}{gray}{0.6}
+
+\definecolor{blue}{rgb}{50,85,150}
+\definecolor{lightred}{rgb}{1,0.6,0.6}
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+
+% >> Theoreme
+
+\newcommand{\boxskip}{7pt}        		% Abstand in Boxen zwischen Rand und Text
+\newcommand{\skiparound}{10pt}   		% Abstand vor und nach Theoremen
+\newcommand{\thmstyle}{changebreak}     % Sytle für Theorem-Umgebungen
+
+\theoremstyle{\thmstyle}
+\theorembodyfont{}                % setzt bodyfont auf nicht kursiv
+
+\theorempreskip{\skiparound}      % Abstände
+\theorempostskip{\skiparound}
+
+
+%---------Theorem-------------
+\newmdtheoremenv[%
+	backgroundcolor=lightgrey,%
+	%linecolor=darkgrey,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	%topline=true,%
+	%rightline=true,%
+	%leftline=true,%
+	%bottomline=true,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-10pt,%
+	rightmargin=-10pt,%
+	%frametitlefont=\normalfont\bfseries\color{black},%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+]{thm}[themcount]{Theorem}
+
+%---------Satz----------------
+\newmdtheoremenv[%
+	%backgroundcolor=lightgrey,%
+	%linecolor=darkgrey,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	%linecolor=darkgrey,%
+	%topline=true,%
+	%rightline=true,%
+	%leftline=true,%
+	%bottomline=true,%
+	%backgroundcolor=lightgrey,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-10pt,%
+	rightmargin=-10pt,%
+	%frametitlefont=\normalfont\bfseries\color{black},%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+]{satz}[themcount]{Satz}
+%\newtheorem{satz}[themcount]{Satz}
+
+%---------Definition-----------
+%\theoremstyle{nonumberbreak}
+%\newmdtheoremenv[%
+%	outerlinewidth=3pt,%
+%	linecolor=darkgrey,%
+%	topline=false,%
+%	rightline=false,%
+%	bottomline=false,%
+%	innertopmargin=3pt,%
+%	innerbottommargin=3pt,%
+%	frametitlefont=\normalfont\bfseries\color{black},%
+%	skipabove=5pt,%
+%	skipbelow=5pt,%
+%]{defin}[themcount]{Definition}
+%\theoremstyle{\thmstyle}
+\newtheorem{defin}[themcount]{Definition}
+
+
+%---------Lemma---------------
+\newtheorem{lemma}[themcount]{Lemma}
+
+%---------Folgerung--------------
+\newtheorem{folg}[themcount]{Folgerung}
+
+%---------Korollar--------------
+\newtheorem{kor}[themcount]{Korollar}
+
+%---------Beispiel----------------
+\newtheorem{bsp}[themcount]{Beispiel}
+
+%---------Erinnerung--------------
+\newtheorem{erinnerung}[themcount]{Erinnerung}
+
+%---------Bemerkung--------------
+%\theoremstyle{nonumberplain}
+\newtheorem{bem}[themcount]{Bemerkung}
+
+\theoremstyle{nonumberplain}
+\theorembodyfont{\normalfont}
+\newtheorem{bsppure}{Beispiel}
+
+%--------------------------------
+\theoremstyle{break}
+
+\theoremheaderfont{\sffamily\bfseries\large}
+%
+%--------------------------------
+%
+%----------Übung-----------------
+\newmdtheoremenv[%
+%backgroundcolor=lightgrey,%
+%linecolor=darkgrey,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\sffamily\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=\skiparound,%
+skipbelow=\skiparound,%
+]{uebung}[taskcount]{Übung}
+%
+%-----------Lösung-----------------
+\newenvironment{loesung}{%
+	\vspace{-2mm}
+	\textit{Lösung:} \\%
+}{}
+
+
+
+%---------Übungsblatt--------------
+
+
+%---------Hausaufgaben--------------
+\newenvironment{hausaufgabe}{%
+	\stepcounter{blattcount}%
+	\setcounter{page}{1}
+	\fcolorbox{black}{lightgrey}{%
+		\begin{minipage}{0.5\textwidth}
+			\textsf{{\huge \textbf{Hausaufgaben}}} \\
+			\textsf{Übungsblatt \theblattcount}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\flushright \textbf{\name} (Matr.-Nr. \matrikelnr)\\
+			Ü-Gruppe: \uebungsgruppe
+		\end{minipage}}%
+	\setcounter{figure}{0}%
+	\setcounter{equation}{0}%
+	\setcounter{table}{0}%
+	\vspace{5mm}%
+	}{%
+	\newpage%
+}
+
+\newenvironment{uebungsblatt}{%
+	\stepcounter{blattcount}%
+	\setcounter{page}{1}
+	\fcolorbox{black}{lightgrey}{%
+		\begin{minipage}{0.5\textwidth}
+			\textsf{{\huge \textbf{Übungsblatt \theblattcount}}} \\
+			\textsf{\modul}
+		\end{minipage}
+		\begin{minipage}{0.5\textwidth}
+			\flushright \name \\
+			Übungsleiter: \uebungsleiter
+	\end{minipage}}%
+	\setcounter{figure}{0}%
+	\setcounter{equation}{0}%
+	\setcounter{table}{0}%
+	\vspace{5mm}%
+}{%
+	\newpage%
+}
+
+%
+%
+%\newcommand{\headeraufgabenblatt}{%
+%	\stepcounter{blattcount}%
+%	\fcolorbox{black}{lightgrey}{%
+%		\begin{minipage}{0.5\textwidth}
+%			\textsf{{\huge \textbf{Hausaufgaben}}} \\
+%			\textsf{Übungsblatt \theblattcount}
+%		\end{minipage}
+%		\begin{minipage}{0.5\textwidth}
+%			\flushright \textbf{Eric Kunze} (Matr.-Nr. 4679202)\\
+%			Ü-Gruppe: gerade Woche (M. Schönherr)
+%		\end{minipage}%
+%	} \setcounter{figure}{0} \setcounter{equation}{0} \\[5mm]}
+

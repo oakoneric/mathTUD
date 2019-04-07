@@ -1,0 +1,142 @@
+%
+% ================================ 
+% | MATH SETTINGS                |
+% ================================
+
+%============= BUCHSTABEN =============
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+
+%============= LOGIK =============
+\newcommand{\follows}{\quad \Rightarrow \quad}
+\newcommand{\equivalent}{\quad \Leftrightarrow \quad}
+
+%============= MENGEN =============
+\newcommand{\menge}[1]{\{ #1 \}}
+\newcommand{\card}[1]{\abs{#1}}
+
+\newcommand{\nat}{\mathbb{N}}				% natürliche Zahlen
+\newcommand{\integer}{\mathbb{Z}}			% ganze Zahlen
+\newcommand{\ratio}{\mathbb{Q}}
+\newcommand{\real}{\mathbb{R}}				% reelle Zahlen
+\newcommand{\complex}{\mathbb{C}}			% komplexe Zahlen
+\newcommand{\korper}{\mathbb{K}}			% Körper IR oder IC
+
+\newcommand{\einheit}[1]{{#1}^{\times}}
+\newcommand{\ringx}{\einheit{R}}			% Einheiten Ring
+\newcommand{\korperx}{\einheit{K}}			% Einheiten Körper
+
+\newcommand{\rest}[1]{\integer / #1 \integer} % Restklassen Z/( )Z
+% add Polynomring
+% add Endlicher Körper
+
+\newcommand{\ohneNull}{\backslash \menge{0}}% Menge ohne Null \{0}
+
+\DeclareMathOperator{\inn}{int} % Set of inner points
+\DeclareMathOperator{\ext}{ext} % Set of outer points
+\DeclareMathOperator{\cl}{cl} 	% Abschluss
+\DeclareMathOperator{\diam}{diam}
+\newcommand{\rand}{\partial}
+
+%============= FUNKTIONEN =============
+\newcommand{\abb}[3]{#1 \colon #2 \to #3}	  % Abbildungen mit Namen, einzeilig
+\newcommand{\bigabb}[5]{#1 \colon \left\lbrace%	Abbildungen mit Namen, zweizeilig
+	\begin{array}{ccl}%
+		#2 & \to & #3 \\%
+		#4 & \mapsto & #5%
+	\end{array}%
+	\right.}
+%
+\newcommand{\bigabbnoname}[4]{\left\lbrace%		Abbildungen ohne Namen, zweizeilig
+	\begin{array}{ccl}%
+		#1 & \to & #2 \\%
+		#3 & \mapsto & #4%
+	\end{array}%
+	\right.}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\graph}{graph}
+\DeclareMathOperator{\grad}{grad}
+\newcommand{\quer}[1]{\overline{#1}}
+
+%============= ZAHLENTHEORIE =============
+\newcommand{\teilt}{\mid}
+\newcommand{\teiltnicht}{\nmid}
+\newcommand{\normalteiler}{\trianglelefteq}
+\newcommand{\nichtnormal}{\ntrianglelefteq}
+\DeclareMathOperator{\ggT}{ggT}
+\DeclareMathOperator{\kgV}{kgV}
+
+\newcommand{\simfrac}[1]{\frac{1}{#1}}
+
+%============= VEKTORRÄUME =============
+\newcommand{\basisB}{\mathcal{B}}
+\newcommand{\darstMat}[2]{M_{\mathcal{#1}} (#2)}
+\newcommand{\MBf}{\darstMat{\basisB}{f}}
+\newcommand{\one}{\mathbbm{1}}
+
+\newcommand{\isomorph}{\cong}
+
+\newcommand{\erz}[1]{\langle #1 \rangle}
+\newcommand{\scal}[2]{\langle #1\, ,\, #2 \rangle}
+
+\DeclareMathOperator{\Span}{span}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\bild}{Im}
+
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\transpose}[1]{\left( #1 \right)^{\top}}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Eig}{Eig}
+
+%============= GRUPPEN =============
+\DeclareMathOperator{\ord}{ord}		% Ordnung eines Elements
+\DeclareMathOperator{\Inn}{Inn}		% Abbildung Inn
+\DeclareMathOperator{\zentrum}{Z}	% Zentrum einer Gruppe
+\DeclareMathOperator{\fix}{Fix}		% Fixpunkte einer Wirkung
+\DeclareMathOperator{\stab}{Stab}	% Stabilisator
+\DeclareMathOperator{\Syl}{Syl}		% Menge der p-Sylowgruppen
+
+%============= RINGE =============
+
+%============= KÖRPER =============
+\DeclareMathOperator{\GF}{GF}
+
+
+%============= METRISCHE RÄUME =============
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+%============= DIFFERENZIERUNG =============
+\newcommand{\partdiff}[1]{\frac{\partial}{\partial #1 }}
+\newcommand{\ableitung}[1]{\frac{\mathrm{d}}{\mathrm{d} #1 }}
+\newcommand{\diff}[1]{\enspace \mathrm{d}#1}
+\newcommand{\dx}{\diff{x}}
+\newcommand{\dy}{\diff{y}}
+\newcommand{\da}{\diff{a}}
+
+\DeclareMathOperator{\Lin}{L}		% Menge der lineare Abb.
+\DeclareMathOperator{\cdiff}{C}		% Menge der stetig-diffbaren Abb.
+
+%============= INTEGRATION =============
+\DeclareMathOperator{\tangentialraum}{T}
+\DeclareMathOperator{\normalenraum}{N}
+
+\DeclareMathOperator{\divergenz}{div}
+\renewcommand{\div}{\divergenz}
+\DeclareMathOperator{\rot}{rot}
+
+
+

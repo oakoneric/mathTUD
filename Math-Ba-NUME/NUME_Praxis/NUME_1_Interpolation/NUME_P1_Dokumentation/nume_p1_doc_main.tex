@@ -1,0 +1,294 @@
+\documentclass[a4paper, 11pt, ngerman]{scrartcl}
+\KOMAoptions{%
+	parskip=half,%
+	fontsize=11pt}
+
+% === INPUT ===================================================
+\input{tex_packages}
+\input{tex_math}
+\input{tex_theoreme}
+\input{nume_p1_doc_localsettings}
+
+% === EIGENSCHAFTEN ===================================================
+\title{Spline-Interpolation}
+\author{Eric Kunze \& Johanna Preuße}
+\date{30. November 2018}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	In dieser Aufgabe wird die Runge-Funktion sowie eine weitere Funktion im Vergleich dazu interpoliert. Als Interpolierende wird jeweils ein linearer Spline sowie eine kubischer $\mathcal{C}^1$-Spline verwendet. Nach Herleitung der Splines werden diese grafisch dargestellt und anschließend Interpolationsfehler in Abhängigkeit der Feinheit der Zerlegung des zugrunde liegenden Intervalls ausgewertet. Schließlich wird auch die Konvergenzgeschwindigkeit der Näherung gegen die zu interpolierenden Funktionen untersucht. Die dabei auftretenden Unterschiede werden am Ende diskutiert und Möglichkeiten zur Effizienzsteigerung und Verbesserung des Programms aufgezeigt.
+\end{abstract}
+
+\tableofcontents
+\pagebreak
+
+\section{Interpolation der Runge-Funktion}
+
+Für die Runge-Funktion
+\begin{align*}
+	f(x) = \frac{1}{1+25x^2}
+\end{align*}
+gilt
+\begin{align*}
+	f'(x) = - \frac{50x}{625x^4+50x^2+1}
+\end{align*}
+
+\subsection{Herleitung des linearen Splines}
+\label{sec: herlinspline}
+
+Sei $\Delta_N$ eine Zerlegung des Intervall $[-1,1]$ in äquidistante Stützstellen $x_k$ mit $k=0, \dots, N$ und Stützstellenabstand $h_N := 2 / N$, d.h. für die Stützstellen gilt $x_k = -1 + k * h_N$. Für den Polynomspline $ s^1 \in \mathcal{S}_1^0(\Delta_N)$ soll $s^1 \vert_{[x_k , x_{k+1}]} = s_k^1$ sein. Dann ist $\abb{s_k^1}{[x_k, x_{k+1}]}{\real}$ für alle $k = 0, \dots , N-1$ eine affin lineare Funktion in jedem Intervall, d.h. 
+\begin{align*}
+	s_k^1(x) = f(x_k) + \frac{f(x_{k+1})- f(x_k)}{h_N} * (x - x_k) \quad \text{für alle } k = 0, \dots N
+\end{align*}
+
+Die Implementierung in Octave sieht dann wie folgt aus:
+%
+\lstinputlisting[language=Octave, captionpos=b, caption=Lineare Splineinterpolation, linerange={3-22}]{../splinef1.m}
+%
+Dabei werden jeweils zehn Elemente der Verfeinerung $M$ in einem Splineabschnitt ausgewertet, da $M = 10 * N$ gilt. Dies beschleunigt die Berechnung insbesondere bei großen $N$ bzw. $M$, da die mehrfache Berechnung gleicher Werte ausgeschlossen wird. Eine Implementierung, die für zwei unabhängige Feinheiten Ergebnisse liefert, befindet sich im entsprechenden File als Kommentar. Diese arbeitet allerdings deutlich ineffizienter.
+
+\subsection{Herleitung des kubischen Splines}
+\label{sec: herkubspline}
+
+Es gelten die gleichen Voraussetzungen wie in \cref{sec: herlinspline}. Für den kubischen Spline gestaltet sich die Herleitung ein wenig schwieriger. Dazu nutzen wir die Vorgehensweise in der Vorlesung (vgl. Abschnitt 1.3 im Skript). Der Spline $s^3 \in \mathcal{S}_3^1(\Delta_N)$ setzt sich dann aus den Teilfunktionen $s_k^3$ zusammen, d.h. $s_3 \mid_{[x_k, x_{k+1}]} = s_k^3$. Für alle $k = 0, \dots N$ kann dann $s_k^3$ dargestellt werden als 
+\begin{align}
+	s_k^3(x) &= a_k (x-x_k)^3 + b_k (x-x_k)^2 + c_k (x-x_k) + d_k \label{eq: ansatz_kubspline} \\ 
+	\ableitung{x}{s_k^3} (x) &= 3a_k (x-x_k)^2 + 2b_k (x-x_k) + c_k  \label{eq: ansatz_kubsplineabl}
+\end{align}
+Aufgrund der Interpolationsbedingung gilt in \cref{eq: ansatz_kubspline} $s_k(x_k) = d_k = f(x_k)$ und da $s$ zusätzlich auch $f'$ in allen $x_k$ interpolieren soll mit \cref{eq: ansatz_kubsplineabl} auch $\ableitung{x}s_k^3(x_k) = c_k = f'(x_k)$. Mit der Setzung $m_k := s'(x_k) = f'(x_k)$ und $h_k = h_N$ für alle $k=0, \dots N$ wie in \cref{sec: herlinspline} ergibt sich dann das lineare Gleichungssystem
+\begin{align}
+	\begin{pmatrix} 	h_N^3 & h_N^2 \\ 3*h_N^2 & 2*h_N    \end{pmatrix} * \begin{pmatrix} a_k \\ b_k 	\end{pmatrix}
+	= \begin{pmatrix} 	f(x_{k+1}) - f(x_k) - m_k*h_N \\ m_k * h_N - m_k  \end{pmatrix}
+\end{align}
+Die Lösung errechnet Octave selbstständig und dann erfolgt die Berechnung von $s^3(x_0)$ für ein eingegebenes $x_0$ wie in \cref{sec: herlinspline}.
+Die Implementation sieht dann wie folgt aus:
+%
+\lstinputlisting[language=Octave, captionpos=b, caption=Kubische Splineinterpolation, linerange={1-25}]{../splinef3.m}
+%
+Wiederum werden jeweils zehn Elemente der Verfeinerung $M$ in einem Splineabschnitt ausgewertet um die Effizienz zu erhöhen. Auch hier findet sich eine allgemeinere, aber langsamere Implementierung im entsprechenden File.
+
+\subsection{Plot der Splines}
+\label{sec: plotdersplines}
+
+Um den Spline zu plotten, wird dabei der Vektor der Verfeinerung $\Delta_M$ benutzt (für genaue Darstellung siehe Aufgabenblatt). Interessanterweise ist für den Plot des linearen Splines eigentlich gar keine explizite Berechnung des Splines notwendig, da Octave bei Übergabe der Stützstellen der Zerlegung $\Delta_N$ automatisch linear zwischen diesen interpoliert. Um die Implementierung zu testen verwenden wir jedoch die explizite Berechnung beider Splines. Der fertige Plot ist dann \cref{fig: fplot} zu entnehmen. Der Quellcode für die Plots sieht dann wie folgt aus:
+%
+\lstinputlisting[language=Octave, %
+	captionpos=b, %
+	caption=Plots der Runge-Funktion im Hauptprogramm, %
+	linerange={32-40}]%
+{../p1_main.m}
+
+Dabei ist festzustellen, dass unsere Implementierung nicht ganz sauber ist, da an zwei verschiedenen Stellen die Zerlegungen berechnet werden: einmal als \texttt{x} im Hauptprogramm und dann jeweils als \texttt{x0} in den Spline-Funktionen. Dies ist insofern problematisch, dass Änderungen stets an beiden Stellen durchgeführt werden müssen. Jedoch soll dies für unsere Zwecke in der Form ausreichen. Soll jedoch auf der Aufgabe aufbauend weiter mit den Files gearbeitet werden, ist eine Übergabe der jeweiligen Feinheit als Parameter an die entsprechenden Spline-Funktionen einzusetzen.
+
+\begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.7\textwidth]{../fplot.png}
+	\caption{Interpolation der Runge-Funktion $f$}
+	\label{fig: fplot}
+\end{figure}
+
+\subsection{Interpolationsfehler der Runge-Funktion}
+\label{sec: intfehlerrunge}
+Die grafische Darstellung des Interpolationsfehler stellt lediglich den Fehler an den Stellen der Zerlegung mit Feinheit $M$ dar, vergleiche dazu \cref{fig: ffehlerplot}. Die Implementierung sieht wie folgt aus.
+%
+\lstinputlisting[language=Octave, %
+	captionpos=b, %
+	caption=Plot der Interpolationsfehler der Runge-Funktion im Hauptprogramm, %
+	linerange={42-50}]%
+{../p1_main.m}
+
+\begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.7\textwidth]{../ffehlerplot.png}
+	\caption{Interpolationsfehler der Runge-Funktion $f$}
+	\label{fig: ffehlerplot}
+\end{figure}
+
+Die Berechnung der maximalen Fehler stellt den Hauptaufwand bezüglich der Rechenzeit des Programms dar. Dabei ergeben sich die Werte aus \cref{tab: ffehlermax}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{cr|l|l}
+		\hline
+		$k$ & $N_k$ & $E(h_{N_k})$ linear & $E(h_{N_k})$ kubisch \\
+		\hline
+		0 & 4 & 0.17872 & 0.21938 \\
+		\hline
+		1 & 8 & 0.063128 & 0.035509 \\
+		\hline 
+		2 & 16 & 0.053536  & 0.0016935\\
+		\hline 
+		3 & 32 & 0.020652  & 0.00038860\\
+		\hline 
+		4 & 64 & 0.0058496 & 0.000033560\\
+		\hline
+	\end{tabular}
+	\caption{Maximaler Fehler bei Interpolation der Runge-Funktion}
+	\label{tab: ffehlermax}
+\end{table}
+
+Dabei erkennt man die fallende Monotonie des Fehler bezüglich der Feinheit $N_k$, was sich auch daraus erschließt, dass mit höherer Feinheit die Funktion besser interpoliert wird. Außerdem ist der Fehler insbesondere für höhere $k$ beim kubischen Spline kleiner als jener beim linearen Spline. Auch dies ist klar, da kubische Splines das Krümmungsverhalten der Funktion besser annähern können (kubische Funktionen besitzen Krümmungen während lineare Funktionen stets eine Gerade beschreiben).
+
+Für die experimentelle Konvergenzordnung ergeben sich die Werte in \cref{tab: ffehlerexp}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ll|l|l}
+		\hline
+		$k$ & $N_k$ & $EOC(h_{N_k},h_{N_{k+1}})$ linear & $EOC(h_{N_k},h_{N_{k+1}})$ kubisch\\
+		\hline
+		0 & 4 & 1.5013 & 2.6272\\
+		\hline
+		1 & 8 & 0.2378 & 4.3901\\
+		\hline
+		2 & 16 & 1.3742 & 2.1237\\
+		\hline
+		3 & 32 & 1.8199 & 3.5334\\
+		\hline
+		4 & 64 & 1.9541 & 3.8869\\
+		\hline
+		5 & 128 & 1.9885 & 3.9719\\
+		\hline
+		6 & 256 & 1.9971 & 3.9930\\
+		\hline
+		7 & 512 & 1.9992 & 3.9982\\
+		\hline
+		8 & 1024 & 1.9998 & 3.9996\\
+		\hline
+		9 & 2048 & 2.0000 & 3.9999\\
+		\hline
+		10 & 4096 & 2.0000 & 4.0000\\
+		\hline
+	\end{tabular}
+	\caption{Experimentelle Konvergenzordnung bei Interpolation der Runge-Funktion}
+	\label{tab: ffehlerexp}
+\end{table}
+
+Die experimentelle Konvergenzordnung beschreibt die Geschwindigkeit, mit der die Interpolierende gegen die Interpolierte (hier also die Runge-Funktion) konvergiert. Dementsprechend kann man den Daten entnehmen, dass der kubische Spline für große $k$ doppelt so schnell gegen die Runge-Funktion konvergiert wie der lineare Spline.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Interpolation der  anderen Funktion}
+
+Für die Funktion
+\begin{align*}
+g(x) = \left(1+\cos\left( \frac{3}{2}\pi*x\right)\right)^{\frac{2}{3}}
+\end{align*}
+gilt
+\begin{align*}
+g'(x) =-\frac{\pi\sin\left(\frac{3}{2}\pi x\right)}{\sqrt[3]{1+\cos\left(\frac{3}{2}\pi x \right)}}
+\end{align*}
+
+\subsection{Interpolation durch linearen und kubischen Spline}
+Die Herleitung der Splines gestaltet sich exakt genauso wie für die Splines der Runge-Funktion, siehe also \cref{sec: herlinspline} und \cref{sec: herkubspline}. Die Implementierung in Octave ist ebenso nahezu identisch und kann dem entsprechenden File entnommen werden.
+%\lstinputlisting[language=Octave, captionpos=b, caption=Lineare Splineinterpolation der anderen Funktion, linerange={3-22}]{../splineg1.m}
+%\newpage
+%\lstinputlisting[language=Octave, captionpos=b, caption=Kubische Splineinterpolation der anderen Funktion, linerange={3-27}]{../splineg3.m}
+Ebenso ist auch die programmiertechnische Umsetzung der Plots (vgl. \cref{fig: gplot}) analog. Der Quellcode dafür findet sich im Hauptskript.
+%\lstinputlisting[language=Octave, %
+%captionpos=b, %
+%caption=Plots der anderen Funktion im Hauptprogramm, %
+%linerange={70-78}]%
+%{../p1_main.m}
+
+\begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.7\textwidth]{../gplot.png}
+	\caption{Interpolation der anderen Funktion $g$}
+	\label{fig: gplot}
+\end{figure}
+
+\newpage
+%
+\subsection{Interpolationsfehler der anderen Funktion}
+Die grafische Darstellung des Interpolationsfehler stellt lediglich den Fehler an den Stellen der Zerlegung mit Feinheit $M$ dar, vergleiche dazu \cref{fig: gfehlerplot}. Die Implementierung ist wiederum analog zu jener in \cref{sec: intfehlerrunge} und kann im entsprechenden File genauer nachgeschlagen werden.
+%
+%\lstinputlisting[language=Octave, %
+%captionpos=b, %
+%caption=Plot der Interpolationsfehler der anderen Funktion im Hauptprogramm, %
+%linerange={80-88}]%
+%{../p1_main.m}
+
+\begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.7\textwidth]{../gfehlerplot.png}
+	\caption{Interpolationsfehler der anderen Funktion $g$}
+	\label{fig: gfehlerplot}
+\end{figure}
+
+Bereits in der grafischen Darstellung ist erkennbar, dass diese Funktion wahrscheinlich schlechter interpoliert werden kann, da beispielsweise in den Minima auch der kubische Spline noch erkennbar vom originalen Verlauf der Funktion $g$ abweicht. Dies ist mit der starken Anstiegsänderung im Verhältnis zu einem relativ kleinen Intervall der Stützstellen zu erklären, sodass die starke Krümmung nicht von einer Funktion dritten Grades genähert werden kann. Dies könnte man eventuell beheben, indem man größere Polynomgrade zulässt, jedoch ergeben sich dann unter Umständen die bei Polynominterpolationen mit höhergradigen Polynomen auftretenden Oszillationen. Außerdem können wir bei linearer und kubischer Splineinterpolation eine für große $k$ gleiche experimentelle Konvergenzordnung feststellen (vgl \cref{tab: gfehlerexp}). Damit bringt also auch der kubische Spline keinen Vorteil in der Geschwindigkeit, mit der man sich der Originalfunktion nähert. Mit einem Wert von $EOC \approx 1.\overline{3}$ ist diese außerdem geringer als bei der Runge-Funktion.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{cr|l|l}
+		\hline
+		$k$ & $N_k$ & $E(h_{N_k})$ linear & $E(h_{N_k})$ kubisch\\
+		\hline
+		0 & 4 & 0.61130 & 0.19577 \\
+		\hline
+		1 & 8 & 0.26300 & 0.070736 \\
+		\hline 
+		2 & 16 & 0.10648 & 0.027316 \\
+		\hline 
+		3 & 32 & 0.042468 & 0.010764 \\
+		\hline 
+		4 & 64 & 0.016874 & 0.0042640 \\
+		\hline
+	\end{tabular}
+	\caption{Maximaler Fehler bei Interpolation der anderen Funktion}
+	\label{tab: gfehlermax}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ll|l|l}
+		\hline
+		$k$ & $N_k$ & $EOC(h_{N_k},h_{N_{k+1}})$ linear & $EOC(h_{N_k},h_{N_{k+1}})$ kubisch\\
+		\hline
+		0 & 4 & 1.2168 & 1.4686  \\
+		\hline
+		1 & 8 & 1.3045 & 1.3727\\
+		\hline
+		2 & 16 & 1.3261 & 1.3436 \\
+		\hline
+		3 & 32 & 1.3316 & 1.3359 \\
+		\hline
+		4 & 64 & 1.3328 & 1.3340 \\
+		\hline
+		5 & 128 & 1.3332 & 1.3335 \\
+		\hline
+		6 & 256 & 1.3332 & 1.3334 \\
+		\hline
+		7 & 512 & 1.3333 & 1.3333 \\
+		\hline
+		8 & 1024 & 1.3333 & 1.3333 \\
+		\hline
+		9 & 2048 & 1.3333 & 1.3333 \\
+		\hline
+		10 & 4096 & 1.3333 & 1.3333 \\
+		\hline
+	\end{tabular}
+	\caption{Experimentelle Konvergenzordnung bei Interpolation der anderen Funktion}
+	\label{tab: gfehlerexp}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Auswertung der Ergebnisse}
+
+Nachdem beide Funktionen jeweils linear und kubisch interpoliert worden sind ergeben sich die folgenden Ergebnisse.
+
+Offensichtlich eignet sich die Runge-Funktion $f$ besser zur Spline-Interpolation als die Funktion $g$. Dies erkennt man insbesondere an den kleineren maximalen Fehlern und der höheren Konvergenzgeschwindigkeit. Das heißt also im Allgemeinen braucht man weniger Ressourcen (weniger Zeit/Rechenaufwand aufgrund schnellerer Konvergenz) und erhält damit bessere Interpolationsergebnisse. Dies kann auf die unterschiedlichen Krümmungseigenschaften der beiden Funktionen zurückgeführt werden, denn die Runge-Funktion besitzt lediglich ein Maximum, wohingegen die andere Funktion $g$ noch zwei weitere Minima besitzt, in deren Umgebung sich der Tangentenanstieg relativ schnell ändert. 
+
+Hinsichtlich der Implementierung können wir resümieren, dass in unserem Quellcode sicher noch einige Optimierungen getätigt werden können, insbesondere in Hinblick auf die Laufzeit. Diese ist doch recht lang, inbesondere die Berechnung der maximalen Fehler ist sehr rechenaufwändig. Des Weiteren sollten für die bessere Nachnutzbarkeit auch die in \cref{sec: plotdersplines} angesprochenen Veränderungen durchgeführt werden.
+Allerdings liefert unser Programm bereits zuverlässig genau Werte, mit denen man in diesem Rahmen durchaus arbeiten kann.
+
+\end{document}
+
