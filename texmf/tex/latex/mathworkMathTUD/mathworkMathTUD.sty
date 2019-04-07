@@ -397,7 +397,8 @@ nobreak,%
 \newcommand{\F}{\mathbb{F}}    % (prime) field
 
 % % Abbildungen mit Namen, einzeilig
-\newcommand{\abb}[3]{#1 \colon #2 \to #3}
+%\newcommand{\abb}[3]{#1 \colon #2 \to #3}
+\NewDocumentCommand{\abb}{ m m O{} m}{#1 \colon #2 \to_{#3} #4}
 
 % Abbildungen mit Namen, zweizeilig
 \newcommand{\bigabb}[5]{#1 \colon \left\lbrace%
@@ -481,11 +482,13 @@ nobreak,%
 \newcommand{\rand}{\partial}
 
 % >> measure theory
+\newcommand{\borel}[1]{\mathcal{B}(#1)}
 
 % >> numerical mathematics
 
 % >> stochastic
-
+\undef\P
+\newcommand{\P}{\mathbb{P}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
@@ -499,6 +502,7 @@ nobreak,%
 \DeclareMathOperator{\Bil}{Bil}
 
 %%%%%% C
+\DeclareMathOperator{\charak}{char}
 \DeclareMathOperator{\cl}{cl} % Closure
 \DeclareMathOperator{\cond}{cond} % ?
 \DeclareMathOperator{\cdiff}{C} % stetig differenzierbare Abbildungen

@@ -84,3 +84,6 @@
 \begin{solution}
 \begin{solution}[title]
 \end{solution}
+
+\begriff{arg}
+\person{name}
