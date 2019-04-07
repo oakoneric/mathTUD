@@ -1,0 +1,184 @@
+\chapter{Grundbegriffe der Wahrscheinlichkeitstheorie}
+\section{Wahrscheinlichkeitsräume}
+\subsection*{Ergebnisraum}
+Welche möglichen Ausgänge eines zufälligen Geschehens interessieren uns?
+\begin{*beispiel}
+    Würfeln: Augenzahl, aber nicht Lage, Fallhöhe, usw.
+\end{*beispiel}
+
+\begin{definition}[Ergebnisraum]
+    Die Menge der relevanten Ergebnisse eines Zufallgeschehens nennen wir \begriff{Ergebnisraum} und bezeichnen diesen mit $\Omega$.
+\end{definition}
+
+\begin{*beispiel}
+    \begin{itemize}
+        \item Würfeln: $\Omega = \menge{1,2, \dots , 6}$
+        \item Wartezeiten: $\Omega = \R_+ = [0,\infty)$ (also überabzählbar)
+    \end{itemize}
+\end{*beispiel}
+
+\subsection*{Ereignisse}
+Oft interessiert man sich gar nicht für das konkrete Ergebnis des Zufallsexperiments, sondern nur für das Eintreten gewisser Ereignisse.
+
+\begin{*beispiel}
+    Würfeln: Zahl ist $> 3$ \\
+    Wartezeiten: Wartezeit ist $\leq 5$ Minuten
+\end{*beispiel}
+
+Wir wollen also Teilmengen des Ergebnisraums betrachten, d.h. Elemente von $\pows{\Omega}$ (Potenzmenge), denen eine Wahrscheinlichkeit zugeordnet werden kann d.h. welche \textit{messbar} sind.
+
+\begin{definition}[Ereignisraum]
+    Sei $\Omega \neq \emptyset$ ein Ergebnisraum und $\mathcal{F}$ eine $\sigma$-Algebra auf $\Omega$, d.h. eine Familie von Teilmengen von $\Omega$, sodass 
+    \begin{enumerate}
+        \item $\Omega \in \mathcal F$
+        \item $A \in \mathcal{F} \follows A^\complement \in \mathcal{F}$
+        \item $A_1, A_2, \dots \in \mathcal{F} \follows \bigcup_{i \geq 1} A_i \in \mathcal{F}$
+    \end{enumerate}
+    Dann heißt $(\Omega, \mathcal{F})$ \begriff{Ereignisraum} oder messbarer Raum.
+\end{definition}
+
+\subsection*{Wahrscheinlichkeit}
+Wir ordnen nun den Ereignissen Wahrscheinlichkeiten mittels einer Abbildung $\abb{\mathbb{P}}{\mathcal{F}}{[0,1]}$
+zu, sodass
+\begin{enumerate}
+    \item[(N)] Normierung: $\mathbb{P}(\Omega) = 1$
+    \item[(A)] Additivität: Für paarweise disjunkte Ereignisse $A_1, A_2, \dots \in \mathcal{F}$ ist $\mathbb{P}\left(\bigcup_{i \geq 1} A_i\right) = \sum_{i \geq 0} \mathbb{P}(A_i)$.
+\end{enumerate}
+
+(N), (A) und die Nichtnegativität von $\mathbb{P}$ werden als Kolmogorov-Axiome bezeichnet (nach Kolmogorov: Grundbegriffe der Wahrscheinlichkeitstheorie, 1933).
+
+\begin{definition}[Wahrscheinlichkeit]
+    Sei $(\Omega, \mathcal{F})$ ein Ereignisraum und $\abb{\mathbb{P}}{\mathcal{F}}{[0,1]}$ eine Abbildung mit den Eigenschaften (N) und (A). Dann heißt $\mathbb{P}$ \begriff{Wahrscheinlichkeitsmaß} oder auch \begriff{Wahrscheinlichkeitsverteilung}.
+\end{definition}
+
+Aus der Definition folgen direkt die folgenden Eigenschaften:
+
+\begin{satz}[Rechenregelen für Wahrscheinlichkeitsmaße]
+    Sei $\mathbb{P}$ ein W-Maß auf einem Ereignisraum $(\Omega, \mathcal{F})$ und $A,B,A_1,A_2,\dots \in \mathcal{F}$. Dann gilt:
+    \begin{enumerate}[leftmargin=*]
+        \item $\mathbb{P}(\emptyset) = 0$
+        \item Endliche Additivität: $\mathbb{P} (A \cup B) + \mathbb{P} (A \cap B) = \mathbb{P}(A) + \mathbb{P}(B)$ und $\mathbb{P}(A) + \mathbb{P}(A^\complement) = 1$
+        \item Monotonie: $A \subseteq B \follows \mathbb{P}(A) \leq \mathbb{P}(B)$
+        \item $\sigma$-Subadditivität: $\mathbb{P}\left(\bigcup_{i \geq 1} A_i \right)  \leq \sum_{i \geq 1} \mathbb{P}(A_i)$
+        \item $\sigma$-Stetigkeit: Wenn $A_n \nearrow A$ (d.h. $A_1 \subseteq A_2 \subseteq \cdots$ und $A = \bigcup_{i=1}^{\infty}A_i$ ) oder $A_n \searrow A$, so gilt $\mathbb{P}(A_n) \to \mathbb{P}(A)$ für $n \to \infty$
+    \end{enumerate}
+\end{satz}
+\begin{proof}
+    siehe MINT oder Schillings Lehrbuch
+\end{proof}
+
+\begin{beispiel}
+    Für einen beliebigen Ereignisraum $(\Omega, \mathcal{F})$ und ein beliebiges Element $\xi \in \Omega$ definiert
+    \begin{align*}
+        \delta_\xi(A) := \begin{cases} 1 & \xi \in A \\ 0 & \text{sonst} \end{cases}
+    \end{align*}
+    ein (degeneriertes) W-Maß auf $(\Omega, \mathcal{F})$, welches wir als \begriff{Dirac-Maß} oder Dirac-Verteilung bezeichnen.
+\end{beispiel}
+
+\begin{beispiel}
+    Wir betrachten das Zufallsexperiment "Würfeln mit einem fairen, 6-seitigen Würfel" mit der Ergebnismenge $\Omega = \menge{1, \dots, 6}$ und Ereignisraum $\mathcal{F} = \pows{\Omega}$. Setzen wir aus Symmetriegründen
+    \begin{align*}
+        \mathbb{P}(A) = \frac{\# A}{6}
+    \end{align*}
+    mit $\# A = \card{A} = \text{Kardinalität}$. Dies definert ein W-Maß.
+\end{beispiel}
+
+\begin{beispiel}[Wartezeiten an der Bushaltestelle] \label{beispiel: 1_1.7_exponentialverteilung}
+    Ergebnisraum $\Omega = \R_+$ und Ereignisraum Borel'sche $\sigma$-Algebra $\mathcal{F} = \mathcal{B}(\R_+)$. Ein mögliches W-Maß können wir durch
+    \begin{align*}
+        \mathbb{P}(A) \defeq \int_A \lambda e^{-\lambda x} \dx
+    \end{align*}
+    für einen Parameter $\lambda > 0$ festlegen. (offensichtlich gelten $\mathbb{P}(\Omega) = 1$ und die $\sigma$-Additivität aufgrund der $\sigma$-Additivität des Integrals). Wir bezeichnen dieses Maß als \begriff{Exponentialverteilung}. (Warum gerade dieses Maß für Wartezeiten gut geeigent ist, sehen wir später.)
+\end{beispiel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO ÜBERARBEITEN
+
+\begin{satz}[Konstruktion von WMaßen mit Dichten]
+    Sei $(\Omega, \ereignisF)$ ein Eriegnisraum.
+    \begin{itemize}[leftmargin=*]
+        \item $\Omega$ abzählbar, $\ereignisF = \pows{\Omega}$:  \\
+        Sei $\rho = \left( \rho(\omega) \right)_{\omega \in \Omega}$ eine Folge in $[0,1]$ in $\sum_{\omega \in \Omega} \rho(\omega) = 1$, dann definiert
+        \begin{equation*}
+        \P(A) = \sum_{\omega \in A} \rho(\omega), \quad A \in \ereignisF
+        \end{equation*}
+        ein (diskretes) WMaß $\P$ auf $(\Omega, \ereignisF)$. $\rho$ wird als \begriff{Zähldichte} bezeichnet.
+        Umgekehrt definiert jedes WMaß $\P$ auf $(\Omega, \ereignisF)$ mittels $\rho(\omega) = \P(\set{\omega}), \omega \in \Omega$ eine Folge $\rho$ mit den obigen Eigenschaften.
+        \item $\Omega \subseteq \Rn, \ereignisF = \borel{\Omega}$: \\
+        Sei $\abb{\rho}{\Omega}{[0, \infty)}$ eine Funktion, sodass
+        \begin{enumerate}[nolistsep]
+            \item $\int_{\Omega} \rho(x) \dx = 1$
+            \item $\set{x \in \Omega \colon \rho(x) \leq c} \in \borel{\Omega}$ für alle $c > 0$ 
+        \end{enumerate}
+        dann definiert $\rho$ ein WMaß $\P$ auf $(\Omega, \ereignisF)$ durch 
+        \begin{equation*}
+            \P(A) = \int_{A} \rho(x) \dx = \int_{A} \rho \diff{\lambda}, \quad A \in \borel{\Omega}
+        \end{equation*}
+        Das Integral interpretieren wir stets als Lebesgue-Integral bzgl. Lebesgue-Maß $\lambda$.
+        $\rho$ bezeichnet wir als \begriff{Dichte}, \begriff{Dichtefunktion} oder \begriff{Wahrscheinlichkeitsdichte} von $\P$ und nennen ein solches $\P$ (absolut) \begriff{stetig} (bzgl. dem Lebesgue-Maß).
+    \end{itemize}
+\end{satz}
+
+\begin{proof}
+    Der diskrete Fall ist klar.
+    Im stetigen Fall folgt die Bahuptung aus den bekannten Eigenschaften des Lebesgue-Integrals ($\nearrow$ Schilling MINT, Lemma 8.9)
+\end{proof}
+
+\begin{*bemerkung}
+    \begin{itemize}[leftmargin=*, nolistsep]
+        \item Die eineindeutige Beziehung zwischen Dichte und WMaß überträgt sich nicht auf den stetigen Fall.
+        \begin{itemize}[nolistsep]
+            \item Nicht jedes WMaß auf $(\Omega, \borel{\Omega}), \Omega \subset \Rn$ besitzt eine Dichte.
+            \item Zwei Dichtefunktionen definieren dasselbe WMaß, wenn sie sich nur auf einer Menge von Lebesgue-Maß $0$ unterscheiden.
+        \end{itemize}
+        \item Jede auf $\Omega \subset \Rn$ definierte Dichtefunktion $\rho$ lässt sich auf ganz $\Rn$ fortsetzen durch $\rho(x) = 0, x \notin \Omega$. Das erzeugte WMaß auf $(\Rn, \borel{\Rn})$ lässt mit den WMaß auf $(\Omega, \borel{\Omega})$ identifizieren.
+        \item Mittels Dirac-Maß $\delta_{x}$ können auch jedes diskrete WMaß auf $\Omega \subset \Rn$ als WMaß auf $\Rn, \borel{\Rn}$ interpretieren:
+        \begin{equation*}
+            \P(A) = \sum_{\omega \in A} \rho(\omega) = \int_{A} \mathrm{d} \left( \sum_{\omega \in \Omega} \rho(\omega)\delta_{\omega} \right) \quad A \in \borel{\Rn}
+        \end{equation*}
+        \item stetige und diskrete WMaße lassen sich kombinieren z.B. definiert
+        \begin{equation*}
+            \P(A) = \frac{1}{2} \delta_{0} + \frac{1}{2} \int_{A} \one_{[0,1]}(x) \dx, A \in \borel{\R}
+        \end{equation*}
+        ein WMaß auf $(\R, \borel{\R})$.
+    \end{itemize}
+\end{*bemerkung}
+
+Abschließend erinnern wir uns an:
+
+\begin{satz}[Eindeutigkeitssatz für WMaße]
+    Sei $(\Omega, \ereignisF)$ Ereignisraum und $\P$ ein WMaß auf $(\Omega, \ereignisF)$. 
+    Sei $\ereignisF = \omega(\mathcal{G})$ für ein $\cap$-stabiles Erzeugendensystem $\mathcal{G} \subset \pows{\Omega}$. 
+    Dann ist $\P$ bereits durch seine Einschränkung $\P |_{\mathcal{G}}$ eindeutig bestimmt.
+\end{satz}
+\begin{proof}
+    $\nearrow$ Schhiling MINT, Satz 4.5.
+\end{proof}
+
+Insbesondere definiert z.B.
+\begin{equation*}
+    \P([0,a)) = \int_{0}^{a} \lambda e^{-\lambda x} \dx = 1 - e^{-\lambda a}, a > 0
+\end{equation*}
+bereits die Exponentialverteilung aus \cref{beispiel: 1_1.7_exponentialverteilung}.
+
+
+\begin{definition}[Gleichverteilung]
+    Ist $\Omega$ endlich, so heißt das WMaß mit konstanter Zähldichte 
+    \begin{equation*}
+        \rho(\omega) = \frac{1}{\abs{\Omega}}
+    \end{equation*} 
+    die \begriff{(diskrete) Gleichverteilung} auf $\Omega$ und wird mit $\Uni(\Omega)$ notiert (\textit{U = uniform}).
+    
+    Ist $\Omega \subset \Rn$ eine Borelmenge mit Lebesgue-Maß $0 < \lambda^n(\Omega) < \infty$ so heißt das WMaß auf $(\Omega, \borel(\Omega))$ mit konstanter Dichtefunktion 
+    \begin{equation*}
+        \rho(x) = \frac{1}{\lambda^n(\Omega)}
+    \end{equation*} 
+    die \begriff{(stetige)  Gleichverteilung} auf $\Omega$. 
+    Sie wird ebenso mit $\Uni(\Omega)$ notiert.
+\end{definition}
+
+\subsection*{Wahrscheinlichkeitsräume}
+
+\begin{definition}[Wahrscheinlichkeitsraum]
+    Ein Tripel $(\Omega, \ereignisF, \P)$ mit $\Omega, \ereignisF$ Ereignisraum und $\P$ WMaß auf $(\Omega, \ereignisF)$, nennen wir \begriff{Wahrscheinlichkeitsraum}.
+\end{definition}

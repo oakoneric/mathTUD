@@ -1,0 +1,81 @@
+\section{Zufallsvariablen}
+
+Zufallsvariablen dienen dazu von einen gegebenen Ereignisraum $(\Omega, \ereignisF)$ zu einem Modellausschnitt $\Omega', \ereignisF'$ überzugehen. 
+Es handelt sich also um Abbildungen $\abb{X}{\Omega}{\Omega'}$.
+Damit wir auch jedem Ereignis in $\ereignisF'$ eine Wahrscheinlichkeit zuordnen können, benötigen wir	
+\begin{equation*}
+    A' \in \ereignisF' \follows X^{-1} A' \in \ereignisF		
+\end{equation*}
+d.h. $X$ sollte \begriff{messbar} sein.
+
+\begin{definition}[Zufallsvariable]
+    Seien $(\Omega, \ereignisF)$ und $(\Omega', \ereignisF')$ Ereignisräume. Dann heißt jede messbare Abbildung
+    \begin{equation*}
+        \abb{X}{\Omega}{\Omega'}
+    \end{equation*}
+    \begriff{Zufallsvariable} (von $(\Omega, \ereignisF)$) nach $(\Omega', \ereignisF')$/ auf $(\Omega', \ereignisF')$ oder \begriff{Zufallselement}.
+\end{definition}
+
+\begin{beispiel}
+    \begin{enumerate}[leftmargin=*]
+        \item Ist $\Omega$ abzählbar und $\ereignisF = \pows\Omega$, so ist jede Abbildung $\abb{X}{\Omega}{\Omega'}$ messbar und damit eine Zufallsvariable.
+        \item Ist $\Omega \subset \Rn$ und $\ereignisF = \borel\Omega$, so ist jede stetige Funktion $\abb{X}{\Omega}{\R}$ messbar und damit eine Zufallsvariable.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{satz}
+    Sei $(\Omega, \ereignisF, \P)$ ein \WRaum und $X$ eine Zufallsvariable von $(\Omega, \ereignisF)$ nach $(\Omega', \ereignisF')$. Dann definiert
+    \begin{equation*}
+    \P'(A') \defeq \P\left(X^{-1}(A')\right) = \P\left(\set{X \in A'}\right), \quad A' \in \ereignisF'
+    \end{equation*}
+    ein WMaß auf $(\Omega', \ereignisF')$, welches wir als \begriff{Wahrscheinlichkeitsverteilung von $X$ unter $\P$} bezeichnen.
+\end{satz}
+
+\begin{proof}
+    Aufgrund der Messbarkeit von $X$ ist die Definition sinnvoll. Zudem gelten
+    \begin{equation*}
+        \P'(\Omega') = \P(X^{-1}(\Omega')) = \P(\Omega) = 1
+    \end{equation*}
+    und für $A_1', A_2', \dots \in \ereignisF'$ paarweise disjunkt.
+    \begin{equation*}
+    \begin{aligned}
+        \P' \left( \bigcup_{i \geq 1} A_i' \right) 
+        = \P \left(X^{-1}\left( \bigcup_{i \geq 1} A_i' \right) \right) 
+        &= \P \left( \bigcup_{i \geq 1} X^{-1}(A_i') \right) \\
+        &= \sum_{1 \geq 1} \P(X^{-1} A_i') \quad \text{ da auch } X^{-1}A_1', X^{-1}A_2', \dots \text{ paarweise disjunkt sind} \\
+        &= \sum_{1 \geq 1} \P'(A_i)
+    \end{aligned}
+    \end{equation*}
+    Also ist $\P'$ ein WMaß.
+\end{proof}
+
+\begin{*bemerkung}
+    \begin{itemize}[leftmargin=*, nolistsep]
+        \item Aus Gründen der Lesbarkeit schreiben wir in der Folge $\P (X \in A) = \P ( \menge{\omega \colon X(\omega) \in A} )$
+        \item Ist $X$ die Identität, so fallen die Begriffe \WMass und \WVerteilung zusammen.
+        \item In der (weiterführenden) Literatur zur \WTheorie wird oft auf die Angabe eines zugrundeliegenden WRaumes verzichtet und stattdessen eine ``Zufalsvariable mit Verteilung $\P$ auf $\Omega$'' eingeführt.
+        Gemeint ist (fast) immer $X$ als Identität auf $(\Omega, \ereignisF, \P)$ mit $\ereignisF = \pows\Omega$ oder $\ereignisF = \borel\Omega$.
+        \item Für die Verteilung von $X$ unter $\P$ schreibe $\P_X$ und $X \sim \P_{X}$ für die Tatsache, dass $X$ gemäß $\P_X$ verteilt ist.
+    \end{itemize}
+\end{*bemerkung}
+
+\begin{definition}
+    Zwei Zufallsvariablen sind \begriff{identisch verteilt}, wenn sie dieselbe Verteilung haben.
+\end{definition}
+
+Von besonderen Interesse sind für uns die Zufallsvariablen, die nach $(\R, \borel\R)$ abbilden, sogenannte \begriff{reelle Zufallsvariablen}.
+
+Da die halboffenen Intervalle $\borel\R$ erzeugen, ist die Verteilung einer reellen Zufallsvariable durch die Werte $(-\infty, c]$, $c \in \R$ eindeutig festgelegt.
+
+\begin{definition}[Verteilungsfunktion]
+    Sei $(\R, \borel(\R), \P)$ ein \WRaum, so heißt
+    \begin{equation*}
+        \abb{F}{\R}{[0,1]} \text{ mit } x \mapsto \P((-\infty, x))
+    \end{equation*}
+    \begriff{(kumulative) Verteilungsfunktion von $\P$}.    
+    Ist $X$ eine reelle Zufallsvariable auf beliebigen WRaum $(\Omega, \ereignisF, \P)$, so heißt
+    \begin{equation*}
+        \abb{F}{\R}{[0,1]} \text{ mit } x \mapsto \P(X \leq x) = \P(X \in (-\infty, x])
+    \end{equation*} % TODO everything good with the X's here?
+    die (kumulative) Verteilungsfunktion von $X$.
+\end{definition}
