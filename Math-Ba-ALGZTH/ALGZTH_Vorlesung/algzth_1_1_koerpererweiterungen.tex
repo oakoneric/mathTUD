@@ -1,9 +1,137 @@
 \section{Körpererweiterungen}
+Seien $K,L,M$ Körper.
+
+\begin{bemerkung}
+    In diesem Kapitel bedeutet ``Ring'' \textit{immer} kommutativer Ring mit Einselement, und ein Ringhomomorphismus bildet stets das Einselement auf das Einselement ab.
+    Insbesondere gibt es für jeden Ring einen eindeutig bestimmten Ringhomomorphismus $\Z \to R$.
+\end{bemerkung}
+
+\begin{bemerkung} \label{bemerkung: 1_1.2}
+    \begin{enumerate}[leftmargin=*, label=(\alph*)]
+        \item Ein \begriff{Körper} ist ein Ring $R$, in dem eine der folgenden äquivalenten Bedingungen gilt:
+        \begin{enumerate}[label=(\arabic*), nolistsep, topsep=-\parskip]
+            \item $0 \neq 1$ und jedes $0 \neq x \in R$ ist invertierbar
+            \item $\einheit{R} = R \ohneNull$
+            \item $R$ hat genau zwei Hauptideale (nämlich $(0)$ und $(1)$)
+            \item $(0)$ ist ein maximales Ideal von $R$
+            \item $(0)$ ist das einzige echte Ideal von $R$
+            \item $(0)$ ist das einzigste Primideal von $R$
+        \end{enumerate}
+        \item Insbesondere sind Körper \begriff{nullteilerfrei}, weshalb $\Ker(\Z \to K)$ prim ist.
+        \item Aus (5) folgt: Jeder Ringhomomorphismus $K \to L$ ist injektiv (Beweisidee: $\Ker$ ist ein Ideal, muss das Nullideal sein und somit auch schon trivial) %TODO add ref to (5) and check the ringhomo!
+        \item Der Durchschnitt einer Familie von Teilkörpern von $K$ ist wieder ein Teilkörper von $K$.
+    \end{enumerate}
+\end{bemerkung}
+
+\begin{definition}[Charakteristik]
+    Die \begriff{Charakteristik} von $K$, $\charak(K)$, ist das $p \in \set{0,2,3,5,7, \dots}$ mit $\Ker(\Z \to K) = (p)$.
+\end{definition}
+
+\begin{beispiel} \label{beispiel: 1_1.4}
+    \begin{enumerate}[leftmargin=*, label=(\alph*), noitemsep]
+        \item $\charak(\Q) = 0$ und $\charak(\F_p) = (p)$ ($p$ Primzahl), wobei $\F_p = \rest{p}$
+        \item Ist $K_0 \subseteq K$ Teilkörper, so ist $\charak(K_0) = \charak(K)$.
+    \end{enumerate}
+\end{beispiel}
+
+\begin{definition}[Primkörper]
+    Der \begriff{Primkörper} von $K$ ist der kleinste Teilkörper von $K$ (existiert nach \cref{bemerkung: 1_1.2}(d)).
+\end{definition}
+
+\begin{satz} \label{satz: 1_1.6}
+    Sei $\F$ der Primkörper von $K$.
+    \begin{enumerate}[leftmargin=*, nolistsep, label=(\alph*), topsep=-\parskip]
+        \item $\charak(K)  = 0 \equivalent \F \isomorph \Q$
+        \item $\charak(K)  = p > 0 \equivalent \F \isomorph \F_p$
+    \end{enumerate}
+\end{satz}
+\begin{proof_equiv}
+    \rueckrichtung \cref{beispiel: 1_1.4}
+    \hinrichtung $\Image(\Z \to K) \subseteq \F$ und $\Image(\Z \to K) \isomorph \lfrac{\Z}{\Ker(\Z \to K)}$
+    \begin{enumerate}[label=(\alph*), leftmargin=*]
+        \item $\Image(\Z \to K) \isomorph \lfrac{Z}{(0)} \isomorph \Z \follows \F = \Quot(\Image(\Z \to K)) \isomorph \Quot(\Z) \isomorph \Q$
+        \item $\Image(\Z \to K) \isomorph \lfrac{Z}{(p)} \isomorph \F_p$ ist Teilkörper von K $\Rightarrow \F = \Image(\Z \to K) \isomorph \F_p$
+    \end{enumerate}
+\end{proof_equiv}
+
+\begin{definition}[Körpererweiterung]
+    Ist $K$ ein Teilkörper von $L$, so nennt man $L$ eine \begriff{Körpererweiterung} von $K$, auch geschrieben $L \mid K$.
+\end{definition}
+
+\begin{definition}[$K$-Homomorphismus]
+    Seien $L_1 \mid K$ und $L_2 \mid K$ Körpererweiterungen.
+    \begin{enumerate}[nolistsep, leftmargin=*]
+        \item Ein Ringhomomorphismus $\abb{\phi}{L_1}{L_2}$ ist ein $K$-Homomorphismus, wenn $\phi |_K = \id_K$ (i.Z. $\abb{\phi}{L_1}[K]{L_2}$)
+        \item $\Hom_K(L_1,L_2) = \set{\phi \mid \abb{\phi}{L_1}{L_2} \text{ ist $K$-Homomorphismus}}$
+        \item $L_1$ und $L_2$ sind $K$-isomorph (i.Z. $L_1 \isomorph_K L_2$), wenn es einen Isomorphismus $\phi \in \Hom_K(L_1, L_2)$ gibt.
+    \end{enumerate}
+\end{definition}
+
+\begin{bemerkung}
+    Ist $L | K$ eine Körpererweiterung, so wird $L$ durch Einschränkung der Multiplikation zu einem $K$-Vektorraum.
+\end{bemerkung}
+
+\begin{definition}[Körpergrad]
+    $[L:K]\defeq \dim_K(L) \in \N \cup \menge{\infty}$, der \begriff{Körpergrad} der Körpererweiterungen $L | K$.
+\end{definition}
+
+\begin{beispiel}
+    \begin{enumerate}[label=(\alph*), leftmargin=*]
+        \item $[K: K] = 1$
+        \item $[\C:\R] = 2$ (Basis $(1,i)$, aber Index $(\C:\R) = \infty$)
+        \item $[\R:\Q] = \infty$ (mit Abzählbarkeitsargument oder siehe §2)
+        \item $[K(x):K] = \infty$ ($K(X) = \Quot(\polynom[K])$ (vgl. GEO II.8)
+    \end{enumerate}
+\end{beispiel}
+
+\begin{satz}
+    Für $K \subseteq L \subseteq M$ Körper ist 
+    \begin{equation*}
+        [M:K] = [M:L] * [L:K]
+    \end{equation*}
+    (``Körpergrad ist multiplikativ'')
+\end{satz}
+
+\begin{proof}
+    \textit{Behauptung:} Sei $x_1, \dots, x_n \in L$ $K$-linear unabhängig und $y_1, \dots, y_m \in M$ $L$-linear unabhängig. Dann ist auch $\menge{x_i y_i \colon i = 1, \dots , n ; j = 1, \dots, m}$ $K$-linear unabhängig.
+    
+    \textit{Beweis:} $\sum_{i,j} \lambda_{ij}x_i y_j = 0$ mit $\lambda_{ij} \in K$
+    \begin{equation*}
+        \Longrightarrow \sum_{j}\underbrace{\left( \sum_{i} \lambda_{ij}x_i \right)}_{\in L} y_j = 0 
+        \quad \overset{y_j L\text{-lin. unabh.}}{\Longrightarrow} \quad \sum_{i} \lambda_{ij} x_i = 0 \quad \forall j
+        \quad \overset{y_j K\text{-lin. unabh.}}{\Longrightarrow} \quad \lambda_{ij} = 0 \quad \forall i \enskip \forall j
+    \end{equation*}
+    
+    \begin{itemize}[nolistsep, leftmargin=*]
+        \item $[L:K] = \infty$ oder $[M:L] = \infty \follows [M:K] = \infty \checkmark$
+        \item $[L:K] = n, [M:L] = m$ mit $n,m < \infty$ \\
+        $(x_1, \dots, x_n)$ sei Basis des $K$-Vektorraum $L$ und $(y_1, \dots, y_m)$ Basis des $L$-Vektorraums $M$\\
+        $\follows \set{x_i y_j \colon i = 1, \dots, n; j = 1, \dots, m}$ $K$-linear unabhängig und
+        \begin{equation*}
+            \sum_{i,j} K x_i y_j = \sum_{j} \underbrace{\left( \sum_{i} K x_i \right)}_{=L} y_j = M
+        \end{equation*}
+        also ist $\menge{x_i y_j \colon i = 1, \dots ,n ; j = 1, \dots, m}$ Basis von $M$ 
+    \end{itemize}
+\end{proof}
 
 \begin{definition}
-    $L | K$ ist endlich erzeugt $\equivalent a_1, \dots , a_n \in L : L=K(a_1, \dots, a_n)$
-    $L | K$ ist einfach $\equivalent$ ex. $a \in L: L=K(a)$
+    $L | K$ endlich $\defequiv [L:K] < \infty$.
 \end{definition}
+
+\begin{definition}[Unterring, Teilkörper]
+    Sei $L | K$ eine Körpererweiterung $a_1, a_2, \dots, a_n \in L$.
+    \begin{enumerate}[leftmargin=*]
+        \item $\polynom[K][a_1, \dots , a_n]$ ist der kleinste \begriff{kleinste Unterring} von $L$, der $K \cup \menge{a_1, \dots, a_n}$ enthält (``von $a_1, \dots, a_n$ über $K$ erzeugt'')
+        \item $K(a_1, \dots, a_n)$ ist \begriff{kleinster Teilkörper} von $L$, der $K \cup \menge{a_1, \dots, a_n}$ enthält (``von $a_1, \dots, a_n$ über $K$ erzeugt'', ``$a_1, \dots, a_n$'' zu $K$ adjungieren'')
+        \item $L | K$ ist \begriff{endlich erzeugt} $\defequiv a_1, \dots , a_n \in L$ mit $L=K(a_1, \dots, a_n)$
+        \item $L | K$ ist \begriff{einfach} $\defequiv$ ex. $a \in L$ mit $L=K(a)$
+    \end{enumerate}
+\end{definition}
+
+%\begin{definition}
+%    $L | K$ ist endlich erzeugt $\equivalent a_1, \dots , a_n \in L : L=K(a_1, \dots, a_n)$
+%    $L | K$ ist einfach $\equivalent$ ex. $a \in L: L=K(a)$
+%\end{definition}
 
 \begin{bemerkung}
     \begin{enumerate}[leftmargin=*, label=(\alph*)]

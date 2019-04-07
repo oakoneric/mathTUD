@@ -9,7 +9,7 @@
 % Template for lecture notes and exercises at TU Dresden.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[ %
+\documentclass[%
     ngerman, %
     a4paper, %
     sectionreset, %
@@ -51,6 +51,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \counterwithin{themcount}{section}
+\renewcommand{\thechapter}{\Roman{chapter}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,7 +59,7 @@
 
 \MakeTitle[dark]
     
-%\tableofcontents
+\tableofcontents
 \chapter{Körpererweiterungen}
 \input{algzth_1_1_koerpererweiterungen}
 \input{algzth_1_2_algebraische_koerpererweiterungen}
