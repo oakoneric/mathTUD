@@ -29,7 +29,6 @@
 
 % none
 
-
 %---------------------------------------
 % general settings
 %---------------------------------------
@@ -53,15 +52,6 @@
 
 \counterwithin{themcount}{chapter}
 
-\newcommand{\ereignisF}{\mathcal{F}}
-\newcommand*{\WTheorie}{Wahrscheinlichkeitstheorie }
-\newcommand*{\WMass}{Wahrscheinlichkeitsmaß }
-\newcommand*{\WRaum}{Wahrscheinlichkeitsraum }
-\newcommand*{\WRaeume}{Wahrscheinlichkeitsräume }
-\newcommand*{\WVerteilung}{Wahrscheinlichkeitsverteilung }
-\newcommand*{\Wkeit}{Wahrscheinlichkeit }
-\newcommand*{\ZV}{Zufallsvariable}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -74,9 +64,16 @@
 \setcounter{chapter}{-1}
 \include{stoch_0_einleitung}
 
-\include{stoch_1_1_wahrscheinlichkeitsraeume}
+\chapter{Grundbegriffe der Wahrscheinlichkeitstheorie}
+\input{stoch_1_1_wahrscheinlichkeitsraeume}
 \include{stoch_1_2_zufallsvariablen}
 
+\chapter{Erste Standardmodelle}
+\begin{center}
+    {\Large{\osfamily \itshape --- Diskrete Verteilungen ---}}
+\end{center}
+\input{stoch_2_1_gleichverteilung}
+\input{stoch_2_2_urnenmodelle}
 
 
 \end{document}

@@ -1,4 +1,3 @@
-\chapter{Grundbegriffe der Wahrscheinlichkeitstheorie}
 \section{Wahrscheinlichkeitsräume}
 \subsection*{Ergebnisraum}
 Welche möglichen Ausgänge eines zufälligen Geschehens interessieren uns?
@@ -53,7 +52,7 @@ zu, sodass
 
 Aus der Definition folgen direkt die folgenden Eigenschaften:
 
-\begin{satz}[Rechenregelen für Wahrscheinlichkeitsmaße]
+\begin{satz}[Rechenregelen für Wahrscheinlichkeitsmaße] \label{satz: 1.4_rechenregeln}
     Sei $\mathbb{P}$ ein W-Maß auf einem Ereignisraum $(\Omega, \mathcal{F})$ und $A,B,A_1,A_2,\dots \in \mathcal{F}$. Dann gilt:
     \begin{enumerate}[leftmargin=*]
         \item $\mathbb{P}(\emptyset) = 0$
@@ -94,7 +93,7 @@ Aus der Definition folgen direkt die folgenden Eigenschaften:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO ÜBERARBEITEN
 
-\begin{satz}[Konstruktion von WMaßen mit Dichten]
+\begin{satz}[Konstruktion von WMaßen mit Dichten] \label{satz: 1.8_mass_mit_dichte}
     Sei $(\Omega, \ereignisF)$ ein Eriegnisraum.
     \begin{itemize}[leftmargin=*]
         \item $\Omega$ abzählbar, $\ereignisF = \pows{\Omega}$:  \\
@@ -146,7 +145,7 @@ Aus der Definition folgen direkt die folgenden Eigenschaften:
 
 Abschließend erinnern wir uns an:
 
-\begin{satz}[Eindeutigkeitssatz für WMaße]
+\begin{satz}[Eindeutigkeitssatz für WMaße] \label{satz: 1.9_eindeutigkeitssatz}
     Sei $(\Omega, \ereignisF)$ Ereignisraum und $\P$ ein WMaß auf $(\Omega, \ereignisF)$. 
     Sei $\ereignisF = \omega(\mathcal{G})$ für ein $\cap$-stabiles Erzeugendensystem $\mathcal{G} \subset \pows{\Omega}$. 
     Dann ist $\P$ bereits durch seine Einschränkung $\P |_{\mathcal{G}}$ eindeutig bestimmt.
@@ -162,7 +161,7 @@ Insbesondere definiert z.B.
 bereits die Exponentialverteilung aus \cref{beispiel: 1_1.7_exponentialverteilung}.
 
 
-\begin{definition}[Gleichverteilung]
+\begin{definition}[Gleichverteilung] \label{def: 1.10_gleichverteilung}
     Ist $\Omega$ endlich, so heißt das WMaß mit konstanter Zähldichte 
     \begin{equation*}
         \rho(\omega) = \frac{1}{\abs{\Omega}}
