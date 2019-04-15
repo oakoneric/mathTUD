@@ -239,6 +239,7 @@
 
 \RequirePackage{graphicx}
 \RequirePackage{tcolorbox}
+\usepackage[font=small,labelfont=bf]{caption} % for captions of non-floated figures
 
 \RequirePackage{pgfplots}
 \pgfplotsset{compat=1.10} % in my packages used compat=1.15

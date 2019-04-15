@@ -245,6 +245,7 @@ nobreak,%
 
 \newtheorem{*definition}{Definition}				% Definition
 \newtheorem{*wiederholung}{Wiederholung}			% Wiederholung
+\newtheorem{*erinnerung}{Erinnerung}				% Erinnerung
 \newtheorem{*beispiel}{\raisebox{1pt}{\rule{5pt}{5pt}} Beispiel}	% Beispiel
 
 %--------------------------------------
@@ -372,9 +373,14 @@ nobreak,%
 % >> special characters
 \newcommand{\quer}[1]{\overline{#1}}
 \newcommand{\schlange}[1]{\widetilde{#1}}
+\newcommand{\dach}[1]{\widehat{#1}}
 
 \renewcommand{\epsilon}{\varepsilon}
 \renewcommand{\phi}{\varphi}
+
+\undef\mit
+\newcommand*{\mit}{\text{ mit }}
+\newcommand*{\und}{\text{ und }}
 
 % >> sets and mappings
 \newcommand{\menge}[1]{\left\{ #1 \right\}}
@@ -421,6 +427,7 @@ nobreak,%
 \newcommand{\equivalent}{\ensuremath{\enskip \Leftrightarrow \enskip}} % <=>
 \newcommand{\defequiv}{\ensuremath{\enskip \mathrel{:\Leftrightarrow}} \enskip} % :<=>
 \newcommand{\defeq}{\ensuremath{\mathrel{:=}}} % :=
+\newcommand{\defqe}{\ensuremath{\mathrel{=:}}} % =:
 
 % >> linear algebra - vector spaces
 \newcommand{\basisB}{\mathcal{B}} % cal symbol for basis b
@@ -489,6 +496,14 @@ nobreak,%
 % >> stochastic
 \undef\P
 \newcommand{\P}{\mathbb{P}}
+\newcommand{\ereignisF}{\mathcal{F}}
+\newcommand*{\WTheorie}{Wahrscheinlichkeitstheorie }
+\newcommand*{\WMass}{Wahrscheinlichkeitsmaß }
+\newcommand*{\WRaum}{Wahrscheinlichkeitsraum }
+\newcommand*{\WRaeume}{Wahrscheinlichkeitsräume }
+\newcommand*{\WVerteilung}{Wahrscheinlichkeitsverteilung }
+\newcommand*{\Wkeit}{Wahrscheinlichkeit }
+\newcommand*{\ZV}{Zufallsvariable}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
