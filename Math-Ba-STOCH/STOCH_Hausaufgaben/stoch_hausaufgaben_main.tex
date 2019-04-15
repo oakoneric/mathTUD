@@ -1,0 +1,69 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ %
+    ngerman, %
+    a4paper, %
+    sectionreset, %
+    chapterstyle=framed, %
+    sectionstyle=dotted, %
+    titlefont=osfamily %
+]{../../texmf/tex/latex/mathscriptMathTUD/mathscriptMathTUD}
+
+\usepackage[order=firstname, fractionappearence=lowerraise]{../../texmf/tex/latex/mathworkMathTUD/mathworkMathTUD}
+\usepackage[homework]{../../texmf/tex/latex/exercisesMathTUD/exercisesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\name{Eric Kunze}
+\matnr{4679202}
+\email{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\modul{Stochastik}
+\period{Sommersemester 2019}
+
+\tutor{Apostolos Sideris}
+\group{\empty}
+
+\lecturer{Prof. Dr. Anita Behme}
+\faculty{Mathematik}
+\institute{Stochastik}
+\professorship{Angewandte Stochastik}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% specific commands
+\counterwithin{taskcount}{blattcount}
+\undef\folge
+\NewDocumentCommand{\folge}{m O{n \in \N}}{\left( #1 \right)_{#2}}
+\renewcommand{\complement}{\mathsf{C}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\MakeTitle[dark][Hausaufgaben]
+    
+\include{stoch_hausaufgaben_1}
+
+
+
+\end{document}

@@ -1,0 +1,177 @@
+\begin{exercisePage}[Wahrscheinlichkeit, Zufallsvariablen, Verteilungsfunktionen]
+    \begin{lemma} \label{lemma: 1_1.1_schnitt}
+        Sei $(\Omega, \ereignisF)$ ein messbarer Raum. Dann gilt
+        \begin{equation*}
+            \folge{A_n} \subseteq \ereignisF \follows \bigcap_{n \in \N} A_n \in \ereignisF
+        \end{equation*}
+    \end{lemma}
+    \begin{proof}
+        Da $\folge{A_n} \subseteq \ereignisF$ ist auch $\folge{A_n^\complement} \subseteq \ereignisF$. Dann ist $\bigcap_{n \in \N} A_k = \left( \bigcup_{n \in \N} A_k^\complement \right)^\complement$ und somit weil $\bigcup_{n \in \N} A_k^\complement \in \ereignisF$ und nach Definition einer $\sigma$-Algebra auch $\bigcap_{n \in \N} A_n \in \ereignisF$. Insbesondere gilt dies auch falls endliche viele Mengen weggelassen werden, d.h. für alle $n \in \N$ ist auch $\bigcap_{k \geq n} A_k \in \ereignisF$.
+    \end{proof}
+
+    \begin{exercise}
+        \begin{enumerate}[leftmargin=*, label=(\alph*)]
+            \item Sei ($\Omega, \ereignisF$) ein messbarer Raum. Zeigen Sie, dass für jede Menge $B \subseteq \Omega$ das Mengensystem $\quer{F} \defeq \menge{A \cap B \colon A \in \ereignisF}$ eine $\sigma$-Algebra über dem Grundraum $B$ ist.
+            \item Es sei ($\Omega, \ereignisF$) ein messbarer Raum und $A_1, A_2, \dots \in \ereignisF$ eine Folge von Ereignissen. Zeigen Sie:
+            \begin{equation*}
+                \underline{A} \defeq \liminf_{n \to \infty} A_n = \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k \in \ereignisF \qquad \overline{A} \defeq \limsup_{n \to \infty} A_n = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k \in \ereignisF \qquad \underline{A} \subseteq \overline{A}
+            \end{equation*}
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{enumerate}[leftmargin=*, label=(\alph*)]
+        \item Wir zeigen die drei Eigenschaften einer $\sigma$-Algebra.
+            \begin{itemize}[leftmargin=*]
+                \item Da $\ereignisF$ eine $\sigma$-Algebra ist, ist $\Omega \in \ereignisF$. Wählen wir also $A = \Omega \in \ereignisF$, so ist $B = \Omega \cap B$, da $B \subseteq \Omega$ und somit $\Omega \in \quer{\ereignisF}$.
+                \item Sei $C \in \quer{\ereignisF}$, d.h. es existiert $A \in \ereignisF$ mit $C = A \cap B$. Dann ist $C^\complement = B \setminus C = B \setminus (A \cap B) = (B \setminus A) \cap B = A^\complement \cap B \in \quer{\ereignisF}$.
+                \item Seien $\folge{C_n} \subseteq \quer{\ereignisF}$, d.h. es existiert $\folge{A_n} \subseteq \ereignisF$, sodass für alle $n \in \N$ gilt, dass $C_n = A_n \cap B$. Dann ist
+                \begin{equation*}
+                    \bigcup_{n \in \N} C_n = \bigcup_{n \in \N} (A_n \cap B) =  \underbrace{ \left( \bigcup_{n \in \N} A_n \right)}_{\in \ereignisF}  \cap \, B \in \quer{\ereignisF}
+                \end{equation*}
+            \end{itemize}
+        \item Sei $\folge{A_n} \subseteq \ereignisF$. 
+            \begin{itemize}[leftmargin=*]
+                \item \cref{lemma: 1_1.1_schnitt} sagt uns, dass für alle $n \in \N$ auch $\bigcap_{k \geq n} A_k \in \ereignisF$ gilt. Mit der Definition von $\ereignisF$ folgt schließlich, dass auch $\bigcup_{n \in \N} \bigcap_{k \geq n} A_k \in \ereignisF$ ist.
+                \item Analog zum ersten Punkt ist $\bigcap_{n \in \N} \bigcup_{k \geq n} A_k \in \ereignisF$, da sowohl die (abzählbare) Vereinigung als auch der (abzählbare) Schnitt in $\ereignisF$ liegen.
+                \item Für alle $n,m \in \N$ gilt $\bigcap_{k \geq n} A_k \subseteq A_{\max \menge{n,m}} \subseteq \bigcup_{k \geq m} A_k$. Somit ist für alle $m \in \N$ auch $\bigcup_{n \in \N} \bigcap_{k \geq n} A_k \subseteq A_k \subseteq \bigcup_{k \geq m} A_k$ und dann $\bigcup_{n \in \N} \bigcap_{k \geq n} A_k \subseteq \bigcap_{m \in \N} \bigcup_{k \geq m} A_k$, was bereits $\underline{A} \subseteq \overline{A}$ zeigt.
+            \end{itemize}
+    \end{enumerate}
+
+%%%% AUFGABE 1.2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}
+        Es sei $X$ eine stetige, reelle Zufallsvariable mit Dichtefunktion
+        \begin{equation*}
+            f(x) := \begin{cases} c * (4x - 2x^2) & \text{falls } 0 < x < 2 \\ 0 & \text{sonst} \end{cases}
+        \end{equation*}
+        \begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep]
+            \item Bestimmen Sie $c$.
+            \item Berechnen Sie $\P(X > 1)$ und $\P(X=1)$
+            \item Bestimmen Sie die zugehörige Verteilungsfunktion.
+        \end{enumerate}
+    \end{exercise}
+
+    \begin{enumerate}[leftmargin=*, label=(\alph*)]
+        \item Sei $\P$ das zur Dichte $f$ gehörende Wahrscheinlichkeitsmaß. Dann gilt nach Satz 1.8
+        \begin{equation*}
+        \P(A) = \int_A f(x) \dx \quad \text{für alle } A \in \borel\R
+        \end{equation*}
+        Somit muss auch insbesondere die Normierung erfüllt sein, d.h.
+        \begin{equation*}
+        \P(\R) = \int_\R f(x) \dx \overset{!}{=} 1
+        \end{equation*}
+        Die Additivität bleibt durch die Integraleigenschaften erhalten. Also:
+        \begin{equation*}
+        \begin{aligned}
+        \int_\R f(x) \dx &= \int_{-\infty}^0 f(x) \dx + \int_0^2 f(x) \dx + \int_2^\infty f(x) \dx \\
+        &= \int_{-\infty}^0 0 \dx + \int_0^2 f(x) \dx + \int_2^\infty 0 \dx \\
+        &= \int_0^2 c * (4x - 2x^2) \dx 
+        \enskip = \enskip 2c \left[ x^2 - \frac{1}{3} x^3 \right]_0^2
+        \enskip = \enskip 2c \left( 4 - \frac{8}{3} \right) \\
+        &= \frac{8}{3} c \enskip \overset{!}{=} \enskip 1 
+        \follows c = \frac{3}{8}
+        \end{aligned}
+        \end{equation*}
+        %
+        \item 
+        \begin{equation*}
+            \begin{aligned}
+            \P(X > 1) &= \int_1^\infty f(x) \dx 
+            = \int_1^2 f(x) \dx + \int_2^\infty 0 \dx \\
+            &= \int_1^2 \frac{3}{2} x - \frac{3}{4} x^2 \dx
+            = \left[ \frac{3}{4} x^2 - \frac{3}{12} x^3 \right]_1^2 \\
+            &= \left( 3-2 \right) - \left( \frac{3}{4} - \frac{3}{12} \right) 
+            = 1 - \frac{1}{2} = \frac{1}{2} \\
+            %
+            \P(X=1) &= \int_1^1 f(x) \dx = 0              
+            \end{aligned}
+        \end{equation*}
+        %
+        \item Die Verteilungsfunktion einer \ZV ist definiert als 
+        \begin{equation*}
+            F_X(x) \defeq \P(X \leq x) = \P( (-\infty, x]) = \int_{-\infty}^x f(\xi) \diff{\xi}
+        \end{equation*}
+        Ist $x \leq 0$, so ist $F_X(x) = 0$, da $f(x) = 0$ für alle $x \leq 0$ ist und somit $\int_{-\infty}^x f(\xi) \diff{\xi} = \int_{-\infty}^x 0 \diff{\xi} = 0$. Für $x \in (0,2)$ ist 
+        \begin{equation*}
+            F_X(x) = \int_{-\infty}^x f(\xi) \diff{\xi} = \int_0^x f(\xi) \diff{\xi} = \left[ \frac{3}{4} \xi^2 - \frac{3}{12} \xi^3 \right]_0^x = \frac{3}{4} x^2 - \frac{3}{12} x^3
+        \end{equation*}
+        Für $x \geq 2$ ist stets $(0,2) \subset (-\infty, x)$ und daher ist
+        \begin{equation*}
+            \begin{aligned}
+            F_X(x) = \int_{-\infty}^x f(\xi) \diff{\xi} 
+            &= \int_{-\infty}^0 f(\xi) \diff{\xi} + \int_0^2 f(\xi) \diff{\xi} + \int_2^\infty f(\xi) \diff{\xi} \\
+            &= \int_0^2 f(\xi) \diff{\xi} \\
+            &= \left[ \frac{3}{4} \xi^2 - \frac{3}{12} \xi^3 \right]_0^2 \\
+            &= 3-2 = 1
+            \end{aligned}
+        \end{equation*}
+        Schlussendlich ist
+        \begin{equation*}
+            F_X(x) = \begin{cases}
+            0 & \text{für } x \leq 0 \\
+            \frac{3}{4} x^2 - \frac{3}{12} x^3 & \text{für } x \in (0,2) \\
+            1 & \text{für } x \geq 2
+            \end{cases}
+        \end{equation*}   
+        die zugehörige Verteilungsfunktion.     
+    \end{enumerate}
+
+%%%% AUFGABE 1.3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}
+        Sei $\abb{F}{\R}{\R} \colon x \mapsto a + b * \arctan\left( \frac{x-t}{s} \right)$ für Parameter $a,b,t \in \R$ und $s > 0$.
+        \begin{enumerate}[leftmargin=*, label=(\alph*)]
+            \item Bestimmen Sie $a$ und $b$ so, dass $F$ eine Verteilungsfunktion ist.
+            \item Bestimmen Sie die zugehörige Dichtefunktion.
+        \end{enumerate}
+    \end{exercise}
+    
+    \begin{enumerate}[leftmargin=*, label=(\alph*)]
+        \item Nach Satz 1.19 gilt für jede Verteilungsfunktion
+        \begin{equation*}
+        \lim_{x \to -\infty} F(x) = 0 \quad \text{und} \quad \lim_{x \to \infty} F(x) = 1
+        \end{equation*}
+        Wenden wir dies auf die obige Funktion $F$ an unter Berücksichtigung, dass $\lim_{x \to \pm \infty} \arctan(x) = \pm \frac{\pi}{2}$. Dann gilt
+        \begin{equation*}
+        \lim_{x \to \pm \infty} a + b* \arctan \left(\frac{x-t}{s} \right) = a + b * \arctan \left(\frac{x-t}{s} \right)
+        \end{equation*}
+        Unterscheiden wir nun den Grenzprozess in die jeweilige Richtung, so erhalten wir das folgende lineare Gleichungssystem
+        \begin{equation*}
+        \sysdelim[]
+        \systeme[ab]{a - b * \frac{\pi}{2} \overset{!}{=} 0 , a + b * \frac{\pi}{2} \overset{!}{=} 1} 
+        \follows \sysdelim[]\systeme[b]{a = \frac{\pi}{2} b , a = 1 - \frac{\pi}{2} b} 
+        \follows \systeme[c]{b = \pi^{-1} , a = 0.5}
+        \end{equation*}
+        Somit ist also $F(x) \defeq 0.5 + \frac{1}{\pi} \arctan \left( \frac{x-t}{s} \right)$. 
+        
+        \paragraph{Monotonie.} Seien $x,y \in \R$ mit $x < y$. Dann ist auch $x -t < y - t$ und $\frac{x-t}{s} < \frac{y-t}{s}$ für alle $s,t \in \R, s > 0$. Da der Arkustangens strikt monoton wachsend ist, ist auch $\arctan \left( \frac{x-t}{s} \right) < \arctan \left( \frac{y-t}{s} \right)$ und da sich durch die Parameter $a$ und $b$ nichts mehr ändert, gilt
+        \begin{equation*}
+        0.5 + \frac{1}{\pi} \arctan \left( \frac{x-t}{s} \right) < 0.5 + \frac{1}{\pi} \arctan \left( \frac{y-t}{s} \right) \follows F(x) < F(y)
+        \end{equation*}
+        d.h. die Funktion $F$ ist (streng) monoton wachsend.
+        
+        \paragraph{Rechtsstetigkeit.} Sei $\folge{x_n} \subseteq \R$ mit $x_n \searrow x$ für $n \to \infty$. Dann gilt nach den Rechenregeln für Folgen auch $\frac{x_n - t}{s} \searrow \frac{x - t}{s}$. Da der Arkustangens stetig auf $\R$ ist, ist also $\arctan(y_n) \to \arctan(y)$ für $\folge{y_n} \subseteq \R$ mit $y_n \to y$, jeweils $n \to \infty$, insbesondere also auch $y_n \searrow y$. Also folgt mit den Rechenregeln für Folgen wiederum
+        \begin{equation*}
+        0.5 + \frac{1}{\pi} \arctan \left( \frac{x_n-t}{s} \right) \enskip \longrightarrow \enskip 0.5 + \frac{1}{\pi} \arctan \left( \frac{x-t}{s} \right) \quad (n \to \infty)
+        \end{equation*}
+        was die insbesondere auch die Rechtsstetigkeit von $F$ zeigt. 
+        
+        Damit definiert $F$ nach Satz 1.19 eine Verteilungsfunktion.
+        %
+        \item Für die Verteilungsfunktion $\abb{f}{\R}{\R}$ gilt $f(x) = F'(x)$. Wegen
+        \begin{equation*}
+            \ableitung{x} \arctan(x) = \frac{1}{x^2 + 1}
+        \end{equation*}
+        ist
+        \begin{equation*}
+            \ableitung{x} \arctan\left(\frac{x-t}{s}\right) = \frac{1}{\left(\frac{x-t}{s}\right)^2 + 1} * \frac{1}{s}
+        \end{equation*}
+        Also ist schließlich
+        \begin{equation*}
+            f(x) = F'(x) = \frac{b}{s \left( \left( \frac{x-t}{s} \right)^2 + 1 \right)}
+            = \frac{b}{\frac{(x-t)^2}{s} + \frac{s^2}{s}} 
+            = \frac{sb}{s^2 + (x-t)^2} 
+            = \frac{s}{\pi \left( s^2 + (x-t)^2 \right)}
+        \end{equation*}
+        die zugehörige Dichtefunktion.
+    \end{enumerate}
+    
+\end{exercisePage}
