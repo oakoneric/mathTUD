@@ -1,0 +1,33 @@
+\documentclass[tikz]{standalone}
+
+\usepackage{tudscrcolor}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgf}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\begin{document}
+    %\resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}
+        \begin{axis}[
+        xmin=-5, xmax=5, xlabel=$x$,
+        ymin=0, ymax=1, ylabel=$F(x)$,
+        axis x line=middle,
+        axis y line=middle,
+        samples=400,
+        xticklabels={,,},
+        domain=0:5,
+        height=4cm,
+        width=8cm,
+        ]
+        \addplot[mark=none,cdblue] {(1/(1+exp(-0.07056*x^3 - 1.5976*x))-0.5)*2};
+        \draw[cdblue,thick] (axis cs: -5,0) -- (axis cs:0,0);
+        \end{axis}
+        \end{tikzpicture}%
+    %}
+\end{document}
