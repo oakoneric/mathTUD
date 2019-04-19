@@ -186,7 +186,7 @@
 \echtideal
 \einheit{arg}
 \Rx
-\polynom{ring}{variable}
+\polynom[ring][variable]
 \polynomring{ring}{variable}
 \polynomR
 \Kx
@@ -204,6 +204,23 @@
 \dy
 \da
 \rand
+\borel{set}
+\P
+\ereignisF}
+\WTheorie
+\WMass
+\WRaum
+\WRaeume
+\WVerteilung
+\Wkeit
+\ZV
+\MinPol{alpha}{field}
+\Multi
+\Bin
+\Bernoulli
+\Hyper
+\Poisson
+\brackets{content}
 
 \hinrichtung
 \rueckrichtung

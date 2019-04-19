@@ -99,6 +99,10 @@
 % Defining the title-header depending on the package option
 \newcommand{\header}{Header failed!}
 
+%\newif\ifnogroup
+%\expandafter\ifstrequal\expandafter{\thegroup}{empty}{\nogrouptrue}{\nogroupfalse}
+%\ifdefstring{\thegroup}{}{\nogrouptrue}{\nogroupfalse}
+
 \ifhomework
     %then >> homework is true
     \renewcommand{\header}{%
@@ -110,7 +114,8 @@
                 \end{minipage}%
                 \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     \flushright \textbf{\thename} (Matr.-Nr. \thematnr)\\
-                    {Ü-Gruppe: \thegroup}
+                    %\ifnogroup Tutor: \thetutor \else Ü-Gruppe: \thegroup \fi
+                    Ü-Gruppe: \thegroup
                 \end{minipage}%
         }}%
     }%
