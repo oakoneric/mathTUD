@@ -28,7 +28,7 @@ d.h. $X$ sollte \begriff{messbar} sein.
     \begin{equation*}
     \P'(A') \defeq \P\left(X^{-1}(A')\right) = \P\left(\set{X \in A'}\right), \quad A' \in \ereignisF'
     \end{equation*}
-    ein WMaß auf $(\Omega', \ereignisF')$, welches wir als \begriff{Wahrscheinlichkeitsverteilung von $X$ unter $\P$} bezeichnen.
+    ein Wahrscheinlichkeitsmaß auf $(\Omega', \ereignisF')$, welches wir als \begriff{Wahrscheinlichkeitsverteilung von $X$ unter $\P$} bezeichnen.
 \end{satz}
 
 \begin{proof}
@@ -46,14 +46,17 @@ d.h. $X$ sollte \begriff{messbar} sein.
         &= \sum_{1 \geq 1} \P'(A_i)
     \end{aligned}
     \end{equation*}
-    Also ist $\P'$ ein WMaß.
+    Also ist $\P'$ ein Wahrscheinlichkeitsmaß.
 \end{proof}
 
 \begin{*bemerkung}
     \begin{itemize}[leftmargin=*, nolistsep]
-        \item Aus Gründen der Lesbarkeit schreiben wir in der Folge $\P (X \in A) = \P ( \menge{\omega \colon X(\omega) \in A} )$
-        \item Ist $X$ die Identität, so fallen die Begriffe \WMass und \WVerteilung zusammen.
-        \item In der (weiterführenden) Literatur zur \WTheorie wird oft auf die Angabe eines zugrundeliegenden WRaumes verzichtet und stattdessen eine ``Zufalsvariable mit Verteilung $\P$ auf $\Omega$'' eingeführt.
+        \item Aus Gründen der Lesbarkeit schreiben wir in der Folge
+        \begin{equation*}
+        	\P (X \in A) = \P ( \menge{\omega \colon X(\omega) \in A} )
+        \end{equation*}
+        \item Ist $X = \id$, so fallen die Begriffe \WMass und \WVerteilung zusammen.
+        \item In der (weiterführenden) Literatur zur \WTheorie wird oft auf die Angabe eines zugrundeliegenden Wahrscheinlichkeitsraumes verzichtet und stattdessen eine ``Zufalsvariable mit Verteilung $\P$ auf $\Omega$'' eingeführt.
         Gemeint ist (fast) immer $X$ als Identität auf $(\Omega, \ereignisF, \P)$ mit $\ereignisF = \pows\Omega$ oder $\ereignisF = \borel\Omega$.
         \item Für die Verteilung von $X$ unter $\P$ schreibe $\P_X$ und $X \sim \P_{X}$ für die Tatsache, dass $X$ gemäß $\P_X$ verteilt ist.
     \end{itemize}
@@ -105,12 +108,12 @@ Da die halboffenen Intervalle $\borel\R$ erzeugen, ist die Verteilung einer reel
     \begin{equation*}
         \abb{X}{\menge{1,2,\dots, 6}}{\R} \mit x \mapsto x
     \end{equation*}
-    modelliert werden. Es folgt als Verteilungsfunktion
+    modelliert werden. \\
+    Es folgt als Verteilungsfunktion
     \begin{equation*}
-    \begin{aligned}
-    F(x) &= \P'(X \leq x) = \P(X^{-1}(-\infty,x]) = \P((-\infty,x]) \\
-         &= \frac{1}{6}\sum_{i=1}^{6} \one_{\menge{i \leq x}}
-    \end{aligned}
+	    F(x) 
+	    = \P'(X \leq x) = \P(X^{-1}(-\infty,x]) = \P((-\infty,x])
+	    = \frac{1}{6} \, \sum_{i=1}^{6} \one_{\menge{i \leq x}}
     \end{equation*}
 \end{beispiel}
 
@@ -128,7 +131,7 @@ Diese Erkenntnisse lassen sich auch verallgemeinern:
         \item $F$ ist rechtsseitig stetig
         \item $\lim_{x\to -\infty} F(x) = 0$ und $\lim_{x\to \infty} F(x) = 1$
     \end{enumerate}
-    Umgekehrt existiert zu jeder Funktion $\abb{F}{\R}{[0,1]}$ mit Eigenschaften (1) bis (3) eine reelle Zufallsvariable auf $((0,1), \borel((0,1)), \Uni((0,1))$ mit Verteilungsfunktion $F$.
+    Umgekehrt existiert zu jeder Funktion $\abb{F}{\R}{[0,1]}$ mit Eigenschaften (1) bis (3) eine reelle Zufallsvariable auf $((0,1), \borel{(0,1)}, \Uni((0,1)))$ mit Verteilungsfunktion $F$.
 \end{satz}
 
 \begin{proof}
@@ -142,10 +145,8 @@ Diese Erkenntnisse lassen sich auch verallgemeinern:
     \end{equation*}
     sowie
     \begin{equation*}
-    \begin{aligned}
-        \lim_{x\to -\infty} F(x) \overset{\ref{satz: 1.4_rechenregeln}.5}&{=} \P(\emptyset) \overset{\ref{satz: 1.4_rechenregeln}.1}{=} 0 \\
-        \lim_{x\to \infty} F(x) \overset{\ref{satz: 1.4_rechenregeln}.5}&{=} \P(\R) = 1
-    \end{aligned}
+        \lim_{x\to -\infty} F(x) \overset{\ref{satz: 1.4_rechenregeln}.5}{=} \P(\emptyset) \overset{\ref{satz: 1.4_rechenregeln}.1}{=} 0 \quad \und \quad
+        \lim_{x\to \infty} F(x) \overset{\ref{satz: 1.4_rechenregeln}.5}{=} \P(\R) = 1
     \end{equation*}
     Umgekehrt wähle
     \begin{equation*}
@@ -154,7 +155,7 @@ Diese Erkenntnisse lassen sich auch verallgemeinern:
     Dann ist $X$ eine ``linkseitige Inverse'' von $F$ (auch \begriff{Quantilfunktion} oder \begriff{verallgemeinerte Inverse}).
     Wegen (3) gilt $-\infty < X(u) < \infty$ und zudem
     \begin{equation*}
-        \menge{X \leq x} = (0, F(x)) \cap (0,1) \in \borel((0,1))
+        \menge{X \leq x} = (0, F(x)) \cap (0,1) \in \borel{(0,1)}
     \end{equation*}
     Da diese halboffene Mengen ein Erzeugendensystem von $\borel\R$ bilden, folgt bereits die Messbarkeit von $X$, also ist $X$ eine \ZV. Insbesondere hat die Menge $\menge{X \le x}$ gerade \person{Lebesgue}-Maß $F(x)$ und damit hat $X$ die Verteilungsfunktion $F$.
 \end{proof}
