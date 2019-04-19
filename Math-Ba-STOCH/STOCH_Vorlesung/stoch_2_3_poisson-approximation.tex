@@ -1,0 +1,47 @@
+\section{Poisson-Approximation und -Verteilung}
+
+$\Bin(n,p)$ ist zwar explizit und elementar definiert, jedoch für große $n$ mühsam auszuwerten. Für seltene Ereignisse ($n$ groß, $p$ klein) kann man daher eher den folgenden Satz anwenden.
+
+\begin{satz}[Poisson-Approximation]
+	Sei $\lambda > 0$ und $\folge{p_n}$ eine Folge in $[0,1]$ mit
+	\begin{equation*}
+		n*p_n \to \lambda,\quad n \to \infty
+	\end{equation*}
+	Dann gilt für alle $k \in \N_0$ für die Zähldichte der $\Bin(n,p_n)$-Verteilung
+	\begin{equation*}
+		\lim_{n \to \infty} \binom{n}{k} p_n^k (1-p_n)^{n-k} = e^{-\lambda} \frac{\lambda^k}{k!}
+	\end{equation*}
+\end{satz}
+\begin{proof}
+	Sei $k \in \N_{0}$ fix, dann
+	\begin{equation*}
+		\binom{n}{k} = \frac{n!}{k!(n-k)!} 
+		= \frac{n^k}{k!}\frac{n(n-1)\cdots(n-k+1)}{n^k}
+		= \frac{n^k}{k!}\cdot 1 \cdot (1-\frac{1}{n}\cdots \frac{k-1}{n})
+		\overset{n \to \infty}{\widesim} \frac{n^k}{k!}
+	\end{equation*}
+	wobei $a(l) \overset{n \to \infty}{\sim} b(l) \Leftrightarrow \frac{a(l)}{b(l)} \xrightarrow{n\to \infty} 1$. Damit gilt
+	\begin{equation*}
+	\begin{aligned}
+		\binom{n}{k}p^k (1-p)^{n-k} \overset{n \to \infty}&{\widesim} \frac{n^k}{k!}p_n^k(1-p_n)^{n-k}\\
+		\overset{n \to \infty}&{\widesim} \frac{\lambda^k}{k!}(1-p_n)^n
+		= \frac{\lambda^n}{k!}\brackets{1 - \frac{n*p_n}{n}}^n\\
+		\overset{n \to \infty}&{\longrightarrow} \frac{\lambda^n}{k!}e^{-\lambda}
+	\end{aligned}
+	\end{equation*}
+\end{proof}
+
+Der erhaltene Grenzwert liefert die Zähldichte auf $\N_{0}$, denn 
+\begin{equation*}
+	\sum_{k=0}^{\infty}\frac{\lambda^k}{k!}e^{-\lambda} = e^{-\lambda}\sum_{k=0}^{\infty}\frac{\lambda^{k}}{k!} = e^{-\lambda}e^{\lambda} = 1
+\end{equation*}
+
+\begin{definition}
+	Sei $\lambda >0$. Dann heißt das auf $(\N_{0}, \P(\N_{0}))$ definierte Wahrscheinlichkeitsmaß mit
+	\begin{equation*}
+		\P(\set{k}) = \frac{\lambda^k}{k!}e^{-\lambda} \quad k \in \N_{0},\notag
+	\end{equation*}
+	\begriff{Poissonverteilung} mit Parameter $\lambda$. Wir schreiben auch $\Poisson(\lambda)$.
+\end{definition}
+
+Die Poisson-Verteilung ist ein natürliches Modell für die Anzahl von zufälligen, seltenen Ereignissen (z.B. Tore im Fußballspiel, Schadensfälle einer Versicherung)
