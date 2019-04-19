@@ -173,5 +173,111 @@
         \end{equation*}
         die zugehörige Dichtefunktion.
     \end{enumerate}
+
+%%%% AUFGABE 1.4 %%%%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{exercise}
+        \begin{enumerate}[leftmargin=*, label=(\alph*)]
+            \item Es sei $(\Omega , \ereignisF , \P)$ ein \WRaum und $A,B \in \ereignisF$ Ereignisse mit $\P(A) = \lfrac{3}{4}$ und $\P(B) = \lfrac{1}{3}$. Zeigen Sie: $\lfrac{1}{12} \leq \P(A \cap B) \leq \lfrac{1}{3}$.
+        \item Es sei $(\Omega , \ereignisF , \P)$ ein \WRaum und $A,B,C \in \ereignisF$ Ereignisse mit
+        \begin{equation*}
+            \begin{aligned}
+                \P(A) &= 0.7 \qquad & \P(A \cap B) &= 0.4  \\
+                \P(B) &= 0.6 & \P(A \cap C) &= 0.3 \qquad & \P(A \cap B \cap C) &= 0.1 \\
+                \P(C) &= 0.5 & \P(B \cap C) &= 0.2 \\
+            \end{aligned}
+        \end{equation*}
+        Berechnen Sie $\P(A \cup B)$, $\P(A \cup B \cup C)$ und $\P(A^\complement \cap B^\complement \cap C)$.
+        \end{enumerate}
+    \end{exercise}
     
+    \begin{enumerate}[leftmargin=*, label=(\alph*)]
+        \item Für die Abschätzung nach unten betrachten wir $(A \cap B)^\complement = A^\complement \cup B^\complement$. Dafür gilt die $\sigma$-Subadditivität:
+        \begin{equation*}
+        \P(A^\complement \cup B^\complement) \leq \P(A^\complement) + \P(B^\complement) = 1 - \P(A) + 1 - \P(B) = 2 - \frac{3}{4} - \frac{1}{3} = \frac{11}{12}
+        \end{equation*} 
+        Somit ist $\P(A \cap B) = 1 - \P((A \cap B)^\complement) \geq \frac{1}{12}$. Für die Abschätzung nach oben verwenden wir die Monotonie des (Wahrscheinlichkeits-)Maßes $\P$. Es ist klar, dass $A \cap B \subseteq A$ und $A \cap B \subseteq B$ gilt, d.h. somit ist $\P(A \cap B) \leq \P(A)$ \textit{und} $\P(A \cap B) \leq \P(B)$. Damit folgt nun auch schon $\P(A \cap B) \leq \min \menge{\P(A) , \P(B)} = \P(B) = \frac{1}{3}$. Somit ist also die Ungleichungskette $\lfrac{1}{12} \leq \P(A \cap B) \leq \lfrac{1}{3}$ gezeigt.
+        \item 
+        \begin{align*}
+            \P(A \cup B) = \P(A) + \P(B) - \P(A \cap B) = 0.7 + 0.6 - 0.4 = 0.9
+        \end{align*}
+        \begin{align*}
+            \P(A \cup B \cup C) &= \P(A \cup B) + \P(C) - \P((A \cup  B) \cap C) \\
+            &= \P(A \cup B) + \P(C) - \P((A \cap C) \cup  (B \cap C)) \\
+            &= \P(A \cup B) + \P(C) - \P(A \cap C) - \P(B \cap C) + \P(A \cap B \cap C) \\
+            &= 0.9 + 0.5 - 0.3 - 0.2 + 0.1 \\
+            &= 1
+        \end{align*}
+        \begin{align*}
+            \P \left( A^\complement \cap B^\complement \cap C \right)
+            &= \P \left( \left( A \cap B \cap C^\complement \right)^\complement \right) \\
+            &= 1 - \P \left( A \cup B \cup C^\complement \right) \\
+            &= 1 - \P(A \cup B) - \P(C^\complement) + \P((A \cup B) \cap C^\complement) \\
+            &= 1 - \P(A \cup B) - \P(C^\complement) + \P((A \cap C^\complement) \cup (B \cap C^\complement)) \\
+            &= 1 - \P(A \cup B) - \P(C^\complement) + \P(A \cap C^\complement) + \P(B \cap C^\complement) - \P(A \cap B \cap C^\complement) \\
+            &= 1 - \P(A \cup B) - \P(C^\complement) + \P(A \setminus (A \cap C)) + \P(B \setminus (B \cap C)) \\
+            &\phantom{=} - \P((A \cap B) \setminus (A \cap B \cap C)) \\
+            &= 1 - \P(A \cup B) - 1 + \P(C) + \P(A) - \P(A \cap C)) \\
+            &\phantom{=} + \P(B) - \P(B \cap C) - \P(A \cap B) + \P(A \cap B \cap C) \\
+            &= \P(A) + \P(B) + \P(C) - \P(A \cap B) - \P(A \cap C) - \P(B \cap C) + \P(A \cap B \cap C) \\
+            &= 0.7 + 0.6 + 0.5 - 0.9 - 0.4 - 0.3 - 0.2 + 0.1 \\
+            &= 0.1
+        \end{align*}
+    \end{enumerate} 
+
+
+%%%% AUFGABE 1.5 %%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \begin{exercise}
+        Es sei $(\Omega , \ereignisF , \P)$ ein Wahrscheinlichkeitsraum und $A_1 , \dots , A_n \in \ereignisF$ seien Ereignisse. Zeigen Sie
+        \begin{equation*}
+            \P \left( \bigcap_{k=1}^n \right) \geq \sum_{k=1}^n \P(A_k) - n + 1
+        \end{equation*}
+    \end{exercise}
+
+    \begin{equation*}
+        \begin{aligned}
+            \P \left( \bigcap_{k=1}^n \right) 
+            = \P \left( \left( \bigcup_{k=1}^n A_k^\complement \right)^\complement \right)
+            &= 1 - \P \left( \bigcup_{k=1}^n A_k^\complement \right) \\
+            \overset{\sigma\text{-Subadd.}}&{\geq} 1 - \sum_{k=1}^n \P(A_k^\complement) \\
+            &= 1 - \sum_{k=1}^n \left( 1 - \P(A_k) \right) \\
+            &= 1 - n + \sum_{k=1}^n \P(A_k) \\
+            &= \sum_{k=1}^n \P(A_k) - n + 1
+        \end{aligned}
+    \end{equation*}
+    
+\pagebreak
+    
+%%%%% AUFGABE 1.6 %%%%%%%%%%%%%%%%%%%%%%%
+    
+    \begin{exercise}
+        Es sei $(\Omega , \ereignisF)$ ein messbarer Raum und $\abb{f}{\Omega}{\R}$ eine messbare Funktion. Zeigen Sie, dass dann auch $\abs{f}$ messbar ist. Beweisen oder widerlegen Sie die Umkehrung.
+    \end{exercise}
+
+    Wir zeigen zuerst die Hinrichtung. 
+    \begin{itemize}[leftmargin=*]
+        \item Sei $\folge{f_n} \subseteq \mathcal{M}(\ereignisF)$. Dann ist auch $\sup_{n \in \N} f_n \in \mathcal{M}(\ereignisF)$, da aus
+        \begin{equation*}
+            \begin{aligned}
+                x \in \menge{\sup_{n \in \N} f_n > a} 
+                &\equivalent \exists n_0 \in \N \colon a < f_{n_0}(x) \leq \sup_{n \in \N} f_n(x) \\
+                &\equivalent x \in \bigcup_{n \in \N} \menge{f_n > a}
+            \end{aligned}
+        \end{equation*}
+        folgt, dass $\menge{\sup_{n \in \N} f_n(x) < a} = \bigcup_{n \in \N} \menge{f_n(x) < a} \in \ereignisF$. Und schließlich ist $\sup_{n \in \N} f_n(x)$ genau dann messbar, wenn $\menge{\sup_{n \in \N} f_n(x) < a}$ es für alle $a \in \Omega$ ist. Analog zeigt man dies auch für das Infimum und erhält damit die Messbarkeit von Limes inferior und Limes superior. Existiert schließlich auch der Limes, so ist auch dieser messbar.
+        \item Sei $f \in \mathcal{M}(\ereignisF)$. Dann existiert nach dem Sombrero-Lemma eine Folge $\folge{f_n} \in \mathcal{E}(\ereignisF)$ mit $f_n \longrightarrow f$ für $n \to \infty$. Es ist klar, dass alle einfachen Treppenfunktionen $f_n$ messbar sind. Aufgrund des ersten Punktes ist dann auch der Grenzprozess $\lim_{n \to \infty} f_n = f$ messbar.
+        \item Damit ist dann auch schon $f^+ \defeq \max(f , 0)$ und $f^- \defeq - \min(f, 0)$ messbar, da sich $f$ jeweils durch eine Folge einfacher Funktionen annähern lasst und die Null durch die konstante Nullfolge beschreibbar ist. Insbesondere sind dann auch die jeweiligen Extrema von $f_n$ und $0$ wieder einfach und somit messbar. Schließlich ist $f^+$ und $f^-$ messbar.
+        \item Sei $f$ eine messbare Funktion. Dann sind auch $f^+$ und $f^-$ messbar, was bereits die Messbarkeit von $\abs{f}$ impliziert, da $\abs{f} = f^+ + f^-$.
+    \end{itemize}
+
+    Die Umkehrung ist im Allgemeinen falsch. Zur Konstruktion eines Gegenbeispiels bezeichne $V$ die aus der Übung bekannte Vitali-Menge, welche nicht messbar ist. Betrachten wir dazu die Funktion
+    \begin{equation*}
+        f(x) \defeq \left( \one_V - \one_{V^\complement} \right) (x)       
+        =   \begin{cases}
+                1 &\text{falls } x \in V \\
+                -1 &\text{falls } x \notin V
+            \end{cases}
+    \end{equation*}
+    Offensichtlich ist $\abs{f} \equiv 1$ und damit messbar. Jedoch ist $f$ nicht messbar, weil beispielsweise $f^{-1}(\menge{1}) = V \notin \ereignisF$ nicht messbar ist.
 \end{exercisePage}
