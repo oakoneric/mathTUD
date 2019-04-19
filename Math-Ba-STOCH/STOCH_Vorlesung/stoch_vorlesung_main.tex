@@ -51,8 +51,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \counterwithin{themcount}{chapter}
+\undef\F
+\newcommand{\F}{\mathcal{F}}
 \undef\folge
 \NewDocumentCommand{\folge}{m O{n \in \N}}{\left( #1 \right)_{#2}}
+\renewcommand{\complement}{\mathsf{C}}
+
 
 \newcommand{\widesim}[1][2.5]{
 	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
