@@ -1,0 +1,135 @@
+\begin{exercisePage}[Körpergrad, algebraische Erweiterungen]
+    \setcounter{taskcount}{6}
+    
+%%%% AUFGABE H7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \newcommand{\bruch}{\frac{a \alpha + b}{c \alpha + d}}
+    \newcommand{\mymatrix}{ \left( \begin{smallmatrix} a & b \\ c & d \end{smallmatrix} \right)}
+    
+    \begin{lemma}\label{lemma: 1_7_invertierbarkeit}
+        Sei $K$ ein Körper. Ist $\mymatrix \in \GL_2(K)$, so gelten folgende Eigenschaften:
+        \begin{itemize}[leftmargin=*, nolistsep, topsep=-\parskip]
+            \item $a = 0 \follows b,c \neq 0$ 
+            \item $b = 0 \follows a,d \neq 0$
+            \item $c = 0 \follows a,d \neq 0$
+            \item $d = 0 \follows b,c \neq 0$
+            \item Sind $a,b,c,d \in \einheit{K}$, so ist $a^{-1} b - c^{-1} d \neq 0$.
+        \end{itemize}
+    \end{lemma}
+    \begin{proof}
+        Ist ein Eintrag der Matrix gleich Null, so müssen die Einträge in der gleichen Zeile und der gleichen Spalte ungleich Null sein, da sonst eine Nullspalte oder Nullzeile den Rangverlust und damit auch den Verlust der Invertierbarkeit bedeuten würde. Daraus folgen bereits die ersten vier Aussagen. Für die letzte Aussage nehmen wir an, dass $a^{-1} b - c^{-1} d = 0$ gilt. Dann gilt auch $a^{-1} b = c^{-1} d$, was sich umstellen lässt zu $ad = bc$ bzw. zu $0 = ad - bc = \det\mymatrix$ im Widerspruch zur Invertierbarkeit.
+    \end{proof}
+%%%%
+    \begin{exercise}
+        Ist $\alpha \in L \setminus K$ und $\mymatrix \in \GL_2(K)$, so ist $K(\alpha) = K\left( \bruch \right)$.
+    \end{exercise}
+    \begin{itemize}[leftmargin=*]
+        \item $K(\alpha) \subseteq K(\bruch)$. \\
+        Wir wollen $\alpha$ aus $\bruch$ darstellen. Betrachten wir dazu für $x,y \in K(\alpha)$
+        \begin{equation*}
+            \alpha = x * \bruch + y
+        \end{equation*}
+        Wir müssen nun 5 verschiedene Fälle unterscheiden.
+        \begin{enumerate}[leftmargin=*, label=(\roman*)]
+            \item Ist $a = 0$, so sind $b,c \in \einheit{K}$ nach \cref{lemma: 1_7_invertierbarkeit}. Dann finden wir mit $x = \frac{(c \alpha + d)^2}{bc}$ und $y = -c^{-1}d$
+            \begin{equation*}
+                x * \frac{b}{c \alpha + d} + y = \frac{(c \alpha + d)^2}{bc} * \frac{b}{c \alpha + d} - \frac{d}{c}
+                = \alpha + \frac{d}{c} - \frac{d}{c} = \alpha
+            \end{equation*}
+            \item Ist $b = 0$, so sind nach \cref{lemma: 1_7_invertierbarkeit} $a,d \in \einheit{K}$. Falls $c = 0$ ist, so ist die Aussage mit $x = a^{-1}d$ klar. Sei also $0 \neq c \in \einheit{K}$. Mit $x = -a^{-1} c^2 (\alpha + c^{-1}d)^2 d^{-1}$ und $y = \frac{\alpha^2 + 2 \alpha c^{-1} d}{c^{-1} d}$ ist 
+            \begin{equation*}
+                x * \bruch + y 
+                = \frac{c^2 (\alpha + c^{-1}d)^2}{-ad} * \frac{a \alpha}{c\alpha + d} + \frac{\alpha^2 + 2\alpha c^{-1} d}{c^{-1} d} = \alpha
+            \end{equation*}
+            \item Ist $c = 0$, so sind $a,d \in \einheit{K}$ nach \cref{lemma: 1_7_invertierbarkeit}. Mit $x = a^{-1} d$ sowie $y = -a^{-1} b  $ ist
+            \begin{equation*}
+            x * \bruch + y = \frac{d}{a} * \frac{a * \alpha + b}{d} - \frac{b}{a} = \alpha + \frac{b}{a} - \frac{b}{a} = \alpha
+            \end{equation*}
+            \item Ist $a = 0$, so sind $b,c \in \einheit{K}$ nach \cref{lemma: 1_7_invertierbarkeit}. Dann gilt mit $x = b^{-1} c \alpha^2$ und $y = -a*\alpha^2*b^{-1}$
+            \begin{equation*}
+                x * \bruch + y 
+                = \frac{c * \alpha^2}{b} * \frac{a*\alpha + b}{c * \alpha} - \frac{a*\alpha^2}{b} 
+                = \frac{a*\alpha^2 + b * \alpha - a*\alpha^2}{b} 
+                = \alpha
+            \end{equation*}
+            \item Für den allgemeinen Fall seien $0 \neq a,b,c,d \in \einheit{K}$. Zur besseren Nachvollziehbarkeit konstruieren wir hier das $\alpha$ direkt aus $\bruch$. Wir multiplizieren zuerst mit $a^{-1}c$, was $\frac{\alpha + a^{-1}b}{\alpha + c^{-1}d}$ ergibt. Addieren wir eine $-1$, so liefert dies $\frac{a^{-1}b - c^{-1} d}{\alpha + c^{-1} d}$. Durch Multiplikation mit $\frac{(\alpha + c^{-1}d)^2}{a^{-1}b - c^{-1}d}$ (der Nenner ist wegen \cref{lemma: 1_7_invertierbarkeit} nicht Null) erreichen wir $\alpha + c^{-1}d$. Abschließend eliminiert die Addition von $-c^{-1}a$ noch den letzten Summanden und wir erhalten $\alpha$. Damit ergibt sich
+            \begin{equation*}
+                x = \frac{c * (\alpha + c^{-1}d)^2}{b - ac^{-1}d} \quad \text{und} \quad
+                y = - \frac{(\alpha + c^{-1}d)^2}{a^{-1}b - c^{-1}d} - c^{-1}d
+            \end{equation*}
+            \item Die zwei weiteren Fälle, dass jeweils zwei diagonal zueinander stehende Elemente gleich Null sind ergeben sich unmittelbar aus den Operationen der Fälle, dass je einer von beiden Einträgen Null sind.
+        \end{enumerate}
+        Damit gilt für jedes $\xi \in K(\alpha)$ auch $\xi \in K(\bruch)$.
+        
+        \item $K(\bruch) \subseteq K(\alpha)$. \\ 
+        Da $\alpha \in K(\alpha)$ und $a,b \in K$ ist auch $a * \alpha + b \in K(\alpha)$. Analog ist für $c \in \einheit{K}$ und $d \in K$ auch $c * \alpha + d \in K(\alpha)$. Angenommen $c * \alpha + d = 0$, dann gilt $\alpha = -\frac{d}{c} \in K$ im Widerspruch zu $\alpha \in L \setminus K$. Damit ist also $c * \alpha + d \neq 0$, d.h. $c * \alpha + d \in \einheit{K}$. Schließlich ist dann auch $(a * \alpha + b) * (c * \alpha + d)^{-1} = \bruch \in K(\alpha)$. Daraus folgt nun die Inklusion $K(\bruch) \subseteq K(\alpha)$.
+    \end{itemize}
+    Schlussendlich folgt aus beiden Inklusionen die Gleichheit der Körper, also $K(\alpha) = K(\bruch)$
+    
+    \undef\bruch
+    \undef\mymatrix
+    
+%%%% AUFGABE H8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{exercise}
+        Bestimmen Sie das Minimalpolynom von $\lfrac{1+\sqrt{5}}{2}$ und von $\zeta_5 + \zeta_5^{-1}$ jeweils über $\Q$. Ist $\Q(\zeta_5) = \Q(\zeta_5 + \zeta_5^{-1})$?
+    \end{exercise}
+    \begin{itemize}[leftmargin=*]
+        \item Man stellt schnell fest, dass $\alpha = \frac{1 + \sqrt{5}}{2}$ eine Nullstelle von $f = X^2 - X -1 \in \polynom[\Q]$ ist, denn
+        \begin{equation*}
+            f(\alpha) = \frac{(1 + \sqrt{5})^2}{4} - \frac{1+\sqrt{5}}{2} - 1 
+            = \frac{1 + 2\sqrt{5} + 5}{4} - \frac{2 + 2\sqrt{5}}{4} - 1 = 0
+        \end{equation*}
+        Dieses Polynom ist normiert und besitzt die Nullstellen 
+        \begin{equation*}
+            x_{\lfrac{1}{2}} = \frac{1}{2} \pm \sqrt{\frac{1}{4} + 1} = \frac{1 \pm \sqrt{5}}{2} \notin \Q
+        \end{equation*}
+        Somit ist $f$ nach GEO II.7.1 irreduzibel und es gilt $f = \MinPol{\alpha}{\Q}$.
+        %
+        \item Betrachten wir einige Potenzen von $\alpha = \zeta_5 + \zeta_5^{-1}$.
+        \begin{equation*}
+            \begin{aligned}
+            \alpha^3 &= \zeta_5^3 + \zeta_5^{-3} + 3(\zeta_5 + \zeta_5^{-1}) \\
+            \alpha^5 &= 2 + 5(\zeta_5^3 + \zeta_5^{-3}) + 10(\zeta_5+\zeta_5^{-1})
+            \end{aligned}
+        \end{equation*}
+        Nun ist offensichtlich, dass man eine Null aus diesen Potenzen schreiben kann, nämlich $0 = \alpha^5 - 5\alpha^3 + 5\alpha - 2$. Damit ist erhält man ein Polynom $f = X^5 - 5X^3 + 5X - 2 \in \polynom[\Q]$, welches $\alpha$ als Nullstelle hat. Dieses Polynom ist allerdings nicht irreduzibel, d.h. es gibt eine Zerlegung
+        \begin{equation*}
+            f = (X - 2)(X^2 + X - 1)^2
+        \end{equation*}
+        Da $\alpha$ keine Nullstelle von $X-2$ ist, jedoch von $f$, muss also $\alpha$ eine Nullstelle von $\quer{f} = X^2 + X -1$ sein. Dieses Polynom ist normiert und hat nur die Nullstellen $x_{\lfrac{1}{2}} = \frac{1 + \sqrt{5}}{2} \notin \Q$. Somit ist $\quer{f}$ nach GEO II.7.1 irreduzibel und es gilt $\quer{f} = \MinPol{\alpha}{\Q}$.
+        %
+        \item Angenommen es gilt $\Q(\zeta_5) = \Q(\zeta_5 + \zeta_5^{-1})$. Ein Polynom mit Nullstelle $\zeta_5$ ist zum Beispiel $\quer{f} = X^5 + 1 = (X - 1)(X^4 - X^3 + X^2 - X + 1)$, wobei $f = X^4 - X^3 + X^2 - X + 1$ ein normierter, irreduzibler Faktor mit Nullstelle $\zeta_5$ ist, also $f = \MinPol{\zeta_5}{\Q}$. Damit ist $\zeta_5$ algebraisch über $\Q$ und es gilt nach Satz 2.7 auch $[\Q(\zeta_5) : \Q] = \deg(\zeta_5 \mid \Q) = 4$ und dem ersten Teil der Aufgabe $[\Q(\zeta_5 + \zeta_5^{-1}) : \Q] = \deg( \zeta_5 + \zeta_5^{-1} \mid \Q) = 2$. Aufgrund der Multiplikativität des Körpergrades (Satz 1.12) gilt
+        \begin{equation*}
+            \begin{array}{rccccc}
+            & [\Q(\zeta_5) : \Q(\zeta_5 + \zeta_5^{-1})] & * & [\Q(\zeta_5 + \zeta_5^{-1}) : \Q] & = & [ \Q( \zeta_5 ) : \Q ] \\%
+            \follows & \lbrack \Q ( \zeta_5 ) : \Q ( \zeta_5 + \zeta_5^{-1} ) \rbrack & * & 2 & = & 4 \\
+            \end{array}
+        \end{equation*}
+        woraus also $[\Q(\zeta_5) : \Q(\zeta_5 + \zeta_5^{-1})] = \lfrac{4}{2} = 2$ folgt, was im Widerspruch zur Annahme steht. Somit ist $\Q(\zeta_5) \neq \Q(\zeta_5 + \zeta_5^{-1})$.       
+    \end{itemize}
+
+%%%% AUFGABE H9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \begin{exercise}
+        Sei $\alpha \in L$ algebraisch über $K$ mit $\deg( \alpha \mid K)$ ungerade. Zeigen Sie, dass $K(\alpha) = K(\alpha^2)$ gilt.
+    \end{exercise}
+
+    Da $\alpha$ algebraisch über $K$ ist, existiert eine Polynom $f \in \polynom[K]$, für das $f(\alpha) = 0$ gilt. Aus der Eigenschaft algebraisch zu sein folgt mit Satz 2.7 auch, dass $\deg(f) = \deg(\alpha | K) = [K(\alpha) : K] = 2k + 1$ für ein $k \in \N_0$. Betrachte daher $f = \sum_{i=0}^{2k+1} c_i X^i$.  Wir können $f$ zerlegen in 
+    \begin{equation*}
+            f = \sum_{i=0}^k a_i X^{2i + 1} + \sum_{i=0}^k b_i X^{2i} 
+            = \left( \sum_{i=0}^k a_i X^{2i} \right) * X + \sum_{i=0}^k b_i X^{2i}
+    \end{equation*}
+    wobei $a_i = c_{2i+1}$ und $b_i = c_{2i}$ für alle $i \in \menge{0, \dots , k}$.
+    Definieren wir nun
+    \begin{equation*}
+        \quer{f} \defeq \left( \sum_{i=0}^k a_i (\alpha^2)^i \right) * X + \sum_{i=0}^k b_i (\alpha^2)^i \enskip \in \polynom[K(\alpha^2)] \label{eq: 1_9_polynomueberalpha2}
+    \end{equation*}
+    Weiterhin gilt natürlich $\quer{f}(\alpha) = 0$. Der Leitkoeffizient von $\quer{f}$ ist nicht Null, da sonst der Grad von $\sum_{i=0}^k a_i (\alpha^2)^i$ kleiner als der Grad des Minimalpolynoms von $\alpha$ über $K$ wäre. Angenommen $\LC(\quer{f}) = \sum_{i=0}^k a_i (\alpha^2)^i = 0$. Dann ist das Polynom $\sum_{i=0}^k a_i X^{2i} \in \polynom[K]$ vom Grad $2k$ schon Minimalpolynom und $\deg(\alpha | K) = 2k$ gerade im Widerspruch zur Voraussetzung. Damit ist $\LC(\quer{f}) \neq 0$.
+    
+    Definieren wir also
+    \begin{equation*}
+        g = X + \frac{\sum_{i=0}^k b_i \alpha^{2i}}{\sum_{i=0}^k a_i \alpha^{2i}} \enskip \in \polynom[K(\alpha)]
+    \end{equation*}
+    so hat dieses Grad $1$ (ist also irreduzibel), ist normiert und $\alpha$ ist Nullstelle davon. Damit ist $[K(\alpha) : K(\alpha^2)] = 1$ und die Körper sind gleich, d.h. $K(\alpha) = K(\alpha^2)$.
+
+\end{exercisePage}
