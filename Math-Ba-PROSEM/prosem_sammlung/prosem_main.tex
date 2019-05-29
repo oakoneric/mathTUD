@@ -1,0 +1,92 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ %
+ngerman, %
+a4paper, %
+sectionreset, %
+chapterstyle=framed, %
+sectionstyle=pure, %
+titlefont=osfamily %
+]{../../texmf/tex/latex/mathscriptMathTUD/mathscriptMathTUD}
+
+\usepackage[order=firstname, fractionappearence=lowerraise]{../../texmf/tex/latex/mathworkMathTUD/mathworkMathTUD}
+%\usepackage[presentExercise]{../../texmf/tex/latex/exercisesMathTUD/exercisesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\name{Eric Kunze}
+\matnr{Nummer}
+\email{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\modul{Proseminar: Numerik}
+\period{Sommersemester 2019}
+
+%\tutor{Dr. Legrand}
+%\group{Tag x. DS, (un)gerade Woche}
+
+\lecturer{Prof. Dr. Andreas Fischer}
+\faculty{Mathematik}
+\institute{Numerik}
+\professorship{Numerik der linearen Optimierung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% specific commands
+
+\counterwithin{themcount}{chapter}
+\titleformat{\chapter}[frame]{\bfseries\titlefont\color{cddarkblue}}{\enskip \LARGE Vortrag \;\thechapter \enskip}{8pt}{\Huge\centering\MakeUppercase}%
+\titlespacing{\chapter}{0pt}{0pt}{10pt}%
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
+\newcommand{\zerodisplayskips}{%
+	\setlength{\abovedisplayskip}{3pt}%
+	\setlength{\belowdisplayskip}{3pt}%
+	\setlength{\abovedisplayshortskip}{0pt}%
+	\setlength{\belowdisplayshortskip}{0pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+
+\newcommand{\vortragender}[1]{\begin{center} \textit{\Large #1} \end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+    
+    \MakeTitle[dark][Numerische Verfahren zur Lösung unrestringierter Optimierungsaufgaben]
+    
+    \tableofcontents
+    
+    \stepcounter{chapter}
+    \include{prosem_2_eric_konvexeFkt}
+    \include{prosem_3_friedemann_monotonie}
+    \include{prosem_4_klemens_definitheit}
+    
+    
+\end{document}

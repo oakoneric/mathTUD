@@ -1,0 +1,403 @@
+%~ \documentclass[a4paper,titlepage,reqno]{amsart}
+\documentclass[a4paper,reqno]{amsart}
+\usepackage[foot]{amsaddr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[ngerman]{babel}
+\usepackage{blindtext}
+\usepackage{amsmath,amssymb,mathtools,paralist,enumitem,color,wasysym}
+\usepackage[mathscr]{eucal}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{satz}[theorem]{Satz}
+\newtheorem{bemerkung}[theorem]{Bemerkung}
+\newtheorem{beispiel}[theorem]{Beispiel}
+%~ \newtheorem{beweis}[proof]{Beweis}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Bemerkung}
+
+%~ \newcommand{\norm}[1]{\setcounter{section}{3}\setcounter{theorem}{}}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\newcommand{\dd}{\textnormal{d}}
+\newcommand\red[1]{\textcolor{red}{#1}}
+
+\title[Fortsetzung zu konvexen Funktionen]{Proseminar:\\4. Fortsetzung zu konvexen Funktionen}
+
+%~ \author{Klemens Fritzsche}
+%~ \address{}
+
+\begin{document}
+\maketitle
+
+%~ \counterwithin{theorem}{section}
+% neu: satz 3.8 + lemma 3.9
+
+% im Buch ab S. 18 Lemma 3.9 bis S. 21, einschließlich Aufgaben 3.11 und 3.12
+%~ \section{Fortsetzung zu konvexen Funktionen}%
+
+\section*{Wiederholung}
+\setcounter{section}{3}\setcounter{theorem}{1}
+%~ \setcounter{theorem}{2}
+\begin{definition}\label{def3.2}%[Def. 3.2]
+    Sei $X\subseteq\mathbb{R}^n$ eine konvexe Menge. Eine Funktion
+    $f\colon X\to\mathbb{R}$ heißt
+    \begin{compactenum}[(a)]
+        \item \emph{konvex} (auf $X$), wenn für alle $x,y\in X$ und alle
+            $\lambda\in(0,1)$ gilt:
+            \begin{align*}
+                f(\lambda x+(1-\lambda)y)\leq\lambda f(x) + (1-\lambda)f(y);
+            \end{align*}
+        \item \emph{strikt konvex} (auf $X$), wenn für alle $x,y\in X$ mit
+            $x\neq y$ und alle $\lambda\in(0,1)$ gilt:
+            \begin{align*}
+                f(\lambda x+(1-\lambda)y)<\lambda f(x) + (1-\lambda)f(y);
+            \end{align*}
+        \item \emph{gleichmäßig konvex} (auf $X$), wenn es ein $\mu>0$
+            gibt mit
+            \begin{align*}
+                f(\lambda x+(1-\lambda)y) + \mu\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x) + (1-\lambda)f(y).
+            \end{align*}
+            für alle $x,y\in X$ und alle $\lambda\in(0,1)$.
+            (Man bezeichnet $f$ dann auch als \emph{gleichmäßig konvex mit
+            Modulus $\mu$}.)
+        \end{compactenum}
+\end{definition}
+
+\setcounter{theorem}{4}
+\begin{satz}\label{satz3.5}%[Satz 3.5]
+    Seien $X\subseteq\mathbb{R}^n$ eine offene und konvexe Menge und
+    $f\colon X\to\mathbb{R}$ stetig differenzierbar. Dann gelten:
+    \begin{compactenum}[(a)]
+        \item $f$ konvex (auf $X$) $\Longleftrightarrow$ $\forall x,y\in X: f(x)-f(y)\geq \nabla f(y)^\top(x-y)$.
+        \item $f$ strikt konvex (auf $X$) $\Longleftrightarrow$ $\forall x,y\in X,x\neq y: f(x)-f(y)>\nabla f(y)^\top(x-y)$.
+        \item $f$ gleichmäßig konvex (auf $X$) $\Longleftrightarrow$ $\exists \mu>0:f(x)-f(y)\geq \nabla f(y)^\top(x-y) + \mu\norm{x-y}^2$ $\forall x,y\in X$
+    \end{compactenum}
+\end{satz}
+
+\begin{definition}\label{def3.6}%[Def. 3.6]
+    Sei $X\subseteq\mathbb{R}^n$ eine gegebene Menge. Eine Funktion
+    $F\colon X\to\mathbb{R}^n$ heißt
+    \begin{compactenum}[(a)]
+        \item \emph{monoton} (auf $X$), wenn
+            \begin{align*}
+                (x-y)^\top(F(x)-F(y))\geq 0
+            \end{align*}
+            für alle $x,y\in X$ gilt;
+        \item \emph{strikt monoton} (auf $X$), wenn
+            \begin{align*}
+                (x-y)^\top(F(x)-F(y))> 0
+            \end{align*}
+            für alle $x,y\in X$ mit $x\neq y$ gilt;
+        \item \emph{gleichmäßig monoton} (auf $X$), wenn es ein $\mu>0$ gibt
+            mit
+            \begin{align*}
+                (x-y)^\top(F(x)-F(y))\geq \mu\norm{x-y}^2
+            \end{align*}
+            für alle $x,y\in X$. (Man bezeichnet $F$ dann auch als
+            \emph{gleichmäßig monoton mit Modulus $\mu$}.)
+    \end{compactenum}
+\end{definition}
+
+\begin{satz}\label{3.7}%[Satz 3.7]
+    Sei $X\subseteq\mathbb{R}^n$ eine offene und konvexe Menge und
+    $f\colon X\to\mathbb{R}$ stetig differenzierbar. Dann gelten:
+    \begin{compactenum}[(a)]
+        \item $f$ konvex $\Longleftrightarrow$ $\nabla f$ monoton
+        \item $f$ strikt konvex $\Longleftrightarrow$ $\nabla f$ strikt monoton
+        \item $f$ gleichmäßig konvex $\Longleftrightarrow$ $\nabla f$
+        gleichmäßig monoton.
+    \end{compactenum}
+\end{satz}
+
+\def\thesection{\Alph{section}}
+\setcounter{section}{1}\setcounter{theorem}{2}
+\begin{satz}[Mittelwertsatz in Integralform]\label{MWS_Intform}%, Satz A.3]
+    Sei $F\colon\mathbb{R}^n\to\mathbb{R}^m$ stetig differenzierbar,
+    sowie $x,y\in\mathbb{R}^n$ gegeben. Dann gilt
+    \begin{align*}
+        F(x) = F(y) + \int_0^1 F'(y+\tau(x-y))(x-y)\dd\tau.
+    \end{align*}
+\end{satz}
+
+Hier nutzen wir $F(x)=\nabla f(x)$, d.h. es gilt
+    \begin{align}\label{MWS_intform}
+        \nabla f(x) = \nabla f(y) + \int_0^1 \nabla^2 f(y+\tau(x-y))(x-y)\dd\tau.
+    \end{align}
+
+\def\thesection{\arabic{section}}
+\section*{Fortsetzung}
+
+Wir zeigen zuerst ein Resultat über zweimal stetig differenzierbare
+(strikt, gleichmäßig) konvexe Funktionen unter Zuhilfenahme von Satz
+\ref{3.7}:
+\setcounter{section}{3}\setcounter{theorem}{7}
+\begin{satz}\label{satz3.8}%[Satz 3.8]
+    Sei $X\subseteq\mathbb{R}^n$ eine offene und konvexe Menge und
+    $f\colon X\to\mathbb{R}^n$ zweimal stetig differenzierbar. Dann gilt
+    \begin{compactenum}[(a)]
+        \item $f$ konvex (auf $X$) $\Longleftrightarrow$ $\nabla^2 f(x)$
+            positiv semidefinit für alle $x\in X$
+        \item $\nabla^2 f(x)$ positiv definit für alle $x\in X$
+            $\Longrightarrow$ $f$ strikt konvex (auf $X$)
+        \item $f$ gleichmäßig konvex (auf $X$) $\Longleftrightarrow$
+            $\nabla^2 f(x)$ gleichmäßig positiv definit auf $X$, d.h.,
+            wenn es ein $\mu>0$ gibt mit
+            \begin{align}\label{eq:3.11}
+                d^\top\nabla^2 f(x)d\geq\mu\norm{d}^2
+            \end{align}
+            für alle $x\in X$ und für alle $d\in\mathbb{R}^n$.
+    \end{compactenum}
+\end{satz}
+
+\begin{proof}$ $\newline
+    \begin{itemize}%[leftmargin=-.1cm]
+\item[\emph{(c)}] \underline{"$\Rightarrow$\!":} Sei $f$ gleichmäßig konvex. Wegen
+    Satz \ref{3.7} \emph{(c)} ist
+    $\nabla f$ gleichmäßig monoton, d.h. es existiert ein $\mu>0$ so,
+    dass für alle $x,y\in X$ gilt
+    \begin{align}\label{nablaf_glm_mon}
+        (x-y)^\top(\nabla f(x)-\nabla f(y))\geq\mu\norm{x-y}^2.
+    \end{align}
+    Da $\nabla f$ stetig differenzierbar ist folgt mit einer geeigneten
+    Konstanten $\mu>0$ also
+    \begin{align*}
+        d^\top\nabla^2 f(x) d
+        &= d^\top \lim_{t\to 0} \frac{\nabla f(x+td) - \nabla f(x)}{t}\\
+        &= \lim_{t\to 0} \frac{td^\top(\nabla f(x+td) - \nabla f(x))}{t^2}\\
+        &\stackrel{\eqref{nablaf_glm_mon}}{\geq} \lim_{t\to 0} \frac{1}{t^2} \mu\norm{td}^2
+        %~ =\lim_{t\to 0} \frac{2t\mu\norm{d}^2}{2t}
+        = \lim_{t\to 0} \mu\norm{d}^2\\
+        &= \mu\norm{d}^2\\
+    \end{align*}
+    für alle $x\in X$ und alle $d\in\mathbb{R}^n$, d.h., $\nabla^2 f(x)$
+    ist gleichmäßig positiv definit (auf $X$).\\
+    %
+    \underline{"$\Leftarrow$\!":}
+    Angenommen es gilt \eqref{eq:3.11},  Aus dem Mittelwertsatz in der
+    Integralform \ref{MWS_Intform} und der Monotonie des Integrals
+    ergibt sich
+    \begin{align}    
+        \qquad\quad(x-y)^\top(\nabla f(x)-\nabla f(y))
+        &\stackrel{\eqref{MWS_intform}}{=}
+            \int_0^1 (x-y)^\top \nabla^2f(y+\tau(x-y))(x-y)\dd \tau\nonumber\\
+        &\stackrel{\eqref{eq:3.11}}{\geq} \mu\int_0^1 \norm{x-y}^2\dd\tau\nonumber\\
+        &= \mu\norm{x-y}^2,\label{eq3.12}
+    \end{align}
+    d.h., nach Definition \ref{def3.6} (c) $\nabla f$ ist gleichmäßig
+    monoton auf $X$. Wegen Satz
+    \ref{3.7} \emph{(c)} ist $f$ selbst daher gleichmäßig konvex auf $X$.
+\item[\emph{(a)}] Folgt aus (c) wenn man $\mu=0$ setzt.
+    
+\item[\emph{(b)}] Sei $\nabla^2 f(z)$ positiv definit für alle $z\in X$.
+    Dann ist $\theta(\tau)\coloneqq (x-y)^\top\nabla^2 f(y+\tau(x-y))(x-y)>0$
+    für alle $\tau\in[0,1]$ und alle $x,y\in X$ mit $x\neq y$. Folglich
+    ist
+    \begin{align}
+        (x-y)^\top(\nabla f(x)-\nabla f(y))
+        \stackrel{\eqref{MWS_intform}}{=} \int_0^1 \theta(\tau)\dd \tau>0
+    \end{align}
+    für alle $x,y\in X$ mit $x\neq y$, vgl. \eqref{eq3.12}. Also ist
+    $\nabla f$ nach Definition \ref{def3.6} (b) strikt monoton und
+    somit $f$ selbst strikt konvex aufgrund
+    des Satzes \ref{3.7} \emph{(b)}.
+    \end{itemize}
+\end{proof}
+
+Die Aussage des Satzes \ref{satz3.8} \emph{(b)} ist i.A. nur von
+hinreichendem Charakter, denn die Funktion$f(x)\coloneqq x^4$ ist strikt
+konvex, aber $\nabla^2 f(0)=0$ ist nur positiv semidefinit auf
+$X=[0,1]\subseteq\mathbb{R}$:
+\begin{itemize}
+    \item Aus $f(x)=x^4$ folgt $\nabla f(x)=4x^3$ und $\nabla^2 f(x)=12x^2$.
+    Also gilt $\nabla^2 f(0)=0$ und $f$ kann nicht positiv definit auf
+    $X$ sein.
+    \item $f(x)=x^4$ ist strikt konvex genau dann, wenn $\nabla f(x)$
+    strikt monoton ist, d.h., wenn für alle $x,y\in X$ mit $x\neq y$ gilt
+    $$
+    (x-y)(\nabla f(x)-\nabla f(y))>0.
+    $$
+    O.B.d.A. können wir $x>y$ voraussetzen. Eingesetzt liefert dies
+    $$
+        \underbrace{(x-y)}_{>0}(4x^3-4y^3)>0
+    $$
+    was wegen $x^3>y^3$ erfüllt ist.
+\end{itemize}
+
+Dass Levelmengen von gleichmäßig konvexen Funktionen stets kompakt sind,
+zeigen wir im folgenden
+
+%~ \setcounter{section}{3}\setcounter{theorem}{8}
+\begin{lemma}\label{lemma3.9}%[Lemma 3.9]
+    Sei $f\colon \mathbb{R}^n\to\mathbb{R}$ stetig differenzierbar, $x^0\in\mathbb{R}^n$
+    beliebig, die Levelmenge
+    \begin{align}
+        \mathscr{L}(x^0)
+        \coloneqq
+        \{ x\in\mathbb{R}^n \mid f(x)\leq f(x^0) \}
+    \end{align}
+    konvex und $f$ gleichmäßig konvex auf $\mathscr{L}(x^0)$. Dann ist
+    die Menge $\mathscr{L}(x^0)$ kompakt.
+\end{lemma}
+
+\begin{proof}
+    Die Levelmenge $\mathscr{L}(x^0)$ ist nichtleer, da
+    $x^0\in\mathscr{L}(x^0)$.
+    Die Funktion $f$ ist gleichmäßig konvex auf $\mathscr{L}(x^0)$,
+    d.h., es existiert ein geeignetes $\mu>0$ mit $\lambda\coloneqq\frac{1}{2}$
+    sodass für alle $x\in\mathscr{L}(x^0)$ und $y=x^0$ gilt (nach
+    Einsetzen in die Definition \ref{def3.2} (c))
+    \begin{align*}
+        & f(\tfrac{1}{2} x+ \tfrac{1}{2}x^0) + \mu\tfrac{1}{2}\cdot\tfrac{1}{2}\norm{x-x^0}^2
+        \leq \tfrac{1}{2} f(x) + \tfrac{1}{2}f(x^0)\\
+        \Leftrightarrow\qquad
+        & f(\tfrac{1}{2} (x+ x^0)) + \mu\tfrac{1}{4}\norm{x-x^0}^2
+        \leq \tfrac{1}{2}\left( f(x) + f(x^0)\right)
+    \end{align*}
+    bzw. umgestellt
+    \begin{align*}
+        \tfrac{1}{4}\mu\norm{x-x^0}^2
+        &\leq \tfrac{1}{2}( f(x) + f(x^0)) - f(\tfrac{1}{2} (x+ x^0))\\
+        %~ \Leftrightarrow\qquad
+        %~ & \tfrac{1}{4}\mu\norm{x-x^0}^2
+        &= \tfrac{1}{2}\underbrace{( f(x) - f(x^0))}_{\leq0, \text{ da } x\in\mathscr{L}(x^0)}
+        - \left(f(\tfrac{1}{2} (x+ x^0)) - f(x^0)\right)\\
+        %~ \Leftrightarrow\qquad
+        %~ & \tfrac{1}{4}\mu\norm{x-x^0}^2
+        &\leq - \left(f(\tfrac{1}{2} (x+ x^0)) - f(x^0)\right)\\
+        %~ & \tfrac{1}{4}\mu\norm{x-x^0}^2 \leq 
+        &\!\!\!\!\stackrel{\ref{satz3.5} (a)}{\leq}
+        - \tfrac{1}{2}\nabla f(x^0)^\top(x-x^0)\\
+        %~ \Leftrightarrow\qquad
+        %~ & \tfrac{1}{4}\mu\norm{x-x^0}^2
+        &\leq 
+        \tfrac{1}{2}\norm{\nabla f(x^0)^\top(x-x^0)}\\
+        %~ \Leftrightarrow\qquad
+        %~ & \tfrac{1}{4}\mu\norm{x-x^0}^2
+        &\leq 
+        \tfrac{1}{2}\norm{\nabla f(x^0)}\norm{(x-x^0)}
+    \end{align*}
+    und daraus folgt
+    \begin{align*}
+        \norm{x-x^0}\leq c\coloneqq \frac{2\norm{\nabla f(x^0)}}{\mu}
+    \end{align*}
+    für alle $x\in\mathscr{L}(x^0)$. Also ist $\mathscr{L}(x^0)$
+    beschränkt. Aus Stetigkeitsgründen ist die Levelmenge
+    $\mathscr{L}(x^0)$ aber auch abgeschlossen. Nach dem nach dem Satz
+    von Heine-Borel ist $\mathscr{L}(x^0)$ also kompakt.
+\end{proof}
+    
+    Es ist hierbei egal ob man $f$ als gleichmäßig konvex auf dem
+    gesamten $\mathbb{R}^n$ oder auch nur auf einer konvexen Menge
+    $X\subseteq\mathbb{R}^n$ voraussetzt: Es folgt automatisch, dass
+    die Levelmenge $\mathscr{L}(x^0)$ konvex ist. Man könnte in diesem
+    Fall also auf die explizit geforderte Voraussetzung der Konvexität
+    von $\mathscr{L}(x^0)$ im Lemma \ref{lemma3.9} verzichten.
+
+
+%~ \begin{satz}\label{satz310}% Satz 3.10
+    %~ Sei $f\colon \mathbb{R}^n\to\mathbb{R}$ stetig differenzierbar und
+    %~ $X\subseteq\mathbb{R}^n$ konvex. Man betrachte das restringierte
+    %~ Optimierungsproblem
+    %~ \begin{align}\label{eq:satz310}
+        %~ \min{f(x)}\quad\text{u.d.N.}\quad x\in X.
+    %~ \end{align}
+    %~ Dann gelten die folgenden Aussagen:
+    %~ \begin{compactenum}[(a)]
+        %~ \item Ist $f$ konvex auf $X$, so ist die Lösungsmenge von \eqref{eq:satz310}
+            %~ konvex (evtl. leer).
+        %~ \item Ist $f$ strikt konvex auf $X$, so besitzt \eqref{eq:satz310}
+            %~ höchstens eine Lösung.
+        %~ \item Ist $f$ gleichmäßig konvex auf $X$ sowie $X$ nichtleer und
+            %~ abgeschlossen, so besitzt \eqref{eq:satz310} genau eine
+            %~ Lösung.
+    %~ \end{compactenum}
+%~ \end{satz}
+
+%~ \begin{proof}
+    %~ \red{asd}
+%~ \end{proof}
+
+
+%~ \begin{bemerkung}
+    %~ \red{asd}
+%~ \end{bemerkung}
+
+%~ \begin{lemma}% Lemma 3.11
+    %~ Sei $f\colon \mathbb{R}^n\to\mathbb{R}$ stetif differenzierbar,
+    %~ $x^0\in\mathbb{R}^n$, die Levelmenge $\mathscr{L}(x^0)$ konvex, $f$
+    %~ gleichmäßig konvex auf $\mathscr{L}(x^0)$ und $x^*\in\mathbb{R}^n$
+    %~ das gemäß Satz \ref{satz310} (c) eindeutige globale Minimum von $f$.
+    %~ Dann existiert ein $\mu>0$ mit
+    %~ \begin{align}
+        %~ \mu\norm{x-x^*}^2\leq f(x)-f(x^*)
+    %~ \end{align}
+    %~ für alle $x\in\mathscr{L}(x^0)$.
+%~ \end{lemma}
+
+%~ \begin{proof}
+    %~ Da $x^*$ als globales Minimum von $f$ notwendigerweise ein stationärer
+    %~ Punkt von $f$ ist, ergibt sich die behauptete Ungleichung aus dem
+    %~ Satz \ref{satz310} (c).
+%~ \end{proof}
+
+%~ Die für die Optimierung vermutlich wichtigste Eigenschaft konvexer
+%~ Funktionen formulieren wir folgenden
+
+%~ \begin{satz}% Lemma 3.12
+    %~ Sei $f\colon\mathbb{R}^n\to\mathbb{R}$ stetig differenzierbar und
+    %~ konvex, sowie $x^*\in\mathbb{R}^n$ ein stationärer Punkt von $f$.
+    %~ Dann ist $x^*$ ein globales Minimium von $f$ auf dem $\mathbb{R}^n$.
+%~ \end{satz}
+
+%~ \begin{proof}
+    %~ Aus dem Satz \ref{satz310} (a) folgt
+    %~ \begin{align}
+        %~ f(x)-f(x^*)\geq\nabla f(x^*)^\top(x-x^*)=0
+    %~ \end{align}
+    %~ und damit
+    %~ \begin{align}
+        %~ f(x)\geq f(x^*)
+    %~ \end{align}
+    %~ für alle $x^*\in\mathbb{R}^n$. Also ist $x^*$ ein globales Minimum
+    %~ von $f$.
+%~ \end{proof}
+
+%~ \begin{definition}
+    %~ Seie $X\subseteq\mathbb{R}^n$ eine offene Menge und $f\colon X\to\mathbb{R}$
+    %~ stetig differenzierbar. Dann heißt $f$ \emph{pseudokonvex} (auf $X$),
+    %~ falls die Implikation
+    %~ \begin{align}
+        %~ \nabla f(y)^\top(x-y)\geq 0 \quad\Rightarrow\quad f(x)\geq f(y)
+    %~ \end{align}
+    %~ für alle $x,y\in X$ gilt.
+%~ \end{definition}
+
+%~ Zur Veranschaulichung dieser Definition sei zunächst $n=1$:
+%~ \red{asd}
+
+%~ \begin{beispiel}
+    %~ Seien $a,b,\in\mathbb{R}^n, \alpha,\beta\in\mathbb{R},X\subseteq\in\mathbb{R}^n$
+    %~ konvex mit der Eigenschaft
+    %~ \begin{align}
+        %~ b^\top x + \beta\neq 0\quad\text{für alle }x\in X
+    %~ \end{align}
+    %~ sowie $f\colon X\to\mathbb{R}$ definiert durch
+    %~ \begin{align}
+        %~ f(x)\coloneqq \frac{a^\top x+\alpha}{b^\top x+\beta}.
+    %~ \end{align}
+    %~ Die Funktion $f$ ist pseudokonvex, jedoch i.A. nicht konvex:
+%~ \end{beispiel}
+
+
+
+\end{document}

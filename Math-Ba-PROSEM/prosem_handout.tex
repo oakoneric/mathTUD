@@ -1,0 +1,324 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ %
+ngerman, %
+a4paper, 
+11pt,%
+sectionreset, %
+chapterstyle=framed, %
+sectionstyle=pure, %
+titlefont=osfamily %
+]{../texmf/tex/latex/mathscriptMathTUD/mathscriptMathTUD}
+
+\usepackage[order=firstname, fractionappearence=lowerraise]{../texmf/tex/latex/mathworkMathTUD/mathworkMathTUD}
+%\usepackage[presentExercise]{../../texmf/tex/latex/exercisesMathTUD/exercisesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\name{Eric Kunze}
+\matnr{4670292}
+\email{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\modul{Proseminar -- Numerik}
+\period{Sommersemester 2019}
+
+%\tutor{Dr. Legrand}
+%\group{Tag x. DS, (un)gerade Woche}
+
+\lecturer{Prof. Dr. Andreas Fischer}
+\faculty{Mathematik}
+\institute{Numerik}
+\professorship{Numerik der Optimierung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\counterwithin{themcount}{chapter}
+\titleformat{\chapter}[frame]{\bfseries\titlefont\color{cddarkblue}}{\enskip \LARGE Vortrag \;\thechapter \enskip}{8pt}{\Huge\centering\MakeUppercase}%
+\titlespacing{\chapter}{0pt}{0pt}{10pt}%
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
+\newcommand{\zerodisplayskips}{%
+	\setlength{\abovedisplayskip}{3pt}%
+	\setlength{\belowdisplayskip}{3pt}%
+	\setlength{\abovedisplayshortskip}{0pt}%
+	\setlength{\belowdisplayshortskip}{0pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+    
+\MakeTitle[light][Numerische Verfahren zur Lösung unrestringierter Optimierungsaufgaben]
+\setcounter{chapter}{1}
+
+\chapter{Konvexe Funktionen}
+
+In diesem Vortrag beschäftigen wir uns mit der Klasse der konvexen Funktionen, deren Rolle in der Optimierung in späteren Vorträgen behandelt werden wird. \\
+% Es sei vorweggenommen, dass insbesondere die notwendige Optimalitätsbedingung für konvexe Funktionen schon hinreichend ist.
+%
+Zunächst benötigen wir eine gewisse Struktur auf den Definitionsbereichen von konvexen Funktionen. Diese wird durch \textit{konvexe Mengen} realisiert.
+
+\begin{definition}[konvexe Menge]
+	Eine Menge $X \subseteq \Rn$ heißt \begriff{konvex}, wenn für alle $x,y \in X$ und alle $\lambda \in (0,1)$ auch
+	\begin{align} \label{eq: def_konvexkombination}
+		\lambda x + (1 - \lambda) y \in X
+	\end{align}
+	Eine solche Linearkombination $\sum_{i=1}^{n} \mu_i x_i$ von Vektoren $x_i \in \Rn$ mit $\mu_i \in (0,1)$ für alle $i \in \menge{1,\dots,n}$ und $\sum_{i=1}^n \mu_i = 1$ nennt man auch \begriff{Konvexkombination}
+\end{definition}
+
+Anschaulich kann die Definition wie folgt gedeutet werden:
+Eine Menge ist genau dann konvex, wenn jede Verbindungsstrecke zweier Punkte der Menge wieder vollständig in der Menge liegt.
+
+% TODO Abbildung
+
+Ausgehend davon können wir nun eine neue Klasse von Funktionen definieren.
+
+\begin{definition}[konvexe Funktion] \label{def: konvexe_fkt}
+	Sei $X \subseteq \Rn$ eine konvexe Menge. Eine Funktion $\abb{f}{X}{\R}$ heißt
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item \begriff{konvex} (auf $X$), wenn für alle $x,y \in X$ und alle $\lambda \in (0,1)$ gilt, dass
+		\begin{align} \label{eq: konvexe_fkt}
+			f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda) f(y)
+		\end{align}
+		\item \begriff{strikt konvex} (auf $X$), wenn für alle $x,y \in X$ mit $x \neq y$ und alle $\lambda \in (0,1)$ gilt, dass
+		\begin{align} \label{eq: strikt_konvex}
+			f(\lambda x + (1-\lambda)y) < \lambda f(x) + (1-\lambda) f(y)
+		\end{align}
+		\item \begriff{gleichmäßig konvex} (auf $X$), wenn es ein $\mu > 0$ gibt mit 
+		\begin{align} \label{eq: gleichmaessig_konvex}
+			f(\lambda x + (1-\lambda)y) + \mu \lambda (1-\lambda) \norm{x-y}^2 \leq \lambda f(x) + (1-\lambda) f(y)
+		\end{align}
+		für alle $x,y \in X$ und alle $\lambda \in (0,1)$.
+	\end{itemize}
+\end{definition}
+
+\begin{bemerkung}
+	Der Faktor $\mu$ in \labelcref{eq: gleichmaessig_konvex} wird auch als \begriff{Modulus} bezeichnet. Man sagt dann, dass $f$ \textit{gleich"-mäßig konvex mit Modulus $\mu$} ist.
+	
+	Analog ließe sich auch die Eigenschaft Konkavität definieren, indem das Relationszeichen umgedreht wird. Jedoch ist $f$ genau dann konkav, wenn $-f$ konvex ist, d.h. Konkavität lässt sich immer mittles \cref{def: konvexe_fkt} nachweisen.
+	
+	Im folgenden wollen wir auf die explizite Angabe der konvexen Menge verzichten, wenn dies aus dem Kontext klar wird.
+	
+	Anschauliche Bedeutung:
+	Ist $f$ konvex, so liegt kein Punkt einer Verbindungsstrecke von zwei Punkten $(x,f(x)) , (y,y(x)) \in \graph(f) \subseteq \R^{n+1}$ unterhalb des Graphen von $f$.
+\end{bemerkung}
+
+% TODO Abbildung 
+
+Aus Zeitgründen wird das folgende Lemma nur erwähnt.
+\begin{*lemma}
+   	Sei $X \subseteq \Rn$ eine konvexe Menge und $\abb{f}{X}{\R}$. Dann gilt
+   	\begin{align*}
+   		f \text{ gleichmäßig konvex } \follows f \text{ strikt konvex } \follows f \text{ konvex}
+   	\end{align*}
+\end{*lemma}
+\begin{proof}
+	Dies folgt unmittelbar aus \cref{def: konvexe_fkt}.
+\end{proof}
+
+Insbesondere gilt im Allgemeinen keine weitere Implikation in obigem Lemma was durch Beispiele im Laufe des Vortrags widerlegt werden wird.
+
+\begin{beispiel}
+   	\begin{enumerate}[leftmargin=*, nolistsep, label=(\roman*)]
+   		\item Die Gerade $f(x) \defeq x$ ist konvex, aber nicht strikt konvex.
+   		\item Die Parabel $f(x) \defeq x^2$ ist gleichmäßig konvex. Dagegen ist $g(x) \defeq x^4$ strikt konvex, nicht jedoch gleichmäßig konvex. 
+   	\end{enumerate}
+\end{beispiel}
+\begin{proof}
+	\begin{enumerate}[leftmargin=*, nolistsep, label=(\roman*)]
+		\item Für $f(x) = x$ gilt in \eqref{def: konvexe_fkt}
+		\begin{align*}
+			f(\lambda x + (1-\lambda)y) = \lambda x + (1-\lambda) y = \lambda * f(x) + (1-\lambda) f(y)
+		\end{align*}
+		Insbesondere gilt dann $\leq$. Die obige Gleichung zeigt aber auch, dass $f$ nicht strikt konvex ist, da stets auch Gleichheit gilt. Dies ist auch ein Beispiel dafür, dass nicht jede konvexe Funktion auch strikt konvex ist. 
+		%
+		\item Die gleichmäßige Konvexität von $f$ folgt später einfach aus \cref{lemma: quadratischeFunktion}. Wir wollen hier insbesondere die gleichmäßige Konvexität von $g$ widerlegen. Nehmen wir also an $g$ sei gleichmäßig konvex. Dann gilt dies insbesondere auch für $y=0$ und $\lambda = \lfrac{1}{2}$. Somit ergibt sich
+		\begin{align*}
+			g( \lambda x + (1-\lambda) y ) &= g(0.5 x) = 0.5^4 * x^4 = \lfrac{1}{16} x^4 \\
+			\lambda g(x) + (1-\lambda) g(y) &= 0.5 g(x) = 0.5 x^4
+		\end{align*}
+		Um dies zum Widerspruch zu führen, suchen wir alle $x \neq 0$, für die die Ungleichung \eqref{eq: gleichmaessig_konvex} nicht gilt, d.h.
+		\begin{align*}
+			\frac{1}{16}x^4 + \frac{1}{4} \mu x^2 > \frac{1}{2} x^4 \follows \mu > \frac{7}{4}x^2 \follows \abs{x} < \sqrt{\frac{4}{7} \mu}
+		\end{align*}
+		Damit finden wir für alle $\mu > 0$ also ein $x \neq 0$, sodass die Ungleichung in der falschen Richtung erfüllt ist.
+	\end{enumerate}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Eine besondere Stellung nehmen die quadratischen Funktionen ein, für die weitere Implikationen ausgehend vom Lemma oben gelten.
+
+\begin{lemma} \label{lemma: quadratischeFunktion}
+	Sei $\abb{f}{\Rn}{\R}$ eine quadratische Funktion mit
+	\begin{align*}
+		f(x) \defeq \frac{1}{2} \trans{x} Q x + \trans{c} x + \gamma
+	\end{align*}
+	mit einer symmetrischen Matrix $Q \in \R^{n \times n}$, einem Vektor $c \in \Rn$ und einer Konstante $\gamma \in \R$. Dann gilt:
+	\begin{enumerate}[leftmargin=*, label=(\roman*), nolistsep]
+		\item $f$ ist konvex $\equivalent$ $Q$ ist positiv semidefinit.
+		\item $f$ ist strikt konvex $\equivalent$ $f$ ist gleichmäßig konvex $\equivalent$ $Q$ ist positiv definit.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	Der Beweis geht von der folgenden Beobachtung aus:
+	\begin{align*}
+		\lambda f(x) + (1-\lambda) f(y)
+		&= \frac{1}{2} \lambda \trans{x} Q x + \lambda \trans{c} x + \lambda \gamma + \frac{1}{2} (1-\lambda) \trans{y} Q y + (1-\lambda) \trans{c} y + (1-\lambda) \gamma \\
+		&= \frac{1}{2} \lambda \trans{x} Q x + \frac{1}{2} (1-\lambda) \trans{y} Q y + \trans{c} (\lambda x + (1-\lambda) y) + \gamma \\
+		&= f(\lambda x + (1 - \lambda) y) \\
+		&\phantom{=} - \frac{1}{2} \transpose{\lambda x + (1 - \lambda) y} Q (\lambda x + (1 - \lambda) y) + \\
+		&\phantom{=} \enskip \frac{1}{2} \lambda \trans{x} Q x + \frac{1}{2} (1-\lambda) \trans{y} Q y\\
+		&= f(\lambda x + (1 - \lambda) y) + \underbrace{\frac{1}{2} \lambda (1-\lambda)}_{> 0} \transpose{x-y} Q (x-y)
+	\end{align*}
+
+	Somit ist also $f$ genau dann konvex, wenn $\transpose{x-y} Q (x-y) \geq 0$ für alle $x,y \in \Rn$, was äquivalent zur positiven Semidefinitheit von $Q$ ist. Analog ist $f$ genau dann strikt konvex, wenn $\transpose{x-y} Q (x-y) > 0$ für alle $x \neq y$, was wiederum bedeutet, dass $Q$ positiv definit ist.
+	
+	Da $Q$ symmetrisch und positiv definit ist, existiert eine Orthonormalbasis $\mathcal{B} = (v_1 , \dots , v_n)$ von $\Rn$ aus Eigenvektoren von $Q$ mit zugehörigen Eigenwerten $\theta_i$ ($i=1, \dots , n$). Für jedes $z \in \Rn$ existieren dann $\alpha_i$ ($i = 1,\dots, n$), so dass $z = \sum_{i=1}^n \alpha_i * v_i$. Sei $\theta_{\min}$ der kleinste (positive) Eigenwert von $Q$. Dann gilt
+	\begin{align*}
+		\scal{z}{Qz} 
+		&= \scal{\sum_{i=1}^n \alpha_i * v_i}{A * \sum_{i=1}^n \alpha_i * v_i}
+		= \scal{\sum_{i=1}^n \alpha_i * v_i}{\sum_{i=1}^n \alpha_i * (A v_i)} 
+		= \scal{\sum_{i=1}^n \alpha_i * v_i}{\sum_{i=1}^n \theta_i * \alpha_i * v_i} \\
+		&= \sum_{i=1}^n \theta_i * \alpha_i^2 
+		\geq \theta_{\min} * \sum_{i=1}^n \alpha_i^2
+		= \theta_{\min} * \scal{z}{z} = \theta_{\min} * \trans{z}z = \theta_{\min} * \norm{z}
+	\end{align*}
+	
+	Mit $z = x-y$ folgt daraus nun
+	\begin{align*}
+		\transpose{x-y} Q (x-y) \geq \theta_{\min} * \norm{x-y}^2
+	\end{align*}
+	Somit ist $f$ gleichmäßig konvex mit Modulus $\mu = 2 \theta_{\min}$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{satz}
+	Seien $X \subseteq \Rn$ eine offene und konvexe Menge sowie $\abb{f}{X}{\R}$ stetig differenzierbar. Dann gelten:
+	\begin{enumerate}[leftmargin=*, label=(\roman*)]
+		\item $f$ ist genau dann konvex (auf $X$), wenn für alle $x,y \in X$ 
+		\begin{align} \label{eq: satz_konvex}
+			f(x) - f(y) \geq \trans{\nabla f(y)} (x-y)
+		\end{align}
+		gilt
+		\item $f$ ist genau dann strikt konvex (auf $X$), wenn für alle $x,y \in X$ mit $x \neq y$ 
+		\begin{align} \label{eq: satz_streng_konvex}
+		f(x) - f(y) > \trans{\nabla f(y)} (x-y)
+		\end{align}
+		gilt
+		\item $f$ ist genau dann gleichmäßig konvex (auf $X$), wenn es ein $\mu > 0$ gibt mit
+		\begin{align} \label{eq: satz_gleichmaessig_konvex}
+		f(x) - f(y) \geq \trans{\nabla f(y)} (x-y) + \mu \norm{x-y}^2
+		\end{align}
+		für alle $x,y \in X$.
+	\end{enumerate}
+\end{satz}
+\begin{proof}
+	Wir zeigen zuerst die Rückrichtungen. Dabei wollen wir insbesondere die gleichmäßige Konvexität betrachten, die beiden anderen Teile folgen dann aus dieser. 
+	
+	Gelte also \eqref{eq: satz_gleichmaessig_konvex}. Seien $x,y \in X$ und $\lambda \in (0,1)$ beliebig. Setzen wir nun als $z$ als Konvexkombination $z \defeq \lambda x +(1-\lambda)y \in X$. Wegen \eqref{eq: satz_gleichmaessig_konvex} gilt dann 
+	\begin{align}
+		f(x) - f(z) &\geq \trans{\nabla f(z)}(x-z) + \mu \norm{x-z}^2 \label{eq: proof_xz} \\
+	\intertext{und}
+		f(y) - f(z) &\geq \trans{\nabla f(z)}(y-z) + \mu \norm{y-z}^2 \label{eq: proof_yz}
+	\end{align}
+	Nun multiplizieren wir \eqref{eq: proof_xz} mit $\lambda$ und \eqref{eq: proof_yz} mit $(1-\lambda)$. Anschließend addieren wir beide Ungleichungen und erhalten für die linke Seite 
+	\begin{equation*}
+		\lambda f(x) - \lambda f(z) + (1-\lambda) f(y) - (1-\lambda) f(z)
+		= \lambda f(x) + (1-\lambda) f(y) - f(z)
+	\end{equation*}
+	bzw. für den ersten Teil der rechten Seite wegen $z = \lambda x + (1-\lambda) y$
+	\begin{align*}
+		\lambda  \trans{\nabla f(z)}(x-z) + (1-\lambda) \trans{\nabla f(z)}(y-z) 
+		&= \trans{\nabla f(z)} \left( \lambda(x-z) + (1-\lambda) (y-z) \right) \\
+		&= \trans{\nabla f(z)} \left( \lambda x - \lambda z + y - z - \lambda y + \lambda z \right) \\
+		\overset{\text{Def. } z}&{=} \trans{\nabla f(z)} \left( \lambda (x-y) + y - \lambda x - (1-\lambda) y \right) \\
+		&= \trans{\nabla f(z)} \left( \lambda x - \lambda y + y - (1-\lambda) y \right) \\
+		&= \trans{\nabla f(z)} * \left( y \underbrace{( -\lambda + 1 - 1 + \lambda)}_{=0} \right) 
+	\end{align*}
+	Beachten wir nun noch
+	\begin{equation*}
+		x-z = x - \lambda x - (1-\lambda)y = (1-\lambda) (x-y) \quad \und \quad
+		y-z = y - \lambda x - (1-\lambda)y = \lambda (y-x)
+	\end{equation*}
+	dann gilt für die ``Norm-Terme'' der rechten Seite
+	\begin{align*}
+		\lambda \mu \norm{x-z}^2 + + \mu \norm{y-z}^2 
+		&= \mu \left( \lambda \norm{(1-\lambda) (x-y)}^2 + (1- \lambda) \norm{\lambda (y-x)}^2\right) \\
+		&= \mu \left( \lambda (1-\lambda)^2 \norm{(x-y)}^2 + (1- \lambda) \lambda^2 \norm{(x-y)}^2\right) \\
+		&= \mu \norm{x-y}^2 \left( \lambda (1-\lambda) (1-\lambda + \lambda) \right) \\
+		&= \lambda (1-\lambda) \mu \norm{x-y}^2
+	\end{align*}
+	
+	Somit gilt für die Ungleichung mit $z = \lambda x + (1-\lambda) y$ schließlich wieder
+	\begin{equation*}
+		\lambda f(x) + (1-\lambda) f(y) - f(\lambda x + (1-\lambda) y) \geq \lambda (1-\lambda) \mu \norm{x-y}^2
+	\end{equation*}
+	und damit ist $f$ gleichmäßig konvex. Analog zeigt man nun auch, dass aus \eqref{eq: satz_konvex} bzw. \eqref{eq: satz_streng_konvex} die (strikte) Konvexität folgt. Somit sind alle Rückrichtungen gezeigt.
+	
+	Für die Hinrichtungen setzen wir nun $f$ als gleichmäßig konvex voraus. Dann existiert ein $\mu > 0$, sodass für alle $x,y \in X$ und alle $\lambda \in (0,1)$
+	\begin{equation*}
+	\begin{aligned}
+		f(y + \lambda(x-y)) 
+		&= f(\lambda x + (1-\lambda) y) \\
+		&\leq \lambda f(x) + (1-\lambda) f(y) - \mu \lambda (1-\lambda) \norm{x-y}^2
+	\end{aligned}
+	\end{equation*}
+	gilt. Division mit $\lambda$ ergibt schließlich
+	\begin{align*}
+		\frac{f(y + \lambda (x-y)) - f(y)}{\lambda} \leq f(x) - f(y) - \mu (1-\lambda) \norm{x-y}^2
+	\end{align*}
+	Da $f$ nun stetig differenzierbar ist folgt für $\lambda \searrow 0$
+	\begin{align} \label{eq: proof_differenzieren}
+		\trans{\nabla f(y)} (x-y) = \lim_{\lambda \searrow 0} \frac{f(y + \lambda (x-y)) - f(y)}{\lambda} \leq f(x) - f(y) - \mu \norm{x-y}^2
+	\end{align}
+	Dies entspricht gerade der Aussage in \eqref{eq: satz_gleichmaessig_konvex}. Mit $\mu = 0$ ergibt sich ebenso die Aussage in \eqref{eq: satz_konvex}.
+	
+	\pagebreak
+	
+	Um \labelcref{eq: satz_streng_konvex} zu zeigen, müssen wir anders argumentieren, da im Übergang zur Grenze die strikte Relation verloren ginge. Sei nun also $f$ strikt konvex und $x,y \in X$ mit $x \neq y$. Insbesondere ist $f$ dann konvex, d.h. es gilt \eqref{eq: satz_konvex}. Definieren wir nun
+	\begin{equation*}
+		z \defeq \frac{1}{2}(x+y) = \frac{1}{2} x + \left(1 - \frac{1}{2}\right) y 
+	\end{equation*}
+	ergibt sich wegen $2(z-y) = 2 * \left( \lfrac{1}{2}x + \lfrac{1}{2}y - y \right) = 2 * \left( \lfrac{1}{2}x - \lfrac{1}{2}y  \right) = x -y$
+	\begin{align} \label{eq: proof_abschaetzung}
+		\trans{\nabla f(y)} (x-y) = 2 \trans{\nabla f(y)} (z-y) \overset{\eqref{eq: satz_konvex}}{\leq} 2( f(z) - f(y))
+	\end{align}
+	Jedoch ist $x \neq y$. Aus der strikten Konvexität von $f$ folgt nun
+	\begin{align} \label{eq: proof_striktkonvex}
+		f(z) = f \left( \frac{1}{2} x + \left( 1 - \frac{1}{2} \right) \right) < \frac{1}{2} f(x) + \frac{1}{2} f(y)
+	\end{align}
+	Aus \eqref{eq: proof_abschaetzung} und \eqref{eq: proof_striktkonvex} folgt damit $\trans{\nabla f(y)} (x-y) < f(x) - f(y)$ also gerade \eqref{eq: satz_streng_konvex}
+\end{proof}
+
+\end{document}
