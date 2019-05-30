@@ -1,0 +1,170 @@
+\begin{exercisePage}[Diskrete Wahrscheinlichkeitsverteilungen][15 / 20]
+	
+%%%% AUFGABE 2.1 %%%%
+
+	\begin{exercise}
+		\begin{enumerate}[leftmargin=*,label=(\alph*)]
+			\item Aus einer Urne mit $n$ Kugeln werden nacheinander Kugeln mit Zurücklegen entnommen. Es bezeichne $X$ die Nummer der Ziehung, bei der erstmals eine Kugel erneut gezogen wird. Bestimmen Sie die Wahrscheinlichkeit $\P(X > r)$ und $\P(X = r)$ für $r \in \N$.
+			\item Am 21. Juni 1995 wurde erstmalig in der Geschichte des deutschen Zahlenlottos „6 aus 49“, und zwar bei der 3016. Ausspielung, eine Gewinnreihe gezogen, die schon einmal gezogen worden war. In der Tagespresse wurde dieses Ereignis als Sensation gefeiert - zu Recht?
+		\end{enumerate}
+	\end{exercise}
+
+	Es gilt folgende Äquivalenz:
+	\begin{equation*}
+		X > r \quad \equivalent \quad A_r \defeq \text{Die ersten $r$ Züge bleiben ohne Wiederholung}
+	\end{equation*}
+	Angenommen $X>r$, d.h. die erste Wiederholung findet sich erst nach dem $r$-ten Zug. Dann müssen die ersten $r$ Züge ohne Wiederholung gewesen sein, denn sonst wäre $X<r$. Bleiben die ersten $r$ Züge dagegen ohne Wiederholung, so muss $X>r$ sein, weil bisher noch keine Wiederholung eingetreten ist.
+	
+	Die Wahrscheinlichkeit, dass die ersten $r$ Züge ohne Wiederholung bleiben beträgt
+	\begin{equation*}
+		\P(A_r) = 1 * \frac{n-1}{n} * \frac{n-2}{n} \cdots \frac{n-r + 1}{n} = \frac{(n-1)!}{(n-r)! * n^{r-1}} =\frac{n!}{(n-r)! * n^r} = \binom{n}{r} * \frac{r!}{n^r} = \P(X>r)
+	\end{equation*}
+	
+	Betrachten wir $X=r$, so heißt das wiederum, dass die ersten $r-1$ Züge ohne Wiederholung blieben und der $r$-te Zug eine Wiederholung liefert, d.h. im $r$-ten Zug eine der $r-1$ vorher gezogenen Kugeln erneut gezogen wird. Damit gilt
+	\begin{equation*}
+		\P(X=r) = \P(A_{r-1}) * \frac{r-1}{n} 
+		= \binom{n}{r-1} * \frac{(r-1)!}{n^{r-1}} * \frac{r-1}{n} 
+		= \binom{n}{r-1} * \frac{(r-1)!}{n^r} * (r-1)
+	\end{equation*}
+	
+	Wenden wir dies nun auf das Lotto-Beispiel an, so interessiert uns z.B. die Wahrscheinlichkeit dafür, dass man hätte länger als bis zur 3016. Ziehung warten müssen. Die Urne besteht nun also aus den $\binom{49}{6}$ möglichen Gewinnreihen und $r=3016$.
+	Nun wollen wir $\P(X>3016)$ bestimmen. Da alle meine Rechner spätestens bei $\binom{49}{6} !$ ausgestiegen sind, habe ich auf die explizite Form verzichtet und dafür Octave mit folgendem Code rechnen lassen:
+	\begin{lstlisting}[language=Matlab]
+		function res = prob (n, k)
+			res = 1;
+			for i=1:(k-1)
+				res = res * (n-i)/n;
+			end
+		end
+	\end{lstlisting}
+	Das liefert ein Ergebnis von $\P(X>3016) \approx 0.7224$. Man hätte als zu $72~\%$ noch länger auf eine sich wiederholende Gewinnreihe warten müssen. In Anbetracht der Tatsache, dass allerdings bisher nur $0.02~\%$ aller möglichen Gewinnreihen ausgespielt wurden ist dies schon ein wenig erstaunlich.
+	
+	
+%%%% AUFGABE 2.2 %%%%
+
+	\begin{exercise}
+		Es sei $\card{E}$ endlich mit $\card{E} \geq 2$, $n \geq 1$ und $\rho$ eine diskrete Verteilung auf $E$. Weiterhin gelte 
+		\begin{align} \label{eq: 2_2_konvggrho}
+			N \to \infty , N_a \to \infty \mit \frac{N_a}{N} \to \rho(a) 
+		\end{align} 
+		für alle $a \in E$. Zeigen Sie, dass dann $\Hyper(N, (N_a)_a, n)$ punktweise gegen $\Multi(n, \rho(a)_a)$ konvergiert.
+	\end{exercise}
+
+	Da $E$ endlich ist, können wir oBdA annehmen, dass $E = \menge{1, \dots , l}$ gilt. Dann schreiben wir statt $N_a$ auch $N_i$, statt $k_a$ auch $k_i$ für die Anzahl der gezogenen Kugeln einer Farbe aus $E$ und $\rho_i$ statt $\rho(a)$. 
+	
+	Für die Zähldichte $\psi$ hypergeometrischen Verteilung gilt 
+	\begin{equation*}
+		\psi(\folge{k_i}[i]) = \frac{ \prod_{i = 1}^l \binom{N_i}{k_i}}{\binom{N}{n}}
+	\end{equation*}
+	Dieses können wir umstellen, sodass
+	\begin{align}
+		\psi(\folge{k_i}[i]) 
+		= \frac{\prod_{i = 1}^l \frac{N_i!}{k_i! (N_i - k_i)!}}{\frac{N!}{n! \, (N-n)!}} 
+		&= \carf{N!}{n! \, (N-n)!} \prod_{i = 1}^l \frac{N_i!}{k_i! \, (N_i - k_i)!} \notag \\
+		&= \frac{n!}{\prod_{i=1}^{l} k_i!} * \frac{(N-n)!}{N!} \prod_{i = 1}^l \frac{N_i!}{(N_i - k_i)!} \notag \\
+		&= \binom{n}{\folge{k_i}[i=1,\dots,l]} \frac{(N-n)!}{N!} \prod_{i = 1}^l \frac{N_i!}{(N_i - k_i)!} 
+\label{eq: 2_2_umstellung}
+	\end{align}
+	Nun zerlegen wir den Faktor $\frac{(N-n)!}{N!}$ in 
+	\begin{equation*}
+		\prod_{i=1}^l \frac{N - \sum_{j=1}^{i} k_i}{N - \sum_{j=1}^{i-1} k_i}
+	\end{equation*}
+	Damit hat jeder Faktor des großen Produkts genau $k_i$ eigene Faktoren und das gesamte Produkt also nach wie vor $\sum_{i=1}^{l} k_i = n$ Faktoren.
+	Setzen wir dies in \labelcref{eq: 2_2_umstellung} ein und schreiben $\frac{N_i!}{(N_i - k_i)!} = N_i \cdots (N_i - k_i + 1)$ so erhalten wir
+	\begin{equation*}
+		\frac{(N-n)!}{N!} \prod_{i = 1}^l \frac{N_i!}{(N_i - k_i)!}
+		= \prod_{i=1}^l \frac{N_i \cdots (N_i - k_i + 1)}{\frac{N - \sum_{j=1}^{i} k_i}{N - \sum_{j=1}^{i-1} k_i}}
+	\end{equation*}
+	Insbesondere gilt nun wegen \labelcref{eq: 2_2_konvggrho} auch schon
+	\begin{equation*}
+		 \frac{N_i \cdots (N_i - k_i + 1)}{\frac{N - \sum_{j=1}^{i} k_i}{N - \sum_{j=1}^{i-1} k_i}} 
+		\longrightarrow \rho_i^{k_i}
+	\end{equation*}
+	und damit
+	\begin{equation*}
+		\psi((k_i)_i) \longrightarrow \prod_{i=1}^l \rho_i^{k_i}
+	\end{equation*}
+	Somit konvergiert also $\Hyper(N, (N_a)_a, n) \longrightarrow \Multi(n, \rho(a)_a)$ punktweise.
+	
+	
+%%%% AUFGABE 2.3 %%%%
+
+	\begin{exercise}
+		Eine Urne enthält $S$ schwarze ``1'' und $W$ weiße ``0'' Kugeln. Wie groß ist die Wahrscheinlichkeit nach $n$ Ziehungen ohne Zurücklegen $s$ schwarze und $w$ weiße Kugeln gezogen zu haben?
+		\begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep]
+			\item Wir nummerieren die Kugeln zunächst durch. Geben Sie einen Ergebnisraum an, wenn die Reihenfolge der gezogenen Kugeln beachtet werden muss (sortierte Kugeln).
+			\item Bestimmen Sie ein geeignetes \WMass auf diesem Ereignisraum.
+			\item Geben Sie einen Ergebnisraum an, wenn die Reihenfolge der gezogenen, nummerierten Kugeln nicht beachtet werden muss (unsortierte Kugeln).
+			\item Finden Sie eine Zufallsvariable, die vom ``sortierten'' Ergebnisraum in den ``unsortierten'' Ergebnisraum	abbildet und bestimmen Sie ihre Verteilung.
+			\item Uns interessiert nun, wie oft die jeweiligen Farben gezogen wurden. Geben Sie einen geeigneten Ergebnisraum an.
+			\item Geben Sie eine Zufallsvariable an, die vom unsortierten Ergebnisraum (aus Teil (c)) in den Ergebnisraum der farbigen Kugeln (aus Teil (e)) abbildet und bestimmen Sie die zugehörige Verteilung.
+		\end{enumerate}
+	\end{exercise}
+
+	\begin{enumerate}[leftmargin=*, label=(\alph*)]
+		\item Wir betrachten sortierte Kugeln, d.h. die Reihenfolge ist relevant. Nummerieren wir die Kugeln durch, so erhalten wir stets einen Vektor mit $n$ Zahleneinträgen aus $\menge{1, \dots , N}$. Ein möglicher Ergebnisraum ist dann
+		\begin{equation*}
+			\quer{\Omega} = \menge{\omega = (\omega_1 , \dots , \omega_n) \in \menge{1, \dots , N}^n \colon \omega_i \neq \omega_j \text{ für } i \neq j}
+		\end{equation*}
+		Es gilt
+		\begin{equation*}
+			\# \quer{\Omega} = N * (N-1) * (N-2) \cdots (N-n+1) = \frac{N!}{(N-n)!}
+		\end{equation*}
+		\item Da alle Ergebnisse aus $\quer{\Omega}$ gleichwahrscheinlich sind, können wir die Gleichverteilung verwenden, d.h.
+		\begin{equation*}
+			\quer{\P} = \Uni(\quer{\Omega})
+		\end{equation*}
+		\item Nun betrachten wir das Experiment ohne Beachtung der Reihenfolge, d.h. das Tupel $\quer{\omega} \in \quer{\Omega}$ soll ohne Ordnungsstruktur auskommen. Betrachten wir daher $\omega$ als Menge, so können wir als Ergebnisraum 
+		\begin{equation*}
+			\dach{\Omega} = \menge{\dach{\omega} \subseteq \menge{1 , \dots , N} \colon \# \dach\omega = n}
+		\end{equation*}
+		definieren. Da keine Elemente in den Einträgen von $\quer{\omega} \in \quer{\Omega}$ mehrfach vorkommen konnten, verlieren wir in der Mengendarstellung kaum Informationen.
+		\item Wir suchen eine Zufallsvariable, die uns den Zusammenhang zwischen ungeordneter und geordneter Stichprobe beschreibt. Definiere
+		\begin{equation*}
+			\bigabb{X}{\quer\Omega}{\dach\Omega}%
+			{\quer\omega = (\omega_1 , \dots , \omega_n)}{\menge{\omega_1 , \dots , \omega_n}}
+		\end{equation*}
+		Ein mögliches Wahrscheinlichkeitsmaß wird dann definiert durch das Bildmaß $\quer{\P} \circ X^{-1} \defqe \dach{\P}$. Man stellt fest, dass $\# \menge{X=\omega}$ genau der Anzahl der Möglichkeiten $n$ Elemente auf $n$ Plätze zu verteilen entspricht, also $\# \menge{X = \omega} = n!$. Weiter ist $\# \dach{\Omega}$ die Anzahl der Möglichkeiten eine $n$-elementige Teilmenge aus einer $N$-elementigen Menge auszuwählen, d.h. $\# \quer{\Omega} = \lfrac{N!}{(N-n)!}$. Somit gilt
+		\begin{equation*}
+			\dach\P(\menge{\omega}) = \quer\P(X^{-1}(\menge{\omega})) = \quer{\P} (X = \omega ) = \frac{\# \menge{X = \omega}}{\# \quer\Omega} = \frac{n!}{\lfrac{N!}{(N-n)!}} = \frac{1}{\binom{N}{n}} = \frac{1}{\# \dach{\Omega}}
+		\end{equation*}
+		Somit ist auch $\dach\P = \Uni(\dach\Omega)$.
+		\item Nun interessieren wir uns nur für die Anzahl der Kugeln in jeder Farbe und setzen daher als Ergebnisraum
+		\begin{equation*}
+			\Omega = \menge{(w , s) \in \N_0^2 \colon w + s = n}
+		\end{equation*} 
+		\item Im Folgenden bezeichne $F_0,F_1 \subseteq \menge{1, \dots , N}$ die Menge aller Nummern der weißen bzw. schwarzen Kugeln. Wir modellieren den Übergang von unsortiertem Ergebnisraum in den Ergebnisraum der Anzahlen durch eine Zufallsvariable $Y$ mit
+		\begin{equation*}
+			\bigabb{Y}{\dach\Omega}{\Omega}%
+			{\omega}{(\# \omega \cap F_0 , \# \omega \cap F_1)}
+		\end{equation*}
+		Bevor wir das Wahrscheinlichkeitsmaß auf $\Omega$ konstruieren betrachten wir die Menge $\menge{Y = \omega = (w , s)}$. Die Abbildung $\phi$ mit $\phi(A) = (A \cap F_0 , A \cap F_1)$ teilt die Menge $A$ auf in die Menge $A \cap F_0$ aller weißen Kugeln und $A \cap F_1$ aller schwarzen Kugeln. Die Umkehrfunktion ist $\phi^{-1} (B_0 \cap F_0 , B_1 \cap F_1) = B_0 \cup B_1$, denn 
+		\begin{align*}
+			A 
+			\overset{\phi}&{\mapsto} (A \cap F_0 , A \cap F_1) \\
+			\overset{\phi^{-1}}&{\mapsto} (A \cap F_0) \cup (A \cap F_1) = (A \cup A) \cap (A \cup F_1) \cap (F_0 \cup A) \cap (F_0 \cup F_1) = A  \\
+			(B_0 \cap F_0 , B_1 \cap F_0)
+			\overset{\phi^{-1}}&{\mapsto} B_0 \cup B_1 \\
+			\overset{\phi}&{\mapsto} (B_0 \cap F_0 , B_1 \cap F_1)
+		\end{align*}
+		Somit ist $\phi$ eine Bijektion und 
+		\begin{equation*}
+			\begin{aligned}
+				\# \menge{Y = (w , s)} 
+				&= \# \menge{A \subseteq F_0 \colon \# A = w} \times \menge{A \subseteq F_1 \colon \# A = s} \\
+				&= \# \menge{A \subseteq F_0 \colon \# A = w} * \# \menge{A \subseteq F_1 \colon \# A = s}
+			\end{aligned}
+		\end{equation*} 
+		Diese beiden Kardinalitäten repräsentieren die Anzahl der $k_i$-elementigen Teilmengen von $F_i$, also
+		\begin{equation*}
+			\# \menge{A \subseteq F_0 \colon \# A = w} = \binom{W}{w} \quad \und \quad \# \menge{A \subseteq F_1 \colon \# A = s} = \binom{S}{s}
+		\end{equation*}
+		Somit ergibt sich endlich für das Bildmaß $\P \defeq \dach\P \circ Y^{-1}$ auf $\Omega$
+		\begin{equation*}
+			\P(\menge{\omega}) = \dach\P(Y^{-1}(\menge{\omega})) = \dach\P(Y=\omega) = \frac{\# \menge{Y = \omega}}{\# \dach\Omega} = \frac{\binom{W}{w} * \binom{S}{s}}{\binom{N}{n}}
+		\end{equation*}
+		was der hypergeometrischen Verteilung entspricht.
+	\end{enumerate}
+
+\end{exercisePage}
+

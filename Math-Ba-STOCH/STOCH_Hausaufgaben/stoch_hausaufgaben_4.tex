@@ -1,0 +1,152 @@
+\begin{exercisePage}[Gemeinsame Verteilungen][17/20]
+	
+%%%% AUFGABE 4.1 %%%%
+	\begin{lemma} \label{lemma: 4_1_vandermonde}
+		Für $m,n,k \in \N$ gilt \vspace{-\baselineskip}
+		\begin{align} 
+			\sum_{\ell = 0}^k \binom{n}{\ell} * \binom{m}{k - \ell} = \binom{n+m}{k}
+			\label{eq: 4_1_vandermode}
+		\end{align}
+	\end{lemma}
+	\begin{proof}
+		Seien $N$ und $M$ disjunkte Mengen mit $\card{N} = n$ und $\card{M} = m$. Für alle $j \in \menge{0,1,\dots,k}$ sei $\mathcal{A}_\ell \defeq \menge{A \in \pows{N \cup M} : \card{A} = k , \card{A \cap N} = \ell , \card{A \cap M} = k- \ell}$. Wie bereits schon in Hausaufgabe 2.3 erläutert gibt es genau $\binom{n}{\ell}$ viele $\ell$-elementige Teilmengen von $N$ und $\binom{m}{k-\ell}$ viele $(k-\ell)$-elementige Teilmengen von $M$. Für die Kardinalität von $\mathcal{A}_\ell$ gilt dann $\card{\mathcal{A}_\ell} = \binom{n}{\ell} * \binom{m}{k-\ell}$. Da alle $\mathcal{A}_\ell$ paarweise disjunkt sind, gilt
+		\begin{equation*}
+			\binom{n+m}{k} = \sum_{\ell = 0}^k \card{\mathcal{A}_\ell} = \sum_{\ell = 0}^k \binom{n}{\ell} * \binom{m}{k-\ell}
+		\end{equation*}
+		für die Anzahl der $k$-elementigen Teilmengen von $N \cup M$.
+	\end{proof}
+	\begin{homework}
+		\begin{enumerate}[leftmargin=*]
+			\item Es seien $X \sim \Bin(n,p)$ und $Y \sim \Bin(m,p)$ zwei unabhängige, binomialverteilte Zufallsvariablen. Zeigen Sie, dass dann $X+Y \sim \Bin(n+m , p)$ ebenfalls Binomialverteilt ist, d.h. die Binomialverteilung ist stabil unter Faltungsoperationen.
+			\item Es seien $X,Y \sim \Poisson(\lambda)$ unabhängige, identisch verteilte Zufallsvariablen. Bestimmen Sie $\P(X=k \mid X+Y = n)$ für $0 \leq k \leq n$.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Die unabhängigen Variablen $X$ und $Y$ haben die Zähldichten $\rho_X(k) = \binom{n}{k} p^k (1-p)^{n-k}$ und $\rho_Y(k) = \binom{m}{k} p^k (1-p)^{m-k}$. Da die Faltung gerade die Addition zweier Zufallsvariablen beschreibt, gilt nach Satz 3.25 $\P_{X+Y} = \P_X \star \P_Y$ und damit nach Proposition 3.26
+		$\rho_X \star \rho_Y (k) = \sum_{\ell \in \Z} \rho_X(\ell) * \rho_Y(k - \ell)$ für $k \in \Z$. 
+		Somit ist dann 
+		\begin{equation*}
+			\begin{aligned}
+				\P(X+Y = k) 
+				&= \sum_{\ell \in \Z} \binom{n}{\ell} p^\ell (1-p)^{n-\ell} * \binom{m}{k - \ell} p^{k-\ell} (1-p)^{m - k + \ell} \\
+				&= \sum_{\ell \in \Z} \binom{n}{\ell} \binom{m}{k - \ell} p^k (1-p)^{n+m-k} \\
+				\overset{\eqref{eq: 4_1_vandermode}}&{=} \binom{n+m}{k} p^k (1-p)^{(n+m)-k}
+			\end{aligned}
+		\end{equation*}
+		%%%
+		\item Seien $X,Y \sim \Poisson(\lambda)$ unabhängig und identisch verteilt, d.h. $\P(X=k) = \P(Y=k) = \frac{\lambda^k}{k!} e^{_\lambda}$.
+		Aus der Vorlesung in Beispiel 3.27 ist bekannt, dass $\P(X+Y = k) = \frac{(2\lambda)^k}{k!} e^{-2\lambda}$ gilt. Somit ist dann 
+		\begin{equation*}
+			\begin{aligned}
+				\P( X = k \mid X+Y = n) 
+				&= \frac{\P( \menge{X=k} \cap \menge{X+Y=n})}{\P(\menge{X+Y=n})}
+				= \frac{\P(X = k) * \P(Y = n-k)}{\P(X+Y=n)} \\
+				&= \frac{\frac{\lambda^k}{k!} e^{-\lambda} * \frac{\lambda^{n-k}}{(n-k)!} e^{-\lambda}}{\frac{(2\lambda)^n}{n!} e^{-2 \lambda}} 
+				= \frac{\lambda^n}{2^n \lambda^n} * \frac{n!}{k! (n-k)!} \\
+				&= \binom{n}{k} * 2^{-n}
+			\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+
+
+%%%% AUFGABE 4.2 %%%%
+	\begin{homework}
+		Es sei $X \sim \Geom(p)$ eine geometrisch verteilte Zufallsvariable. Zeigen Sie, dass $X$ gedächtnislos ist, d.h. $\P(X \geq i + j \mid X \geq i)$ für alle $i,j \geq 0$.
+	\end{homework}
+	
+	Da $X$ geometrische verteilt ist, hat es die Zähldichte $\P(X=k) = p * (1-p)^k$. Dann gilt
+	\begin{equation*}
+		\P(X \geq j) = 1 - \P(X \leq j-1) = 1 - \sum_{n=0}^{j-1} p(1-p)^n  = 1 - p * \sum_{n=0}^{j-1} (1-p)^n
+	\end{equation*}
+	Da $1-p \leq 1$, gilt für die $(j-q)$-te Partialsumme der geometrischen Reihe
+	\begin{equation*}
+		\frac{1-(1-p)^{j-1}}{1 - (1-p)} = \frac{1 - (1-p)^{j-1}}{p}
+	\end{equation*}
+	Somit gilt dann
+	\begin{equation*}
+		1 - p * \sum_{n=0}^{j-1} (1-p)^n = 1 - (1 - (1-p)^{j-1}) = (1-p)^{j-1}
+	\end{equation*}
+	Analog gilt auch $\P(X \geq i) = (1-p)^{i-1}$ und $\P(X \geq i+j) = (1-p)^{i+j-1}$. Für die bedingte Wahrscheinlichkeit gilt schließlich
+	\begin{equation*}
+		\begin{aligned}
+			\P(X \geq i+j \mid X \geq i) = \frac{\P( \menge{X \geq i+j} \cap \menge{X \geq i})}{\P(X \geq i)} &= \frac{\P(X \geq i+j)}{\P(X \geq i)} \\
+			&= \frac{(1-p)^{i+j-1}}{(1-p)^i} = (1-p)^{j-1} = \P(X \geq j)
+		\end{aligned}
+	\end{equation*}
+	und $X$ ist somit gedächtnislos.
+	
+
+%%%% AUFGABE 4.3 %%%%
+	\begin{homework}
+		$X,Y$ seien zwei Zufallsvariablen, deren gemeinsame Zähldichte aus \cref{tab: 4_3_zaehldichte} entnommen werden kann.
+		
+		{\centering
+		\begin{tabular}{c||c|c|c|c} \label{tab: 4_3_zaehldichte}
+			\diagbox[dir=NW, height=18pt, trim=l]{$X$}{$Y$} & -1 & 1 & 2 & 5 \\ \hline \hline
+			-1 & $\frac{1}{27}$ & $\frac{1}{9}$ & $\frac{1}{27}$ & $\frac{1}{9}$ \\
+			1  & $\frac{1}{ 9}$ & $\frac{2}{9}$ & $\frac{1}{ 9}$ & $0$ \\
+			5  & $\frac{4}{27}$ & $\frac{1}{9}$ & $0$            & $0$ \\
+		\end{tabular}
+		\captionof{table}{Gemeinsame Zähldichte von $X$ und $Y$}}
+		
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Bestimmen Sie die Wahrscheinlichkeit der Ereignisse ``$Y$ gerade'' und ``$X * Y$ ungerade''.
+			\item Finden Sie die Verteilung $X+Y$. 
+			\item Sind $X$ und $Y$ unabhängig.
+		\end{enumerate}
+	\end{homework}
+	
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item~\vspace{-\baselineskip}
+		\begin{equation*}
+			\begin{aligned}
+				\P(Y \text{ gerade}) 
+				&= \P(Y = 2) = \frac{1}{27} + \frac{1}{9} = \frac{4}{27} \\
+				\P( X*Y \text{ ungerade}) 
+				&= \frac{1}{27} + \frac{3}{27} + \frac{3}{27} + \frac{3}{27} + \frac{6}{27} + 0 + \frac{4}{27} + \frac{3}{27} + 0
+				= \frac{23}{27}
+			\end{aligned}
+		\end{equation*}
+		\item%~\vspace{-\baselinskip}
+		Sei $\ell = (-1,1,5)$. Dann ist $\P(X+Y = k) = \sum_{i=1}^3 \P(X = \ell_i , Y = k - \ell_i)$.
+		
+		{\centering
+			\begin{tabular}{l||c|c|c|c|c|c|c|c|c} \label{tab: 4_3_zaehldichte_X+Y}
+				$k$ & $-2$ & $0$ & $1$ & $2$ & $3$ & $4$ & $6$ & $7$ & $10$ \\ \hline 
+				$\P(X+Y=k)$ & $\frac{1}{27}$ & $\frac{2}{9}$ & $\frac{1}{27}$ & $\frac{2}{9}$ & $\frac{1}{9}$ & $\frac{7}{27}$ & $\frac{1}{9}$ & $0$ & $0$ \\
+			\end{tabular}
+			\captionof{table}{Zähldichte von $X + Y$}}
+		
+		\item Wir betrachten $X=1$ und $Y=5$. Dann gilt
+		\begin{equation*}
+			\P(X=1,Y=5 = \frac{1}{9} \quad \und \quad \P(X=1) * \P(X=5) = \frac{4}{9} * \frac{1}{9}
+		\end{equation*}
+		und somit $\P(X=1,Y=5) \neq \P(X=1) * \P(X=5)$. Damit sind $X$ und $Y$ nicht stochastisch unabhängig.
+	\end{enumerate}
+
+
+%%%% AUFGABE 4.4 %%%%
+	\begin{homework}
+		Geben Sie zwei Zufallsvariablen $X$ und $Y$ an, sodass zwar $X$ und $Y$ abhängig sind, aber $X^2$ und $Y^2$ unabhängig.
+	\end{homework}
+
+	\bigskip
+
+%%%% AUFGABE 4.5 %%%%
+	\begin{homework}
+		Auf der $(x,y)$-Ebene werden parallele Geraden $y = 2a*k$ ($k \in \Z$) mit Abstand $2a$ eingezeichnet. Eine Strecke (``Nadel'') der Länge $2 \ell$ mit $\ell < a$ wird zufällig auf die Ebene geworfen. Wie groß ist die Wahrscheinlichkeit dafür, dass die Strecke eine der Geraden schneidet?
+	\end{homework}
+
+	Wir betrachten zwei Variablen: $x$ gebe den Abstand des Nadelmittelpunktes von der nächstliegenden Geraden an und $\phi$ beschreibe den Winkel zwischen der durch die Nadel beschriebenen Geraden und der nächstliegenden Geraden. Damit die Nadel eine der Geraden kreuzt (oder berührt) muss $x \leq 2\ell * \sin(\phi)$ gelten. Somit lassen sich alle möglichen Lagepositionen einschränken zur Ergebnismenge $\Omega = \menge{(x,\phi) \in [0,a] \times [0,\pi)}$. Diese hat offensichtlich Lebesgue-Maß $\lambda(\Omega) = a*\pi$.
+	Betrachten wir nun das Ereignis $S = \menge{(x,\phi) \in \Omega : x \leq \ell * \sin(\phi)}$, was genau die Positionen einer Nadel beschreibt, bei denen es zum Schnitt mit einer der Geraden kommt. Diese Menge repräsentiert also die Fläche unter dem Graphen der Funktion $y(\phi) = \ell * \sin(\phi)$. Damit ergibt sich ein Lebesgue-Maß
+	\begin{equation*}
+		\lambda(S) = \int_S \diff{\lambda} 
+		= \int \one_{[0,\ell*\sin(\phi)] \times [0,\pi)} \diff{\lambda}
+		= \int_0^\pi \ell * \sin(\phi) \diff{\phi}
+		= \ell * \left[ - \cos(\phi) \right]_0^\pi = 2\ell
+	\end{equation*}
+	Nun können wir den Nadelwurf als zufällig insofern annehmen, dass die Lage des Mittelpunktes vom Winkel unabhängig ist und alle möglichen Positionen gleich wahrscheinlich sind.
+	Dann ergibt sich mit der stetigen Gleichverteilung $\P(S) = \frac{\lambda(S)}{\lambda(\Omega)} = \frac{2\ell}{a\pi}$ als Wahrscheinlichkeit für den Schnitt der Nadel mit einer der Geraden.
+
+\end{exercisePage}

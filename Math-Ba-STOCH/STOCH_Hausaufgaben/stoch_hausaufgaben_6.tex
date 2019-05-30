@@ -1,0 +1,236 @@
+\begin{exercisePage}[Erwartungswert \& Varianz][16/20]
+	
+	%%%% HAUSAUFGABE 6.1 %%%%
+	\begin{homework}
+		Geben Sie Zufallsvariablen $X$ und $Y$ an, die unkorrelliert, aber nicht unabhängig sind.
+	\end{homework}
+	
+	Sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum mit $\Omega = \menge{1,2,3}$, $\ereignisF = \pows{\Omega}$ und $\P = \Uni(\Omega)$. Wir betrachten die Zufallsvariablen $\abb{X}{\Omega}{\menge{-1,0,1}}$ und $\abb{Y}{\Omega}{\menge{0,1}}$ mit
+	\begin{equation*}
+	X(1) \defeq -1 \qquad X(2) \defeq 0 \qquad X(3) \defeq 1 \qquad \und \qquad Y = \one_{\menge{2}}
+	\end{equation*}
+	\begin{correction}
+		$Y$ ist also definiert als $Y(k) \defeq \begin{cases} 0 & k = 1,3 \\ 1 & k=2 \end{cases}$ und damit gilt $\EW[Y] = \EW[Y] = \sum_{y=1}^3 y * \underbrace{\P(Y=y)}_{=\frac{1}{3}} = \frac{1}{3}$.
+	\end{correction}
+	Dann gilt $\EW[X] = \sum_{x = 1}^3 x * \P(X=x) = - \frac{1}{3} + 0 + \frac{1}{3} = 0$ und $\EW[Y] = \sum_{y=1}^3 y * \P(Y=y) = 2$. Für $\EW[XY]$ betrachten wir 
+	\begin{equation*}
+	\menge{X=x} \cap \menge{Y=y} = X^{-1}(x) \cap Y^{-1}(y) = \begin{cases}
+	\menge{1} & x = 1 , y = 0 \\
+	\menge{2} & x = 0 , y = 1 \\
+	\menge{3} & x = -1 , y = 0 \\
+	\phantom{\{} \emptyset \phantom{\}} & \text{sonst}
+	\end{cases}
+	\end{equation*}
+	Dann gilt für den Erwartungswert
+	\begin{equation*}
+	\EW[XY] = \sum_{x,y = 1}^3 xy * \P(X=x , Y=y) = 1*0*\P(\menge{1}) + 0*1*\P(\menge{2}) + (-1) * 0 * \P(\menge{3}) = 0
+	\end{equation*}
+	Schließlich ist $\EW[XY] = \EW[X] * \EW[Y] \equivalent 0 = \EW[XY] - \EW[X] * \EW[Y] = \Cov{X}{Y}$ und damit sind $X$ und $Y$ wegen
+	\begin{equation*}
+		\Corr{X}{Y} = \frac{\Cov{X}{Y}}{\sqrt{\Var[X] * \Var[Y]}} = 0
+	\end{equation*} 
+	unkorreliert.
+	
+	Jedoch sind $X$ und $Y$ wegen
+	\begin{equation*}
+		\P(X = 1 , Y = 1) = \P(\emptyset) = 0 \neq \frac{1}{9} = \P(X=1) * \P(Y=1)
+	\end{equation*}
+	nicht unabhängig.
+	
+	
+%%%% HAUSAUFGABE 6.2 %%%%
+	\begin{homework}
+		Sei $X$ eine Zufallsvariable mit Werten in $\N_0$. Zeigen Sie $E[X] = \sum_{k \ge 1} \P(X \ge k)$.
+	\end{homework}
+
+	Wir beginnnen auf der rechten Seite, denn dort gilt mit $\rho$ als Zähldichte von $\P$.
+	\begin{equation*}
+		\sum_{k \geq 1} \P(X \geq k) = \sum_{k = 1}^\infty \sum_{\ell = k}^\infty \P(X = \ell) = \sum_{k = 1}^\infty \sum_{\ell = k}^\infty \rho(\ell)
+	\end{equation*}
+	Nun stellt man fest, dass für jedes $k \ge 1$ der Term $\rho(\ell)$ in genau den ersten $\ell$ Summanden der mit $k$ indizierten Summe vorkommt. Zur Veranschaulichung schreibt man beispielsweise die ersten Summanden aus, d.h.
+	\begin{equation*}
+	\begin{aligned}
+		\sum_{k = 1}^\infty \sum_{\ell = k}^\infty \rho(\ell) 
+		&= \left( \rho(1) + \rho (2) + \rho(3) + \cdots \right) + \left( \rho(2) + \rho(3) + \cdots \right) + \left( \rho(3) + \cdots \right) + \cdots \\
+		&= 1 * \rho(1) + 2 * \rho(2) + 3 * \rho(3) + \cdots 
+	\end{aligned} 
+	\end{equation*}
+	Damit erhält man schließlich $\sum_{k = 1}^\infty \sum_{\ell = k}^\infty \rho(\ell) = \sum_{k \ge 1} k * \rho(k) = \EW[X]$.
+	
+
+%%%% HAUSAUFGABE 6.3 %%%%
+	\begin{homework}
+		Es seien $X,Y \in L^1$. Beweisen oder widerlegen Sie:
+		\begin{enumerate}[leftmargin=*]
+			\item Falls $\EW[X] = \EW[Y]$, so gilt $P(X = Y ) = 1$.
+			\item Falls $\EW[\abs{X-Y}] = 0$, so gilt $\P(X=Y) = 1$.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Die Aussage ist falsch, was wir im folgenden durch ein Gegenbeispiel zeigen werden. Sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum mit $\Omega = \menge{1,2,3}$, $\ereignisF = \pows{\Omega}$ und $\P = \Uni(\Omega)$. Weiter seien $X = \id_{\Omega}$ und $Y = \one_{\menge{2}}$. Dann ist $X^{-1}(x) = x$, $Y^{-1}(\menge{2}) = \Omega$ und $Y^{-1}(\menge{1,3}) = \emptyset$. Folglich gilt
+		\begin{equation*}
+			\EW[X] = \sum_{x \in \Z} x * \rho(x) = \sum_{x=1}^3 x * \frac{1}{3} = 2 \quad \und \quad \EW[Y] = \sum_{x \in \Z} x * \rho(x) = 2 * 1 = 2
+		\end{equation*}
+		Also gilt $\EW[X] = \EW[Y]$. Nun bestimmen wir $\menge{X=Y} = \menge{\omega \in \Omega : X(\omega) = Y(\omega)} = \menge{2}$ mit $\# \menge{X=Y} = 1$ und damit $\P(X=Y) = \frac{\# \menge{X=Y}}{\# \Omega} = \frac{1}{3} \neq 1$.
+		
+		\begin{correction}
+			Das Gegenbeispiel funktioniert nicht, da das Urbild $Y^{-1}(\menge{2})$ falsch ist und dann der Erwartungswert $\EW[Y] = \frac{1}{3}$.
+		\end{correction}
+		%
+		\item Per Definition gilt
+		\begin{equation*}
+		\begin{aligned}
+			0 = \EW[X] = \int_\Omega \abs{X(\omega)-Y(\omega)} \P(\diff{\omega}) \quad \overset{\text{MINT 10.3}}&{\Longleftrightarrow} \quad \abs{X(\omega) - Y(\omega)} = 0 \text{ für fast alle } \omega \in \Omega \\
+			&\Longleftrightarrow \quad X=Y \enskip \P \text{-fast sicher} \\
+			&\Longleftrightarrow \quad \P(X=Y) = 1
+		\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+
+
+%%%% HAUSAUFGABE 6.4 %%%%
+	\begin{homework}
+		\begin{enumerate}[leftmargin=*]
+			\item Bestimmen Sie die wahrscheinlichkeitserzeugende Funktion für $X \sim \Poisson(\lambda)$ ($\lambda > 0$) und berechnen Sie
+			mit dieser den Erwartungswert und die Varianz von $X$.
+			\item Wir betrachten die Gleichverteilung auf $\Omega = \menge{2,3, \dots , 12}$. Zeigen Sie das $\Uni(\Omega)$ keine ''Faltungswurzel`` besitzt, d.h. es gibt kein Wahrscheinlichkeitsmaß $Q$ mit $Q \star Q = \Uni(\Omega)$. Interpretieren Sie Ihr Ergebnis anschaulich.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Sei $X \sim \Poisson(\lambda)$ ($\lambda > 0$). Nach Definition 5.14 gilt für eine $\N_0$-wertige Zufallsvariable
+		\begin{equation*}
+			\psi_X(s) \defeq \sum_{k \in \N_0} s^k \P(X = k) \qquad \forall s \in [0,1]
+		\end{equation*}
+		für die wahrscheinlichkeitserzeugende Funktion von $X$. Also $\Poisson(\lambda)$-verteilte Zufallsvariable hat $X$ die Zähldichte $\rho(k) = \P(X = k) = \frac{\lambda^k}{k!} e^{-\lambda}$ für alle $k \in \N_0$. Damit ergibt sich für die wahrscheinlichkeitserzeugende Funktion
+		\begin{equation*}
+			\psi_X(s) = \sum_{k \in \N_0} s^k \frac{\lambda^k}{k!} e^{-\lambda} = e^{- \lambda} \sum_{k \in \N_0} \frac{(s\lambda)^k}{k!} = e^{- \lambda} e^{s \lambda} = e^{\lambda (s-1)}
+		\end{equation*}
+		Nach Satz 5.16 gilt für den Erwartungswert
+		\begin{equation*}
+			\EW[X] = \psi_X'(1) = \lambda e^{\lambda(1-1)} = \lambda
+		\end{equation*}
+		Außerdem lässt sich die Varianz schreiben als
+		\begin{equation*}
+		\begin{aligned}
+			\Var[X] = \EW[X^2] - \EW[X]^2 &= \EW[X(X-1)] + \EW[X] - \EW[X]^2 \\
+			&= \psi_X''(1) + \psi_X'(1) - \left( \psi_X'(1) \right)^2 \\
+			&= \lambda^2 + \lambda - \lambda^2 \\
+			&= \lambda
+		\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+
+%%%% HAUSAUFGABE 6.5 %%%%
+	\begin{homework}
+		Es seien $X,Y \in L^2(\Omega, \ereignisF, \P)$ reelle Zufallsvariablen. Zeigen Sie:
+		\begin{enumerate}[leftmargin=*]
+			\item $\Var[X+Y] - \Var[X-Y] = 4\Cov{X}{Y}$.
+			\item $\Var[X+Y] = \Var[X] + \Var[Y] + 2 \Cov{X}{Y}$. 
+			\item Zeigen Sie, dass der Erwartungswert die quadratische Abweichung minimiert, d.h. für $X \in L^2$ gilt $\EW[(X-a)^2] \ge \Var[X]$ für alle $a \in \R$, wobei Gleichheit im Fall $a = \EW[X]$ eintritt.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Es gilt $\Var[X+Y] = \Var[X] + \Var[Y] + \Cov{X}{Y} + \Cov{Y}{X}$ und $\Var[X-Y] = \Var[X] + \Var[Y] + \Cov{X}{-Y} + \Cov{-Y}{X}$. Dann folgt durch Subtraktion beider Gleichungen
+		\begin{equation*}
+			\begin{aligned}
+			\Var[X+Y] - \Var[X-Y] &= \Var[X] + \Var[Y] + \Cov{X}{Y} + \Cov{Y}{X} \\
+			&- \Var[X] - \Var[Y] - \Cov{X}{-Y} - \Cov{-Y}{X}
+			\end{aligned}
+		\end{equation*}
+		Offensichtlich ist die Kovarianz symmetrisch, d.h. $\Cov{X}{Y} = \Cov{Y}{X}$ und es gilt
+		\begin{equation*}
+			\Cov{X}{-Y} = \EW[X(-Y)] - \EW[X] \EW[-Y] = -\EW[XY] + \EW[X] \EW[Y] = - \Cov{X}{Y} 
+		\end{equation*}
+		Somit ergibt sich schließlich
+		\begin{equation*}
+		\begin{aligned}
+			\Var[X+Y] - \Var[X-Y] 
+			&= \Cov{X}{Y} + \Cov{Y}{X} - \Cov{X}{-Y} - \Cov{-Y}{X} \\
+			&= 4 \Cov{X}{Y}
+		\end{aligned}
+		\end{equation*}
+		%
+		\item Die Gleichheit folgt aus der Symmetrie der Kovarianz, d.h.
+		\begin{equation*}
+			\Cov{Y}{X} = \EW[ (Y - {\EW[Y]}) (X - {\EW[X]}) ] 
+			= \EW[ (X - {\EW[X]}) (Y - {\EW[Y]}) ] = \Cov{X}{Y}
+		\end{equation*}
+		Dann gilt
+		\begin{equation*}
+			\Var[X+Y] = \Var[X] + \Var[Y] + \Cov{X}{Y} + \Cov{Y}{X} = \Var[X] + \Var[Y] + 2\Cov{X}{Y}
+		\end{equation*}
+		%
+		\item Es gilt $\EW[(X-a)^2] = \underbrace{\EW[X-a]^2}_{\ge 0} + \Var[X] \ge \Var[X]$. Setzen wir $a = \EW[X]$, so wird die Ungleichung zur Defintion der Varianz und damit gilt Gleichheit.
+	\end{enumerate}
+	
+
+
+%%%% HAUSAUFGABE 6.6 %%%%
+	\begin{homework}
+		Es sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum und $\mathcal{L}^2 \defeq \mathcal{L}^2(\Omega, \ereignisF, \P)$ die quadratintegrierbaren Zufallsvariablen auf $(\Omega, \ereignisF, \P)$.
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Zeigen Sie, dass $\abb{\Covarianz}{\mathcal{L}^2 \times \mathcal{L}^2}{\R}$ mit $(X,Y) \mapsto \Cov{X}{Y}$ eine symmetrische, positiv semidefinite Bilinearform auf $\mathcal{L}^2$ definiert.
+			\item Es sei $\mathcal{N} \defeq \menge{X \in \mathcal{L}^2 : \norm{X}_{\mathcal{L}^2} = 0} = \menge{X \in \mathcal{L}^2 : X = 0 \enskip \P-\text{fast überall}}$. Weiterhin definieren wir den Faktorraum $L^2 \defeq \mathcal{L}^2 / \mathcal{N}$ als den Raum der Äquivalenzklassen, d.h. $[X], [Y] \in L^2$ sind genau dann gleich, wenn $X-Y \in \mathcal{N}$. Zeigen Sie, dass $(L^2, \scal{\cdot}{\cdot})$ mit $\scal{X}{Y} = \EW[XY]$ ein Hilbertraum ist.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item \textbf{Symmetrie.} Seien $X,Y \in \mathcal{L}^2$. Dann gilt
+		\begin{equation*}
+			\Cov{X}{Y} = \EW[XY] - \EW[X] \EW[Y] = \EW[YX] - \EW[Y] \EW[X] = \Cov{Y}{X}
+		\end{equation*}
+		\textbf{Bilinearität.} Da wir bereits Symmetrie gezeigt haben, reicht es aus, die Linearität im ersten Argument zu zeigen. Seien also $X_1, X_2, Y \in \mathcal{L}^2$ und $a \in \R$. Dann gilt
+		\begin{equation*}
+			\begin{aligned}
+			\Cov{X_1 + X_2}{Y} 
+			&= \EW[(X_1 + X_2) Y] - \EW[X_1 + X_2] \EW[Y] \\
+			&= \EW[X_1 Y + X_2 Y] - \EW[X_1 + X_2] \EW[Y] \\
+			&= \EW[X_1 Y] + \EW[X_2 Y] - \EW[X_1] \EW[Y] - \EW[X_2] \EW[Y] \\
+			&= \EW[X_1 Y] - \EW[X_1] \EW[Y] + \EW[X_2 Y] - \EW[X_2] \EW[Y] \\
+			&= \Cov{X_1}{Y} + \Cov{X_2}{Y}
+			\end{aligned}
+		\end{equation*}
+		und
+		\begin{equation*}
+			\begin{aligned}
+			\Cov{aX}{Y} 
+			= \EW[aXY] - \EW[aX] \EW[Y] 
+			&= a \EW[XY] - a \EW[X] \EW[Y] \\
+			&= a (\EW[XY] - \EW[X]\EW[Y]) \\
+			&= a * \Cov{X}{Y}
+			\end{aligned}
+		\end{equation*}
+		\textbf{Positive Semidefinitheit.} Sei $X \in \mathcal{L}^2$. Dann gilt
+		\begin{equation*}
+			\Cov{X}{X} = \Var[X] = \E \Bigl[ \underbrace{(X - \EW[X])^2}_{\ge 0} \Bigr] \ge 0
+		\end{equation*}
+		%
+		\pagebreak
+		%
+		\item Seien $X,Y \in L^2$ und $\scal{X}{Y} \defeq \EW[XY]$. Wir zeigen zuerst, dass dies ein Skalarprodukt definiert.
+		Die Symmetrie folgt wiederum unmittelbar aus den Eigenschaften des Integrals und wir müssen Linearität nur im ersten Argument zeigen. Dazu seien $X, X_1, X_2, Y \in L^2$ und $a \in \R$. Dann gilt
+		\begin{equation*}
+			\scal{X_1 + X_2}{Y} = \EW[(X_1 + X_2) Y] = \EW[X_1 Y + X_2 Y] = \EW[X_1 Y] + \EW[X_2 Y] = \scal{X_1}{Y} + \scal{X_2}{Y}
+		\end{equation*}
+		und
+		\begin{equation*}
+			\scal{a X}{Y} = \EW[a X Y] = a * \EW[XY] = a * \scal{X}{Y}
+		\end{equation*}
+		Außerdem gilt für $X \neq 0$
+		\begin{equation*}
+			\scal{X}{X} = \EW[X^2] = \int_{\Omega} \underbrace{X^2}_{>0} \diff{\P} \enskip > 0
+		\end{equation*}
+		und damit ist $\scal{\cdot}{\cdot}$ positiv definit, schließlich also ein Skalarprodukt.
+		
+		Außerdem ist bereits bekannt, dass $L^2$ ein Vektorraum über dem Körper $\R$ ist.
+		
+		Wir müssen nun noch die Vollständigkeit von $(L^2, \scal{\cdot}{\cdot})$ zeigen. Das Skalarprodukt induziert eine Norm $\norm{X}_\ast \defeq \sqrt{\scal{X}{X}}$ für alle $X \in L^2$. Für diese gilt
+		\begin{equation*}
+			\norm{X}_\ast = \sqrt{\EW[X^2]} = \left( \int_{\Omega} X^2 \diff\P \right)^{\frac{1}{2}} = \left( \int_{\Omega} \abs{X}^2 \diff\P \right)^{\frac{1}{2}}
+ 		\end{equation*}
+ 		Nun sehen wir, dass also $\norm{\cdot}_\ast = \norm{\cdot}_{L^2}$. Nach dem Satz von Riesz-Fischer ist $L^p(\P)$ für alle $p \in [1,\infty]$ vollständig, also insbesondere auch für $p = 2$.		
+	\end{enumerate}
+\end{exercisePage}

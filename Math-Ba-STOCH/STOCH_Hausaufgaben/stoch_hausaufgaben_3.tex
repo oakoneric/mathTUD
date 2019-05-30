@@ -1,0 +1,182 @@
+\begin{exercisePage}[Bedingte Wahrscheinlichkeiten und Unabhängigkeit][19/20]
+	
+	\begin{homework}
+		Es sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum.
+		\begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep]
+			\item Es seien $A,B \in \ereignisF$ mit $\P(A) > 0$. Zeigen Sie, dass $\P(A \cap B \mid A \cup B) \leq \P(A \cap B \mid A)$.
+			\item Es seien $A_1, \dots , A_n \in \ereignisF$ unabhängige Ereignisse. Zeigen Sie, dass
+			\begin{equation*}
+				\P \left(\bigcap\nolimits_{k=1}^n A_k^\complement\right) \leq \exp\left(-\sum\nolimits_{k=1}^n \P(A_k) \right)
+			\end{equation*}
+			\item Seien $A,B,C \in \ereignisF$ mit $0 < \P(C) < 1$. Zeigen Sie, dass aus $\P(A \mid C) \geq \P(B \mid C)$ und $\P(A \mid C^\complement) \geq \P(B \mid C^\complement)$ bereits $\P(A) \geq \P(B)$ folgt.
+			\item Es seien $A,B \in \ereignisF$ mit $\P(A) > 0$. Beweisen oder widerlegen Sie: $\P(A \cap B) = \P(A) * \P(B) \follows \P(B \mid A) = \P(A^\complement)$.
+			\item Beweisen oder widerlegen Sie: Es gibt Ereignisse $A,B \in \ereignisF$ mit $0 < \P(B) < 1$, $\P(A \mid B) = \P(A)$ und $\P(A \cap B) = \P(A \cup B)$.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Offensichtlich ist $A \cap B \subseteq A \cup B$ und somit ist $(A \cap B) \cap (A \cup B) = A \cap B$. Weiter ist $A \subseteq A \cup B$ und damit wegen der Monotonie des Maßes $\P(A) \leq \P(A \cup B)$, d.h. $\frac{1}{\P(A \cup B)} \leq \frac{1}{\P(A)}$. Schlussendlich ist damit
+		\begin{equation*}
+		\P(A \cap B \mid A \cup B) = \frac{\P( (A \cap B) \cap (A \cup B))}{\P(A \cup B)} \leq \frac{\P(A \cap B)}{\P(A)} = \P(A \cap B \mid A)
+		\end{equation*}
+		%
+		\item Nach Lemma 3.16 ist auch die Familie $A_1^\complement , \dots , A_n^\complement \in \ereignisF$ stochastisch unabhängig, d.h. es gilt $\P(\bigcap_{k \in J} A_k^\complement) = \prod_{k \in J} \P(A_k)$ für jede Teilmenge $J \subseteq I = \menge{1, \dots , n}$, also insbesondere auch für $J = I$. Dann ist
+		\begin{equation*}
+			\P(\bigcap_{k=1}^n A_k^\complement) = \prod_{k=1}^n \P(A_k) = \prod_{k=1}^n (1 - \P(A_k)) \leq \prod_{k=1}^n \exp(-\P(A_k)) = \exp \left( \sum_{k=1}^n \P(A_k) \right)
+		\end{equation*}
+		Dabei geht in die Ungleichung vor allem die bekannte Abschätzung $1 + x \leq \exp(x)$ ein.
+		%
+		\item Aus den Voraussetzungen folgen
+		\begin{equation*}
+			\begin{aligned}
+			\P(A \mid C) = \frac{\P(A \cap C)}{\P(C)} &\geq \frac{\P(B \cap C)}{\P(C)} = \P(B \mid C) &\follows \P(A \cap C) &\geq \P(B \cap C) \\
+			\P(A \mid C^\complement) = \frac{\P(A \cap C^\complement)}{\P(C^\complement)} &\geq \frac{\P(B \cap C^\complement)}{\P(C^\complement)} = \P(B \mid C) &\follows \P(A \cap C^\complement) &\geq \P(B \cap C^\complement)
+			\end{aligned}
+		\end{equation*}
+		Addiert man die beiden Ungleichungen, so erhält man
+		\begin{equation*}
+			\P(A \cap C) + \P(A \cap C^\complement) \geq \P(B \cap C) + \P(B \cap C^\complement)
+		\end{equation*}
+		wobei die Mengen $A \cap C$ und $A \cap C^\complement$ (und analog auch für $B$) disjunkt sind, d.h. mit endlicher Additivität folgt
+		\begin{equation*}
+			\begin{aligned}
+			\P((A \cap C) \cup (A \cap C^\complement)) &\geq \P( (B \cap C) \cup (B \cap C^\complement)) \\
+			\follows \P((A \cap C) \cup (A \setminus C)) &\geq \P((B \cap C) \cup (B \setminus C)) \\
+			\follows \P(A) &\geq \P(B)
+			\end{aligned}
+		\end{equation*}
+		%
+		\item Wir betrachten den zweifache Würfelwurf mit $\Omega=\menge{1, \dots, 6}^2$ (d.h. $\# \Omega = 36$), $\ereignisF = \pows{\Omega}$ und $\P = \Uni(\Omega)$. Dazu beschreibe $A$ das Ereignis einer geraden Zahl im ersten Wurf, $B$ das Ereignis, dass die zweite Zahl größer als vier ist. Somit gilt
+		\begin{equation*}
+			\begin{aligned}
+				A &= \menge{(2,i),(4,i),(6,i) : i = 1,\dots,6} & \follows &\# A = 18 &\follows &\P(A) = \frac{18}{36} = \frac{1}{2} \\
+				B &= \menge{(i,5),(i,6) : i = 1,\dots, 6} &\follows &\# B = 12 &\follows &\P(B) = \frac{1}{2} \\
+				A \cap B &= \menge{(2,5),(2,6),(4,5),(4,6),(6,5),(6,6)} &\follows &\# A \cap B = 6 &\follows &\P(A \cap B) = \frac{1}{6}
+			\end{aligned}
+		\end{equation*}
+		Damit ist $\P(A \cap B) = \P(A) * \P(B)$, also $A$ und $B$ unabhängig. Jedoch ist $\P(A^\complement) = 1 - \P(A) = \lfrac{1}{2}$ im Gegensatz zu
+		\begin{equation*}
+			\P(B \cap A) = \frac{\P(B \cap A)}{\P(A)} = \frac{\lfrac{1}{6}}{\lfrac{1}{2}} = \frac{1}{3} \neq \frac{1}{2}
+		\end{equation*}
+		%
+		\item Wir betrachten den Wahrscheinlichkeitsraum $(\Omega, \ereignisF, \P)$ mit $\Omega = \menge{\alpha}$, $\ereignisF = \pows{\Omega} = \menge{\emptyset , \Omega}$ und $\P(\emptyset) \defeq 0$, $\P(\Omega) \defeq 1$. Dies definiert offensichtlich einen Wahrscheinlichkeitsraum. Jedoch existiert kein Ereignis $B \in \ereignisF$ mit $0 < \P(B) < 1$. Damit ist die Aussage widerlegt.
+	\end{enumerate}
+	
+%%%% AUFGABE 3.2 %%%%
+	\begin{homework}
+		Ein Taschenspieler hat eine faire und eine doppelköpfige Münze in seiner Tasche. Es wird mit genau einer Münze dreimal werfen. Er greift ohne zu schauen in seine Tasche und wählt eine Münze aus (zufällig gleichverteilte Auswahl). Weder der Taschenspieler noch Sie wissen, mit welcher Münze geworfen wird.
+		\begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep, topsep=-\baselineskip]
+			\item Beim ersten Wurf zeigt die Münze Kopf. Mit welcher Wahrscheinlichkeit hat er mit der fairen Münze geworfen?
+			\item Der zweite Wurf ist wieder Kopf. Mit welcher Wahrscheinlichkeit hat er mit der fairen Münze geworfen?
+			\item Der dritte Wurf ist Zahl. Mit welcher Wahrscheinlichkeit hat er mit der fairen Münze geworfen?
+		\end{enumerate}
+	\end{homework}
+
+	Wir bezeichnen die Auswahl der fairen Münze mit $F$, die Auswahl der doppelköpfigen mit $D$. Weiter sei $K$ das Erscheinen von Kopf und $Z$ das Erscheinen von Zahl. Damit ist dann laut Aufgabenstellung
+		\begin{equation*}
+			\P(F) = \P(D) = \frac{1}{2} \qquad
+			\P(K \mid F) = \P( Z \mid F) = \frac{1}{2} \qquad
+			\P(K \mid D) = 1 \und \P(Z \mid D) = 0
+		\end{equation*}
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Nach dem Satz der totalen Wahrscheinlichkeit gilt
+		\begin{equation*}
+			\P(K) = \P(K \mid F) * \P(F) + \P(K \mid D) * \P(D) = \lfrac{1}{2} * \lfrac{1}{2} + 1 * \lfrac{1}{2} = \lfrac{3}{4}
+		\end{equation*}
+		und dann nach dem Satz von Bayes
+		\begin{equation*}
+			\P(F \mid K) = \frac{\P(K \mid F) * \P(F)}{\P(K)} = \frac{\lfrac{1}{2} * \lfrac{1}{2}}{\lfrac{3}{4}} = \frac{1}{3}
+		\end{equation*}
+		für die gesuchte Wahrscheinlichkeit.
+		%
+		\item Wir schreiben $KK$ für Kopf im ersten und zweiten Wurf. Dann ist $\P(KK \mid F) = \lfrac{1}{2} * \lfrac{1}{2} = \lfrac{1}{4}$. Nach dem Satz der totalen Wahrscheinlichkeit ergibt sich
+		\begin{equation*}
+			\P (KK) = \P( KK \mid F) * \P(F) + \P(KK \mid D) * \P(D) = \frac{1}{4} * \frac{1}{2} + 1 * \frac{1}{2} = \frac{1}{8} + \frac{1}{2} = \frac{5}{8}
+		\end{equation*}
+		Dann ergibt sich wieder mit dem Satz von Bayes
+		\begin{equation*}
+			\P(F \mid KK) = \frac{\P(KK \mid F) * \P(F)}{\P(KK)} = \frac{\lfrac{1}{4} * \lfrac{1}{2}}{\lfrac{5}{8}} = \frac{1}{5}
+		\end{equation*}
+		%
+		\item Wir schreiben $Z_3$ für das Ereignis, dass im dritten Wurf eine Zahl geworfen wird. Die Wahrscheinlichkeit, dass mit der doppelköpfigen Münze im dritten Wurf eine Zahl geworfen wird, ist $\P(D \mid Z_3) = 0$, da mit der doppelköpfigen Münze nie eine Zahl geworfen werden kann. Genauer ist $\P(Z_3 \mid F) = \lfrac{1}{8}$ sowie $P(Z_3 \mid D) = 0$ und nach dem Satz der totalen Wahrscheinlichkeit dann $\P(Z_3) = \P(Z_3 \mid F) * \P(F) + \P(Z_3 \mid D) * \P(D) = \P(Z_3 \mid F) * \P(F)$. Der Satz von Bayes ergibt also
+		\begin{equation*}
+			\P( F \mid Z_3) = \frac{\P(Z_3 \mid F) * \P(F)}{\P(Z_3 \mid F) * \P(F)} = 1
+		\end{equation*}
+		Also muss er die faire Münze gewählt haben.
+	\end{enumerate}
+
+%%%% AUFGABE 3.3 %%%%
+	\begin{homework}
+		Es sei ein Wahrscheinlichkeitsraum $(\Omega, \ereignisF, \P)$ und eine Indexmenge $I \neq 0$ gegeben. Weiterhin seien $A_i$ ($i \in I$) unabhängige Ereignisse. Zeigen Sie, dass dann auch $\menge{\Omega, A_i \colon i \in I}$ unabhängig sind.
+	\end{homework}
+	
+	Da die $A_i$ ($i \in I$) unabhängig sind, gilt für jede Teilmenge $\emptyset \neq J \subseteq I$ mit $\# J < \infty$, dass $\P\left( \bigcap_{i \in J} A_i \right) = \prod_{i \in J} \P(A_i)$. Da alle $A_i \in \ereignisF$ und somit $A_i \subseteq \Omega$ gilt, ist $\bigcap_{i \in J} A_i = \bigcap_{i \in J} \cap \Omega$. Außerdem können wir mit $1 = \P(\Omega)$ multiplizieren, ohne dass die rechte Seite verändert wird. Somit ist
+	\begin{equation*}
+		\P \left( \bigcap_{i \in J} A_i \cap \Omega \right) = \prod_{i \in J} \P(A_i) * \P(\Omega)
+	\end{equation*}
+	für jede beliebige Teilmenge $\emptyset \neq J \subseteq I$ mit $\# J < \infty$, was gerade der Definition von stochastischer Unabhängigkeit der $\menge{\Omega , A_i : i \in I}$ entspricht.
+	
+%%%% AUFGABE 3.4 %%%%
+	\begin{homework}
+		Es sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum und $\mathcal{F}_{i,j} \subseteq \mathcal{F}$ ($1 \leq i \leq n , 1 \leq j \leq m(i)$) unabhängige, $\cap$-stabile Familien mit $\Omega \in \mathcal{F}_{i,j}$ für alle $i,j$. Zeigen Sie, dass die Familien
+		\begin{equation*}
+			\mathcal{F}_i^\cap \defeq \menge{F_{i,1} \cap \dots \cap F_{i,m(i)} : F_{i,j} \in \mathcal{F}_{i,j} \und 1 \leq j \leq m(i)} \qquad (1 \leq i \leq n)
+		\end{equation*}
+		$\cap$-stabil und unabhängig sind sowie, dass $\mathcal{F}_{i,1}, \dots , \mathcal{F}_{i,m(i)} \subseteq \mathcal{F}_i^\cap$ gilt.
+	\end{homework}
+	
+	Wir fixieren uns ein beliebiges $i \in \menge{1, \dots, n}$ und schreiben $\mathcal{F}^\cap$ für $\mathcal{F}_i^\cap$, sowie $\mathcal{F}_k = \mathcal{F}_{i,k}$. Weiter schreiben wir $m = m(i)$.
+	
+	\paragraph{$\cap$-Stabilität}
+	Seien $A^1, A^2 \in \mathcal{F}^\cap$ (Index nur zur besseren Unterscheidung oben notiert, keine Potenz). Dann gibt es $(F_k^1)_{k = 1, \dots , m} , (F_k^2)_{k = 1, \dots , m}$ mit $F_k^j \in \mathcal{F}_k$ für alle $k$ und alle $j$ sowie $A^1 = \bigcap_{k=1}^m F_k^1$ bzw. $A^2 = \bigcap_{k=1}^m F_k^2$. Dann ist auch
+	\begin{equation*}
+		A^1 \cap A^2 = \left( \bigcap_{k=1}^m F_k^1 \right) \cap \left( \bigcap_{k=1}^m  F_k^2 \right) = \bigcap_{k=1}^m \underbrace{\left( F_k^1 \cap F_k^2) \right)}_{\in \mathcal{F}_k} \in \mathcal{F}^\cap
+	\end{equation*}
+	
+	\paragraph{Unabhängigkeit}
+	Wir wählen eine Familie $\folge{A^\ell}[\ell] \subseteq \mathcal{F}^\cap$. Dann existiert zu jedem $A^\ell$ eine Familie $\folge{F_k^\ell}[k = 1, \dots , m]$ mit $F_k^\ell \in \mathcal{F}_k$ für alle $k$ und alle $\ell$, sodass $A^\ell = \bigcap_{k =1}^m F_k^\ell$ für alle $\ell$. Betrachten wir nun
+	\begin{equation*}
+	\begin{aligned}
+		\P \left( \bigcap_{\ell \in J} A^\ell \right)
+		&= \P \left( \bigcap_{\ell \in J} \bigcap_{j=1}^m F_j^\ell \right)
+		= \P \left( \bigcap_{j=1}^m \bigcap_{\ell \in J} F_j^\ell \right) \\
+		&= \prod_{j=1}^m \P \left( \bigcap_{\ell \in J} F_j^\ell \right) 
+		= \prod_{j=1}^m \prod_{\ell \in J} \P(F_j^\ell)
+		= \prod_{\ell \in J} \prod_{j=1}^m \P(F_j^\ell)
+		= \prod_{\ell \in J} \P \left( \bigcap_{j=1}^m F_j^\ell \right) \\
+		&= \P \left( \bigcap_{\ell \in J} \bigcap_{j=1}^m F_j^\ell \right)
+		= \P \left( \bigcap_{\ell \in J} A^\ell \right)
+	\end{aligned}
+	\end{equation*}
+	für eine endliche Teilmenge $J$.
+	
+%%%% AUFGABE 3.5 %%%%
+	\begin{homework}[$\star$]
+		Geben Sie ein Beispiel dafür, dass die von unabhängigen Familien erzeugten $\sigma$-Algebren nicht unabhängig sind.
+	\end{homework}
+
+	Betrachten wir den Wahrscheinlichkeitsraum $(\Omega , \ereignisF , \P)$ mit $\Omega = [0,1]$, $\ereignisF = \borel{\Omega}$ und $\P = \lambda$ das eindimensionale Lebesgue-Maß. Weiter betrachten wir die Familien $\mathcal{A} = \menge{A_1 , A_2}$ und $\mathcal{B} = \menge{B}$ mit
+	\begin{equation*}
+		\begin{aligned}
+			A_1 &\defeq [0, \lfrac{1}{4}) \cup [\lfrac{1}{2}, \lfrac{3}{4} ) \qquad &\mit \lambda(A_1) &= \lfrac{1}{2} \\
+			A_2 &\defeq [0, \lfrac{1}{3}) \cup [\lfrac{2}{3}, 1 ) &\mit \lambda(A_2) &= \lfrac{2}{3} \\
+			B &\defeq [0, \lfrac{1}{2}) &\mit \lambda(B) &= \lfrac{1}{2}
+		\end{aligned}
+	\end{equation*} 
+	Dann sind $\mathcal{A}$ und $\mathcal{B}$ stochastisch unabhängig, da
+	\begin{equation*}
+		\begin{aligned}
+			\lambda(A_1 \cap B) = \lambda ( [0 , \lfrac{1}{4}) ) = \frac{1}{4} = \frac{1}{2} * \frac{1}{2} = \lambda(A_1) * \lambda(B) \\
+			\lambda(A_2 \cap B) = \lambda ( [0 , \lfrac{1}{3}) ) = \frac{1}{3} = \frac{2}{3} * \frac{1}{2} = \lambda(A_2) * \lambda(B)
+		\end{aligned}
+	\end{equation*}
+	Definieren wir nun $A \defeq A_1 \cap A_2 = [0, \lfrac{1}{4}) \cup [\lfrac{2}{3} , \lfrac{3}{4} ) \in \sigma(\mathcal{A})$, dann ist
+	\begin{equation*}
+		\lambda(A) = \frac{1}{4} + \left( \frac{3}{4} - \frac{2}{3} \right) = \frac{1}{3}
+	\end{equation*}
+	Weiter ist $B \in \sigma(\mathcal{B})$ und $A \cap B = [0 , \lfrac{1}{4})$, also $\lambda(A \cap B) =  \lfrac{1}{4}$, aber
+	\begin{equation*}
+		\lambda(A) * \lambda(B) = \frac{1}{3} * \frac{1}{2} = \frac{1}{6} \neq \frac{1}{4}
+	\end{equation*}
+	und $\sigma(\mathcal{A})$ und $\sigma(\mathcal{B})$ damit stochastisch abhängig.
+\end{exercisePage}

@@ -60,7 +60,36 @@
 \renewcommand{\footrulewidth}{0pt}
 \lfoot{\osfamily \textcolor{cdgray}{\footnotesize \thename~(Matr.-Nr.: \thematnr)}}{\rightmark}
 \pagestyle{fancy}
+\newcommand{\carf}[2]{\frac{#2}{#1}}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\L}{\mathcal{L}}
 
+\lstset{language=Matlab,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	%commentstyle=
+	%morecomment=[l]{!\ },% Comment only with space after !
+	%stringstyle=\color{darkgray}\ttfamily,
+	%backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	%numberstyle=\color{gray}\ttfamily,
+	%identifierstyle=\color{black},
+	xleftmargin=.1\textwidth, 
+	xrightmargin=.1\textwidth,
+	breaklines=true,
+	frame=single,
+	tabsize=2,
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}2
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -69,7 +98,12 @@
 \MakeTitle[dark][Hausaufgaben]
     
 \include{stoch_hausaufgaben_1}
-
+\include{stoch_hausaufgaben_2}
+\include{stoch_hausaufgaben_3}
+\include{stoch_hausaufgaben_4}
+\include{stoch_hausaufgaben_5}
+\include{stoch_hausaufgaben_6}
+\include{stoch_hausaufgaben_7}
 
 
 \end{document}

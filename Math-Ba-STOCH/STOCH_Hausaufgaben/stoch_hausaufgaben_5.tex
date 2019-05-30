@@ -1,0 +1,140 @@
+\begin{exercisePage}[bedingte Wahrscheinlichkeit \& Erwartungswerte][12/20]
+	
+%%%% AUFGABE 5.1 %%%%%
+	\begin{homework}
+		Ein Netzwerk besteht aus vier ähnlichen, aber unabhängig voneinander arbeitenden Komponenten. Damit das Netzwerk stabil läuft, müssen $A$ und $B$ oder $C$ und $D$ funktionieren. Sei $T$ der Ausfallzeitpunkt des gesamten Systems und $T_k$ der Ausfallzeitpunkt der Komponente $k$ mit $k \in \menge{A,B,C,D}$. Wir nehmen an, dass $T_k \sim \Exp(\lambda)$ exponentialverteilt mit Parameter $\lambda > 0$ ist, für alle $k \in \menge{A,B,C,D}$. Zeigen Sie, dass $\P(T<t) = \left( 1 - e^{-2\lambda t} \right)^2$ gilt.
+	\end{homework}
+	
+%	Wir bezeichnen mit $T_{AB}$ und $T_{CD}$ den Ausfallzeitpunkt der Teilsysteme $AB$ bzw. $CD$. Dann gilt aufgrund der Unabhängigkeit der einzelnen Komponenten $\P(T_{AB} < t) = \P(T_A < t , T_B < t) = \P(T_A < t) * \P(T_B < t)$. Da $T_A, T_B \sim \Exp(\lambda)$ exponentialverteilt sind, ist 
+	
+	Es gilt $\P(T < t) = 1 - \P(T \geq t)$. $\P(T \geq t)$ beschreibt den Fall, dass das System bis zum Zeitpunkt $t$ noch nicht ausgefallen ist, also funktioniert. Dazu müssen $A$ und $B$ oder $C$ und $D$ funktionieren. Die Funktionalität von $A$ und $B$ können wir durch $\P(T_{AB} \geq t) = \P(T_A \geq t , T_B \geq t)$ beschreiben, analog auch $\P(T_{CD} \geq t) = \P(T_C \geq t , T_D \geq t)$. Aufgrund der Unabhängigkeit der einzelnen Komponenten gilt
+	\begin{equation*}
+		\begin{aligned}
+		\P(T_{AB} \geq t) &= \P(T_A \geq t , T_B \geq t) = \P(T_A \geq t) * \P(T_B \geq t) \\
+		\P(T_{CD} \geq t) &= \P(T_C \geq t , T_D \geq t) = \P(T_C \geq t) * \P(T_D \geq t)
+		\end{aligned}
+	\end{equation*} 
+	Die (logische) Disjunktion der Funktionalität der Teilsysteme kann als mengentheoretische Vereinigung beschrieben werden. Dann gilt
+	\begin{equation*}
+	\begin{aligned}
+		\P(T \geq t) 
+		&= \P(\menge{T_{AB} \geq t} \cup \menge{T_{CD} \geq t}) \\
+		&= \P(\menge{T_{AB} \geq t}) + \P(T_{CD} \geq t) - \P(T_{AB} \geq t , T_{CD} \geq t) \\
+		&= \P(T_A \geq t) * \P(T_B \geq t) + \P(T_C \geq t) * \P(T_D \geq t) \\
+		&\phantom{= \P(T_A \geq t) * \P(T_B \geq t) } \,\, - \P(T_A \geq t) * \P(T_B \geq t) * \P(T_C \geq t) * \P(T_D \geq t) \\
+	\end{aligned}
+	\end{equation*}
+	
+	Da $t \geq 0$ gilt für alle Komponenten $k$ schon $\P(T_k \geq t) = 1 - \P(T_k < t) = 1 - (1-e^{-\lambda t}) = e^{-\lambda t}$.
+	Damit gilt
+	\begin{equation*}
+		\P(T \geq t) = (e^{-\lambda t})^2 + (e^{-\lambda t})^2 - (e^{-\lambda t})^4 = 2 e^{-2 \lambda t} - e^{-4 \lambda t}
+	\end{equation*}
+	Setzten wir dies nun endlich in den Anfang ein, so ergibt sich
+	\begin{equation*}
+		\P(T < t) = 1 - \P(T \geq t) = 1 - 2 e^{-2 \lambda t} + e^{-4 \lambda t} = \left( 1 - e^{-2 \lambda t} \right)^2
+	\end{equation*}
+
+%%%% AUFGABE 5.2 %%%%
+	\begin{homework}
+		Es seien $X,Y \sim \Exp(1)$ unabhängige Zufallsvariablen.
+		\begin{enumerate}[nolistsep, topsep=-\parskip, leftmargin=*]
+			\item Bestimmen Sie die Dichte von $\frac{X}{X+Y}$.
+			\item Sind $X+Y$ und $\frac{X}{X+Y}$ unabhängig?
+		\end{enumerate}
+	\end{homework}
+
+\pagebreak
+
+%%%% AUFGABE 5.3 %%%%
+	\begin{homework}
+		Es sei $X$ eine Zufallsvariable auf $(\Omega, \ereignisF, \P)$. Zeigen Sie, dass $X$ genau dann unabhängig von sich selbst ist, wenn es eine Konstante $c \in \R$ gibt, sodass $\P(X = c) = 1$.
+	\end{homework}
+
+	\begin{proof-equivalence}[]
+		\hinrichtung Wir betrachten die Verteilungsfunktion $F_X$ von $X$ mit $F_X(t) = \P(X \le t)$. Aufgrund der Unabhängigkeit von $X$ von sich selbst gilt
+		\begin{equation*}
+			P(X \leq t) = \P(X \le t , X \le t) = \P(X \le t) * \P(X \le t)
+		\end{equation*}
+		und somit ist $F_X(t) \in \menge{0,1}$ für alle $t \in \R$. Als Verteilungsfunktion ist $F_X$ monoton wachsend und daher sind nur drei Fälle zu unterscheiden:
+		\begin{itemize}[leftmargin=*, nolistsep]
+			\item $F_X(t) = 0$ für alle $t \in \R$, was wegen $\lim_{t \to \infty} F_X(t) = 1$ nicht möglich ist.
+			\item $F_X(t) = 1$ für alle $t \in \R$, was wegen $\lim_{t \to -\infty} F_X(t) = 0$ nicht möglich ist.
+			\item Es existiert ein $c \in \R$, sodass $F_X(t) = 0$ für alle $t \leq c$ und $F_X(t) = 1$ für alle $t > c$.
+		\end{itemize}
+		Da nur der dritte Fall eintreten kann, muss also dieses $c \in \R$ existieren, sodass $\P(X=c) = 1$ gelten muss und $X$ ist fast sicher konstant.
+		%
+		\rueckrichtung Sei $X$ fast sicher konstant, d.h. es existiert ein $c \in \R$, sodass $\P(X=c)=1$. Wir wollen nun zeigen, dass $X$ von jeder beliebigen Zufallsvariable unabhängig ist. Dazu sei $Y$ eine solche beliebige Zufallsvariable auf $(\Omega, \ereignisF, \P)$ und $A,B \in \ereignisF$ seien messbare Mengen. Wir unterscheiden zwei Fälle:
+		\begin{itemize}[leftmargin=*, nolistsep]
+			\item Ist $c \in A$, dann gilt
+			\begin{equation*}
+				\P(X \in A , Y \in B) = \P(\Omega \cap \menge{Y \in B}) = \P(Y \in B) = \P(\Omega) * \P(Y \in B) = \P(X \in A) * \P(Y \in B)
+			\end{equation*}
+			\item Ist $c \notin A$, so gilt
+			\begin{equation*}
+				\P(X \in A , Y \in B) = \P(\emptyset \cap \menge{Y \in B}) = \P(\emptyset) = 0 = \P(\emptyset) * \P(Y \in B) = \P(X \in A) * \P(Y \in B)
+			\end{equation*}
+		\end{itemize}
+		Damit sind $X$ und $Y$ in jedem Fall unabhängig, insbesondere gilt dies natürlich auch für $Y=X$.
+	\end{proof-equivalence}
+
+%%%% AUFGABE 5.4 %%%%
+	\begin{homework}
+		Es seien $X \sim \Geom(\lambda)$ und $Y \sim \Geom(\mu)$ unabhängige, geometrisch verteilte Zufallsvariablen mit Parameter $\lambda, \mu \in (0,1)$. Zeigen Sie, dass $\rho \defeq \lambda + \mu - \lambda \mu \in (0,1)$ und bestimmen Sie die Verteilung von $Z \defeq \min \menge{X,Y}$.
+	\end{homework}
+
+	Da $\lambda, \mu \in (0,1)$ sind, ist auch $(1-\lambda), (1-\mu) \in (0,1)$ und somit $(1 - \lambda) * (1 - \mu) \in (0,1)$.  Insbesondere gilt
+	\begin{equation*}
+		1 > (1-\lambda)(1-\mu) = \lambda \mu - \lambda - \mu + 1 \follows 0 > \lambda \mu - \lambda - \mu \follows 0 < \lambda + \mu - \lambda \mu
+	\end{equation*}
+	sowie
+	\begin{equation*}
+		0 < (1-\lambda)(1-\mu) = \lambda \mu - \lambda - \mu + 1  \follows \lambda + \mu - \lambda \mu < 1
+	\end{equation*}
+	
+	Wir definieren die Zufallsvariable $Z \defeq \min \menge{X,Y}$ und suchen ihre Verteilung. Die Zufallsvariablen $X \sim \Geom(\lambda)$ und $Y \sim \Geom(\mu)$ haben die Zähldichten $\rho_X(k) = \lambda(1-\lambda)^k$ und $\rho_Y(k) = \mu (1-\mu)^k$. Wir wissen bereits aus vorherigen Aufgaben, dass $\P(X > k) = (1-\lambda)^{k+1}$ (und analog für $Y$) gilt. Es gilt
+	\begin{equation*}
+		\P(Z > k) = \P(\min\menge{X,Y} > k) = \P(X>k,Y>k) = \P(X>k) * \P(Y>k) = (1-\lambda)^{k+1} * (1-\mu)^{k+1}
+	\end{equation*}
+	Dann ist
+	\begin{equation*}
+	\begin{aligned}
+		\P(Z = k) = \P(Z > k-1) - \P(Z>k) 
+		&= (1-\lambda)^k * (1-\mu)^k - (1-\lambda)^{k+1} * (1-\mu)^{k+1} \\
+		&= (1-\lambda)^k * (1-\mu)^k * \big( 1 - (1-\lambda)(1-\mu) \big) \\
+		&= (1- \lambda -\mu + \lambda \mu)^k * (\lambda + \mu - \lambda \mu) \\
+		&= \big(\lambda + \mu - \lambda \mu \big) \big( 1- (\lambda + \mu - \lambda \mu) \big)^k
+	\end{aligned}
+	\end{equation*}
+	und somit ist $Z = \min \menge{X,Y} \sim \Geom(\lambda + \mu - \lambda \mu) = \Geom(\rho)$.
+%%%% AUFGABE 5.5 %%%%
+	\begin{homework}
+		Berechnen Sie \EW für die folgenden Zufallsvariablen:
+		\begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep, topsep=-\parskip]
+			\item $X \sim \Uni([a,b])$ mit $a,b \in \R$
+			\item $X \sim \GammaDist(\lambda, r)$ mit $\lambda,r > 0$
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Die (stetige) Gleichverteilung auf $[a,b]$ hat die Dichtefunktion $\rho(x) = \frac{1}{b-a}$. Dann gilt für den Erwartungswert
+		\begin{equation*}
+			\EW = \int_\R x * \rho(x) \dx = \int_a^b x * \frac{1}{b-a} \dx = \frac{1}{b-a} * \left[ \frac{1}{2} x^2 \right]_a^b = \frac{1}{b-a} * \frac{1}{2} \left( b^2 - a^2 \right) = \frac{b+a}{2}
+		\end{equation*}
+		%
+		\item Die Gamma-Verteilung hat die Dichtefunktion $\rho(x) = \frac{\lambda^r}{\Gamma(r)} x^{r-1} e^{-\lambda x}$. Somit gilt für den Erwartungswert
+		\begin{equation*}
+			\EW = \int_\R x * \rho(x) \dx = \int_\R \frac{\lambda^r}{\Gamma(r)} * x^r * e^{-\lambda x} \dx
+		\end{equation*}
+		Unter Nutzung von MINT 12.5 gilt $\Gamma(r+1) = r * \Gamma(r)$, also auch $\frac{\lambda^{r+1}}{\Gamma(r+1)} = \frac{\lambda}{r} * \frac{\lambda^r}{\Gamma(r)}$. Mit $r$-facher partieller Integration erhält man schließlich $\EW = \lfrac{r}{\lambda}$.
+	\end{enumerate}
+
+%%%% AUFGABE 5.6 %%%%%
+	\begin{homework}
+		Es sei $r \in \N$, $\lambda,t > 0$, $\folge{p_n}[n \geq 1] \subseteq (0,1)$ eine Folge mit $n * p_n \to \lambda$ und $\folge{t_n}[n \geq 1] \subseteq \N_0$ eine Folge mit $\frac{t_n}{n} \to t$ für $n \to \infty$. Zeigen Sie
+		\begin{equation*}
+			\lim_{n \to \infty} \negBin(r,p_n)(\menge{0, \dots , t_n}) = \GammaDist(\lambda,r)((0,t])
+		\end{equation*}
+		\textit{Hinweis: Zeigen Sie zunächst $\negBin(r,p)(\menge{0, \dots , m}) = \Bin(r+m,p)(\menge{r, r+1 , \dots , r+m})$.}
+	\end{homework}
+\end{exercisePage}

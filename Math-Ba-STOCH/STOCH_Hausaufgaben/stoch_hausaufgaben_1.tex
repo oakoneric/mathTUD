@@ -1,4 +1,4 @@
-\begin{exercisePage}[Wahrscheinlichkeit, Zufallsvariablen, Verteilungsfunktionen]
+\begin{exercisePage}[Wahrscheinlichkeit, Zufallsvariablen, Verteilungsfunktionen][18.5 / 20]
     \begin{lemma} \label{lemma: 1_1.1_schnitt}
         Sei $(\Omega, \ereignisF)$ ein messbarer Raum. Dann gilt
         \begin{equation*}
@@ -71,6 +71,10 @@
         \follows c = \frac{3}{8}
         \end{aligned}
         \end{equation*}
+        %
+        \begin{correction}
+        	Nun ist noch zu zeigen, dass $f(x) \geq 0$ für alle $x \in \R$. Betrachte dazu die Nullstellen $x_1 = 0$ und $x_2 = 2$ von $f$. Da $f$ Parabelform hat und nach unten geöffnet ist, folgt aus der Stetigkeit von $f$, dass $f(x) \geq 0$ für alle $x \in [0,2]$, insbesondere für alle $x \in \R$.
+        \end{correction}
         %
         \item 
         \begin{equation*}
@@ -156,7 +160,7 @@
         
         Damit definiert $F$ nach Satz 1.19 eine Verteilungsfunktion.
         %
-        \item Für die Verteilungsfunktion $\abb{f}{\R}{\R}$ gilt $f(x) = F'(x)$. Wegen
+        \item Für die Dichtefunktion $\abb{f}{\R}{\R}$ gilt $f(x) = F'(x)$. Wegen
         \begin{equation*}
             \ableitung{x} \arctan(x) = \frac{1}{x^2 + 1}
         \end{equation*}
@@ -231,13 +235,13 @@
     \begin{exercise}
         Es sei $(\Omega , \ereignisF , \P)$ ein Wahrscheinlichkeitsraum und $A_1 , \dots , A_n \in \ereignisF$ seien Ereignisse. Zeigen Sie
         \begin{equation*}
-            \P \left( \bigcap_{k=1}^n \right) \geq \sum_{k=1}^n \P(A_k) - n + 1
+            \P \left( \bigcap_{k=1}^n A_k \right) \geq \sum_{k=1}^n \P(A_k) - n + 1
         \end{equation*}
     \end{exercise}
 
     \begin{equation*}
         \begin{aligned}
-            \P \left( \bigcap_{k=1}^n \right) 
+            \P \left( \bigcap_{k=1}^n A_k \right) 
             = \P \left( \left( \bigcup_{k=1}^n A_k^\complement \right)^\complement \right)
             &= 1 - \P \left( \bigcup_{k=1}^n A_k^\complement \right) \\
             \overset{\sigma\text{-Subadd.}}&{\geq} 1 - \sum_{k=1}^n \P(A_k^\complement) \\

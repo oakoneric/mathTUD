@@ -1,0 +1,266 @@
+\begin{exercisePage}[Bedingte Verteilung \& bedingte Erwartung]
+	
+	\begin{homework}
+		Es seien $X,Y \in \L^2$ zwei Zufallsvariablen. Zeigen Sie folgende Eigenschaften der Korrelation:
+		\begin{enumerate}[nolistsep]
+			\item Für alle $a,c > 0$ und $b \in \R$ gilt $\Corr{aX+b}{cY+d} = \Corr{X}{Y}$.
+			\item Es gilt genau dann $\Corr{X}{Y} \in \menge{-1,+1}$, wenn $a,b \in \R$ mit $a \neq 0$ existieren, sodass $\P(Y = aX+b) = 1$.
+		\end{enumerate}
+	\end{homework}
+
+	\newcommand{\wurzel}{\sqrt{\frac{\Var[Y]}{\Var[X]}}}
+	\newcommand{\bruch}{\frac{\Var[Y]}{\Var[X]}}
+	
+	\begin{enumerate}[label = (zu \alph*), leftmargin=*]
+		\item Für die Kovarianz gilt
+		\begin{equation*}
+		\begin{aligned}
+		\Cov{aX+b}{cY+d} &= \EW[(aX + b)(cY+d)] - \EW[aX+b] \EW[cY+d] \\
+		&= \EW[ac XY + bc Y + ad X + bd] - \left( a \EW[X] + b \right) \left( c \EW[Y] + d \right) \\
+		&= ac \EW[XY] + bc \EW[Y] + ad \EW[X]- ac \EW[X] \EW[Y] - bc \EW[Y] - ad \EW[X] - bd \\
+		&= ac \left( \EW[XY] - \EW[X] \EW[Y] \right) \\
+		&= ac \Cov{X}{Y}
+		\end{aligned}
+		\end{equation*}
+		Damit gilt nun für die Korrelation
+		\begin{equation*}
+		\begin{aligned}
+			\Corr{aX + b}{cY + d} 
+			&= \frac{\Cov{aX+b}{cY+d}}{\sqrt{\Var[aX + b] * \Var[cY + d]}} \\
+			&= \frac{ac \Cov{X}{Y}}{\sqrt{a^2 \Var[X] * c^2 \Var[Y]}} \\
+			&= \frac{\Cov{X}{Y}}{\sqrt{\Var[X] * \Var[Y]}} = \Corr{X}{Y}
+		\end{aligned}
+		\end{equation*}
+		%
+		\item \begin{proof-equivalence}
+			\rueckrichtung Sei $\P(Y=aX+b) =1$ für $a,b \in \R$ mit $a \neq 0$, d.h. $Y = aX + b$ $\P$-fast sicher. Dann gilt
+			\begin{equation*}
+				\Corr{X}{Y} 
+				= \Corr{X}{aX+b} 
+				= \Corr{X}{X} 
+				= \frac{\Cov{X}{X}}{\sqrt{\Var[X] * \Var[X]}} 
+				= \frac{\Var[X]}{\pm \Var[X]} 
+				= \pm 1
+			\end{equation*}
+			\hinrichtung Sei $\Corr{X}{Y} = \pm 1$. Dann definieren wir 
+			\begin{equation*}
+				a = \pm \frac{\sqrt{\Var[Y]}}{\sqrt{\Var[Y]}} > 0 
+				\quad \und \quad 
+				b = \EW[Y] - a \EW[X] \in \R
+			\end{equation*}
+			Definieren wir uns eine Zufallsvariable $Z \defeq Y - (a X + b)$ und wollen nun zeigen, dass $\P(Z = 0) = 1$ gilt. Es gilt nun
+			\begin{equation*}
+				Z = Y - \wurzel X + \EW[Y] - \wurzel \EW[X] = \wurzel \left( X - \EW[X] \right) + \left( Y - \EW[Y] \right)
+			\end{equation*}
+			und dann für den Erwartungswert
+			\begin{equation*}
+				\EW[Z] = \wurzel \left( {\EW[X]} - \EW[{\EW[X]}] \right) + \left( \EW[Y] - \EW[{\EW[Y]}] \right) = 0
+			\end{equation*}
+			Somit ist dann unter Ausnutzung von $\Cov{X}{Y} = \Corr{X}{Y} * \sqrt{\Var[arg] * \Var[Y]} = \pm \sqrt{\Var[arg] * \Var[Y]}$
+			\begin{equation*}
+			\begin{aligned}
+				\Var[Z] 
+				&= \EW[Z^2] \\
+				&= \EW[\bruch \left(X - {\EW[X]} \right)^2 - 2 \wurzel \left( X - {\EW[X]} \right) \left( Y - {\EW[Y]} \right) - \left( Y - {\EW[Y]} \right)^2] \\
+				&= \bruch \Var[X] - 2 \wurzel \Cov{X}{Y} + \Var[Y] \\
+				&= \Var[Y] - 2 \wurzel \sqrt{\Var[arg]} \sqrt{\Var[Y]} + \Var[Y] \\
+				&= 0			
+			\end{aligned}
+			\end{equation*}
+			Wendet man nun die Chebyshev-Ungleichung für das komplementäre Ereignis an, so ergibt sich für ein beliebiges $\epsilon > 0$
+			\begin{equation*}
+				\P( \abs{Z - \EW[Z]} < \epsilon) \geq 1 - \frac{\Var[Z]}{\epsilon^2}
+			\end{equation*}
+			Für $\epsilon \to 0$ folgt dann daraus mit der Konvention $0 * \infty = 0$, dass $\P(\abs{Z - \EW[Z]} = 0) = 1$ ist. Schließlich impliziert dies nun $\P(Z = \EW[Z]) = 1$, d.h. $1 = \P(Z = 0) = \P(Y - aX+b = 0) = \P(Y = aX+b)$.
+		\end{proof-equivalence}
+	\end{enumerate}
+
+	\undef\wurzel
+	\undef\bruch
+	
+	
+%%%% AUFGABE 7.2 %%%%
+	\begin{homework}
+		Es sei $\abb{(X,Y)}{\Omega}{\R}$ ein Zufallsvektor mit Dichte $f_{(X,Y)} = \one_\Delta(x,y)$, wobei $\Delta \subseteq \R^2$ definiert ist durch
+		\begin{equation*}
+			\Delta \defeq \menge{(x,y) \in \R^2 \colon -1 \le x \le 1 \text{ und }0 \le y \le 1-\abs{x}}
+		\end{equation*}
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Bestimmen Sie die Randdichten $f_X(x)$ und $f_Y(y)$.
+			\item Bestimmen Sie die bedingten Dichten $f_{Y \mid X=x}$ und $f_{X \mid Y=y}$.
+			\item Bestimmen Sie die Kovarianz $\Cov{X}{Y}$.
+			\item Sind $X$ und $Y$ unabhängig?
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Zuerst stellen wir fest, dass $\one_\Delta(x,y)$ für alle $x,y \in \R$ auch geschrieben werden kann als $\one_{[-1,1]}(x) * \one_{[0,1-\abs{x}]}(y)$. Dann gilt
+		\begin{equation*}
+		\begin{aligned}
+			f_X(x) = \int_\R f_{(X,Y)}(x,y) \dy &= \int_\R \one_\Delta(x,y) \dy \\ 
+			&= \int_\R \one_{[-1,1]}(x) * \one_{[0,1-\abs{x}]}(y) \dy \\
+			&= \one_{[-1,1]}(x) * \int_0^{1-\abs{x}} \dy \\
+			&= \one_{[-1,1]}(x) * (1 - \abs{x})
+		\end{aligned}
+		\end{equation*}
+		Nun stellen wir $\one_\Delta$ erneut anders da, denn 
+		\begin{equation*}
+			\Delta = \menge{(x,y) \in \R^2 \colon 0 \le y \le 1 \text{ und } -1 + y \le x \le 1-y}
+		\end{equation*}
+		und somit ist $\one_\Delta(x,y) = \one_{[0,1]}(y) * \one_{[-1+y,1-y]}(x)$.
+		Damit ist nun
+		\begin{equation*}
+		\begin{alignedat}[t]{2}
+			f_Y(y) = \int_\R f_{(X,Y)}(x,y) \dx 
+			&= \int_\R \one_\Delta(x,y) \dx 
+			&&= \int_{\R} \one_{[0,1]}(y) * \one_{[-1+y,1-y]}(x) \dx \\
+			&= \one_{[0,1]}(y) * \int_{-1+y}^{1-y} \!\!\! \dx 
+			&&= (2 - 2y) * \one_{[0,1]}(y)
+		\end{alignedat}
+		\end{equation*}
+		%
+		\item Nach Proposition 6.6 der Vorlesung berechnen sich die bedingten Dichten zu
+		\begin{equation*}
+		\begin{aligned}
+			\rho_{X \mid Y = y}(x) &= \frac{\rho_{(X,Y))}(x,y)}{\rho_Y(y)} 
+			= \frac{\one_\Delta(x,y)}{(2-2y) * \one_{[0,1]}(y)}
+			= \frac{\one_{[-1+y,1-y]}(x)}{2-2y} \\
+			\rho_{Y \mid X = x}(y) &= \frac{\rho_{(X,Y))}(x,y)}{\rho_X(x)} 
+			= \frac{\one_\Delta(x,y)}{(1 - \abs{x}) * \one_{[-1,1]}(x)}
+			= \frac{\one_{[0,1-\abs{x}]}(y)}{1-\abs{x}}
+		\end{aligned}
+		\end{equation*}
+		%
+		\item Für die Kovarianz berechnen wir zuerst den Erwartungswert von $XY$:
+		\begin{equation*}
+		\begin{aligned}
+			\EW[XY] = \int_{\Omega} X(\omega) * Y(\omega) \P(\diff{\omega}) 
+			&= \int_\R \int_\R x*y*f_{(X,Y)}(x,y) \dx \dy \\
+			&= \int_\R \int_\R x *  \one_{[-1,1]}(x) * y *  \one_{[0,1-\abs{x}]}(y) \dx \dy \\
+			&= \int_{-1}^1 x \int_0^{1-\abs{x}} y \dy \dx \\
+			&= \int_{-1}^1 x \left[ \frac{1}{2} y^2 \right]_0^{1-\abs{x}} \dx \\
+			&= \int_{-1}^1 \frac{1}{2} x \left( 1 - \abs{x} \right)^2 \dx \\
+			&= \int_{-1}^1 \frac{1}{2} x \dx - \int_{-1}^1 \frac{1}{2} x * \abs{x} \dx \\
+			&= \frac{1}{2} \int_{-1}^1  x \dx + \frac{1}{2} \int_{-1}^0  x^2 \dx - \frac{1}{2} \int_0^1 x^2 \dx \\
+			&= \frac{1}{4} \underbrace{\left[ x^2 \right]_{-1}^1}_{= 0} + \underbrace{\frac{1}{6} \left[ x^3 \right]_{-1}^0}_{= \frac{1}{6}} - \underbrace{\frac{1}{6} \left[ x^3 \right]_0^1}_{= \frac{1}{6}} \\
+			&= 0
+		\end{aligned}
+		\end{equation*}
+		Außerdem gilt für die Erwartungswerte von $X$ und $Y$
+		\begin{equation*}
+			\EW[X] = \int_\Omega X(\omega) \P(\diff{\omega}) = \int_\R x * f_X(x) \dx = \int_{-1}^1 x \dx = \frac{1}{2} * \left[ x^2 \right]_{-1}^1 = 0
+		\end{equation*}
+		sowie
+		\begin{equation*}
+			\EW[Y] = \int_\R y * f_Y(y) \dy = \int_{0}^1 y (2-2y) \dy = 2 \int_0^1 y - y^2 \dy =  \left[ y^2 \right]_0^1 - \frac{2}{3} \left[ y^3 \right]_0^1 = 1 - \frac{2}{3} = \frac{1}{3}
+		\end{equation*}
+		Somit ergibt sich die Kovarianz schließlich zu $\Cov{X}{Y} = \EW[XY] - \EW[X] \EW[Y] = 0$.
+		%
+		\item Angenommen $X$ und $Y$ seien unabhängig. Dann gilt $f_{(X,Y)}(x,y) = f_X(x) * f_Y(y)$. Sei $(x,y) = (0,0) \in \R^2$. Damit ist $(0,0) \in \Delta$, aber
+		\begin{equation*}
+			f_{(X,Y)}(0,0) = \one_\Delta(0,0) = 1 \neq 2 = (1-\abs{0}) (2-2*0) * \one_{[-1,1]}(0) * \one_{[0,1-\abs{0}]}(0) = f_X(0) * f_Y(0)
+		\end{equation*}
+		im Widerspruch zur Annahme der Unabhängigkeit der beiden Zufallsvariablen. Somit sind $X$ und $Y$ abhängig.
+ 	\end{enumerate}
+
+	
+%%%% AUFGABE 7.3 %%%%
+	\begin{homework}
+		Es seien $X$ und $Y$ reelle Zufallsvariablen, deren gemeinsame Dichte durch
+		\begin{equation*}
+			f(x,y) = e^{-\frac{x}{y}} * e^{-y} * \one_{(0,\infty) \times (0,\infty)}(x,y)
+		\end{equation*}
+		gegeben ist. Bestimmen die Randverteilung von $Y$, die bedingte Verteilung von $X$ bedingt auf $Y = y$ und berechnen Sie $\P(X > 1 \mid Y = y)$.
+	\end{homework}	
+	
+	\begin{itemize}[leftmargin=*]
+		\item \textbf{Randverteilung von $Y$.} Nach Proposition 6.6 gilt für Randverteilung $f_Y$ von $Y$
+		\begin{equation*}
+		\begin{aligned}
+			f_Y(y) = \int_\R f(x,y) \dx 
+			&= \int_0^\infty e^{-\frac{x}{y}} * e^{-y} * \one_{(0,\infty)}(y) \dx \\
+			&= e^{-y} * \one_{(0,\infty)}(y) * \int_0^\infty e^{-\frac{x}{y}} \dx \\
+			&= e^{-y} * \one_{(0,\infty)}(y) * \left[ -y * e^{- \frac{x}{y}}  \right]_0^\infty\\
+			&= y e^{-y} * \one_{(0,\infty)}(y)\\
+		\end{aligned}
+		\end{equation*}	
+		
+		\item \textbf{bedingte Verteilung von $X$.} Wiederum gilt mit Proposition 6.6 für die Dichte $f_{X \mid Y = y}$ der bedingten Verteilung von $X$
+		\begin{equation*}
+			f_{X \mid Y = y}(x) = \frac{f(x,y)}{f_Y(y)} 
+			= \frac{e^{-\frac{x}{y}}*e^{-y} * \one_{(0,\infty)\times (0, \infty)}(x,y)}{y * e^{-y} * \one_{(0,\infty)}(y)} 
+			= \frac{1}{y} e^{-\frac{x}{y}} * \one_{(0,\infty)}(x)
+		\end{equation*}
+		Damit ergibt sich als Verteilung dann
+		\begin{equation*}
+			\P(X \in A \mid Y = y) = \int_A f_{X \mid Y = y}(x) \dx = \int_{A \cap (0,\infty)} \frac{1}{y} e^{-\frac{x}{y}} \qquad \forall A \in \ereignisF
+		\end{equation*}
+		
+		\item \textbf{$\boldsymbol{\P(X>1 \mid Y = y)}$.} Es gilt
+		\begin{equation*}
+		\begin{aligned}
+			\P(X > 1 \mid Y =  y) = \int_1^\infty f_{X \mid Y = y}(x) \dx = \int_1^\infty \frac{1}{y} e^{-\frac{x}{y}} \dx = \frac{1}{y} \int_1^\infty e^{-\frac{x}{y}} \dx = \frac{1}{y} \left[ -y e^{- \frac{x}{y}} \right]_1^\infty = e^{-\frac{1}{y}}
+		\end{aligned}
+		\end{equation*}
+	\end{itemize}
+
+
+%%%% AUFGABE 7.4 %%%%
+	\begin{homework}
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Ist $X \sim \Poisson(\lambda)$, so gilt für alle beschränkten Funktionen $\abb{f}{\N_0}{\R}$ 
+			\begin{equation*}
+				\EW[X f(X)] = \lambda * \EW[f(X+1)]
+			\end{equation*}
+			\item Es sei $X$ eine $\N_0$-wertige Zufallsvariable und $\lambda > 0$. Für alle beschränkten Funktionen $\abb{f}{\N_0}{\R}$ gelte $\EW[X f(X)] = \lambda * \EW[f(X+1)]$. Zeigen Sie, dass $X \sim \Poisson(\lambda)$. \\
+			\textit{Hinweis. Was ergibt sich im Falle $f = \one_{\menge{k}}$?}
+		\end{enumerate}
+	\end{homework}
+	
+	\pagebreak
+	
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Es ist $X \sim \Poisson(\lambda)$, d.h. $\rho(x) = \frac{\lambda^x}{x!} e^{-\lambda}$. Definieren wir eine Funktion $\abb{g}{\N_0}{\R}$ mit $g(x) \defeq x * f(x)$ so gilt
+		\begin{equation*}
+		\begin{aligned}
+			\EW[X f(X)] = \EW[g \circ X] &= \sum_{x \in \N_0} g(x) *\rho(x) \\
+			&= \sum_{x \in \N_0} x f(x) \rho(x) \\
+			&= \sum_{x \in \N_0} x f(x) \frac{\lambda^x}{x!}e^{-\lambda}
+		\end{aligned}
+		\end{equation*}
+		Analog gilt
+		\begin{equation*}
+			\EW[f(X+1)] 
+			= \sum_{x \in \N_0} f(x+1) *\rho(x)
+			= \sum_{x \in \N_0} f(x+1) \frac{\lambda^x}{x!}e^{-\lambda}
+		\end{equation*}
+		Somit gilt nun
+		\begin{equation*}
+		\begin{aligned}
+			\lambda \EW[f(X+1)] 
+			&= \sum_{x \ge 0} \lambda f(x+1) \frac{\lambda^x}{x!}e^{-\lambda} \\
+			&= \sum_{x \ge 0} f(x+1) (x+1) \frac{\lambda^{x+1}}{(x+1)!} e^{-\lambda} \\
+			&= \sum_{x \ge 1} f(x) x \frac{\lambda^x}{x!}e^{-\lambda} \\
+			&= \sum_{x \ge 0} f(x) x \frac{\lambda^x}{x!}e^{-\lambda} \quad \text{\textcolor{cdgray}{\textit{(für $x=0$ ist der Summand ohnehin Null)}}}\\
+			&= \sum_{x \ge 0} x f(x) \rho(x) \\
+			&= \EW[X f(X)]
+		\end{aligned}
+		\end{equation*}
+		%
+		\item Da $X$ $\N_0$-wertig ist, ist die Gleichung $\EW[X f(X)] = \lambda \EW[f(X+1)]$ gleichwertig zu $\sum_{x \in \N_0} x f(x) \rho(x) = \sum_{x \ge 0} \lambda f(x+1) \rho(x)$. Wählen wir nun $f=\one_{\menge{k}}$ so gilt für alle $k \in \N_0$, dass $k * \rho(k) = \lambda \rho(k-1)$, da in den obigen Summen stets nur das $k$-te Element nicht Null wird. Damit ergibt sich nun eine Rekursionsvorschrift in Form $\rho(k) = \frac{\lambda}{k} \rho(k-1)$. Führen wir diese Rekursion nun $k$ mal aus, so ergibt sich $\rho(k) = \frac{\lambda^k}{k!} * \rho(0)$. Nun müssen wir noch $\rho(0)$ bestimmen und nutzen dafür die Eigenschaft der Normierung, d.h. $1 \overset{!}{=} \sum_{k \ge 0} \rho(k) = \sum_{k \ge 0} \frac{\lambda^k}{k!} \rho(0) = e^{\lambda} \rho(0)$. Daraus folgt nun $\rho(0) = e^{-\lambda}$. Schlussendlich ergibt sich damit aus der Rekursionsvorschrift eine explizite Darstellung der Zähldichte als $\rho(k) = \frac{\lambda^k}{k!} e^{-\lambda}$, welche zur $\Poisson(\lambda)$-Verteilung gehört. 
+	\end{enumerate}
+
+
+%%%% AUFGABE 7.5 %%%%
+	\begin{homework}
+		Sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum und $\abb{X,Y}{\Omega}{\R}$ reelle Zufallsvariablen mit gemeinsamer Dichte $\rho_{X,Y}(x,y)$ bezüglich des Lebesgue-Maßes, sodass $\EW[X]$ existiert. Zeigen Sie, dass dann 
+		\begin{equation*}
+			\EW[X \mid Y=y] = \int_\R x * \frac{\rho_{X,Y}(x,y)}{\rho_Y(y)} * \one_{\rho_Y(y) > 0} \dx
+		\end{equation*}
+		gilt.
+	\end{homework}
+
+	\begin{equation*}
+		\EW[X \mid Y=y] = \int_\R x * \P(X=x , Y=y) \dx = \int_\R x * \rho_{X \mid Y = y}(x) \dx = \int_\R x * \frac{\rho_{X,Y}(x,y)}{\rho_Y(y)} * \one_{\rho_Y(y) > 0} \dx
+	\end{equation*}
+\end{exercisePage}
