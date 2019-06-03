@@ -216,12 +216,14 @@
 \RequirePackage{wasysym}	% add some symbols
 % \RequirePackage[bb=boondox]{mathalfa} %special zero using \mathbb{0}
 \RequirePackage{systeme}	% easy typesetting systems of equations
+\RequirePackage{witharrows} % arrows from one equation to another
 
 % further support for different equation setting
 \RequirePackage{cancel}
 \RequirePackage{xfrac}		% sfrac -> fractions e.g. 3/4
 \RequirePackage{nicefrac}
 \RequirePackage{units}		% units and fractions
+\RequirePackage{diagbox}
 
 \RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
 \RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
@@ -260,6 +262,9 @@
 % enumeration
 \RequirePackage{enumerate}
 \RequirePackage[inline]{enumitem} 		%customize label
+
+% source code
+\RequirePackage{listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -479,6 +484,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\begriff}[1]{\textbf{#1}}
 \newcommand{\person}[1]{\textsc{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          DOODLE BOXES                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,decorations.pathreplacing}
+% Inspired by http://www.texample.net/tikz/examples/hand-drawn-lines/
+\usetikzlibrary{decorations.pathmorphing}
+\pgfdeclaredecoration{penciline}{initial}{
+    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,
+    auto corner on length=1mm,]{
+        \pgfpathcurveto%
+        {% From
+            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+            {\pgfdecorationsegmentamplitude}
+        }
+        {%  Control 1
+            \pgfmathrand
+            \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+            {\pgfqpoint{-\pgfdecorationsegmentaspect
+                    \pgfdecoratedinputsegmentremainingdistance}%
+                {\pgfmathresult\pgfdecorationsegmentamplitude}
+            }
+        }
+        {%TO
+            \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+        }
+    }
+    \state{final}{}
+}
+\tikzset{handdrawn/.style={decorate,decoration=penciline}}
+\tikzset{every shadow/.style={fill=none,shadow xshift=0pt,shadow yshift=0pt}}
+
+\NewEnviron{doodlebox}[2]{%
+    \begin{tikzpicture}[decoration=penciline, decorate]%
+        \pgfmathsetseed{1237}%
+        \node (n1) [decorate,draw=#1, fill=#2,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
+    \end{tikzpicture}%
+}
+\NewEnviron{doodle}[1]{%
+    \begin{tikzpicture}[decoration=penciline, decorate]%
+    \pgfmathsetseed{1237}%
+    \node (n1) [decorate,draw=#1, fill=#1!10,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
+    \end{tikzpicture}%
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \endinput

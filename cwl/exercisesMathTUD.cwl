@@ -17,3 +17,5 @@
 \scorebox{score}
 \task{arg}
 \subtask{arg}
+\begin{correction}[color]
+\end{correction}

@@ -140,49 +140,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Environment for a new exercise sheet
-\usepackage{tikz}
-\usetikzlibrary{arrows,positioning,decorations.pathreplacing}
-% Inspired by http://www.texample.net/tikz/examples/hand-drawn-lines/
-\usetikzlibrary{decorations.pathmorphing}
-\pgfdeclaredecoration{penciline}{initial}{
-    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,
-    auto corner on length=1mm,]{
-        \pgfpathcurveto%
-        {% From
-            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
-            {\pgfdecorationsegmentamplitude}
-        }
-        {%  Control 1
-            \pgfmathrand
-            \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
-            {\pgfqpoint{-\pgfdecorationsegmentaspect
-                    \pgfdecoratedinputsegmentremainingdistance}%
-                {\pgfmathresult\pgfdecorationsegmentamplitude}
-            }
-        }
-        {%TO
-            \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
-        }
-    }
-    \state{final}{}
-}
-\tikzset{handdrawn/.style={decorate,decoration=penciline}}
-\tikzset{every shadow/.style={fill=none,shadow xshift=0pt,shadow yshift=0pt}}
-
-\NewEnviron{doodlebox}[2]{%
-    \begin{tikzpicture}[decoration=penciline, decorate]%
-        \pgfmathsetseed{1237}%
-        \node (n1) [decorate,draw=#1, fill=#2,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
-    \end{tikzpicture}%
-}
-\NewEnviron{doodle}[1]{%
-    \begin{tikzpicture}[decoration=penciline, decorate]%
-    \pgfmathsetseed{1237}%
-    \node (n1) [decorate,draw=#1, fill=#1!10,thick,align=justify, text width=0.97\textwidth, inner ysep=2mm, inner xsep=2mm] at (0,0) {\BODY};%
-    \end{tikzpicture}%
-}
-
-
 \newcommand{\scorebox}[1]{%
     \begin{tikzpicture}[decoration=penciline, decorate]%
     \pgfmathsetseed{1237}%
@@ -226,7 +183,7 @@
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% theorem environments for exercises ans solutions
+% theorem environments for exercises and solutions
 
 % >> Exercise
 \theoremstyle{break}
@@ -254,6 +211,49 @@ skipabove=\skiparound,%
 skipbelow=\skiparound,%
 nobreak,%
 ]{exercise}[taskcount]{Übung}
+
+\newmdtheoremenv[%
+backgroundcolor=cdblue!5,%
+linecolor=cddarkblue,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\sffamily\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=\skiparound,%
+skipbelow=\skiparound,%
+nobreak,%
+]{homework}[taskcount]{Hausaufgabe}
+
+\newmdtheoremenv[%
+backgroundcolor=cdblue!5,%
+linecolor=cddarkblue,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\sffamily\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=\skiparound,%
+skipbelow=\skiparound,%
+nobreak,%
+]{aufgabe}[taskcount]{Aufgabe}
+
 %
 % >> Solution
 \newtheoremstyle{solutionstyle}%
@@ -268,6 +268,8 @@ nobreak,%
 \theorempostskip{5pt}
 \theoremsymbol{$\square$}
 \newtheorem{solution}{Lösung}
+
+\NewDocumentEnvironment{correction}{O{cdpurple}}{\color{#1}\osfamily\itshape}{}
 
 
 

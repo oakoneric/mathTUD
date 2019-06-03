@@ -244,6 +244,7 @@ nobreak,%
 \theoremindent0cm
 
 \newtheorem{*definition}{Definition}				% Definition
+\newtheorem{*lemma}{Lemma}
 \newtheorem{*wiederholung}{Wiederholung}			% Wiederholung
 \newtheorem{*erinnerung}{Erinnerung}				% Erinnerung
 \newtheorem{*beispiel}{\raisebox{1pt}{\rule{5pt}{5pt}} Beispiel}	% Beispiel
@@ -381,6 +382,7 @@ nobreak,%
 \undef\mit
 \newcommand*{\mit}{\text{ mit }}
 \newcommand*{\und}{\text{ und }}
+\newcommand*{\bzw}{\text{ bzw. }}
 
 \newcommand{\brackets}[1]{\left( #1 \right)}
 
@@ -438,9 +440,9 @@ nobreak,%
 \newcommand{\one}{\mathbbm{1}}  % unitary matrix
 \newcommand{\isomorph}{\mathrel{\cong}}
 \newcommand{\erz}[1]{\langle #1 \rangle} % generating system
-\newcommand{\scal}[2]{\langle #1\, ,\, #2 \rangle} % scalar product
-\newcommand{\transpose}[1]{\left( #1 \right)^{\top}} % transpose symbol with (*)
-\newcommand{\trans}[1]{#1^{\top}} % transpose symbol without (*)
+\newcommand{\scal}[2]{\left\langle #1\, ,\, #2 \right\rangle} % scalar product
+\newcommand{\transpose}[1]{\left( #1 \right)^{\top}} % transpose symbol with (***)
+\newcommand{\trans}[1]{#1^{\top}} % transpose symbol without (***)
 
 % >> groups / rings / fields
 \newcommand{\normalteiler}{\mathrel{\trianglelefteqslant}}
@@ -466,6 +468,8 @@ nobreak,%
 
 \newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
 \newcommand{\MinPol}[2]{\Minpol\left( #1 \mathrel{|} #2\right)}
+\newcommand{\Sp}[1][L \mid K]{\Spur_{#1}}
+\newcommand{\No}[1][L \mid K]{\Norm_{#1}}
 
 % >> number theory
 \newcommand{\teilt}{\mathrel{\mid}}
@@ -507,6 +511,15 @@ nobreak,%
 \newcommand*{\Wkeit}{Wahrscheinlichkeit }
 \newcommand*{\ZV}{Zufallsvariable}
 
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\EW}[1][X]{\ensuremath{\E \left[ #1 \right]}}
+\newcommand{\Varianz}{\mathbb{V}\mathrm{ar}}
+\newcommand{\Var}[1][X]{\ensuremath{\Varianz \left( #1 \right)}}
+\newcommand{\Covarianz}{\mathbb{C}\mathrm{ov}}
+\newcommand{\Cov}[2]{\ensuremath{\Covarianz \left( #1 , #2 \right)}}
+\newcommand{\Correlation}{\mathbb{C}\mathrm{orr}}
+\newcommand{\Corr}[2]{\ensuremath{\Correlation \left( #1 , #2 \right)}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
 
@@ -536,6 +549,7 @@ nobreak,%
 \DeclareMathOperator{\Eig}{Eig} % Eigenspace
 \DeclareMathOperator{\End}{End} % Endomorphism
 \DeclareMathOperator{\eps}{eps}
+\DeclareMathOperator{\Exp}{Exp} % exponential distribution
 \DeclareMathOperator{\ext}{ext} % Exterior
 \DeclareMathOperator{\Ext}{ext} % 2nd time?
 
@@ -543,7 +557,9 @@ nobreak,%
 \DeclareMathOperator{\Fix}{Fix} % Fix-points for group theory
 
 %%%%%% G
-\DeclareMathOperator{\ggT}{ggT} % Größte geimeinsamer Teiler (gcd)
+\DeclareMathOperator{\GammaDist}{Gamma} % gamma distribution
+\DeclareMathOperator{\Geom}{Geom} % geometric distribution
+\DeclareMathOperator{\ggT}{ggT} % Größter gemeinsamer Teiler (gcd)
 \DeclareMathOperator{\GL}{GL} % General Linear Group
 \DeclareMathOperator{\graph}{graph} % Graph
 \DeclareMathOperator{\grad}{grad} % Gradient
@@ -570,6 +586,8 @@ nobreak,%
 \DeclareMathOperator{\Mat}{Mat} % Matrix
 \DeclareMathOperator{\Minpol}{MinPol} % Minimalpolynon
 \DeclareMathOperator{\Multi}{Multi}
+\DeclareMathOperator{\negBin}{negBin} % negative binomial distribution
+\DeclareMathOperator{\Norm}{N}         % norm (algebra)
 \DeclareMathOperator{\normalenraum}{N} % Normalenraum
 \DeclareMathOperator{\normalisator}{N} % Mormalisator
 
@@ -596,6 +614,7 @@ nobreak,%
 \DeclareMathOperator{\SL}{SL} % Special Linear Group
 \DeclareMathOperator{\SO}{SO} % Special Orthogonal Group
 \DeclareMathOperator{\Span}{span} % Span
+\DeclareMathOperator{\Spur}{Sp}   % spur (algebra)
 \DeclareMathOperator{\SR}{SR} % Spaltenraum
 \DeclareMathOperator{\Stab}{Stab} % Stabilizer
 \DeclareMathOperator{\supp}{supp} % Support

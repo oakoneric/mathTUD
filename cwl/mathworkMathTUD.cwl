@@ -206,7 +206,7 @@
 \rand
 \borel{set}
 \P
-\ereignisF}
+\ereignisF
 \WTheorie
 \WMass
 \WRaum
@@ -221,6 +221,23 @@
 \Hyper
 \Poisson
 \brackets{content}
+\dach{arg}
+\bzw
+\Geom
+\negBin
+\GammaDist
+\Exp
+\E
+\EW[X]
+\Varianz
+\Var[X]
+\Covarianz
+\Cov{X}{Y}
+\Correlation
+\Corr{X}{Y}
+\Sp[ext]
+\No[ext]
+
 
 \hinrichtung
 \rueckrichtung
