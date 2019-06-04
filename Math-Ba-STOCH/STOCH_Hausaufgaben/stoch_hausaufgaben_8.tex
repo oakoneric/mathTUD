@@ -1,0 +1,145 @@
+\begin{exercisePage}[Bedingte Erwartung]
+	
+%%%% HAUSAUFGABE 8.1 %%%%
+	\newcommand{\mathG}{\ensuremath{\mathcal{G}}}
+	\begin{homework}
+		Es sei $\mathcal{G} \subseteq \ereignisF$ eine $\sigma$-Algebra und $\abb{X}{(\Omega, \ereignisF)}{(\quer{\R}, \borel{\quer{\R}})} \in \L^1(\P)$ eine reelle Zufallsvariable. 
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Es seien $X_{\mathG}$ und $Y_{\mathG}$ Zufallsvariablen mit $\int_G X \diff{\P} = \int_G X_{\mathG} \diff{\P}$ bzw. $\int_G X \diff{\P} = \int_G Y_{\mathG} \diff{\P}$ für alle $G \in \mathG$. Zeigen Sie, dass $X_{\mathG} = Y_{\mathG}$ fast sicher gilt.
+			\item Zeigen Sie, dass $\EW[X|\mathG]$ existiert.
+		\end{enumerate}
+	\end{homework}
+	
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Seien $X_{\mathG}$ und $Y_{\mathG}$ Versionen der bedingten Erwartung von $X$ gegeben $\mathG$. 
+%		Sei $\P_0$ die Restriktion von $\P$ auf $\mathG$, d.h. $\P_0 = \P|_{\mathG}$.
+		Da $X_{\mathG}$ und $Y_{\mathG}$ zwei Versionen der bedingten Erwartung sind, gilt $\int_G X_{\mathG} \diff{\P} = \int_G Y_{\mathG} \diff{\P}$ für alle $G \in \mathG$. Betrachten wir nun die Mengen $G_1 \defeq \menge{X_{\mathG} > Y_{\mathG}}$ und $G_2 \defeq \menge{X_{\mathG} < Y_{\mathG}}$. Dann ist $\P(X_{\mathG} \neq Y_{\mathG}) = \P(G_1 \cup G_2)$. 
+		Bestimmen wir nun $\P(G_1)$. Aus $\int_{G_1} X_{\mathG} \diff{\P} = \int_{G_1} Y_{\mathG} \diff{\P}$ folgt
+		\begin{equation*}
+			\int_{G_1} X_{\mathG} - Y _{\mathG} \diff{\P} 
+			= \int_{G_1} X_{\mathG} \diff{\P} - \int_{G_1} Y_{\mathG} \diff{\P} = \int_{G_1} X \diff{\P} - \int_{G_1} X \diff{\P} = 0
+		\end{equation*}
+		Nun ist aber $(X_{\mathG} - Y_{\mathG}) * \one_{G_1} \ge 0$ und daher $(X_{\mathG}  - Y _{\mathG}) * \one_{G_1} = 0$, d.h. $\P(X_{\mathG} > Y_{\mathG}) = \P(G_1) = 0$.
+		Analog erhält man mit vertauschten Rollen von $X_{\mathG}$ und $Y_{\mathG}$, dass $P(G_2) = 0$ gilt. Damit gilt nun 
+		\begin{equation*}
+			0 \le \P(X_{\mathG} \neq Y_{\mathG}) = \P(G_1 \cup G_2) \le \P(G_1) + \P(G_2) = 0
+		\end{equation*}
+		Somit ist $\P(X_{\mathG} \ne Y_{\mathG}) = 0$, d.h. $X_{\mathG} = Y_{\mathG}$ fast sicher.
+		%
+		\item Wir unterscheiden wie üblich zwei Fälle: $X \ge 0$ oder $X \in \mathcal{L}^1$.
+		\begin{enumerate}[wide, leftmargin=*, label=(\roman*), nolistsep]
+			\item Sei $X \ge 0$. Weiter sei $\mu$ das Maß mit Dichte $X$ bezüglich $\P$, also $\mu(A) \defeq \int_A X \diff{\P} = \EW[X \one_A]$ für alle $A \in \mathG$ und $\P_0$ die Restriktion von $\P$ auf $\mathG$, also $\P_0 = \P |_{\mathG}$. Damit ist jede $\P_0$-Nullmenge auch eine $\mu$-Nullmenge, d.h. $\mu \ll \P$. Der Satz von Radon-Nikodym liefert nun die Existenz einer Dichte $g$ von $\mu$ bezüglich $\P_0$. Damit gilt für alle $G \in \mathG$
+			\begin{equation*}
+				\int_{\Omega} g \ \one_G \diff{\P_0} = \int_G g \diff{\P_0} = \mu(G) = \int_G X \diff{\P} = \int_{\Omega} X \ \one_G \diff{\P}
+			\end{equation*}
+			%
+			\item Für $X \in \L^1(\P)$ existieren $X^+, X^- \ge 0$. Nach Teil (i) existieren dafür jeweils bedingte Erwartungen $g^+ , g^-$ von $X^+$ bzw. $X^-$ gegeben $\mathG$. Dann ist $g \defeq g^+ - g^- $ eine bedingte Erwartung, da
+			\begin{equation*}
+				\EW[g \ \one_G] = \EW[g^+ \ \one_G] - \EW[g^- \ \one_G] = \EW[X^+ \ \one_G] - \EW[X^- \ \one_G] = \EW[X \ \one_G]
+			\end{equation*}
+			für alle $G \in \mathG$ gilt.
+		\end{enumerate}
+	\end{enumerate}
+
+%%%% HAUSAUFGABE 8.2 %%%%
+	\begin{homework}
+		Es sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum, $\mathG \subseteq \ereignisF$ eine $\sigma$-Algebra und $\abb{X,X_1, X_2, \dots , Y}{(\Omega, \ereignisF)}{(\quer{\R},\borel{\quer{\R}})}$ Zufallsvariablen. Zeigen Sie:
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Wenn $X_n \ge 0$, $X_n \in \L^1(\P)$ und $\liminf_{n \to \infty} \EW[X_n] < \infty$, dann gilt
+			\begin{equation*}
+				\EW[\liminf_{n \to \infty} X_n \mid \mathG] \le \liminf_{n \to \infty} \EW[X_n \mid \mathG] \quad \P-\text{fast sicher}
+			\end{equation*}
+			\item Wenn $\P(\menge{\omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega)} =  1$ und $\P(\menge{\omega \in \Omega : \abs{X_n(\omega)} \le Y(\omega)} =  1$ für ein $Y \in \L^1(\P)$, dann gilt 
+			\begin{equation*}
+				X \in \L^1(\P) \quad \und \quad
+				\lim_{n \to \infty} \EW[X_n \mid \mathG] = \EW[X \mid \mathG] \quad \P-\text{fast sicher}
+			\end{equation*}
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[wide, leftmargin=*, label=(zu \alph*)]
+		\item Wir definieren uns Zufallsvariablen $Y_n \defeq \inf_{m \ge n} X_m$. Damit gilt $Y_n \uparrow X \defeq \liminf_{n \to \infty} X_n$. Per Definition der $Y_n$ gilt $Y_n \le X_n$ für alle $n \in \N$. Dann gilt nach Lemma 6.12 auch $\EW[Y_n \mid \mathG] \le \EW[X_n \mid \mathG]$ fast sicher. Da $X_n \ge 0$, ist auch $Y_n \ge 0$ für alle $n \in \N$. Weiter sind auch alle $Y_n \in \L^1(\P)$. Nun gilt offensichtlich $Y_n \uparrow X \defeq \liminf_{n \to \infty} X_n$. Da $Y_n \in \L^1(\P)$, ist $\EW[Y_n] < \infty$ für alle $n \in \N$, was auch $\sup_{n \in \N} \EW[Y_n] < \infty$ zur Folge hat. Damit liefert Beppo-Levi
+		\begin{equation*}
+			\EW[X \mid \mathG] = \sup_{n \in \N} \EW[Y_n \mid \mathG] = \lim_{n \to \infty} \EW[Y_n \mid \mathG] \le \lim_{n \to \infty} \EW[X_n \mid \mathG]
+		\end{equation*}
+		%
+		\item Definieren wir $Y_n \defeq \sup_{m \ge n} \abs{X_m - X}$. Da $X_n \to X$ folgt $Y_n \downarrow 0$ fast sicher. Weiter gilt offensichtlich $Y_n \ge 0$ und $Y_n = \sup_{m \ge n} \abs{X_m - X} \le \sup_{m \ge n} \abs{X_m} + \abs{X} \le 2Y$. Also ist $0 \le 2Y - Y_n \uparrow 2Y$. Nach Beppo-Levi gilt wegen $\sup_{n \in \N} \EW[Y_n] < \infty$ auch $\EW[2Y - Y_n \mid \mathG] \uparrow \EW[2Y \mid \mathG]$ und daraus resultierend $\EW[Y_n \mid \mathG] \downarrow 0$. Linearität, Monotonie und die Jensen-Ungleichung mit $\phi = \abs{\ \cdot \ }$ liefern schließlich
+		\begin{equation*}
+			\abs{\EW[X \mid \mathG] - \EW[X_n \mid \mathG]} = \abs{\EW[X - X_m \mid \mathG]} \le \EW[\abs{X - X_n} \mid \mathG] \le \EW[\abs{Y_n} \mid \mathG] \downarrow 0
+		\end{equation*}
+		Dies entspricht gerade der Konvergenz, d.h. $\lim_{n \to \infty} \EW[X_n \mid \mathG] = \EW[X \mid \mathG]$ $\P$-fast sicher. Betrachten wir nun
+		\begin{equation*}
+			\EW[\abs{\EW[X \mid \mathG] - \EW[X_n \mid \mathG]}] = \EW[\abs{X - X_n}] = \EW[Y_n] \downarrow 0
+		\end{equation*}
+		was nun $\L^1$-Konvergenz entspricht und damit $X \in \L^1(\P)$.
+	\end{enumerate}
+
+%%%% HAUSAUGABE 8.3 %%%%
+	\begin{homework}
+		Sei $(\Omega, \ereignisF, \P)$ ein Wahrscheinlichkeitsraum. 
+		\begin{enumerate}[wide, leftmargin=*, nolistsep]
+			\item \textbf{Jensen-Ungleichung.} Es sei $\abb{f}{\R}{\R}$ eine konvexe Funktion und $\abb{X}{(\Omega, \ereignisF)}{(\quer{\R}, \borel{\quer{\R}})}$ eine integrierbare Zufallsvariable, d.h. $X \in \L^1(\P)$. Zeigen Sie, dass dann
+			\begin{equation*}
+				f(\EW[X \mid \mathG]) \le \EW[f(X) \mid \mathG] \quad \P-\text{fast sicher}
+			\end{equation*}
+			\item \textbf{Cauchy-Schwarz-Ungleichung.} Es seien $\abb{X,Y}{(\Omega, \ereignisF)}{(\quer{\R}, \borel{\quer{\R}})}$ quadratintegrierbare Zufallsvariablen, d.h. $X,Y \in \L^2(\P)$ und $\mathG \subseteq \ereignisF$ eine $\sigma$-Algebra. Zeigen Sie, dass
+			\begin{equation*}
+				\EW[XY \mid \mathG]^2 \le \EW[X^2 \mid \mathG] * \EW[Y^2 \mid \mathG] \quad \P-\text{fast sicher}
+			\end{equation*}
+			gilt mit Gleichheit genau dann, wenn $aX+bY = 0$ fast sicher für gewisse $a,b \in \R$.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[wide, leftmargin=*, label=(zu \alph*)]
+		\item Nach MINT 14.14 lässt sich $f$ als Supremum affin-linearer Funktionen darstellen, d.h. mit $\mathcal{A} = \menge{\abb{\phi}{\R}{\R} \mid \phi \in \polynom[\Q][x] \text{ und } \deg\phi \le 1}$ ist entweder $f(x) = ax+b$ oder $f(x) = \sup_{\phi \in \mathcal{A}, \phi \le f} \phi(x)$. Für den ersten Fall ist die Aussage klar aufgrund der Linearität der bedingten Erwartung. Für den zweiten Fall betrachten wir ein $\phi \in \mathcal{A}$ mit $\phi \le f$. Wir können $\phi$ schreiben als $\phi(x) \defeq ax + b$ für geeignete $a,b \in \Q$. Dann gilt wegen Linearität und Monotonie
+		\begin{equation*}
+			\phi ( \EW[X \mid \mathG] ) = a * \EW[X \mid \mathG] + b = \EW[aX + b \mid \mathG] = \EW[\phi(X) \mid \mathG] \le \EW[f(X) \mid \mathG]
+		\end{equation*}
+		$\P$-fast sicher.
+		Damit ist nun 
+		\begin{equation*}
+			f(\EW[X \mid \mathG]) = \sup_{\phi \in \mathcal{A}, \phi \le f} \phi(\EW[X \mid \mathG]) \le \EW[f(X) \mid \mathG] \quad \P-\text{fast sicher}
+		\end{equation*}
+	\end{enumerate}
+	
+%%%% HAUSAUFGABE 8.4 %%%%
+	\begin{homework}
+		\begin{enumerate}[wide, leftmargin=*, nolistsep]
+			\item Wir betrachten einen zweifachen Würfelwurf. Es seien $X_1, X_2$ die Augenzahl des ersten bzw. zweiten Wurfes und $M \defeq \max \menge{X_1 , X_2}$. Bestimmen Sie die Verteilung von $\EW[M \mid X_1]$.
+			\item Es seien $X,Y \sim \Exp(1)$ unabhängige Zufallsvariablen. Bestimmen Sie die Verteilung von $\EW[X \mid X + Y]$.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[wide, leftmargin=*, label=(zu \alph*)]
+		\item Wir betrachten zuerst $\P(M = k \mid X_1 = j)$. Ist $k < j$, so ist als das Maximum beider Würfe kleiner als der erste Wurf, was per Definition des Maximums nicht möglich ist, d.h. $\P(M = k \mid X_1 = j) = 0$ für alle $k < j$. Ist $k = j$, so darf als die Augenzahl des ersten Wurfes im zweiten Wurf nicht überschritten werden. Dafür gibt es für die Augenzahl $j$ im ersten Wurf immer genau $j$ Möglichkeiten, von denen jede eine Einzelwahrscheinlichkeit von $\lfrac{1}{6}$ hat, d.h. $\P(M = k \mid X_1 = j) = \frac{1}{6}j$ für alle $j = k$. Für $k > j$ hängt das Maximum schlussendlich nur noch vom zweiten Wurf ab, da dieser den ersten in der Augenzahl übertreffen soll. Somit ist $\P(M = k \mid X_1 = j) = \P(X_2 = k) = \lfrac{1}{6}$. Zusammengefasst gilt nun also
+		\begin{equation*}
+			\P(M = k \mid X_1 = j) = 
+			\begin{cases}
+				0              & \text{für } k < j \\
+				\lfrac{1}{6} j & \text{für } k = j \\
+				\lfrac{1}{6}   & \text{für } k > j
+			\end{cases}
+		\end{equation*}
+		Somit ergibt sich 
+		\begin{equation*}
+		\begin{aligned}
+			\EW[M \mid X_1 = j] 
+			= \sum_{k=1}^{6} k * \P(M = k \mid X_1 = j) 
+			= j * \frac{1}{6} j + \sum_{k=j+1}^{6} \frac{1}{6}k
+			&= \frac{1}{6} * \left( j^2 + 21 - \frac{j (j-1)}{2} \right) \\
+			&= 3.5 + \frac{j (j-1)}{12}
+		\end{aligned}
+		\end{equation*}
+		Damit ergibt sich schließlich $\EW[M \mid X_1] = 3.5 + \frac{X_1 (X_1 - 1)}{12}$ und als Verteilung
+		
+		\newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{.7cm}}
+		\begin{center}
+			\begin{tabular}{c||C|C|C|C|C|C}
+				$j$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ \\
+				\hline
+				$\P(M \mid X_1 = j)$ & $3.5$ & $3.67$ & $4$ & $4.5$ & $5.17$ & $6$ \\
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+\end{exercisePage}
