@@ -53,10 +53,12 @@
 \counterwithin{themcount}{chapter}
 \undef\F
 \newcommand{\F}{\mathcal{F}}
+\newcommand{\E}{\mathcal{E}}
 \undef\folge
 \NewDocumentCommand{\folge}{m O{n \in \N}}{\left( #1 \right)_{#2}}
 \renewcommand{\complement}{\mathsf{C}}
 
+\def\upmodels{\perp\!\!\!\perp}
 
 \newcommand{\widesim}[1][2.5]{
 	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
@@ -88,7 +90,7 @@
 
 \chapter{Bedingte Wahrscheinlichkeiten und Unabhängigkeit}
 \input{stoch_3_1_bedingte_wahrscheinlichkeiten}
-
+\input{stoch_3_2_unabhaengigkeit}
 
 
 \end{document}
