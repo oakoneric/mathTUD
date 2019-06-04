@@ -1,0 +1,116 @@
+\begin{exercisePage}[Iterative Verfahren für Gleichungssysteme][2/2]
+	\newcommand{\cnorm}[1]{\dot{\Vert} #1 \dot{\Vert}}
+	\renewcommand{\i}{\mathrm{i}}
+	
+	\newcommand{\Norm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}} 
+	% dreifach gestrichene Norm
+	
+%%% ZUSÄTZLICHE ANGABEN %%%%
+	\begin{flushright}
+		\osfamily \textcolor{cdgray}{Bachelor Mathematik, Immatrikulationsjahrgang 2017}
+	\end{flushright}
+%%%% AUFGABE T1 %%%%
+	\begin{exercise}
+		Sei $\rho(A) \defeq \max_{1 \leq i \leq n} \abs{\lambda_i(A)}$ der Spektralradius von $A \in \R^{n \times n}$, wobei $\lambda_i(A)$ die Eigenwerte von
+		A sind. Beweise den folgenden Satz für den Vektorraum der Matrizen über dem Körper $\C$: Für jede durch eine Vektornorm induzierte Matrixnorm $\norm{\cdot}$ gilt $\rho(A) \leq \norm{A}$.
+	\end{exercise}
+
+	Ohne Beschränung der Allgemeinheit sei $\lambda \in \R$ der betragsmäßig größte Eigenwert mit zugehörigem, normiertem Eigenvektor $v \in \Rn$. Dann gilt
+	\begin{equation*}
+		\norm{A} = \sup_{\norm{x} = 1} \norm{Ax} \geq \norm{Av} = \norm{\lambda * v} = \abs{\lambda} * \norm{v} = \abs{\lambda} = \rho(A)
+	\end{equation*}
+	Da in der Matrixnorm das Supremum jedoch nur über reellwertige Argumente gebildet wird, gilt die (Un-)Gleichungskette nicht unbedingt für komplexwertige Eigenvektoren und Eigenwerte. Deswegen definieren wir uns eine Fortsetzung der Norm auf den komplexen Zahlen mit
+	\begin{equation*}
+		\bigabb{\cnorm{\cdot}}{\C^n}{\R}{x+ \i y}{\sqrt{\norm{x}^2 + \norm{y}^2} \text{ mit } x,y \in \Rn}
+	\end{equation*}
+	wobei $\norm{\cdot}$ die Norm auf $\Rn$ bezeichnet. Nun macht man sich schnell klar, dass auch $\cnorm{\cdot}$ eine Norm darstellt, d.h. Definitheit, Homogenität und Dreiecksungleichung erfüllt. Außerdem ist sie eine Fortsetzung von $\norm{\cdot}$, d.h. für alle $A \in \R^{n \times n}$ gilt
+	\begin{align*}
+		\cnorm{A}
+		= \sup_{\cnorm{z} = 1} \cnorm{Az} 
+		= \sup_{\cnorm{z} = 1} \cnorm{Ax + A \i y} 
+		&= \sup_{\cnorm{z} = 1} \sqrt{\norm{Ax}^2 + \norm{Ay}^2} \\
+		&\leq \sup_{\cnorm{z} = 1} \sqrt{\norm{A}^2 \left( \norm{x}^2 + \norm{y}^2 \right) } \\
+		&= \sup_{\cnorm{z} = 1} \norm{A} * \cnorm{z}
+		= \norm{A} * \sup_{\cnorm{z} = 1} \cnorm{z}
+		= \norm{A}
+	\end{align*}
+	sowie $\norm{A} \leq \cnorm{A}$, da $\R \subsetneq \C$ und das Supremum in der komplexen Norm also über eine echte Obermenge gebildet wird. Somit ist also $\cnorm{A} = \norm{A}$ für alle $A \in \R^{n \times n}$.
+	
+	Nun löst sich die Aufgabe wie im Fall reeller Eigenwerte und Eigenvektoren - sei also wieder $\lambda$ der betragsmäßig größte Eigenwert mit zugehörigem, normiertem Eigenvektor $v$, dann gilt
+	\begin{equation*}
+		\norm{A} = \cnorm{A} = \sup \menge{\cnorm{Az} \colon \cnorm{z} = 1} \geq \cnorm{Av} = \cnorm{\lambda v} = \abs{\lambda} \cnorm{v} = \abs{\lambda} = \rho(A)
+	\end{equation*}
+	und damit stets $\rho(A) \leq \norm{A}$.
+	
+	Dies gilt natürlich dann auch für alle Matrizen $A \in \C^{n \times n}$ (auch wenn der Spektralradius nach VL und Aufgabenstellung dafür nicht definiert ist).
+	
+%%%% AUFGABE T2 %%%%		
+	\begin{exercise}
+		Sei $\rho(A) \defeq \max_{1 \leq i \leq n} \abs{\lambda_i(A)}$ der Spektralradius von $A \in \R^{n \times n}$, wobei $\lambda_i(A)$ die Eigenwerte von
+		A sind. Beweise den folgenden Satz: \\
+		Zu jedem $\epsilon > 0$ und zu jeder Matrix $A$ existiert eine durch eine Vektornorm induzierte Matrixnorm $\Norm{\cdot}$ mit $\Norm{A} \leq \rho(A) + \epsilon$
+	\end{exercise}
+
+	Wir verwenden die Schur-Zerlegung der Matrix $A \in \R^{n \times n}$ aus der Linearen Algebra. Demnach gibt es also eine unitäre Matrix $U$, sodas
+	\begin{equation*}
+		B \defeq U^{-1} A U = 
+		\begin{pmatrix}
+			b_{11} & b_{12} & \cdots & b_{1n} \\
+			       & b_{22} & \cdots & b_{2n} \\
+			       &        & \ddots & \vdots \\
+			       &		&    	 & b_{nn}
+		\end{pmatrix}	
+	\end{equation*}
+	eine rechte obere Dreiecksmatrix ist. Insbesondere sind dann $A$ und $B$ ähnlich und haben somit gleiches charakteristisches Polynom $\det(\lambda \one - A) = \det(\lambda \one - B) = \prod_{i=1}^n \lambda - b_{ii}$. Damit sind also die Diagonalelemente von $B$ gerade die Eigenwerte $\lambda_i = b_{ii}$ ($i \in \menge{1, \dots , n}$) von $A$. Definieren wir nun 
+	\begin{equation*}
+		b \defeq \max_{i,j = 1,\dots , n} \abs{b_{ij}} 
+		\quad \und \quad 
+		\delta \defeq \min\menge{1,\frac{\epsilon}{(n-1)*b}} \in (0,1]
+	\end{equation*}
+	sowie
+	\begin{equation*}
+		D \defeq \diag(1 , \delta , \delta^2, \dots , \delta^{n-1}) \in \R^{n \times n}
+		\quad \und \quad
+		D^{-1} = \diag(1 , \delta^{-1} , \delta^{-2}, \dots , \delta^{-n+1})
+	\end{equation*}
+	Dann ergibt sich durch Multiplikation der Matrizen
+	\begin{equation*}
+		B*D = 
+		\begin{pmatrix}
+		b_{11} & \delta * b_{12} & \cdots & \delta^{n-1} * b_{1n} \\
+		       & \delta * b_{22} & \cdots & \delta^{n-1} * b_{2n} \\
+		       &                 & \ddots & \vdots \\
+		       &		         &    	  & \delta^{n-1} * b_{nn}
+		\end{pmatrix} 
+		\quad \bzw \quad
+		C \defeq D^{-1} B D
+		\begin{pmatrix}
+		b_{11} & \delta * b_{12} & \cdots & \delta^{n-1} * b_{1n} \\
+			   &          b_{22} & \cdots & \delta^{n-2} * b_{2n} \\
+			   &                 & \ddots & \vdots \\
+			   &		         &    	  &                b_{nn}
+		\end{pmatrix}
+	\end{equation*}
+	Wegen $\delta \leq 1$ gilt
+	\begin{equation*}
+		\norm{C}_\infty \leq \max_{i=1, \dots , n} \abs{b_{ii}} + (n-1)\delta b \leq \rho(A) + \epsilon
+	\end{equation*}
+	Nun definieren wir uns mit $V \defeq QD$ eine neue Norm
+	\begin{equation*}
+		\bigabb{\Norm{\cdot}}{\R^n}{\R}%
+		{x}{\norm{V^{-1} x}_\infty}
+	\end{equation*}
+	Wegen $C = D^{-1} B D = D^{-1} Q^{-1} A Q D = V^{-1} A V$ gilt auch
+	\begin{equation*}
+		\Norm{Ax} = \norm{V^{-1}Ax}_\infty = \norm{CV^{-1}x}_\infty \leq \norm{C}_\infty * \norm{V^{-1}x}_\infty = \norm{C}_\infty * \Norm{x}
+	\end{equation*}
+	und damit
+	\begin{equation*}
+		\Norm{A} \leq \norm{C}_\infty \leq \rho(A) + \epsilon
+	\end{equation*}
+	was der zu zeigenden Behauptung entspricht.
+\end{exercisePage}
+
+\undef\cnorm
+\undef\i
+\undef\Norm

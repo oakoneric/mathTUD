@@ -1,0 +1,29 @@
+\begin{exercisePage}[CG-Verfahren]
+	\setcounter{taskcount}{4}
+	\begin{homework}
+		Das CGNR-Verfahren zur Lösung von $Ax = b$ mit einer regulären Matrix $A \in \R{n \times n}$ ist das CG-Verfahren angewendet auf die Gauß'sche Normalgleichung $\trans{A} A x = \trans{A} b$. Zeige, dass das CGNR-Verfahren angewendet auf das System $\alpha Q x = b$ mit $\alpha \in \R\ohneNull$ und einer orthogonalen Matrix $Q \in \R^{n \times n}$ nach nur einer Iteration die Lösung des linearen Gleichungssystems $A x = b$ findet, wobei der Startwert $x^0$ beliebig gewählt werden kann.
+	\end{homework}
+	
+	Wir wenden die Gauß'schen Normalengleichungen an auf das Gleichungssystem $\alpha Q x = b$ und erhalten als mit dem CG-Verfahren zu behandelndes Gleichungssystem
+	\begin{equation*}
+		\alpha^2 \underbrace{\trans{Q}Q}_{= \one_n} * x 
+		= \alpha \one_n * x = \alpha \trans{Q} b
+	\end{equation*}
+	Die Matrix $\alpha^2 \one_n$ ist offenbar symmetrisch und positiv definit für alle $\alpha \in \R\ohneNull$, d.h. wir dürfen das CG-Verfahren anwenden. Starten wir nun Algorithmus 2.15 mit einem beliebigen $x^0 \in \R^n$ und setzen zuerst $d^0 \defeq r^0 \defeq \alpha \trans{Q} b - \alpha^2 \one_n x^0$. Weiter gilt
+	\begin{equation*}
+		t_0 
+		= \frac{\norm{r^0}_2^2}{\transpose{d^0} (\alpha^2 \one_n) d^0} 
+		= \frac{\scal{r^0}{r^0}}{\alpha^2 * \scal{d^0}{r^0}}
+		= \frac{\scal{r^0}{r^0}}{\alpha^2 * \scal{r^0}{r^0}}
+		= \frac{1}{\alpha^2}
+	\end{equation*}
+	Betrachten wir nun das Residuum nach einer Iteration
+	\begin{equation*}
+		r^1
+		= r^0 - t_0 * \alpha^2 \one_n * d^0 
+		= r^0 - \frac{1}{\alpha^2} * \alpha^2 \one_n * r^0 
+		= r^0 - r^0
+		= 0
+	\end{equation*}
+	Somit erreicht der Algorithmus also für diesen Fall bereits nach einer Iteration die exakte Lösung und bricht somit ab.
+\end{exercisePage}
