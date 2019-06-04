@@ -51,6 +51,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % specific commands
+\usepackage{hhline}
+\newcommand\undermat[2]{%
+	\makebox[0pt][l]{$\smash{\underbrace{\phantom{%
+					\begin{matrix}#2\end{matrix}}}_{\text{$#1$}}}$}#2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -62,6 +66,9 @@
 %\tableofcontents
 
 \include{algzth_hausaufgaben_1}
+\include{algzth_hausaufgaben_2}
+\include{algzth_hausaufgaben_3}
+\include{algzth_hausaufgaben_4}
 
 
 

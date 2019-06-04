@@ -1,4 +1,4 @@
-\begin{exercisePage}[Körpergrad, algebraische Erweiterungen]
+\begin{exercisePage}[Körpergrad, algebraische Erweiterungen][10 / 10]
     \setcounter{taskcount}{6}
     
 %%%% AUFGABE H7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,17 +19,21 @@
         Ist ein Eintrag der Matrix gleich Null, so müssen die Einträge in der gleichen Zeile und der gleichen Spalte ungleich Null sein, da sonst eine Nullspalte oder Nullzeile den Rangverlust und damit auch den Verlust der Invertierbarkeit bedeuten würde. Daraus folgen bereits die ersten vier Aussagen. Für die letzte Aussage nehmen wir an, dass $a^{-1} b - c^{-1} d = 0$ gilt. Dann gilt auch $a^{-1} b = c^{-1} d$, was sich umstellen lässt zu $ad = bc$ bzw. zu $0 = ad - bc = \det\mymatrix$ im Widerspruch zur Invertierbarkeit.
     \end{proof}
 %%%%
-    \begin{exercise}
+    \begin{homework}
         Ist $\alpha \in L \setminus K$ und $\mymatrix \in \GL_2(K)$, so ist $K(\alpha) = K\left( \bruch \right)$.
-    \end{exercise}
+    \end{homework}
     \begin{itemize}[leftmargin=*]
         \item $K(\alpha) \subseteq K(\bruch)$. \\
         Wir wollen $\alpha$ aus $\bruch$ darstellen. Betrachten wir dazu für $x,y \in K(\alpha)$
         \begin{equation*}
             \alpha = x * \bruch + y
         \end{equation*}
-        Wir müssen nun 5 verschiedene Fälle unterscheiden.
-        \begin{enumerate}[leftmargin=*, label=(\roman*)]
+        
+        \begin{correction}
+        	einfacher: $g = \frac{a \alpha + b}{c \alpha + b}$ nach $\alpha$ umstellen
+        \end{correction}
+        
+        Wir müssen nun 5 verschiedene Fälle unterscheiden.        \begin{enumerate}[leftmargin=*, label=(\roman*)]
             \item Ist $a = 0$, so sind $b,c \in \einheit{K}$ nach \cref{lemma: 1_7_invertierbarkeit}. Dann finden wir mit $x = \frac{(c \alpha + d)^2}{bc}$ und $y = -c^{-1}d$
             \begin{equation*}
                 x * \frac{b}{c \alpha + d} + y = \frac{(c \alpha + d)^2}{bc} * \frac{b}{c \alpha + d} - \frac{d}{c}
@@ -70,9 +74,9 @@
     
 %%%% AUFGABE H8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \begin{exercise}
+    \begin{homework}
         Bestimmen Sie das Minimalpolynom von $\lfrac{1+\sqrt{5}}{2}$ und von $\zeta_5 + \zeta_5^{-1}$ jeweils über $\Q$. Ist $\Q(\zeta_5) = \Q(\zeta_5 + \zeta_5^{-1})$?
-    \end{exercise}
+    \end{homework}
     \begin{itemize}[leftmargin=*]
         \item Man stellt schnell fest, dass $\alpha = \frac{1 + \sqrt{5}}{2}$ eine Nullstelle von $f = X^2 - X -1 \in \polynom[\Q]$ ist, denn
         \begin{equation*}
@@ -110,9 +114,9 @@
 
 %%%% AUFGABE H9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    \begin{exercise}
+    \begin{homework}
         Sei $\alpha \in L$ algebraisch über $K$ mit $\deg( \alpha \mid K)$ ungerade. Zeigen Sie, dass $K(\alpha) = K(\alpha^2)$ gilt.
-    \end{exercise}
+    \end{homework}
 
     Da $\alpha$ algebraisch über $K$ ist, existiert eine Polynom $f \in \polynom[K]$, für das $f(\alpha) = 0$ gilt. Aus der Eigenschaft algebraisch zu sein folgt mit Satz 2.7 auch, dass $\deg(f) = \deg(\alpha | K) = [K(\alpha) : K] = 2k + 1$ für ein $k \in \N_0$. Betrachte daher $f = \sum_{i=0}^{2k+1} c_i X^i$.  Wir können $f$ zerlegen in 
     \begin{equation*}

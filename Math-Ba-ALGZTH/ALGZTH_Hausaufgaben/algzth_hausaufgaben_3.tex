@@ -1,0 +1,56 @@
+\begin{exercisePage}[Transzendente Erweiterungen \& separable Polynome][8/12]
+	
+	\setcounter{taskcount}{37}
+	
+%%%% H 38 %%%%
+	\begin{homework}
+		Bestimmen Sie den Grad des Zerfällungskörpers des Polynoms $f = X^4 + 2X^2 - 2$ über $\Q$. Ist $f$ separabel?
+	\end{homework}
+	
+	Wir betrachten das Polynom $f = X^4 + 2X^2 -2 \in \polynom[Q]$ mit der Substitution $Y \defeq X^2$, was uns $f = Y^2 + 2Y - 2$ liefert. Damit erhält man die Nullstellen $X_{\lfrac{1}{2}} = \pm \sqrt{-1 + \sqrt{3}}$ und $X_{\lfrac{3}{4}} = \pm \sqrt{-1 - \sqrt{3}}$. Offensichtlich sind alle vier Nullstellen voneinander verschieden und haben alle Vielfachheit eins. Damit ist also die Summer der Vielfachheiten der Nullstellen gleich dem Grad des Polynoms und $f$ somit separabel.
+	
+	Im Folgenden sei $\alpha_1 = \sqrt{-1 + \sqrt{3}}$ und $\alpha_2 = \sqrt{-1 - \sqrt{3}}$.
+	
+	Da mit $a \in K$ für einen Körper $K$ auch schon $-a \in K$ gilt, reicht als Zerfällungskörper für $f$ auch $L \defeq \Q(\alpha_1, \alpha_2)$ aus. Mit Eisenstein und $p=2$ stellen wir fest, dass $f$ irreduzibel ist. Damit gilt $[\Q(\alpha_1) : \Q] = 4$. Um den Grad des Zerfällungskörpers zu bestimmen fehlt nun noch $[L : \Q(\alpha_1)]$. Man kann $\alpha_2$ auch schreiben als $\alpha_2 = \sqrt{-1 - \sqrt{3}} = \sqrt{-1 * (1 + \sqrt{3})} = i \sqrt{1 + \sqrt{3}} \in \C$. Jedoch ist mit $\alpha_1 \in \R$ (da $-1 + \sqrt{3} > 0$) auch $\Q(\alpha_1) \subseteq \R$ und damit auf jeden Fall $\alpha_2 \notin \Q(\alpha_1)$. Somit ist auch $[\Q(\alpha_1,\alpha_2) : \Q(\alpha_1)] > 1$. Andererseits hat das Polynom $g = X^2 - \alpha_1^2 + 2 \in \polynom[\Q(\alpha_1)]$ mit  
+	\begin{equation*}
+		g(\alpha_2) = \alpha_2^2 + \alpha_1^2 + 2 = -1 - \sqrt{3} - 1 + \sqrt{3} + 2 = 0
+	\end{equation*}
+	die Nullstelle $\alpha_2$. Damit ist es das Polynom kleinsten Grades, welches Minimalpolynom von $\alpha_2$ über $\Q(\alpha_1)$ sein kann. Deshalb gilt $[\Q(\alpha_1,\alpha_2) : \Q(\alpha_1)] = 2$. Da der Körpergrad multiplikativ ist, ergibt sich
+	\begin{equation*}
+		[L : \Q] = [\Q(\alpha_1,\alpha_2) : \Q(\alpha_1)] * [\Q(\alpha_1) : \Q] = 2 * 4 = 8
+	\end{equation*}
+	
+	
+%%%% H 39 %%%%
+	\begin{homework}
+		Sei $L=K(X)$ ein rationaler Funktionenkörper. Sei $\alpha = \frac{f}{g} \in L \setminus K$ mit $f,g \in \polynom[K]$ teilerfremd. Zeigen Sie, dass $[L : K(\alpha)] = \max\menge{\deg(f) , \deg(g)}$.
+	\end{homework}
+	
+	\pagebreak
+	
+	
+%%%% H 40 %%%%
+	\begin{homework}
+		Sei $p > 0$, $a \in K$ und $f = X^p - X + a \in \polynom[K]$. Zeigen Sie:
+		\begin{enumerate}[leftmargin=*, label=(\alph*), nolistsep, topsep=-\parskip]
+			\item $f(X) = f(X+1)$
+			\item $f$ ist separabel
+			\item Jeder Wurzelkörper von $f$ ist ein Zerfällungskörper von $f$.
+			\item Hat $f$ keine Nullstelle in $K$, so ist $f$ irreduzibel.
+		\end{enumerate}
+	\end{homework}
+	\begin{enumerate}[leftmargin=*, label=(zu \alph*)]
+		\item Es ist $f(X+1) = (X+1)^p - (X+1) + a \overset{\text{V1}}{=} X^p + 1^p - X - 1 + a = X^p - X + a = f(X)$.
+		%
+		\item Sei $\alpha$ eine Nullstelle von $f$, d.h. $f(\alpha) = 0$. Wegen Teil (a) gilt dann auch $0 = f(\alpha) = f(\alpha + 1) = \dots = f(\alpha + p - 1)$. Da $\charak(K) = p$, sind die $\alpha, \alpha + 1 , \dots , \alpha + p - 1$ paarweise verschieden. Damit hat $f$ genau $p$ Nullstellen. Da $f$ auch Grad $p$ hat, ist $f$ damit separabel. 
+		%
+		\item Sei $L$ ein Wurzelkörper von $f$, d.h. $L = K(\alpha)$ für eine Nullstelle $\alpha$ von $f$. Nach Teil (b) sind dann $\alpha, \alpha + 1 , \dots , \alpha + p - 1$ die Nullstellen von $f$. Jedoch ist mit $i \in K$ (bzw. genauer $\iota(i)$) für alle $i \in \menge{0, \dots , p-1}$ auch $\alpha + i \in K(\alpha)$ und damit ist $K(\alpha) = K(\alpha + i)$ für alle $i \in \menge{0, \dots , p-1}$. Somit ist dann $K(\alpha) = L$ auch schon ein Zerfällungskörper, in dem $f = \prod_{i=0}^{p-1} (X - (\alpha + i))$ in Linearfaktoren zerfällt.
+		%
+		\item Wir zeigen die Kontraposition. Angenommen $f$ sei reduzibel, dann existiert eine Darstellung $f = \prod_{i = 0}^m r_i$ mit $r_i \in \polynom[K]$ für alle $i \in \menge{0 , \dots , m}$ und ein $m \geq 2$. 
+		
+		Wir zeigen nun, dass alle $r_i$ den gleichen Grad haben. 		
+		Sei $L$ der Zerfällungskörper von $f$. Wir betrachten eine Nullstelle $\alpha \in L$ von $f$. Wie wir bereits gesehen haben, sind dann auch $\alpha + 1 , \dots , \alpha + p - 1$ Nullstellen. Damit lässt sich $f$ schreiben als $f = \prod_{i=0}^{p-1} (X - (\alpha + i)) \defqe \prod_{i=0}^{p-1} r_i(X)$. Offensichtlich ist $r_i$ irreduzibel über $K$ für alle $i \in \menge{0, \dots , p-1}$. Dann existiert zu jedem irreduziblen Faktor aber auch ein $s \in \menge{0, \dots , p-1}$, sodass $\quer{r_i}(X) \defeq r_i(X+s)$ gilt und dieses $\quer{r_i}$ ist ebenso irreduzibel. Damit hat $r_i$ für alle $i \in \menge{0 , \dots , p-1}$ den gleichen Grad wie das Minimalpolynom von $\alpha$.
+		
+		Da nun alle irreduziblen Faktoren den gleichen Grad besitzen, $m \geq 2$ aufgrund der Reduzibilität gilt und $p$ prim ist, müssen alle $r_i$ Linearfaktoren sein. Somit hat $f$ dann schon Nullstellen in $K$, nämlich die Nullstellen der Linearfaktoren, also $\alpha , \alpha + 1, \dots , \alpha + p -1$.
+	\end{enumerate}
+\end{exercisePage}

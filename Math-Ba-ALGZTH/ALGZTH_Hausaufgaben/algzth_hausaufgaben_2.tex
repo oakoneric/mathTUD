@@ -1,0 +1,43 @@
+\begin{exercisePage}[Wurzelkörper, Zerfällungskörper, algebraischer Abschluss][10/10]
+	\setcounter{taskcount}{22}
+	
+	%%%% AUFGABE H23 %%%%
+	\begin{homework}
+		Sei $f \in \polynom[K]$ irreduzibel und $[L : K]$ endlich und teilerfremd zu $\deg(f)$. Zeigen Sie, dass $f$ auch in $\polynom[L]$ irreduzibel ist.
+	\end{homework}
+
+	Sei $\alpha$ eine Nullstelle von $f$ in einem algebraischen Abschluss von $L$. Wegen Multiplikativität der Körpergrade ergibt sich $[L(\alpha) : K] = [L(\alpha) : L] * [L : K] = [L(\alpha) : K(\alpha)] * [K(\alpha) : K]$. Also gilt
+	\begin{equation*}
+		[L(\alpha) : L] = \frac{[L(\alpha) : K(\alpha)] * [K(\alpha) : K]}{[L : K]} = \frac{[L(\alpha) : K(\alpha)] * \deg(f)}{[L : K]}
+	\end{equation*} 
+	Da $[L:K]$ und $\deg(f)$ teilerfremd sind, ist $[L:K]$ ein Teiler von $[L(\alpha) : K(\alpha)]$. Andererseits gilt auch immer $[L(\alpha) : K(\alpha)] \leq [L:K]$ und deshalb $[L(\alpha) : K(\alpha)] = [L:K]$.  Somit folgt dann daraus $[L(\alpha) : L] = \deg(\alpha|L) = \deg(f)$ und $f$ ist als Minimalpolynom über $L$ irreduzibel.
+	
+	
+	%%%% AUFGABE H24 %%%%
+	\begin{homework}
+		Bestimmen Sie den Zerfällungskörper von $f = X^2 + X + 1$, $f = X^3 + X^2 + X + 1$ und $f = X^4 + X^3 + X^2 + X + 1$ über $\Q$ und geben Sie jeweils den Grad an.
+	\end{homework}
+	
+	\begin{itemize}[leftmargin=*]
+		\item Wir betrachten das Polynom $f = X^2 + X + 1$. Dies ist offensichtlich das dritte Kreisteilungspolynom $\Phi_3$. Somit hat es die Nullstellen $\zeta_3$ und $\zeta_3^2$. Da $\zeta_3^2 \in \Q(\zeta_3)$ ist $\Q(\zeta_3 , \zeta_3^2) = \Q(\zeta_3)$. Damit ist also $\Q(\zeta_3)$ der Zerfällungskörper von $f$. Da $\Phi_3$ gemäß eines Satzes aus Geometrie irreduzibel ist, ist also $f = \MinPol{\zeta}{\Q}$ und somit ist $[\Q(\zeta_3) : \Q] =  2$.
+		%
+		\item Wir betrachten das Polynom $f = X^4 + X^3 + X^2 + X + 1$, welches widerum das fünfte Kreisteilungspolynom $\Phi_5$ ist. Somit hat es die Nullstellen $\zeta_5^k$ für $k = 1,2,3,4$ und $\Q(\zeta_5)$ ist Zerfällungskörper von $f$, da wieder alle weiteren Potenzen bereits in $\Q(\zeta_5)$ liegen. Auch $f$ ist als Kreisteilungspolynom wieder irreduzibel und somit $f = \MinPol{\zeta_5}{\Q}$. Also ist $[\Q(\zeta_5) : \Q] = 4$.
+		%
+		\item Betrachten wir nun noch das Polynom $f = X^3 + X^2 + X + 1$, so hat dieses auf jeden Fall die Nullstelle $-1$. Polynomdivision mit $X + 1$ ergibt dann $f = (X+1)(X^2+1)$. Aus dem zweiten Faktor ergeben sich die weiteren Nullstellen $i$ und $-i$. Offensichtlich ist $1 \in \Q$ bereits enthalten und $-i$ lässt sich aus $i$ darstellen. Damit ist also $\Q(i)$ als Zerfällungskörper von $f$ ausreichend. Weiter ist $g = X^2 + 1$ irreduzibel und normiert, also ist $g$ das Minimalpolynom von $i$ über $\Q$. Damit ist $[\Q(i) : \Q] = 2$.
+	\end{itemize}
+	
+	\pagebreak
+	
+	%%%% AUFGABE H25 %%%%
+	\begin{homework}
+		Bestimmen Sie den Grad des Zerfällungskörpers von $f = X^4 + 1$ über $\Q$ und über $\Q(\sqrt{2})$.
+	\end{homework}
+	
+	Erneut ist $f = X^4 + 1$ ein Kreisteilungspolynom, nämlich $\Phi_8$. Damit erhalten wir alle mit $8$ teilerfremden Potenzen von $\zeta_8$ als Nullstellen, d.h. $f$ hat die Nullstellen $\zeta_8, \zeta_8^3, \zeta_8^5, \zeta_8^7$. Alternativ ist $\zeta_8 = \frac{1+i}{\sqrt{2}}$ und dies zur vierten Potenz ergibt wieder $-1$, wie auch die drei weiteren Potenzen.
+	Als Zerfällungskörper ist somit wieder $\Q(\zeta_8)$ ausreichend. $f$ ist normiert und nach V18 irreduzibel, also Minimalpolynom von $\zeta_8$ über $\Q$ und somit ist $\deg(\zeta_8 | \Q) = [\Q(\zeta_8) : \Q] = 4$.
+	
+	Da $\zeta_8 = \exp \left( \frac{2\pi i}{8} \right) = \frac{1 + i}{\sqrt{2}}$, ist $i = \zeta_8^2 \in \Q(\zeta_8)$ und auch $\zeta_8 + \zeta_8^7 = \sqrt{2} \in \Q(\zeta_8)$. Damit ist $\Q(i, \sqrt{2}) \subseteq \Q(\zeta_8)$. Es ist bereits bekannt, dass $[\Q(i) : \Q] = 2 = [\Q(\sqrt{2}) : \Q]$ und außerdem ist klar, dass $i \notin \Q(\sqrt{2})$. Also folgt daraus, dass $[\Q(i,\sqrt{2}) : \Q] = [\Q(\sqrt{2})(i) : \Q(\sqrt{2})] * [\Q(\sqrt{2}) : \Q] = 2*2 = 4$, also ist $\Q(\zeta_8) = \Q(i,\sqrt{2})$. Insbesondere folgt daraus nun auch, dass $\Q(\sqrt{2}) \subseteq \Q(i,\sqrt{2})$ ist. 
+	
+	Nach Multiplikativität der Körpergrade gilt nun $[\Q(\zeta_8) : \Q] = [\Q(\zeta_8) : \Q(\sqrt{2})] * [\Q(\sqrt{2}) : \Q]$. Aus dem ersten Teil wissen wir, dass $[\Q(\zeta_8) : \Q]
+	= 4$. Außerdem ist bekannt, dass $[\Q(\sqrt{2}) : \Q] = 2$ gilt und somit nur $[\Q(\zeta_8) : \Q(\sqrt{2})] = 2$ gelten kann.
+	\end{exercisePage}

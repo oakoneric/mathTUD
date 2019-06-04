@@ -1,0 +1,115 @@
+\begin{exercisePage}[separable Erweiterungen, einfache Erweiterungen]
+	
+	\setcounter{taskcount}{53}
+	
+	\begin{lemma} \label{lemma: 4_54_teilersep}
+		Sei $f \in \polynom[K]$ separabel und $g \in \polynom[K]$, sodass $f = g * h$ für ein weiteres Polynom $h \in \polynom[K]$. Dann ist auch $g$ separabel.
+	\end{lemma}
+	\begin{proof}
+		Angenommen $g$ hat eine mindestens zweifache Nullstelle $\alpha$, d.h. $g = (X - \alpha)^2 * \quer{g}$ für ein Polynom $\quer{g} \in \polynom[K]$. Dann ist aber auch $f = g * h = (X - \alpha)^2 * \quer{g} * h$ und $\alpha$ somit eine mindestens zweifache Nullstelle von $f$. Dies ist jedoch im Widerspruch zur Separabilität von $f$, d.h. $g$ muss schon separabel gewesen sein.
+	\end{proof}
+	
+%%%% HAUSAUFGABE H 54 %%%%
+	\begin{homework}
+		Seien $p > 0$, $L|K$ algebraisch und $\alpha \in L$. Zeigen Sie: Genau dann ist $\alpha$ separabel über $K$, wenn $K(\alpha) = K(\alpha^p)$.
+	\end{homework}
+
+
+	\begin{proof-equivalence}
+		\rueckrichtung Es gelte $K(\alpha) = K(\alpha^p)$. Dann ist insbesondere $\alpha \in K(\alpha^p)$ und wir können $\alpha$ als Linearkombination der Potenzen von $\alpha^p$ schreiben, also $\alpha = \sum_{i\ge 0} a_i * (\alpha^p)^i \in K(\alpha^p)$. Nun können wir das Polynom $f = \sum_{i\ge 0} a_i * (X^p)^i - X \in \polynom[K]$  betrachten. Nach der vorherigen Überlegung ist $f(\alpha) = 0$, d.h. das Minimalpolynom $\MinPol{alpha}{K} = \quer{f} \teilt f$. Nun betrachten wir die formale Ableitung von $f$, d.h. $f' = \sum_{i\ge 0} p i * a_i * X^{pi - 1} -1 = - 1$, da $\charak(K) = p > 0$ und somit alle Koeffizienten der Summe verschwinden. Nun gilt $\ggT(f,f') = 1$, was nach Satz 6.6 die Separabilität von $f$ impliziert. Da nun $\quer{f}$ ein Teiler von $f$ ist, überträgt sich die Separabilität nach \cref{lemma: 4_54_teilersep} auch auf $\quer{f}$. Damit ist also das Minimalpolynom von $\alpha$ über $K$ separabel und nach Definition $\alpha$ separabel über $K$.
+		%
+		\hinrichtung Sei $\alpha$ separabel über $K$. Wir bezeichnen mit $f$ das Minimalpolynom von $\alpha$ über $K$, mit $h$ das Minimalpolynom von $\alpha$ über $K(\alpha^p)$. Man stellt fest, dass im Körper $K(\alpha)$ gilt $h \teilt f$. Das Polynom $g = X^p - \alpha^p \in \polynom[K(\alpha^p)]$ hat offensichtlich $\alpha$ als Nullstelle und ist somit ein Vielfaches von $h$. $g$ lässt sich aufgrund der positiven Charakteristik (V1) auch schreiben als $g = (X-\alpha)^p$, sodass $h$ als Teiler von der Form $h= (X-\alpha)^n$ für ein $n \le p$ sein muss. Da $\alpha$ separabel ist, darf der Faktor $(X-\alpha)$ nur einmal im Minimalpolynom $f$ vorkommen. Dies vererbt sich nun auch auf den Teiler $h$ von $f$, d.h. es muss $n=1$ gelten. Damit gilt also $h = X - \alpha \in \polynom[K(\alpha^p)]$. Nun ist also $\alpha \in K(\alpha^p)$ und gemeinsam mit der trivialen Inklusion $K(\alpha^p) \subseteq K(\alpha)$ gilt nun schon $K(\alpha) = K(\alpha^p)$.
+	\end{proof-equivalence}
+
+
+%%%% HAUSAUFGABE H 55 %%%%
+	\begin{homework}
+		Sei $d \in \einheit{K} \setminus (\einheit{K})^2$ und $\alpha = x + y \sqrt{d} \in L = K(\sqrt{d})$. Drücken Sie $N_{L\mid K}(\alpha)$ und $Sp_{L \mid K}(\alpha)$ durch $x$ und $y$ aus.
+	\end{homework}
+
+	Als $K$-Vektorraum hat $L$ die Basis $\mathcal{B} = (1 , \sqrt{d})$. Dann gilt $\mu_\alpha (1) = \alpha = x+y\sqrt{d}$, $\mu_\alpha(\sqrt{d}) = x \sqrt{d} + y d$ und damit schließlich für die darstellende Matrix
+	\begin{equation*}
+		\darstMat{\mathcal{B}}{\mu_\alpha} = \begin{pmatrix} x & yd \\ y & x	\end{pmatrix}
+	\end{equation*}
+	Damit ist $N_{L \mid K}(\alpha) = \det \left( \darstMat{\mathcal{B}}{\mu_\alpha} \right) = x^2 - y^2 d$ und $Sp_{L \mid K} (\alpha) = Sp \left( \darstMat{\mathcal{B}}{\mu_\alpha} \right) = 2x$.
+	
+	
+%%%% HAUSAUFGABE H 56 %%%%
+	\newcommand{\muzeta}{\mu_{\zeta_\ell^j}}
+	\begin{homework}
+		Sei $\ell$ eine Primzahl und $L = \Q(\zeta_\ell)$. Zeigen Sie, dass $Sp_{L \mid \Q} (1) = \ell - 1$ und $Sp_{L \mid \Q}(\zeta_\ell^j)=-1$ für jedes $j \in \menge{1 , \dots , \ell - 1}$. Folgern Sie, dass $Sp_{L \mid \Q}(1 - \zeta_\ell^j) = \ell$ für jedes $j \in \menge{1, \dots , \ell - 1}$.
+	\end{homework}
+
+	Für die ersten beiden Teile habe ich jeweils zwei Lösungen.
+	\begin{itemize}[leftmargin=*]
+		\item Das Minimalpolynom von $\zeta_\ell$ ist $\Phi_\ell = 1 + X + \dots + X^{\ell-1}$ mit $[\Q(\zeta_\ell) : \Q] = \deg(\Phi_\ell) = \ell - 1$. Somit hat eine Basis des $K$-Vektorraums $L$ also Mächtigkeit $\ell -1$. Eine solche Basis ist beispielsweise durch $\basisB = \left( 1 , \zeta_\ell , \zeta_\ell^2 , \dots , \zeta_\ell^{\ell-2} \right)$ gegeben. Nun suchen wir die darstellende Matrix von $\mu_1$ bezüglich dieser Basis. Diese ergibt sich wegen $\mu_1 = \id_L$ als $\darstMat{B}{\mu_1} = \one_{\ell - 1}$. Dann ergibt sich für die Spur $\Sp[L\mid \Q](1) = \Spur \darstMat{B}{\mu_1} = \ell - 1$. 
+		%
+		Alternativ ist $1 \in \Q$ und damit nach Lemma 8.5 mit $n = [L : \Q] = \ell - 1$ schon $\Sp[L \mid \Q](1) = n * 1 = \ell - 1$.
+		%
+		\item Betrachten wir nun die darstellende Matrix von $\mu_{\zeta_\ell^j}$ bezüglich $\basisB$. Es gilt $\muzeta(1) = \zeta_\ell^j$, $\muzeta(\zeta_\ell^k) = \zeta_\ell^j * \zeta_\ell^k = \zeta_\ell^{j+k}$ für alle $k \leq \ell - j - 2$. Für alle $k \in \menge{\ell - j , \dots , \ell}$ gilt $\muzeta(\zeta_\ell^k) = j + k - \ell$. In diesen Fällen erfolgt also nur eine Permutation der Basiselemente. Für $k = \ell - j - 1$ betrachten wir das Kreisteilungspolynom $\Phi_\ell(\zeta_\ell) = 1 + \zeta_\ell + \zeta_\ell^2 + \dots + \zeta_\ell^{\ell-2} + \zeta_\ell^{\ell - 1} = 0$. Nun können wir dieses nach $\zeta_\ell^{\ell-1}$ umstellen und erhalten $\zeta_\ell^{\ell-1} = \sum_{i = 0}^{\ell - 2} - \zeta_\ell^i$. 
+		Nun können wir diese Informationen zur darstellenden Matrix zusammensetzen:
+		\begin{equation*}
+			\darstMat{B}{\muzeta} = \left(  \begin{array}{ccc|c|ccc}
+			0 & \dots & 0 & -1 & 1 & \dots & 0 \\
+			1 & \dots & 0 & -1 & \vdots & \ddots & \vdots \\
+			\vdots & \ddots & \vdots & \vdots & 0 & \dots & 1 \\
+			\undermat{\ell - j - 2}{0 & \dots & 1} & -1 &\undermat{j}{0&\dots &0} \\
+			\end{array}\right) 
+			= \left(  \begin{array}{ccc|c|ccc}
+			0  & \dots              & 0 & -1      &   &        & \\
+			   &                    &   & \vdots  &   & \one_j & \\
+			   & \one_{\ell - j -2} &   & \vdots  &   &        & \\
+			   &                    &   & -1      & 0 & \dots  & 0 \\
+			\end{array}
+			\right)
+			\in \Mat_{\ell -1}(\Q)
+		\end{equation*}
+		
+		Nun stehen auf der Hauptdiagonalen nur Nullen und in der $(\ell - j - 1)$-ten Spalte stehen in jeder Zeile eine $-1$. Damit ergibt sich $\Sp[L \mid \Q] = \Spur \darstMat{B}{\muzeta} = -1$.
+		%
+		Alternativ können wir wieder Lemma 8.5 (d) anwenden. Wir wissen, dass $\Phi_\ell = \MinPol{\zeta_\ell}{\Q}$ ist und dann ergibt sich $m = \frac{n}{r} = \frac{n}{\deg(\Phi_\ell)} = \frac{\ell - 1}{\ell - 1} = 1$. Da $\ell$ prim ist, sind alle Koeffizienten im Kreisteilungspolynom $\Phi_\ell$ gleich Eins und es folgt mit Lemma 8.5 (d), dass $\Sp[L \mid Q](\muzeta) = - m * 1 = -1$ für alle $j \in \menge{1, \dots \ell-1}$.
+		%
+		\item Für die letzte Aussage können wir die $K$-Linearität der Spur aus Lemma 8.5 (b) anwenden: \\
+		$\Sp[L \mid \Q](1 - \muzeta) = \Sp[L \mid \Q](1) - \Sp[L \mid \Q](\muzeta) = \ell - 1 - (-1) = \ell$.
+	\end{itemize}
+	\undef\muzeta
+
+%%%% HAUSAUGBE H 57 %%%%
+	\begin{homework}
+		Seien $a,b \in \Z$. Bestimmen Sie ein primitives Element der Erweiterung $\Q(\sqrt{a} , \sqrt{b}) \mid \Q$.
+	\end{homework}
+	
+	Definieren wir $\alpha = \sqrt{a}$ und $\beta = \sqrt{b}$. Wir wollen zeigen, dass $\Q(\alpha, \beta) = \Q(\alpha + \beta)$. Die Inklusion $\Q(\alpha + \beta) \subseteq \Q(\alpha , \beta)$ ist klar. Um die andere Inklusion zu zeigen betrachten wir einige Potenzen von $\alpha + \beta$:
+	\begin{equation*}
+		\begin{alignedat}{2}
+			(\alpha + \beta)^2 &= a + 2 \alpha \beta + b &&= (a+b) + 2 \alpha \beta \\
+			(\alpha + \beta)^3 &= a \alpha + 2a \beta + b \alpha + a \beta + 2b \alpha + b \beta &&= (a+3b) \alpha + (3a + b) \beta \\
+			(\alpha + \beta)^4 &= (a+b)^2 + 4(a+b) \alpha \beta + 4ab &&= (a^2 + 6ab + b^2) + 4(a+b) \alpha \beta
+		\end{alignedat}
+	\end{equation*} 
+	Schreiben wir dies nun als Gleichungssystem in Matrixform, dann ergibt sich
+	\begin{equation*}
+		\begin{pmatrix} 
+			\alpha + \beta \\ (\alpha + \beta)^2 \\ (\alpha + \beta)^3 \\ (\alpha + \beta)^4
+		\end{pmatrix}
+		= \underbrace{\begin{pmatrix}
+			0               & 1    & 1    & 0      \\
+			a+b             & 0    & 0    & 2      \\
+			0               & a+3b & 3a+b & 0      \\
+			a^2 + 6ab + b^2 & 0    & 0    & 4(a+b)
+		\end{pmatrix}}_{\defqe A}
+		* \begin{pmatrix}
+		1 \\ \alpha \\ \beta \\ \alpha \beta
+		\end{pmatrix}
+	\end{equation*}
+	Es gilt $\det(A) = -4 (a-b)^3 \neq 0$ für $a \neq b$. Für $a \neq b$ ist also $A \in \GL_4(\Q)$ und damit existiert $A^{-1} \in \GL_4(\Q)$ mit 
+	\begin{equation*}
+		\begin{pmatrix}
+		1 \\ \alpha \\ \beta \\ \alpha \beta
+		\end{pmatrix} = A^{-1} * \begin{pmatrix} 
+		\alpha + \beta \\ (\alpha + \beta)^2 \\ (\alpha + \beta)^3 \\ (\alpha + \beta)^4
+		\end{pmatrix}
+	\end{equation*}
+	Aus der zweiten und dritten Zeile folgt dann insbesondere, dass $\alpha$ und $\beta$ mithilfe der Potenzen von $\alpha + \beta$ geschrieben werden können. Dies zeigt nun auch $\alpha, \beta \in \Q(\alpha + \beta)$ und somit die Inklusion $\Q(\alpha, \beta) \subseteq \Q(\alpha + \beta)$. Schlussendlich folgt damit $\Q(\sqrt{a},\sqrt{b}) = \Q(\sqrt{a} + \sqrt{b})$, also ist $\sqrt{a} + \sqrt{b}$ primitives Element der Erweiterung $\Q(\sqrt{a},\sqrt{b}) \mid \Q$.
+
+\end{exercisePage}
