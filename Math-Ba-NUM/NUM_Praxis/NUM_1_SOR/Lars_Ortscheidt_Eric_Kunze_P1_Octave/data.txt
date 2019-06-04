@@ -1,0 +1,88 @@
+============================================
+ LOESUNG DURCH PCG UND SOR FUER GEFORDERTE N
+*********** DIRICHLET **********************
+============================================
+-----------------------
+***** Sei N = 5 *****
+-----------------------
+pcg converged at iteration 1 with relative residual 1.03064e-15
+-- Fuer w = 1 --
+Die Iteration hat nach 49 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 66 Iterationen abgebrochen.
+-- Fuer w = 1.3333 --
+Die Iteration hat nach 17 Iterationen abgebrochen.
+-----------------------
+***** Sei N = 10 *****
+-----------------------
+pcg converged at iteration 1 with relative residual 2.51866e-15
+-- Fuer w = 1 --
+Die Iteration hat nach 168 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 69 Iterationen abgebrochen.
+-- Fuer w = 1.5604 --
+Die Iteration hat nach 32 Iterationen abgebrochen.
+-----------------------
+***** Sei N = 100 *****
+-----------------------
+pcg converged at iteration 1 with relative residual 2.82525e-13
+-- Fuer w = 1 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.9397 --
+Die Iteration hat nach 299 Iterationen abgebrochen.
+----------------------
+***** Sei N = 200 *****
+----------------------
+pcg converged at iteration 1 with relative residual 1.02083e-12
+-- Fuer w = 1 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.9692 --
+Die Iteration hat nach 595 Iterationen abgebrochen.
+============================================
+ LOESUNG DURCH PCG UND SOR FUER GEFORDERTE N
+**************** POISSON *******************
+============================================
+-----------------------
+***** Sei N = 5 *****
+-----------------------
+pcg converged at iteration 11 with relative residual 1.79801e-17
+-- Fuer w = 1 --
+Die Iteration hat nach 49 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 66 Iterationen abgebrochen.
+-- Fuer w = 1.3333 --
+Die Iteration hat nach 17 Iterationen abgebrochen.
+-----------------------
+***** Sei N = 10 *****
+-----------------------
+pcg converged at iteration 22 with relative residual 7.61245e-07
+-- Fuer w = 1 --
+Die Iteration hat nach 165 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 69 Iterationen abgebrochen.
+-- Fuer w = 1.5604 --
+Die Iteration hat nach 33 Iterationen abgebrochen.
+-----------------------
+***** Sei N = 100 *****
+-----------------------
+pcg converged at iteration 221 with relative residual 9.33077e-07
+-- Fuer w = 1 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.9397 --
+Die Iteration hat nach 300 Iterationen abgebrochen.
+-----------------------
+***** Sei N = 200 *****
+-----------------------
+pcg converged at iteration 447 with relative residual 9.5183e-07
+-- Fuer w = 1 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.8 --
+Die Iteration hat nach 1500 Iterationen abgebrochen.
+-- Fuer w = 1.9692 --
+Die Iteration hat nach 598 Iterationen abgebrochen.

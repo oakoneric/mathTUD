@@ -107,48 +107,71 @@ endfor
 % ======================
 % FEHLERPLOT FUER N = 10
 % ======================
-N = 10;
+N     = 10;
 omega = [ 1 , 1.8 , 2/(1+(1-(0.5*(cos(pi/(N+1))+cos(pi/(N+1))))^2)^0.5) ];
-b = funb(N);
-A = funA(N);
+b1    = genfunb(N,dirichlet);
+b2    = genfunb(N,poisson);
+A     = funA(N);
 
-detailfehlerplot =  figure('Name', 'Iterationsfehler im SOR-Verfahren');
-fehlerplot =  figure('Name', 'Iterationsfehler im SOR-Verfahren');
+% Fehlerplot der ersten Funktion (dirichlet)
+fehlerplot1 = figure('Name', 'Fehlerplot der ersten Funktion');
+   plot1    = subplot(2,1,1); hold on
+   plot1det = subplot(2,1,2); hold on
+
+% Fehlerplot der zweiten Funktion (poisson)
+fehlerplot2 = figure('Name', 'Fehlerplot der zweiten Funktion');
+   plot2    = subplot(2,1,1); hold on
+   plot2det = subplot(2,1,2); hold on
 
 for j = 1:3
   w = omega(j);
   X = zeros(N*N,1);
-  fehler = fehlervec(A,b,X,w,tol,nmax);
-  numit = length(fehler);
+  fehler1 = fehlervec(A,b1,X,w,tol,nmax);
+  fehler2 = fehlervec(A,b2,X,w,tol,nmax);
+  numit1  = length(fehler1);
+  numit2  = length(fehler2);
   clear X
   
-  x = [1:numit];
-  figure(fehlerplot);
-  plot(x,fehler);
-%  plot(numit,fehler(numit),'s');
-  hold on
-  figure(detailfehlerplot);
-  plot(x,fehler);
-  hold on
+  x1 = [1:numit1];
+  x2 = [1:numit2];
+  
+  plot(plot1,    x1, fehler1);   hold on
+  plot(plot1det, x1, fehler1);   hold on
+  plot(plot2,    x2, fehler2);   hold on
+  plot(plot2det, x2, fehler2);   hold on
 endfor
 
-% --- FEHLERPLOT --- 
-figure(fehlerplot);
-legend(['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
-achse = axis();
-title('relativer Fehler im SOR-Iterationsverfahren');
-xlabel('Iterationszahl');
-ylabel('relativer Fehler');
-print(fehlerplot, '-dpng','fehlerplot.png');
+% Einstellungen für den ersten Plot
+legend(plot1, ['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
+title (plot1, 'relativer Fehler im SOR-Iterationsverfahren der ersten Funktion');
+xlabel(plot1, 'Iterationszahl');
+ylabel(plot1, 'relativer Fehler');
+hold on
 
-% --- DETAILLIERTER FEHLERPLOT ---
-figure(detailfehlerplot)
-legend(['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
-axis([0 200 0 0.0001]);
-title('relativer Fehler im SOR-Iterationsverfahren (Detaildarstellung)');
-xlabel('Iterationszahl');
-ylabel('relativer Fehler');
-print(detailfehlerplot, '-dpng','detailfehlerplot.png');
+% detaillierte Darstellung
+legend(plot1det, ['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
+axis  (plot1det, [0 200 0 0.0001]);
+title (plot1det, 'relativer Fehler im SOR-Iterationsverfahren (Detaildarstellung)');
+xlabel(plot1det, 'Iterationszahl');
+ylabel(plot1det, 'relativer Fehler');
+hold on
+print(fehlerplot1, '-dpng','fehlerplot1.png');
+
+% Einstellungen für den zweiten Plot
+legend(plot2, ['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
+title (plot2, 'relativer Fehler im SOR-Iterationsverfahren der zweiten Funktion');
+xlabel(plot2, 'Iterationszahl');
+ylabel(plot2, 'relativer Fehler');
+hold on
+
+%detaillierte Darstellung
+legend(plot2det, ['w =',num2str(omega(1))],['w =',num2str(omega(2))], ['w =',num2str(omega(3))]);
+axis  (plot2det, [0 200 0 0.0001]);
+title (plot2det, 'relativer Fehler im SOR-Iterationsverfahren (Detaildarstellung)');
+xlabel(plot2det, 'Iterationszahl');
+ylabel(plot2det, 'relativer Fehler');
+hold on
+print(fehlerplot2, '-dpng','fehlerplot2.png');
 
 %-------------------------------------------------------------------------------
 close all
