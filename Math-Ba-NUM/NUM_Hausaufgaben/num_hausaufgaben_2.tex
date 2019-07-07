@@ -2,7 +2,7 @@
 	\newcommand{\cnorm}[1]{\dot{\Vert} #1 \dot{\Vert}}
 	\renewcommand{\i}{\mathrm{i}}
 	
-	\newcommand{\Norm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}} 
+	\newcommand{\NNorm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}} 
 	% dreifach gestrichene Norm
 	
 %%% ZUSÄTZLICHE ANGABEN %%%%
@@ -48,7 +48,7 @@
 	\begin{exercise}
 		Sei $\rho(A) \defeq \max_{1 \leq i \leq n} \abs{\lambda_i(A)}$ der Spektralradius von $A \in \R^{n \times n}$, wobei $\lambda_i(A)$ die Eigenwerte von
 		A sind. Beweise den folgenden Satz: \\
-		Zu jedem $\epsilon > 0$ und zu jeder Matrix $A$ existiert eine durch eine Vektornorm induzierte Matrixnorm $\Norm{\cdot}$ mit $\Norm{A} \leq \rho(A) + \epsilon$
+		Zu jedem $\epsilon > 0$ und zu jeder Matrix $A$ existiert eine durch eine Vektornorm induzierte Matrixnorm $\NNorm{\cdot}$ mit $\NNorm{A} \leq \rho(A) + \epsilon$
 	\end{exercise}
 
 	Wir verwenden die Schur-Zerlegung der Matrix $A \in \R^{n \times n}$ aus der Linearen Algebra. Demnach gibt es also eine unitäre Matrix $U$, sodas
@@ -97,20 +97,20 @@
 	\end{equation*}
 	Nun definieren wir uns mit $V \defeq QD$ eine neue Norm
 	\begin{equation*}
-		\bigabb{\Norm{\cdot}}{\R^n}{\R}%
+		\bigabb{\NNorm{\cdot}}{\R^n}{\R}%
 		{x}{\norm{V^{-1} x}_\infty}
 	\end{equation*}
 	Wegen $C = D^{-1} B D = D^{-1} Q^{-1} A Q D = V^{-1} A V$ gilt auch
 	\begin{equation*}
-		\Norm{Ax} = \norm{V^{-1}Ax}_\infty = \norm{CV^{-1}x}_\infty \leq \norm{C}_\infty * \norm{V^{-1}x}_\infty = \norm{C}_\infty * \Norm{x}
+		\NNorm{Ax} = \norm{V^{-1}Ax}_\infty = \norm{CV^{-1}x}_\infty \leq \norm{C}_\infty * \norm{V^{-1}x}_\infty = \norm{C}_\infty * \NNorm{x}
 	\end{equation*}
 	und damit
 	\begin{equation*}
-		\Norm{A} \leq \norm{C}_\infty \leq \rho(A) + \epsilon
+		\NNorm{A} \leq \norm{C}_\infty \leq \rho(A) + \epsilon
 	\end{equation*}
 	was der zu zeigenden Behauptung entspricht.
 \end{exercisePage}
 
 \undef\cnorm
 \undef\i
-\undef\Norm
+\undef\NNorm

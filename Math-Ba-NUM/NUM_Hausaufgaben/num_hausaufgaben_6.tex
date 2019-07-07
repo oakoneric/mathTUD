@@ -1,0 +1,94 @@
+\begin{exercisePage}[Numerische Lösung von Anfangswertaufgaben]
+	
+	\setcounter{taskcount}{8}
+%%%% HAUSAUFGABE T09 %%%%
+	\begin{homework}
+		Gegeben seien die Differentialgleichung $y' = f(x,y)$, wobei $f$ hinreichend glatt sei und für $\theta \in \R$ das implizite Runge-Kutta-Verfahren
+		\begin{equation*}
+			\Phi(x,y,h) \defeq \theta k^1 + (1-\theta)k^2
+		\end{equation*}
+		mit $k^1 \defeq f(x,y)$ und $k^2 \defeq f(x+h,y+h(\theta k^1 + (1-\theta)k^2))$. Bestimme die Konvergenzordnung des Verfahrens in Abhängigkeit von $\theta$.
+	\end{homework}
+
+%%%% HAUSUAFGABE T10 %%%%
+	\begin{homework}
+		Gesucht ist eine Übertragung des klassischen Runge-Kutta-Verfahrens auf die Anfangswertaufgabe 
+		\begin{align}
+			v'' = g(x,v,v') \quad \mit v(x_0) = v_0 \und v'(x_0) = v_0' \label{t10: aw}
+		\end{align}
+		mit $\abb{v}{[x_0, \infty)}{\R}$. Dazu kann man wie folgt vorgehen:
+		\begin{enumerate}[leftmargin=*, nolistsep, label=(\alph*)]
+			\item Transformiere die gegebene Aufgabe in eine Anfangswertaufgabe für ein System von zwei Differentialgleichungen erster Ordnung.
+			\item Wende auf das erhaltene System $y' = F(x,y)$ (und Anfangsbedingungen) die modifizierte Trapezregel (Verfahren von Heun) 
+			\begin{equation*}
+				y_{n+1} = y_n + \frac{h}{2} \Bigl[ F(x_n,y_n) + F(x_n + h , y_n + h F(x_n,y_n)) \Bigr]
+			\end{equation*}
+			an und schreibe anschließend die erhaltene Verfahrensvorschrift so um, dass nur die in \labelcref{t10: aw}
+			auftretenden Größen bzw. deren Näherungen vorkommen.
+		\end{enumerate}
+	\end{homework}
+
+	\textbf{Bemerkung.} \textit{Die Schreibweise der Indizes (ob oben oder unten notiert) wechselt im Laufe der Aufgabe, aber ich denke, dass trotzdem stets deutlich sein sollte, welcher Index gemeint ist. Prinzipiell steht der Laufindex immer dort, wo noch Platz ist (d.h. also kein Komponentenindex oder Ableitungsstrich steht).}
+	
+	Wir transformieren die gegebene Anfangswertaufgabe zweiter Ordnung zuerst in ein System von Aufgaben erster Ordnung. Definiere dafür $v_1 \defeq v$ und $v_2 \defeq v_1'$. Dann ergibt sich das zu \labelcref{t10: aw} äquivalente System zu
+	\begin{equation*}
+		\begin{aligned}
+		v_1' &= v_2 \\
+		v_2' &= g(x,v,v') = g(x,v_1,v_2)
+		\end{aligned}
+	\end{equation*}
+	mit den zugehörigen Anfangswerten $v(x_0) = v_1(x_0) = v_0$ und $v'(x_0) = v_2(x_0) = v_0$. Setzen wir $y \defeq \left( \begin{smallmatrix} v_1 \\ v_2 \end{smallmatrix} \right)$ und $y' \defeq \left( \begin{smallmatrix} v_1' \\ v_2' \end{smallmatrix} \right)$ sowie
+	$F(x,y) \defeq \left( \begin{smallmatrix} v_2(x) \\ g(x,y) \end{smallmatrix} \right) = \left( \begin{smallmatrix} v_2(x) \\ g(x,v_1,v_2) \end{smallmatrix} \right)$, so ergibt sich die Form
+	\begin{equation*}
+		y' = F(x,y) \quad \mit \quad y(x_0) = \left( \begin{smallmatrix} v_0 \\ v_0' \end{smallmatrix} \right) = y_0
+	\end{equation*}
+	Nun wenden wir das Verfahren von Heun an und erhalten mit Superskriptnotation für vektorwertige Variablen
+	\begin{equation*}
+		y^{n+1} = y^n + \frac{h}{2} \Bigl[ F(x_n,y^n) + F(x_n + h , y^n + h F(x_n,y^n)) \Bigr]
+	\end{equation*}
+	Wir wollen die Vektorwertigkeit rückgängig machen und statt $y$ wieder die Komponenten $v_1$ und $v_2$ nutzen. Wir bezeichnen die Iterierten von $v_1$ und $v_2$ in Bezug zu $y$ auch wieder mit Superskripts, auch wenn diese nicht mehr mehrdimensional sind. Es gilt
+	\begin{equation*}
+		\begin{aligned}
+		y^n + h F(x_n,y^n) 
+		&=
+		\begin{pmatrix} v_1^n \\ v_2^n \end{pmatrix}
+		+ h *
+		\begin{pmatrix} v_2(x_n) \\ g(x_n, v_1^n, v_2^n) \end{pmatrix} 
+		= 
+		\begin{pmatrix} v_1^n + h * v_2(x_n) \\ v_2^n + h * g(x_n, v_1^n, v_2^n) \end{pmatrix} 
+		\\
+		g(x_n + h, y^n + h F(x_n, y^n)) 
+		&= g(x_n + h , v_1^n + h v_2^n , v_2^n + h * g(x_n, v_1^n, v_2^n))
+		\end{aligned}
+	\end{equation*}
+	Somit ergibt sich die Verfahrensvorschrift für das Heun-Verfahren dann in Komponentendarstellung zu
+	\begin{equation*}
+		\begin{aligned}
+		\begin{pmatrix} v_1^{n+1} \\ v_2^{n+1} \end{pmatrix}
+		&=
+		\begin{pmatrix} v_1^n \\ v_2^n \end{pmatrix}
+		+ \frac{h}{2}
+		\left[ \begin{pmatrix} v_2(x_n) \\ g(x_n, v_1^n, v_2^n) \end{pmatrix}
+		+ \begin{pmatrix} v_2(x_n + h) \\ g(x_n + h, y^n + F(x_n,y^n)) \end{pmatrix} \right] \\
+		&= \begin{pmatrix} v_1^n \\ v_2^n \end{pmatrix}
+		+ \frac{h}{2}
+		\left[ \begin{pmatrix} v_2^n \\ g(x_n, v_1^n, v_2^n) \end{pmatrix}
+		+ \begin{pmatrix} v_2^{n+1} \\ g(x_n + h , v_1^n + h v_2^n , v_2^n + h * g(x_n, v_1^n, v_2^n)) \end{pmatrix} \right]
+		\end{aligned}
+	\end{equation*}
+	Ersetzen wir nun wieder rückwärts $v_1 = v$ und $v_2=v_1'=v'$ dann ergibt sich mit Subskriptnotation
+	\begin{equation*}
+		\begin{aligned}
+		v_{n+1} &= v_n + \frac{h}{2} \left( v_n' + v_{n+1}' \right) \\
+		v_{n+1}' &= v_n' + \frac{h}{2} \left( g(x_n, v_n, v_n') + g(x_n + h, v_n + hv_n', v_n' + h g(x_n, v_n, v_n') ) \right)
+		\end{aligned}
+	\end{equation*}
+	Man prüft nun leicht nach, dass die Berechnungen explizit sind, wenn man mit der zweiten Gleichung beginnt, d.h. alle auf der rechten Seite vorkommenden Näherungen sind bereits bekannt. Nun können wir die zweite Zeile des Gleichungssystems in die erste Zeile einsetzen und erhalten
+	\begin{equation*}
+		\begin{aligned}
+		v_{n+1} &= v_n + \frac{h}{2} \left( v_n' + v_n' + \frac{h}{2} \Bigl( g(x_n, v_n, v_n') + g(x_n + h, v_n + hv_n', v_n' + h g(x_n, v_n, v_n') ) \Bigr) \right) \\
+		&= v_n + h v_n' + \frac{h^2}{4} \Bigl( g(x_n, v_n, v_n') + g(x_n + h, v_n + hv_n', v_n' + h g(x_n, v_n, v_n') ) \Bigr)
+		\end{aligned}
+	\end{equation*}
+	Dies ist wiederum eine explizite Verfahrensvorschrift und somit erhalten wir dies als Ergebnis der Übertragung des klassischen Rungeverfahrens auf das Anfangswertproblem \labelcref{t10: aw}.
+\end{exercisePage}
