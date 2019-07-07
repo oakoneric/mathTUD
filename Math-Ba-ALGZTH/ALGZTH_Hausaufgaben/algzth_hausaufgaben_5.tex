@@ -1,0 +1,31 @@
+\begin{exercisePage}[Normale Erweiterungen, Galoiserweiterungen]
+	
+	\setcounter{taskcount}{69}
+	
+%%%% AUFGABE H70 %%%%
+	\begin{homework}
+		Seien $K \subseteq L_1, L_2 \subseteq \Q$ mit $L_1 | K$ und $L_2 | K$ endlich galoissch sowie $L_1 \cap L_2 = K$. Dann ist auch das Kompositum $L_1 L_2$ galoissch über $K$ und $\Gal(L_1 L_2 | K) \isomorph \Gal(L_1 | K) \times \Gal(L_2 | K)$.
+	\end{homework}
+
+%%%% AUFGABE H71 %%%%
+	\begin{homework}
+		Sei $L = \Q(i, \zeta_3, \sqrt{2})$. Zeigen Sie, dass $L | \Q$ galoissch ist, bestimmen Sie $\Gal(L | \Q)$ und geben Sie ein primitives Element der Erweiterung $L | \Q$ an.
+	\end{homework}
+
+%%%% AUFGABE H72 %%%%
+	\begin{homework}
+		Sei $\Q \subseteq L \subseteq \C$ mit $L | \Q$ endlich galoissch und $\Gal(L | \Q) \isomorph \rest{4}$. Zeigen Sie, dass es genau einen Zwischenkörper $\Q \subseteq M \subseteq L$ gibt und dieser erfüllt $M \subseteq \R$.
+	\end{homework}
+
+	$G \defeq \Gal(L | \Q) = \rest{4}$ ist eine zyklische Gruppe der Ordnung $\# G = 4$. Somit gibt es für jeden Teiler der Gruppenordnung genau eine Untergruppe mit entsprechender Ordnung. Sei also $U \le G$. Dann ist $\# U \in \menge{1,2,4}$. Für den Index gilt dann entsprechend 
+	\begin{equation*}
+		(G : U) = \frac{\# G}{\# U} \in \menge{4,2,1}
+	\end{equation*}
+	Nach Theorem 2.2 kennen wir eine Bijektion $\abb{\phi}{\Ugr(G)}{\Zwk(L | \Q)}$. Definieren wir nun $M \defeq \phi(U)$. Da die Untergruppen $U$ stets existieren, existiert dann auch der zugehörige Zwischenkörper. Dann gilt aufgrund der Indextreue der Bijektion $[L : M] \in \menge{4,2,1}$. Ist nun $\# U = 1$, so ist $[L : M] = 4$ und nach dem Gradsatz ergibt sich dann
+	\begin{equation*}
+		[M : \Q] = \frac{[L : \Q]}{L : M} = 1
+	\end{equation*}
+	Damit ist also $M = \Q$, was nicht möglich ist. Ist $ \# U = 4$, so folgt analog, dass $[L : M] = 1$.
+	Ist dagegen $\# U = 2$, so ist $[L : M] = 2$ und aufgrund des Gradsatzes gitl dann $[M : \Q] = [L : M] = 2$. Somit ist der Zwischenkörper $M$ immer eindeutig bestimmt.
+	
+\end{exercisePage}

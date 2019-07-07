@@ -1,0 +1,63 @@
+\begin{exercisePage}[Galoisgruppe von Polynomen, endliche Körper]
+	
+	\setcounter{taskcount}{85}
+	
+%%%% HAUSUAFGABE H86 %%%%
+	\begin{homework}
+		Sei $L$ der Zerfällungskörper von $f = X^4 + 1$ über $\Q$. Bestimmen Sie die Zwischenkörper $M$ der Erweiterung $L|\Q$ und geben Sie jeweils ein primitives Element von $M | \Q$ an.
+
+	\end{homework}
+
+	Sei $L$ der Zerfällungskörper von $f = X^4 + 1$ über $\Q$. In Aufgabe H25 haben wir gezeigt, dass die Nullstellen von $f$ gerade die $\zeta_8^i$ für $i = 1,3,5,7$ sind . Damit ergibt sich $L = \Q(\zeta_8)$. Da $f$ separabel ist (alle Nullstellen sind offensichtlich paarweise verschieden), ist $L$ als Zerfällungskörper galoissch und somit ist $\# \Gal(L | \Q) = [L : \Q] = \deg(f) = 4$. 
+	
+	Bestimmen wir nun $G \defeq \Gal(L | \Q) = \Aut(L | \Q)$. Dazu müssen wir jedes $\sigma \in G$ lediglich auf $\zeta_8$ definieren, da $\sigma$ als Automorphismus auf $\Q$ die Identität ist. Jedes solches $\sigma$ muss $\zeta_8$ auf eines seiner Konjugierten abbilden. Die Konjugierten ergeben sich als die weiteren Nullstellen von $f$. Somit ergibt sich nun $G = \menge{\sigma_1, \sigma_2, \sigma_3, \sigma_4}$ mit $\sigma_i(\zeta_8) = \zeta_8^{2i-1}$, also
+	\begin{equation*}
+		\sigma_1(\zeta_8) = \zeta_8 \qquad \sigma_2(\zeta_8) = \zeta_8^3 \qquad \sigma_3(\zeta_8) = \zeta_8^5 \qquad \sigma_4(\zeta_8) = \zeta_8^7
+	\end{equation*}
+	Betrachten wir nun die Ordnungen der Elemente. Es ist $\sigma_2^2(\zeta_8) = \sigma_2(\zeta_8^3) = \zeta_8^9 = \zeta_8$. Somit ist $\sigma_2^2  = \id_L$, d.h. $\ord(\sigma_2) = 2$. Weiter ist auch $\sigma_4^2(\zeta_8) = \sigma_4(\zeta_8^7) = \zeta_8^{49} = \zeta_8$ und damit auch $\ord(\sigma_4^2) = 2$. Nun gibt es (mindestens) zwei Elemente der gleichen Ordnung in $G$, sodass $G$ nicht zyklisch sein kann. Da wir nur (bis auf Isomorphie) zwei Gruppen der Ordnung $4$ kennen, muss $G \isomorph V_4$ gelten. Schließlich kennen wir wegen $\sigma_4 = \sigma_2 \circ \sigma_3$ auch schon die Untergruppen von $G$, nämlich $\Ugr(G) = \menge{1, \erz{\sigma_2} , \erz{\sigma_3} , \erz{\sigma_2, \sigma_3}} \defqe \menge{U_1, U_2, U_3, U_4}$. 
+	
+	Aus der Galois-Korrespondenz erhalten wir eine Abbildung $\abb{\phi}{\Ugr(G)}{\Zwk(L | \Q)}$ mit $\phi(H) = H^\circ \defeq L^H = \menge{\alpha \in L : \alpha^h = \alpha \enskip \forall h \in H}$. Bestimmen wir nun $\phi(U_i)$ für $i = 1,2,3,4$. Für $U_1$ ist $\phi(U_1) = L$ offensichtlich. Für $U_2$ betrachten wir, wie sich bestimmte Argumente, vor allem Potenzen von $\zeta_8$, unter dem Erzeuger $\sigma_2$ verhalten. Beispielsweise ist $\sigma_2(\zeta_8^2) = \zeta_8^6 \neq \zeta_8^2$. Somit kann $\zeta_8^2$ nicht in $\phi(U_2)$ sein. Mit $\zeta_8^4$ stellt man fest, dass $\sigma_2(\zeta_8^4) = \zeta_8^4$ gilt wegen $\ord(\sigma_2) = 2$ folglich auch $\sigma_2^2(\zeta_8^4) = \zeta_8^4$. Damit gilt also für alle $u \in U_2$, dass $\left(\zeta_8^4\right)^u  = \zeta_8^4$. Analog fährt man fort und erhält schließlich folgende Zwischenkörper:
+	\begin{equation*}
+	\begin{aligned}
+		\phi(U_1) &= L^{\id} = \menge{\alpha \in L : \alpha^{\id} = \alpha} = L \\
+		\phi(U_2) &= L^{\erz{\sigma_2}} =  \menge{\alpha \in L: \alpha^u = \alpha \enskip \forall u \in U_2} = \Q(\zeta_8^4) \\
+		\phi(U_3) &= L^{\erz{\sigma_3}} =  \menge{\alpha \in L: \alpha^u = \alpha \enskip \forall u \in U_3} = \Q(\zeta_8^2) \\
+		\phi(U_4) &= L^{\erz{\sigma_2}} =  \menge{\alpha \in L: \alpha^u = \alpha \enskip \forall u \in U_4} = \Q \\
+	\end{aligned}
+	\end{equation*}
+	Damit ergibt sich die Menge der Zwischenkörper von $L|\Q$ als $\Zwk(L|\Q) = \menge{\Q, \Q(\zeta_8^2), \Q(\zeta_8^4), L}$.
+	
+	\begin{homework}
+		Bestimmen Sie die Galoisgruppe von $f = X^4 + 1$ über $\F_p$, in
+		Abhängigkeit von $p > 2$.
+
+	\end{homework}
+
+	\begin{homework}
+		Sei $K = \F_q$ und sei $\ell$ eine Primzahl. Bestimmen Sie die Anzahl
+		der primitiven Elemente der Erweiterung $\F_{q^\ell} | \F_q$. Schließen Sie, dass es $\ell^{-1} (q^\ell - q) (q - 1)$ viele irreduzible $f \in \polynom[K]$ vom Grad $\deg(f) = \ell$ gibt.
+	\end{homework}
+
+	Wir betrachten die Körpererweiterung $L\defeq \F_{q^\ell} | \F_q \defqe K$ und wollen zeigen, dass alle Elemente in $L \setminus K$ primitiv sind. Dann wissen wir, dass nach Satz 3.5, dass $L | K$ einfach ist. Wählen wir nun ein $\alpha \in L \setminus K$, d.h. $[K(\alpha) : K] \neq 1$. Dann ist auf jeden Fall $K(\alpha) \subseteq L$ und somit
+	\begin{equation*}
+		\ell = [L : K] = [L : K(\alpha)] * \underbrace{[K(\alpha) : K]}_{\neq 1}
+	\end{equation*}
+	Folglich ist $[K(\alpha) : K] = \ell$ und somit $[L : K(\alpha)] = 1$, da $\ell$ prim ist. Damit ist $L = K(\alpha)$ für beliebiges $\alpha \in L \setminus K$. Nun gibt es genau $q^\ell - q$ Elemente in $L \setminus K$, die alle primitiv sind, d.h. die Anzahl der primitven Elemente von $L|K$ ist genau $q^\ell - q$.
+	
+	Betrachten wir nun die Menge $\mathcal{I}_\ell \defeq \menge{f \in \polynom[K][X]_{= \ell} \colon f \text{ irreduzibel}}$ der irreduziblen Polynome vom Grad $\ell$ und die Menge $\mathcal{M}_\ell \defeq \menge{f \in \polynom[K][X]_{= \ell} \colon f = \MinPol{\alpha}{K} \text{ für ein } \alpha \in L}$ der Minimalpolynome vom Grad $\ell$ über $K$. Diese sind irreduzibel und somit gilt $\mathcal{M}_\ell \subseteq \mathcal{I}_\ell$. 
+	
+	Wir zeigen nun, dass auch $\mathcal{I}_\ell^{\text{normiert}} = \mathcal{M}_\ell$ gilt. Sei $f \in \mathcal{I}_\ell^{\text{normiert}}$, d.h. $f$ ist irreduzibel vom Grad $\ell$ und normiert. $f$ hat eine Nullstelle $\alpha$ im algebraischen Abschluss $\quer{K}$. Dann können wir wieder $K(\alpha) | K$ betrachten. Da $f$ irreduzibel und normiert ist, ist $f$ das Minimalpolynom von $\alpha$. Dann ist $[K(\alpha) : K] = \ell$. Da es nach Satz 3.7 nur genau eine Erweiterung von $K$ mit Grad $\ell$ gibt, ist $L = K(\alpha)$, d.h. $\alpha \in L$, und damit $\mathcal{I}_\ell^{\text{normiert}} \subseteq \mathcal{M}_\ell$. Zusammen mit der Inklusion $\mathcal{M}_\ell \subseteq \mathcal{I}_\ell$ gilt dann $\mathcal{I}_\ell^{\text{normiert}} = \mathcal{M}_\ell$.
+	
+	Nun hat jedes $f \in \mathcal{M}_\ell$ genau $\ell$ Nullstellen, d.h. es gibt zu jedem primitiven Element $\alpha \in L$ genau $\ell - 1$ Konjugierte bzw. haben $\ell$ primitive Elemente in $L$ das gleiche Minimalpolynom. Damit müssen wir die Anzahl der primitiven Elemente einmal durch $\ell$ teilen und erhalten für die Anzahl der Minimalpolynome vom Grad $\ell$ genau
+	\begin{equation*}
+		\# \mathcal{M}_{\ell} = \frac{q^\ell - q}{\ell}
+	\end{equation*}
+	
+	Nun unterscheiden sich die Polynome in $\mathcal{I}_\ell$ und $\mathcal{M}_\ell$ lediglich um die Normierung. Machen wir die Normierung der Minimalpolynome rückgängig, so erhalten wir stets ein irreduzibles Polynom in $\mathcal{I}_\ell$. Diese Umkehrung besteht aus der Multiplikation eines $f \in  \mathcal{M}_\ell$ mit einem Element $c \in \einheit{K}$, sodass $c * f \in \mathcal{I}_\ell$. Somit ist $(q-1) * \# \mathcal{M}_\ell = \# \mathcal{I}_\ell$. 
+	
+	Somit ergibt sich schlussendlich
+	\begin{equation*}
+		\# \mathcal{I}_\ell = \frac{(q^\ell - q) (q-1)}{\ell}
+	\end{equation*}
+	für die Anzahl der irreduziblen Polynome $f \in \polynom[K][X]$.
+\end{exercisePage}
