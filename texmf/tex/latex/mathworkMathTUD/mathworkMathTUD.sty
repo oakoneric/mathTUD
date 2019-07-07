@@ -202,7 +202,7 @@ nobreak,%
 %---------Algorithmus----------------
 \newmdtheoremenv[%
 %backgroundcolor=lightgrey,%
-linecolor=darkgrey,%
+linecolor=cdgray,%
 %innertopmargin=\boxskip,%
 %innerbottommargin=\boxskip,%
 %linecolor=darkgrey,%
@@ -234,6 +234,7 @@ nobreak,%
 \newtheorem{erinnerung}[themcount]{Erinnerung}		% Erinnerung
 \newtheorem{wiederholung}[themcount]{Wiederholung}	% Wiederholung
 \newtheorem{bemerkung}[themcount]{Bemerkung}			% Bemerkung
+%\newtheorem{algorithmus}[themcount]{Algorithmus}    % Algorithmus
 
 %--------------------------------------
 % theorems without numbers but break
@@ -520,6 +521,7 @@ nobreak,%
 \newcommand{\Cov}[2]{\ensuremath{\Covarianz \left( #1 , #2 \right)}}
 \newcommand{\Correlation}{\mathbb{C}\mathrm{orr}}
 \newcommand{\Corr}[2]{\ensuremath{\Correlation \left( #1 , #2 \right)}}
+\newcommand{\Normal}{\mathcal{N}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
@@ -558,6 +560,7 @@ nobreak,%
 \DeclareMathOperator{\Fix}{Fix} % Fix-points for group theory
 
 %%%%%% G
+\DeclareMathOperator{\Gal}{Gal} % galois group
 \DeclareMathOperator{\GammaDist}{Gamma} % gamma distribution
 \DeclareMathOperator{\Geom}{Geom} % geometric distribution
 \DeclareMathOperator{\ggT}{ggT} % Größter gemeinsamer Teiler (gcd)
@@ -631,12 +634,14 @@ nobreak,%
 
 %%%%%% UVW
 \DeclareMathOperator{\UG}{UG} % Untergruppe (subgroup)
+\DeclareMathOperator{\Ugr}{Ugr} % Menge der Untergruppen (set of subgroups)
 \DeclareMathOperator{\Uni}{U} % Unitary Group / uniform distribution
 
 %%%%%% XYZ
 \DeclareMathOperator{\ZR}{ZR} % Zeilenraum
 \DeclareMathOperator{\zentralisator}{C} % Zentralisator
 \DeclareMathOperator{\zentrum}{Z} % Zentrum
+\DeclareMathOperator{\Zwk}{Zwk}  % Menge der Zwischenkörper
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

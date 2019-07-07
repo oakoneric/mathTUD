@@ -237,7 +237,10 @@
 \Corr{X}{Y}
 \Sp[ext]
 \No[ext]
-
+\Gal
+\Ugr
+\Zwk
+\Normal
 
 \hinrichtung
 \rueckrichtung
