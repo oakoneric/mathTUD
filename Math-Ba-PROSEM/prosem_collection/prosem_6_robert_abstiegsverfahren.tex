@@ -1,0 +1,99 @@
+\chapter{Allgemeines Abstiegsverfahren}
+
+Gesucht ist ein Verfahren zur Lösung des Problems $\min f(x)$, $x \in \R^n$ mit $\abb{f}{\R^n}{\R}$.
+
+Idee: Man ermittelt zu einem Punkt $x \in \R^n$ eine Richtung $d \in \R^n$, in die $f(x)$ absteigt und verkleinert in dieser $f(x)$ hinreichend.
+
+\begin{definition}[Abstiegsrichtung] \label{definition: 6.1}
+	Sei $\abb{f}{\R^n}{\R}$ eine stetig differenzierbare Funktion, $x \in \R^n$. Ein Vektor $d \in \R^n$ heißt Abstiegsrichtung von $f$ in $x$, wenn es ein $\quer{t} > 0$ gibt mit $f(x + td) < f(x)$ für alle $t \in (0,\quer{t})$.
+\end{definition}
+
+\begin{lemma} \label{lemma: 6.2}
+	Sei $\abb{f}{\R^n}{\R}$ stetig differenzierbar, $x \in \R^n$, $d \in \R^n$ mit $\nabla \trans{f(x)} d < 0$. \\
+	$\follows d$ ist eine Abstiegsrichtung
+\end{lemma}
+\begin{proof}
+	Da $f$ ist stetig differenzierbar ist, folgt für die Richtungsableitung $f'(x;d)$
+	\begin{equation*}
+		f'(x;d) = \lim_{t \to 0} \frac{f(x + td)-f(x)}{t} = \nabla \trans{f(x) d} < 0
+	\end{equation*}
+	Somit ist $\frac{f(x+td)-f(x)}{t} <0$ für hinreichend kleine $t$.
+\end{proof}
+
+\begin{bemerkung}
+	\cref{lemma: 6.2} ist ein hinreichendes aber kein notwendiges Kriterium für eine Abstiegsrichtung. Ist beispielsweise $x \in \R^n$ ein striktes lokales Maximum eine beliebiegen Funktion $f$, so ist nach \cref{definition: 6.1} jedes $0 \neq d \in \R^n$ eine Abstiegsrichtung, jedoch ist die Bedingung von \labelcref{lemma: 6.2} nicht erfüllt, da $\nabla f(x) = 0$.
+\end{bemerkung}
+
+\begin{beispiel}
+	Sei $\abb{f}{\R^n}{\R}$ stetig differenzierbar, $x \in \R^n$ mit $\nabla f(x) \neq 0$. Dann ist $d = - \nabla f(x)$ nach \cref{lemma: 6.2} eine Abstiegsrichtung. Allgemeiner ist auch $d = - B * \nabla f(x)$ mit einer symmetrischen, positiv definiten Matrix $B \in \R^{n \times n}$ eine Abstiegsrichtung.
+\end{beispiel}
+
+\begin{algorithmus} \label{algorithmus: 6.5}
+	\begin{enumerate}[leftmargin=*, label=Schritt \arabic*., nolistsep]
+		\item Wähle $x^0 \in \R^n$ und setze $k \defeq 0$.
+		\item Wenn $x^k$ einem Abbruchkriterium genügt: Stop.
+		\item Bestimme $d^k$ von $f$ in $x$.
+		\item Bestimme $t^k > 0$ mit $f(x^k + t^k d^k) < f(x^k)$.
+		\item Setze $x^{k+1} = x^k + t^k d^k$, $k \to k+1$, gehe zu Schritt 1.
+	\end{enumerate}
+\end{algorithmus}
+
+Implizit nehmen wir im Folgenden an, dass dieser Algorithmus eine unendliche Folge $\folge[k \in \N]{x^k}$ generiert.
+
+\begin{definition}
+	Sei $\abb{f}{\R^n}{\R}$ stetig differenzierbar, $x \in \R^n$, $d \in \R^n$ eine Abstiegsrichtung von $f$ in $x$.
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item Eine Abbildung $\abb{T}{\R^n \times \R^n}{\pows{\R_+}}$ heißt \begriff{Schrittweitenstrategie}. Diese heißt wohldefiniert, wenn für $(x,d) \in \R^n \times \R^n$ mit $\nabla\trans{f(x)} d < 0$ gilt, dass $T(x,d) \neq \emptyset$.
+		\item $T$ heißt \begriff{effizient}, falls es eine von $x$ und $d$ unabhängige Konstante $\theta > 0$ gibt mit
+		\begin{equation*}
+			f(x+ + td) \le f(x) - \theta \left( \frac{\nabla \trans{f(x)} d}{ \norm{d}} \right) \qquad \text{für alle } t \in T(x,d)
+		\end{equation*}
+		Eine Schrittweite $t$ heißt effizient, wenn sie mit einer effizienten Schrittweitenstrategie erzeugt wurde.
+	\end{itemize}
+\end{definition}
+
+\begin{satz} \label{satz 6.7}
+	Sei $\abb{f}{\R^n}{\R}$ stetig differenzierbar und $\folge[k \in \N]{x^k}$ eine Folge, die mit \cref{algorithmus: 6.5} erzeugt wurde. Außerdem gelte:
+	\begin{enumerate}[label=\arabic*., nolistsep]
+		\item Es existiert eine Konstante $c > 0$ mit 
+		\begin{equation}
+			- \frac{\trans{\nabla f(x^k)} d^k}{\norm{\nabla f(x^k)} * \norm{d^k}} \ge c \text{für allef} k \in \N \tag{\text{Winkelbedingung}}
+		\end{equation}
+		\item Die Schrittweiten $t^k$ seien effizient für alle $k \in \N$.
+	\end{enumerate}
+	Dann ist jeder Häufungspunkt der Folge $\folge[k \in \N]{x^k}$ ein stationärer Punkt von $f$.
+\end{satz}
+\begin{proof}
+	Da alle $t^k$ effizient sind, folgt die Existenz eines $\theta > 0$ mit
+	\begin{equation*}
+		f(x^{k+1}) = f(x^k + t^k d^k) \le f(x^k) - \theta \left( \frac{\trans{\nabla f(x^k)} d^k}{\norm{d^k}} \right)^2 \quad \text{für alle } k \in \N
+	\end{equation*}
+	Mit der Winkelbedingung folgt nun
+	\begin{equation*}
+		f(x^{k+1}) \le f(x^k) - \theta c^2 \norm{\nabla f(x^k)}^2
+	\end{equation*}
+	Sei $x^\ast$ Häufungspunkt von $\folge[k \in \N]{x^k}$. Es ist klar, das $\folge[k \in \N]{f(x^k)}$ monoton fallend ist und zumindest eine Teilfolge gegen $f(x^\ast)$ konvergiert. Damit konvergiert dann auch $f(x^k) \to f(x^\ast)$. Insbesondere gilt $f(x^{k+1}) - f(x^k) \to 0$ und $\norm{\nabla f(x^k)} \to 0$. Somit ist jeder Häufungspunkt von $\folge[k \in \N]{x^k}$ ein stationärer Punkt von $f$.
+\end{proof}
+
+\begin{beispiel}
+	Sei $\abb{f}{\R^n}{\R}$ eine quadratische Funktion, d.h. $f(x) \defeq \lfrac{1}{2} \trans{x}Qx + \trans{c}x + \gamma$ mit $Q \in \R^{n \times n}$ symmetrisch und positiv definit. Seien $x \in \R^n$ und $d \in \R^n$ eine Abstiegsrichtung, die beliebig gegeben sind. Dann liefert 
+	\begin{equation*}
+		t_{\min} = - \frac{\nabla \trans{f(x)} d}{\trans{d} Q d}
+	\end{equation*}
+	den stärksten Abstieg.
+\end{beispiel}
+\begin{proof}
+	Sei $t \in \R$. Es ist $f(x + td) = f(x) + t \nabla \trans{f(x)} d + \lfrac{1}{2} t^2 * \trans{d} Q d$. Definieren wir $\phi(t) \defeq f(x + td)$, dann ist $\phi'(t_{\min}) = 0$. Daraus folgt nun
+	\begin{equation*}
+		0 = \phi'(t_{\min}) = \nabla \trans{f(x)} d + t_{\min} \trans{d} Q d \quad \follows \quad t_{\min} = - \frac{\nabla \trans{f(x)} d}{\trans{d} Q d}
+	\end{equation*}
+	Nun kann man noch zeigen, dass $t_{\min}$ effizient ist:
+	\begin{equation*}
+		\begin{aligned}
+		f(x + t_{\min} d) &= f(x) + t_{\min} \nabla \trans{f(x)} d + \frac{1}{2} t_{\min}^2 \trans{d} Q d \\
+		&= f(x) - \frac{1}{2} t_{\min}^2 \trans{d} Q d \\
+		&= f(x) - \frac{\left( \nabla \trans{f(x)} d \right)^2}{2 \trans{d} Q d}
+		\end{aligned}
+	\end{equation*}
+	Damit gilt offensichtlich, dass ein $\theta$ exisitert mit $\frac{1}{2 \trans{d} Q d} \ge \frac{\theta}{\norm{d}^2}$
+\end{proof}

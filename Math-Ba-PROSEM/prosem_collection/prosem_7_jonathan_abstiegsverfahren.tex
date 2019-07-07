@@ -1,0 +1,89 @@
+\chapter{Fortsetzung Abstiegsverfahren}
+
+\newcommand{\level}{\mathcal{L}}
+
+\begin{satz} \label{satz 7.1}
+	Seien $x_0 \in \R^n$, $\abb{f}{\R^n}{\R}$ stetig differenzierbar, die Levelmenge $\L (x^0) \defeq \menge{x \in \R^n \colon f(x) \le f(x^0)}$ konvex und $f$ gleichmäßig konvex auf $\L(x^0)$. Sei $\folge{x^k}$ eine durch den \cref{algorithmus: 6.5} (Abstiegsverfahren) erzeugte Folge, sodass
+	\begin{enumerate}
+		\item Es ist $\sum_{k=0}^{\infty} \delta_k = \infty$ wobei
+		\begin{equation*}
+			\delta_k \defeq \left( \frac{\nabla \trans{f(x^k)} d^k}{\norm{\nabla f(x^k)} \norm{d^k}} \right)^2 \tag{Zoutendijk-Bedingung}
+		\end{equation*}
+		\item Die Schrittweiten $t_k > 0$ sind effizient für alle $k \in \N$. 
+	\end{enumerate}
+	Dann konvergiert die Folge $\folge{x^k}$ gegen das eindeutig bestimmte globale Minimum von $f$.
+\end{satz}
+\begin{proof}
+	Sei $k \in \N$. Wegen $x^0 \in \level(x^0)$ gilt $\level(x^0) \neq \emptyset$ und mit \cref{lemma3.9} folgt, dass $\level(x^0)$ kompakt. Da jedes globale Minimum von $f$ azf dem $\R^n$ notwendig in der Levelmenge $\level(x^0)$ liegen muss, besitzt $f$ nach Theorem 5.4 genau ein globales Minimum $x^\ast$. Da $f$ gleichmäßig konvex auf $\level(x^0)$ ist, existiert ein $\mu > 0$, sodass für alle 
+	\begin{equation}
+		\forall x,y \in \level(x^0): f(x) - f(y) \ge \nabla \trans{f(y)}(x-y) + \mu \norm{x-y}^2 \label{eq: satz_7.1_1}
+	\end{equation}
+	Aus der trivialen Ungleichung
+	\begin{equation*}
+		0 \le \norm{\sqrt{\frac{\mu}{2}} (x^\ast - x^k) + \sqrt{\frac{1}{2\mu}} \nabla f(x^k)}^2
+	\end{equation*}
+	folgt nach kurzer Rechnung
+	\begin{equation*}
+		- \frac{1}{2\mu} \norm{\nabla f(x^k)} ^2 \le \frac{\mu}{2} \norm{x^\ast - x^k}^2 + \nabla \trans{f(x^k)} (x^\ast - x^k) \le f(x^\ast) - f(x^k) 
+	\end{equation*}
+	Daraus folgt nun 
+	\begin{align}
+		- \norm{\nabla f(x^k)}^2 \le 2 \mu (f(x^\ast) - f(x^k)) \label{eq: satz_7.1_2}
+	\end{align}
+	Aus der Effizienz der Schrittweiten $t_k$ existiert ein $\theta > 0$ mit 
+	\begin{align}
+		f(x^{k+1}) &= f(x^k + t_k d^k) \notag \\
+		&\le f(x^k) - \theta \left(  \frac{\nabla f(x^k) d^k}{\norm{d^k}} \right)^2 * \frac{\norm{\nabla f(x^k)}}{\nabla f(x^k)} \notag\\
+		&= f(x^k) - \theta \delta_k * \norm{\nabla f(x^k)}^2 \notag \\
+		\overset{\eqref{eq: satz_7.1_2}}&{\le} f(x^k) - 2\mu \theta (f(^\ast) - f(x^k))
+	\end{align}
+	Also ist
+	\begin{equation*}
+		0 \le f(x^{k+1}) - f(x^k) \overset{\eqref{eq: satz_7.1_2}}{\le} f(x^k) - 2 \delta_k \theta (f(x^k) - f(x^\ast)) - f(x^\ast) = (1 - 2 \mu \theta \delta_k) (f(x^k) - f(x^\ast))
+	\end{equation*}
+	Durch $k+1$-fache Anwendung dieser Ungleichung sowie unter AUsnutzung der bekannten Ungleichung $\exp(x) \ge 1 + x$ für alle $x \in \R$. Für $x = - 2 \mu \theta \delta_k$ ergibt sich
+	\begin{equation}
+		\begin{aligned}
+		0 &\le f(x^{k+1}) - f(x^\ast) \\
+		&\le \prod_{j=0}^k (1-2 \mu \theta \delta_j) (f(x^0) - f(x^\ast)) \\
+		&\le \prod_{j=0}^{k} \exp(-2\mu\theta \delta_j) (f(x^0) - f(x^\ast)) \\
+		&= \exp \left( -2 \mu \theta \sum_{j=0}^k \delta_j \right) (f(x^0) - f(x^\ast))                          (6)
+		\end{aligned}
+	\end{equation}
+	Wegen $\sum_{j=0}^k \delta_j \overset{k \to \infty}{\longrightarrow} \infty$ ergibt sich hieraus die Konvergenz von $\folge{f(x^k)}$ gegen $f(x^\ast)$. Aus Lemma 5.6 folgt $0 \le \mu \norm{x^k - x^\ast}^1 \le f(x^k) - f(x^\ast)$ für alle $k \in \N$ und damit folgt auch die Konvergenz $x^k \to x^\ast$.
+\end{proof}
+
+\begin{bemerkung}
+	Die Winkelbedingung aus \cref{satz 6.7} ist hinreichend für die Zoutendijk-Bedingung, denn 
+	\begin{equation*}
+		\exists c > 0 \enskip \forall k \in \N \colon - \frac{\nabla f(x^k) d^k}{\norm{\nabla f(x^k)} * \norm{d^k}} \ge c \quad \follows \quad \forall k \in \N \colon \delta_k \ge c^2 \ge 0 \quad \follows \sum_{j=0}^\infty \delta_j \ge \sum_{j=0}^\infty c^2 = \infty
+	\end{equation*}
+\end{bemerkung}
+
+\begin{bemerkung}
+	Die beiden Konvergenzsätze \cref{satz 6.7} und \labelcref{satz 7.1} sind von fundamentaler Bedeutung zum Nachweis der globalen Konvergenz verschiedener Abstiegsverfahren.
+\end{bemerkung}
+
+\begin{folgerung}
+	Seien $x_0 \in \R^n$, $\abb{f}{\R^n}{\R}$ stetig differenzierbar, die Levelmenge $\level(x^0) \defeq \menge{x \in \R^n \colon f(x) \le f(x^0)}$ konvex und $f$ gleichmäßig konvex auf $\level(x^0)$. Sei $\folge{x^k}$ eine durch den \cref{algorithmus: 6.5} (Abstiegsverfahren) erzeugte Folge, sodass
+	\begin{enumerate}
+		\item $\exists \delta > 0 \enskip \forall k \in \N \colon \delta_k \ge \delta$ wobei
+		\begin{equation*}
+		\delta_k \defeq \left( \frac{\nabla \trans{f(x^k)} d^k}{\norm{\nabla f(x^k)} \norm{d^k}} \right)^2
+		\end{equation*}
+		\item Die Schrittweiten $t_k > 0$ sind effizient für alle $k \in \N$. 
+	\end{enumerate}
+	Dann konvergiert die Folge $\folge{x^k}$ gegen das eindeutig bestimmte globale Minimum $x^\ast$ von $f$ und es existieren Konstanten $c \ge 0$ und $q \in (0,1)$ mit $\norm{x^k - x^\ast} \le cq^k$ für alle $k \in \N$ (d.h. $\folge{x^k}$ konvergiert R-linear gegen $x^\ast$).
+\end{folgerung}
+
+\begin{proof}
+	\begin{equation*}
+		\forall k \in \N \colon \delta_k \ge \delta \follows \forall k \in \N \colon \sum_{j=0}^k \delta_j \ge \delta (k+1) \follows \sum_{j=0}^k \delta_j \overset{k \to \infty}{\longrightarrow} \infty
+	\end{equation*}
+	Mit \cref{satz 7.1} folgt die Konvergenz von $\folge{x^k}$ gegen $x^\ast$. Weiterhin gilt für alle $k \in \N$ mit Lemma 5.6
+	\begin{align*}
+		\mu \norm{x^k - x^\ast}^2 &\le f(x^k) - f(x^\ast) \\
+		&\le \exp \left( - 2 \mu \theta \sum_{j=0}^{k-1} \delta_j \right) (f(x^0) - f(x^\ast)) \\
+		&\le \exp \left( -2 \mu \theta \delta * k \right) (f(x^0) - f(x^\ast)) \\ \follows \quad \norm{x^k - x^\ast} &\le \sqrt{\frac{(f(x^0) - f(x^\ast))}{\mu} * \exp(-2\mu \theta \delta k)} = \underbrace{\sqrt{\frac{(f(x^0) - f(x^\ast))}{\mu}}}_{\defqe c} * \underbrace{\exp(-\mu \theta \delta)}_{\defqe q}^k
+	\end{align*}
+\end{proof}

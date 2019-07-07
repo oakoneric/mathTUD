@@ -1,0 +1,194 @@
+\newcommand{\nat}{\mathbb{N}}				% natürliche Zahlen
+\newcommand{\integer}{\mathbb{Z}}			% ganze Zahlen
+\newcommand{\ratio}{\mathbb{Q}}
+\newcommand{\real}{\mathbb{R}}				% reelle Zahlen
+\newcommand{\complex}{\mathbb{C}}			% komplexe Zahlen
+\newcommand{\korper}{\mathbb{K}}            % Körper IR oder IC
+
+
+\chapter{Schrittweitenstrategien}
+
+\vortragender{Lars Ortscheidt}
+
+Das bisher kennengelernte Abstiegsverfahren hat in Bezug auf die Abstiegsrichtung $d$ und die Schrittweite $t$ große Freiheitsgrade. Da die Schrittweite $t_{\min}$ mit $f(x+t_{\min}d) = \min_{t\geq 0} f(x+td)$ im Allgemeinen nicht in endlich vielen Schritten berechnet werden kann, werden nun zwei Schrittweitenregeln vorgestellt, welche ''realisierbar`` sind, d.h. sie brauchen nur endlich viele Schritte zur Berechnung.
+
+
+\section{Armijo-Regel}
+
+\begin{definition}
+	Seien $f: \real^n \to \real$ stetig differenzierbar und $\sigma, \beta \in (0,1)$ fest für das ganze Abstiegsverfahren. Zu $x, d \in \real^n$ mit $\nabla f(x)^{\top} d<0$ bestimme $t \defeq \max_{\ell \in \nat_0} \beta^\ell$, so dass gilt 
+	\begin{align}
+		f(x+td) \leq f(x) + \sigma t \nabla f(x)^{\top} d.  \label{armijo}
+	\end{align}	 
+	Dieses Verfahren heißt \begriff{Armijo-Regel}. \\
+	Setzt man $\phi(t) := f(x+td)$ lautet \labelcref{armijo} 
+	\begin{align*}
+		\phi(t) \leq \phi (0) + \sigma t \phi' (0),
+	\end{align*}
+	die sogenannte Armijo-Goldstein-Bedingung.
+\end{definition}
+
+\begin{bemerkung}
+	\begin{itemize}	
+		\item Zur Bestimmung von $t$ wird \labelcref{armijo} also für $t= \beta^\ell$, $\ell=0,1,2,...$ überprüft und bei der ersten Gültigkeit abgebrochen.
+		\item $T(x,d)$ besitzt bei der Armijo-Regel höchstens ein Element.
+	\end{itemize}
+\end{bemerkung}
+\begin{satz}
+	Seien $f: \real^n \to \real$ stetig differenzierbar mit $\sigma , \beta \in (0,1)$, fest. Dann existiert für alle $x,d \in \real^n$ mit $\nabla f(x)^{\top} d < 0$ ein endliches $\ell \in \nat$ mit
+	\begin{align*}
+		f(x+ \beta^\ell d) \leq f(x)+ \sigma \beta^\ell \nabla f(x)^{\top} d, 
+	\end{align*}
+	d.h. die Armijo-Regel ist wohldefinitionniert.
+\end{satz}
+
+\begin{proof}
+	Angenommen für alle $\ell \in \nat$ gilt
+	\begin{align*}
+		f(x+ \beta^\ell d) > f(x)+ \sigma \beta^\ell \nabla f(x)^{\top} d
+	\end{align*}
+	und somit auch
+	\begin{align*}
+		\frac {f(x+ \beta^\ell d) - f(x)}{\beta^\ell} > \sigma \nabla f(x)^{\top} d.
+	\end{align*}
+	Dann folgt mit $\ell \to \infty$ wegen der Differenzierbarkeit von $f$
+	\begin{align*}
+		\nabla f(x)^{\top} d > \sigma \nabla f(x)^{\top} d
+	\end{align*}
+	und weil $\sigma \in (0,1)$ ergibt sich
+	\begin{align*}
+		\nabla f(x)^{\top} d \geq 0,
+	\end{align*}
+	was im Widerspruch zur Voraussetzung des Satzes steht.
+\end{proof}
+
+
+\section{Wolfe-Powell-Schrittweitenstrategie}
+
+\begin{definition}
+	Seien $f: \real^n \to \real$ stetig differenzierbar und $\sigma \in (0, \frac{1}{2}), \, \rho \in [\sigma, 1)$ fest vorgegeben. Für $x,d \in \real^n$ mit $\nabla f(x)^{\top} d <0$ bestimme man ein $t >0$ mit 
+	\begin{align}
+		f(x+td) \leq f(x) + \sigma t \nabla f(x)^{\top} d \label{w_p_1}
+	\end{align}
+	und
+	\begin{align}
+		\nabla f(x+td)^{\top} d \geq \rho \nabla f(x)^{\top} d. \label{w_p_2}
+	\end{align}
+	\labelcref{w_p_1} und \labelcref{w_p_2} heißen dann die \begriff{Wolfe-Powell-Bedingungen}. \\ Setzt man $\phi(t) := f(x+td)$, so lauten \labelcref{w_p_1} und \labelcref{w_p_2}
+	\begin{align*}
+		\phi (t) \leq \phi (0)+\sigma t \phi' (0)
+	\end{align*}
+	und
+	\begin{align*}
+		\phi'(t) \geq \rho \phi' (0).
+	\end{align*}
+\end{definition}
+
+\begin{satz}
+	Seien $f:\real^n \to \real$ stetig differenzierbar und $\sigma \in (0, \frac{1}{2})$, $\rho \in [\sigma, 1)$, $x^0 \in \real^n$ fest. Zu $x \in \mathcal{L}(x^0) := \{ z \in \real^n | f(z) \leq f(x^0) \}$ und $d \in \real^n$ mit $\nabla f(x)^{\top} d <0$ sei 
+	\begin{align*}
+		T_{WP} (x,d) := \{ t>0 | \text{\labelcref{w_p_1} und \labelcref{w_p_2} gelten} \}
+	\end{align*}
+	die Menge der Wolfe-Powell-Schrittweiten in $x$ in Richtung $d$. Dann gelten:
+	\begin{enumerate}[label=(\alph*)]
+	\item Ist f nach unten beschränkt, so ist $T_{WP}(x,d) \neq \emptyset$, d.h. die Wolfe-Powell-Strategie ist wohldefinitionniert.
+	\item Ist außerdem der Gradient $\nabla f$ auf der Levelmenge $\mathcal{L}(x^0)$ Lipschitz-stetig, so existiert eine Konstante $\theta >0$ (unabhängig von x und d) mit
+	\begin{align*}
+		f(x+td) \leq f(x) - \theta \left( \frac{\nabla f(x)^{\top} d}{\| d \|}     \right)^2
+	\end{align*}	 
+	für alle $t \in T_{WP}(x,d)$, d.h. die Wolfe-Powell-Schrittweitenstrategie ist effizient.
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}
+	Zu (a): Setze 
+	\begin{align*}
+		\phi(t) &:= f(x+td), \\
+		\psi (t) &:= f(x+td)-f(x)- \sigma t \nabla f(x)^{\top} d= \phi(t) - \phi(0) - \sigma t \phi'(0) 
+	\end{align*}
+	und somit
+	\begin{align*}
+		\phi'(t) = \nabla f(x+td)^{\top} d, \\
+		\psi'(t) = \phi'(t) - \sigma \phi'(0).
+	\end{align*}
+	So lauten \labelcref{w_p_1} und \labelcref{w_p_2}
+	\begin{align}
+		\psi (t) &\leq 0 \label{w_p_3} \\
+		\phi'(t) &\geq \rho \phi'(0) \label{w_p_4}.
+	\end{align}
+	Offenbar gilt $\psi(0)=0, \lim_{t \to \infty} \psi(t) = \infty$ (da $f$ beschränkt), $\psi'(0) <0$, damit $\psi'(t) <0$ für $t \in [0, t_0), t_0 >0$. Daher existiert $t^\ast>0$ minimal mit $\psi(t^\ast)=0, \psi(t)<0$ für $t \in (0,t^\ast)$, somit erfüllt $t^\ast$ \labelcref{w_p_3}. Da $\psi'(t^\ast) \geq 0$ folgt $\phi'(t^\ast) \geq \sigma \phi'(0)$, womit wegen $\rho \geq \sigma >0$ und $\phi'(0)<0$ \labelcref{w_p_4} für $t^\ast$ folgt, also $t^\ast \in T_{WP}(x,d).$ 
+	\\ 
+	Zu (b): Sei $t \in T_{WP}(x,d)$ gegeben. Dann ist $f(x+td) \leq f(x)$ und somit insbesondere $x+td \in \mathcal{L}(x^0)$. Aus der Wolfe-Powell-Regel folgt zunächst
+	\begin{align*}
+		\rho \nabla f(x)^{\top} d - \nabla f(x)^{\top} d &\leq \nabla f(x+td)^{\top} d - \nabla f(x)^{\top} d \\
+		\Longleftrightarrow \qquad (\rho -1) \nabla f(x)^{\top}d &\leq ( \nabla f(x+td)- \nabla f(x) )^{\top} d.
+	\end{align*}
+	Mit der Cauchy-Schwarzschen Ungleichung und vorausgesetzten Lipschitz-Stetigkeit von $\nabla f(x)$ auf $\mathcal{L}(x^0)$ folgt mit einer geeigneten Konstanten $\ell > 0$:
+	\begin{align*}
+		(\rho -1) \nabla f(x)^{\top}d \leq \| \nabla f(x+td)- \nabla f(x) \| \; \|d\| \leq Lt \|d\|^2
+	\end{align*}
+	Hieraus folgt
+	\begin{align*}
+		t \geq \frac{(\rho -1) \nabla f(x)^{\top} d}{\ell \|d\| ^2}
+	\end{align*}
+	und daher 
+	\begin{align*}
+		f(x+td) &\mathop{\leq}^{\labelcref{w_p_1}} f(x) + \sigma  t \nabla f(x)^{\top} d \\
+		&\leq f(x)+ \sigma \frac{(\rho -1) \nabla f(x)^{\top} d}{\ell \|d\| ^2} \nabla f(x)^{\top} d \\
+		&\leq f(x) - \theta \left(\frac{\nabla f(x)^{\top} d}{\|d\|}\right)^2
+	\end{align*}
+	mit 
+	\begin{align*}
+		\theta := \frac{(1-\rho) \sigma}{\ell}
+	\end{align*}
+	Damit ist die Behauptung bewiesen.
+\end{proof}
+
+Abschließend zwei hinreichende Bedingungen dafür, dass der Gradient $\nabla f$ auf der Levelmenge $\mathcal{L}(x^0)$ Lipschitz-stetig ist.
+\begin{lemma}
+	Seien $f: \real^n \to \real$ zweimal stetig differenzierbar und $x^0 \in \real^n$. Ist eine der folgenden Bedingungen erfüllt:
+	\begin{enumerate}
+	\item[(a)] $\| \nabla^2 f(x) \|$ ist beschränkt auf einer konvexen Obermenge $X$ der Levelmenge $\mathcal{L}(x^0)$,
+	\item[(b)] die Levelmenge $\mathcal{L}(x^0)$ ist kompakt,
+	\end{enumerate}
+	so ist der Gradient $\nabla f$ Lipschitz-stetig auf $\mathcal{L}(x^0)$. 
+\end{lemma}
+
+\begin{proof}
+	Sei Bedingung (b) erfüllt. Definiere 
+	\begin{align*}
+		[\mathcal{L}(x^0)]:= \{ ax+(1-a)y \mid a \in [0,1], x,y \in \mathcal{L}(x^0) \},
+	\end{align*} offenbar ist diese Menge eine konvexe Obermenge von $\mathcal{L}(x^0)$. Betrachte die Funktion  
+	\begin{align*}
+	f \colon \left\lbrace%	
+	\begin{array}{ccl}%
+		[0,1] \times \mathcal{L}(x^0) \times \mathcal{L}(x^0) & \to & [\mathcal{L}(x^0)] \\%
+		(a,x,y) & \mapsto & ax+(1-a)y%
+	\end{array}%
+\right.
+	\end{align*}
+	Offenbar ist f stetig und surjektiv mit kompaktem Definitionsbereich. Da das Bild von kompakten Mengen unter stetigen Funktionen wieder kompakt ist, folgt $[\mathcal{L}(x^0)]$ kompakt, d.h. es es existiert eine konvexe und kompakte Obermenge $X \subseteq \real^n$ mit $\mathcal{L}(x^0) \subseteq X$.
+	Aus Stetigkeitsgründen existiert dann eine Konstante $L$ mit 
+	\begin{align}
+		\| \nabla^2 f(x)\| \leq L \qquad \text{ für alle } x \in X, \label{wa}
+	\end{align}
+	d.h. die Bedingung (a) ist erfüllt. \\
+	Sei nun die Bedingung (a) erfüllt. Dann existiert eine Zahl $L>0$ mit \labelcref{wa} . Es gilt
+	\begin{align*}
+		 \int_{0}^{1} \nabla^2 f(y+ \tau(x-y))(x-y) \, d \tau = \left[\nabla f(y+ \tau(x-y))\right]_{\tau =0}^1 = \nabla f(x) - \nabla f(y)
+	\end{align*}
+	für alle $x,y\in X$. Wegen $y+\tau (x-y) \in X$ ist daher
+	\begin{align*}
+		\| \nabla f(x) - \nabla f(y) \| &\leq \int_{0}^{1} \| \nabla^2 f(y+ \tau(x-y)) \|  \, d \tau \, \|x-y\| \\
+		&\leq \int_0^1 L \, d\tau \, \| x-y \| \\
+		&= L \| x-y \|
+	\end{align*}
+	für alle $x,y \in X$, was zu zeigen war. 
+\end{proof}
+
+\undef\nat
+\undef\integer
+\undef\ratio
+\undef\real
+\undef\complex
+\undef\korper

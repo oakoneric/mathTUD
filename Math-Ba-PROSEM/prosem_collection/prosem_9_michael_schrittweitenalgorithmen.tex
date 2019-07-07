@@ -1,0 +1,92 @@
+\chapter{Schrittweitenalgorithmen}
+\vortragender{Michael Kunert}
+
+\begin{erinnerung}
+	Sei $\abb{f}{\R^n}{\R}$ stetig differenzierbar und $\sigma \in (0,\frac{1}{2})$ sowie $\rho \in [0,1)$ gegeben. Zu $x,d \in \R^n$ mit $\nabla \trans{f(x)} d < 0$ bestimme man ein $t > 0$ mit 
+	\begin{align}
+		f(x+td) &\le f(x) + \sigma t \nabla \trans{f(x)} d \label{eq: armijo2} \\
+		\nabla \trans{f(x+td)} d &\ge \rho \nabla \trans{f(x)} d \label{eq: wp}
+	\end{align}
+	Zur Vereinfachung im Algorithmus setzen wir im Folgenden stets
+	\begin{align*}
+			\phi(t) &\defeq f(x+td) \\
+			\psi(t) &\defeq \phi(t) - \phi(0) - \sigma t \phi'(0)
+	\end{align*}
+\end{erinnerung}
+
+\begin{bemerkung}
+	Die Wolfe-Powellbedingungen \labelcref{eq: armijo2} und \labelcref{eq: wp} sind damit 
+	\begin{align*}
+		\psi(t) \le 0 \quad \und \quad \phi'(t) \ge \rho \phi'(0) 
+	\end{align*}
+\end{bemerkung}
+\begin{proof}
+	Zum einen ist
+	\begin{alignat*}{2}
+		&&\psi(t) &= \phi(t) - \phi(0) - \sigma t \phi'(0) \le 0 \\
+		\equivalent &&f(x + td) - f(x) - \sigma t \trans{\nabla f(x)} d &\le 0 \\
+		\equivalent &&f(x + td) &\le f(x) + \sigma t \nabla \trans{f(x)} d
+	\end{alignat*}
+	und außerdem
+	\begin{align*}
+		\phi'(t) \ge \rho \phi'(0) \equivalent \nabla \trans{f(x+td)} d \ge \rho \nabla \trans{f(x)} d
+	\end{align*}
+\end{proof}
+
+\begin{lemma}
+	Seien $\sigma < \rho$ und $\phi'(0) < 0$. Ist $[a,b]$ mit $0 \le a \le b$ ein Intervall mit den Eigenschaften $\psi(a) \le 0$, $\psi(b) \ge 0$ und $\psi'(a) < 0$, so enthält das Intervall $[a,b]$ einen Punkt $\quer{t}$ mit $\psi(\quer{t}) < 0$ und $\psi'(\quer{t}) = 0$. $\quer{t}$ ist ein innerer Punkt eines Intervalls $I$, sodass für alle $t \in I$ gilt:
+	\begin{align}
+		\psi(t) \le 0 \quad \und \quad \phi'(t) \ge \rho \phi'(0) \label{eq: 9_lemma}
+	\end{align}
+\end{lemma}
+\begin{proof}
+	Sei $\quer{t}$ ein gloables Minimum von $\psi$ auf $[a,b]$ (Satz von Weierstraß). Wegen \labelcref{eq: 9_lemma} ist $\quer{t}$ ein innerer Punkt von $[a,b]$. Außerdem ist $\psi(\quer{t})$ muss gelten. 
+	Wegen $\sigma < \rho$ folgt die Existenz von $I$, sodass für alle $t \in I$ gilt
+	\begin{align*}
+		\left.\begin{array}{rcl}
+		\psi(t) &\le & 0 \quad \und \quad \psi'(t) \ge (\rho - \sigma) \phi'(0) \\
+		\psi'(t) &= & \phi'(t) - \sigma \phi'(0)
+		\end{array}
+		\right\} \follows \psi(t) \le 0 \quad \und \quad \phi'(t) \ge \rho \phi'(0) \enskip \forall \ t \in I
+	\end{align*}
+\end{proof}
+
+\begin{algorithmus} \label{alg}
+	Gegeben seien $x \in \R^n$ und $d \in \R^n$ mit $\nabla \trans{f(x)} d < 0$. 
+	\begin{enumerate}[label=Phase~\Alph*., leftmargin=4.5em, nolistsep]
+		\item ~
+		\begin{enumerate}[label=\Alph{enumi}.\arabic*, start=0]
+			\item Wähle $t_0 > 0$, $\gamma > 1$ und setze $i \defeq 0$.
+			\item Ist $\psi(t_i) \ge 0$, so setze $a \defeq 0$ und $b \defeq t$ und gehe zu (B.0). \\
+			Ist $\psi(t_i) < 0$, $\psi'(t_i) \ge \rho \phi'(0)$, so setze $t \defeq t_i$ und breche ab. \texttt{STOP 1}. \\
+			Ist $\psi(t_i) < 0$, $\psi'(t_i) < \rho \phi'(0)$, so setze $t_{i+1} \defeq \gamma t$, $i = i+1$ und gehe zu (A.1)
+		\end{enumerate}
+		\item ~
+		\begin{enumerate}[label=\Alph{enumi}.\arabic*, start=0, nolistsep]
+			\item Wähle $\tau_1, \tau_2 \in (0,\frac{1}{2}]$, setze $j \defeq 0$ und setze $a_0 \defeq a$ sowie $b_0 \defeq b$.
+			\item Wähle $t_j \in [a_j + \tau_1 (b_j - a_j), b_j + \tau_2 (b_j - a_j)]$.
+			\item Ist $\psi(t_j) \ge 0$, so setze $a_{j+1} = a_j$, $b_{j+1} = t_j$, $j=j+1$ und gehe zu (B.1). \\
+			Ist $\psi(t_j) < 0$, $\psi'(t_i) \ge \rho \phi'(0)$, so setze $t \defeq t_j$ und breche ab. \texttt{STOP 2}. \\
+			Ist $\psi(t_i) < 0$, $\psi'(t_i) < \rho \phi'(0)$, so setze $a_{j+1} \defeq t_j$, $b_{j+1} \defeq b_j$, $j = j+1$ und gehe zu (B.1).
+		\end{enumerate}
+	\end{enumerate}
+	\counterwithout{enumii}{enumi}
+\end{algorithmus}
+
+Wenn $f$ nach unten beschränkt ist und eine Schranke $\uline{f}$ bekannt ist, dann gilt
+\begin{align*}
+	\psi(t) \le 0 \equivalent \sigma t \phi'(0) \le \phi(t) - \phi(0) \follows t \le \frac{\uline{f} - \phi(0)}{\sigma \phi'(0)}
+\end{align*}
+also ist $t_0 \in (0,t)$.
+
+\begin{satz}
+	Sei $\abb{f}{\Rn}{\R}$ stetig differenzierbar und nach unten beschränkt. Des Weiteren seien $\sigma \in (0,\frac{1}{2})$ und $\rho \in (\sigma , 1)$. Dann bricht \cref{alg} nach endlich vielen Schritten ab.
+\end{satz}
+\begin{proof}
+	\begin{enumerate}[label=Phase~\Alph*:, nolistsep, leftmargin=*]
+		\item Bricht \cref{alg} bei \texttt{STOP 1} ab, dann sind die Wolfe-Powell-Bedingungen erfüllt. Bei der Übergabe nach (B.0) hat $[a,b]$ offenbar die Eigenschaften \labelcref{eq: 9_lemma} und $\phi'(a) < \sigma \phi'(0)$. Angenommen Phase A würde nicht abbrechen. Dann ist für $t_i = \gamma^i * t_0$ aufgrund der Fallvoraussetzung $\psi(t_i) < 0$, also $\phi(t_i) < \phi(0) + \sigma t_i \phi'(0)$. Das ist wegen $\gamma > 1$, $\phi'(0) < 0$ und der Beschränkung von $f$ nicht möglich.
+		\item Wenn Phase B bei \texttt{STOP 2} abbricht, sind die Wolfe-Powell-Bedingungen erfüllt. Zeige nun, dass für alle Intervalle $[a_j, b_j]$ die Gleichung \eqref{eq: 9_lemma} erfüllt und $\phi'(a_j) < \rho \phi'(0)$ mittels Induktion. Für $j = 0$ ist die Aussage erfüllt. Habe nun $[a_j, b_j]$ die geforderten Eigenschaften. Falls $\phi(t_j) \ge 0$ gilt $\psi(a_{j+1}) \le 0$, $\psi(b_{j+1}) \ge 0$ und $\psi'(a_{j+1}) < 0$. Falls $\psi(t_j) < 0$, dann ist $\psi(a_{j+1}) \le 0$, $\psi(b_{j+1}) \ge 0$ und $\psi'(a_{j+1}) = \psi'(t_j) < \rho \phi'(0) < 0$. In beiden Fällen sind die Eigenschaften also erfüllt. 
+		
+		Es bleibt zu zeigen, dass auch auch Phase B abbricht. Die Intervalllängen $\abs{b_j - a_j}$ ziehen sich auf einen Punkt $t^\ast$ zusammen. Nach Lemma 9.2 gibt es jedem $[a_j,b_j]$ ein $t_j \in (a_j,b_j)$ mit $\psi(t_j) < 0$ und $\psi'(t_j) = 0$. Wegen $t_j \to t$ für $j \to \infty$ folgt $\psi'(t^\ast) = 0$, also $\phi(t^\ast) = \sigma \phi'(0)$. Das steht jedoch im Widerspruch zu $\phi'(a_j) < \rho \phi'(0)$ und daraus resultierend $\phi'(t^\ast) \le \rho \phi'(0)$.  
+	\end{enumerate}
+\end{proof}
