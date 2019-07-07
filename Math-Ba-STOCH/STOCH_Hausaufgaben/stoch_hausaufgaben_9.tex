@@ -1,0 +1,173 @@
+\begin{exercisePage}[Normalverteilung]
+	
+%%%% HAUSAUGBAE 7.1 %%%%
+	\begin{homework}
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Es sei $X \sim \Normal(\mu, \sigma^2)$ eine normalverteilte Zufallsvariable mit Erwartungswert $\mu \in \R$ und Varianz $\sigma^2 > 0$. Zeigen Sie, dass $\frac{X- \mu}{\sigma} \sim \Normal(0,1)$ standard-normalverteilt ist.
+			\item Es sei $X \sim \Normal(0,1)$. Bestimmen Sie die Dichte von $X^2$.
+			\item Es seien $X \sim \Normal(0,1)$ und $Z$ Zufallsvariable mit $\P(Z = 1) = \P(Z = -1) = \lfrac{1}{2}$ unabhängige Zufallsvariablen. Zeigen Sie, dass $Y \defeq ZX \sim \Normal(0,1)$.
+		\end{enumerate}
+	\end{homework}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $F_X$ die Verteilungsfunktion von $X$ und $F_Y$ die Verteilungsfunktion von $Y \defeq \frac{X - \mu}{\sigma}$. Dann ist
+		\begin{equation*}
+			F_Y(x) = \P(Y \le x) = \P \left( \frac{X-\mu}{\sigma} \le x \right) = \P(X-\mu \le \sigma * x) = \P(X \le \sigma x + \mu) = F_X (\sigma x + \mu)
+		\end{equation*}
+		bzw.
+		\begin{equation*}
+			F_Y \left( \frac{x - \mu}{\sigma} \right) = \P \left( Y \le \frac{x - \mu}{\sigma} \right) = \P \left( \frac{X - \mu}{\sigma} \le \frac{x - \mu}{\sigma} \right) = \P( X \le x) = F_X(x)
+		\end{equation*}
+		Betrachten wir nun 
+		\begin{equation*}
+			\begin{aligned}
+			F_X(x) = \int_{- \infty}^x \frac{1}{\sigma \sqrt{2\pi}} \exp\left( -\frac{1}{2} \left( \frac{\xi - \mu}{\sigma} \right)^2 \right) \diff{\xi}
+			\end{aligned}
+		\end{equation*}
+		Substitution mit $\theta = \frac{\xi-\mu}{\sigma}$ liefert dann
+		\begin{equation*}
+			F_X(x) = \int_{- \infty}^{\frac{x-\mu}{\sigma}} \frac{1}{\sigma \sqrt{2\pi}} * \exp\left( -\frac{\theta^2}{2} \right) * \sigma \diff{\theta} = \int_{- \infty}^{\frac{x-\mu}{\sigma}} \frac{1}{\sqrt{2\pi}} * \exp\left( -\frac{\theta^2}{2} \right)  \diff{\theta} =	F_Y \left( \frac{x - \mu}{\sigma} \right)
+		\end{equation*}
+		Damit hat nun $Y$ die Dichte einer Standardnormalverteilung und somit $Y = \frac{X-\mu}{\sigma} \sim \Normal(0,1)$.
+		%
+		\item Sei $X \sim \Normal(0,1)$. Im Folgenden bezeichne $\phi$ die Dichte und $\Phi$ die Verteilungsfunktion der Standardnormalverteilung. Für die Verteilungsfunktion $\chi$ von $X^2$ gilt dann
+		\begin{equation*}
+		\begin{aligned}
+			\chi(x) 
+			&= \P(X^2 \le x) = \P(\abs{X} \le \sqrt{x}) = \P(-\sqrt{x} \le X \le \sqrt{x}) \\
+			&= \Phi(\sqrt{x}) - (1 - \Phi(\sqrt{x})) \\
+			&= 2 \Phi(\sqrt{x}) - 1
+		\end{aligned}
+		\end{equation*}
+		Die Dichte kann als Ableitung der Verteilungsfunktion gewonnen werden. Daher ist
+		\begin{equation*}
+			\chi'(x) = \ableitung{x} \left( 2\Phi(\sqrt{x}) - 1  \right) = \phi(\sqrt{x}) * \frac{1}{\sqrt{x}} = \frac{1}{\sqrt{2\pi}} \frac{1}{\sqrt{x}} * \exp \left(-\frac{1}{2} \ x \right)
+		\end{equation*}
+		die Dichte von $X^2$.
+	\end{enumerate}
+
+
+%%%% HAUSAUFGABE 7.2 %%%%
+	\begin{homework}
+		Ein Experiment, bei dem ein Ereignis $A$ mit der Wahrscheinlichkeit $p = 0.1$ eintritt, wird $n = 50$ mal wiederholt. Man bestimme die Wahrscheinlichkeit dafür, dass das Ereignis $A$ höchstens $3$ mal
+		in diesen $50$ Versuchen auftritt
+		\begin{enumerate}[leftmargin=*, nolistsep, topsep=-\parskip]
+			\item durch exakte Rechnung,
+			\item mittels Poisson-Approximation,
+			\item mit Hilfe des Grenzwertsatzes von De Moivre-Laplace.
+		\end{enumerate}
+	\end{homework}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Die Zufallsvariable $X$ beschreibe die Häufigkeit des Eintretens von $A$. Per Definition ist dann
+		\begin{equation*}
+		\P(X \le 3) = \sum_{k=0}^3 \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^3 \binom{50}{k} 0.1^k 0.9^{50-k} = 0.250294
+		\end{equation*}
+		%
+		\item Angenommen $X \sim \Poisson(\lambda)$ mit $\lambda = n * p = 50 * 0.1 = 5$. Dann gilt
+		\begin{equation*}
+			\P(X \le 3) = \sum_{k=0}^3 \frac{\lambda^k}{k!} e^{-\lambda} = \sum_{k=0}^3 \frac{5^k}{k!} e^{-5} = \frac{118}{3e^5} = 0.255026
+		\end{equation*}
+		%
+		\item Angenommen $X \sim \Normal(0,1)$. Dann gilt mit $\mu = n*p = 50 * 0.1 = 5$ und $\sigma^2 = n*p*(1-p) = 50 * 0.1 * 0.9 = 4.5$
+		\begin{equation*}
+			\P(0 \le X \le 3) = \Phi\left(\frac{3-5}{\sqrt{4.5}}\right) - \Phi\left(\frac{0 - 5}{\sqrt{4.5}} \right)= 0.1951
+		\end{equation*}
+		Wendet man dagegen die Näherung aus dem Satz von de Moivre-Laplace an, so ergibt sich mit $x_n(k) = \frac{k - np}{\sqrt{np(1-p)}}$ 
+		\begin{equation*}
+			\sum_{k=0}^3 \frac{\phi(x_n(k))}{\sqrt{np(1-p)}} = 0.233245
+		\end{equation*}
+	\end{enumerate}
+
+%%%% HAUSAUDGABE 9.3 %%%%
+	\begin{homework}
+		Bestimmen Sie die momenterzeugende Funktion für
+		\begin{enumerate}[leftmargin=*, nolistsep, topsep=-\parskip]
+			\item $X \sim \Poisson(\lambda)$
+			\item $X \sim \Uni(a,b)$
+		\end{enumerate}
+		und berechnen Sie mit Hilfe dieser Erwartungswert und Varianz.
+	\end{homework}
+	
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Es ist 
+		\begin{equation*}
+			\begin{aligned}
+			m_X(u) = \EW[e^{uX}] 
+			&= \sum_{x=0}^{\infty} e^{ux} \rho(x) \\
+			&= \sum_{x=0}^{\infty} e^{ux} \frac{\lambda^x}{x!} e^{-\lambda} \\
+			&= e^{-\lambda} \sum_{x=0}^\infty \frac{(e^u \lambda)^x}{x!} \\
+			&= e^{-\lambda} e^{e^u \lambda} \\
+			&= e^{\lambda (e^u - 1)}
+			\end{aligned}
+		\end{equation*}
+		Für die Ableitungen gilt dann
+		\begin{equation*}
+			\begin{aligned}
+			m_X'(u) &= \lambda e^u e^{\lambda (e^u - 1)}  \\
+			m_X''(u) &= \lambda e^{\lambda (e^u - 1) + u} (\lambda e^u + 1)
+			\end{aligned}
+		\end{equation*}
+		Somit ist
+		\begin{equation*}
+			\begin{aligned}
+			\EW[X] &= m_X'(0) = \lambda e^0 e^{\lambda (e^0 - 1)} = \lambda \\
+			\EW[X^2] &= m_X''(0) = \lambda e^{\lambda (e^0 - 1) + 0} (\lambda e^0 + 1) = \lambda ( \lambda + 1) \\
+			\Var[X] &= \EW[X^2] - \EW[X]^2 = \lambda ( \lambda + 1) - \lambda^2 = \lambda
+			\end{aligned}
+		\end{equation*}
+		%
+		\item Mit $X \sim \Uni(a,b)$ ist
+		\begin{equation*}
+			\begin{aligned}
+			m_X(u) 
+			= \EW[e^{uX}] 
+			&= \int_a^b e^{ux} \frac{1}{b-a} \dx 
+			= \frac{1}{b-a} \int_a^b e^{ux} \dx \\ 
+			&= \frac{1}{b-a} \left[\frac{1}{u} e^{ux} \right]_a^b 
+			= \frac{1}{b-a} \frac{1}{u} \left( e^{ub} - e^{ua} \right) \\
+			&= \frac{e^{ub} - e^{ua}}{u (b-a)}
+			\end{aligned}
+		\end{equation*}
+		Weiter gilt nun
+		\begin{equation*}
+			m_X'(u) = \frac{b e^{b u} - a e^{a u}}{u (b - a)} - \frac{e^{b u} - e^{a u}}{u^2 (b - a)} = \frac{-e^{a u} + e^{b u} + a e^{a u} u - b e^{b u} u}{(a - b) u^2}
+		\end{equation*}
+		Um $m_X'(0)$ berechnen zu können, betrachten wir die stetige Fortsetzung von $m_X'$ in der Null. Mit dem Satz von l'Hôptial ergibt sich
+		\begin{equation*}
+			\lim_{u \to 0} m_X'(u) = \frac{a^2 - b^2}{2 (a-b)} = \frac{a+b}{2} = \EW[X]
+		\end{equation*}
+		Für die zweite Ableitung gilt
+		\begin{equation*}
+			m_X''(u) = \frac{e^{a u} {a^2 u^2 - 2 a u + 2} - e^{b u} {b^2 u^2 - 2 b u + 2}}{u^3(a - b)}
+		\end{equation*}
+		und somit 
+		\begin{equation*}
+			\EW[X^2] = \lim_{u \to 0} m_X''(u) = \frac{1}{3} (a-b)^2
+		\end{equation*}
+		Schlussendlich ergibt sich damit für die Varianz
+		\begin{equation*}
+			\Var[X] = \EW[X^2] - \EW[X]^2 = \frac{1}{3} (a-b)^2 - \frac{(a+b)^2}{4} = \frac{1}{12} (b-a)^2 
+		\end{equation*}
+	\end{enumerate}
+
+%%%% HAUSAUDGABE 9.4 %%%%
+	\begin{homework}
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Es sei $X$ derart verteilt, dass $\P(X = k) = \left( 2 (k^2 + \abs{k})\right)^{-1}$ für $k \in \Z \ohneNull$. 
+			Bestimmen Sie die momenterzeugende Funktion.
+			\item Es seien $X_1, X_2, \dots$ unabhängig und identisch verteilte Zufallsvariablen, $N$ eine positive, diskrete Zufallsvariable mit $\EW[N] < \infty$, unabhängig von der Folge $\folge[i \ge 1]{X_i}$ und $S = \sum_{i = 1}^N X_i$. Bestimmen Sie die momenterzeugende Funktion von $S$ und leiten Sie so die Formel von Wald her (vgl. Bsp. 6.15).
+		\end{enumerate}
+	\end{homework}
+
+%%%% HAUSAUFGABE 9.5 %%%%
+	\begin{homework}
+		Es seien $X$, $Y$ unabhängige und identisch verteilte Zufallsvariablen mit $\EW[X] = 0$ und $\Var[X] = 1$.
+		\begin{enumerate}[leftmargin=*, nolistsep]
+			\item Falls $X+Y$ und $X-Y$ unabhängig sind, so erfüllt die charakteristische Funktion $\phi_X(u)$ die Relation
+			\begin{equation*}
+				\phi_X(2u) = \phi_X(u)^3 \ \phi_X(-u)
+			\end{equation*}
+			\item Zeigen Sie, dass im Fall von Teil a) $X$ und $Y$ die charakteristische Funktion einer Standardnormalverteilung besitzen.
+		\end{enumerate}
+	\end{homework}
+\end{exercisePage}
