@@ -1,0 +1,61 @@
+\begin{exercisePage}[Galoistheorie, Kreisteilungskörper]
+	
+	\setcounter{taskcount}{100}
+	
+%%%% HAUSAUFGABE H101 %%%%
+	\begin{exercise}
+		Bestimmen Sie die Galoisgruppen der Polynome $f_1 = X^3 + X + 1$, $f_2 = X^3 -2X - 1$, $f_3 = X^3 - 12X + 8$ und $f_4 = X^4 + 3X^2 +2$ über $\Q$.
+	\end{exercise}
+
+	\begin{itemize}[leftmargin=*]
+		\item Betrachten wir $f_1 = X^3 + X + 1$. Reduktion modulo $2$ liefert ein Polynom $f_1^{\text{red}} = X^3 + X + 1 \in \polynom[\F_2]$ und wegen $f(0) = 1$ sowie $f(1) = 1$ in $\F_2$ hat $f_1^{\text{red}}$ keine Nullstellen in $\F_2$. Daraus folgt die Irreduzibilität über $\F_2$ und mit dem Reduktionskriterium aus GEO schließlich auch selbige über $\Q$. Weiter gilt mit Ü98 für die Diskriminante $\discr(f_1) = -4 - 27 = -31 \notin (\einheit{\Q})^2$. Somit gilt mit Beispiel 5.18 aus der Vorlesung, dass $\Gal(f_1 \mid \Q) = S_3$.
+		%
+		\item Das Polynom $f_2 = X^3 - 2X - 1$ hat die Nullstelle $-1$ und ist somit reduzibel. Für die Diskriminante gilt $\discr(f) = -4 * (-2)^3 -27 = 5 \notin (\einheit{\Q})^2$. Somit ist wieder nach Beispiel 5.18 $\Gal(f_2 \mid \Q) \isomorph C_2$.
+		%
+		\item Wir betrachten das Polynom $f_3 = X^3 - 12X + 8$. Reduktion modulo $5$ liefert das Polynom $f_3^{\text{red}} = X^3 + 3 X + 3 \in \polynom[\F_5]$. Dort lassen sich die Nullstellen schnell bestimmen, denn wegen
+		\begin{equation*}
+			\begin{aligned}
+			f_3^{\text{red}}(0) &= 3 \\
+			f_3^{\text{red}}(1) &= 2 \\
+			f_3^{\text{red}}(2) &= 7  = 2 \\
+			f_3^{\text{red}}(3) &= 24 = 4 \\
+			f_3^{\text{red}}(4) &= 59 = 4
+			\end{aligned}
+		\end{equation*}
+		gibt es keine. Somit ist nach Reduktionskriterium dann auch $f$ irreduzibel über $\Q$. Für die Diskriminante gilt wieder $\discr(f) = -4 * (-12)^3 - 27 * 8^2 = 2^8 * 3^3 - 3^3 * 2^6 = 3^4 * 2^6 \in (\einheit{\Q})^2$. Damit ist $\Gal(f_3 \mid \Q) = A_3 \isomorph C_3$.
+		%
+		\item Für das Polynom $f_4 = X^4 + 3X^2 + 2 = (X^2 + 2)(X^2 + 1)$ kann man die Nullstellen $\alpha_1 = i$, $\alpha_2 = -i$, $\alpha_3 = i \sqrt{2}$ und $\alpha_4 = -i \sqrt{2}$ erraten. Die Automorphismen des Zerfällungskörpers $L = \Q(i,\sqrt2)$ sind auf $\Q$ ohnehin die Identität und vertauschen auf $L$ nur die beiden Nullstellenpaare $\alpha_1 \leftrightarrow \alpha_2$ und $\alpha_3 \leftrightarrow \alpha_4$. Damit lassen diese sich in Zykelschreibweise notieren als $\Gal(f_4 \mid \Q) = \Aut(L \mid \Q) = \menge{\id, (1 \ 2)(3 \ 4), (1 \ 2), (3 \ 4)}$. Damit ist $\Gal(f_4 \mid \Q) = \erz{(1 \ 2), (3 \ 4)} \isomorph C_2 \times C_2 \isomorph V_4$. 
+	\end{itemize}
+
+%%%% HAUSAUFGABE H102 %%%%
+	\begin{exercise}
+		Sei $K$ vollkommen und $L|K$ algebraisch. Hat jedes $f \in \polynom[K] \setminus K$ eine Nullstelle in $L$, so ist $L$ ein algebraischer Abschluss von $K$. \\
+		\textit{Hinweis: Betrachten sie für $\alpha \in \quer{L}$ die normale Hülle $M$ von $K(\alpha)|K$ und zeigen Sie, dass $M \subseteq L$ gilt.}
+	\end{exercise}
+
+	\pagebreak
+
+%%%% HAUSAUFGABE H103 %%%%
+	\begin{exercise}
+		Sei $p$ eine ungerade Primzahl und $L = \Q(\zeta_p)$. Zeigen Sie: $L$ enthält genau einen Teilkörper $K$ der Form $K = \Q(\sqrt{d})$ mit $d \in \Z$ kein Quadrat. Genau dann ist $K \subseteq \R$, wenn $p \equiv 1 \mod 4$. 
+	\end{exercise}
+
+	Nach Korollar 6.9 ist $\Q(\zeta_p) | \Q$ galoissch mit $G \defeq \Gal(\Q(\zeta_p)|\Q) \isomorph \einheit{(\rest{p})}$. Damit ist $\# G = \# \einheit{(\rest{p})} = p-1$. Da $\einheit{(\rest{p})} \isomorph \rest{(p-1)} \isomorph C_{p-1}$ zyklisch und $p-1$ gerade ist (also $\frac{p-1}{2} \teilt p-1$), gibt es genau eine Untergruppe $C_{\frac{p-1}{2}}$ mit $(C_{\frac{p-1}{2}} : C_{p-1}) = \frac{\# C_{p-1}}{\# C_{\frac{p-1}{2}}} = 2$.Nach Galoiskorrespondenz bleibt der Index erhalten, d.h. mit $K = L^{C_{\frac{p-1}{2}}}$ und $\Q = L^{C_{p-1}}$ ist $[K : \Q] = (C_{\frac{p-1}{2}} : C_{p-1}) = 2$. Nach Übung Ü20 ist nun $K = \Q(\sqrt{d})$ für ein $d \in \Q$. Dabei ist $d$ kein Quadrat, da dann $\sqrt{d} \in \Q$ gelten würde und somit $\Q(\sqrt{d}) = \Q$, d.h.$[K : \Q] = 1$, was falsch ist. Nun müssen wir noch zeigen, dass auch $d \in \Z$ ist. Dazu sei $d$ von der Form $d = \frac{a}{b}$ mit $a,b \in \Z$, $b \neq 0$ und $\ggT(a,b) = 1$. Der Fall $a = 0$ ist klar. Wir wählen $d' = ab \in \Z$, dann ist zu zeigen, dass $\Q(\sqrt{d}) = \Q(\sqrt{d'})$. 
+	\begin{itemize}[leftmargin=*]
+		\item $\sqrt{ab} \in \Q(\sqrt{\frac{a}{b}})$: Mit $\sqrt{\frac{a}{b}} \in \Q(\sqrt{\frac{a}{b}})$ ist auch $\sqrt{\frac{b}{a}} = \left( \sqrt{\frac{a}{b}} \right)^{-1} \in \Q(\sqrt{\frac{a}{b}})$. Wegen $a - b \in \Q$ ist dann 
+		\begin{equation*}
+			(a-b) \left( \sqrt{\frac{a}{b}} - \sqrt{\frac{b}{a}} \right)^{-1} = (a-b) \left( \frac{a-b}{\sqrt{ab}} \right)^{-1} = \sqrt{ab}
+		\end{equation*}
+		\item $\sqrt{\frac{a}{b}} \in \Q(\sqrt{ab})$: Wegen $b \in \Q$ ist 
+		\begin{equation*}
+			\frac{\sqrt{ab}}{b} = \sqrt{\frac{ab}{b^2}} = \sqrt{\frac{a}{b}}
+		\end{equation*}
+		Somit ist $\Q(\sqrt{\frac{a}{b}}) = \Q(\sqrt{ab})$ und $K = \Q(\sqrt{d'})$ mit $d' \in \Z$ ein eindeutig bestimmter Zwischenkörper $\Q \subseteq K \subseteq L$.
+	\end{itemize}
+
+	Wir betrachten die komplexe Konjugation $\abb{\tau}{\C}{\C}$ mit $x+iy \mapsto x - iy$. Diese ist bekanntermaßen ein Automorphismus und wegen $\tau|_{\Q} = \id_\Q$ auch $\tau \in G$. Wegen $\tau \circ \tau = \id_\C$ ist $\ord(\tau) = 2$.
+	
+	Sei nun $K \subseteq \R$. Dann ist $\tau |_K = \id_K$, da auch $\tau |_\R = \id_\R$. Somit ist $\tau \in K^\circ = C_{\frac{p-1}{2}}$. Wegen $\ord(\tau) = 2$ gilt $2 \teilt \# C_{\frac{p-1}{2}} = \frac{p-1}{2}$ und damit $ 4 \teilt p-1$, was gerade $p \equiv 1 \mod 4$ entspricht.
+	
+	Gelte $p \equiv 1 \mod 4$. Dann ist $4 \teilt p-1$, also existiert eine eindeutig bestimmte Untergruppe $C_{\frac{p-1}{4}}$. Da $\ord(\tau) = 2$ und es in $C_{p-1}$ nur $\varphi(2) = 1$ Element der Ordnung zwei gibt, muss schon $\tau |_K = \id_K$ und daher $K \subseteq \R$ gelten.
+\end{exercisePage}
