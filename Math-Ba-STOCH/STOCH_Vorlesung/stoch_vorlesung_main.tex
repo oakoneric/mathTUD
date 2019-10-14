@@ -9,17 +9,22 @@
 % Template for lecture notes and exercises at TU Dresden.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[ %
-    ngerman, %
-    a4paper, %
-    sectionreset, %
-    chapterstyle=framed, %
-    sectionstyle=pure, %
-    titlefont=osfamily %
-]{../../texmf/tex/latex/mathscriptMathTUD/mathscriptMathTUD}
+\documentclass[ngerman, a4paper, 11pt]{report}
 
-\usepackage[order=firstname, fractionappearence=lowerraise]{../../texmf/tex/latex/mathworkMathTUD/mathworkMathTUD}
-%\usepackage[presentExercise]{../../texmf/tex/latex/exercisesMathTUD/exercisesMathTUD}
+\usepackage[ngerman]{babel}
+\usepackage{../../texmf/tex/latex/layoutMathTUD}
+\usepackage[smallequationskip]{../../texmf/tex/latex/mathworkMathTUD}
+
+\usepackage{../../texmf/tex/latex/mathoperatorsMathTUD}
+\usepackage{../../texmf/tex/latex/maththeorems2MathTUD}
+
+\usepackage{../../texmf/tex/latex/titlepageMathTUD}
+\usepackage{../../texmf/tex/latex/graphicsMathTUD}
+
+\input{./stoch_local_headings}
+\input{./stoch_local_changes}
+
+\usepackage{../../texmf/tex/latex/referencesMathTUD}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -51,9 +56,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \counterwithin{themcount}{chapter}
-\undef\F
-\newcommand{\F}{\mathcal{F}}
-\newcommand{\E}{\mathcal{E}}
+
+\renewcommand{\F}{\mathcal{F}}
+\newcommand{\Ecal}{\mathcal{E}}
+\renewcommand{\G}{\mathcal{G}}
 \undef\folge
 \NewDocumentCommand{\folge}{m O{n \in \N}}{\left( #1 \right)_{#2}}
 \renewcommand{\complement}{\mathsf{C}}
@@ -64,12 +70,21 @@
 	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
 }
 
+
+\newcommand*{\WTheorie}{Wahrscheinlichkeitstheorie }
+\newcommand*{\WMass}{Wahrscheinlichkeitsmaß }
+\newcommand*{\WRaum}{Wahrscheinlichkeitsraum }
+\newcommand*{\WRaeume}{Wahrscheinlichkeitsräume }
+\newcommand*{\WVerteilung}{Wahrscheinlichkeitsverteilung }
+\newcommand*{\Wkeit}{Wahrscheinlichkeit }
+\newcommand*{\ZV}{Zufallsvariable}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \begin{document}
 
-\MakeTitle[dark]
+\makeTUtitle
     
 \tableofcontents
 
@@ -77,20 +92,40 @@
 \include{stoch_0_einleitung}
 
 \chapter{Grundbegriffe der Wahrscheinlichkeitstheorie}
+\label{chapter_1_grundbegriffe}
 \input{stoch_1_1_wahrscheinlichkeitsraeume}
 \include{stoch_1_2_zufallsvariablen}
 
-\chapter{Erste Standardmodelle}
-\begin{center}
-    {\Large{\osfamily \itshape --- Diskrete Verteilungen ---}}
-\end{center}
+\chapter{Erste Standardmodelle: Diskrete Verteilungen}
+\label{chapter_2_diskreteVerteilungen}
 \input{stoch_2_1_gleichverteilung}
 \input{stoch_2_2_urnenmodelle}
 \input{stoch_2_3_poisson-approximation}
 
 \chapter{Bedingte Wahrscheinlichkeiten und Unabhängigkeit}
+\label{chapter_3_bedingteWahrscheinlichkeiten}
 \input{stoch_3_1_bedingte_wahrscheinlichkeiten}
 \input{stoch_3_2_unabhaengigkeit}
+\input{stoch_3_3_unabhaengige_zufallsvariablen}
+\input{stoch_3_4_faltungen}
 
+\chapter{Weitere Standardmodelle: Stetige Verteilungen}
+\label{chapter_4_stetigeVerteilungen}
+\input{stoch_4_1_gleichverteilung}
+\input{stoch_4_2_wartezeitverteilungen}
 
+\chapter{Erwartungswert und Varianz}
+\label{chapter_5_erwartungswertVarianz}
+\input{stoch_5_1_erwartungswert}
+\input{stoch_5_2_varianz}
+\input{stoch_5_3_wahrscheinlichkeitserzeugeneFunktionen}
+
+\chapter{Normalverteilung}
+\label{chapter_7_normalverteilung}
+\input{stoch_7_normalverteilung}
+
+\chapter{Momenterzeugende und charakteristische Funktionen}
+\label{chapter_8_momenterzeugende-charakteristische-Funktionen}
+\input{stoch_8_1_momenterzeugendeFunktionen}
+\input{stoch_8_2_charakteristischeFunktionen}
 \end{document}

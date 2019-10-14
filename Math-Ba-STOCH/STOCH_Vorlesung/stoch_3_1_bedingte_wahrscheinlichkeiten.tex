@@ -19,8 +19,8 @@
 	Das Eintreten von $B$ führt also dazu, dass das Wahrscheinlichkeitsmaß $\P$ durch ein neues Wahrscheinlichkeitsmaß $\P_{B}$ ersetzt werden muss. Hierbei sollte gelten:
 	\begin{align}
 		&\text{Renormierung: } &&\P_{B} = 1 \label{eq: Renormierung} \tag{R}\\
-		&\text{Proportionalität: } &&\text{Für alle } A \subseteq \F \mit A \subseteq B \text{ gilt } \P_{B}(A) = c_B * \P(A) 
-		\text{ mit einer Konstante } c_B \label{eq: Proportionalitaet} \tag{P}
+		&\text{Proportionalität: } &&\text{Für alle } A \subseteq \F \mit A \subseteq B \text{ gilt } \P_{B}(A) = c_B * \P(A) \notag \\ 
+		&&&\text{mit einer Konstante } c_B \label{eq: Proportionalitaet} \tag{P}
 	\end{align}
 \end{beispiel}
 
@@ -87,7 +87,7 @@ Stehen die $A_i$ in \cref{lemma: 3_1_4_multiplikationsformel} in einer (zeitlich
 	\captionof{figure}{Darstellung eines Stufenexperiments}
 \end{center}
 
-\begin{satz}[Konstruktion des Wahrscheinlichkeitsmaßes eines Stufenexperiments] \label{satz: 3_1_6_stufenexperiment}
+\begin{satz}[ Wahrscheinlichkeitsmaß eines Stufenexperiments] \label{satz: 3_1_6_stufenexperiment}
 	Gegeben seinen $n$ Ergebnisräume $\Omega_i = \menge{\omega_i (1), \dots, \omega_i (k)}, k \in \N \cup \menge{\infty}$ und es sei $\Omega = \Omega_1 \times \cdots \Omega_n$ der zugehörige Produktraum. Weiter seinen $\F_i$ $\sigma$-Algebren auf $\Omega_i$ und $\F = \bigotimes_{i=1}^n \F_i$ die Produkt-$\sigma$-Algebra auf $\Omega$. Setze $\omega = (\omega_1,\dots,\omega_n)$ und
 	\begin{equation*}
 	[\omega_1,\dots,\omega_m] \defeq \menge{\omega_1}\times \dots \times \menge{\omega_m} \times \Omega_{m+1} \times \cdots \times \Omega_{n} \qquad (m \leq n) 
@@ -174,7 +174,7 @@ Stehen die $A_i$ in \cref{lemma: 3_1_4_multiplikationsformel} in einer (zeitlich
 		\begin{align}
 			\P(A) = \sum_{i\in I} \P(A\mid B_i) * \P(B_i) \label{eq: totaleWkeit}
 		\end{align} 
-		\item \textit{Satz von \person{Bayes}:} Für alle $A \in \F$ mit $\P(A) > 0$ und alle $k \in I$ gilt
+		\item \textit{Satz von Bayes:} Für alle $A \in \F$ mit $\P(A) > 0$ und alle $k \in I$ gilt
 		\begin{align}
 			\P(B_k \mid A) = \frac{\P(A \mid B_k) * \P(B_k)}{\sum_{i\in I}\P(A\mid B_i) * \P(B_i)} \label{eq: bayes}
 		\end{align}

@@ -1,7 +1,7 @@
 \section{Urnenmodelle}
 
 Ein ``Urnenmodell'' ist eine abstrakte Darstellung von Zufallsexperimenten, bei denen zufällig Stichproben aus einer gegebenen Menge ``gezogen'' werden.
-Eine Urne ist ein Behältnis in welchem sich farbige/nummerierte Kugeln befinden, die ansonsten ununterscheidbar sind.
+Eine Urne ist ein Behältnis, in welchem sich farbige/nummerierte Kugeln befinden, die ansonsten ununterscheidbar sind.
 Aus der Urne ziehe man blind/zufällig eine oder mehrere Kugeln und notiere ihre Farbe/Zahl.
 
 \begin{center}
@@ -9,17 +9,17 @@ Aus der Urne ziehe man blind/zufällig eine oder mehrere Kugeln und notiere ihre
     \captionof{figure}{Urnenmodell mit nummerierten, farbigen Kugeln}
 \end{center}
 
-\subsection{Urnenmodell mit Zurücklegen: Multinomial-Verteilung}
+\subsection[Urnenmodell mit Zurücklegen: Multinomial-Verteilung]{Urnenmodell mit Zurücklegen: \protect\\ Multinomial-Verteilung}
 
 Gegeben sei eine Urne mit $N$ Kugeln, verschiedenfarbig mit Farben aus $E$, wobei $\abs{E} \ge 2$ 
 
 Man ziehe $n$ Stichproben/Kugeln, wobei nach jedem Zug die Kugel wieder zurückgelegt wird. Uns interessiert die Farbe in jedem Zug, setze also
 \begin{equation*}
-	\Omega = E^n \und \ereignisF = \pows\Omega 
+	\Omega = E^n \und \F = \pows\Omega 
 \end{equation*}
 Zur Bestimmung eines geeigneten Wahrscheinlichkeitsmaßes nummerieren wir die Kugeln mit $1,\dots, N$, so dass alle Kugeln der Farbe $a \in E$ eine Nummer aus $F_{a} \subset \menge{1,\dots, N}$ tragen. Würden wir die Nummern notieren, so wäre
 \begin{equation*}
-	\quer{\Omega} = \menge{1,\dots, N}^n \und \quer{\ereignisF} = \pows{\quer{\Omega}}
+	\quer{\Omega} = \menge{1,\dots, N}^n \und \quer{\F} = \pows{\quer{\Omega}}
 \end{equation*}
 und wir könnten die Gleichverteilung $\quer{\P} = U(\quer{\Omega})$ als WMaß für einem einzelnen Zug verwenden. Für den Übergang zu $\Omega$ konstruieren wir  Zufallsvariablen. Die Farbe im $i$-ten Zug wird beschrieben durch
 \begin{equation*}
@@ -41,13 +41,13 @@ und damit
     = \prod_{i=1}^{n} \frac{\abs{F_{\omega_i}}}{N} 
     \defqe \prod_{i=1}^{n} \rho(\omega_i)
 \end{equation*}
-Zähldichten, die sich als Produkt von Zähldichten schreiben lassen, werden auch als \begriff{Produktdichten} bezeichnet ($\nearrow$  \S 3 Unabhängigkeit).
+Zähldichten, die sich als Produkt von Zähldichten schreiben lassen, werden auch als \begriff{Produktdichten} bezeichnet ($\nearrow$  \cref{sec: unabhaengigkeit}).
 
 Sehr oft interessiert uns bei einem Urnenexperiment nicht die Reihenfolge der gezogenen Farben, sondern nur die Anzahl der Kugeln in Farbe $a \in E$ nach $n$ Zügen. Dies entspricht
 \begin{equation*}
 	 \dach{\Omega} 
 	 = \menge{k = (k_a)_{a \in E} \in \N_{0}^{\abs{E}} \colon \sum_{a \in E} k_a = n}
-	 \und \dach{\ereignisF} = \pows{\dach{\Omega}}
+	 \und \dach{\F} = \pows{\dach{\Omega}}
 \end{equation*}
 Den Übergang $\Omega \to \dach{\Omega}$ beschreiben wir durch die Zufallsvariablen
 \begin{equation*}
@@ -63,28 +63,28 @@ Wir erhalten
 \begin{equation*}
 	\begin{aligned}
 		\P(Y=k) &= \P(Y_a = k_a : a \in E) \\
-		&= \sum_{\omega \in \Omega \colon Y(\omega) = k} \prod_{i=1}^ \rho(\omega_i)
+		&= \sum_{\omega \in \Omega \colon Y(\omega) = k} \prod_{i=1}^n \rho(\omega_i)
 		= \sum_{\omega \in \Omega \colon Y(\omega) = k} \prod_{a \in E} \rho(a)^{k_a} 
 		= \binom{n}{\folge{k_a}[a \in E]} \prod_{a \in E} \rho(a)^{k_a}
 	\end{aligned}
 \end{equation*}
 wobei
 \begin{equation*}
-	\binom{n}{(k_1 , \dots , k_l)} \defeq \begin{cases}
-	\frac{n!}{k_1 ! \cdots k_l !} & \text{falls } \sum_{i=1}^l k_i = 1 \\
+	\binom{n}{(k_1 , \dots , k_\ell)} \defeq \begin{cases}
+	\frac{n!}{k_1 ! \cdots k_\ell !} & \text{falls } \sum_{i=1}^\ell k_i = 1 \\
 	0 & \text{sonst}
 	\end{cases}
 \end{equation*}
-der Multinomialkoeffizient ist, welcher die Anzahl der Möglichkeiten beschreibt $n$ Objekte in $l$ Gruppen aufzuteilen, sodass die Gruppe $i$ gerade $k_i$ Objekte enthält.
+der Multinomialkoeffizient ist, welcher die Anzahl der Möglichkeiten beschreibt $n$ Objekte in $\ell$ Gruppen aufzuteilen, sodass die Gruppe $i$ gerade $k_i$ Objekte enthält.
 
 \begin{definition}
-	Sei $l \geq 2$, $p=(p_1 , \dots , p_l)$ eine Zähldichte und $n \in \N$, dann heißt die Verteilung auf 
+	Sei $l \geq 2$, $p=(p_1 , \dots , p_\ell)$ eine Zähldichte und $n \in \N$, dann heißt die Verteilung auf 
 	\begin{equation*}
-		\menge{k=\folge{k_i}[i=1, \dots , l] \in \N_0^l : \sum_{i=1}^l k_i = 1}
+		\menge{k=\folge{k_i}[i=1, \dots , \ell] \in \N_0^\ell : \sum_{i=1}^\ell k_i = 1}
 	\end{equation*}
 	mit Zähldichte
 	\begin{equation*}
-		m((k_1 , \dots , k_l)) = \binom{n}{k_1 , \dots , k_l} \prod_{i=1}^l p_i^{k_i}
+		m((k_1 , \dots , k_\ell)) = \binom{n}{k_1 , \dots , k_\ell} \prod_{i=1}^\ell p_i^{k_i}
 	\end{equation*}
 	\begriff{Mulitnomialverteilung} mit Parametern $n$ und $p$. Wir schreiben auch $\Multi(n,p)$.
 \end{definition}
