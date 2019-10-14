@@ -1,0 +1,67 @@
+\subsection{Konstruktion unabhängiger Zufallsvariablen}
+\cref{chapter_1_grundbegriffe}: Zu beliebiger Wahrscheinlichkeitsverteilung $\P_X$ existiert ein Wahrscheinlichkeitsraum mit Zufallsvariable $X$ auf diesem Wahrscheinlichkeitsraum, so dass $X \sim \P_X$.
+
+\begin{enumerate}[leftmargin=*, nolistsep]
+	\item Seien $\P_{X_1}, \P_{X_2}$ Wahrscheinlichkeitsverteilungen auf $(E, \Ecal)$. Gibt es einen Wahrscheinlichkeitsraum $(\Omega, \F, \P)$ und Zufallsvariablen $X_1, X_2$ unabhängig, so dass $X_i \sim \P_{X_i}$?
+	\item Wie kann ich beliebig (unendlich) viele unabhängige Zufallsvariablen konstruieren?
+\end{enumerate}
+
+Wir beginnen mit Schritt (1):
+
+Konstruiere zwei Wahrscheinlichkeitsräume $(\Omega_i, \F_i, \P_i)$ ($i = 1,2$) und Zufallsvariablen $X_1, X_2$ mit $X_i \sim \P_{X_i}$. Auf dem Produktraum
+\begin{equation*}
+	\Omega \defeq \Omega_1 \times \Omega_2 \quad \F \defeq \F_1 \otimes \F_2 \quad \P = \P_1 \otimes \P_2
+\end{equation*}
+definieren wir
+\begin{equation*}
+\begin{aligned}
+	X'_1 \colon \Omega_1 \times \Omega_2 \to E : &(\omega_1, \omega_2) \mapsto X_1(\omega_1) \\
+	X'_2 \colon \Omega_1 \times \Omega_2 \to E : &(\omega_1, \omega_2) \mapsto X_2(\omega_2)
+\end{aligned}
+\end{equation*}
+Dann gilt für beliebige Ereignisse: $F_1, F_2 \in \Ecal$
+\begin{equation*}
+	\underbrace{\menge{X'_1 \in F_1} \cap \menge{X'_2 \in F_2}}_{\supseteq \Omega = \Omega_1 \times \Omega_2} = \underbrace{\menge{X_1 \in F_1}}_{\supseteq \Omega_1} \times \underbrace{\menge{X_2 \in F_2}}_{\supseteq \Omega_2} \in \F_1 \times \F_2
+\end{equation*}
+und damit folgt die Messbarkeit der Abbildungen $X'_1, X'_2$, d.h. $X'_1, X'_2$ sind Zufallsvariablen auf $(\Omega, \F)$. Zudem gilt
+\begin{equation*}
+\begin{aligned}
+	\P(X'_1 \in F_1, X'_2 \in F_2)
+	&= \P_1 \otimes \P_2 \brackets{\menge{X_1 \in F_1} \times \set{X_2 \in F_2}} \\
+	&= \P_1 (X_1 \in F_1) \P_2(X_2 \in F_2)
+\end{aligned}
+\end{equation*}
+also $\P(X'_i \in F_i) = \P_i (X'_i \in F_i)$ sowie nach \cref{3_21_satz} $X'_1 \upmodels X'_2$.
+
+Wenn $(\Omega_2, \F_1, \P_1) = (\Omega_2, \F_2, \P_2)$, so liefert die obige Konstruktion zwei unabhängige Zufallsvariablen auf einem Wahrscheinlichkeitsraum. Andernfalls können wir auf den Produktraum ausweichen und $X'_i$ anstelle von $X_i$ betrachten. Die obige Konstruktion lässt sich direkt auf \textit{endlich} viele Zufallsvariablen übertragen.
+
+Betrachten wir nun den Fall (2). Wir benötigen dafür den folgenden Satz.
+
+\begin{satz}[Satz von \person{Kolmogorov}]
+	\label{3_23_satz_kolmogorov}
+	Sei $I$ eine beliebige Indexmenge und $(\Omega_i, \F_i, \P_i)$ ($i \in I$) Wahrscheinlichkeitsräume. Setze
+	\begin{equation*}
+		\begin{aligned}
+		\Omega_I &\defeq \bigtimes_{i \in I} \Omega_i = \menge{\omega : I \to \bigcup_{i \in I} \Omega_i, \omega_i \in \Omega_i, i \in I}\\
+		\F_I &:= \sigma( \pi^{-1} ( \F_i) : i \in I)
+		\end{aligned}
+	\end{equation*}
+	wobei $\abb{\pi_i}{\Omega_I}{\Omega_i}$ mit $\omega \mapsto \omega_i$ die Projektionsabbildung ist. Dann existiert auf $(\Omega_I, \F_I)$ genau ein Wahrscheinlichkeitsmaß $\P_I$, sodass für alle $H \subseteq I$ mit $0 \le \abs{H} < \infty$ gilt
+	\begin{equation*}
+		\pi_H ( \P_I) = \bigotimes_{i \in H} \P_i,
+	\end{equation*}
+	wobei $\abb{\pi_i}{\Omega_I}{\Omega_H}$ wiederum die Projektionsabbildung.
+\end{satz}
+\begin{proof}
+	$\nearrow$ Schilling: Maß und Integral, Satz 17.4.
+\end{proof}
+
+Sind auf den Wahrscheinlichkeitsräumen $(\Omega_i , \F_i , \P_i)$ ($i \in I$), nun Zufallsvariablen $\abb{X_i}{\Omega_i}{E}$ gegeben, so definieren wir wie im Satz von Kolmogorov (\cref{3_23_satz_kolmogorov})
+\begin{equation*}
+	(\Omega, \F, \P) \defeq \brackets{\Omega_I, \F_I, \P_I = \bigotimes_{i \in I} \P_i} \mit \omega = (\omega_i)_{i \in I}
+\end{equation*}
+und wie im endlichen Fall
+\begin{equation*}
+	\abb{X_i'}{\Omega}{E} \mit X_i'(\omega) = X_i(\omega_i)
+\end{equation*}
+definieren. Da die Unabhängigkeit der Zufallsvariablen über endliche Teilfamilien definiert ist, folgt diese wie im endlichen Fall. 

@@ -1,0 +1,40 @@
+\documentclass[tikz]{standalone}
+
+\usepackage{tudscrcolor}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgf}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\begin{document}
+	
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+		%Shape: Axis 2D [id:dp8508806841135094] 
+		\draw  (50,246.9) -- (388,246.9)(83.8,75) -- (83.8,266) (381,241.9) -- (388,246.9) -- (381,251.9) (78.8,82) -- (83.8,75) -- (88.8,82)  ;
+		%Straight Lines [id:da16916887281741155] 
+		\draw    (84,160) -- (192,160) ;
+		%Straight Lines [id:da9049951895649381] 
+		\draw [color={rgb, 255:red, 255; green, 114; blue, 50 }  ,draw opacity=1 ]   (83.8,246.9) -- (192,160) ;
+		%Straight Lines [id:da21444674738376057] 
+		\draw [color={rgb, 255:red, 255; green, 114; blue, 50 }  ,draw opacity=1 ]   (192,160) -- (293,248) ;
+		%Straight Lines [id:da3378006631805073] 
+		\draw    (179.92,243.08) -- (180,252.67) ;
+		%Straight Lines [id:da715576960846674] 
+		\draw    (310.92,242.08) -- (311,251.67) ;
+		% Text Node
+		\draw (122,150) node   {$\rho ( x)$};
+		% Text Node
+		\draw (256,174.67) node [color={rgb, 255:red, 255; green, 114; blue, 50 }  ,opacity=1 ]  {$\rho \star \rho ( x)$};
+		% Text Node
+		\draw (181,262.67) node   {$1$};
+		% Text Node
+		\draw (312,260.67) node   {$2$};
+	\end{tikzpicture}    
+\end{document}

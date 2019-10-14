@@ -1,0 +1,122 @@
+\section{Wahrscheinlichkeitserzeugende Funktionen}
+
+\begin{definition}[Wahrscheinlichkeitserzeugende Funktion]
+	\label{5_14_definition}
+	\begin{enumerate}[leftmargin=*, label=(\arabic*)]
+		\item Ist $\P$ ein Wahrscheinlichkeitsmaß auf $(\N_0, \pows{\N_0})$ mit Zähldichte $\rho$, so heißt
+		\begin{equation*}
+			\psi_{\P}(s) \defeq \sum_{k\in \N_0} s^k \rho(k) \quad (0 \le s \le 1)
+		\end{equation*}
+		\begriff{wahrscheinlichkeitserzeugende Funktion} von $\P$ (probability generating function - pgf).
+		\item Ist $X$ eine $\N_0$-wertige Zufallsvariable auf $(\Omega, \F, \P)$, so heißt
+		\begin{equation*}
+			\psi_X(s) \defeq \sum_{k\in \N_0} s^k \P(X=k) \quad (0 \le s \le 1)
+		\end{equation*}
+		\begriff{wahrscheinlichkeitserzeugende Funktion} von $X$.
+	\end{enumerate}
+\end{definition}
+
+\begin{*bemerkung}
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item Da $\sum_{k\in \N_0} \rho(k) = 1$ ist, ist die pgf auf $0 \le s \le 1$ wohldefiniert. Zudem ist $\psi$ auf $[0,1)$ unendlich oft differenzierbar.
+		\item Da $\rho(k) \ge 0 \forall k$ ist die pgf stets konvex.
+		\item Durch Taylorentwicklung von $\psi$ in 0 erhält man:
+		\begin{equation*}
+			\psi_{\P}(s) = \sum_{k\in \N_0} s^k \frac{\psi_{\P}^{(k)}(0)}{k!}
+		\end{equation*}
+		so dass für alle $k \in \N_0$ folgt
+		\begin{equation*}
+			\rho(k) = \frac{\psi_{\P}^{(k)}(0)}{k!}
+		\end{equation*}
+		Die Verteilung $\P$ (bzw. $\P \circ X^{-1}$) ist durch $\psi_{\P}$ (bzw. $\psi_X$) eindeutig bestimmt. Also ``erzeugt $\psi$ die Zähldichte''.
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{beispiel}
+	\label{5_15_beispiel}
+	Ist $X \sim \Bin(n,p)$, so folgt
+	\begin{align*}
+		\psi_X (s) &= \sum_{k=0}^n s^k \binom{n}{k} p^k (1-p)^{n-k}\\
+		&= \sum_{k=0}^n \binom{n}{k} (ps)^k (1-p)^{n-k}\\
+		&= (ps + (1-p))^n \\
+		&= (1+p(s-1))^n
+	\end{align*}
+\end{beispiel}
+
+\begin{proposition}[Momentenberechnung mit pgf]
+	\label{5_16_proposition}
+	Sei $X$ eine $\N_0$-wertige Zufallsvariable, dann gilt
+	\begin{equation*}
+		\EW[X^n] < \infty \quad (n \ge 1) \Longleftrightarrow \psi_X^{(n)}(1) = \lim_{s \nearrow 1} \psi_X^{(n)} (s) < \infty.
+	\end{equation*}
+	Insbesondere gilt dann
+	\begin{equation*}
+		\psi_X^{(n)} (1) = \EW[X(X-1) \dots (X-n+1)]
+	\end{equation*}
+\end{proposition}
+
+\begin{proof}
+	Sei $\rho(k) = \P(X=k)$. Durch $n$-faches gliedweises Differenzieren der Potenzreihe $\psi_X$ folgt
+	\begin{equation*}
+		\psi_X^{(n)} (s) = \sum_{k\in \N_0} k(k-1) \cdots (k-n+1) \rho(k) s^{k-n} \quad (0 \le s< 1)
+	\end{equation*}
+	Dann existieren in $[0, \infty)$
+	\begin{equation*}
+	\begin{aligned}
+		\lim_{s \nearrow 1} \psi_X^{(n)}(s)
+		&= \lim_{s \nearrow 1} \sum_{k=0}^{\infty} k(k-1) \cdots (k-n+1) \rho(k) s^{k-n} \\
+		&= \sum_{k=n}^{\infty} \rho(k) k(k-1) \cdots (k-n+1)\\
+		&= \EW[X(X-1) \cdots (X-n+1)]
+	\end{aligned}
+	\end{equation*}
+	sowie induktiv
+	\begin{align}
+		\psi^{(n)} (1) 
+		&= \lim_{s \nearrow 1} \frac{\psi^{(n-1)}(1) - \psi^{(n-1}(s)}{1-s} \notag \\
+		&= \lim_{s \nearrow 1} \sum_{k\in \N_0} \rho(k) k(k-1) \cdots (k-(n-1)+1) \frac{1-s^{k-(n-1)}}{1-s} \notag \\
+		&= \lim_{s \nearrow 1} \sum_{k\in \N_0} \rho(k)k(k-1)\cdots (k-n+2) \sum_{\ell=0}^{k-(n-1)} s^\ell \tag{Geom. Reihe} \\
+		&= \sum_{k\in \N_0} \rho(k)k(k-1) \cdots (k-n+2)(k-n+1) \tag{Monotonie}\\  
+		&= \EW[X(X-1)\cdots (X-n+1)] \notag
+	\end{align}
+	Insbesondere gilt $\EW[X^n] < \infty$ genau dann, wenn $\psi_X^{(n)}(1) < \infty$ bzw. $\lim\limits_{s \nearrow 1} \psi_X^{(n)} (s) < \infty$
+\end{proof}
+
+\begin{beispiel}
+	\label{5_17_beispiel}
+	Sei $X \sim \Bin(n,p)$, dann gilt nach \cref{5_15_beispiel} $\psi_X (s) = (1+p(s-1))^n$. Damit 
+	\begin{equation*}
+	\begin{aligned}
+		\psi_X'  (s) &= n (1+p(s-1))^{n-1} p \\
+		\psi_X'' (s) &= n (n-1) (1+p(s-1))^{n-2}\cdot p^2
+	\end{aligned}
+	\end{equation*}
+	so dass
+	\begin{equation*}
+	\begin{aligned}
+		\EW[X]  &= \psi'_X (1) = np \\
+		\Var[X] &= \EW[X^2] - \EW[X]^2 = \EW[X(X-1)] + \EW[X] - \EW[X]^2 \\
+		&= \psi_X''(1) + \psi_X'(1) - (\psi'_X(1))^2 \\
+		&= n (n-1) p^2 + np - (np)^2 = np - np^2 = np(1-p)
+	\end{aligned}
+	\end{equation*}
+\end{beispiel}
+
+\begin{proposition}
+	\label{5_18_proposition}
+	Seien $X,Y$ unabhängige, $\N_0$-wertige Zufallsvariablen auf $(\Omega,\F,\P)$. Dann gilt
+	\begin{equation*}
+	\begin{aligned}
+		\psi_{X+Y}(s) &= \EW[s^{X+Y}] = \EW[s^X s^Y] \\
+		&= \EW[s^X] \EW[s^Y] \\
+		&= \psi_X(s) \psi_Y(s)
+	\end{aligned}
+	\end{equation*}
+\end{proposition}
+
+\begin{proposition}
+	\label{5_19_proposition}
+	Sind $\P_1$, $\P_2$ Wahrscheinlichkeitsmaße auf $(\N_0, \pows{\N_0})$, so gilt
+	\begin{equation*}
+	\psi_{\P_1 \ast \P_2}(s) = \psi_{\P_1}(s) \psi_{\P_2}(s) \quad (0 \le s \le 1)
+	\end{equation*}
+\end{proposition}

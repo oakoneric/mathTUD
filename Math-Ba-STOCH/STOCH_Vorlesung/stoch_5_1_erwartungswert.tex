@@ -1,0 +1,178 @@
+\section{Der Erwartungswert}
+\begin{definition}[Erwartungswert]
+	\label{5_1_definition}
+	Sei $(\Omega, \F, \P)$ Wahrscheinlichkeitsraum und $\abb{X}{(\Omega, \F)}{(\R, \borel\R)}$ Zufallsvariable. Dann ist
+	\begin{equation*}
+		\EW = \int_{\Omega} X(\omega) \enskip \P(\diff \omega) = \int_{\R} x \enskip \P(X  \in \diff x)
+	\end{equation*}
+	der \begriff{Erwartungswert} von $X$.
+\end{definition}
+
+\begin{*bemerkung}
+	Der Erwartungswert von $X$ existiert genau dann, wenn
+	\begin{equation*}
+		\int_{\Omega} \abs{X} \diff \P < \infty \quad \bzw \quad \EW[\abs{X}] < \infty
+	\end{equation*}
+	d.h. genau dann, wenn $X \in \Lint^1(\P)$.
+	Für nichtnegative Zufallsvariablen ist der Erwartungswert immer definiert, wenn wir $+\infty$ als zulässigen Wert annehmen, was wir in der Folge auch tun.
+\end{*bemerkung}
+
+\begin{beispiel}
+	\label{5_2_beispiel}
+	Sei $(\Omega, \F, \P)$ ein Wahrscheinlichkeitsraum, $A \in \F$ und sei $\abb{X}{(\Omega , \F)}{(\R , \borel\R)}$ die Indikatorvariable $X(\omega) = \one_{A} (\omega)$. Dann gilt: $X \in \Lint^1(\P)$ und
+	\begin{equation*}
+		\EW[X] = \int_{\Omega} \one_{A} (\omega) \enskip \P(\diff \omega) = \int_{A} \P(\diff \omega) = \P(A)
+	\end{equation*}
+\end{beispiel}
+
+\begin{proposition}
+	\label{5_3_proposition}
+	Sei $\abb{X}{(\Omega, \F)}{ (\Rn, \borel\Rn)}$ eine Zufallsvariable und $\abb{f}{\Rn}{\R}$ Borel-messbar. Dann gilt
+	\begin{equation*}
+		\EW[f \circ X] = \EW[f(X)] = \int f(X) \diffskip\P = \int_{\Omega} f(X(\omega)) \diffskip{\P(\omega)} = \int_{\Rn} f(x) \enskip \P(X \in \diff x)
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	 $f \circ X = f(X)$ ist eine reelle Zufallsvariable. Die Formel folgt direkt auf dem Transformationssatz für Bildmaße ($\nearrow$ Schilling MINT Satz 18.1).
+\end{proof}
+
+\begin{proposition}[Erwartungswerte bei Existenz einer (Zähl-)dichte]
+	\label{5_4_proposition}
+	Sei $\abb{X}{(\Omega, \F)}{(\Rn, \borel\Rn)}$ eine Zufallsvariable und $\abb{f}{\Rn}{\R}$ Borel-messbar.
+	\begin{enumerate}
+		\item \textbf{diskreter Fall:} Ist $\P_X$ ein Wahrscheinlichkeitsmaß auf $(\Z, \pows\Z)$ mit Zähldichte $\rho$, so ist
+		\begin{equation*}
+			\EW[f(X)] = \sum_{x \in \Z} f(x)\rho(x)
+		\end{equation*}
+		\item \textbf{stetiger Fall:} Besitzt $\P_X$ eine Dichte $\rho$ (bzgl. Lebesguemaß), so ist
+		\begin{equation*}
+			\E[f(X)] = \int_{\R} f(x)\rho(x) \dx
+		\end{equation*}
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	Klar aus \cref{5_1_definition} und \cref{5_3_proposition}.
+\end{proof}
+
+\begin{beispiel}
+	\label{5_5_beispiel}
+	Sei $X \sim \Bin(n,p)$. Dann gilt
+	\begin{align*}
+		\EW[X] 
+		&= \sum_{k=0}^n k * \binom{n}{k} p^k (1-p)^{n-k} \\
+		&= \sum_{k=1}^n \frac{n!}{(n-k)!(k-1)!} p^k (1-p)^{n-k}\\
+		&= np \sum_{k=1}^n \underbrace{\binom{n-1}{k-1} p^{k-1}(1-p)^{n-1-(k-1)}}_{\text{Zähldichte }\Bin(n-1,p)} \\
+		&= n p (p+1-p)^{n-1} \\
+		&= np
+	\end{align*}
+\end{beispiel}
+
+Da der Erwartungswert ein Integral ist, übertragen sich viele Eigenschaften. 
+\begin{proposition}[Eigenschaften des Erwartungswertes]
+	\label{5_6_proposition}
+	Seien $\abb{X,X_n,Y}{(\Omega,\F)}{(\R, \borel\R)}$ ($n \in \N$) Zufallsvariablen in $\Lint^1(\P)$ und $a,b \in \R$ konstant.
+	\begin{enumerate}[leftmargin=*]
+		\item \textbf{Linearität:} $\EW[aX +bY] = a \EW[X] + b \EW[Y]$
+		\item \textbf{Monotonie:} $X \le Y$, d.h. $X(\omega) \le Y(\omega) \enskip \forall \omega \in \Omega$. Dann gilt $\E[X] \le \E[Y]$ und insbesondere gilt $X \ge 0 \follows \EW \ge 0$.
+		\item \textbf{Lemma von \person{Fatou}:} $\EW[\liminf_{n \to \infty}X_n] \le \liminf_{n \to \infty} \EW[X_n]$
+		\item \textbf{Satz von \person{Beppo-Levi}:} Wenn $X_n \ge 0 \und X_n \uparrow X$ so gilt $\EW[X] = \sup_{n \in \N} \EW[X_n] = \lim_{n \to \infty} \EW[X_n]$
+		\item \textbf{Dominierte Konvergenz / Satz von \person{Lebesgue}:} Sei $\lim_{n \to \infty} X_n(\omega) = X(\omega)$ und $\P(\set{\omega: \abs{X_n(\omega)} \le Y(\omega)}) = 1$ (d.h. $\abs{X} \le Y$ $\P$-fast sicher) für $Y \in \Lint^1(\P)$. Dann gilt $X \in \Lint^{1}(\P)$ und $\lim_{n \to \infty} \EW[X_n] = \EW[X]$.
+		\item \textbf{\person{Markov}-Ungleichung:} Sei $\epsilon > 0$. Dann gilt $\P(\abs{X} \ge \epsilon) \le \frac{1}{\epsilon} \EW[\abs{X}]$
+		\item \textbf{\person{Hölder}-Ungleichung:} Sei $1 \le p,q \le \infty, \frac{1}{p}+ \frac{1}{q} = 1$. Dann gilt 
+		\begin{equation*}
+			\EW[\abs{XY}] \le \brackets{\E[\abs{X}^p]}^{\sfrac{1}{p}} \brackets{\E[\abs{Y}^q]}^{\sfrac{1}{q}}
+		\end{equation*}
+		Für $p = q = 2$ ergibt sich die \person{Cauchy}-\person{Schwarz}-Ungleichung.
+		\item \textbf{\person{Jensen}-Ungleichung:} Sei $X \ge 0$ und $\abb{\Phi}{[0,\infty)}{[0,\infty)}$ konvex, messbar. Dann gilt $\Phi(\EW[X]) \le \EW[\Phi(X)]$.
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	$\nearrow$ Schilling MINT.
+\end{proof}
+
+\begin{beispiel}
+	\label{5_7_beispiel}
+	Da für $X_1,\dots, X_n \sim \Bernoulli(p)$ unabhängig gilt, dass $\underbrace{X_1 + \cdots + X_n}_{\defqe X} \sim \Bin(n,p)$. Damit folgt
+	\begin{equation*}
+	  \begin{aligned}
+		  \E[X] 
+		  &= \E[X_1 + \cdots + X_n] = \E[X_1] + \cdots + \E[X_n] = n \E[X_1] \\
+		  &= n * (1 \cdot \underbrace{\P(X_1 = 1)}_{= p} + 0 \cdot \underbrace{\P(X_1 = 0)}_{= 1-p})\\
+		  &= n * p
+	  \end{aligned}
+	\end{equation*}
+\end{beispiel}
+
+\begin{proposition}[Produktformel für Erwartungswerte]
+	\label{5_8_proposition}
+	Seien $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X_1,\dots,X_n}{\Omega}{\Rd}$ unabhängige Zufallsvariablen und $\abb{f_1,\dots, f_n}{\Rd}{\R}$ messbare Funktionen. Wenn entweder $f_i(X_i) \ge 0$ ($i = 1, \dots,n$) oder $f_i(X_i) \in \Lint^{1}(\P)$ ($i=1,\dots,n$), dann gilt
+	\begin{equation*}
+		\EW[\prod_{i=1}^n f_i(X_i)] = \prod_{i=1}^n \EW[f_i(X_i)]
+	\end{equation*}
+\end{proposition}
+
+Für den Beweis von \cref{5_8_proposition} benötigen wir:
+\begin{lemma}
+	\label{5_9_lemma}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum, $\abb{X,Y}{\Omega}{\Rd}$ unabhängige Zufallsvariablen und $\abb{h}{\R^{2d}}{\R}$ messbar. Falls $h \ge 0$ oder $h(X,Y) \in \Lint^{1}(\P)$, dann gilt
+	\begin{equation*}
+		\begin{aligned}
+			\EW[h(X,Y)] &= \int_{\Rd}\int_{\Rd} h(x,y) \enskip \P(X \in \diff x)\P(Y \in \diff y) \\
+			&= \EW[\int_{\Rd} h(X,y) \enskip\P(Y \in \diff y)] \\
+			&= \EW[\int_{\Rd} h(x,Y) \enskip\P(X \in \diff x)]
+		\end{aligned}
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	$h(X,Y)$ ist eine reelle Zufallsvariable und
+	\begin{equation*}
+	\begin{aligned}
+		\E[h(X,Y)] &= \int_{\Omega} h(X(\omega),Y(\omega)) \diffskip{\P(\omega)}\\
+		\overset{\labelcref{5_3_proposition}}&{=} \int_{\R^{2d}} h(x,y)\P(X\in \diff x, Y \in \diff y) \\
+		\overset{X \upmodels Y, \labelcref{3_21_satz}}&{=} \int_{\R^{2d}} h(x,y) \P_X \otimes \P_Y(\diff x, \diff y) \\
+		\overset{\text{\person{Fubini}}}&{=} \int_{\Rd} \int_{\Rd} h(x,y) \P_X(\diff x)\P_Y(\diff y) \\
+		\overset{\labelcref{5_3_proposition}}&{=} \int_{\Omega} \int_{\Rd} h(x,Y(\omega))\P_X (\diff x) \diffskip{\P(\omega)} \\
+		&= \EW[\int_{\Rd} h(x,Y)\P_X(\diff x)]
+	\end{aligned}
+	\end{equation*}
+\end{proof}
+
+\begin{proof}[\cref{5_8_proposition}]
+	Betrachte $n=2$, Zufallsvariablen $X,Y$ und Abbildungen $f,g$. Setze $h(x,y) = f(x)g(y)$, dann folgt für $f,g \ge 0$ mit \labelcref{5_9_lemma}
+	\begin{equation*}
+		\begin{aligned}
+		\E[f(X)g(Y)] &= \int_{\Rd} \int_{\Rd} f(x) g(y) \enskip \P(X\in \diff x)\P(Y\in \diff y)\\
+		&= \int_{\Rd} f(x) \P(X \in \diff x)\int_{\Rd} g(y) \enskip \P(Y \in \diff y)\\
+		&= \E[f(X)] * \E[g(Y)]
+	\end{aligned}
+	\end{equation*}
+	Für $f(X),g(Y) \in \Lint^{1}(\P)$ zeigt obige Rechnung
+	\begin{equation*}
+		\E[f(X)g(Y)] = \E[\abs{f(X)}]\E[\abs{g(Y)}] < \infty
+	\end{equation*}
+	also $f(X)g(Y) \in \Lint^{1}(\P)$. Die Aussage folgt über die obige Rechnung. Für allgemeines $n$ folgt \cref{5_8_proposition} durch Iteration mit \cref{3_19_korollar}.
+\end{proof}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+		xmin=-5, xmax=5,
+		ymin=0, ymax=0.5,
+		samples=400,
+		axis y line=none,
+		axis x line=none,
+		ticks=none,
+		]
+		\addplot+[mark=none, blue] {1/(sqrt(2*pi))*exp(-0.5*x^2)};
+		\addplot+[mark=none, blue] {1/(sqrt(2*pi*2))*exp(-0.5*x^2/2)};
+		\end{axis}
+		
+		\draw[->] (0,0) -- (7,0);
+		\draw[->] (0,0) -- (0,5);
+		\node[lime!80!black] at (3.5,-0.5) (E) {$\mathbb{E}[X]$};
+		\draw[lime!80!black] (3.5,-0.1) -- (3.5,0.1);
+		\draw [lime!80!black,decorate,decoration={brace,amplitude=10pt,mirror, raise=1pt},yshift=0pt]
+		(0,0) -- (3,0) node [lime!80!black,midway,yshift=-0.6cm] {Streuung};
+		\node at (-0.5,0) (empty) {};
+	\end{tikzpicture}
+\end{center}

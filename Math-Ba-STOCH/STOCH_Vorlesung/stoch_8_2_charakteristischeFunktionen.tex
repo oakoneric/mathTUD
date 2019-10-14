@@ -1,0 +1,184 @@
+\section{Charakteristische Funktionen}
+
+\begin{definition}
+	\label{8_8_definition}
+	\begin{enumerate}[leftmargin=*,nolistsep]
+		\item Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X}{\Omega}{\Rd}$ eine Zufallsvariable. Dann ist
+		\begin{equation*}
+			\phi_X(u) \defeq \EW[e^{i \scal{u}{X}}] \quad (u \in \Rd)
+		\end{equation*}
+		\begriff{charakteristische Funktion} von $X$.
+		\item Ist $\P$ Verteilung in $\Rd$, dann ist
+		\begin{equation*}
+			\phi_{\P}(u) \defeq \int_{\Rd} e^{i \scal{u}{X}} \P(\diff x) \quad (u \in \Rd)
+		\end{equation*}
+		\begriff{charakteristische Funktion} von $\P$.
+	\end{enumerate}
+\end{definition}
+
+\begin{*bemerkung}
+	\begin{itemize}[leftmargin=*,nolistsep]
+		\item Da $\abs{e^{i \scal{u}{X}}} = 1$, ist die charakteristische Funktion für \textit{alle} $u \in \Rd$ definiert.
+		\item Die charakteristische Funktion ist die inverse \person{Fourier}transformation des Maßes $\P$ bzw. $\P_X$. Die mgf ist hingegen mit der \person{Laplace}transformation verwandt.
+		\item Existiert die mgf in einer Umgebung der Null, dann ist sie dort holomorph (komplex differenzierbar) und kann daher in die komplexe Ebene fortgesetzt werden (siehe Funktionentheorie). Dies führt auf die charakteristische Funktion.
+		\item Ist $X$ eine $\N_0$-wertige Funktion, so gilt $\phi_X(u) = \psi_X(e^{i u})$.
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{beispiel}
+	\label{8_9_beispiel}
+	Sei $X \sim \GammaDist(\lambda,r)$. Dann folgt mittels Rechnung wie in \cref{8_2_beispiel} und dem Integralsatz von \person{Cauchy}:
+	\begin{equation*}
+		\phi_X(u) = \left( \frac{\lambda}{\lambda-i u} \right)^r \quad (u \in \R)
+	\end{equation*}
+\end{beispiel}
+
+\begin{proposition}[Rechenregeln]
+	\label{8_10_proposition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum, $\abb{X,Y}{\Omega}{\Rd}$ mit charakteristischer Funktion $\phi_X,\phi_Y$. Dann
+	\begin{enumerate}[leftmargin=*, nolistsep]
+		\item $\phi_X(0) = 1$
+		\item Seien $A \in \R^{n \times n}$, $b \in \Rn$. Dann gilt
+			\begin{equation*}
+				\phi_{AX + b}(u) = e^{i * \scal{u}{b}} \phi_X(\trans{A} u)
+			\end{equation*} 
+		\item Wenn $X \upmodels Y$, dann folgt $\phi_{X+Y}(u) = \phi_X(u) * \phi_Y(u) \quad (u \in \Rd)$
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	Analog zu \cref{8_4_proposition}.
+\end{proof}
+
+\begin{proposition}
+	\label{8_11_proposition} 
+	Sei $X \sim \Normal(\mu,\sigma^2)$, dann gilt
+	\begin{equation*}
+		\phi_X(u) = e^{i \mu u - \frac{\sigma^2 u^2}{2}} \quad (u \in \R)
+	\end{equation*}
+	und insbesondere
+	\begin{equation*}
+		\phi_{\Normal(0,1)}(u) = e^{-\frac{u^2}{2}} \quad (u \in \R)
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	Betrachte die Standardnormalverteilung:
+	\begin{equation*}
+		\phi(u) \defeq \phi_{\Normal(0,1)}(u) = \int_{\R} e^{i u x} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}\dx
+	\end{equation*} 
+	Mit dem Differenzierbarkeitslemma für Parameterintergrale ($\nearrow$ Schilling MINT, Satz 12.2)
+	\begin{equation*}
+	\begin{aligned}
+		\phi'(u) &= \int_{\R} \brackets{\frac{\diff}{\diff u}e^{i ux}}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dx \\
+		&= \frac{1}{\sqrt{2\pi}} \int_{\R} i x e^{i ux} e^{-\frac{x^2}{2}} \dx \\
+		&= \frac{1}{\sqrt{2\pi}} \int_{\R} (-i) e^{i u x} \brackets{\frac{\diff}{\diff x} e^{-\frac{x^2}{2}}} \dx\\
+		\overset{\text{P.I.}}&{=} \underbrace{\frac{-i}{\sqrt{2\pi}} \left[ e^{i u x} e^{-\frac{x^2}{2}} \right]_{x=-\infty}^{\infty}}_{=0} + \frac{1}{\sqrt{2\pi}} \int_{\R} i \brackets{\frac{\diff}{\diff x} e^{i ux}} \dx \\
+		&= \frac{1}{\sqrt{2\pi}} \int_{\R} i * i u e^{i ux} e^{-\frac{x^2}{2}} \dx \\
+		&= -u \frac{1}{\sqrt{2\pi}} \int_{\R} e^{i u x} e^{-\frac{x^2}{2}} \dx \\
+		&= - u \phi(u)
+	\end{aligned}	
+	\end{equation*}
+	Die DGL $\phi'(u) = -u * \phi(u)$ besitzt die Lösung
+	\begin{equation*}
+		\phi(u) = \phi(0) * e^{-\frac{x^2}{2}}
+	\end{equation*}
+	mit $\phi(0) = 1$ nach \cref{8_10_proposition}, also folgt $\phi(u) = e^{-\frac{u^2}{2}}$. Für $X \sim \Normal(\mu, \sigma^2)$ gilt $Z \defeq \frac{X-\mu}{\sqrt{\sigma^2}} \sim \Normal(0,1)$ ($\nearrow$ HA 9.1) und nach \cref{8_10_proposition} folgt
+	\begin{equation*}
+		\phi_X(u) = \phi_{\sigma Z + \mu} (u) = e^{i \mu u} * \phi_Z (\sigma u) = e^{i \mu  u} * e^{-\frac{\sigma^2 u^2}{2}}
+	\end{equation*}
+\end{proof}
+
+Die Charakteristische Funktion charakterisiert eine Verteilung eindeutig:
+\begin{proposition}
+	\label{8_12_proposition} 
+	Seien $(\Omega,\F,\P), (\Omega',\F',\P')$ Wahrscheinlichkeitsräume und $\abb{X}{\Omega}{\Rd}$ sowie $\abb{Y}{\Omega'}{\Rd}$ Zufallsvariablen mit charakteristischen Funktionen $\phi_X$, $\phi_Y$. Dann:
+	\begin{equation*}
+		X \disteq Y \equivalent \phi_X(u) = \phi_Y(u) \quad \forall u \in \Rd
+	\end{equation*}
+\end{proposition}
+
+Für den Beweis benötigen wir:
+\begin{lemma}
+	\label{8_13_lemma} 
+	Seien $(\Omega,\F,\P), (\Omega',\F',\P')$ Wahrscheinlichkeitsräume und $\abb{X}{\Omega}{\Rd}$ sowie $\abb{Y}{\Omega'}{\Rd}$ Zufallsvariablen. Dann gilt $X \disteq Y$ genau dann, wenn
+	\begin{equation*}
+		\EW[f(X)] = \E'[f(Y)] \quad \forall f \in C_c(\Rd)
+	\end{equation*} 
+	Dabei ist $\E'[f(Y)]$ der Erwartungswert bezüglich $\P'$ und $C_c$ ist die Menge der stetigen Funktionen mit kompakten Träger.
+\end{lemma}
+\begin{proof_equiv}
+	\hinrichtung klar
+	\rueckrichtung Es genügt zu zeigen
+		\begin{equation}
+			\EW[\one_K(X)] = \P(X \in K) = \P'(Y \in K) = \E'[\one_K(Y)] \label{8_10_beweis}\tag{$\star$}
+		\end{equation}
+		für alle $K \subseteq \Rd$ kompakt, denn die kompakten Mengen sind ein $\cap$-stabiler Erzeuger von $\borel\Rd$ und es gibt eine aufsteigende Folge $K_n \nearrow \Rd$. Die Indikatoren $\one_K$ können wir durch $C_c$-Funktionen approximieren: Sei
+		\begin{equation*}
+		\begin{aligned}
+			\mathrm{dist}(x,A) &\defeq \inf_{y \in A}\abs{x-y} \quad \mit \quad A \subset \Rd\\
+			f_n(x) &\defeq \frac{\mathrm{dist}(x, U_n^\complement)}{\mathrm{dist}(x,U_n^\complement) + \mathrm{dist}(x,K)} \quad \mit \quad U_n = \menge{y \in \Rd \colon \mathrm{dist}(y,k) < \sfrac{1}{n}}
+		\end{aligned}
+		\end{equation*}
+		Dann ist $f_n \in C_c$ mit $f_n \searrow \one_K$. Mit monotoner Konvergenz folgt \eqref{8_10_beweis} aus der Voraussetzung.
+\end{proof_equiv}
+
+%\begin{proof}[\propref{8_12}]\leavevmode
+%	\begin{itemize}[topsep=-6pt,labelindent=0pt]
+%		\item[($\Rightarrow$)] klar
+%		\item[($\Leftarrow$)] Sei $\varphi_X(u) = \varphi_Y(u)$, $u \in \Rd$. Wir konstruieren $d$ unabhängige, identisch verteilte (u.i.v) Zufallsvariablen $N_1,\dots, N_d \sim \normal(0,1)$ unabhängig von $X$. Dann ist auch $N:=(N_1, \dots, N_d)$ unabhängig von $X$ ($\nearrow$ \cref{3_19}). Zudem gilt
+%		\begin{align*}
+%			\P(\sqrt{\sigma^2}N \in \d y) &= \prod_{i=1}^d \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{y_i^2}{2\sigma^2}} \d y_i\\
+%			&= (2\pi \sigma^2)^{-\frac{d}{2}} e^{-\frac{\abs{y}^2}{2\sigma^2}}\d y \quad\mit \abs{y} = \sqrt{\sum y_i^2}.
+%		\end{align*}
+%		Es gilt für alle $f \in C_c(\Rd)$:
+%		\begin{align*}
+%			\E[f(X + \sqrt{\sigma^2}N)] \overset{X \upmodels N}&{=} \int_{\Rd} \E[f(X +y)](2\pi\sigma^2)^{-\frac{d}{2}} e^{- \frac{\abs{y}^2}{2\sigma^2}} \d y\\
+%			&= (2 \pi \sigma^2)^{-\frac{d}{2}} \int_{\Rd} f(z) \E[e^{-\frac{\abs{X-z}^2}{2\sigma^2}}]\d z,
+%		\end{align*}
+%		wobei für $X \in \Rd$
+%		\begin{align*}
+%			e^{-\frac{\abs{X-z}^2}{2\sigma^2}}&= \prod_{i=1}^d \underbrace{e^{-\frac{\abs{X_i - z_i}^2}{\sigma^2}}}_{\varphi_{\normal(0,\sigma^2)}(X_i-z_i)}\\
+%			&= \prod_{i=1}^d \int_{\R} e^{\ii (X_i - z_i)y_i}\frac{\sigma}{\sqrt{2\pi}} e^{-\frac{\sigma^2y_i^2}{2}} \d y_i\\
+%			&= \frac{\sigma^d}{(2\pi)^{\frac{d}{2}}} \int_{\Rd} e^{\ii \scaProd{X-z}{y}}e^{-\frac{\sigma^2 \abs{y}^2}{2}} \d y,\\
+%			\intertext{so dass}
+%			\E[f(X+\sqrt{\sigma^2}N)] &= (2\pi)^{-d} \int_{\Rd} f(z) \E[\int_{\R} e^{\ii \scaProd{X-z}{y}}e^{-\frac{\sigma^2\abs{y}^2}{2}}\d y]\d z\\
+%			&= (2\pi)^{-d} \int_{\Rd} f(z) \int_{\Rd} \underbrace{\E[e^{\ii \scaProd{X}{Y}}]}_{\varphi_X(y)} e^{-\ii \scaProd{z}{y}}e^{-\frac{\sigma^2\abs{y}^2}{2}} \d y \d z \quad \text{ dom. Konv.}
+%		\end{align*}
+%		Dieselbe Rechnung auf $(\O', \F',\P')$ mit einem weiteren Vektor $N'$ u.i.v $\normal(0,1)$ Zufallsvariablen zeigt dann wegen $\varphi_X(u) = \varphi_Y(u)$.
+%		\begin{align*}
+%			\E[f(X + \sqrt{\sigma^2}N)] = \E'[f(Y + \sqrt{\sigma^2}N')]
+%		\end{align*}
+%		Mit dominierter Konvergenz folgt für $\sigma^2 \to 0$
+%		\begin{align*}
+%			\E[f(X)] = \E[f(Y)] \quad \forall f \in C_c (\Rd)
+%		\end{align*}
+%		Mit \propref{8_13} folgt die Behauptung.
+%	\end{itemize}
+%\end{proof}
+
+Folgende Proposition is analog zu \cref{8_5_proposition}.
+\begin{proposition}
+	\label{8_14_proposition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X}{\Omega}{\Rd}$ eine Zufallsvariable mit charakteristischer Funktion $\phi_X$. Wenn $\EW[\norm{X}^n] < \infty$ für ein $n \in \N$, dann existiert
+	\begin{equation*}
+		\partial_u^{\alpha} \phi_X(u) = \frac{\partial^{\abs{\alpha}}}{\partial^{\alpha_1}_{u_1} \cdots \partial^{\alpha_d}_{u_d}} \phi_X(u) \quad \forall \alpha \in \N^d_0 \mit \abs{\alpha} = \sum_{i=1}^d \alpha_i \le n
+	\end{equation*}
+	Zudem ist $\partial^{\alpha}_u \phi_X(u)$ stetig und es gilt
+	\begin{equation*}
+		\EW[X^{\alpha}] = i^{-\abs{\alpha}} \partial^{\alpha}_u \varphi_X(0)
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	Da $\norm{x^{\alpha}} \le \norm{x}^{\abs{\alpha}}$ für $x \in \Rd, \alpha \in \N^d_0$ folgt aus der Annahme $\EW[\norm{X^{\alpha}}] < \infty$. Damit 
+	\begin{equation*}
+	\begin{aligned}
+		\partial^{\alpha}_u \phi_X(u) &= \partial_u^\alpha \int_{\Rd}e^{i \scal{u}{x}} \P(X \in \diff x) \\
+		\overset{(\star)}&{=} \int_{\Rd} \partial^{\alpha}_u \int_{\Rd} e^{i \scal{u}{x}} \P(X \in \diff x) \\
+		&= \int_{\Rd} (i x)^{\alpha} e^{i \scal{u}{x}} \P(X \in \diff x) \\
+		&= i^{\abs{\alpha}} \int_{\Rd} x e^{i \scal{u}{x}} \P(X \in \diff x)
+	\end{aligned}
+	\end{equation*}
+	so dass die Ableitung existiert und für $u = 0$ die Momentenformel folgt. In $(\star)$ haben wir $\abs{\alpha}$-mal das Differenzierbarkeitslemma ($\nearrow$ MINT Satz 12.1) verwendet, wobei $\partial^{\alpha}_u e^{i \scal{u}{x}}$ integrierbar ist, da
+	\begin{equation*}
+		\norm{\partial^{\alpha}_u e^{i \scal{u}{x}}} = \norm{(i x)^{\alpha} e^{i \scal{u}{x}}} = \norm{(i x)^{\alpha}} = \norm{x^{\alpha}}
+	\end{equation*}
+\end{proof}

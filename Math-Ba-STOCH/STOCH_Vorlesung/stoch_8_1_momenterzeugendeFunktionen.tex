@@ -1,0 +1,112 @@
+\section{Momenterzeugende Funktionen}
+\textbf{Ziel:} ``Übersetze'' Verteilungen in Funktionen. Insbesondere einfache Faltungsoperation ($\nearrow$ 5.3). 
+
+\begin{definition}
+	\label{8_1_definition}
+	\begin{enumerate}[leftmargin=*, nolistsep]
+		\item Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X}{\Omega}{\R}$ eine Zufallsvariable. Dann heißt
+		\begin{equation*}
+			m_X(u) \defeq \EW[e^{uX}] \quad (u \in \R) \text{, so dass } m_X(u) < \infty
+		\end{equation*}
+		\begriff{momenterzeugende Funktion} von $X$ (mgf = moment generating function)
+		\item Ist $\P$ eine Verteilung auf $\R$, so heißt
+		\begin{equation*}
+			m_{\P}(u) \defeq \int_{\R} e^{uX} \P(\diff x) \quad (u \in \R) \text{, so dass } m_{\P}(u) < \infty
+		\end{equation*}
+		\begriff{momenterzeugende Funktion} von $\P$.
+	\end{enumerate}
+\end{definition}
+
+\begin{beispiel}
+	\label{8_2_beispiel}
+	Sei $X \sim \GammaDist(\lambda,r)$.
+	\begin{align*}
+		m_X(u) &= \EW[e^{uX}]\\
+		&= \int_{0}^{\infty} e^{ux}\lambda e^{-\lambda x}\frac{(\lambda x)^{r-1}}{\Gamma(r)}\dx\\
+		&= \frac{\lambda^r}{\Gamma(r)} \int_{0}^{\infty} e^{-(\lambda-u)x} x^{r-1}\dx \qquad \text{substituiere } y= (\lambda-u)x \\
+		&= \frac{\lambda^r}{\Gamma(r)} \int_0^{\infty} e^{-y}\frac{y^{r-1}}{(\lambda-u)^{r-1}}\frac{\diff y}{(\lambda-u)} \\
+		&= \left( \frac{\lambda}{\lambda-u} \right)^r \qquad u < \lambda
+	\end{align*}
+\end{beispiel}
+
+\begin{lemma}
+	\label{8_3_lemma}
+	Ist $X$ $\N_0$-wertig, so gilt für alle $u \in \R$ mit $m_X(u) < \infty$
+	\begin{equation*}
+		m_X(u) = \EW[e^{uX}] = \psi_X(e^u)
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	Klar, da folgt aus \cref{8_1_definition}.
+\end{proof}
+
+\begin{proposition}
+	\label{8_4_proposition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X,Y}{\Omega}{\R}$ Zufallsvariablen mit mgf's $m_X$ bzw. $m_Y$. Es gelten:
+	\begin{enumerate}[leftmargin=*]
+		\item $m_X(0) = 1$
+		\item Für $a,b \in \R$ gilt $m_{aX+b}(u) = e^{bu} * m_X(au)$ für $u$ so dass $m_X(au) < \infty$.
+		\item $X \upmodels Y \follows m_{X+Y}(u) = m_X(u)* m_Y(u)$ für alle $u$, so dass $m_X(u), m_Y(u) < \infty$ 
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	\begin{enumerate}[nolistsep, leftmargin=4em, label=(zu \arabic*)]
+		\item Klar.
+		\item $m_{aX+b}(u) = \EW[e^{aXu + bu}] = e^{bu} \EW[e^{auX}] = e^{bu} m_X(au)$.
+		\item $m_{X+Y}(u) = \EW[e^{Xu + Yu}] \overset{X \upmodels Y}{=} \EW[e^{uX}] \E[e^{uY}] = m_X(u) * m_Y(u)$
+	\end{enumerate}
+\end{proof}
+
+
+Der Bezeichnung ``momenterzeugend'' erklärt sich mit der folgenden Proposition:
+\begin{proposition}
+	\label{8_5_proposition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X}{\Omega}{\R}$ eine Zufallsvariable mit momenterzeugender Funktion $m_X$, so dass ein $\epsilon > 0$ existiert mit $m_X(u)<\infty$ auf $[0,\epsilon)$. Dann gilt
+	\begin{equation*}
+		\EW[X^n] = \frac{\diff^n}{\diff u^n} m_X(0) \quad \forall n \in \N
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	Für alle $u \in \R$ mit $m_X(u) < \infty$ folgt
+	\begin{equation*}
+		m_X(u) = \EW[e^{uX}] = \EW[\sum_{k=0}^{\infty}\frac{(uX)^k}{k!}] 		\overset{\person{Lebesgue}}{=} \sum_{k=0}^{\infty} \frac{\EW[X^k]u^k}{k!}
+	\end{equation*}
+	$n$-fachen Differenzieren liefert
+	\begin{equation*}
+		\frac{\diff^n}{\diff u^n} m_X(0) = \sum_{k=0}^{\infty} \frac{\EW[X^k]}{k!} k(k-1)\cdots(k-n+1) u^{k-n} \\
+	\end{equation*}
+	so dass
+	\begin{equation*}
+		\frac{\diff^n}{\diff u^n} m_X(0) = \frac{\EW[X^n]}{n!} n(n-1)\cdots(n-n+1) = \EW[X^n]
+	\end{equation*}
+\end{proof}
+
+Die mgf charakterisiert eine Verteilung eindeutig:
+\begin{satz}
+	\label{8_6_satz}
+	Seien $(\Omega,\F,\R),(\Omega',\F',\P')$ Wahrscheinlichkeitsräume und $\abb{X}{\Omega}{\R}$ sowie $\abb{Y}{\Omega'}{\R}$ Zufallsvariablen mit mgfs $m_X$, $m_Y$. Wenn $m_X(u)$ und $m_Y(u)$ in einer Umgebung um Null definiert sind und im Definitionsbereich gilt $m_X(u) = m_Y(u)$, so haben $X$ und $Y$ die selben Verteilungen ($X \disteq Y$).
+\end{satz}
+\begin{proof}
+	Sind $X,Y$ $\N_0$-wertig, so folgt dies aus \cref{8_3_lemma} und dem entsprechenden Resultat für pgfs. Der allgemeine Fall folgt aus dem Resultat zu charakteristischen Funktionen (\cref{8_12_satz}).
+\end{proof}
+
+\begin{beispiel}[(vgl. \cref{4_3_lemma})]
+	\label{8_7_beispiel}
+	Seien $X \sim \GammaDist(\lambda,r)$ und $Y \sim \GammaDist(\lambda,s)$ unabhängig, dann gilt nach \cref{8_2_beispiel}
+	\begin{equation*}
+		m_X(u) = \left( \frac{\lambda}{\lambda-u} \right)^r \quad (u < \lambda) \qquad \und \qquad m_Y(u) = \left( \frac{\lambda}{\lambda-u} \right)^s \quad (u <\lambda)
+	\end{equation*}
+	und nach \cref{8_4_definition}
+	\begin{equation*}
+		m_{X+Y}(u) = m_X(u) * m_Y(u) =  \left( \frac{\lambda}{\lambda-u} \right)^r * \left( \frac{\lambda}{\lambda-u} \right)^s = \left( \frac{\lambda}{\lambda-u} \right)^{r+s}
+	\end{equation*}
+	Dies ist die mgf einer $\GammaDist(\lambda,r+s)$ Verteilung. Nach \cref{8_6_satz} folgt $X+Y \sim \GammaDist(\lambda, r+s)$.
+\end{beispiel}
+
+%\begin{*anmerkung}
+%	\begin{itemize}
+%		\item pgf: $\psi_X(u) = \E[u^X]$
+%		\item mgf: $m_X(u) = \E[e^{uX}]$
+%	\end{itemize}
+%\end{*anmerkung}
+

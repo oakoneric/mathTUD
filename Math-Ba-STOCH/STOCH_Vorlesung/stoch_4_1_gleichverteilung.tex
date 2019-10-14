@@ -1,0 +1,26 @@
+\section{Stetige Gleichverteilung}
+
+\begin{*erinnerung}
+	$\Omega \subset \Rn$ Borel-messbar mit Lebesgue-Volumen $0 < \lambda(\Omega) < \infty$. Wahrscheinlichkeitsmaß ist $(\Omega, \borel(\Omega))$ mit Dichte
+	\begin{equation*}
+		\rho(x) = \frac{1}{\lambda(\Omega)}
+	\end{equation*}
+	heißt stetige Gleichverteilung auf $\Omega$, notiert mit $\Uni(\Omega)$.
+\end{*erinnerung}
+
+Für alle $A \in \borel\Omega$ gilt:
+\begin{equation*}
+	\P(A) = \int_{A} \rho(x) \dx = \frac{\lambda(A)}{\lambda(\Omega)}.
+\end{equation*}
+Meist verwenden wir $\Uni([a,b])$ für $a < b$ (Gleichverteilung auf Intervall) mit \begin{equation*}
+	\rho(x) = \frac{1}{(b-a)} \mit a \le x \le b
+\end{equation*} 
+und Verteilungsfunktion
+\begin{equation*}
+	F(x) = 
+	\begin{cases}
+	0 & x < a\\
+	\int_{a}^{x} \frac{1}{b-a} \dy = \frac{x-a}{b-a} & a \le x \le b\\
+	1 & x >b.
+	\end{cases}
+\end{equation*}

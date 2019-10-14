@@ -1,0 +1,121 @@
+\section{Varianz und höhere Momente}
+
+\begin{definition}[$k$-te Momente]
+	\label{5_10_definition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $\abb{X}{(\Omega,\F)}{(\R, \borel\R)}$ eine reelle Zufallsvariable. Dann ist für $k \in \N$
+	\begin{equation*}
+		\EW[X^k] = \int_{\Omega} X^k(\omega) \enskip \P(\diff \omega) = \int_{\R} x^k \enskip \P(X \in \diff x)
+	\end{equation*}
+	das \begriff{$k$-te Moment} von $X$ (sofern definiert).
+\end{definition}
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep,leftmargin=*]
+		\item Erwartungswert $\cong$ erstes Moment
+		\item Das $k$-te Moment existiert genau dann, wenn $\int_{\Omega} \abs{X(\omega)^k}\P(\diff \omega) < \infty$ bzw. $X \in \Lint^{k}(\P)$.
+		\item MINT: $\Lint^{r}(\P) \subseteq \Lint^{s}(\P)$ für $s \le r$
+	\end{itemize}
+\end{*bemerkung}
+
+Von Interesse ist insbesondere das zweite Moment.
+\begin{definition}[Varianz, Standardabweichung]
+	\label{5_11_definition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum und $X,Y \in \Lint^{2}(\P)$ reelle Zufallsvariablen.
+	\begin{enumerate}[leftmargin=*,nolistsep]
+		\item Die \begriff{Varianz} von $X$ ist $\Var[X] = \EW[(X - \EW)^2] = \EW[X^2] - \EW[X]^2$
+		\item Die \begriff{Standardabweichung}/Streuung von $X$ ist $\sqrt{\Var[X]}$.
+		\item Die \begriff{Kovarianz} von $X$ und $Y$ ist
+		\begin{equation*}
+			\Cov{X}{Y} = \EW[(X-{\EW[X]})(Y-{\EW[Y]})] = \EW[XY] - \EW[X]\EW[Y]
+		\end{equation*}
+		\item Sind $\Var[X], \Var[Y] \ge 0$, dann ist die \begriff{Korrelation} von $X$ und $Y$ definiert als
+		\begin{equation*}
+			\Corr{X}{Y} = \frac{\Cov{X}{Y}}{\sqrt{\Var[X]\Var[Y]}}
+		\end{equation*} 
+		\item Gilt $\Corr{X}{Y} = 0$, so heißen $X,Y$ \begriff{unkorreliert}.
+	\end{enumerate}
+\end{definition}
+
+\begin{*bemerkung}
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item Die Endlichkeit der Ausdrücke in \cref{5_11_definition} folgt aus der \person{Cauchy}-\person{Schwarz}-Ungleichung
+		$\EW[\abs{XY}] \le (\EW\abs{X}^2)^{\frac{1}{2}}\cdot (\EW\abs{Y}^2)^{\frac{1}{2}}$
+		\item Für die (Ko)varianz gilt
+		\begin{equation*}
+			\begin{aligned}
+			\EW[{(X -\EW[X])(Y-\EW[Y])}] &= \EW[{XY - X\EW[Y] - Y\EW[X] + \EW[X]\EW[Y]}]\\
+			&= \EW[XY] - \EW[X]\EW[Y] - \EW[X]\EW[Y] + \EW[X]\EW[Y]\\
+			&= \EW[XY] - \EW[X]\EW[Y].
+			\end{aligned}
+		\end{equation*}
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{beispiel}
+	\label{5_12_beispiel}
+	Sei $X\sim\Bin(n,p)$, dann gilt
+	\begin{equation*}
+		\Var[X] = \EW[X^2] - \underbrace{\EW[X]^2}_{=np}
+	\end{equation*}
+	mit
+	\begin{equation*}
+	\begin{aligned}
+		\EW[X^2] &= \sum_{k=0}^n k^2 \binom{n}{k} p^k (1-p)^{n-k} \\
+		&= np \sum_{k=1}^n k \frac{(n-1)!}{(n-1-(k-1))!(k-1)!} p^{k-1} (1-p)^{n-1-(k-1)} \\
+		&= np \sum_{\ell = 0}^{n-1}(\ell+1)\binom{n-1}{\ell} p^\ell (1-p)^{n-1-\ell} \quad \mit \ell = k-1 \\
+		&= np \left(1 + \sum_{\ell=0}^{n-1} \ell \, \binom{n-1}{\ell} p^\ell (1-p)^{n-1-\ell} \right) \\
+		&= np (1+(n-1)p) * 1) \quad \text{mit binomischem Lehrsatz} \\
+		&= np + n(n-1)p^2 \\
+	\end{aligned}
+	\end{equation*}
+	Damit ist $\Var[X] = np + n^2 p^2 - n p^2 - n^2 p^2 = np(1-p)$.
+\end{beispiel}
+
+\begin{proposition}[Eigenschaften der (Ko-)Varianz]
+	\label{5_13_proposition}
+	Sei $(\Omega,\F,\P)$ ein Wahrscheinlichkeitsraum, $X,Y, X_1, \dots, X_n \in \Lint^{2}(\P), a,b \in \R$.
+	\begin{enumerate}[leftmargin=*, nolistsep]
+		\item $\Var[aX + b] = a^2 \, \Var[X]$
+		\item  Sei $\Cov{X}{Y}^2 \le \Var[X] \Var[Y]$ und insbesondere $\abs{\Corr{X}{Y}} \le 1$
+		\item $\Var[\sum_{i=1}^n X_i] = \sum_{i=1}^n \Var[X_i] + \sum_{\substack{i,j=1//i\neq j}}^n \Cov{X_i}{X_j}$. Sind die $X_1, \dots, X_n$ paarweise unkorreliert, so gilt die \begriff{Formel von \person{Bienaymé}}:
+		\begin{equation*}
+			\Var[\sum_{i=1}^n X_i] = \sum_{i=1}^n \Var[X_i]
+		\end{equation*}
+		\item $X \upmodels Y \follows \Corr{X}{Y} = 0$
+		\item \begriff{\person{Tschebyscheff}-Ungleichung}: Für $\epsilon > 0$ gilt
+		\begin{equation*}
+			\P(\abs{X - \EW[X]} > \epsilon) \le \frac{\Var[X]}{\epsilon^2}
+		\end{equation*}
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\begin{enumerate}[leftmargin=*, nolistsep, label=(zu \arabic*)]
+		\item Da $\EW[aX + b] = a\EW[X] + b$, folgt 
+		\begin{equation*}
+			\Var[aX+b] = \EW[{(a\E[X] +b - (a\E[X] + b))^2}] = \EW[{a^2(X-\EW[X])^2}] = a^2 \Var[X]
+		\end{equation*}
+		\item Wegen (1) können wir oBdA annehmen, dass $\E[X] = 0 = \E[Y]$. Dann wird (2) zu $\E[XY]^2 \le \EW[X] * \EW[Y]$ und dies ist die \person{Cauchy}-\person{Schwarz} Ungleichung.
+		\item Wähle wieder oBdA $\EW[X_i] = 0$. Dann 
+		\begin{equation*}
+		\begin{aligned}
+			\Var[\sum_{i=1}^n X_i] &= \EW[(\sum_{i=1}^n X_i)^2] \\
+			&= \EW[\sum_{i,j = 1}^n X_i X_j] \\
+			&= \sum_{i,j = 1}^n \EW[X_i X_j]\\
+			&= \sum_{i,j = 1}^n \Cov{X_i}{X_j} \\
+			&= \sum_{i=1}^n \Var[X_i] + \sum_{\substack{i,j = 1 \\ i \neq j}}^n \Cov{X_i}{X_j}
+		\end{aligned}
+		\end{equation*} 
+		\item Aus der Unabhängigkeit von $X$ und $Y$ folgt $\EW[XY]=\EW[X] \EW[Y]$. Somit gilt
+		\begin{equation*}
+			\Cov{X}{Y} = \EW[XY] - \EW[X] \EW[Y] = 0 \quad \follows \quad \Corr{X}{Y} = 0
+		\end{equation*}
+		\item Wende die \person{Markov}-Ungleichung auf $X' = (X-\EW[X])^2$ an, dann folgt
+		\begin{equation*}
+		\begin{aligned}
+			\P(\abs{X - \EW[X]} > \epsilon) &= \P((X - \EW[X])^2 > \epsilon^2) \\
+			\overset{\person{Markov}}&{\le} \frac{1}{\epsilon^2} \, \, \EW[{(X - \EW[X])^2}] \\
+			&= \frac{\Var[X']}{\epsilon^2}
+		\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+\end{proof}

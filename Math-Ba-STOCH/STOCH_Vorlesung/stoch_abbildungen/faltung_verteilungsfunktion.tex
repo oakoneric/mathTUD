@@ -1,0 +1,39 @@
+\documentclass[tikz]{standalone}
+
+\usepackage{tudscrcolor}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgf}
+
+\usepackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\begin{document}
+	
+	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+	
+	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+		%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+		%Shape: Axis 2D [id:dp9744249503209287] 
+		\draw  (31,193.9) -- (369,193.9)(64.8,22) -- (64.8,213) (362,188.9) -- (369,193.9) -- (362,198.9) (59.8,29) -- (64.8,22) -- (69.8,29)  ;
+		%Straight Lines [id:da04303841222166549] 
+		\draw [fill={rgb, 255:red, 247; green, 9; blue, 9 }  ,fill opacity=1 ]   (64.8,193.9) -- (173,107) ;
+		%Straight Lines [id:da9935141331554764] 
+		\draw    (173,107) -- (302.92,106.83) ;
+		%Curve Lines [id:da5574713559730453] 
+		\draw    (64.8,193.9) .. controls (131.92,192.83) and (188.88,115.75) .. (261.92,106.83) ;
+		%Straight Lines [id:da5561757729548006] 
+		\draw    (207.92,189.08) -- (208,198.67) ;
+		%Straight Lines [id:da41564219518446843] 
+		\draw    (301.92,189.08) -- (302,198.67) ;
+		% Text Node
+		\draw (208.83,207.17) node   {$1$};
+		% Text Node
+		\draw (302.83,207.17) node   {$2$};
+		% Text Node
+		\draw (156.83,85.17) node  [align=left] {Verteilungsfunktion $\displaystyle F$};
+	\end{tikzpicture}
+\end{document}

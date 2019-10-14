@@ -1,0 +1,49 @@
+\begin{definition}
+	\label{7_1_definition}
+	Sei $\mu \in \R$, $\sigma^2 > 0$. Das Wahrscheinlichkeitsmaß $\Normal(\mu, \sigma^2)$ auf $(\R, \borel\R)$ mit Dichtefunktion
+	\begin{equation*}
+		g_{\mu,\sigma^2}(x) \defeq \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \quad (x \in \R)
+	\end{equation*}
+	heißt \begriff{Normalverteilung} mit Parametern $\mu$ und $\sigma^2$.
+	Im Fall $\mu = 0$ und $\sigma^2 = 1$, heißt $\Normal(0,1)$ \\ \begriff{Standardnormalverteilung}.
+\end{definition}
+
+\begin{*bemerkung}
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item $g_{\mu, \sigma^2}$ ist eine Wahrscheinlichkeitsdichte, da $\int_{\R} e^{-\frac{x^2}{2}} \dx = \sqrt{2\pi}$.
+		\item $\mu$ und $\sigma^2$ sind gerade \textit{Erwartungswert} und \textit{Varianz} der Normalverteilung $\Normal(\mu, \sigma^2)$. Sei dazu $X \sim \Normal(\mu, \sigma^2)$.
+		\begin{equation*}
+		\begin{aligned}
+			\EW[X] 
+			&= \frac{1}{\sqrt{2\pi \sigma^2}} \int_{\R} x e^{-\frac{(x-\mu)^2}{2\sigma^2}} \dx \qquad  \text{substituiere } y = \frac{x-\mu}{\sqrt{\sigma^2}} \\
+			&= \frac{1}{\sqrt{2\pi}} \int_{\R} (\sqrt{\sigma^2}y + \mu)e^{-\frac{y^2}{2}} \dy \\
+			&= \sqrt{\frac{\sigma^2}{2\pi}} \underbrace{\int_{\R} y e^{-\frac{y^2}{2}}\dy}_{=0, \text{ wg.Symmetrie}} + \frac{1}{\sqrt{2\pi}}\underbrace{\int_{\R} \mu e^{-\frac{y^2}{2}}\dy}_{\mu\sqrt{2\pi}} \\
+			&= \mu \\
+			\Var(X) 
+			&= \frac{1}{\sqrt{2\pi \sigma^2}} \int_{\R} (x-\mu)^2 e^{-\frac{(x-\mu)^2}{2\sigma^2}} \dx \qquad \text{substituiere } y= \frac{x-\mu}{\sqrt{\sigma^2}} \\ 
+			&= \frac{\sigma^2}{\sqrt{2\pi}} \int_{\R} y^2 e^{-\frac{y^2}{2}} \dy \\
+			&= \frac{\sigma^2}{\sqrt{2\pi}} \int_{\R} (-y) \left(-y e^{-\frac{y^2}{2}} \right) \dy \\
+			\overset{\text{part. Int.}}&{=} \frac{\sigma^2}{\sqrt{2\pi}} \Bigg( \underbrace{\left[-y e^{-\frac{y^2}{2}} \right]_{-\infty}^{\infty}}_{=0} + 
+			\underbrace{\int_{\R} e^{-\frac{y^2}{2}} \dy}_{= \sqrt{2\pi}} \Bigg)\\
+			&= \sigma^2
+		\end{aligned}
+		\end{equation*}
+	\end{itemize}
+\end{*bemerkung}
+
+Die Popularität der Normalverteilung erklärt sich insbesondere aus dem zentralen Grenzwertsatz. Hier eine einfache Form davon:
+
+\begin{proposition}[de \person{Moivre}-\person{Laplace}, lokaler Grenzwertsatz]
+	\label{7_2_definition}
+	Seien $p \in (0,1)$ und $B_{n,p}(k) = \binom{n}{k}p^k(1-p)^{n-k}$ die Zähldichte von $\Bin(n,p)$, $g(x)$ die Dichte der Standardnormalverteilung. Dann gilt für beliebiges $c>0$ mit
+	\begin{equation*}
+		x_n(k) = \frac{k-np}{\sqrt{np(1-p)}}
+	\end{equation*}
+	der Grenzwert
+	\begin{equation*}
+		\lim_{n\to \infty} \max_{k : \abs{x_n(k)} < c} \abs{\frac{\sqrt{np(1-p)} * B_{n,p}(k)}{g(x_n(k))} -1} = 0
+	\end{equation*}
+\end{proposition}
+\begin{proof}
+	siehe Handout bzw. später als Korollar des zentralen Grenzwertsatzes
+\end{proof}
