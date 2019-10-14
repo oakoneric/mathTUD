@@ -1,0 +1,74 @@
+\chapter{Gradienten- und Gradientenähnliche Verfahren}
+
+\vortragender{Duc Anh Nguyen}
+
+\textbf{Motivation:} Die Richtung des steilsten Abstiegs von $\abb{f}{\Rn}{\R}$ (differenzierbar) im Punkt $x$ ist ein Vektor $d$, der folgende Optimierungsaufgabe löst:
+\begin{equation*}
+	\min \nabla \trans{f(x)} d \text{ unter der Nebenbedingung } \norm{d} = 1
+\end{equation*}
+\begin{equation*}
+	\scal{\nabla f(x)}{d'} \le \norm{\nabla f(x)} * \norm{d'} = \scal{\nabla f(x)}{\frac{\nabla f(x)}{\norm{f(x)}}} \follows d = - \frac{\nabla f(x)}{\norm{\nabla f(x)}}
+\end{equation*}
+
+\begin{algorithmus} \label{algorithmus 8.1}
+	\begin{enumerate}[label = Schritt \arabic*:, start=0, leftmargin = 5em, nolistsep]
+		\item $x^0 \in \Rn$, $\sigma, \beta \in (0,1)$, $\epsilon \ge 0$, $k \defeq 0$.
+		\item Wenn $\norm{\nabla f(x^k)} \le \epsilon$: \texttt{STOP}
+		\item Setze $d^k \defeq - \nabla f(x^k)$.
+		\item Bestimme $t_k \defeq \max_{\ell \in \N_0} \beta^\ell$ mit $f(x^k + t_k d^k) \le f(x^k) + \sigma t_k \nabla \trans{f(x^k)} d^k$
+		\item Setze $x^{k+1} \defeq x^k + t_k d^k$, $k \leftarrow k + 1$, gehe zu Schritt 1.
+	\end{enumerate}
+\end{algorithmus}
+
+\begin{lemma} \label{lemma 8.2}
+	Seien $\abb{f}{\R^n}{\R}$ stetig differenzierbar und $x,d \in \Rn$, $\folge[k \in \N]{x^k}, \folge[k \in \N]{d^k} \subseteq \Rn$ mit $x_k \to x$ und $d^k \to d$, sowie $\folge[k \in \N]{t_k} \subseteq \R_{++}$ mit $t_k \to 0$. Dann ist 
+	\begin{equation*}
+		\lim_{k \to \infty} \frac{f(x^k + t_k d_k) - f(x^k)}{t_k} = \nabla \trans{f(x)} d
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	$\xi^k \in [x^k , x^k + t_k d^k]$ mit $f(x^k + t_k d^k) - f(x^k) = t_k \nabla \trans{f(\xi^k)} d^k$ (Mittelwertsatz). Wegen $t_k \to 0$ und $d^k \to d$ gilt $x^k + t_k d^k \to x$ und $\xi^k \to x$. Aufgrund der stetigen Differenzierbarkeit ist auch $\nabla \trans{f(\xi^k)} d \to \nabla \trans{f(x)} d$. Daraus folgt nun 
+	\begin{equation*}
+		\lim_{k \to \infty} \frac{f(x^k + t_k d^k) - f(x^k)}{t_k} = \lim_{k \to \infty} \nabla \trans{f(\xi^k)} d^k = \nabla \trans{f(x)} d
+	\end{equation*}
+\end{proof}
+
+Für den nachfolgenden Satz setze $\epsilon = 0$, damit die erzeugte Folge $\folge[k \in \N]{x^k}$ nicht nach endlich vielen Schritten abgebrochen wird.
+
+\begin{satz}
+	Sei $\abb{f}{\Rn}{\R}$ stetig differenzierbar und $\folge[k \in \N]{x^k}$ eine von \cref{algorithmus 8.1} erzeugte Folge. Dann ist jeder Häufungspunkt von $\folge[k \in \N]{x^k}$ ein stationärer Punkt ($\nabla f(x^\ast) = 0$).
+\end{satz}
+\begin{proof}
+	Sei $x^\ast \in \Rn$ ein Häufungspunkt von $\folge{x_k}$. Sei $\folge[K]{x_k}$ eine gegen $x^\ast$ konvergente Teilfolge von $\folge[k \in \N]{x^k}$. Dadurch konvergiert $\folge[K]{f(x^k)}$ gegen $f(x^\ast)$. Angenommen $\nabla f(x^\ast) \neq 0$. Dann ist
+	\begin{equation*}
+		f(x^{k+1}) = f(x^k + t_k d^k) \le f(x^k) + \sigma t_k \underbrace{\nabla \trans{f(x^k)} d^k}_{\le 0} \le f(x^k)
+	\end{equation*}
+	Somit ist die Folge $\folge[k \in \N]{f(x^k)}$ monoton fallend und $f(x^k) \to f(x^\ast)$. Die Folge $\folge[K]{d^k}$ konvergiert gegen $d = - \nabla f(x^\ast) \neq 0$. Weiter gilt $f(x^k) - f(x^{k+1}) \overset{k \to \infty}{\longrightarrow} 0$. Somit gilt resultierend aus Schritt 2 und Schritt 3 von \cref{algorithmus 8.1} 
+	\begin{equation*}
+		t_k \nabla \trans{f(x^k)} d^k = t_k \frac{f(x^k + t_k d^k) - f(x^k)}{t_k} \overset{K \ni k \to \infty}{\longrightarrow} 0
+	\end{equation*}
+	Somit ist $\folge[K]{t_k} \to 0$. Setze für Schritt 3 eine Folge $\folge{\ell_k}$ mit $t_k = \beta^{\ell_k}$, sodass gilt
+	\begin{align*}
+		&f(x^k + \beta^{\ell_k - 1} d^k) > f(x^k) + \sigma \beta^{\ell_k} \nabla \trans{f(x^k)} d^k \\
+		\follows &\frac{f(x^k + \beta^{\ell_k -1} d^k) - f(x^k)}{\beta^{\ell_k - 1}} > \sigma \nabla \trans{f(x^k)} d^k \\
+		\overset{\labelcref{lemma 8.2}, k \to \infty}{\follows} &- \norm{f(x^\ast)} \ge - \sigma \norm{\nabla f(x^\ast)}^2
+	\end{align*}
+	Dies ist nun ein Widerspruch, d.h. die Annahme war falsch und es gilt $\nabla f(x^\ast) = 0$.
+\end{proof}
+
+\begin{algorithmus} \label{algorithmus 8.5}
+	Für das gradientenähnliche Verfahren wandeln wir Schritt 2 in \cref{algorithmus 8.1} ab und wählen $d^k \in \R$ mit $\nabla \trans{f(x^k)} d^k < 0$.
+\end{algorithmus}
+
+\begin{satz}
+	Sei $\abb{f}{\Rn}{\R}$ stetig differenzierbar, $\folge{x_k}$ und $\folge{d^k}$ von \cref{algorithmus 8.5} erzeugte Folgen mit der Eigenschaft, dass $\folge{d^k}$ gradientenähnlich bezüglich $f$ und $\folge{x^k}$ ist, so ist jeder Häufungspunkt der Folge $\folge{x^k}$ ein stationärer Punkt von $f$.
+	
+	\textbf{gradientenähnlich}: es existieren Konstanten $c > 0$ und $\epsilon > 0$, sodass für alle $k \in \N$ gilt $\norm{d^k} \le c$ und $\nabla \trans{f(x^k)} d \le - \epsilon$ für alle $k \in \N$ hinreichend groß.
+\end{satz}
+
+\begin{beispiel}
+	\begin{enumerate}[label=(\alph*), leftmargin=*, nolistsep]
+		\item $d^k = - \nabla f(x^k)$.
+		\item Sei $H$ positiv definit und symmetrisch. Setze $d^k = -H^{-1} \nabla f(x^k)$, $\nabla \trans{f(x^k)} d^k = - \nabla \trans{f(x^k)} H^{-1} \nabla f(x^k) < 0$.
+	\end{enumerate}
+\end{beispiel}
