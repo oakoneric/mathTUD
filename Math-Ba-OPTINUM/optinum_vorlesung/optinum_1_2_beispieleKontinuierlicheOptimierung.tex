@@ -1,0 +1,31 @@
+\section{Beispiele zur kontinuierlichen Optimierung}
+
+\subsection{Transportoptimierung}
+
+Es gebe Erzeuger $i \in I = \menge{0, \dots , n}$ und Verbraucher $j \in J = \menge{1, \dots , n}$. Weiterhin seien die Kosten $c_{ij}$ für den Transport einer Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_j > 0$ für alle $i$ und $j$ gegeben. Wie muss der Transport organisiert werden, damit die Gesamtkosten minimal sind?
+
+Für jedes mathematische Modell einer OA braucht man
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item geeignete Variablen ($\to x$)
+	\item Zielfuntkion ($\to f$)
+	\item Nebenbedingungen ($\to G$)
+\end{itemize}
+
+\begin{description}
+	\item[Variablen] $x_{ij} \ge 0$ für alle $i \in I$ und $j \in J$ beschreibe die Einheiten, die von $i$ nach $j$ transportiert werden.
+	\item[Zielfunktion] $f(x) = \sum\limits_{i \in I} \sum\limits_{j \in J} c_{ij} x_{ij} \to \min$
+	\item[Nebenbedingungen] \leavevmode
+	\begin{itemize}[nolistsep, topsep=-\parskip]
+		\item Kapazitätsbeschränkung der Erzeuger $i \in I$: $\sum\limits_{j \in J} x_{ij} \le a_i \quad (i \in I)$
+		\item Bedarfserfüllung von Verbrauchern $j \in J$: $\sum\limits_{i \in I} x_{ij} \ge b_j \quad (j \in J) $
+	\end{itemize}
+\end{description}
+
+Somit können wir als Modell formulieren:
+\begin{equation*}
+	\begin{aligned}
+	f(x) = \sum_{i \in I} \sum_{j \in J} c_{ij} x_{ij} \to \min \quad \bei &\sum_{j \in J} x_{ij} \le a_i \enskip (i \in I), \\
+	&\sum_{i \in I} x_{ij} \ge b_j \enskip (j \in J), \\
+	& x_{ij} \ge 0 \enskip ((i,j) \in I \times J)
+	\end{aligned}
+\end{equation*}

@@ -1,0 +1,66 @@
+\section{Aufgabenstellung und Grundbegriffe}
+
+Es seien $G \subseteq \Rn$ und $\abb{f}{G}{\R}$ gegeben. In dieser Vorlesung betrachten wir Optimierungsaufgaben (OA) der Form
+\begin{equation}\label{eq: oa}
+	f(x) \to \min \quad \bei x \in G
+\end{equation}
+Man nennt
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item $f$ die \begriff{Zielfunktion},
+	\item $G$ den \begriff{zulässigen Bereich} und
+	\item ein $x \in  G$ \begriff{zulässigen Punkt} (oder zulässige Lösung).
+\end{itemize}
+Ein zulässiger Punkt $x^\ast \in G$ heißt \begriff{optimal} (oder Lösung oder optimale Lösung), wenn für alle $x \in G$ die Ungleichung
+\begin{equation}
+	f(x^\ast) \le f(x)
+\end{equation}
+gilt. Falls das Problem \eqref{eq: oa} lösbar ist, so wird mit $f^\ast = f(x^\ast)$ der \begriff{Optimalwert} bezeichnet. Das Problem \eqref{eq: oa} ist ein
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item \begriff{unrestringiertes} (oder freies) Optimierungsproblem, wenn $G = \Rn$ gilt,
+	\item andernfalls (d.h. für $G \neq \Rn$) ein \begriff{restringiertes} Problem
+\end{itemize}
+und außerdem eine
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item \begriff{diskrete} (oder ganzzahlige) OA (engl. integer program), falls jede Variable eine diskreten Menge angehört
+	\item \begriff{kontinuierliche} (oder stetige) OA, falls alle Variablen stetige Werte annehmen
+	\item gemischt ganzzahlige OA, wenn sowohl stetige als auch diskrete Variablen vorkommen.
+\end{itemize}
+
+Gilt in \eqref{eq: oa} $f(x) = \trans{c} x$ für ein $c \in \Rn$ und ist $G$ durch lineare Bedingungen beschreibbar, so heißt \eqref{eq: oa} \begriff{linear}. In diesem Fall lässt sich \eqref{eq: oa} schreiben als
+\begin{equation}
+	\trans{c} x \to \min \quad \bei Ax = a, Bx \le b
+\end{equation}
+mit geeigneten Matrizen $A$ und $B$ sowie Vektoren $a$ und $b$.
+
+Gerade für (gemischt) ganzzahlige OA kann die Lösung der Originalaufgabe schwierig sein. Eine verwandte, jedoch im Allgemeinen leichter zu lösende Aufgabe kann  in diesen Fällen wie folgt erhalten werden:
+
+\begin{definition}
+	Wir betrachten die Optimierungsaufgaben
+	\begin{itemize}[nolistsep, topsep=-\parskip]
+		\item[(P)] $f(x) \to \min \quad \bei x \in D \cap E$
+		\item[(Q)] $g(x) \to \min \quad \bei x \in E$
+	\end{itemize}
+	(Q) heißt \begriff{Relaxation} zu (P) falls $g(x) \le f(x)$ für alle $x \in D \cap E$ gilt. In vielen Fällen wird dabei $g = f$ gewählt.
+\end{definition}
+
+Der Optimalwert der Relaxation kann als Näherung (bzw. untere Schranke) für den tatsächlichen Optimalwert von (P) genutzt werden. Meistens liefert die Lösung von (Q) jedoch keinen zulässigen Puntk für (P).
+
+\begin{satz}
+	Ist $\quer{x}$ eine Lösung von (Q) und gilt $\quer{x} \in D$ sowie $f(\quer{x}) = g(\quer{x})$, dann löst $\quer{x}$ auch (P).
+\end{satz}
+\begin{proof}
+	siehe Übung
+\end{proof}
+
+\begin{definition}
+	Seien (Q1) und (Q2) Relaxationen zu (P). (Q1) heißt \begriff{stärker} (oder strenger) als (Q2), wenn die Schranke (d.h. der Optimalwert) von (Q1) größer oder gleich der Schranke (Optimalwert) von (Q2) für jede Instanz von (P) ist.
+\end{definition}
+
+\begin{*anmerkung}
+	Zur Erklärung des Begriffes ''Instanz`` betrachte das folgende Beispiel.
+	\begin{itemize}[nolistsep, topsep=-\parskip]
+		\item Problemklasse: $\trans{c} x \to \min$
+		\item Instanz der Problemklasse: $x_1 + 2x_2 - 3x_3 \to \min$
+	\end{itemize}
+	Eine Instanz ist also eine konkrete Belegung.
+\end{*anmerkung}
