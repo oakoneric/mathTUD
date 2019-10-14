@@ -1,0 +1,259 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         THEOREME                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{maththeorems1MathTUD}
+
+
+\newcounter{themcount}
+%\counterwithin{themcount}{section}
+
+
+\newlength{\blacktrianglewidth}
+\settowidth{\blacktrianglewidth}{$\blacktriangleright$}
+
+\newcommand{\boxskip}{7pt}        		% Abstand in Boxen zwischen Rand und Text
+\newcommand{\skiparound}{10pt}   		  % Abstand vor und nach Theoremen
+\newcommand{\thmstyle}{\theoremheader@order@val}           % Style für Theorem-Umgebungen, set by package option above
+
+
+\theoremstyle{\thmstyle}
+\theoremheaderfont{\osfamily \bfseries}
+\theorembodyfont{}                % setzt bodyfont auf nicht kursiv
+% TODO set sans serif font in math mode
+
+\theorempreskip{\skiparound}      % Abstände
+\theorempostskip{\skiparound}
+
+%======================================================================
+
+\theoremseparator{}
+%---------Theorem-------------
+\newmdtheoremenv[%
+%style=boxedtheorem,%
+backgroundcolor=cdblue!10,%
+linecolor=cddarkblue,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+outerlinewidth=0.5pt,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\osfamily\bfseries,%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{theorem}[themcount]{Theorem}
+
+%---------Satz----------------
+\newmdtheoremenv[%
+%backgroundcolor=lightgrey,%
+%linecolor=darkgrey,%
+outerlinewidth=0.5pt,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%linecolor=darkgrey,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%backgroundcolor=lightgrey,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\normalfont\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{satz}[themcount]{Satz}
+%\newtheorem{satz}[themcount]{Satz}
+
+%---------Definition-----------
+%\theoremstyle{nonumberbreak}
+%\newmdtheoremenv[%
+%	outerlinewidth=3pt,%
+%	linecolor=darkgrey,%
+%	topline=false,%
+%	rightline=false,%
+%	bottomline=false,%
+%	innertopmargin=3pt,%
+%	innerbottommargin=3pt,%
+%	frametitlefont=\normalfont\bfseries\color{black},%
+%	skipabove=5pt,%
+%	skipbelow=5pt,%
+%]{defin}[themcount]{Definition}
+%\theoremstyle{\thmstyle}
+\newtheorem{definition}[themcount]{Definition}
+
+%---------Algorithmus----------------
+\newmdtheoremenv[%
+%backgroundcolor=lightgrey,%
+linecolor=cdgray,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%linecolor=darkgrey,%
+topline=true,%
+rightline=true,%
+leftline=true,%
+bottomline=true,%
+%backgroundcolor=lightgrey,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\normalfont\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{algorithmus}[themcount]{Algorithmus}
+%\newtheorem{satz}[themcount]{Satz}
+
+%--------------------------------------
+% Theorems without box
+%--------------------------------------
+\newtheorem{lemma}[themcount]{Lemma}					% Lemma
+\newtheorem{folgerung}[themcount]{Folgerung}			% Folgerung
+\newtheorem{korollar}[themcount]{Korollar}			% Korollar
+\newtheorem{beispiel}[themcount]{Beispiel}			% Beispiel
+\newtheorem{erinnerung}[themcount]{Erinnerung}		% Erinnerung
+\newtheorem{wiederholung}[themcount]{Wiederholung}	% Wiederholung
+\newtheorem{bemerkung}[themcount]{Bemerkung}			% Bemerkung
+%\newtheorem{algorithmus}[themcount]{Algorithmus}    % Algorithmus
+
+%--------------------------------------
+% theorems without numbers but break
+%--------------------------------------
+
+\theoremstyle{nonumberbreak}
+\theoremheaderfont{\osfamily \bfseries}
+\theoremindent0cm
+
+\newtheorem{*definition}{Definition}				% Definition
+\newtheorem{*lemma}{Lemma}
+\newtheorem{*wiederholung}{Wiederholung}			% Wiederholung
+\newtheorem{*erinnerung}{Erinnerung}				% Erinnerung
+\newtheorem{*beispiel}{\raisebox{1pt}{\rule{5pt}{5pt}} Beispiel}	% Beispiel
+
+%--------------------------------------
+% theorems without numbers and without linebreak
+%--------------------------------------
+\theoremstyle{nonumberplain}
+\theoremseparator{\textbf{.}}
+%\theorembodyfont{\upshape \mdseries}
+% TODO set bodyfont to non-italic
+
+\newtheorem{*bemerkung}{\raisebox{1pt}{$\blacktriangleright$} \textos{Bemerkung}}	% Bemerkung
+\newtheorem{*hinweis}{\raisebox{1pt}{$\blacktriangleright$} \textos{Hinweis}}		% Hinweis
+%raisebox sets symbol some pts over baseline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          CORRECT REFERENCES                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{algorithmus}{Algorithmus}{Algorithmen}
+
+%\crefformat{equation}{#2Gleichung~(#1)#3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          PROOF ENVIRONMENTS                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% >> proof
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalfont\normalsize\bfseries}
+\theorembodyfont{\normalfont\small}
+\theoremseparator{\textbf{.}}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\renewtheorem{proof}{Beweis}
+
+%\ifinlist{proof}{\theorem@disable}{\RenewEnviron{proof}{}{}}{\renewtheorem{proof}{Beweis}}
+
+% >> Equivalences
+\newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
+\newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
+\newenvironment{proof-equivalence}[1][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\begin{description}}%
+        {\begin{description}[topsep=-\parskip]}%
+}{%
+        \end{description}%
+}%
+\newenvironment{proof_equiv}{\begin{proof}\begin{description}}{\end{description}\end{proof}}
+
+% >> inductions
+\newcommand{\ianfang}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IA)}]%
+    }{%
+        %parameter exists
+        \item[\textbf{(IA)}] {#1 :} %\hfill \\%
+    }%
+}
+
+\newcommand{\ivorraussetzung}{\item[\bfseries (IV)]}
+
+\newcommand{\ischritt}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IS)}]
+    }{%
+        % parameter exists
+        \item[\textbf{(IS)}] {#1 :} %\\
+    }%
+}
+
+% two optional arg's:
+% #1 = induced variable 
+% #2 = vert. space before (IA): parskip (default) or nopreskip
+\NewDocumentEnvironment{induction}{O{} O{}}{%
+    \ifthenelse{ \isempty{#1} }{}{%
+        Vollständige Induktion nach #1:
+    }%---
+    \ifthenelse{ \equal{#2}{nopreskip} }{%
+        \begin{description}[topsep=-\parskip]
+    }{%
+        \begin{description}
+    }%
+}{%
+    \end{description}%
+}
+
+\newenvironment{proof_induction}[1][]{%
+    \begin{proof}
+        \begin{induction}[#1][nopreskip]%
+}{%
+        \end{induction}
+    \end{proof}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

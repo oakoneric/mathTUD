@@ -1,0 +1,66 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+% inspired by Henry Haustein, Daniel Graeveling
+% https://github.com/henrydatei/TUD_MATH_BA
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{mathscriptMathTUD}[2018/08/05]
+
+% programming related packages
+\RequirePackage{zref-base}
+\RequirePackage{etoolbox}
+\RequirePackage{xparse}	% better macros
+\RequirePackage{calc}
+\RequirePackage{xstring}
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+
+\RequirePackage{silence}
+\WarningFilter{wasysym}{Font shape `U/wasy/b/n'}
+\WarningFilter{latex}{Command \@starttoc}
+\WarningFilter{latex}{You have requested}
+\WarningFilter{latex}{Some font}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   GENERAL DOCUMENT SETTINGS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\LoadClass[ngerman,a4paper]{report}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         PACKAGES                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math related packages
+% basic ams-math and enhancments
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{blkarray}
+
+
+\RequirePackage{systeme}	% easy typesetting systems of equations
+\RequirePackage{witharrows} % arrows from one equation to another
+
+% further support for different equation setting
+\RequirePackage{cancel}
+\RequirePackage{xfrac}		% sfrac -> fractions e.g. 3/4
+\RequirePackage{nicefrac}
+\RequirePackage{units}		% units and fractions
+\RequirePackage{diagbox}
+
+%\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+%\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\endinput

@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          TITLEPAGE                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{titlepageMathTUD}
+
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\@ifpackageloaded{tudscrcolor}{}{\RequirePackage[table,dvipsnames]{tudscrcolor}}
+
+\@ifpackageloaded{opensans}{}{\usepackage[scale=1]{opensans}}
+\ifx\osfamily\undefined
+    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+    \DeclareTextFontCommand{\textos}{\osfamily}
+\fi
+
+\RequirePackage{tabularx}
+
+\newif\ifdarktitle
+\darktitletrue
+
+\newcommand*{\thename}{\hfill}
+\newcommand*{\thematnr}{\hfill}
+\newcommand*{\theemail}{\href{mailto:example@mail.com}{\ttfamily \hfill}}
+
+\newcommand*{\themodul}{\hfill}
+\newcommand*{\theperiod}{\hfill}
+
+\newcommand*{\thetutor}{\hfill}
+\newcommand*{\thegroup}{\hfill}
+
+\newcommand*{\thelecturer}{\hfill}
+\newcommand*{\thefaculty}{\hfill}
+\newcommand*{\theinstitute}{\hfill}
+\newcommand*{\theprofessorship}{\hfill}
+
+\newcommand*{\name}[1]{\renewcommand{\thename}{#1}}
+\newcommand*{\matnr}[1]{\renewcommand{\thematnr}{#1}}
+\newcommand*{\email}[1]{\renewcommand{\theemail}{#1}}
+
+\newcommand*{\modul}[1]{\renewcommand{\themodul}{#1}}
+\newcommand*{\period}[1]{\renewcommand{\theperiod}{#1}}
+
+\newcommand*{\tutor}[1]{\renewcommand{\thetutor}{#1}}
+\newcommand*{\group}[1]{\renewcommand{\thegroup}{#1}}
+
+\newcommand*{\lecturer}[1]{\renewcommand{\thelecturer}{#1}}
+\newcommand*{\faculty}[1]{\renewcommand{\thefaculty}{#1}}
+\newcommand*{\institute}[1]{\renewcommand{\theinstitute}{#1}}
+\newcommand*{\professorship}[1]{\renewcommand{\theprofessorship}{#1}}
+
+\newcommand{\titlesettings}[1]{%
+	\ifthenelse{\equal{#1}{dark}}{%
+		\pagecolor{cddarkblue!90}%
+		\color{white}%
+	}{}%
+	\raggedright%
+	\fosfamily%
+	\setlength{\parindent}{0pt}%
+}
+
+\newcommand{\titleheading}[1]{%
+	\hspace{-18.6mm} %
+	\ifthenelse{\equal{#1}{dark}}%
+	{ %\color{white}%
+		\includegraphics[scale=0.6]{TUD-white.pdf}}%
+	{\includegraphics[scale=0.6]{TUD-blue.pdf}} \\
+	\vspace{3mm} 
+	\begin{tabular}{m{\textwidth}}
+		\hline
+		\hspace{-4pt}\small{\textbf{Fakultät \thefaculty} Institut für \theinstitute, Professur für \theprofessorship} \\
+		\hline
+	\end{tabular} \\
+%	\hrule \vspace{-1mm}
+%	\small{\textbf{Fakultät \thefaculty} Institut für \theinstitute, Professur für \theprofessorship}
+%	\vspace{0.6mm} \hrule
+}
+
+\newcommand{\titletitle}[1][]{%
+	\vspace{5cm}
+	{\Huge\bfseries \MakeUppercase \themodul \par}
+	%
+	\ifthenelse{\isempty{#1}}{}{
+		\vspace{0.5cm}%
+		{\Large \itshape #1} \\%
+	}
+	%
+	\vspace{1.5cm}
+	\textbf{{\Large \thelecturer}} \par
+	\vspace{0.5cm}
+	{\large \theperiod}
+}
+
+\newcommand{\titlefoot}{%
+	\vfill%
+	\begin{tabular}{lll}
+		Autor  & : & \thename \\
+		E-Mail & : & \theemail \\
+	\end{tabular}%
+}
+
+\newcommand{\makeTUtitle}[1][]{%
+	\begin{titlepage}
+		\ifdarktitle
+		\titlesettings{dark}%
+		\titleheading{dark}%
+		\else
+		\titlesettings{light}%
+		\titleheading{light}%
+		\fi
+		\ifthenelse{\isempty{#1}}{%
+			\titletitle
+		}{%
+			\titletitle[#1]
+		}%
+		\titlefoot%
+	\end{titlepage}
+	\nopagecolor
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            GRAPHICS                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{graphicsMathTUD}
+
+\RequirePackage{graphicx}
+\RequirePackage{tcolorbox}
+\usepackage[font=small,labelfont=bf]{caption} % captions of non-floated figures
+
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.10}   % in my packages used compat=1.15
+\usepgfplotslibrary{fillbetween}
+\RequirePackage{pgf}
+\RequirePackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\@ifpackageloaded{tudscrcolor}{}{\RequirePackage[table,dvipsnames]{tudscrcolor}}
+%\RequirePackage[table,dvipsnames]{xcolor}
+% official colours in cooperate design TUD (include xcolor)
+% main colours:
+% cddarkblue, cdblue, cdgray, cdindigo, cdpurple, cddarkgreen, cdgreen, cdorange
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tabulars
+
+\RequirePackage{tabularx} 	% tabularx-environment (explicitly set width of columns)
+\RequirePackage{longtable} 	% Tabellen mit Seitenumbrüchen
+\RequirePackage{multirow}
+\RequirePackage{booktabs}	% improved rules
+\RequirePackage{colortbl} 	% Einfärben von Spalten, Zeilen und Zellen
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

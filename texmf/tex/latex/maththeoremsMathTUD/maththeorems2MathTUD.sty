@@ -1,0 +1,248 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         THEOREME                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{maththeorems2MathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for makro handling
+%\RequirePackage{kvoptions}
+\RequirePackage{xkeyval}
+\RequirePackage{xifthen}
+%\RequirePackage{xparse}
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,arrows}
+\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for theorem environments
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage[amsmath,thmmarks,framed]{ntheorem}
+
+
+\RequirePackage{pgfplots}
+\@ifpackageloaded{tudscrcolor}{}{\RequirePackage[table,dvipsnames]{tudscrcolor}}
+
+\RequirePackage[scale=1]{opensans}
+\ifx\osfamily\undefined
+    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\fi
+\DeclareTextFontCommand{\textos}{\osfamily}
+
+\RequirePackage{chngcntr}
+
+\newcounter{themcount}
+
+% including section counter in theorem counter
+\DeclareOptionX{includesection}{%
+    \counterwithin{themcount}{section}%
+}
+
+
+% >> first number or first name in theorems
+% possible values: firstnumber, firstname
+\def\theoremheader@order@val{firstnumber}
+\DeclareOptionX{order}{%
+	%sets accordingly the required ntheoremoptions
+	\let\tempa\@empty
+	\IfEq{#1}{firstnumber}{\def\tempa{change}}{%
+		\IfEq{#1}{firstname}{\def\tempa{nochange}}{%
+			\PackageWarning{mathscript}{Unknown Value for key `order'}
+		}
+	}
+	\edef\theoremheader@order@val{\tempa}
+}
+
+\ProcessOptionsX
+
+
+%======================================================================
+
+\theoremstyle{plain}
+\theoremseparator{.}
+\theorembodyfont{}
+\theoremheaderfont{\slshape}
+\newtheorem*{proof}{Beweis}
+
+%---------Definition-----------
+
+% first name, second numbers
+%\newtheorem{definition}[themcount]{Definition}
+
+%\theoremsymbol{\ensuremath{\square}}
+%\theorembodyfont{}
+%\newtheorem{lemma}[themcount]{Lemma}
+%\newtheorem{satz}[themcount]{Satz}
+%\newtheorem{theorem}[themcount]{Theorem}
+
+%\theoremstyle{margin}
+%\newtheorem{bemerkung}[themcount]{Bemerkung}
+
+\theoremstyle{break}
+\theoremseparator{}
+\theoremheaderfont{\osfamily \bfseries \upshape}
+\theorembodyfont{}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdblue!10,%
+	linecolor=cddarkblue!90,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{satz}[themcount]{Satz}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	%backgroundcolor=none,%
+	linecolor=cdindigo!50,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=0pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	%leftmargin=-10pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{lemma}[themcount]{Lemma}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	%backgroundcolor=none,%
+	linecolor=cdpurple,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=0pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	%leftmargin=-10pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{folgerung}[themcount]{Folgerung}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	%backgroundcolor=none,%
+	linecolor=cdpurple,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=0pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	%leftmargin=-10pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{korollar}[themcount]{Korollar}
+
+
+
+\newenvironment{theorem}[2][]{%
+  \refstepcounter{themcount}%
+  \ifstrempty{#1}%
+  { \mdfsetup{%
+      frametitle={%
+      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+      \node[anchor=east,rectangle,fill=cddarkblue!90]
+      {\strut \color{white} \osfamily Theorem~\thethemcount};}}
+  }%
+  { \mdfsetup{%
+      frametitle={%
+      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+      \node[anchor=east,rectangle,fill=cddarkblue!90]
+      {\strut \color{white} \osfamily Theorem~\thethemcount~(#1)};}}%
+  }%
+  \mdfsetup{
+    innertopmargin=6pt,
+    linecolor=cddarkblue!90,%
+    linewidth=2pt,
+    backgroundcolor=cdblue!10,
+    topline=true,%
+    frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+  }
+  \begin{mdframed}[]\relax%
+  \label{#2}
+}{
+  \end{mdframed}
+}
+
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdorange!10,%
+	linecolor=cdorange,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{definition}[themcount]{Definition}
+
+\newtheorem{bemerkung}[themcount]{Bemerkung}
+\newtheorem{anmerkung}[themcount]{Anmerkung}
+
+\newtheorem{beispiel}[themcount]{Beispiel}
+
+\theoremstyle{nonumberbreak}
+\newtheorem{*bemerkung}{Bemerkung}
+\newtheorem{*anmerkung}{Anmerkung}
+\newtheorem{*erinnerung}{Erinnerung}
+
+\newtheorem{*beispiel}{Beispiel}

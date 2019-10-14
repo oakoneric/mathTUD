@@ -1,0 +1,66 @@
+\ProvidesPackage{layoutMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             LAYOUT                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+% \RequirePackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+% decent space; change explicitly the space between header and content and footer and content
+
+\RequirePackage{parskip}  	% split paragraphs by vspace instead of intendations
+\RequirePackage[onehalfspacing]{setspace} % increase row-space
+\RequirePackage[title,titletoc]{appendix}
+
+\RequirePackage{marginnote}	% notes at the edge
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         FONTS & SYMBOLS                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ifpdf,ifluatex}
+\ifpdf
+	\ifluatex
+		% new lualatex needs explicit fontspec to draw properly e.g. german umlauts
+		\RequirePackage{fontspec}
+		% \RequirePackage{lua-visual-debug} %for debugging
+	\else
+		% old pdflatex needs explicitly utf-8-support
+		\RequirePackage[utf8]{inputenc}
+		\RequirePackage{chngcntr}
+		\RequirePackage{eufrak}
+	\fi
+\fi
+
+\RequirePackage{lmodern}
+\RequirePackage{ulem} 		% better underlines
+
+
+% new font OpenSans
+\@ifpackageloaded{opensans}{}{\usepackage[scale=1]{opensans}}
+\ifx\osfamily\undefined
+    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+    \DeclareTextFontCommand{\textos}{\osfamily}
+\fi
+% for more information: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        TABLE OF CONTENTS                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{tocloft}	% customize toc
+
+% change appearence of heading of toc: 0 space above, bold, titlefont, huge toc-heading
+\renewcommand{\cftbeforetoctitleskip}{0pt}
+
+% change indentations due to width of capital roman numbers
+\renewcommand{\cftchapnumwidth}{2em}
+\renewcommand{\cftsecindent}{2em}
+\renewcommand{\cftsecnumwidth}{2em}
+\renewcommand{\cftsubsecindent}{4em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
