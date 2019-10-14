@@ -193,7 +193,7 @@
 \teilt
 \teiltnicht
 \rest{arg}
-\folge{element}{index}
+\folge[index]{element}
 \dist{arg1}{arg2}
 \abs{arg}
 \norm{arg}
@@ -241,6 +241,7 @@
 \Ugr
 \Zwk
 \Normal
+\discr
 
 \hinrichtung
 \rueckrichtung
