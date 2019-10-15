@@ -2,6 +2,8 @@
 
 \subsection{Transportoptimierung}
 
+$\to$ lineare Optimierung
+
 Es gebe Erzeuger $i \in I = \menge{0, \dots , n}$ und Verbraucher $j \in J = \menge{1, \dots , n}$. Weiterhin seien die Kosten $c_{ij}$ für den Transport einer Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_j > 0$ für alle $i$ und $j$ gegeben. Wie muss der Transport organisiert werden, damit die Gesamtkosten minimal sind?
 
 Für jedes mathematische Modell einer OA braucht man
@@ -29,3 +31,15 @@ Somit können wir als Modell formulieren:
 	& x_{ij} \ge 0 \enskip ((i,j) \in I \times J)
 	\end{aligned}
 \end{equation*}
+
+\subsection{Kürzeste euklidische Entfernung}
+
+$\to$ nichtlineare Optimierung
+
+Gegeben seien ein Punkt $\schlange{x} \in \Rn$ und eine Menge $G \subseteq \Rn$ mit $x \notin G$. Wir betrachten die folgende OA:
+\begin{equation*}
+	f(x) = \norm{x - \schlange{x}}_2^2 \to \min \quad \bei x \in G
+\end{equation*}
+Ist $G \neq \emptyset$ und abgeschlossen, so existiert eine Lösung. Ist $G$ zusätzlich konvex, so ist die Lösung sogar eindeutig.
+
+Weitere Beispiele und Theorie sind in der Vorlesung ''Kontinuierliche Optimierung`` im Master Mathematik zu erfahren.

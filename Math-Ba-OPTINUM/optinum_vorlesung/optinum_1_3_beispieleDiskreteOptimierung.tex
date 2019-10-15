@@ -1,0 +1,79 @@
+\section{Beispiele zur diskreten Optimierung}
+
+\subsection{Das Rucksackproblem}
+
+Gegeben seien ein Behälter (''Rucksack``) mit Kapazität $b \in \Z_+ \defeq \menge{0, 1, \dots}$ sowie $m$ Teile, die jeweils durch ein Gewicht $a_i \in \Z_+$ und einen Nutzen $c_i \in \Z_+$ beschrieben werden ($i = 1, \dots , m$). Aus dieser Menge von Objekten ist eine nutzenmaximale Teilmenge auszuwählen.
+
+
+\begin{description}
+	\item[Variablen] \begin{equation*}
+		x_i \defeq \begin{cases}
+		1 & \text{wenn Teil $i$ eingepackt wird} \\ 0 & \text{sonst}
+		\end{cases} \quad (i = 1, \dots , m)
+	\end{equation*}
+	\item[Zielfunktion] $f(x) = \sum\limits_{i=1}^{m} c_i x_i \to \max$
+	\item[Nebenbedingungen] Kapazitätsbedingung: $\sum\limits_{i=1}^{m} a_i x_i \le b$
+\end{description}
+
+Als Modell können wir somit formulieren:
+\begin{equation*}
+	\begin{aligned}
+	f(x) = \sum_{i=1}^{m} c_i x_i \to \max \quad \bei \sum_{i=1}^m a_i x_i \le b \und x_i \in \menge{0,1} \enskip (i = 1, \dots , m)
+	\end{aligned}
+\end{equation*}
+
+Aufgrund der binären Gestalt der Variablen wird das Problem auch als $0/1$-Rucksackproblem bezeichnet. Im Gegensatz dazu ist beim klassischen Rucksackproblem jedes Teil mehrfach nutzbar. In diesem Fall ist $x_i \in \Z_+$ zu fordern.
+
+\subsection{Das Bin-Packing-Problem}
+
+Gegeben seien (sehr große) Anzahl an Behältern der Kapazität $L$ sowie $b_i$ Teile des Gewichts oder Volumens $\ell_i$ mit $i \in I = \menge{1, \dots , m}$. Man ermittle die minimale Anzahl an Behältern, die benötigt wird, um alle Objekte zu verstauen.
+Jede Packung (eines Behälters) kann als Vektor $a = (a_1 , \dots , a_m) \in \Z_+^m$ geschrieben werden, wobei $a_i$ angibt, wie oft das Teil $i$ benutzt wird. Ein solcher Vektor ist eine zulässige Packung, wenn 
+\begin{equation*}
+	\sum_{i=1}^m \ell_i a_i \le L
+\end{equation*} 
+ist.
+
+\begin{description}
+	\item[Modell nach \person{Kantorovich}] Wir benötigen 
+	\begin{itemize}[nolistsep]
+		\item eine obere Schranke $u \in \Z_+$ für die maximal benötigte Anzahl an Behältern
+		\item $y_k = \begin{cases}
+		1 & \text{wenn Rucksack } k \text{ benutzt wird} \\ 0 & \text{sonst}
+		\end{cases} \quad (k = 1 , \dots , u)$
+		\item $x_{ik} \in \Z_+$, die angeben, wieviele Objekte vom Typ $i$ in Rucksack $k$ gepackt werden ($(i,k) \in \menge{1, \dots , m} \times \menge{1, \dots , u}$)
+	\end{itemize}
+	Daraus ergibt sich nun folgendes Modell:
+	\begin{equation*}
+		\begin{aligned}
+		f^\text{Kant}(x,y) = \sum_{k=1}^u y_k \to \min \bei \quad & \sum_{k=1}^u x_{ik} = b_i \quad &&(i = 1, \dots , m) \\
+		& \sum_{i=1}^m x_{ik} \ell_i \le L * y_k \quad &&(k = 1 , \dots , u) \\
+		& y_k \in \menge{0,1} \quad &&(k = 1 , \dots , u) \\
+		& x_{ik} \in \Z_+ \quad &&((i,k) \in \menge{1, \dots , m} \times \menge{1, \dots , u})
+		\end{aligned}
+	\end{equation*}
+	Die erste Nebenbedingung sorgt dafür, dass alle Teile gepackt werden; die zweite Nebenbedingung liefert die Einhaltung der Kapazität unter Berücksichtigung, dass nur bepackte Behälter gezählt werden.
+
+	Es kann stets $u = \sum_{i=1}^m b_i$ gewählt werden. Das Auffinden besserer Schranken ist im Allgemeinen schwierig.
+	Eine Relaxation kann z.B. durch $y_k \in [0,1]$ und $x_{ik} \in \R_+$ erhalten werden. Diese liefert jedoch keine guten Näherungen.
+	%
+	\item[Modell von Gilmore \& Gomory] Es seien $J$ eine Indexmenge aller zulässigen Packungen und $x_j \in \Z_+$ ($j \in J$) die Häufigkeit, wie oft ein Behälter nach dem durch $j$ angegebenen Schema $a^j = (a_1^j , \dots , a_m^j)$ mit $\trans{\ell} a^j \le L$ gefüllt wird.
+	Daraus ergibt sich folgendes Modell:
+	\begin{equation*}
+		\begin{aligned}
+		f^{GG}(x) = \sum_{j \in J} x_j \to \min \quad \bei \quad 
+		& \sum_{j \in J} a_i^j * x_j = b_i \quad && (i = 1, \dots , m) \\
+		& x_j \in \Z_+ && (j \in J)
+		\end{aligned}
+	\end{equation*}
+	Die Nebenbedingung sorgt dafür, dass alle Teile gepackt werden.
+	
+	Es gibt im Allgemeinen exponentiell viele zulässige Packungen $a^j$ ($j \in J$), deren Koeffizienten allesamt in den Nebenbedingungen benötigt werden.
+	
+	Eine Relaxation erhält man zum Beispiel durch $x_j \in \R_+$. Diese stetige Relaxation ist sehr gut; man vermutet, dass 
+	\begin{equation*}
+		f^{GG, \ast} - f^{GG, \ast}_\text{relax} < 2
+	\end{equation*}
+	gilt.
+\end{description}
+
+Erfreulicherweise gibt es zum Gilmore-Gomory-Modell äquivalente Formulierungen, die mit einer polynomiellen Zahl von Variablen arbeiten und eine ebenso gute stetige Relaxation besitzen (z.B. Flussmodelle).
