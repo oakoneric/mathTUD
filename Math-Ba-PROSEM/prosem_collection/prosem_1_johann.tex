@@ -1,0 +1,189 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+
+\usepackage{lmodern}
+
+\title{Proseminar Mathematik}
+\author{Johann Seidl}
+\date{\today}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsmath,bm}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+\chapter{Optimalitätskriterien}
+
+\vortragender{Johann Seidl}
+
+\section{Einführung}
+In der heutigen Welt sind viele mathematische Probleme auf Real-World-Probleme zurückzuführen. Unser unter (\ref{formel1}) verstandenes \textit{Minimierungsproblem} spielt unter anderem Rollen in den Ingenieurwissenschaften, der Physik, der Medizin oder der Ökonomie. 
+
+\subsection{Minimierungsproblem}
+Unter einem Minimierungsproblem wird folgende Aufgabe verstanden. \\ 
+
+\begin{definition}
+	Sei $ X \subseteq \mathbb{R}^n $ und eine Funktion $ f:\mathrm{X} \longrightarrow \mathbb{R} $, dann wird ein $x^* \in \mathrm{X} $ mit folgender Eigenschaft gesucht
+	\begin{equation} 
+	f(x^*) \leq f(x)   \qquad \forall x \in \mathrm{X} 
+	\label{formel1}
+	\end{equation}
+\end{definition}
+
+\begin{bemerkung}
+	In kurzer Notation lautet diese Aufgabe $ \min \, f(x)$ unter der Nebenbedingung $x \in \mathrm{X} $. Ist $\mathrm{X} = \mathbb{R}$, dann spricht man von unrestringierten Problemen, andernfalls von restringierten Problemen. 
+\end{bemerkung}
+
+\subsection{Optimalitätskriterien}
+
+In diesem Kapitel gehen wir auf notwendige und hinreichende Bedingungen für lokale Minima ein, welche Ableitungen benutzen. Der erste Satz bezieht ein notwendiges Kriterium erster Ordnung, wobei man von einem Kriterium erster Ordnung spricht, da nur Informationen über die erste Ableitung eingehen.
+
+\begin{satz}
+	Seien $ X \subseteq \mathbb{R}^n $ eine offene Menge und $ f:\mathrm{X} \longrightarrow \mathbb{R} $ eine stetig differenzierbare Funktion. Ist  $ x^{*} \in \mathrm{X} $ ein lokales Minimum von $f$ (auf $ \mathrm{X} $), so gilt 
+	\begin{equation*}
+	\nabla f(x^*) = 0 
+	\end{equation*}
+	d.h., $x^{*}$ist ein stationärer Punkt von $f$. 
+\end{satz}
+\begin{proof}
+	Sei $ x^{*} \in \mathrm{X} $ ein lokales Minimum von $f$, jedoch $\nabla f(x^*) \ne 0 $. Dann existiert ein Vektor $d \in \mathbb{R}^{n} $ mit 
+	\begin{equation*}
+	\nabla f(x^*)^{T}d < 0
+	\end{equation*}
+	Eine mögliche Wahl für $d$ kann zum Beispiel $d := -\nabla f(x^*)$ sein. Da $f$ nach Voraussetzung stetig differenzierbar ist, gilt für die Richtungsableitung $f^{'}(x^{*};d)$ von $f$ in $ x^{*}$ in Richtung $d$: 
+	\begin{equation*}
+	f^{'}(x^{*};d) = \lim_{t \to 0+}\ \dfrac{f(x^{*} + td) - f(x^{*})}{t} = \nabla f(x^{*})^{T}d < 0. 
+	\end{equation*}
+	Folglich gibt es ein $\overline{t} >0 $ mit $ x^{*} +td \in \mathrm{X}$ und 
+	\begin{equation*}
+	\dfrac{f(x^{*}+td) - f(x^{*})}{t}<0 \qquad \forall t \in (0,\overline{t} \,] .
+	\end{equation*}
+	Somit ist 
+	\begin{equation*}
+	f(x^{*}+td)<f(x^{*}) \qquad \forall t \in (0,\overline{t} \,] .
+	\end{equation*}
+	Dies steht aber im Widerspruch zur Voraussetzung, dass $x^{*}$ ein lokales Minimum von $f$ ist.
+\end{proof}
+
+\begin{bemerkung}
+	Offensichtlich ist dieser Satz keine hinreichende Bedingung, da auch ein mögliches Maxima die oben genannten Voraussetzungen erfüllt.
+\end{bemerkung}
+
+\begin{erinnerung}
+	Eine Matrix ist positiv semidefinit, falls für die symmetrische $ n \,$ x $n$ Matrix $M$ gilt 
+	\begin{equation}
+	x^{T}Mx \ge 0 \qquad \forall x \in \mathbb{R}^{n} \setminus 0
+	\label{definit}
+	\end{equation}
+\end{erinnerung}
+
+\begin{erinnerung}[Satz von Taylor]
+	Seien $f : \mathbb{R}^{n} \longrightarrow \mathbb{R}$ zweimal stetig differenzierbar sowie $x,y \in \mathbb{R}^{n}$ gegeben. Dann existiert ein $\Theta \in (0,1)$ mit 
+	\begin{equation}
+	f(x) = f(y) + \nabla f(y)^{T}(x-y)+\dfrac{1}{2}(x-y)^{T} \nabla^{2}f(\xi)(x-y)
+	\label{Taylor}
+	\end{equation}
+	für $\xi= y+\Theta(x-y)$.
+\end{erinnerung}
+
+Betrachten wir nun einen Satz, welcher eine notwendige Bedingung zweiter Ordnung nutzt. Man spricht wieder von Bedingung zweiter Ordnung, da der Satz Informationen über die zweiter Ableitung enthält.
+
+\begin{satz}
+	Seien $ X \subseteq \mathbb{R}^n $ eine offene Menge und $ f:\mathrm{X} \longrightarrow \mathbb{R} $ eine zweimal stetig differenzierbare Funktion. Ist  $ x^{*} \in \mathrm{X} $ ein lokales Minimum von $f$ (auf $ \mathrm{X} $), so ist die Hesse-Matrix $\nabla^{2}f(x^{*})$ positiv semidefinit.
+\end{satz}
+\begin{proof}
+	Sei $x^{*} \in \mathrm{X}$ ein lokales Minimum von f, jedoch $\nabla^{2}f(x^{*})$ nicht positiv semidefinit (\ref{definit}). Dann existiert ein Vektor $d \in \mathbb{R}^{n}$ mit 
+	\begin{equation}
+	d^{t}\nabla^{2}f(x^{*})d <0
+	\label{formel2}
+	\end{equation}
+	Nutzt man nun (\ref{Taylor}) ergibt sich mit Satz 2.1 für alle hinreichend kleinen $t>0$:
+	\begin{equation*}
+	\begin{split}
+	f(x^{*}+td)  &= f(x^{*}) + \nabla f(x^{*})^{T}(td) + \dfrac{1}{2}(td)^{T} \nabla^{2} f(\xi_{t})(td) \\
+	&= f(x^{*}) + \dfrac{1}{2}t^{2}d^{T} \nabla^{2} f(\xi_{t})d 
+	\end{split}
+	\end{equation*}
+	Dabei ist $\nabla f(x^{*})^{T}(td) = 0$, da $x^{*}$ schon das lokale Minimum ist. Des Weiteren ist $\xi_{t} = x^{*} + \upsilon_{t}td \,$ für ein $\upsilon_{t}$ mit $0 < \upsilon_{t} < 1$. Aus Stetigkeitsgründen folgt hieraus unter Verwendung von (\ref{formel2}) die Existenz eines $\overline{t} > 0$ mit 
+	\begin{equation*}
+	f(x^{*}+td)<f(x^{*}) \qquad \forall t \in (0,\overline{t} \,] .
+	\end{equation*}
+	Dies steht aber im Widerspruch dazu, dass $x^{*}$ ein lokales Minimum ist.
+\end{proof}
+
+Auch die Bedingungen aus den Sätzen 2.1 und 2.5 zusammen sind \textit{nicht} hinreichend dafür, dass $x^{*}$ ein lokales Minimum ist.
+
+\begin{beispiel}
+	Betrachte $ f: \mathbb{R}^{2} \longrightarrow \mathbb{R} $ mit $f(x) = x_{1}^{2} - x_{2}^{4}$, $x^{*} =(0,0)$ Die Ableitung erster Ordnung und die Hesse-Matrix der Funktion sind gegeben durch: 
+	\begin{align*}
+	f^{'}(x)=(2x_{1} , -4x_{2}^{3}) \\
+	f^{''}(x)=\begin{pmatrix}
+	2 & 0 \\
+	0 & -12 x_{2}
+	\end{pmatrix}
+	\end{align*}
+	Man kann leicht erkennen, dass $f^{'}(x^{*})=0$ und die Eigenwerte der Matrix im Punkt $x^{*}$ $ \lambda_{1} =0$ und $\lambda_{1} =2$ sind, also die Matrix positiv semidefinit ist. Die Voraussetzungen für Satz 2.5 sind also erfüllt. Dennoch ist zum Beispiel für $\mathrm{X}= \mathbb{R}^{2}$ $f(0,1)<f(0,0)$. 
+\end{beispiel}
+
+\begin{satz}
+	Seien $ X \subseteq \mathbb{R}^n $ offen und $ f:\mathrm{X} \longrightarrow \mathbb{R} $ zweimal stetig differenzierbar. Gelten
+	\begin{itemize}
+		\item[(a)] $\nabla f(x^{*}) =0$ und 
+		\item[(b)] $\nabla^{2} f(x^{*})$ ist positiv definit, 
+	\end{itemize}
+	so ist $x^{*}$ ein striktes lokales Minimum von $f$ (auf $\mathrm{X})$
+\end{satz}
+
+\begin{proof}
+	Aus (b) folgt zunächst die Existenz einer Konstanten $\epsilon$ mit 
+	\begin{equation*}
+	d^{T}\nabla^{2} f(x^{*})d \ge \epsilon d^{T}d \qquad \forall d \in \mathbb{R}^{n}
+	\end{equation*}
+	Nach (\ref{Taylor}) gilt für alle hinreichend nahe bei 0 gelegenen $d \in \mathbb{R}^{n}$ :
+	\begin{equation}
+	f(x^{*}+d) = f(x^{*}) + \nabla f(x^{*})^{T}(d) + \dfrac{1}{2}d^{T} \nabla^{2} f(\xi_{d})d
+	\label{cauchy}
+	\end{equation}
+	mit $\xi_{t} = x^{*} + \upsilon_{d}td \,$ für ein $\upsilon_{d}$ mit $0 < \upsilon_{d} < 1$. Durch Voraussetzung (a) erhalten wir $\nabla f(x^{*})^{T}(td) = 0$.  Wenden wir nun die Cauchy - Schwarzschen Ungleichung auf (\ref{cauchy}) an, erhalten wir 
+	\begin{equation*}
+	\begin{split}
+	f(x^{*}+d)  &= f(x^{*}) + \dfrac{1}{2}d^{T} \nabla^{2} f(x^{*})d+ \dfrac{1}{2} d^{T} \big( \nabla^{2} f(\xi_{d}) - \nabla^{2} f(x^{*}) \big) d \\
+	& \ge
+	f(x^{*}) + \dfrac{1}{2}(\epsilon - \Vert \nabla^{2}f(\xi_{d}) - \nabla^{2}f(x^{*}) \Vert) \Vert d \Vert ^{2}
+	\end{split}
+	\end{equation*}
+	Folglich gilt 
+	\begin{equation*}
+	f(x^{*} +d) > f(x^{*}) \qquad \forall d\neq 0 \text{ und  hinreichend nahe }  0
+	\end{equation*}
+	Also ist $x^{*}$ ein striktes lokales Minimum von $f$.
+\end{proof}
+
+\begin{bemerkung}
+	Dieser Satz liefert ein hinreichendes Kriterium. Man beachte jedoch, dass die Bedigungen (a) und (b) aus Satz 2.7 nicht notwendig für die strikte lokale Minimaliltät von $x^{*}$ sind. Genauere Erklärungen liefert folgendes Beispiel:
+\end{bemerkung}
+
+\begin{beispiel}
+	Betrachte $ f: \mathbb{R}^{2} \longrightarrow \mathbb{R} $ mit $f(x) = x_{1}^{2} + x_{2}^{4}$, $x^{*} =(0,0)$.  Dann ist
+	\begin{align*}
+	f^{'}(x)=(2x_{1} , 4x_{2}^{3}) \\
+	f^{''}(x)= \begin{pmatrix}
+	2 & 0 \\
+	0 & 12x_{2}
+	\end{pmatrix}
+	\end{align*}
+	so stellt man fest, dass $\nabla^{2} f(x^{*})$  positiv semidefinit ist und somit Satz 2.7 keine Anwendung finden kann (Voraussetzung (b) verletzt). Man erkennt jedoch leicht, dass $(0,0)$ das globale Minimum ist.
+\end{beispiel}
+
+\end{document}
