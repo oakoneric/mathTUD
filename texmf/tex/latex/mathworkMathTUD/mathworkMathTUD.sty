@@ -1,0 +1,729 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+% inspired by Henry Haustein, Daniel Graeveling
+% https://github.com/henrydatei/TUD_MATH_BA
+
+\ProvidesPackage{mathworkMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGE DESCRIPTION |
+% ---------------------
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{zref-base}
+\RequirePackage{etoolbox}
+\RequirePackage{xparse} % better macros
+\RequirePackage{calc}
+\RequirePackage{xstring}
+\RequirePackage{xkeyval}
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,arrows}
+\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for theorem environments
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage[amsmath,thmmarks,framed]{ntheorem}
+
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{scalerel,stackengine}
+\RequirePackage{aligned-overset}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         OPTIONS                                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% >> first number or first name in theorems
+% possible values: firstnumber, firstname
+\def\theoremheader@order@val{firstnumber}
+\DeclareOptionX{order}{%
+	%sets accordingly the required ntheoremoptions
+	\let\tempa\@empty
+	\IfEq{#1}{firstnumber}{\def\tempa{changebreak}}{%
+		\IfEq{#1}{firstname}{\def\tempa{break}}{%
+			\PackageWarning{mathscript}{Unknown Value for key `order'}
+		}
+	}
+	\edef\theoremheader@order@val{\tempa}
+}
+
+% >> disables theorem environments
+% possible values: all you can imagine.
+% usefull values: theorem-names defined in this class, new theorems defined by \newmdtheoremenv
+\listadd{\theorem@disable}{\@empty}
+\DeclareOptionX{disable}{%
+	\listadd{\theorem@disable}{#1}
+}
+
+% >> determines the notation for fracs (lfrac & rfrac)
+%\OptFractionAppearence - differenciate between multiple appearences of fraction
+%	- 0: simple slash: a/b (option slash)(default)
+%	- 1: fraction by slash, raised nominator, lowered denominator	(option lowerraise)
+\let\OptFractionAppearence\z@
+\DeclareOptionX{fractionappearence}{%
+	\IfStrEq{#1}{slash}{}{%
+		\IfStrEq{#1}{lowerraise}{%
+			\let\OptFractionAppearence\@ne
+		}{} % further options can be inserted here
+	}
+}
+
+\DeclareOptionX*{\PackageWarning{mathoperator}{Unknown option >\CurrentOption<}}
+
+\newif\ifsmallequationskip
+\smallequationskipfalse
+\DeclareOptionX{smallequationskip}{%
+    \smallequationskiptrue%
+}
+
+\ProcessOptionsX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\RequirePackage{amsmath}
+%\RequirePackage{amssymb}
+%\RequirePackage{amsfonts}
+
+
+
+%\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+%\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         ABSTÄNDE                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\smallequationskip}{%
+    %\setlength\abovedisplayshortskip{0pt plus 3pt}%
+    %\setlength\belowdisplayshortskip{4pt plus 2pt minus 2pt}%
+    \setlength\abovedisplayskip{3pt plus 1pt minus 2pt}%
+    \setlength\belowdisplayskip{3pt plus 1pt minus 2pt}%
+}
+
+% default values:
+% \abovedisplayskip      % 10pt plus 2pt minus 5pt
+% \abovedisplayshortskip % 0pt plus 3pt
+% \belowdisplayskip      % 10pt plus 2pt minus 5pt
+% \belowdisplayshortskip % 6pt plus 3pt minus 3pt
+\ifsmallequationskip
+    \smallequationskip
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         THEOREME                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{themcount}
+%\counterwithin{themcount}{section}
+
+
+\newlength{\blacktrianglewidth}
+\settowidth{\blacktrianglewidth}{$\blacktriangleright$}
+
+\newcommand{\boxskip}{7pt}        		% Abstand in Boxen zwischen Rand und Text
+\newcommand{\skiparound}{10pt}   		  % Abstand vor und nach Theoremen
+\newcommand{\thmstyle}{\theoremheader@order@val}           % Style für Theorem-Umgebungen, set by package option above
+
+
+\theoremstyle{\thmstyle}
+\theoremheaderfont{\osfamily \bfseries}
+\theorembodyfont{}                % setzt bodyfont auf nicht kursiv
+% TODO set sans serif font in math mode
+
+\theorempreskip{\skiparound}      % Abstände
+\theorempostskip{\skiparound}
+
+%======================================================================
+
+\theoremseparator{}
+%---------Theorem-------------
+\newmdtheoremenv[%
+%style=boxedtheorem,%
+backgroundcolor=cdblue!10,%
+linecolor=cddarkblue,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+outerlinewidth=0.5pt,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\osfamily\bfseries,%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{theorem}[themcount]{Theorem}
+
+%---------Satz----------------
+\newmdtheoremenv[%
+%backgroundcolor=lightgrey,%
+%linecolor=darkgrey,%
+outerlinewidth=0.5pt,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%linecolor=darkgrey,%
+%topline=true,%
+%rightline=true,%
+%leftline=true,%
+%bottomline=true,%
+%backgroundcolor=lightgrey,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\normalfont\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{satz}[themcount]{Satz}
+%\newtheorem{satz}[themcount]{Satz}
+
+%---------Definition-----------
+%\theoremstyle{nonumberbreak}
+%\newmdtheoremenv[%
+%	outerlinewidth=3pt,%
+%	linecolor=darkgrey,%
+%	topline=false,%
+%	rightline=false,%
+%	bottomline=false,%
+%	innertopmargin=3pt,%
+%	innerbottommargin=3pt,%
+%	frametitlefont=\normalfont\bfseries\color{black},%
+%	skipabove=5pt,%
+%	skipbelow=5pt,%
+%]{defin}[themcount]{Definition}
+%\theoremstyle{\thmstyle}
+\newtheorem{definition}[themcount]{Definition}
+
+%---------Algorithmus----------------
+\newmdtheoremenv[%
+%backgroundcolor=lightgrey,%
+linecolor=cdgray,%
+%innertopmargin=\boxskip,%
+%innerbottommargin=\boxskip,%
+%linecolor=darkgrey,%
+topline=true,%
+rightline=true,%
+leftline=true,%
+bottomline=true,%
+%backgroundcolor=lightgrey,%
+%innertopmargin=3pt,%
+%innerbottommargin=3pt,%
+%leftmargin=-10pt,%
+%rightmargin=-10pt,%
+%frametitlefont=\normalfont\bfseries\color{black},%
+%skipabove=5pt,%
+%skipbelow=5pt,%
+skipabove=6pt,%
+skipbelow=6pt,%
+nobreak,%
+]{algorithmus}[themcount]{Algorithmus}
+%\newtheorem{satz}[themcount]{Satz}
+
+%--------------------------------------
+% Theorems without box
+%--------------------------------------
+\newtheorem{lemma}[themcount]{Lemma}					% Lemma
+\newtheorem{folgerung}[themcount]{Folgerung}			% Folgerung
+\newtheorem{korollar}[themcount]{Korollar}			% Korollar
+\newtheorem{beispiel}[themcount]{Beispiel}			% Beispiel
+\newtheorem{erinnerung}[themcount]{Erinnerung}		% Erinnerung
+\newtheorem{wiederholung}[themcount]{Wiederholung}	% Wiederholung
+\newtheorem{bemerkung}[themcount]{Bemerkung}			% Bemerkung
+%\newtheorem{algorithmus}[themcount]{Algorithmus}    % Algorithmus
+
+%--------------------------------------
+% theorems without numbers but break
+%--------------------------------------
+
+\theoremstyle{nonumberbreak}
+\theoremheaderfont{\osfamily \bfseries}
+\theoremindent0cm
+
+\newtheorem{*definition}{Definition}				% Definition
+\newtheorem{*lemma}{Lemma}
+\newtheorem{*wiederholung}{Wiederholung}			% Wiederholung
+\newtheorem{*erinnerung}{Erinnerung}				% Erinnerung
+\newtheorem{*beispiel}{\raisebox{1pt}{\rule{5pt}{5pt}} Beispiel}	% Beispiel
+
+%--------------------------------------
+% theorems without numbers and without linebreak
+%--------------------------------------
+\theoremstyle{nonumberplain}
+\theoremseparator{\textbf{.}}
+%\theorembodyfont{\upshape \mdseries}
+% TODO set bodyfont to non-italic
+
+\newtheorem{*bemerkung}{\raisebox{1pt}{$\blacktriangleright$} \textos{Bemerkung}}	% Bemerkung
+\newtheorem{*hinweis}{\raisebox{1pt}{$\blacktriangleright$} \textos{Hinweis}}		% Hinweis
+%raisebox sets symbol some pts over baseline
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          CORRECT REFERENCES                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{algorithmus}{Algorithmus}{Algorithmen}
+
+%\crefformat{equation}{#2Gleichung~(#1)#3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          PROOF ENVIRONMENTS                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% >> proof
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalfont\normalsize\bfseries}
+\theorembodyfont{\normalfont\small}
+\theoremseparator{\textbf{.}}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+%\ifinlist{proof}{\theorem@disable}{\RenewEnviron{proof}{}{}}{\renewtheorem{proof}{Beweis}}
+
+% >> Equivalences
+\newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
+\newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
+\newenvironment{proof-equivalence}[1][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\begin{description}}%
+        {\begin{description}[topsep=-\parskip]}%
+}{%
+        \end{description}%
+}%
+\newenvironment{proof_equiv}{\begin{proof}\begin{description}}{\end{description}\end{proof}}
+
+% >> inductions
+\newcommand{\ianfang}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IA)}]%
+    }{%
+        %parameter exists
+        \item[\textbf{(IA)}] {#1 :} %\hfill \\%
+    }%
+}
+
+\newcommand{\ivorraussetzung}{\item[\bfseries (IV)]}
+
+\newcommand{\ischritt}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IS)}]
+    }{%
+        % parameter exists
+        \item[\textbf{(IS)}] {#1 :} %\\
+    }%
+}
+
+% two optional arg's:
+% #1 = induced variable 
+% #2 = vert. space before (IA): parskip (default) or nopreskip
+\NewDocumentEnvironment{induction}{O{} O{}}{%
+    \ifthenelse{ \isempty{#1} }{}{%
+        Vollständige Induktion nach #1:
+    }%---
+    \ifthenelse{ \equal{#2}{nopreskip} }{%
+        \begin{description}[topsep=-\parskip]
+    }{%
+        \begin{description}
+    }%
+}{%
+    \end{description}%
+}
+
+\newenvironment{proof_induction}[1][]{%
+    \begin{proof}
+        \begin{induction}[#1][nopreskip]%
+}{%
+        \end{induction}
+    \end{proof}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                NEW MATH COMMANDS AND OPERATORS                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% new math commands
+
+% >> special characters
+\newcommand{\quer}[1]{\overline{#1}}
+\newcommand{\schlange}[1]{\widetilde{#1}}
+\newcommand{\dach}[1]{\widehat{#1}}
+
+\renewcommand{\epsilon}{\varepsilon}
+\let\oldphi\phi
+\renewcommand{\phi}{\varphi}
+\renewcommand{\varphi}{\oldphi}
+
+\undef\mit
+\newcommand*{\mit}{\text{ mit }}
+\newcommand*{\und}{\text{ und }}
+\newcommand*{\bzw}{\text{ bzw. }}
+
+\newcommand{\brackets}[1]{\left( #1 \right)}
+
+% >> sets and mappings
+\newcommand{\menge}[1]{\left\{ #1 \right\}}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\card}[1]{\abs{#1}}
+\newcommand{\ohne}[1]{\backslash}
+\newcommand{\ohneNull}{\backslash \menge{0}}
+\newcommand{\pows}[1]{\mathcal{P}\left( #1 \right)}
+
+\newcommand{\N}{\mathbb{N}}			% natural numbers
+\newcommand{\Z}{\mathbb{Z}}			% integers
+\newcommand{\Q}{\mathbb{Q}}     % rational numbers
+\newcommand{\R}{\mathbb{R}}			% real numbers
+\newcommand{\Rn}{\mathbb{R}^n}  % IR^n
+\newcommand{\Rm}{\mathbb{R}^m}  % IR^m
+\newcommand{\Rd}{\mathbb{R}^d}  % IR^d
+\undef{\C}
+\newcommand{\C}{\mathbb{C}}			% complex numbers
+\newcommand{\K}{\mathbb{K}}     % any field (real or complex)
+\newcommand{\F}{\mathbb{F}}    % (prime) field
+
+% % Abbildungen mit Namen, einzeilig
+%\newcommand{\abb}[3]{#1 \colon #2 \to #3}
+\NewDocumentCommand{\abb}{ m m O{} m}{#1 \colon #2 \to_{#3} #4}
+
+% Abbildungen mit Namen, zweizeilig
+\newcommand{\bigabb}[5]{#1 \colon \left\lbrace%
+	\begin{array}{rcl}%
+		#2 & \to & #3 \\%
+		#4 & \mapsto & #5%
+	\end{array}%
+	\right.}
+%
+% Abbildungen ohne Namen, zweizeilig
+\newcommand{\bigabbnoname}[4]{\left\lbrace%
+	\begin{array}{rcl}%
+		#1 & \to & #2 \\%
+		#3 & \mapsto & #4%
+	\end{array}%
+	\right.}
+
+% >> logic
+\newcommand{\follows}{\ensuremath{\enskip \Rightarrow \enskip}} % =>
+\newcommand{\equivalent}{\ensuremath{\enskip \Leftrightarrow \enskip}} % <=>
+\newcommand{\defequiv}{\ensuremath{\enskip \mathrel{:\Leftrightarrow}} \enskip} % :<=>
+\newcommand{\defeq}{\ensuremath{\mathrel{:=}}} % :=
+\newcommand{\defqe}{\ensuremath{\mathrel{=:}}} % =:
+
+% >> linear algebra - vector spaces
+\newcommand{\basisB}{\mathcal{B}} % cal symbol for basis b
+\newcommand{\darstMat}[2]{M_{\mathcal{#1}} (#2)} % % first parameter: basis, second parameter: mapping symbol
+\newcommand{\MBf}{\darstMat{\basisB}{f}}
+\newcommand{\one}{\mathbbm{1}}  % unitary matrix
+\newcommand{\isomorph}{\mathrel{\cong}}
+\newcommand{\erz}[1]{\langle #1 \rangle} % generating system
+\newcommand{\scal}[2]{\left\langle #1\, ,\, #2 \right\rangle} % scalar product
+\newcommand{\transpose}[1]{\left( #1 \right)^{\top}} % transpose symbol with (***)
+\newcommand{\trans}[1]{#1^{\top}} % transpose symbol without (***)
+
+% >> groups / rings / fields
+\newcommand{\normalteiler}{\mathrel{\trianglelefteqslant}}
+\newcommand{\nichtnormal}{\mathrel{\ntrianglelefteqslant}}
+\newcommand{\echtnormal}{\mathrel{\vartriangleleft}}
+
+\newcommand{\ideal}{\mathrel{\trianglelefteqslant}}
+\newcommand{\nichtideal}{\mathrel{\ntrianglelefteqslant}}
+\newcommand{\echtideal}{\mathrel{\vartriangleleft}}
+
+\newcommand{\einheit}[1]{{#1}^{\times}}
+\newcommand{\Rx}{\einheit{R}}			% Einheiten Ring
+
+\NewDocumentCommand{\polynom}{O{R} O{X}}{#1 \left[ #2 \right]}
+% following commands just for compatibility
+\newcommand{\polynomring}[2]{#1 \left[ #2 \right]}  % Polynomring *[*]
+%\newcommand{\polynom}[1]{\polynomring{#1}{X}} % Polynomring *[X]
+\newcommand{\polynomR}{\polynom{R}}   % Polynomring R[X]
+% in older documents insert 
+% \renewcommand{\polynom}[1]{#1 $\left[ X \right]$}
+% for old \polynom-command
+
+
+\newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
+\newcommand{\MinPol}[2]{\Minpol\left( #1 \mathrel{|} #2\right)}
+\newcommand{\Sp}[1][L \mid K]{\Spur_{#1}}
+\newcommand{\No}[1][L \mid K]{\Norm_{#1}}
+
+% >> number theory
+\newcommand{\teilt}{\mathrel{\mid}}
+\newcommand{\teiltnicht}{\mathrel{\nmid}}
+\newcommand{\rest}[1]{\Z / #1 \Z} % Restklassen Z/(*)Z
+
+% >> metric spaces
+\newcommand{\folge}[2][]{\left\{ #2 \right\}_{#1}} % sequence (*)_*
+\newcommand{\dist}[2]{\mathrm{d} \! \left( #1 , #2 \right)} % d(*,*)
+\newcommand{\abs}[1]{\left| #1 \right|} % |*|
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert} % ||*||
+
+% >> differentiation
+\newcommand{\partdiff}[1]{\frac{\partial}{\partial #1 }}
+\newcommand{\ableitung}[1]{\frac{\mathrm{d}}{\mathrm{d} #1 }}
+\newcommand{\diff}[1]{\enskip \mathrm{d}#1}
+\newcommand{\dx}{\diff{x}}
+\newcommand{\dy}{\diff{y}}
+\newcommand{\da}{\diff{a}}
+
+% >> integration
+
+% >> topology
+\newcommand{\rand}{\partial}
+
+% >> measure theory
+\newcommand{\borel}[1]{\mathcal{B}(#1)}
+
+% >> numerical mathematics
+
+% >> stochastic
+\undef\P
+\newcommand{\P}{\mathbb{P}}
+\newcommand{\ereignisF}{\mathcal{F}}
+\newcommand*{\WTheorie}{Wahrscheinlichkeitstheorie }
+\newcommand*{\WMass}{Wahrscheinlichkeitsmaß }
+\newcommand*{\WRaum}{Wahrscheinlichkeitsraum }
+\newcommand*{\WRaeume}{Wahrscheinlichkeitsräume }
+\newcommand*{\WVerteilung}{Wahrscheinlichkeitsverteilung }
+\newcommand*{\Wkeit}{Wahrscheinlichkeit }
+\newcommand*{\ZV}{Zufallsvariable}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\EW}[1][X]{\ensuremath{\E \left[ #1 \right]}}
+\newcommand{\Varianz}{\mathbb{V}\mathrm{ar}}
+\newcommand{\Var}[1][X]{\ensuremath{\Varianz \left( #1 \right)}}
+\newcommand{\Covarianz}{\mathbb{C}\mathrm{ov}}
+\newcommand{\Cov}[2]{\ensuremath{\Covarianz \left( #1 , #2 \right)}}
+\newcommand{\Correlation}{\mathbb{C}\mathrm{orr}}
+\newcommand{\Corr}[2]{\ensuremath{\Correlation \left( #1 , #2 \right)}}
+\newcommand{\Normal}{\mathcal{N}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math operators
+
+%%%%%% A
+\DeclareMathOperator{\Aff}{Aff} % Affine
+\DeclareMathOperator{\Aut}{Aut} % Automorphism
+\DeclareMathOperator{\Abb}{Abb} % Abbildung
+
+%%%%%% B
+\DeclareMathOperator{\Bernoulli}{Bernoulli} % bernoulli distribution
+\DeclareMathOperator{\Bil}{Bil}
+\DeclareMathOperator{\Bin}{Bin} % binomial distribution
+
+%%%%%% C
+\DeclareMathOperator{\charak}{char}
+\DeclareMathOperator{\cl}{cl} % Closure
+\DeclareMathOperator{\cond}{cond} % ?
+\DeclareMathOperator{\cdiff}{C} % stetig differenzierbare Abbildungen
+
+%%%%%% D
+\DeclareMathOperator{\diam}{diam} % Diameter of a set
+\DeclareMathOperator{\discr}{discr} % discriminant of a polynom
+\undef\div
+\DeclareMathOperator{\div}{div} % Divergence
+\DeclareMathOperator{\diag}{diag} % Diagonal matrix
+
+%%%%%% E
+\DeclareMathOperator{\Eig}{Eig} % Eigenspace
+\DeclareMathOperator{\End}{End} % Endomorphism
+\DeclareMathOperator{\eps}{eps}
+\DeclareMathOperator{\Exp}{Exp} % exponential distribution
+\DeclareMathOperator{\ext}{ext} % Exterior
+\DeclareMathOperator{\Ext}{ext} % 2nd time?
+
+%%%%%% F
+\DeclareMathOperator{\Fix}{Fix} % Fix-points for group theory
+
+%%%%%% G
+\DeclareMathOperator{\Gal}{Gal} % galois group
+\DeclareMathOperator{\GammaDist}{Gamma} % gamma distribution
+\DeclareMathOperator{\Geom}{Geom} % geometric distribution
+\DeclareMathOperator{\ggT}{ggT} % Größter gemeinsamer Teiler (gcd)
+\DeclareMathOperator{\GL}{GL} % General Linear Group
+\DeclareMathOperator{\graph}{graph} % Graph
+\DeclareMathOperator{\grad}{grad} % Gradient
+
+%%%%%% H
+\DeclareMathOperator{\Hom}{Hom} % family of Homomorphisms
+\DeclareMathOperator{\Hau}{Hau} % Hauptraum (generalized Eigenspace)
+\DeclareMathOperator{\Hyper}{Hyper} % hypergeometric distribution
+
+%%%%%% IJK
+\DeclareMathOperator{\Image}{Im} % Image
+\DeclareMathOperator{\Inn}{Inn} % Inner autommorphism
+\DeclareMathOperator{\inn}{int} % Set of inner points
+\DeclareMathOperator{\Int}{int} % 2nd time
+\DeclareMathOperator{\id}{id} % Identity
+
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\kgV}{kgV} % kleinste gemeinsamer Teiler (lcd)
+
+%%%%%% LMN
+\DeclareMathOperator{\Lin}{L} % lineare Abbildungen
+\DeclareMathOperator{\LC}{LC} % Leitkoeffizient
+
+\DeclareMathOperator{\Mat}{Mat} % Matrix
+\DeclareMathOperator{\Minpol}{MinPol} % Minimalpolynon
+\DeclareMathOperator{\Multi}{Multi}
+\DeclareMathOperator{\negBin}{negBin} % negative binomial distribution
+\DeclareMathOperator{\Norm}{N}         % norm (algebra)
+\DeclareMathOperator{\normalenraum}{N} % Normalenraum
+\DeclareMathOperator{\normalisator}{N} % Mormalisator
+
+
+%%%%%% OPQ
+\DeclareMathOperator{\ord}{ord} % Order of a group
+\DeclareMathOperator{\Orth}{O} % Orthogonal Group
+\DeclareMathOperator{\Out}{Out} % Outer Automorphism
+
+\DeclareMathOperator{\Poisson}{Poisson} % poisson distribution
+\DeclareMathOperator{\pr}{pr} % Projection
+
+\DeclareMathOperator{\Quot}{Quot} % Quotient
+\DeclareMathOperator{\quot}{Quot} % Abwärtskompatibilität
+
+%%%%%% R
+\DeclareMathOperator{\rd}{rd} % ?
+\DeclareMathOperator{\rk}{rk} % Rank of a matrix
+\DeclareMathOperator{\rot}{rot} % Rotation (Curl)
+\DeclareMathOperator{\rang}{rang} % Matrix Rank
+
+%%%%%% S
+\DeclareMathOperator{\sgn}{sgn} % Signum function
+\DeclareMathOperator{\SL}{SL} % Special Linear Group
+\DeclareMathOperator{\SO}{SO} % Special Orthogonal Group
+\DeclareMathOperator{\Span}{span} % Span
+\DeclareMathOperator{\Spur}{Sp}   % spur (algebra)
+\DeclareMathOperator{\SR}{SR} % Spaltenraum
+\DeclareMathOperator{\Stab}{Stab} % Stabilizer
+\DeclareMathOperator{\supp}{supp} % Support
+\DeclareMathOperator{\Syl}{Syl} % Sylow Group
+\DeclareMathOperator{\Sym}{Sym} % Symmetric Group
+\DeclareMathOperator{\SU}{SU} % Special Unitary Group
+
+%%%%%% T
+\DeclareMathOperator{\tangentialraum}{T} % Tangentialraum
+\DeclareMathOperator{\tr}{tr} % Trace operator
+\DeclareMathOperator{\Typ}{Typ} % Type
+\DeclareMathOperator{\typ}{Typ} % Abwärtskompatibilität
+
+%%%%%% UVW
+\DeclareMathOperator{\UG}{UG} % Untergruppe (subgroup)
+\DeclareMathOperator{\Ugr}{Ugr} % Menge der Untergruppen (set of subgroups)
+\DeclareMathOperator{\Uni}{U} % Unitary Group / uniform distribution
+
+%%%%%% XYZ
+\DeclareMathOperator{\ZR}{ZR} % Zeilenraum
+\DeclareMathOperator{\zentralisator}{C} % Zentralisator
+\DeclareMathOperator{\zentrum}{Z} % Zentrum
+\DeclareMathOperator{\Zwk}{Zwk}  % Menge der Zwischenkörper
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math symbols
+
+% >> cupdot & bigcupdot for disjoint union of sets
+% reference: https://tex.stackexchange.com/questions/3964/mathematical-symbol-for-disjoint-set-union
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\newcommand{\smallbullet}{\scriptstyle\bullet}
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
+\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\smallbullet}}
+
+% >> use \cdot as multiplication symbol instead of *
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
+% >> fractions
+\RequirePackage{nicefrac}
+\newcommand\bsfrac[2]{%
+	\scalebox{-1}[1]{\nicefrac{\scalebox{-1}[1]{$#1$}}{\scalebox{-1}[1]{$#2$}}}%
+}
+\newcommand{\lfrac}[2]{ % fractions, e.g. A/B
+	\ifcase\OptFractionAppearence\relax%
+		\ifmmode%
+			#1\slash #2%
+		\else%
+			$#1\slash #2$%
+		\fi%
+	\or%
+		\nicefrac{#1}{#2}%
+	\else%
+		\PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
+	\fi%
+}
+\newcommand{\rfrac}[2]{ % fractions with backslash, e.g. B\A
+	\ifcase\OptFractionAppearence\relax%
+		\ifmmode%
+			#1\backslash#2%
+		\else%
+			$#1\backslash#2$%
+		\fi%
+	\or%
+		\bsfrac{#1}{#2}% Menge der Rechtsnebenklassen
+	\else%
+		\PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
+	\fi%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\RequirePackage{cleveref}
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{proposition}{Proposition}{Propositionen}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{korollar}{Korollar}{Korollare}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{algorithmus}{Algorithmus}{Algorithmen}

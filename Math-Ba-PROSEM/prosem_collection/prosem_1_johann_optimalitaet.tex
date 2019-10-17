@@ -1,0 +1,155 @@
+\chapter{Optimalitätskriterien}
+
+\vortragender{Johann Seidl}
+
+In der heutigen Welt sind viele mathematische Probleme auf Real-World-Probleme zurückzuführen. Unser unter (\ref{formel1}) verstandenes \textit{Minimierungsproblem} spielt unter anderem Rollen in den Ingenieurwissenschaften, der Physik, der Medizin oder der Ökonomie. 
+
+\section{Minimierungsproblem}
+Unter einem Minimierungsproblem wird folgende Aufgabe verstanden.  
+
+\begin{definition}
+	Sei $ X \subseteq \Rn $ und eine Funktion $ f: X \to \R $, dann wird ein $x^\ast \in X $ mit folgender Eigenschaft gesucht
+	\begin{equation} 
+		f(x^\ast) \leq f(x)   \qquad \forall x \in X 
+		\label{formel1}
+	\end{equation}
+\end{definition}
+
+\begin{bemerkung}
+	In kurzer Notation lautet diese Aufgabe $ \min f(x)$ unter der Nebenbedingung $x \in X$. Ist $X = \R$, dann spricht man von unrestringierten Problemen, andernfalls von restringierten Problemen. 
+\end{bemerkung}
+
+\section{Optimalitätskriterien}
+
+In diesem Kapitel gehen wir auf notwendige und hinreichende Bedingungen für lokale Minima ein, welche Ableitungen benutzen. Der erste Satz bezieht ein notwendiges Kriterium erster Ordnung, wobei man von einem Kriterium erster Ordnung spricht, da nur Informationen über die erste Ableitung eingehen.
+
+\begin{satz} \label{satz 1.3_2.1}
+	Seien $ X \subseteq \R^n $ eine offene Menge und $ f:X \to \R $ eine stetig differenzierbare Funktion. Ist  $ x^\ast \in X $ ein lokales Minimum von $f$ (auf $X$), so gilt 
+	\begin{equation*}
+		\nabla f(x^\ast) = 0 
+	\end{equation*}
+	d.h., $x^\ast$ ist ein stationärer Punkt von $f$. 
+\end{satz}
+\begin{proof}
+	Sei $ x^\ast \in X $ ein lokales Minimum von $f$, jedoch $\nabla f(x^\ast) \ne 0 $. Dann existiert ein Vektor $d \in \R^{n} $ mit 
+	\begin{equation*}
+		\nabla \trans{f(x^\ast)} d < 0
+	\end{equation*}
+	Eine mögliche Wahl für $d$ kann zum Beispiel $d \defeq -\nabla f(x^\ast)$ sein. Da $f$ nach Voraussetzung stetig differenzierbar ist, gilt für die Richtungsableitung $f'(x^\ast;d)$ von $f$ in $ x^\ast$ in Richtung $d$: 
+	\begin{equation*}
+		f'(x^\ast;d) = \lim_{t \to 0+}\ \dfrac{f(x^\ast + td) - f(x^\ast)}{t} = \nabla \trans{f(x^\ast)} d < 0. 
+	\end{equation*}
+	Folglich gibt es ein $\quer{t} >0 $ mit $ x^\ast +td \in X$ und 
+	\begin{equation*}
+		\dfrac{f(x^\ast+td) - f(x^\ast)}{t}<0 \qquad \forall t \in (0,\overline{t} ] 
+	\end{equation*}
+	Somit ist 
+	\begin{equation*}
+		f(x^\ast+td)<f(x^\ast) \qquad \forall t \in (0,\overline{t} ]
+	\end{equation*}
+	Dies steht aber im Widerspruch zur Voraussetzung, dass $x^\ast$ ein lokales Minimum von $f$ ist.
+\end{proof}
+
+\begin{bemerkung}
+	Offensichtlich ist dieser Satz keine hinreichende Bedingung, da auch ein mögliches Maxima die oben genannten Voraussetzungen erfüllt.
+\end{bemerkung}
+
+\begin{erinnerung}
+	Eine Matrix ist positiv semidefinit, falls für die symmetrische $ n \times n$ Matrix $M$ gilt 
+	\begin{equation}
+		\trans{x}Mx \ge 0 \qquad \forall x \in \R^{n} \setminus \menge{0}
+		\label{definit}
+	\end{equation}
+\end{erinnerung}
+
+\begin{erinnerung}[Satz von Taylor]
+	Seien $f : \R^{n} \to \R$ zweimal stetig differenzierbar sowie $x,y \in \R^{n}$ gegeben. Dann existiert ein $\theta \in (0,1)$ mit 
+	\begin{equation}
+		f(x) = f(y) + \nabla \trans{f(y)}(x-y)+\dfrac{1}{2}\trans{(x-y)} \nabla^{2} f(\xi)(x-y)
+		\label{Taylor}
+	\end{equation}
+	für $\xi = y+\theta(x-y)$.
+\end{erinnerung}
+
+Betrachten wir nun einen Satz, welcher eine notwendige Bedingung zweiter Ordnung nutzt. Man spricht wieder von Bedingung zweiter Ordnung, da der Satz Informationen über die zweiter Ableitung enthält.
+
+\begin{satz} \label{satz 1.7_2.5}
+	Seien $ X \subseteq \R^n $ eine offene Menge und $ f: X \to \R $ eine zweimal stetig differenzierbare Funktion. Ist  $ x^\ast \in X $ ein lokales Minimum von $f$ (auf $X$), so ist die Hesse-Matrix $\nabla^{2} f(x^\ast)$ positiv semidefinit.
+\end{satz}
+\begin{proof}
+	Sei $x^\ast \in X$ ein lokales Minimum von $f$, jedoch $\nabla^{2}f(x^\ast)$ nicht positiv semidefinit (\ref{definit}). Dann existiert ein Vektor $d \in \R^{n}$ mit 
+	\begin{equation}
+		\trans{d} \nabla^{2} f(x^\ast) d < 0
+		\label{formel2}
+	\end{equation}
+	Nutzt man nun (\ref{Taylor}) ergibt sich mit Satz 2.1 für alle hinreichend kleinen $t>0$:
+	\begin{equation*}
+	\begin{split}
+		f(x^\ast+td)  &= f(x^\ast) + \nabla \trans{f(x^\ast)}(td) + \dfrac{1}{2}\trans{(td)} \nabla^{2} f(\xi_{t})(td) \\
+		&= f(x^\ast) + \dfrac{1}{2}t^{2}\trans{d} \nabla^{2} f(\xi_{t})d 
+		\end{split}
+	\end{equation*}
+	Dabei ist $\nabla \trans{f(x^\ast)}(td) = 0$, da $x^\ast$ schon das lokale Minimum ist. Des Weiteren ist $\xi_{t} = x^\ast + \upsilon_{t}td$ für ein $\upsilon_{t}$ mit $0 < \upsilon_{t} < 1$. Aus Stetigkeitsgründen folgt hieraus unter Verwendung von (\ref{formel2}) die Existenz eines $\overline{t} > 0$ mit 
+	\begin{equation*}
+		f(x^\ast+td)<f(x^\ast) \qquad \forall t \in (0,\overline{t}]
+	\end{equation*}
+	Dies steht aber im Widerspruch dazu, dass $x^\ast$ ein lokales Minimum ist.
+\end{proof}
+
+Auch die Bedingungen aus den Sätzen \ref{satz 1.3_2.1} und \ref{satz 1.7_2.5} zusammen sind \textit{nicht} hinreichend dafür, dass $x^\ast$ ein lokales Minimum ist.
+
+\begin{beispiel}
+	Betrachte $ f: \R^{2} \to \R $ mit $f(x) = x_{1}^{2} - x_{2}^{4}$, $x^\ast =(0,0)$. Die Ableitung erster Ordnung und die Hesse-Matrix der Funktion sind gegeben durch: 
+	\begin{align*}
+		f'(x) &= (2x_{1} , -4x_{2}^{3}) \\
+		f''(x) &= \begin{pmatrix} 2 & 0 \\ 0 & -12 x_{2} \end{pmatrix}
+	\end{align*}
+	Man kann leicht erkennen, dass $f'(x^\ast)=0$ und die Eigenwerte der Matrix im Punkt $x^\ast$ $ \lambda_{1} =0$ und $\lambda_{1} =2$ sind, also die Matrix positiv semidefinit ist. Die Voraussetzungen für Satz \ref{satz 1.7_2.5} sind also erfüllt. Dennoch ist zum Beispiel für $X = \R^{2}$ $f(0,1) < f(0,0)$. 
+\end{beispiel}
+
+\begin{satz} \label{satz 1.9_2.7}
+	Seien $ X \subseteq \R^n $ offen und $ f:X \to \R $ zweimal stetig differenzierbar. Gelten
+	\begin{enumerate}[label=(\alph*), nolistsep, topsep=-\parskip]
+		\item $\nabla f(x^\ast) =0$ und 
+		\item $\nabla^{2} f(x^\ast)$ ist positiv definit, 
+	\end{enumerate}
+	so ist $x^\ast$ ein striktes lokales Minimum von $f$ (auf $X)$
+\end{satz}
+
+\begin{proof}
+	Aus (b) folgt zunächst die Existenz einer Konstanten $\epsilon$ mit 
+	\begin{equation*}
+		\trans{d}\nabla^{2} f(x^\ast)d \ge \epsilon \trans{d}d \qquad \forall d \in \R^{n}
+	\end{equation*}
+	Nach (\ref{Taylor}) gilt für alle hinreichend nahe bei Null gelegenen $d \in \R^{n}$ :
+	\begin{equation}
+		f(x^\ast+d) = f(x^\ast) + \nabla \trans{f(x^\ast)}(d) + \dfrac{1}{2}\trans{d} \nabla^{2} f(\xi_{d})d
+		\label{cauchy}
+	\end{equation}
+	mit $\xi_{t} = x^\ast + \upsilon_{d}td \,$ für ein $\upsilon_{d}$ mit $0 < \upsilon_{d} < 1$. Durch Voraussetzung (a) erhalten wir $\nabla \trans{f(x^\ast)}(td) = 0$. Wenden wir nun die Cauchy - Schwarz - Ungleichung auf (\ref{cauchy}) an, erhalten wir 
+	\begin{equation*}
+	\begin{split}
+		f(x^\ast+d)  &= f(x^\ast) + \dfrac{1}{2}\trans{d} \nabla^{2} f(x^\ast)d+ \dfrac{1}{2} \trans{d} \big( \nabla^{2} f(\xi_{d}) - \nabla^{2} f(x^\ast) \big) d \\
+		& \ge
+		f(x^\ast) + \dfrac{1}{2}(\epsilon - \Vert \nabla^{2}f(\xi_{d}) - \nabla^{2}f(x^\ast) \Vert) \Vert d \Vert ^{2}
+	\end{split}
+	\end{equation*}
+	Folglich gilt 
+	\begin{equation*}
+		f(x^\ast +d) > f(x^\ast) \qquad \forall d\neq 0 \text{ und  hinreichend nahe }  0
+	\end{equation*}
+	Also ist $x^\ast$ ein striktes lokales Minimum von $f$.
+\end{proof}
+
+\begin{bemerkung}
+	Dieser Satz liefert ein hinreichendes Kriterium. Man beachte jedoch, dass die Bedigungen (a) und (b) aus Satz \ref{satz 1.9_2.7} nicht notwendig für die strikte lokale Minimaliltät von $x^\ast$ sind. Genauere Erklärungen liefert nachfolgendes Beispiel.
+\end{bemerkung}
+
+\begin{beispiel}
+	Betrachte $ f: \R^{2} \to \R $ mit $f(x) = x_{1}^{2} + x_{2}^{4}$, $x^\ast =(0,0)$.  Dann ist
+	\begin{align*}
+		f'(x) &=(2x_{1} , 4x_{2}^{3}) \\
+		f''(x) &= \begin{pmatrix} 2 & 0 \\ 0 & 12x_{2} \end{pmatrix}
+	\end{align*}
+	so stellt man fest, dass $\nabla^{2} f(x^\ast)$  positiv semidefinit ist und somit Satz \ref{satz 1.9_2.7} keine Anwendung finden kann (Voraussetzung (b) verletzt). Man erkennt jedoch leicht, dass $(0,0)$ das globale Minimum ist.
+\end{beispiel}
