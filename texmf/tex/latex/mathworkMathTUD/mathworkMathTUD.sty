@@ -11,10 +11,6 @@
 \ProvidesPackage{mathworkMathTUD}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PACKAGE DESCRIPTION |
-% ---------------------
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{zref-base}
 \RequirePackage{etoolbox}
@@ -23,12 +19,13 @@
 \RequirePackage{xstring}
 \RequirePackage{xkeyval}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for theorem environments
 \RequirePackage{tikz}
 \usetikzlibrary{calc,arrows}
 \RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Packages for theorem environments
 \RequirePackage{amsmath,amssymb,amsfonts,mathtools}
 \RequirePackage[amsmath,thmmarks,framed]{ntheorem}
 
@@ -713,17 +710,3 @@ nobreak,%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\RequirePackage{cleveref}
-\crefname{theorem}{Theorem}{Theoreme}
-\crefname{satz}{Satz}{Sätze}
-\crefname{lemma}{Lemma}{Lemmata}
-\crefname{proposition}{Proposition}{Propositionen}
-\crefname{folgerung}{Folgerung}{Folgerungen}
-\crefname{korollar}{Korollar}{Korollare}
-\crefname{definition}{Definition}{Definitionen}
-\crefname{bemerkung}{Bemerkung}{Bemerkungen}
-\crefname{beispiel}{Beispiel}{Beispiele}
-\crefname{erinnerung}{Erinnerung}{Erinnerungen}
-\crefname{algorithmus}{Algorithmus}{Algorithmen}
