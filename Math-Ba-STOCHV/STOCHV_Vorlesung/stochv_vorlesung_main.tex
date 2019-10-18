@@ -1,0 +1,89 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 11pt]{report}
+
+\usepackage[ngerman]{babel}
+\usepackage{../../texmf/tex/latex/layoutMathTUD}
+\usepackage[smallequationskip]{../../texmf/tex/latex/mathworkMathTUD}
+
+\usepackage{../../texmf/tex/latex/mathoperatorsMathTUD}
+\usepackage{../../texmf/tex/latex/maththeorems2MathTUD}
+
+\usepackage{../../texmf/tex/latex/titlepageMathTUD}
+\usepackage{../../texmf/tex/latex/graphicsMathTUD}
+
+\input{./stochv_local_headings}
+\input{./stochv_local_changes}
+
+\usepackage{../../texmf/tex/latex/referencesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\name{Eric Kunze}
+\matnr{Nummer}
+\email{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\modul{Vertiefung in der Stochastik}
+\period{Wintersemester 2019/20}
+
+%\renewcommand{\tutor}{Dr. Legrand}
+%\renewcommand{\group}{Tag x. DS, (un)gerade Woche}
+
+\lecturer{Prof. Dr. Martin Keller-Ressel}
+\faculty{Mathematik}
+\institute{Stochastik}
+\professorship{Stoch. Analysis und Finanzmathematik}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\undef\folge
+\NewDocumentCommand{\folge}{m m}{\left( #1 \right)_{#2}}
+\renewcommand{\complement}{\mathsf{C}}
+
+\renewcommand{\F}{\mathcal{F}}
+\renewcommand{\G}{\mathcal{G}}
+
+\newcommand{\widesim}[1][2.5]{
+	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
+}
+
+\usepackage{mwe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\makeTUtitle
+    
+\tableofcontents
+
+\chapter{Einführung}
+\label{chapter_1_einfuehrung}
+\input{stochv_1_1_zentraleFragestellungen}
+\input{stochv_1_2_mathematischesFinanzmodell}
+\input{stochv_1_3_anleihenBeispieleDerivate}
+\input{stochv_1_4_replikationsArbitrage}
+
+\end{document}

@@ -1,0 +1,67 @@
+\section{Anleihen und grundlegende Beispiele für Derivate}
+
+Hier betrachten wir immer nur ein Basisgut $S_t = S_t^1$.
+
+\begin{enumerate}[leftmargin=*, label=(\alph*)]
+	\item \begriff{Anleihe} [bond] (genauer: Null-Kupon-Anleihe [zero-coupon bond])
+	
+	Der Emittent (Herausgeber) einer Anleihe mit Endfälligkeit [maturity] $T$ garantiert dem Käufer zum Zeitpunkt $T$ den Betrag $N$ (EUR/USD/...) zu zahlen.
+	Typische Emittenten sind z.B. Staaten [government bond] oder Unternehmen (als Alternative zur Kreditaufnahme).
+	Nach Emission werden Anleihen auf dem Sekundärmarkt weiterverkauft, d.h. liquide gehandelte Wertpapiere. 
+	
+	\begin{tabular}{ll}
+		Preis bei Emission: & $B(0,T)$ \\
+		Preis bei Weiterverkauf zum Zeitpunkt $t \le T$: & $B(t,T)$ \\
+	\end{tabular}
+	
+	Es ist $B(T,T) = N$ und wir normieren stets $N=1 \follows B(T,T)=1$.
+	
+	Anleihen von West-/ Nord-/ Mitteleuropäischen Staaten und den USA sowie Kanada werden als risikolos betrachtet (sichere Zahlung). Sonst: Kreditrisiko
+	
+	Risikofreie Anleihen können als Numeraire $S_t^0 = B(t,T)$ genutzt werden.
+	
+	\begin{center}
+		%TODO BILD (1)
+		\includegraphics[width=.5\textwidth]{example-image}
+		\captionof{figure}{Zahlungsstrom einer Anleihe}
+	\end{center}
+	
+	\item \begriff{Terminvertrag} [forward contract]
+	
+	aus Käufersicht: Vereinbarung zu bestimmtem zukünftigen Zeitpunkt $T$ eine Einheit des Basisguts $S$ zum Preis $K$ zu kaufen (Kaufverpflichtung). Beliebt ist dieser bei Rohstoffen und Elektrizität.
+	
+	Auszahlungsprofil: $F_T = S_T - K$
+	Preis zum Zeitpunkt $t$: $F_t$
+	
+	\begin{center}
+		%TODO BILD (2)
+		\includegraphics[width=.5\textwidth]{example-image}
+		\captionof{figure}{Auszahlungsprofil eines Terminvertrags}
+	\end{center}
+	
+	
+	\item \begriff{(Europäische) Put- bzw. Call-Option}
+	
+	Recht zu einem zukünftigen Zeitpunkt $T$ eine Einheit des Basisguts $S$ zum Preis $K$ zu verkaufen (put) bzw. zu kaufen (call)
+	$\to$ keine Kaufverpflichtung !
+	% Vergleich zum Terminvertrag: keine Pflicht
+	
+	Auszahlungsprofil:
+	\begin{itemize}
+		\item Call: $C_T = \begin{cases} S_T - K & S_T \ge K \\ 0 & S_T < K \end{cases} = \brackets{S_T - K}_+$
+		%TODO Bild (3)
+		\item Put: $P_T = \begin{cases} 0 & S_T \ge K \\ K - S_T & S_T < K \end{cases} = \brackets{K - S_T}_+$ 
+		%TODO Bild (4)
+	\end{itemize}
+
+	\item \begriff{Amerikanische Put- bzw. Call-Option}
+	
+	wie Put/Call, aber mit Ausübung zu beliebigem Zeitpunkt $\tau \in [0,T]$.
+	
+	\begin{tabular}{ll}
+		Preis zum Zeitpunkt $t$: & $P_t^{AM}$, $C_t^{AM}$ \\
+		Auszahlungsprofil zum Zeitpunkt $\tau$: & $\brackets{S_\tau - K}_+$, $\brackets{K - S_\tau}_+$
+	\end{tabular}
+	
+	Der Zeitpunkt $\tau$ muss im Allgemeinen als Lösung eines stochastischen Optimierungsproblems bestimmt werden (optimales Stopp-Problem).
+\end{enumerate}

@@ -1,0 +1,84 @@
+\section{Elementare Replikations- und Ar"-bitrage"-argumente}
+
+Was können wir (mit elementaren Mitteln) über die ''fairen`` Preise $B(t,T), F_t, C_t, P_t$ aussagen?
+
+Wir verwenden:
+
+\begin{itemize}[topsep=-\parskip]
+	\item \begriff{Replikationsprinzip}: zwei identische, zukünftige Zahlungsströme haben auch heute denselben Wert (ein Zahlungsstrom ''repliziert`` den anderen)
+	\item \begriff{No-Arbitrage-Prinzip}: ''Ohne Kapitaleinsatz kann kein sicherer Gewinn ohne Verlustrisiko erzielt werden.`` (Arbitrage = risikofreier Gewinn)
+	\item \begriff{Superreplikationsprinzip} (schwächere Form des Replikationsprinzips): Ist ein Zahlungsstrom in jedem Fall größer als ein anderer, so hat er auch heute den größeren Wert.
+\end{itemize}
+
+\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		stark & Replikationsprinzip & eingeschränkt anwendbar \\
+		$\downarrow$ & Superreplikationsprinzip & $\uparrow$ \\
+		schwach & No-Arbitrage-Prinzip & immer anwendbar \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{lemma} % 1.1
+	Für den Preis $C_T$ des europäischen Calls gilt:
+	\begin{equation*}
+		\brackets{S_t - K B(t,T)}_+ \le C_t \le S_t
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	untere Schranke: Für Widerspruch nehme an, dass $S_t - K B(t,T) - C_t = \epsilon > 0$.
+	
+	\begin{center}
+		\begin{tabular}{|l|c|cc|} % Wert in T über rechte beide Spalten
+			\hline \multirow{2}{*}{Portfolio} & \multirow{2}{*}{Wert in $t$} & \multicolumn{2}{c|}{Wert in $T$} \\
+			&& $S_T \le K$ & $S_T > K$ \\ \hline \hline
+			Kaufe Call & $C_t$ & $0$ & $S_T - K$ \\
+			Verkaufe Basisgut & $-S_T$ & $-S_T$ & $-S_T$ \\
+			Kaufe Anleihe & $\epsilon + K B(t,T)$ & $\frac{\epsilon}{B(t,T)} + K$ &  $\frac{\epsilon}{B(t,T)} + K$ \\ \hline
+			$\Sigma$ & $0$ & $K - S_T + \frac{\epsilon}{B(t,T)} > 0$ & $\frac{\epsilon}{B(t,T)} > 0$ \\
+			& kein Anfangskapital & \multicolumn{2}{c|}{sicherer Gewinn}\\ \hline
+		\end{tabular}
+	\end{center}
+
+	Dies steht jedoch im Widerspruch zum No-Arbitrage-Prinzip. Somit ist $S_t - K B(t,T) \le C_T$. Außerdem ist $C_t \ge 0$, d.h. $C_t \ge \brackets{S_t - K B(t,T)}_+$.
+	
+	obere Schranke: $\nearrow$ Übung
+\end{proof}
+
+\begin{lemma}[Put-Call-Parität] % 1.2
+	Für Put $P_t$, Call $C_t$ mit selbem Ausübungspreis $K$ und Basisgut $S_t$ gilt
+	\begin{equation*}
+		C_t - P_t = S_t - B(t,T) * K
+	\end{equation*}
+	%TODO Bild (5)
+\end{lemma}
+\begin{proof}
+	Mit Replikationsprinzip:
+	
+	\begin{center}
+		\begin{tabular}{|l|c|cc|}
+			\hline 
+			\multirow{2}{*}{Portfolio 1} & \multirow{2}{*}{Wert in $t$} & \multicolumn{2}{c|}{Wert in $T$} \\
+			&& $S_T \le K$ & $S_T > K$ \\ \hline \hline
+			Kaufe Call & $C_t$ & $0$ & $S_T - K$ \\
+			Kaufe Anleihe & $K * B(t,T)$ & $K$ & $K$ \\ \hline
+			Wert Portfolio 1 & $C_t + K * B(t,T)$ & K & $S_T$ \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\begin{center}
+		\begin{tabular}{|l|c|cc|}
+			\hline 
+			\multirow{2}{*}{Portfolio 2} & \multirow{2}{*}{Wert in $t$} & \multicolumn{2}{c|}{Wert in $T$} \\
+			&& $S_T \le K$ & $S_T > K$ \\ \hline \hline
+			Kaufe Put & $P_t$ & $K - S_T$ & $0$ \\
+			Kaufe Basisgut & $S_t$ & $S_T$ & $S_T$ \\ \hline
+			Wert Portfolio 2 & $P_t + S_t$ & $K$ & $S_T$ \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+
+	Replikationsprinzip: $C_t + K * B(t,T) = P_t + S_t \follows C_t + P_t = S_t - K*B(t,T)$
+\end{proof}
