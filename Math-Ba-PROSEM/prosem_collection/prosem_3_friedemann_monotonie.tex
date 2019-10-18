@@ -3,7 +3,7 @@
 \vortragender{Friedemann Krannich}
 
 \section{Wiederholung}
-	Wir erinnern uns an die folgenden S"atze und Definitionen:
+	Wir erinnern uns an die folgenden Sätze und Definitionen:
 	\begin{definition}[Konvexität]
 		Sei $X\subseteq\mathbb{R}^n$ konvex, $f : X\to\mathbb{R}$ eine Funktion.
 		\begin{enumerate}
@@ -12,7 +12,7 @@
 			f(\lambda{}x+(1-\lambda)y)\leq\lambda{}f(x)+(1-\lambda)f(y)
 			\end{displaymath}
 			\item $f$ ist strikt konvex (auf X): nutze in 1. \(<\) statt $\leq$
-			\item $f$ ist gleichm"a"sig konvex (auf X), falls $\exists{}\mu{}>0: \ \forall{}x,y\in{}X  \ \forall{}\lambda{}\in(0,1):$ \\
+			\item $f$ ist gleichmäßig konvex (auf X), falls $\exists{}\mu{}>0: \ \forall{}x,y\in{}X  \ \forall{}\lambda{}\in(0,1):$ \\
 			\begin{equation*}
 			f(\lambda{}x+(1-\lambda{})y)+\mu{}\lambda{}(1-\lambda{})\|x-y\|\leq\lambda{}f(x)+(1-\lambda{})f(y)
 			\end{equation*}
@@ -24,7 +24,7 @@
 		\begin{enumerate}
 			\item $f$ ist konvex (auf X) $ \Leftrightarrow \forall x,y \in X: 		f(x)-f(y)\geq{}f'(y)^T(x-y)$
 			\item $f$ ist strikt konvex (auf X) $ \Leftrightarrow\forall x \neq y \in X : f(x)-f(y) > f'(y)^T(x-y)$
-			\item $f$ ist gleichm"a"sig konvex (auf X) $\Leftrightarrow \exists \mu > 0 : \forall x,y \in X:
+			\item $f$ ist gleichmäßig konvex (auf X) $\Leftrightarrow \exists \mu > 0 : \forall x,y \in X:
 			$\\$ f(x)-f(y) \geq f'(y)^T(x-y)+ \mu \| x-y \|^2 $
 		\end{enumerate}
 	\end{satz}
@@ -32,7 +32,7 @@
 	\section{Monotonie einer Funktion}
 	
 	\begin{definition}[Monotonie]
-		Sei $X\subseteq\mathbb{R}^n$. Eine Funktion $f : X \rightarrow \mathbb{R}$\textsuperscript{n} hei"st
+		Sei $X\subseteq\mathbb{R}^n$. Eine Funktion $f : X \rightarrow \mathbb{R}$\textsuperscript{n} heißt
 		\begin{enumerate}
 			\item monoton (auf X), falls $\forall x,y \in X:$
 			\begin{equation*}
@@ -42,7 +42,7 @@
 			\begin{equation*}
 			(x-y)^T(f(x)-f(y)) > 0
 			\end{equation*}
-			\item gleichm"a"sig monoton (auf X) falls $\exists \mu > 0 : \forall x,y \in X:$
+			\item gleichmäßig monoton (auf X) falls $\exists \mu > 0 : \forall x,y \in X:$
 			\begin{equation*}
 			(x-y)^T(f(x)-f(y)) \geq \mu \| x-y \|^2
 			\end{equation*}
@@ -59,7 +59,7 @@
 		\begin{enumerate}
 			\item $f$ konvex \( \Leftrightarrow \) $f'$ monoton
 			\item $f$ strikt konvex \( \Leftrightarrow \) $f'$ strikt monoton
-			\item $f$ gleichm"a"sig konvex \( \Leftrightarrow \) $f'$ gleichm"a"sig monoton
+			\item $f$ gleichmäßig konvex \( \Leftrightarrow \) $f'$ gleichmäßig monoton
 		\end{enumerate}
 	\end{satz}
 	\begin{proof}
@@ -73,7 +73,7 @@
 		\begin{equation*} \label{9}
 		0 \geq (f'(y)-f'(x))^T(x-y)
 		\end{equation*}
-		"aquivalent zu
+		äquivalent zu
 		\begin{equation*} \label{10}
 		0 \geq -(f'(x)-f'(y))^T(x-y)
 		\end{equation*}
@@ -81,7 +81,7 @@
 		\begin{equation*} \label{11}
 		(f'(x)-f'(y))^T(x-y) \geq 0
 		\end{equation*} impliziert, also ist $f'$ monoton.
-		F"ur strenge Konvexit"at bzw. strenge Monotonie funktioniert der Beweis analog, nutze \(>\) statt  \( \geq \) . \\
+		Für strenge Konvexität bzw. strenge Monotonie funktioniert der Beweis analog, nutze \(>\) statt  \( \geq \) . \\
 		"\( \Leftarrow \)" \ : \ Seien $x,y \in X$ beliebig aber fest. Der Mittelwertsatz liefert:
 		\begin{equation} \label{12}
 		\exists \theta \in (0,1): f(x)-f(y)=f'(\xi)^T(x-y) \ \textnormal{mit} \ \xi =y+ \theta (x-y) \in X
@@ -97,10 +97,10 @@
 		\begin{equation*}
 		=\theta^{-1}(f'(\xi)-f'(y))^T\theta(x-y)+f'(y)^T(x-y) \geq f'(y)^T(x-y)
 		\end{equation*}
-		mit Satz 1.2 1. folgt dann die Konvexit"at von f. \\
-		Der Beweis, dass strikte Monotonie von $f'$ strikte Konvexit"at von $f$ impliziert erfolgt analog unter Nutzung von \(>\) statt  \( \geq \) . \\
+		mit Satz 1.2 1. folgt dann die Konvexität von f. \\
+		Der Beweis, dass strikte Monotonie von $f'$ strikte Konvexität von $f$ impliziert erfolgt analog unter Nutzung von \(>\) statt  \( \geq \) . \\
 		Zu 3.: 
-		"$\Rightarrow$" \ : \ $f$ gleichm"a"sig konvex. Satz 1.2 3. liefert $\exists \mu > 0 : \forall x,y \in X:$
+		"$\Rightarrow$" \ : \ $f$ gleichmäßig konvex. Satz 1.2 3. liefert $\exists \mu > 0 : \forall x,y \in X:$
 		\begin{equation*}
 		f(x)-f(y) \geq f'(y)^T(x-y)+\mu \| x-y \|^2
 		\end{equation*}
@@ -121,8 +121,8 @@
 		\begin{equation*}
 		\Rightarrow (x-y)(f'(x)-f'(y))^T \geq 2\mu \| x-y \|^2
 		\end{equation*}
-		$\Rightarrow$ $f'$ ist gleichm"a"sig monoton\\
-		"$\Leftarrow$" \ : \ $f'$ gleichm"a"sig monoton, d.h. $\exists \mu > 0 :\forall x,y \in X:$
+		$\Rightarrow$ $f'$ ist gleichmäßig monoton\\
+		"$\Leftarrow$" \ : \ $f'$ gleichmäßig monoton, d.h. $\exists \mu > 0 :\forall x,y \in X:$
 		\begin{equation*}
 		(x-y)^T(f'(x)-f'(y)) \geq \mu \| x-y\|^2 
 		\end{equation*}
@@ -142,7 +142,7 @@
 		=f'(y)^T(x-y)+\sum_{k=0}^{m} \frac{t_{k+1}-t_k}{\theta_k}(f'(\xi_k)-f'(y))^T(\xi_k-y) \textnormal{ nach der Definition von $\xi_k$}
 		\end{displaymath}
 		\begin{displaymath}
-		\geq f'(y)^T(x-y)+\mu \sum_{k=0}^{m} \frac{t_{k+1}-t_k}{\theta_k} \| \xi_k -y\|^2 \textnormal { da $f'$ gleichm"a"sig monoton ist}
+		\geq f'(y)^T(x-y)+\mu \sum_{k=0}^{m} \frac{t_{k+1}-t_k}{\theta_k} \| \xi_k -y\|^2 \textnormal { da $f'$ gleichmäßig monoton ist}
 		\end{displaymath}
 		\begin{displaymath}
 		= f'(y)^T(x-y)+\mu \|x-y \|^2 \sum_{k=0}^{m} \theta_k(t_{k+1}-t_k) \textnormal{ nach der Definition von $\xi_k$}.
@@ -161,5 +161,5 @@
 		\begin{displaymath}
 		f(x)-f(y) \geq f'(y)^T(x-y)+\frac{1}{2}\mu \| x-y \|^2
 		\end{displaymath}
-		Mit Satz 1.2 3. folgt, dass $f$ gleichm"a"sig konvex ist.
+		Mit Satz 1.2 3. folgt, dass $f$ gleichmäßig konvex ist.
 	\end{proof}
