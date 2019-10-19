@@ -35,44 +35,48 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage[utf8]{inputenc}
 
-%\RequirePackage{amsmath,amssymb,amsfonts}
-%\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
-%\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Options for exercisesMathTUD package
-
-\newif\ifhomework
-\homeworkfalse
-\DeclareOptionX{homework}{%
-    \homeworktrue%
-}
-\DeclareOptionX{presentExercise}{%
-    \homeworkfalse
-}
-
-\ProcessOptionsX
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New font OpenSans included
-% \RequirePackage[scale=0.9]{opensans}
-% \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
-% \DeclareTextFontCommand{\textos}{\osfamily}
-% for more informations: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+\@ifpackageloaded{opensans}{}{\usepackage[scale=1]{opensans}}
+\ifx\osfamily\undefined
+    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+    \DeclareTextFontCommand{\textos}{\osfamily}
+\fi
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,arrows}
+
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
+\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+
+%\ifx\thename\undefined
+%\newcommand*{\thename}{\hfill}
+%\newcommand*{\name}[1]{\renewcommand{\thename}{#1}}
+%\fi
+%\ifx\thematnr\undefined
+%\newcommand*{\thematnr}{\hfill}
+%\newcommand*{\matnr}[1]{\renewcommand{\thematnr}{#1}}
+%\fi
+%\ifx\themodul\undefined
+%\newcommand*{\themodul}{\hfill}
+%\newcommand*{\modul}[1]{\renewcommand{\themodul}{#1}}
+%\fi
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colour settings
+\RequirePackage{xcolor}
+\@ifpackageloaded{tudscrcolor}{}{\RequirePackage[table,dvipsnames]{tudscrcolor}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counter
+\RequirePackage{chngcntr}
 \newcounter{taskcount}
 \newcounter{blattcount}
 \newcounter{themcount}
 
 \numberwithin{page}{blattcount}
-
-\counterwithout{themcount}{section}
 
 \counterwithout{equation}{section}
 \counterwithin{equation}{blattcount}
@@ -88,46 +92,20 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Defining the title-header depending on the package option
-\newcommand{\header}{Header failed!}
-
-%\newif\ifnogroup
-%\expandafter\ifstrequal\expandafter{\thegroup}{empty}{\nogrouptrue}{\nogroupfalse}
-%\ifdefstring{\thegroup}{}{\nogrouptrue}{\nogroupfalse}
-
-\ifhomework
-    %then >> homework is true
-    \renewcommand{\header}{%
+% Defining the title-header
+\newcommand{\header}{%
         {\osfamily%
-            \fcolorbox{black}{cdblue!20}{%
+            \fcolorbox{cddarkblue}{cdblue!20}{%
                 \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
                     {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
                     \textbf{\themodul} -- Übungsblatt \theblattcount
                 \end{minipage}%
                 \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
-                    \flushright \textbf{\thename} (Matr.-Nr. \thematnr)\\
-                    %\ifnogroup Tutor: \thetutor \else Ü-Gruppe: \thegroup \fi
-                    Ü-Gruppe: \thegroup
+                    \flushright \textbf{\thename} \\
+                    Matr.-Nr. \thematnr
                 \end{minipage}%
         }}%
     }%
-\else
-    %else >> present_exercise is true
-    \renewcommand{\header}{%
-        {\osfamily%
-            \fcolorbox{black}{cdblue!20}{%
-                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
-                    {\huge \textbf{Übungsblatt \theblattcount}} \vspace{3pt} \\%
-                    \textbf{\themodul}%
-                \end{minipage}%
-                \begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
-                    \flushright \textbf{\thename} \\%
-                    Übungsleiter: \thetutor \\%
-                    \theperiod%
-                \end{minipage}%
-        }}%
-    }%
-\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,15 +154,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theorem environments for exercises and solutions
-
-\RequirePackage{tikz}
-\usetikzlibrary{calc,arrows}
-\RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
-
-\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
-\RequirePackage[amsmath,thmmarks,framed]{ntheorem}
-
-\RequirePackage{amsmath,amssymb}
+\newcommand{\skiparound}{10pt}
 
 % >> Exercise
 \theoremstyle{break}
@@ -282,6 +252,3 @@ nobreak,%
 
 \newcommand{\task}[1]{\section*{#1}}
 \newcommand{\subtask}[1]{\subsection*{#1}}
-
-
-%\endinput
