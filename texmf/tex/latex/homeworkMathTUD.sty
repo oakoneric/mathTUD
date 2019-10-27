@@ -242,6 +242,84 @@ nobreak,%
 
 \NewDocumentEnvironment{correction}{O{cdpurple}}{\color{#1}\osfamily\itshape}{}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         PROOF ENVIRONMENTS                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% >> proof
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\renewtheorem{proof}{Beweis}
+
+% >> Equivalences
+\newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
+\newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
+\newenvironment{proof-equivalence}[1][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\begin{description}}%
+        {\begin{description}[topsep=-\parskip]}%
+}{%
+        \end{description}%
+}%
+\newenvironment{proof_equiv}{\begin{proof}\begin{description}}{\end{description}\end{proof}}
+
+% >> inductions
+\newcommand{\ianfang}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IA)}]%
+    }{%
+        %parameter exists
+        \item[\textbf{(IA)}] {#1 :} %\hfill \\%
+    }%
+}
+
+\newcommand{\ivorraussetzung}{\item[\bfseries (IV)]}
+
+\newcommand{\ischritt}[1][]{%
+    \ifthenelse{\isempty{#1}}{%
+        % no parameter
+        \item[\textbf{(IS)}]
+    }{%
+        % parameter exists
+        \item[\textbf{(IS)}] {#1 :} %\\
+    }%
+}
+
+% two optional arg's:
+% #1 = induced variable 
+% #2 = vert. space before (IA): parskip (default) or nopreskip
+\NewDocumentEnvironment{induction}{O{} O{}}{%
+    \ifthenelse{ \isempty{#1} }{}{%
+        Vollständige Induktion nach #1:
+    }%---
+    \ifthenelse{ \equal{#2}{nopreskip} }{%
+        \begin{description}[topsep=-\parskip]
+    }{%
+        \begin{description}
+    }%
+}{%
+    \end{description}%
+}
+
+\newenvironment{proof_induction}[1][]{%
+    \begin{proof}
+        \begin{induction}[#1][nopreskip]%
+}{%
+        \end{induction}
+    \end{proof}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{titlesec}
