@@ -17,9 +17,12 @@
 
 \usepackage{../../texmf/tex/latex/mathoperatorsMathTUD}
 %\usepackage{../../texmf/tex/latex/maththeorems2MathTUD}
-\usepackage{../../texmf/tex/latex/homeworkMathTUD}
+
 
 \usepackage{../../texmf/tex/latex/graphicsMathTUD}
+\usepackage{../../texmf/tex/latex/doodleboxMathTUD}
+\usepackage{../../texmf/tex/latex/homeworkMathTUD}
+
 \usepackage{../../texmf/tex/latex/titlepageMathTUD}
 
 
@@ -64,8 +67,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \undef\folge
-\NewDocumentCommand{\folge}{m m}{\left( #1 \right)_{#2}}
+\NewDocumentCommand{\folge}{m m}{\left\{ #1 \right\}_{#2}}
 \renewcommand{\complement}{\mathsf{C}}
+
+\newlength{\zulength}
+\settowidth{\zulength}{(zu a)}
+\addtolength{\zulength}{1em}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,5 +85,7 @@
 %\smallequationskip
 
 \include{hana_uebungen-1}
+\include{hana_uebungen-2}
+\include{hana_uebungen-3}
 
 \end{document}
