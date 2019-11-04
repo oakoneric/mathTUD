@@ -1,0 +1,289 @@
+\section{Bedingte Erwartungswerte und Martingale}
+
+\subsection{Bedingte Dichte und bedingter Erwartungswert}
+
+Motivation: Gegeben seien zwei Zufallsvariablen $(X,Y)$ mit Werten in $\R^m \times \Rn$ und gemeinsamer Dichte $f_{XY}(x,y)$.
+
+Aus Dichte $f_{XY}$ können wir ableiten:
+\begin{itemize}
+	\item $f_Y(y) \defeq \int_{\R^m} f_{XY}(x,y) \dx$, die Randverteilung von $Y$
+	\item $S_y \defeq \menge{y \in \Rn : f_Y(y) > 0}$, der Träger von $Y$
+\end{itemize}
+
+\begin{definition}
+	Die bedingte Dichte von $X$ bzgl. $Y$ ist definiert als
+	\begin{equation*}
+	f_{X|Y}(x,y) = \begin{cases}
+	\frac{f_{XY}(x,y)}{f_Y(y)} & y \in S_y \\ 0 & \notin S_y
+	\end{cases}
+	\end{equation*}
+\end{definition}
+
+Betrachte folgende Problemstellung: Was ist die beste Vorhersage von $X$ gegeben eine Beobachtung $Y = y$?
+
+Kriterium: Minimiere quadratischen Abstand bzw. das zweite Moment bzw. die $L_2$-Norm.
+
+Vorhersage: messbare Funktion $\abb{g}{\Rn}{\R^m}, y \mapsto g(y)$.
+
+\begin{equation}
+\min\menge{\EW[(X-g(y))^2] : g \text{ messbar } \Rn \to \R^m} \tag{min-1} \label{eq: min-1}
+\end{equation}
+
+\begin{proposition} %1.3
+	Wenn $(X,Y)$ eine gemeinsame Dichte besitzen und $\EW[\abs{X}^2] < \infty$ gilt, dann wird \eqref{eq: min-1} minimiert durch die bedingte Erwartung
+	\begin{equation*}
+	g(y) = \EW[X | Y=y] \defeq \int_{\R^m} x f_{X | Y}(x,y) \dx
+	\end{equation*}
+	Wir bezeichnen $ \EW[X | Y=y]$ als Erwartungswert von $X$ bedingt auf $Y=y$.
+\end{proposition}
+
+Allgemeiner gilt:
+
+\begin{theorem} %1.4
+	Seien $(X,Y)$ Zufallsvariablen mit gemeinsamer Dichte auf $\R^m \times \Rn$ und $\abb{h}{\R^m \times \Rn}{\R}$ messbar mit $\EW[h(X,Y)^2]$. Dann wird das Minimierungsproblem
+	\begin{equation*}
+	\min\menge{\EW[(h(X,Y)-g(Y))^2] : g \text{ messbar } \Rn \to \R}
+	\end{equation*}
+	gelöst durch
+	\begin{equation*}
+	g(y) = \EW[h(X,Y) | Y = y] = \int_{\R^m} h(x,y) * f_{X|Y}(x,y) \dx
+	\end{equation*}
+\end{theorem}
+
+\begin{proof}[nur Proposition für $m=1$, Theorem analog]
+	Setze $g(y) = \int_{\R} x f_{X|Y}(x,y) \dx$. Sei $\abb{p}{\Rn}{\R}$ eine beliebige messbare Funktion mit $\EW[p(Y)^2]< \infty$. Setze weiter $g_\epsilon(y) = g(y) + \epsilon p(y)$. Minimiere $F(\epsilon) \defeq \EW[(X-g_\epsilon(y))^2] = \EW[(X - g(y) - \epsilon p(y))^2] = \EW[(X-g(Y))^2] - 2\epsilon \EW[(X-g(Y)) p(Y)] + \epsilon^2 \EW[p(Y)^2]$.
+	\begin{equation*}
+	\begin{aligned}
+	\frac{\partial F}{\partial \epsilon}(\epsilon) &= 2\epsilon \EW[p(Y)^2] - 2\EW[(X-g(Y)) p(Y)]  \follows \epsilon_\ast \defeq\frac{\EW[(X-g(Y))p(Y)]}{\EW[p(Y)^2]} = \frac{A}{B} \\
+	A &= \EW[Xp(Y)] - \EW[g(Y) p(Y)]  \\
+	&= \int_{\R \times \Rn} x p(y) f_{XY}(x,y) \dx \dy - \int_{S_y} g(y) p(y) f_Y(y) \dy \\
+	&= \int_{\R \times \Rn} x p(y) f_{XY}(x,y) \dx \dy - \int_{\R \times S_y} x p(y) \underbrace{f_{X|Y}(x,y) f_Y(y)}_{=f_{XY}(x,y)} \dy = 0
+	\end{aligned}
+	\end{equation*}
+	Damit ist $\epsilon^\ast = 0$ unabhängig von $p$ und $g(y)$ minimiert \eqref{eq: min-1}.
+\end{proof}
+
+\begin{*beispiel}
+	Seien $(X,Y)$ normalverteilt auf $\R \times \R$ mit
+	\begin{equation*}
+	\mu = \begin{pmatrix} \mu_X \\ \mu_Y \end{pmatrix} \qquad \Sigma 
+	= \begin{pmatrix} Var[X] & \Cov{X}{Y} \\ \Cov{X}{Y} & \Var[Y] \end{pmatrix}
+	= \begin{pmatrix}
+	\sigma_x^2 & \rho \sigma_x \sigma_y \\ \rho \sigma_x \sigma_y & \sigma_y^2
+	\end{pmatrix}
+	\qquad \rho \in [-1,1]
+	\end{equation*}
+	Dann ist die bedingte Dichte $f_{X|Y}(x,y)$ wieder die Dichte einer Normalverteilung mit
+	\begin{equation*}
+	\begin{aligned}
+	\EW[X|Y=y] &= \mu_X + \rho \frac{\sigma_X}{\sigma_Y} \brackets{y - \mu_Y} \\
+	\Var[X|Y=y] &= \sigma_X^2 (1-\rho^2)
+	\end{aligned}
+	\end{equation*}
+	$\to$ siehe Übung.
+	
+	Die Abbildung $y \mapsto \mu_X + \rho \frac{\sigma_X}{\sigma_Y}(Y-\mu_Y)$ heißt Regressionsgerade für $X$ gegeben $Y = y$.
+	
+	% TODO Abbildung Regressionsgerade
+	
+	Die Steigung wird im Wesentlichen durch $\rho$ bestimmt.
+	
+	Für diskrete Zufallsvariablen, d.h. wenn $X$,$Y$ nur endliche viele Werte $\menge{x_1, \dots , x_m}$ bzw. $\menge{y_1, \dots, y_n}$ annehmen, dann erhalten wir mit ähnlichen Überlegungen als Lösung von \eqref{eq: min-1} 
+	\begin{equation*}
+	\EW[X | Y=y_j] = \sum_{i=1}^m x_i \P(X=x_i | Y=y_j)
+	\end{equation*}
+	wobei direkt die bedingten Wahrscheinlichkeiten
+	\begin{equation*}
+	\P(X=x_i | Y=y_j) = \begin{cases}
+	\frac{\P(X=x_i \land Y = y_j)}{\P(Y=y_j)} & \text{wenn } \P(Y = y_j) > 0 \\
+	0 & \text{wenn } \P(Y=y_j) = 0
+	\end{cases}
+	\end{equation*}
+	folgen.
+\end{*beispiel}
+
+\subsection{Bedingte Erwartung: Maßtheoretischer Zugang}
+
+Wir betrachten den Wahrscheinlichkeitsraum $(\Omega, \F, \P)$. Für eine Zufallsvariable $\abb{X}{\Omega}{\R}$ und $p \in [1,\infty)$ definieren wir, doe $L_p$-Norm
+\begin{equation*}
+\norm{X}_p \defeq \EW[\abs{X}^p]^{\frac{1}{p}} = \brackets{\int_\Omega \abs{X(\omega)}^p \diffskip{\P(\omega)}}^\frac{1}{p}
+\end{equation*}
+und den $L_p$-Raum
+\begin{equation*}
+L_p(\Omega, \F, \P) \defeq \menge{\abb{X}{\Omega}{\R} \enskip \F\text{-messbar}, \norm{X}_p < \infty}
+\end{equation*}
+Dabei identifizieren wir Zufallsvariablen, die sich nur auf $\P$-Nullmengen unterscheiden miteinander, d.h. $\P(X \neq X') = 0 \follows X = X'$ in $L_p$. Aus der Maßtheorie bekannt: Die Räume $L_p(\Omega,\F,\P)$ mit Norm $\norm{\dots}_p$ mit $p \in [1,\infty)$ sind
+\begin{itemize}
+	\item Banachräume, d.h. vollständige, normierte Vektorräume.
+	\item für $p=2$ auch Hilbertraum mit inneren Produkt 
+	\begin{equation*}
+	\scal{X}{Y} = \EW[XY] = \int_\Omega X(\omega) Y(\omega) \diffskip{\P(\omega)}
+	\end{equation*}
+\end{itemize}
+
+Für $\G \subseteq \F$ Unter-$\sigma$-Algebra ist $L_p(\Omega,\G,\P) \subseteq L_p(\Omega, \F, \P)$ ein abgeschlossener Unterraum.
+
+Wir verallgemeinern das ''Vorhersageproblem`` ais dem letzten Abschnitt: Gegeben sei ein Zufallsvariale $X$ aus $L_2(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. Was ist die beste $\G$-messbare Vorhersage für $X$?
+
+\begin{equation}
+\min\menge{\EW[(X-G)^2] : G \in L_2(\Omega,\G,\P)} \tag{min-2} \label{eq: min-2}
+\end{equation}
+
+Aus Hilbertraumtheorie folgt, dass \eqref{eq: min-2} besitzt eine eindeutige Lösung $G_\ast \in L_(\Omega, \G, \P)$. $G_\ast$ ist die Orthogonalprojektion (bzgl. $\scal{\cdot}{\cdot}$) von $X \in L_2(\Omega,\F,\P)$ auf den abgeschlossenen Unterraum $L_2(\Omega,\G,\P)$.
+
+% TODO Abbildung Hilbertraum
+
+Wir bezeichnen $G_\ast$ mit $\EW[X|\G]$ als bedingten Erwartunswert von $X$ bezüglich $\G$.
+
+\begin{theorem} %1.5 
+%	\label{theorem: 1.5}
+	SSeien $X,Y \in L_2(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. Dann gilt
+	\begin{itemize}
+		\item Linearität: $\EW[aX + bY | \G] = a \EW[X|\G] + b\EW[Y|\G]$
+		\item Turmregel: Für jede weitere $\sigma$-Algebra $\mathcal{H} \subseteq \G$ gilt ${\EW[{\EW[{X|\G}]}|\mathcal{H}]} = {\EW[X|\mathcal{H}]}$
+		\item Pull-out-Property: $\EW[XZ|\G] = Z * \EW[X | \G]$ für alle beschränkten und $\G$-messbaren Zufallsvariablen $Z$.
+		Für $Z$ $\G$-messbar mit $\EW[\abs{XZ}] < \infty$ gilt $\EW[XZ | \G] = Z * \EW[X | \G]$. Insbesondere gilt für $\G$-messbare $X$ schon $\EW[X|\G]=X$.
+		\item Monotonie: $X \le Y \follows \EW[X|\G] \le \EW[Y|\G]$
+		\item Dreiecksungleichung: $\abs{\EW[X|\G]} \le \EW[\abs{X}|\G]$
+		\item Unabhängigkeit: $X$ unabhängig von $\G$ $\follows$ $\EW[X|\G] = \EW[X]$
+		\item triviale $\sigma$-Algebra: $\G=\menge{\emptyset, \Omega} \follows \EW[X|\G] = \EW[X]$
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	siehe VL ''Wahrscheinlichkeitstheorie mit Martingalen``
+\end{proof}
+
+Die für $X \in L_2(\Omega,\F,\P)$ definierte bedingte Erwartung $\EW[X|\G]$ lässt sich durch Approximation auf alle $X \in L_1(\Omega,\F,\P)$ erweitern. Alle Eigenschaften aus Theorem 1.5 bleiben erhalten. %TODO Ref
+
+Sei $Y$ eine Zufallsvariable und $\G= \sigma(Y)$ die von $Y$ erzeugte $\sigma$-Algebra. Wir schreiben $\EW[X|Y] = \EW[X|\sigma(Y)]$; dies ist eine $\G$-messbare Zufallsvariable.
+
+Aus der Maßtheorie sag uns das Doob-Dynkin-Lemma, dass eine messbare Funktion $\abb{g}{\Rn}{\R}$ existiert, sodass $\EW[X|Y] = g(Y)$. Dabei ist $g$ genau die Funktion aus \eqref{eq: min-1}.
+
+Zusammenfassung
+
+Sei $X,Y$ aus $L_1(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. 
+\begin{enumerate}[label=(\alph*),nolistsep,topsep=-\parskip]
+	\item $\EW[X|Y=y]$ ist eine messbare Funktion $\abb{g}{\Rn}{\R^m}$ und falls eine bedingte Dichte existiert, dann gilt $\EW[X|Y=y] = \int_{\R^m} x f_{X|Y}(x,y) \dx$.
+	\item $\EW[X|Y]$ ist eine $\sigma(Y)$-messbare Zufallsvariable und kann als $g(Y)$ dargestellt werden. Falls eine bedingte Dichte existiert, dann gilt $\EW[X|Y](\omega) = \int_\Rn x f_{X|Y}(x,Y(\omega)) \dx$.
+	\item $\EW[X|\G]$ ist eine $\G$-messbare Zufallsvariable. Falls $\G=\sigma(Y)$ tritt Fall (b) ein.
+\end{enumerate}
+In allen Fällen kann $\EW[X|\cdot]$ interpretiert werden als \textit{beste Vorhersage} für $X$ gegeben
+\begin{enumerate}[label=(\alph*),nolistsep,topsep=-\parskip]
+	\item eine punktweise Betrachtung $Y=y$
+	\item die Beobachtung $Y$
+	\item die Information $\G$
+\end{enumerate}
+
+\subsection{Martingale}
+
+Prototyp eines ''neutralen`` stochastischen Prozesses, der weder Aufwärts- noch Abwärtstrend besitzt. Wir betrachten hier den Prozess nur in diskreter Zeit $I = \N_0$.
+
+\begin{definition}
+	Sei $\folge{X}{n \in \N_0}$ ein stochastischer Prozess. Wenn gilt
+	\begin{equation}
+	\begin{alignedat}{2}
+		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N \\
+		\EW[X_{n+1}|X_1,\dots,X_n] &= X_n \qquad &\forall n \in \N \\
+	\end{alignedat}
+	\end{equation}
+	dann heißt $\folge{X_n}{n \in \N}$ \begriff{Martingal}.
+\end{definition}
+
+Wenn wir $\F_n^X = \sigma(X_1,\dots,X_n)$ definieren, können wir (b) schreiben als 
+\begin{equation*}
+	\EW[X_{n+1}|\F_n^X] = X_n \qquad \forall n \in \N
+\end{equation*}
+
+\textbf{Konvention}: Alle stochastischen Prozesse $\folge{X_n}{n \in \N_0}$ haben deterministischen Startwert $X_0$.
+
+Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$ basierend auf Vergangenheit $\sigma(X_1,\dots,X_n)$ ist der momentane Wert $X_n$.
+Aus der Turmregel folgt:
+\begin{equation*}
+	\EW[X_{n+k}|\F_n^X] = X_n \qquad \forall n,k \in \N_0 %b''
+\end{equation*}
+denn
+\begin{equation*}
+	\EW[X_{n+k}|\F_n^X] = \EW[\underbrace{\EW[X_{n+k}|\F_{n+k-1}^X]}_{=X_{n+k-1}}|\F_n^X] = \EW[X_{n+k-1}|\F_n^X] \overset{k \text{ mal}}{=} X_n
+\end{equation*}
+
+Man kann von $\folge{\F_n^X}{n \in \N}$ auf beliebige Filtrationen $\folge{\F_n}{n \in \N_0}$ erweitert werden.
+
+\begin{*definition}
+	Sei $\folge{X_n}{n \in \N_0}$ ein stochastischer Prozess, adaptiert an eine Filtration $\folge{\F_n}{n \in \N_0}$. Wenn gilt
+	\begin{alignat*}{2}
+		\EW[\abs{X_n}] &< \infty &\forall n \in \N_0 \\ % (a)
+		\EW[X_{n+1}|\F_n] &= X_n &\forall n \in \N_0    % (b)
+	\end{alignat*}
+	dann heißt $\folge{X_N}{n \in \N}$ Martingal bezüglich der Filtration $\folge{\F_n}{n \in \N}$.
+\end{*definition}
+
+Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf verfügbarer Information $\F_n$ ist der momentane Wert $X_n$.
+
+\begin{*definition}
+	Falls in Punkt (b) statt ''$=$`` die Ungleichung ''$\le$`` oder ''$\ge$`` gilt, so heißt $\folge{X_n}{n \in \N}$ \begriff{Super- bzw. Submartingal}.
+\end{*definition}
+
+\begin{itemize}
+	\item Wenn $X=\folge{X_n}{n \in \N}$ ein Martingal ist, dann gilt $\EW[X_n] = X_0$, d.h. $n \mapsto \EW[X_n]$ ist konstant. Begründung:
+	\begin{equation*}
+	\EW[X_{n+1}|\F_n] = X_n \follows \underbrace{\EW[{\EW[X_{n+1}|\F_n]}]}_{= \EW[X_{n+1}]} = \EW[X_n] \overset{n \text{ mal}}{\follows} \EW[X_n] = X_0
+	\end{equation*}
+	\item $X$ Submartingal $\follows n \mapsto \EW[X_n]$ ist monoton steigend
+	\item $X$ Supermartingal $\follows n \mapsto \EW[X_n]$ ist monoton fallend
+\end{itemize}
+
+''Das Leben ist ein Supermartingal -- die Erwartungen fallen mit der Zeit`` \smiley
+
+\begin{beispiel}
+	\begin{itemize}
+		\item Seien $\folge{Y_n}{n \in \N}$ unabhängige Zufallsvariablen in $L_1(\Omega,\F,\P)$ mit $\EW[Y_n] = 0$. Betrachten wir die Partialsummen $X_n \defeq \sum_{k=1}^n Y_k$ und $X_0 = 0$. Dann ist $\folge{X_n}{n \in \N_0}$ ein Martingal, denn
+		\begin{equation*}
+			\begin{aligned}
+			\EW[\abs{X_n}] &\le \sum_{k=1}^n \EW[\abs{Y_k}] < \infty \qquad \forall n \in \N \\
+			\EW[X_{n+1} \mid \F_n^X] &= \EW[Y_{n+1} + X_n \mid \F_n^X] \\
+			&= \EW[y_{n+1} \mid \F_n^X] + \EW[X_n \mid \F_n^X] = \underbrace{\EW[Y_{n+1}]}_{=0} + X_n \\
+			&= X_n
+			\end{aligned}
+		\end{equation*}
+	\end{itemize}
+\end{beispiel}
+
+\begin{*definition}
+	Sei $\folge{\F_n}{n \in \N_0}$ eine Filtration. Ein stochastischer Prozess $\folge{H_n}{n \in \N}$ heißt \begriff{vorhersehbar} [predictable] bezüglich $\folge{\F_n}{n \in \N_0}$ wenn gilt
+	\begin{equation*}
+		H_n \text{ ist } \F_{n-1} \text{-messbar} \qquad \forall n \in \N
+	\end{equation*}
+\end{*definition}
+
+\begin{*bemerkung}
+	Vorhersehbarkeit ist eine stärkere Eigenschaft als Adaptiertheit.
+\end{*bemerkung}
+
+\begin{*definition}
+	Sei $X$ ein adaptierter und $H$ ein vorhersehbarer stochastischer Prozess bezüglich $\folge{\F_n}{n \in \N}$. Dann heißt 
+	\begin{equation}
+		(H \bullet X)_n \defeq \sum_{k=1}^n H_k (X_k - X_{k-1}) \tag{$\star$} \label{eq: diskretesIntegral}
+	\end{equation}
+	\begriff{diskretes stochastisches Integral} von $H$ bezüglich $X$.
+\end{*definition}
+
+\begin{*bemerkung}
+	Summen \eqref{eq: diskretesIntegral} heißen in der Analysis Riemann-Stieltjes-Summen und werden für die Konstruktion des Riemann-Stieltjes-Integrals $\int h \diffskip{\rho}$ verwendet.
+\end{*bemerkung}
+
+\begin{*definition}
+	Ein stochastischer Prozess $\folge{H_n}{n \in \N}$ heißt lokal beschränkt, wenn eine deterministische Folge $c_n \in \R_{\ge 0}$ existiert, sodass
+	\begin{equation*}
+		\abs{H_n} \le c_n \enskip \text{ fast sicher } \qquad \forall n \in \N
+	\end{equation*}
+\end{*definition}
+
+\begin{satz} %1.6
+	Sei $X$ adaptierter stochastischer Prozess (bezüglich Filtration $\folge{\F_n}{n \in \N}$). Dann sind äquivalent:
+	\begin{enumerate}
+		\item $X$ ist Martingal.
+		\item $(H \bullet X)$ ist Martingal für alle lokal beschränkten, vorhersbaren $\folge{H_n}{n \in \N}$
+	\end{enumerate}
+\end{satz}
+
+Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
