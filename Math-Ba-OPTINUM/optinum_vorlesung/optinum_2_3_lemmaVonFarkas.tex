@@ -1,0 +1,60 @@
+\section{Das Lemma von \person{Farkas}}
+
+Das folgende Resultat besitzt vielfältige Anwendungen in der Optimierung ($\nearrow$ Dualität).
+
+\begin{lemma}[Farkas] %2.7
+	Es seien $A \in \R^{m \times n}$ und $a \in \Rm$.  Von den Systemen
+	\begin{enumerate}[label=(\roman*), nolistsep, topsep=-\parskip]
+		\item $Az \le 0$, $\trans{a} z > 0$
+		\item $\trans{A} u = a$, $u \ge 0$.
+	\end{enumerate}
+	ist \textit{genau} eines lösbar.
+\end{lemma}
+\begin{proof}
+	\begin{itemize}[leftmargin=*, nolistsep]
+		\item \textit{höchstens} eines der Systeme ist lösbar: Seien (i) und (ii) lösbar. Dann gilt
+		\begin{equation*}
+			0 < \trans{a} z = \trans{\trans{A}u} z = \underbrace{\trans{u}}_{\ge 0} \underbrace{A z}_{\le 0} \le 0 \quad \lightning
+		\end{equation*}
+		\item  \textit{mindestens} eines der Systeme ist lösbar --- die Unlösbarkeit von (ii) impliziert die Lösbarkeit von (i):  Sei (ii) nicht lösbar. Dann gilt
+		$a \notin K \defeq \menge{x = \trans{A} u \colon u \ge 0}$, wobei $K$ ein konvexer, abgeschlossener Kegel ist. Wir betrachten die Optimierungsaufgabe
+		\begin{equation*}
+			f(x) = \frac{1}{2} \norm{a-x}_2^2 = \frac{1}{2} \transpose{a-x}(a-x) \to \min \bei x \in K
+		\end{equation*}
+		Dann existiert eine eindeutige (und globale) Lösung $\quer{x} \in K$ mit
+		\begin{equation*}
+			(1) \quad \nabla \trans{f(\quer{x})} \quer{x} = 0 
+			\qquad \qquad 
+			(2) \quad \nabla \trans{f(\quer{x})} x \ge 0 \enskip \forall x \in K
+		\end{equation*}
+		Zunächst folgt gemäß \cref{aussage: 2.4}, dass $\nabla \trans{f(\quer{x})} (x - \quer{x}) \ge 0$ für alle $x \in K$. Durch Einsetzen von $x = \frac{1}{2} \quer{x} \in K$ und $x = 2*\quer{x} \in K$ (beachte: $K$ ist Kegel) erhält man (1). Dies wiederum lässt sich zur notwendigen Bedingung ddazu addieren und man erhält (2). 
+		Nun zeigen wir, dass $z \defeq a - \quer{x} \neq 0$ (wegen $a \notin K$) das System (i) löst. Es gilt $\nabla f(\quer) = -z$ und damit folgt
+		\begin{equation*}
+			0 = \nabla \trans{f(\quer{x})} \quer{x} = -\trans{z} * (\quer{x} - a + a) = \trans{z} (z-a)  \follows \trans{a} z = \trans{z} z \overset{z \neq 0}{>} 0
+		\end{equation*}
+		Weiter gilt $x \in K$ genau dann, wenn ein $u \ge 0$ existiert mit $x = \trans{A} u$. Aus (2) folgt dann 
+		\begin{equation*}
+			\begin{aligned}
+			\nabla \trans{f(\quer{x})} x \ge 0 \enskip \forall x \in K &\follows& - \trans{z} \trans{A} u &\ge 0 \enskip &&\forall u \ge 0 \\
+			&\follows& \transpose{Az} u &\le 0 \enskip &&\forall u \ge 0 \\
+			&\follows& Az &\le 0 && (\text{wähle z.B. wieder } u = e^1, e^2, \dots)
+			\end{aligned}
+		\end{equation*}
+		Damit löst $z$ das System (1).
+	\end{itemize}
+\end{proof}
+
+Damit können die notwendigen Optimalitätsbedingungen \eqref{eq: 2.6} bzw. äquivalent dazu
+\begin{equation}
+	\forall i \in I_0(x) \colon \trans{a_i} * d \le 0 \follows \nabla \trans{f(\schlange{x})} * d \ge 0 \label{eq: 2.7}
+\end{equation}
+wie folgt umformuliert werden: Offenbar ist \eqref{eq: 2.7} gleichbedeutend mit der Unlösbarkeit von 
+\begin{equation*}
+	\nabla \trans{f(\schlange{x})} * d < 0, \qquad \trans{a_i} * d \le 0 \enskip \forall i \in I_0(\schlange{x})
+\end{equation*}
+Wählt man also im Lemma von Farkas $a = - \nabla f(\schlange{x})$ und $A$ bestehend aus den Zeilen $\trans{a_i}$, so folgt die Lösbarkeit des Systems
+\begin{equation}
+	\nabla f(\schlange{x}) + \sum_{i \in I_0(\schlange{x})} u_i a_i = 0 \qquad (u \ge 0) \label{eq: 2.8}
+\end{equation}
+
+Für konvexe Optimierungsaufgaben ist die Lösbarkeit von \eqref{eq: 2.8} sogar äquivalent dazu, dass $\schlange{x}$ Lösung der betrachteten Aufgabe ist.

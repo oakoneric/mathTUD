@@ -1,0 +1,159 @@
+\section{Optimalitätsbedingungen}
+
+\begin{definition} %2.3
+	\label{definition: 2.3_kegel}
+	Eine Menge $K \subseteq \Rn$ heißt \begriff{Kegel}, falls gilt:
+	\begin{equation*}
+	x \in K \follows \lambda x \in K \quad \forall \lambda \ge 0
+	\end{equation*}
+	Ein Kegel $K$ ist ein \begriff{konvexer Kegel}, falls $K$ eine konvexe Menge bzw. falls gilt
+	\begin{equation*}
+	x,y \in K \follows x+y \in K
+	\end{equation*}
+	für alle $x,y \in K$. Der \begriff{Kegel der zulässigen Richtungen} $Z(\schlange{x})$ ist definiert durch
+	\begin{equation*}
+	Z(\schlange{x}) \defeq \menge{d \in \Rn \mid \exists \quer{t} \defeq \quer{t}(\schlange{x},d) > 0 \text{ sodass } \schlange{x} + td \in G \enskip \forall t \in [0,\quer{t}]}
+	\end{equation*}
+\end{definition}
+
+% TODO Kegelbilder einfügen (Punkt - konvex, eine Gerade-konvex, zwei Geraden-mit zwischenteil konvex)
+
+% TODO zulässige Richtungen einfügen
+
+Für Optimierungsaufgaben ist der Kegel der zulässigen Richtungen von großer Bedeutung.
+
+\begin{aussage}[notwendiges Optimalitätskriterium] %2.4
+	\label{aussage: 2.4}
+	Ist $f$ auf $G$ stetig differenzierbar und $\schlange{x} \in G$ ein lokales Minimum. Dann gilt
+	\begin{equation} \label{eq: 2.2}
+	\nabla \trans{f(\schlange{x})} * d \ge 0 \qquad \forall d \in Z(\schlange{x})
+	\end{equation}
+	Ist $G$ konvex, dann erhält man die Bedingung
+	\begin{equation} \label{eq: 2.3}
+	\nabla \trans{f(\schlange{x})} \brackets{x - \schlange{x}} \ge 0 \qquad \forall x \in G
+	\end{equation}
+\end{aussage}
+\begin{proof}
+	Sei $\schlange{x}$ ein lokales Minimum und $d \in Z(\schlange{x})$ eine zulässige Richtung. Dann existiert gemäß Definition ein $\quer{t}$, sodass $\schlange{x} + td \in G$ für alle $t \in [0,\quer{t}]$ gilt. Weil außerdem $\quer{x}$ eine lokale Lösung ist, gibt es $\rho > 0$ mit $\rho < \quer{t}$ sodass $f(\schlange{x} + td) \ge f(\schlange{x})$ für $t \in (0,\rho)$ gilt. Aus dieser Ungleichung folgt
+	\begin{equation*}
+	\frac{f(\schlange{x} - td) - f(\schlange{x})}{t} \ge 0 \qquad \forall t \in (0,\rho)
+	\end{equation*}
+	Durch Grenzwertbildung $t \to 0$ auf beiden Seiten erhält man mithilfe der Definition der Richtungsableitung und der Stetigkeit von $f$ die Behauptung \eqref{eq: 2.2}.
+	Für konvexe Mengen gilt stets $x - \schlange{x} \in Z(\schlange{x})$ für $x \in G$, also folgt \eqref{eq: 2.3}.
+\end{proof}
+
+Dieses Kriterium sagt aus, dass im Punkt $\schlange{x}$ alle Richtungsableitungen (bezüglich zulässiger Richtungen) nicht-negativ sind, d.h. es keine zulässige Abstiegsrichtung gibt.
+
+\begin{bemerkung} %2.2
+	Ein Punkt, der die Bedingung \eqref{eq: 2.2} erfüllt, heißt \begriff{stationärer Punkt}.
+\end{bemerkung}
+
+\begin{bemerkung} %2.3
+	Bei der freien Minimierung (d.h. für $G = \Rn$) ergibt sich wegen $Z(\schlange{x}) = \Rn$ für alle $\schlange{x} \in G$ die notwendige Bedingung
+	\begin{equation*}
+	\schlange{x} \text{ ist lokales Minimum} \follows \nabla f(\schlange{x}) = 0
+	\end{equation*}
+	Wähle dafür $d \in \menge{\pm e^i}_{i=1}^n$.
+\end{bemerkung}
+
+Für konvexe Optimierungsaufgaben gilt auch die Umkehrung des Resultats der vorherigen Aussage.
+
+\begin{aussage}[hinreichendes Optimalitätskriterium] %2.5
+	Es seien $G \subseteq \Rn$ sowie $\abb{f}{G}{\R}$ konvex und stetig differenzierbar. Falls ein $\schlange{x} \in G$ existiert, welches der Bedingung \eqref{eq: 2.3} genügt, dann ist $\schlange{x}$ (globales) Minimum von \eqref{eq: 2.1}.
+\end{aussage}
+\begin{proof}
+	Wenn $f$ konvex und stetig differenzierbar ist und gilt
+	\begin{equation*}
+	f(x) \ge f(\schlange{x}) + \nabla \trans{f(\schlange{x})} \brackets{x - \schlange{x}} \qquad \forall x \in G
+	\end{equation*}
+	Wegen \eqref{eq: 2.3} folgt unmittelbar die (globale) Optimalität. Ausführlicher: siehe Übung.
+\end{proof}
+
+Im Fall polyedrischer zulässiger Mengen $G \subseteq \Rn$ (wie z.B. in der linearen Optimierung) kann die Bedingung \eqref{eq: 2.2} präzisiert werden, da dann $Z(x)$ eine einfache Struktur besitzt.
+
+\begin{definition} %2.4
+	\label{definition: 2.4}
+	$G \subseteq \Rn$ heißt \begriff{polyedrisch}, falls eine Darstellung $G = \menge{x \in \Rn \colon Ax \le b}$ für eine geeignete Matrix $A$ und einen geeigneten Vektor $b$ existiert. Hierbei gilt
+	\begin{equation*}
+	Ax \le b \defequiv \forall i \in I = \menge{1,\dots,n}: \trans{a_i}x = \sum_{j=1}^n a_{ij}x_j \le b_i
+	\end{equation*}
+\end{definition}
+
+%TODO Bilder Polyeder
+
+\begin{bemerkung} %2.4
+	Eine polyedrische Menge $G$ ist konvex und abgeschlossen, aber im Allgemeinen nicht beschränkt. Implizit können in der Beschreibung von $G$ aus \cref{definition: 2.4} auch Gleichungsrestriktionen enthalten sein.
+\end{bemerkung}
+
+\begin{definition} %2.5
+	Für $x \in G$ ist die \begriff{Indexmenge der aktiven Restriktionen} definiert durch 
+	\begin{equation*}
+	I_0(x) \defeq \menge{i \in I \colon \trans{a_i} x = b_i}
+	\end{equation*}
+\end{definition}
+
+%TODO Abbildung aktive Restriktionen
+
+Sei nun ein zulässiger Punkt $x \in G$ gegeben. Damit eine beliebige Richtung $d \in \Rn$ zulässig ist, nuss ein $\quer{t} > 0$ existieren, sodass $x + td \in G$ für alle $t \in [0,\quer{t}]$ gilt.
+Für einen polyedrischen Bereich $G$ ist dies äquivalent zu
+\begin{equation*}
+\forall i \in I \colon \trans{a_i} \brackets{x + td} \le b_i \equivalent \forall i \in I \colon t \trans{a_i} d \le b_i - \trans{a_i} x
+\end{equation*}
+für alle $t \in [0,\quer{t}]$.
+
+\begin{itemize}[nolistsep]%, topsep=-\parskip]
+	\item Für alle inaktiven Restriktionen (also solche $\trans{a_i} x < b_i$) wäre $t \trans{a_i} d \le b_i - \trans{a_i} x$ zu erfüllen. Egal, welchen Wert $\trans{a_i}d$ annimmt, es kann stets eine hinreichend kleine Schrittweite (im Sinne der Definition einer zulässigen Richtung) gefunden werden. Somit schränken inaktive Restriktionen die möglichen Richtungen $d \in \Rn$ \textit{nicht} ein.
+	\item Für aktive Restriktionen (also $\trans{a_i} x = b_i$) erhält man $t \trans{a_i} d \le 0$, also (wegen $t > 0$) $\trans{a_i} d \le 0$.
+\end{itemize}
+
+Diese Bedingung lässt sich geometrisch interpretieren: 
+das Skalarprodukt der zulässigen Richtungen und des Normalenvektors (nach außen gerichtet) $a_i$ der begrenzenden Hyperebene muss kleiner oder gleich Null sein, d.h. der Schnittwinkel beider Vektoren liegt im Bereich $[\frac{\pi}{2},\pi]$. Folglich zeigt die zulässige Richtung $d \in \Rn$ tatsächlich in das Innere von $G$.
+%TODO Bild
+
+Für einen zulässigen Punkt $x \in G$ kann somit folgende Beobachtung angegeben werden:
+\begin{equation}
+d \in Z(x) \equivalent \forall u \in I_0(x) \colon \trans{a_i}d \le 0 \label{eq: 2.4}
+\end{equation}
+Außerdem ist die Größe $\schlange{t}$ (maximale Schrittweite) wohldefiniert.
+\begin{equation}
+\schlange{t} \defeq \schlange{t} \defeq \min\menge{\frac{b_i - \trans{a_i}x}{\trans{a_i}d} \colon i \in I(x,d)} \label{eq: 2.5}
+\end{equation}
+wobei $I(x,d) \defeq \menge{ i \in I \colon \trans{a_i}d > 0}$.
+
+\begin{bemerkung} %2.5
+	Falls $I(x,d) = \emptyset$, setzen wir $\schlange{t} \defeq \infty$.
+\end{bemerkung}
+
+\begin{beispiel} %2.2
+	Wir betrachten $x \defeq \transpose{1,1,1}$ und die polyedrische Menge
+	\begin{equation*}
+		 G \defeq \menge{\transpose{x_1,x_2,x_3} \in \R^3 \colon x_1 + 2x_2 + x_3 \le 4, 3x_1 + x_2 + x_3 \le 6, x_i \ge 0, i=1,2,3}
+	\end{equation*}
+	Offenbar gilt $x \in G$. Wir betrachten die Richtungen
+	\begin{equation*}
+		d^1 = \transpose{1,1,1} \und d^2 = \transpose{-1,-2,-1}
+	\end{equation*}
+	Als aktive Restriktionen erkennen wir $I_0(x) = \menge{1}$ (da nur die erste Nebenbedingung von $G$ mit Gleichheit erfüllt ist).
+	\begin{itemize}
+		\item Für $d = d^1$ gilt
+		\begin{equation*}
+			\trans{a_i} d = \transpose{\begin{smallmatrix} 1 \\ 2 \\ 1	\end{smallmatrix}} \left(\begin{smallmatrix} 1 \\ 1 \\ 1 \end{smallmatrix}\right) = 4 > 0
+		\end{equation*}
+		Somit ist $d^1$ keine zulässige Richtung wegen \eqref{eq: 2.4}.
+		\item Für $d = d^2$ gilt
+		\begin{equation*}
+		\trans{a_i} d = \trans{\begin{pmatrix} 1 \\ 2 \\ 1	\end{pmatrix}} \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} = -6 \le 0
+		\end{equation*}
+		Somit ist $d^2$ eine zulässige Richtung wegen \eqref{eq: 2.4}. Zur maximalen Schrittweite: Die Ungleichung $\transpose{3,1,1}(x + td) \le 6$ liefert die Bedingung $t \in [-\frac{1}{6}, \infty)$. Aus $x+td \ge 0$ folgt die Bedingung $t \le \frac{1}{2}$. Insgesamt gilt $\schlange{t} = \frac{1}{2}$.
+	\end{itemize} 
+\end{beispiel}
+
+Zusammengefasst erhalten wir das folgende Resultat:
+
+\begin{folgerung} %2.6
+	Sei $G$ polyedrisch, d.h. $G = \menge{x \in \Rn \colon Ax \le b}$ und $\abb{f}{G}{\R}$ stetig differenzierbar. Ist $\schlange{x}$ eine lokale Lösung von \eqref{eq: 2.1}, so gilt 
+	\begin{equation}
+		\nabla \trans{f(\schlange{x})} * d \ge 0 \qquad \forall d \in \Rn  \mit \trans{a_i} d \le 0 \enskip \forall i \in I_0(\schlange{x}) \label{eq: 2.6}
+	\end{equation}
+	Ist $f$ zusätzlich konvex, dann gilt auch die Umkehrung.
+\end{folgerung}

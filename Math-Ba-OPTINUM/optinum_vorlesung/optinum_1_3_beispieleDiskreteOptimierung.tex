@@ -99,7 +99,12 @@ Modell zur Standortplanung:
 \end{equation*}
 bei
 \begin{equation*}
-	x_s = \sum_{k \in K} y_{ks} \quad \und \quad x_s \in \menge{0,1} \quad \und \quad \underbrace{y_{ks} \ge 0}_{\bzw y_{ks} \in [0,1]} \qquad (k \in K, s \in S)
+\begin{alignedat}{2}
+	\sum_{s \in S} y_{ks} &= 1 &&(k \in K) \\
+	y_{ks} &\le x_s &&(s \in S, k \in K) \\
+	x_s &\in \menge{0,1}  &&(s \in S) \\
+	y_{ks} &\ge 0\qquad &&(k \in K, s \in S)
+\end{alignedat}
 \end{equation*}
 
 \subsection{Quadratisches Zuordnungsproblem}
@@ -112,7 +117,7 @@ Variablen: $x_{ik} = \begin{cases}
 	
 Zielfunktion:
 \begin{equation*}
-	f(x) = \sum_{i=1}^n \sum_{k=1}^n \sum_{j=1, j \neq i}^n \sum_{\ell =1, \ell \neq k}^n x_{j \ell} x_{i k} * 2c_{ij} d_{kl} \to \min
+	f(x) = \sum_{i=1}^n \sum_{k=1}^n \sum\limits_{\substack{j=1 \\ j \neq i}}^n \sum\limits_{\substack{\ell =1 \\ \ell \neq k}}^n x_{j \ell} x_{i k} * 2c_{ij} d_{kl} \to \min
 \end{equation*}
 bei
 \begin{equation*}

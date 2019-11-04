@@ -1,0 +1,136 @@
+\section{Existenz von Lösungen}
+
+Wir betrachten die Optimierungsaufgabe
+\begin{equation}
+	f(x) \to \min \quad \bei x \in G \label{eq: 2.1}
+\end{equation}
+wobei folgende Bedingungen erfüllt seinen:
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item $f$ ist stetig (zumindest auf $G$)
+	\item $G$ ist kompakt
+	\item $G \neq \emptyset$
+\end{itemize}
+\vspace{\parskip}
+
+\begin{satz}[Weierstrass] \label{satz: 2.1_weierstrass}
+	Unter diesen Voraussetzungen existiert ein $\quer{x} \in G$ mit 
+	\begin{equation*}
+		f^\ast \defeq f(\quer{x}) \le f(x) \quad \forall x \in G
+	\end{equation*}
+\end{satz}
+\begin{proof}
+	Sei $f^\ast \defeq \inf_{x \in G} f(x)$. Wegen $G \neq \emptyset$, finden wir eine Folge $\folge{f_k}{k \in \N} \subseteq \R$ mit $f_k = f(x_k) \ge f^\ast$ mit $x_k \in G$ für alle $k \in \N$ und $\lim_{k \to \infty} f_k = f^\ast$. Die daraus resultierende Folge $\folge{x_k}{k \in \N}$ besitzt wegen der Kompaktheit von $G$ eine konvergente Teilfolge $\folge{\schlange{x_k}}{k \in \N} \subseteq \folge{x_k}{k \in \N}$ mit $\lim_{k \to \infty} \schlange{x_k} = \quer{x} \in G$ (Abgeschlossenheit von $G$). Die Stetigkeit von $f$ ergibt nun $\lim_{k \to \infty} f(\schlange{x_k}) = f(\quer{x}) = f^\ast$ (insbesondere $f^\ast \in \R$)
+\end{proof}
+
+\begin{beispiel}
+	\begin{enumerate}[nolistsep, leftmargin=*, topsep=-\parskip]
+		\item \cref{satz: 2.1_weierstrass} anwendbar ($G$ kompakt, Minimum existiert):
+		\begin{equation*}
+			f(x_1,x_2) = x_1 - x_2 \to \min \bei x_1^2 + 4x_2^2 \le 1
+		\end{equation*}
+		Der zulässige Bereich ist eine Ellipse mit Rand.
+		\item \cref{satz: 2.1_weierstrass} nicht anwendbar ($G$ unbeschränkt, kein Minimum, $f^\ast = -\infty$):
+		\begin{equation*}
+			f(x_1,x_2) = x_1 - x_2 \to \min \bei x_1^2 + 4x_2^2 \ge 1
+		\end{equation*}
+		\item \cref{satz: 2.1_weierstrass} nicht anwendbar ($G$ unbeschränkt, kein Minimum, $f^\ast = 0$)
+		\begin{equation*}
+			f(x_1,x_2) = \frac{1}{x_1} \to \min \bei x_2 \le \frac{1}{x_1}, x_1 \ge 1, x_2 \ge 0
+		\end{equation*}
+		\item \cref{satz: 2.1_weierstrass} nicht anwendbar ($G$ unbeschränkt, Minimum existiert, $f^\ast = -1$)
+		\begin{equation*}
+			f(x_1,x_2) = - \frac{1}{x_1} \to \min \bei x_2 \le \frac{1}{x_1}, x_1 \ge 1, x_2 \ge 0
+		\end{equation*}
+	\end{enumerate}
+\end{beispiel}
+
+Offensichtlich besitzen also nicht alle Optimierungsaufgaben eine (globale) Lösung, insbesondere deshalb, weil Bedingung \eqref{eq: 1.2_optimal} ziemlich stark ist. Stattdessen hat sich in der Literatur auch der folgende ''schwächere`` Lösungsbegriff etabliert.
+
+\begin{definition}
+	Ein zulässiger Punkt $\quer{x} \in G$ heißt lokale Lösung von \eqref{eq: 2.1}, falls ein $\rho > 0$ existiert mit 
+	\begin{equation*}
+		f(\quer{x}) \le f(x) \quad \forall x \in G \cap B_\rho(\quer{x})
+	\end{equation*}
+	wobei $B_\rho(\quer{x}) \defeq \menge{x \in \Rn : \norm{x - \quer{x}}_2 \le \rho}$ die offene Kugel vom Radius $\rho$ um $\quer{x}$ ist.
+\end{definition}
+
+\begin{bemerkung}
+	Jede globale Lösung ist auch lokale Lösung. Die Umkehrung ist im Allgemeinen nicht korrekt.
+\end{bemerkung}
+
+Sofern eine globale Lösung existiert, ist diese in der Menge der lokalen Lösungen enthalten. Die Betrachtung lokaler Lösungen ist damit im Allgemeinen ausreichend. Für eine spezielle Klasse von Optimierungsaufgaben sind beide Lösungskonzepte sogar äquivalent. Dazu betrachten wir die folgenden Definitionen:
+
+\begin{definition}[Konvexität] %2.2
+	\begin{enumerate}[nolistsep]
+		\item $G \subseteq \Rn$ ist konvex, falls für alle $x,y \in G$ gilt
+		\begin{equation*}
+			[x,y] \defeq \menge{x(\lambda) \in \Rn : x(\lambda) = (1-\lambda)x + \lambda y, \lambda \in [0,1]} \subseteq G
+		\end{equation*}
+		% TODO Abbildung konvexe Menge, nichtkonvexe Menge
+		\item Sei $G$ konvex. Die Funktion $\abb{f}{G}{\R}$ heißt konvex, wenn gilt
+		\begin{equation*}
+			f(x + \lambda (y-x)) \le f(x) + \lambda \brackets{f(y) - f(x)}
+		\end{equation*}
+		für alle $x,y \in G$ und $\lambda \in [0,1]$.
+		\item  Sei $G$ konvex. Eine Funktion $\abb{f}{G}{\R}$ heißt streng konvex, wenn gilt
+		\begin{equation*}
+			f(x + \lambda (y-x)) < f(x) + \lambda \brackets{f(y) - f(x)}
+		\end{equation*}
+		für alle $x,y \in G$ und $\lambda \in [0,1]$.
+	\end{enumerate}
+\end{definition}
+
+%TODO Abbildung konvexe Funktion
+
+Ausgehend von diesen Begrifflichkeiten erhalten wir das folgende Resultat:
+
+\begin{satz} %2.2
+	Sei $G \subseteq \Rn$ eine konvexe Menge und $\abb{f}{G}{\R}$ eine konvexe Funktion.
+	\begin{enumerate}
+		\item Jede lokale Lösung ist gleichzeitig auch globale Lösung von \eqref{eq: 2.1}.
+		\item Falls $f$ sogar streng konvex ist, dann existiert höchstens eine Lösung.
+	\end{enumerate}
+\end{satz}
+\begin{proof}
+	\begin{enumerate}
+		\item Sei $\schlange{x} \in G$ eine lokale Lösung von \eqref{eq: 2.1}. Wir nehmen an, dass dies jedoch keine globale Lösung ist, d.h. es existiert ein $\quer{x} \in G$ mit $f(\quer{x}) < f(\schlange{x})$. Wegen der Konvexität von $G$ gilt dann $x(\lambda) = \schlange{x} + \lambda(\quer{x} - \schlange{x}) \in G$ für alle $\lambda \in [0,1]$. Mit der Konvexität von $f$ folgt letzlich
+		\begin{equation*}
+			f(x(\lambda)) = f(\schlange{x} + \lambda (\quer{x} - \schlange{x})) 
+			\overset{f \text{ konvex}}{\le} f(\schlange{x}) + \underbrace{\lambda}_{> 0} \underbrace{\brackets{f(\quer{x}) - f(\schlange{x})}}_{< 0}
+			< f(\schlange{x}) \qquad \forall \lambda \in (0,1]
+		\end{equation*}
+		Somit ist $\schlange{x}$ keine lokale Lösung im Widerspruch zur Annahme.
+		%
+		\item Seien $x,y$ zwei voneinander verschiedene Lösungen., d.h. $f(x) = f(y) = f^\ast$. Wir erhalten $x(\lambda) \in G$ für alle $\lambda \in [0,1]$ und
+		\begin{equation*}
+			f(x(\lambda)) = f(x + \lambda(y-x)) \overset{f \text{ streng konvex}}{<} f(x) + \lambda \underbrace{\brackets{f(y) - f(x)}}_{= 0}
+		\end{equation*}
+		Somit ist $x$ keine Lösung.
+	\end{enumerate}
+\end{proof}
+
+Für konvexe Optimierungsaufgaben sind lokale und globale Lösungen also äquivalent. Als wichtigen Spezialfall konvexer Mengen halten wir die folgende Darstellung fest.
+
+\begin{aussage} %2.3
+	Sei $G$ gegeben durch
+	\begin{equation*}
+		G \defeq \menge{x \in \Rn : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J}
+	\end{equation*}
+	Dann gilt: falls alle Funktionen $g_i$ ($i \in i$) konvex und alle Funktionen $h_j$ ($j \in J$) affin-linear sind, dann ist $G$ konvex.
+\end{aussage}
+\begin{proof}
+	Seien $x,y \in G$ und $\lambda \in (0,1)$. Zur Klärung der Konvexität, stellt sich die Frage, ob $x(\lambda) \in G$?
+	\begin{equation*}
+		\begin{aligned}
+		g_i(x(\lambda)) &= g_i(x + \lambda (y-x)) \le g_i(x) + \lambda \brackets{g_i(y) - g_i(x)} = \underbrace{1-\lambda}_{>0} \underbrace{g_i(x)}_{\le 0} + \underbrace{\lambda}_{>0} \underbrace{g_i(y)}_{\le 0} \\
+		&\le 0 \\
+		%
+		h_j(x(\lambda)) &= h_j(x + \lambda(y-x)) = A_j(x+\lambda(y-x)) + b_j = (1-\lambda) A_j x + \lambda A_j y + b_j \\
+		&= (1-\lambda) [\underbrace{A_j x + b_j}_{h_j(x) = 0}] + \lambda [\underbrace{A_j y + b_j}_{h_j(y) = 0}] \\
+		&= 0
+		\end{aligned}
+	\end{equation*}
+	Somit ist $x(\lambda) \in G$ und $G$ also konvex.
+\end{proof}
+
+Jeder zulässige Bereich einer linearen Optimierungsaufgabe ($\nearrow$ Kapitel 3) hat diese Gestalt. %TODO ref
