@@ -1,0 +1,69 @@
+\section{Basislösungen und Ecken}
+
+Sei $I \defeq \menge{1, \dots , n}$. Da $\rg(A) = m$, existiert eine Indexmenge $I_B \subseteq I$ mit $\card{I_B} = m$ derart, dass alle Spalten $A^i$ ($i \in I_B$) linear unabhängig sind. $I_B$ wird \begriff{Basis-Indexmenge} genannt. Mit $I_N \defeq I \setminus I_B$ (Nichtbasis) definieren wir
+\begin{align*}
+A_B &= (A^i)_{i \in I_B} & A_N &= (A^i)_{i \in I_N} \\
+c_B &= (c_i)_{i \in I_B} & c_N &= (c_i)_{i \in I_N} \\
+x_B &= (x_i)_{i \in I_B} & x_N &= (x_i)_{i \in I_N}
+\end{align*}
+Dann lässt sich \eqref{eq: 3.1} schreiben als
+\begin{equation}
+	z = \trans{c_B} x_B + \trans{c_N} x_N \to \min \bei A_B x_B + A_N x_N = b, x_b \ge 0, x_N \ge 0 \label{eq: 3.2}
+\end{equation}
+bzw. durch Auflösen der Gleichung nach $x_B$ (beachte: $A_B$ hat Vollrang) als
+\begin{equation}
+	z = \brackets{\trans{c_N} - \trans{c_B} A_B^{-1}A_N} x_N + \trans{c_B} A_B^{-1} b \to \min \bei x_B = -A_B^{-1} A_N x_N + A_B^{-1}b, x_B \ge 0, x_N \ge 0 \label{eq: 3.3}
+\end{equation}
+
+\begin{definition} %3.1
+	Der Punkt 
+	\begin{equation*}
+		x = \left(\begin{matrix} x_B \\ x_N \end{matrix} \right) = \left( \begin{matrix} A_B^{-1} b \\ 0 \end{matrix} \right)
+	\end{equation*}
+	heißt \begriff{Basislösung} zu  $I_B$. Gilt zusätzlich $A_B^{-1}b \ge 0$, dann heißt $x=(x_B,x_N)$ \begriff{zulässige Basislösung}.
+\end{definition}
+
+\begin{definition} %3.2
+	Der Punkt $x \in G$ heißt \begriff{Ecke} (von $G$), falls aus $x = \frac{1}{2} \brackets{x^1 + x^2}$ mit $x^1,x^2 \in G$ stets $x = x^1 = x^2$ folgt.
+\end{definition}
+
+Ecken des zulässigen Bereichs können also nicht durch andere zulässige Punkte linear kombiniert werden.
+
+Zur Wiederholung benennen wir im Folgenden (ohne Beweis) einige Eigenschaften von Ecken und zulässigen Basislösungen.
+
+\begin{satz} %3.1
+	Sei $\rg(A) = m$. Dann ist jede zulässige Basislösung auch Ecke von $G$. Umgekehrt gibt es zu jeder Ecke mindestens eine zulässige Basislösung.
+\end{satz}
+
+Häufig unterscheidet man zwischen 
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item \begriff{degenerierten} (oder entarteten) Ecken, die mehrere zulässige Basislösungen besitzen
+	\item \begriff{nicht-degenerierten} (oder nicht-entarteten) Ecken, die genau eine zulässige Basislösung besitzen.
+\end{itemize}
+Dabei gilt: Eine Ecke $x \in G$ ist genau dann degeneriert, wenn ein $i \in I_B$ mit $x_i=0$ existiert.
+
+\begin{beispiel} %3.1
+	Sei
+	\begin{equation*}
+		G \defeq \menge{x \in \Rn \colon x_1+x_2+x_3=1, \enskip 2x_1+x_2+x_4=2, \enskip x_1,\dots , x_4 \ge 0}
+	\end{equation*}
+	Hierbei ist die Ecke $E_1 = \transpose{0,1,0,1}$ nicht degeneriert, da sie nur die Zerlegung $I_B = \menge{2,4}$ und $I_N = \menge{1,3}$ gestattet.
+	Die Ecke $E_2 = \transpose{1,0,0,0}$ ist degeneriert, weil ein $i \in I_B$ zwangsläufig $x_i = 0$ erfüllen muss.
+\end{beispiel}
+
+\begin{satz} %3.2
+	Seo $G \neq \emptyset$. Dann besitzt $G$
+	\begin{enumerate}[nolistsep, topsep=-\parskip]
+		\item mindestens eine Ecke
+		\item höchstens endlich viele Ecken.
+	\end{enumerate}
+\end{satz}
+\begin{proof}
+	siehe Übung
+\end{proof}
+
+\begin{satz} %3.3
+	Ist \eqref{eq: 3.1} lösbar, dann gibt es eine Ecke von $G$, die \eqref{eq: 3.1} löst.
+\end{satz}
+
+Bei linearen Optimierungsaufgaben genügt es daher die Ecken von $G$ zu betrachten. Ist die Aufgabe lösbar, so findet man durch systematisches Abschreiten der Ecken eine Lösung.

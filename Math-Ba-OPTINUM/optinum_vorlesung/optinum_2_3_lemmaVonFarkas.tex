@@ -56,5 +56,38 @@ Wählt man also im Lemma von Farkas $a = - \nabla f(\schlange{x})$ und $A$ beste
 \begin{equation}
 	\nabla f(\schlange{x}) + \sum_{i \in I_0(\schlange{x})} u_i a_i = 0 \qquad (u \ge 0) \label{eq: 2.8}
 \end{equation}
-
 Für konvexe Optimierungsaufgaben ist die Lösbarkeit von \eqref{eq: 2.8} sogar äquivalent dazu, dass $\schlange{x}$ Lösung der betrachteten Aufgabe ist.
+
+Gerade im Hinblick auf die praktische Anwendbarkeit ist \eqref{eq: 2.8} in der jetzigen Form wenig hilfreich, da $\schlange{x}$ und damit $I_0(\schlange{x})$ unbekannt sind. Man betrachtet daher oftmals die folgende äquivalente Umformulierung:
+
+\begin{lemma} %2.8
+	Sei $G \defeq \menge{x \in \Rn \colon \trans{a_i}x \le b_i , i \in I}$ und $\abb{f}{G}{\R}$ stetig differenzierbar. Wenn $x \in \Rn$ Lösung von
+	\begin{equation*}
+		f(x) \to \min \bei x \in  G
+	\end{equation*}
+	ist, dann existiert ein Vektor $u$, sodass das Paar $(x,u)$ das folgende System löst:
+	\begin{align}
+		\begin{split}
+		\nabla f(x) + \sum_{i \in I} u_i a_i &= 0 \qquad u_i \ge 0 , \quad \trans{a_i} - b_i \le 0 \quad (i \in I) \\
+		u_i \brackets{\trans{a_i}x - b_i} &= 0 \qquad (i \in I)
+		\end{split} \label{eq: 2.9}
+	\end{align}
+	Dabei beschreibt $\trans{a_i} - b_i \le 0$ die Zulässigkeit von $x \in G$ und $u_i \brackets{\trans{a_i}x - b_i} = 0$ gleicht die zu große Indexmenge der Summe wieder aus, d.h. für inaktive Restriktionen folgt $u_i = 0$.
+	Ist $f$ konvex, so gilt auch die Umkehrung. Man nennt \eqref{eq: 2.9} auch ein \begriff{KKT-System}.
+\end{lemma}
+
+\begin{bemerkung} %2.6
+	\begin{enumerate}[nolistsep]
+		\item KKT steht für \person{Karush}-\person{Kuhn}-\person{Tucker}.
+		\item Die Variablen $u$ heißen \begriff{\person{Lagrange}-Multiplikatoren}.
+		\item Gibt es neben den Ungleichungen auch Gleichungsrestriktionen $\trans{a_i}x = b_i$ für $i = m+1, \dots , \quer{m}$ und $\quer{m} > m$, dann erhält man das KKT-System
+		\begin{align}
+			\begin{split}
+			\nabla f(x) + \sum_{i=1}^m u_i a_i + \sum_{i=m+1}^{\quer{m}} u_i a_i &= 0 \\
+			u_i \ge 0 , \trans{a_i}x - b_i &\le 0 \qquad (i = 1, \dots , m) \\
+			\trans{a_i}x - b_i &= 0 \qquad (i = m+1, \dots , \quer{m}) \\
+			u_i \brackets{\trans{a_i}x - b_i} &= 0 \qquad (i = 1 , \dots , m)
+			\end{split}
+		\end{align}
+	\end{enumerate}
+\end{bemerkung}
