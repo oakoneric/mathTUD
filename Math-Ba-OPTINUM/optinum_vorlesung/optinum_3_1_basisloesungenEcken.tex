@@ -67,3 +67,38 @@ Dabei gilt: Eine Ecke $x \in G$ ist genau dann degeneriert, wenn ein $i \in I_B$
 \end{satz}
 
 Bei linearen Optimierungsaufgaben genügt es daher die Ecken von $G$ zu betrachten. Ist die Aufgabe lösbar, so findet man durch systematisches Abschreiten der Ecken eine Lösung.
+Um dabei zu erkennen, ob Optimalität vorliegt, hilft folgendes Resultat:
+
+\begin{aussage}[Optimalitätskriterium] %3.4
+	\label{aussage: 3.4}
+	Gilt für die zuässige Basislösung $x = (x_B, x_N) = (A_B^{-1}b, 0)$ die Bedingung 
+	\begin{equation}
+		\trans{c_N} - \trans{c_B} A_B^{-1} A_N \ge 0 \label{eq: 3.4}
+	\end{equation}
+	dann ist $x$ Lösung von \eqref{eq: 3.1}.
+\end{aussage}
+\begin{proof}
+	Sei $x = (x_B, x_N)$ eine zulässige Basislösung. Wir zeigen zunächst:
+	\begin{equation*}
+		Z(x) \subseteq \menge{d \in \Rn \colon Ad = 0, d_N \ge 0}
+	\end{equation*}
+	Sei $d \in Z(x)$. Dann existiert $t > 0$ mit $A(x+td) \overset{!}{=} b$ (beachte die Definition von $G$ mit Gleichheitsrestriktionen). Es gilt 
+	\begin{equation*}
+		Ax + t Ad = b  \equivalent b + t Ad = b \overset{t > 0}{\equivalent} Ad = 0
+	\end{equation*}
+	Wegen $x_N = 0$ ergibt sich aus $x + td \overset{!}{\ge} 0$ (nach Definition von $G$) sofort $d_N \ge 0$. Insbesondere gilt
+	\begin{equation*}
+		Ad = 0 \equivalent A_B d_B + A_N d_N = 0 \equivalent d_B = -A_B^{-1} A_N d_N \qquad \forall d \in Z(x)
+	\end{equation*}
+	Damit folgt unter Berücksichtigung von \eqref{eq: 3.4}
+	\begin{align*}
+		\nabla \trans{f(x)} d 
+		&= \trans{c} d \\
+		&= \trans{c_B} d_B + \trans{c_N} d_N \\
+		&= -\trans{c_B} A_B^{-1} A_N d_N + \trans{c_N} d_N \\
+		&= \underbrace{\brackets{\trans{c_N} - \trans{c_B} A_B^{-1} A_N}}_{\ge 0} \underbrace{d_N}_{\ge 0} \ge 0 \qquad \forall d \in Z(x)
+	\end{align*}
+	d.h. $x$ genügt der notwendigen Optimalitätsbedingung \eqref{eq: 2.2}, die hier (im konvexen Fall) auch hinreichend ist.
+\end{proof}
+
+Eine entsprechende Systematik zum Abschreiten der Ecken wird im Folgenden Abschnitt behandelt.

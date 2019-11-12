@@ -97,7 +97,7 @@ Im Fall polyedrischer zulässiger Mengen $G \subseteq \Rn$ (wie z.B. in der line
 Sei nun ein zulässiger Punkt $x \in G$ gegeben. Damit eine beliebige Richtung $d \in \Rn$ zulässig ist, nuss ein $\quer{t} > 0$ existieren, sodass $x + td \in G$ für alle $t \in [0,\quer{t}]$ gilt.
 Für einen polyedrischen Bereich $G$ ist dies äquivalent zu
 \begin{equation*}
-\forall i \in I \colon \trans{a_i} \brackets{x + td} \le b_i \equivalent \forall i \in I \colon t \trans{a_i} d \le b_i - \trans{a_i} x
+	\forall i \in I \colon \trans{a_i} \brackets{x + td} \le b_i \equivalent \forall i \in I \colon t \trans{a_i} d \le b_i - \trans{a_i} x
 \end{equation*}
 für alle $t \in [0,\quer{t}]$.
 
@@ -112,7 +112,7 @@ das Skalarprodukt der zulässigen Richtungen und des Normalenvektors (nach auße
 
 Für einen zulässigen Punkt $x \in G$ kann somit folgende Beobachtung angegeben werden:
 \begin{equation}
-d \in Z(x) \equivalent \forall u \in I_0(x) \colon \trans{a_i}d \le 0 \label{eq: 2.4}
+	d \in Z(x) \equivalent \forall i \in I_0(x) \colon \trans{a_i}d \le 0 \label{eq: 2.4}
 \end{equation}
 Außerdem ist die Größe $\schlange{t}$ (maximale Schrittweite) wohldefiniert.
 \begin{equation}

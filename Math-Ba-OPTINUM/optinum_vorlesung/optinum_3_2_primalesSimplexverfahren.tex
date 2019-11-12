@@ -1,0 +1,71 @@
+\section{Das primale Simplex-Verfahren}
+
+Das primale Simplexverfahren durchläuft zwei Phasen (falls nötig):
+\begin{itemize}
+	\item Phase 1 besteht aus der Ermittlung einer ersten Ecke (zulässige Basislösung), 
+	\item Phase 2 aus der darauf aufbauenden Bestimmung einer optimalen Ecke.
+\end{itemize} 
+
+\subsection{Phase 2 des Simplex-Verfahrens}
+
+Wir betrachten die (erste) zulässige Basislösung (Ecke) $x = (x_B, x_N)$ und schreiben \eqref{eq: 3.3} als Simplex-Tableau:
+
+\begin{center}
+	\begin{tabular}{r|c|c}
+		$T_0$ & $x_N$ & $1$ \\ \hline
+		$x_B = $ & $P$ & $p$ \\ \hline
+		$z =$ & $\trans{q}$ & $q_0$
+	\end{tabular}
+\end{center}
+
+\begin{equation*}
+	\begin{aligned}
+		P &= -A_B^{-1} A_N  &
+		p &= A_B^{-1} b \\
+		\trans{q} &= \trans{c_N} - \trans{c_B} A_B^{-1} A_N &
+		q_0 &= \trans{c_B} A_B^{-1} b 
+	\end{aligned}
+	\label{eq: 3.5}	
+\end{equation*}
+
+%Optimalität erkenn man nun an der Bedingung $\trans{q} \ge 0$.
+
+Wir nehmen zunächst an, dass $x = (x_B, x_N)$ eine nicht-entartete Ecke mit $x_B = \transpose{x_1, \dots, x_m}$ und $x_N = \transpose{x_{m+1}, \dots, x_n}$ ist. Die hierzu gehörige Basislösung ist $x = (x_B, x_N) = (p,0)$ und es gilt $p \ge 0$ (da zulässig). Folglich ist $x \in G$.
+
+\textbf{Frage:} Wenn $x$ nicht optimal ist -- wie kann eine bessere zulässige Basislösung (Ecke) gefunden werden?
+
+\textbf{Antwort:} Wahl einer zulässigen Richtung $d \in Z(x)$ mit maximaler Schrittweite, die eine Verkleinerung des Zielfunktionswerts ermöglicht.
+
+Nach \cref{aussage: 3.4} ist $x$ optimal, falls $q \ge 0$ gilt. Sei nun $q_\tau < 0$ für $\tau \in I_N$. Zur Konstruktion einer neuen Ecke setzen wir $x_\tau = t$ (bisher war $x_\tau = 0$). Dann folgt zunächst $x_N(t) = t * e_\tau$ und wegen der Forderung $x_N(t) \ge 0$ auch $t \ge 0$. Ferner ergibt sich aus Tableau $T_0$ der Zusammenhang $x_i(t) = P_{i \tau} * x_\tau + p_i = P_{i \tau} * t + p_i$ für alle $i \in I_B$.
+
+Insgesamt verfolgen wir ausgehend von $x =(p,0)$ die zulässige Richtung $d \in \Rn$
+\begin{equation*}
+	d_i = \begin{cases}
+	P_{i \tau} & i \in I_B \\
+	1 & i = \tau \\
+	0 & i \in I_N \setminus \menge{\tau}
+\end{cases}
+\end{equation*}
+
+Die maximale Schrittweite $\quer{t}$ erhält man wie folgt: Für jedes $i \in I_B$ ist $x_i(t) \ge 0$ zu gewährleisten. Gilt $P_{i \tau} \ge 0$, so ergibt dies keine Einschränkung für die Schrittweite (weil $p_i \ge 0$, $t \ge 0$, $P_{i \tau} \ge 0$ $\follows x_i(t) \ge 0$ für alle $t \ge 0$). Für $P_{i \tau} < 0$ muss hingegen $t \le - \frac{p_i}{P_{i \tau}}$ (aus Tableauzusammenhang) gewählt werden. Die maximal mögliche Schrittweite ergibt sich folglich zu
+\begin{equation}
+t \le \quer{t} = \quer{t}(x,d) \defeq \min\menge{- \frac{p_i}{P_i \tau} \colon P_{i \tau} < 0, i \in I_B}
+\label{eq: 3.6}
+\end{equation}
+bzw. $\quer{t} = \infty$, falls $P_{i \tau} \ge 0$ für alle $i \in I_B$.
+
+\begin{aussage} %3.5
+	Im Fall $\quer{t} = \infty$ besitzt \eqref{eq: 3.1} keine Lösung, da die Zielfunktion nach unten unbeschränkt ist.
+\end{aussage}
+\begin{proof}
+	Wegen $\quer{t} = \infty$ gilt $x(t) \in G$ für alle $t \ge 0$. Dann liefert $q_\tau < 0$ sogleich $Z(t) = \quer{q} * x_N(t) + q_0 \overset{x_N(t) = t * e_\tau}{=} q_\tau * t + q_0 \to - \infty$ für $t \to \infty$.
+\end{proof}
+
+\begin{bemerkung} %3.2
+	Die beiden Fälle 
+	\begin{enumerate}[nolistsep, topsep=-\parskip]
+		\item $q_i \ge 0$ für alle $i \in I_N \qquad \leadsto$ Optimalität
+		\item es existiert ein $\tau \in I_N$ mit $q_\tau < 0$ und $P_{i \tau} \ge 0$ für alle $i \in I_B \qquad \leadsto$ Unbeschränktheit
+	\end{enumerate}
+	werden primal entscheidbar genannt.
+\end{bemerkung}
