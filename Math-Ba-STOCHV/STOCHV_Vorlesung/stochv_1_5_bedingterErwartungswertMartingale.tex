@@ -281,9 +281,56 @@ Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf
 \begin{satz} %1.6
 	Sei $X$ adaptierter stochastischer Prozess (bezüglich Filtration $\folge{\F_n}{n \in \N}$). Dann sind äquivalent:
 	\begin{enumerate}
-		\item $X$ ist Martingal.
-		\item $(H \bullet X)$ ist Martingal für alle lokal beschränkten, vorhersbaren $\folge{H_n}{n \in \N}$
+		\item $X$ ist Martingal bezüglich $\folge{\F_n}{n \in \N}$.
+		\item $(H \bullet X)$ ist Martingal für alle lokal beschränkten, vorhersbaren Prozesse $H$
 	\end{enumerate}
 \end{satz}
 
 Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
+
+\begin{proof_equiv}
+	\hinrichtung $(H \bullet X)_n = \sum_{k=1}^n H_k (X_k - X_{k-1})$.
+	\begin{itemize}
+		\item Adaptiertheit: klar
+		\item Integrierbarkeit: $H$ lokal beschränkt, d.h. $\abs{H_k} \le c_k < \infty$ für alle $k$.
+		\begin{equation*}
+			\EW[\abs{H_k (X_k - X_{k-1})}] \le c_k * \brackets{\EW[\abs{x_k}] + \EW[\abs{X_{k+1}}]} < \infty
+		\end{equation*}
+		Mit der Dreiecksungleichung folgt daraus $\EW[\abs{(H \bullet X)_n}] < \infty$.
+		\item Martingaleigenschaft: 
+		\begin{equation*}
+			\EW[(H \bullet X)_n \mid \F_{n-1}] = (H \bullet X)_{n-1} + \EW[H_n (X_n - X{n-1}) \mid \F_{n-1}]
+			=  (H \bullet X)_{n-1} + H_n * \underbrace{\brackets{\EW[X_n \mid \F_{n-1}] - X{n-1}}}_{=0} 
+			=(H \bullet X)_{n-1} \quad \forall n \in \N
+		\end{equation*}
+		Damit ist also auch $(H \bullet X)$ ein Martingal.		
+	\end{itemize}
+	\rueckrichtung Fixiere $N \in \N$. Setze $H_n \defeq \one_{n = N}$, dieser ist lokal beschränkt und deterministisch (also auch vorhersehbar). Man stellt fest, dass $(H \bullet X)_n = 0$ für alle $n \le N-1$. Für alle $n \ge N$ gilt dagegen $(H \bullet X)_n = X_N - X_{N-1}$. Wir überprüfen nur die Martingaleigenschaft (Integrierbarkeit folgt aus Dreiecksungleichung). Wir wissen, dass $(H \bullet X)$ ein Martingal ist. 
+	\begin{align*}
+		0 = (H \bullet X)_{N-1} = \EW[(H \bullet X)_N \mid \F_{N-1}] = 
+		\EW[x_N - X_{N-1} \mid \F_{N-1}] = \EW[X_N \mid \F_{N-1}] - X_{N-1}
+		\follows X_{N-1} = \EW[X_N \mid \F_{N-1}] \mit N \in \N \text{beliebig}
+	\end{align*}
+	Somit ist $X$ ein Martingal.
+\end{proof_equiv}
+
+\begin{korollar} %1.7
+	Sei $X = \folge{X_n}{n=1 , \dots, N}$ ein adaptierter stochastischer Prozess bezüglich einer Filtration $\folge{\F_n}{n=1 , \dots, N}$. Wenn $\EW[(H \bullet X)_N] = 0$ für alle lokal beschränkten vorhersehbaren Prozesse $H$, dann ist $X$ ein Martingal bezüglich $\folge{\F_n}{}$.
+\end{korollar}
+\begin{proof}
+	Fixiere $K \in  [N] \defeq \menge{1, 2, \dots , N}$ und eine Menge $A \in \F_{K-1}$. Definiere $H_n(\omega) = \one_A (\omega) * \one_{\menge{n=K}}$, dieser ist lokale beschränkt und vorhersehbar.
+	Es ist $(H \bullet X)_n = 0$ für alle $n \le K-1$. Für alle $n \ge K$ gilt $(H \bullet X)_n = \one_A * (X_K - X_{K-1})$. 
+	\begin{align*}
+%	0 = \EW[(H \bullet X)_N] = \EW[\one_A (X_K - X_{K-1})] 
+%	\overset{Turm}{=} \EW[\EW[\one_A (X_K - X_{K-1}) \mid \F_{K-1}]] 
+%	= \EW[\one_A * \brackets{\underbrace{\EW[X_K \mid \F_{K-1] - X_{K-1}}]}_{\defqe Y_{K-1}}} \quad \forall A \in \F_{K-1}
+%		\follows \int_A  Y_{K-1}(\omega) \diff{\P(\omega)} = \int_A X_{K-1}(\omega) \diff{\P(\omega)} \quad \forall A \in \F_{K-1}
+%		\follows Y_{K-1} = X_{K-1} fast sicher
+%		\follows \EW[X_K \mid \F_{K-1] - X_{K-1}}] = X_{K-1}
+	\end{align*}
+	für beliebige $K$. Somit ist $X$ ein Martingal.
+\end{proof}
+
+\begin{bemerkung}
+	Wir schreiben $[N] \defeq \menge{1, 2, \dots, N}$ und $[N]_0 \defeq \menge{0, 1, 2 , \dots , N}$.
+\end{bemerkung}

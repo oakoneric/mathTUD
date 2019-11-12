@@ -1,0 +1,44 @@
+\section{Anlagestrategien im CRR-Modell}
+
+Eine Anlagestrategie soll durch ein Anfangskapital $w$ und einen stochastischen Prozess $\folge{\eta_n, \xi_n}{n \in [N]}$ dargestellt werden. 
+\begin{itemize}
+	\item Dabei steht $\xi_n$ für die ''Anzahl`` der Wertpapiere, die im Zeitintervall $(n-1,n]$ gehalten werden. Negative Werte von $\xi_n$ sind sogenannte Leerverkäufe. Wir erlauben beliebige Anteile $\xi_n \in \R$.
+	\item Weiter beschreibt $\eta_n$ den Stand des Verrechnungskontos in Geldeinheiten zum Zeitpunkt Null. Negative Werte von $\eta_n$ entsprechend einer Kreditaufnahme.
+	Außerdem sei das Anfangskapital $w \in \R$.
+\end{itemize}
+
+\textbf{\underline{Gesamtwert des Portfolios}}
+
+\begin{equation*}
+\begin{aligned}
+\Pi_n &= \eta_n * S_n^0 + \xi_n * S_n \\
+\Pi_0 &= w
+\end{aligned} \tag{Port} \label{eq: port}
+\end{equation*}
+Man nennt \eqref{eq: port} die \begriff{Portfoliogleichung}.
+
+Annahmen an die Strategie:
+%\begin{itemize}
+%	\item Die Strategie darf nur von Beobachtungen der Vergangenheit abhängen, d.h. $(\eta_n, \xi_n)$ ist ein \textit{vorhersehbarer} Prozess.
+%	\item Portfolio wird nur zwischen $S$ und $S_0$ umgeschichtet, d.h. es wird kein Kapital zugeschossen oder abgezogen.
+%	
+%	$\Pi_n = \eta_n S_n^0 + \xi_n S_n$ Wert zum Zeitpuntk $n$ vor dem Umschichten
+%	$\Pi_n = \eta_{n+1} S_n^0 + \xi_{n+1}S_n$ Wert zum Zeitpunkt $n$ nach dem Umschichten
+%	$\Pi_{n+1} = \eta_{n+1} S_{n+1}^0 + \xi_{n+1} S_{n+1}$ Wert zum Zeitpunkt $n+1$ vor dem Umschichten.
+%	Subtrahiere Gleichung 2 und 3
+%	$\follows \Pi_{n+1} - \Pi_n = \eta_{n+1} \brackets{S_{n+1}^0 - S_n^0} + \xi_{n+1} \brackets{S_{n+1} - S_n}$
+%	kurz: $\Delta \Pi_n = \eta_n \Delta S_n^0 + \xi_m \Delta S_n$ (Selbstfinanzierungseigenschaft, SF)
+%	beachte: $\Delta \Pi_n \defeq \Pi_n - \Pi_{n-1}$
+%	
+%	Diskontieren: $\schlange{\Pi_n} = \frac{\Pi_n}{S_n^0}$ ... diskontierter Portfoliogleichung
+%	Wier erhalten aus (Port)
+%	$\schlange{\Pi_n} = \eta_n + \xi_n \schlange{S}_n$
+%	$\schlange{\Pi_0} = w$ (Port schlange)
+%	
+%	Aus (SF)
+%	$\Delta \schlange{\Pi_n} = \xi_n \Delta \schlange{S}_n$ (SF Schlange)	
+%	
+%	d.h. $\schlange{\Pi}_n  = w + \sum_{k=1}^n \brackets{\schlange\Pi_k - \schlange\Pi_{k-1} \overset{(SF)}{=} w + \sum_{k=1}^n \xi_k \brackets{\schlange S_k - \schlange S_{k-1}} = w + \brackets{\xi \bullet \schlange{S}}_n$
+%		
+%	$\schlange\Pi_n = w + \brackets{\xi \bullet \schlange{S}}_n$ (INt Schlange)
+%\end{itemize}

@@ -68,7 +68,9 @@
 	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
 }
 
-\usepackage{mwe}
+\newlength{\zulength}
+\settowidth{\zulength}{(zu a)}
+\addtolength{\zulength}{1em}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -86,5 +88,10 @@
 \input{stochv_1_3_anleihenBeispieleDerivate}
 \input{stochv_1_4_replikationsArbitrage}
 \input{stochv_1_5_bedingterErwartungswertMartingale}
+
+\chapter{Cox-Ross-Rubinstein-Modell}
+\label{chapter_2_crr}
+\input{stochv_2_0_einfuehrung}
+\input{stochv_2_1_anlagestrategien}
 
 \end{document}
