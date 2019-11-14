@@ -18,9 +18,9 @@ Eine Anlagestrategie soll durch ein Anfangskapital $w$ und einen stochastischen 
 Man nennt \eqref{eq: port} die \begriff{Portfoliogleichung}.
 
 Annahmen an die Strategie:
-%\begin{itemize}
-%	\item Die Strategie darf nur von Beobachtungen der Vergangenheit abhängen, d.h. $(\eta_n, \xi_n)$ ist ein \textit{vorhersehbarer} Prozess.
-%	\item Portfolio wird nur zwischen $S$ und $S_0$ umgeschichtet, d.h. es wird kein Kapital zugeschossen oder abgezogen.
+\begin{itemize}
+	\item Die Strategie darf nur von Beobachtungen der Vergangenheit abhängen, d.h. $(\eta_n, \xi_n)$ ist ein \textit{vorhersehbarer} Prozess.
+	\item Portfolio wird nur zwischen $S$ und $S_0$ umgeschichtet, d.h. es wird kein Kapital zugeschossen oder abgezogen:
 %	
 %	$\Pi_n = \eta_n S_n^0 + \xi_n S_n$ Wert zum Zeitpuntk $n$ vor dem Umschichten
 %	$\Pi_n = \eta_{n+1} S_n^0 + \xi_{n+1}S_n$ Wert zum Zeitpunkt $n$ nach dem Umschichten
@@ -41,4 +41,21 @@ Annahmen an die Strategie:
 %	d.h. $\schlange{\Pi}_n  = w + \sum_{k=1}^n \brackets{\schlange\Pi_k - \schlange\Pi_{k-1} \overset{(SF)}{=} w + \sum_{k=1}^n \xi_k \brackets{\schlange S_k - \schlange S_{k-1}} = w + \brackets{\xi \bullet \schlange{S}}_n$
 %		
 %	$\schlange\Pi_n = w + \brackets{\xi \bullet \schlange{S}}_n$ (INt Schlange)
-%\end{itemize}
+\end{itemize}
+
+\begin{lemma} %2.2
+	Eine selbstfinanzierende Anlagestrategie $\folge{\eta_n, \xi_n}{n \in \N}$ mit Anfangskapital $w \in \R$ und ihr Werteprozess $\Pi_n$ sind durch $w$ und $\folge{\xi_n}{n \in \N}$ vollständig definiert. 
+	\begin{enumerate}[label=(\alph*), leftmargin=*, nolistsep, topsep=-\parskip]
+		\item Der diskontierte Werteprozess lässt sich darstellen als
+		\begin{equation*}
+		\schlange{\Pi_n} = w + \sum_{k=1}^n \xi_k (\schlange{S_k} - \schlange{S_{k-1}}) = w + (\xi \bullet \schlange{S})_n
+		\end{equation*}
+		\item Der Anteil $\eta_n$ ist eindeutig gegeben durch
+		\begin{equation*}
+		\eta_n = \schlange{\Pi_n} - \xi_n \schlange{S_n}
+		\end{equation*}
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	sie Herleitung oben
+\end{proof}
