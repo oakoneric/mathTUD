@@ -1,6 +1,6 @@
-\section{Replikation / Hedging von Derivaten im CRR-Modell}
+\section{Replikation bzw. Hedging von Derivaten im CRR-Modell}
 
-Derivat $C$ mit Auszahlung $h(S_1, S_2, \dots, S_N)$ zum Zeitpunkt $N$, d.h. $C = h(S_1, S_2, \dots, S_N)$ mit $h$ messbar
+Betrachten wir ein Derivat $C$ mit Auszahlung $h(S_1, S_2, \dots, S_N)$ zum Zeitpunkt $N$, d.h. $C = h(S_1, S_2, \dots, S_N)$ mit $h$ messbar.
 
 Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine Anfangskapital $w$, d.h.
 \begin{itemize}[label = --, nolistsep, topsep=-\parskip]
@@ -29,7 +29,7 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 		und die Werte entlang der Pfade des Binomialbaums sind rekursiv bestimmt:
 		\begin{align*}
 				f_N(S_1, \dots, S_N) &= h(S_1, \dots, S_N) = C \\
-				f_n(S_1, \dots, S_n) &= \frac{1}{1+r} \brackets{\frac{r-a}{b-r} f_{n+1}^b + \frac{b-r}{b-a} f_{n+1}^a} \text{ wobei } \tag{Rek} \label{eq: 2_2_rek}
+				f_n(S_1, \dots, S_n) &= \frac{1}{1+r} \brackets{\frac{r-a}{b-r} f_{n+1}^b + \frac{b-r}{b-a} f_{n+1}^a} \tag{Rek} \label{eq: 2_2_rek}
 			\intertext{wobei}
 				f_{n+1}^b &= f_{n+1}(S_1, \dots, S_n, S_n (1+b)) \\
 				f_{n+1}^a &= f_{n+1}(S_1, \dots, S_n, S_n (1+a))  \qquad n \in [N]_0
@@ -122,5 +122,36 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 	\end{equation*}
 	Wir können auch ein Trinomialmodell (up, down, gleichbleibender Preis) betrachten. Dabei bekommen wir eine zusätzliche Zeile in obiger Matrix, jedoch ist das Gleichungssystem dann überbestimmt und i.A. nicht mehr eindeutig auflösbar.
 \end{*bemerkung_inline}
+
+\begin{*beispiel}[Asiatische Call-Option]
+	Die Auszahlung ist gegeben durch $(\quer{S}_N - K)_+$ mit $\quer{S}_N = \frac{1}{1+N} \sum_{k=0}^{N} S_k$. Somit handelt es sich um ein pfadabhängiges Derivat (Summe hängt von allen $S_k$ ab). 
+	Bewertung im CRR-Modell mit zwei Perioden ($N=2$) und Parametern $b = 0.3$, $a = -0.3$, $r=0.1$, $S_0 = 100$, $K=100$.
+		Es gilt $C = h(S_1, S_2)$, also
+	\begin{align*}
+		h(120,169) &= \brackets{\frac{399}{3} - 100}_+ = 33 \\
+		h(130,91)  &= \brackets{\frac{321}{3} - 100}_+ = 7 \\
+		h(70, 91)  &= \brackets{\frac{261}{3} - 100}_+ = 0 \\
+		h(70, 49)  &= \brackets{\frac{219}{3} - 100}_+ = 0 \\
+	\end{align*} 
+	Außerdem gilt $h = f_2$. Wir berechnen die Übergangswahrscheinlichkeit
+	\begin{equation*}
+		q = \frac{r-a}{b-a} = \frac{0.4}{0.6} = \frac{2}{3} \follows 1 - q = \frac{1}{3}
+	\end{equation*}
+	Rekursion:
+	\begin{align*}
+		f_1(130) &= \frac{1}{1+r} \brackets{q * f^b + (1-q) f^a} \\
+		&= \frac{1}{1,1} \brackets{\frac{2}{3} * 33 + \frac{1}{3} * 7} \\
+		&= \frac{1}{1.1} * \frac{73}{3} \\
+		&\approx 22.12 \\
+		f_1(70) &= \frac{1}{1.1} \brackets{\frac{2}{3} * 0 + \frac{1}{3} * 0} = 0 \\
+		f_0 &= \frac{1}{1.1} \brackets{\frac{2}{3} * \frac{1}{1.1} * \frac{73}{3} + \frac{1}{3} * 0} = \frac{1}{(1.1)^2} \frac{146}{9} \approx 13.41 
+	\end{align*}
+	Strategie
+	\begin{align*}
+		\xi_2(130) &= \frac{f_2^b - f_2^a}{S_1 (b-a)} = \frac{33 - 7}{130 * 0.6} = \frac{26}{13*6} = \frac{1}{3} \\
+		\xi_2(70) &= \frac{0-0}{70 * 0.6} = 0 \\
+		\xi_1 &= \frac{f_1^b - f_1^a}{S_0 (b-a)} = \frac{\frac{1}{1.1} * \frac{73}{3} - 0}{100 * 0.6} = \frac{73}{2*11*6} = \frac{73}{196} \approx 0.37
+	\end{align*}
+\end{*beispiel}
 
 
