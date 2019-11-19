@@ -65,7 +65,9 @@
 	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
 }
 
+\newenvironment{indentpar}{\vspace{\parskip} \par \setlength{\parindent}{1cm}}{\vspace{\parskip} \par}
 
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -93,6 +95,8 @@
 \input{optinum_3_0_intro}
 \input{optinum_3_1_basisloesungenEcken}
 \input{optinum_3_2_primalesSimplexverfahren}
+\input{optinum_3_3_dualesSimplexverfahren}
+\input{optinum_3_4_dualitaet}
 
 
 \end{document}

@@ -1,0 +1,97 @@
+\section{Das duale Simplexverfahren}
+
+Nach \cref{aussage: 3.4} ist ein Tableau
+\begin{center}
+	\begin{tabular}{r|c|c}
+		$T_0$ & $x_N$ & $1$ \\ \hline
+		$x_B = $ & $P$ & $p$ \\ \hline
+		$z =$ & $\trans{q}$ & $q_0$
+	\end{tabular}
+\end{center}
+optimal, wenn $p \ge 0$ und $q \ge 0$ gelten. Nach Konstruktion gilt beim primalen Simplexverfahren stets $p \ge 0$.
+Sei nun ein Tableau $T_0$ gegeben mit $q \ge 0$, aber \textit{nicht} $p \ge 0$, d.h. es gibt eine Zeile $\sigma \in I_B$ mit $p_\sigma < 0$.
+Die zu $T_0$ gehörige Basislösung ist dann \textit{nicht} zulässig. Mithilfe des dualen Simplexverfahrens lässt sich jedoch (unter Beibehaltung von $q \ge 0$) eine zulässige Basislösung (d.h. mit "$p \ge 0$) erzeugen.
+Entsprechend der bekannten Austauschregeln ergeben sich folgende Bedingungen:
+\begin{equation*}
+	\begin{alignedat}{2}
+		\schlange{q}_j &\defeq q_j - \frac{P_{\sigma, j}}{P_{\sigma, \tau}} q_\tau &\overset{!}&{\ge} 0 \qquad \forall j \in I_N \setminus \menge{\tau} \\
+		\schlange{q}_\tau &\defeq \frac{q_\tau}{P_{\sigma, \tau}} &\overset{!}&{\ge} 0  \\
+		\schlange{p}_\sigma &\defeq - \frac{p_\sigma}{P_{\sigma, \tau}} &\overset{!}&{\ge} 0
+	\end{alignedat}
+\end{equation*}
+Wegen $p_\sigma < 0$ und $q_\tau \ge 0$ ist somit ein Pivotelement mit $P_{\sigma, \tau} > 0$ zu wählen. Zur Sicherstellung von $\schlange{q}_j \ge 0$ für alle $j \in I_N \setminus \menge{\tau}$ muss ferner gelten
+\begin{equation*}
+	\frac{q_\tau}{P_{\sigma, \tau}} = \min \menge{\frac{q_j}{P_{\sigma, j}} \colon P_{\sigma, j} > 0, j \in I_N}
+\end{equation*}
+Die eigentlichen Austauschregeln sind analog zu denen des primalen Simplexverfahrens.
+
+\begin{bemerkung} %3.4
+	Da dieses Verfahren mit einem \textit{unzulässigen} Punkt startet, ist die Folge der Zielfunktionswerte (im Gegensatz zum primalen Simplexverfahren) nicht monoton fallend.
+\end{bemerkung}
+
+\begin{bemerkung} %3.5
+	Falls eine zulässige Basislösung gefunden wird, so ist diese zwangsläufig optimal.
+\end{bemerkung}
+
+\begin{beispiel}
+	Betrachten wir die Optimierungsaufgabe
+	\begin{equation*}
+		\begin{aligned}
+			z = 6x_1 + 5x_2 + 12x_3 + 8x_4 + 9x_5 \to \min \quad \bei \quad 
+			x_1 + x_3 + x_4 + x_5 &\ge 300, \\
+			x_2 + 2x_3 + x_4 &\ge 400, \\
+			x_i &\ge 0 \qquad \forall i = 1, \dots, 5
+		\end{aligned}
+	\end{equation*}
+	Um daraus Gleichungsrestriktionen zu machen, führen wir Schlupfvariablen $x_6, x_7 \ge 0$ ein, d.h.
+	\begin{equation*}
+		\begin{aligned}
+			x_1 + x_3 + x_4 + x_5 &\ge 300 + x_6 , \\
+			x_2 + 2x_3 + x_4 &\ge 400 + x_7, \\
+			x_i &\ge 0 \qquad \qquad \forall i = 1, \dots, 7
+		\end{aligned}
+	\end{equation*}
+	Daraus ergibt sich nun folgendes Tableau
+	\begin{indentpar}
+		\begin{tabular}{R{1cm}|R{.5cm}R{.5cm}R{.5cm}R{.5cm}R{.5cm}|R{.9cm}l}
+			$T_0$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $1$ \\ \cline{1-7}
+			$x_6 =$ & $1$ & $0$ & $1$ & $1$ & $1$ & $-300$ \\
+			$x_7 =$ & $0$ & \fbox{$1$} & $2$ & $2$ & $0$ & $-400$ \\ \cline{1-7}
+			$z =$   & $6$ & $5$ & $12$ & $8$ & $9$ & $0$ & $\leftarrow \sigma = 7$ \\ \cline{1-7}
+			Keller  & $0$ & $\ast$ & $-2$ & $-1$ & $0$ & $400$
+		\end{tabular}
+	\end{indentpar}
+	
+	Zur Wahl von $\tau = 2$: $\frac{5}{1}$, $\frac{12}{6} = 6$, $\frac{8}{1} = 8$. Dabei ist $5$ minimal, also $\tau = 2$.
+	Fahren wir nun mit den weiteren Tableaus fort:
+	
+	\begin{indentpar}
+		\begin{tabular}{R{1cm}|R{.5cm}R{.5cm}R{.5cm}R{.5cm}R{.5cm}|R{.9cm}l}
+			$T_1$   & $x_1$ & $x_7$  & $x_3$      & $x_4$ & $x_5$ & $1$ \\ \cline{1-7}
+			$x_6 =$ & $1$   & $0$    & \fbox{$1$} & $1$   & $1$   & $-300$ & $\leftarrow \sigma = 6$ \\
+			$x_2 =$ & $0$   & $1$    & $-2$       & $-1$  & $0$   & $400$ \\ \cline{1-7}
+			$z =$   & $6$   & $5$    & $2$        & $3$   & $9$   & $2000$ \\ \cline{1-7}
+			Keller  & $0$   & $\ast$ & $\ast$ & $-1$  & $0$   & $400$
+		\end{tabular}
+
+		\begin{tabular}{R{1cm}|R{.5cm}R{.5cm}R{.5cm}R{.5cm}R{.5cm}|R{.9cm}l}
+			$T_2$   & $x_1$ & $x_7$ & $x_6$ & $x_4$      & $x_5$ & $1$ \\ \cline{1-7}
+			$x_3 =$ & $1$   & $0$   & $1$   & $-1$       & $1$   & $300$  \\
+			$x_2 =$ & $2$   & $1$   & $-2$  & \fbox{$1$} & $2$   & $-200$ & $\leftarrow \sigma = 2$ \\ \cline{1-7}
+			$z =$   & $4$   & $5$   & $2$   & $1$        & $7$   & $2600$ \\ \cline{1-7}
+			Keller  & $-2$  & $-1$  & $2$   & $\tau = 4$ & $-2$  & $200$
+		\end{tabular}
+	
+		\begin{tabular}{R{1cm}|R{.5cm}R{.5cm}R{.5cm}R{.5cm}R{.5cm}|R{.9cm}l}
+			$T_3$   & $x_1$ & $x_7$ & $x_6$ & $x_2$ & $x_5$ & $1$ \\ \cline{1-7}
+			$x_3 =$ & $1$   & $1$   & $-1$   & $-1$  & $1$   & $100$  \\
+			$x_4 =$ & $-2$   & $-1$   & $2$  & $1$   & $-2$   & $200$ \\ \cline{1-7}
+			$z =$   & $2$   & $4$   & $4$   & $1$   & $5$   & $2800$ \\
+		\end{tabular}
+	\end{indentpar}
+
+	Somit ergibt sich die Lösung
+	\begin{equation*}
+		x^\ast = \transpose{0,0,100,200,0,0,0} \quad \und \quad z^\ast = 2800
+	\end{equation*}
+\end{beispiel}
