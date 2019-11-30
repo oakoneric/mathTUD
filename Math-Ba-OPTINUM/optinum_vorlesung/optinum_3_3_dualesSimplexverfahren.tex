@@ -46,8 +46,8 @@ Die eigentlichen Austauschregeln sind analog zu denen des primalen Simplexverfah
 	Um daraus Gleichungsrestriktionen zu machen, führen wir Schlupfvariablen $x_6, x_7 \ge 0$ ein, d.h.
 	\begin{equation*}
 		\begin{aligned}
-			x_1 + x_3 + x_4 + x_5 &\ge 300 + x_6 , \\
-			x_2 + 2x_3 + x_4 &\ge 400 + x_7, \\
+			x_1 + x_3 + x_4 + x_5 &= 300 + x_6 , \\
+			x_2 + 2x_3 + x_4 &= 400 + x_7, \\
 			x_i &\ge 0 \qquad \qquad \forall i = 1, \dots, 7
 		\end{aligned}
 	\end{equation*}
@@ -56,7 +56,7 @@ Die eigentlichen Austauschregeln sind analog zu denen des primalen Simplexverfah
 		\begin{tabular}{R{1cm}|R{.5cm}R{.5cm}R{.5cm}R{.5cm}R{.5cm}|R{.9cm}l}
 			$T_0$ & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $1$ \\ \cline{1-7}
 			$x_6 =$ & $1$ & $0$ & $1$ & $1$ & $1$ & $-300$ \\
-			$x_7 =$ & $0$ & \fbox{$1$} & $2$ & $2$ & $0$ & $-400$ \\ \cline{1-7}
+			$x_7 =$ & $0$ & \fbox{$1$} & $2$ & $1$ & $0$ & $-400$ \\ \cline{1-7}
 			$z =$   & $6$ & $5$ & $12$ & $8$ & $9$ & $0$ & $\leftarrow \sigma = 7$ \\ \cline{1-7}
 			Keller  & $0$ & $\ast$ & $-2$ & $-1$ & $0$ & $400$
 		\end{tabular}

@@ -1,0 +1,30 @@
+\section{Transportoptimierung}
+
+\subsection{Problemstellung}
+
+\textbf{Zur Erinnerung:}
+Es gebe Erzeuger $i \in I = \menge{0, \dots, r}$ und Verbraucher $k \in K = \menge{1, \dots, s}$. Weiterhin seien die Kosten $c_{ik}$ für den Transport einer Einheit von $i$ nach $k$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_k > 0$ für alle $i \in I$ und $k \in K$ bekannt. Wie ist der gesamte Transport kostenminimal zu gestalten.
+
+Als Variablen verwenden wir die Transportmenge $x_{ik}$ von $i$ nach $k$.
+\begin{equation}
+\begin{alignedat}{3}
+	z = \sum_{i \in I} \sum_{k \in K} c_{ik} x_{ik} \to \min \quad \bei \quad 
+	&\sum_{k \in K} x_{ik} &= a_i \quad &(i \in I) \\
+	&\sum_{i \in I} x_{ik} &= b_k \quad &(k \in K) \\
+	& x_{ik} &\ge 0 \quad &(i,k) \in I \times K \\
+\end{alignedat}
+\label{eq: 3.13}
+\end{equation}
+
+Mit   
+\begin{equation*}
+	\begin{aligned}
+		x &= \transpose{x_{11}, x_{12}, \dots, x_{1s}, x_{21}, \dots, x_{rs}} \\
+		c &= \transpose{c_{11}, c_{12}, \dots, c_{1s}, c_{21}, \dots, c_{rs}} \\
+		\quer{b} &= \transpose{a_1, \dots, a_r, b_1, \dots, b_s}
+	\end{aligned}
+\end{equation*}
+hat \eqref{eq: 3.13} die Form
+\begin{equation*}
+	z = \trans{c} x \to \min \bei Ax = \quer{b}, x \ge 0
+\end{equation*}
