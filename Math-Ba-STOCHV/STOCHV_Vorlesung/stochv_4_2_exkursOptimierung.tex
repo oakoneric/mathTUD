@@ -1,0 +1,50 @@
+\section{Exkurs: Optimierung mit Nebenbedingungen}
+
+Betrachte das Optimierungsproblem
+\begin{equation*}
+	\min f_0(x) \quad (x \in \Rn)
+	\tag{OPT} \label{eq: opt}
+\end{equation*}
+unter Nebenbedingungen
+\begin{equation*}
+	\left\{ \begin{array}{rclcl}
+	f_i(x) &\le& 0 & \quad & i = 1, \dots, m \\
+	h_i(x) &=& 0 & \quad & i = 1, \dots, p
+	\end{array} \right.
+	\tag{NB} \label{eq: nb}
+\end{equation*}
+Ein $x \in \Rn$, welches \eqref{eq: nb} erfüllt, heißt \begriff{zulässig}, ein $x_\ast \in \Rn$, welches \eqref{eq: opt} minimiert, heißt (Optimal-)Lösung mit $p_\ast = f_0(x_\ast)$ als Minimalwert.
+
+\begin{*definition}
+	Die Funktion 
+	\begin{equation*}
+		\mathcal{L}(x,\lambda, \nu) = f_0(x) + \sum_{i=1}^m f_i(x) \lambda_i + \sum_{i=1}^p h_i(x) \nu_i
+	\end{equation*}
+	mit $\lambda \in \Rm_{\ge 0}$ und $\nu \in \R^p$ heißt \begriff{Lagrange-Zielfunktion} für \eqref{eq: opt}.
+	
+	Die Funktion
+	\begin{equation*}
+		g(\lambda, \nu) \defeq \inf_{x \in \Rn} \mathcal{L}(x,\lambda,\nu)
+	\end{equation*}
+	heißt (Lagrange-)duale Funktion für \eqref{eq: opt}
+\end{*definition}
+
+\begin{*bemerkung_inline}
+	Als Infimum von (in $\lambda, \nu$) linearen Funktionen ist $g$ konkav\footnote{Wir wissen, dass jede konvexe Funktion sich darstellen lässt als Supremum von (affin) linearen Funktionen.}. Die duale Funktion $g(\lambda, \nu)$ erzeugt eine untere Schranke für $p_\ast$. Begründung: Sei $\quer{x} \in \Rn$ zulässig für \eqref{eq: opt}, d.h. $f_i(\quer{x}) \le 0$ für alle $i \in [m]$ und $h_i(\quer{x}) = 0$ für alle $i \in [p]$.  Somit ist
+	\begin{equation*}
+		\mathcal{L} = f_0(\quer{x}) + \underbrace{\sum_{i=1}^m f_i(\quer{x}) \lambda_i + \sum_{i=1}^p h_i(\quer{x})}_{\le 0} \le f_0(\quer{x})
+	\end{equation*}
+	Also ist $g(\lambda, \nu) = \inf_{x \in \Rn} \mathcal{L}(x,\lambda,\nu) \le \mathcal{L}(\quer{x}, \lambda, \nu) \le f_0(\quer{x})$ für alle zulässigen $\quer{x}$. Somit ist $g(\lambda, \nu) \le p_\ast$ für alle $\lambda \in \Rm_{\ge 0}$ und $\nu \in \R^p$. Die beste untere Schranke erhalten wir durch Maximieren über $\lambda$ und $\nu$.
+\end{*bemerkung_inline}
+
+\begin{*definition}
+	Das duale Optimierungsproblem zu \eqref{eq: opt} ist
+	\begin{equation*}
+		\max g(\lambda, \nu) \qquad \lambda \in \Rm, \nu \in \R^p
+		\tag{D} \label{eq: d}
+	\end{equation*}
+	unter der Nebenbedingung $\lambda_i \ge 0$ für alle $i \in [m]$. Den Maximalwert bezeichnen wir mit $d_\ast$.
+\end{*definition}
+
+Zwischen \eqref{eq: opt} und \eqref{eq: d} gilt \begriff{schwache Dualität}, d.h. $d_\ast \le p_\ast$.
+Unter bestimmten Voraussetzungen gilt auch die \begriff{starke Dualität}, d.h. $d_\ast = p_\ast$.

@@ -1,0 +1,60 @@
+\section{Das Anlageproblem}
+
+Gegeben seien ein Vermögen $w$ sowie Anlagegüter $S^1, \dots, S^n$ (Aktien, Anleihen, $\dots$). Gesucht ist nun eine optimale Verteilung $w = w_1 + \dots + w_n$ auf $S^1, \dots, S^n$.
+
+Die Anlagegüter $S^1, \dots, S^n$ weisen unterschiedliche Erträge, Risiken und typischerweise Korrelationen auf.
+
+Wir unterscheiden:
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Einperiodenproblem: Aufteilung wird heute ($t=0$) festgelegt und bis zum Zeithorizont $t=T$ beibehalten.
+	\item Mehrperiodenproblem: Umschichten zu mehreren Zeitpunkten $\menge{t_0, t_1, \dots, t_N}$ möglich.
+\end{itemize} \vspace{\parskip}
+
+Das einfachste Optimalitätsprinzip ist die \begriff{Pareto-Optimalität}:
+\begin{itemize}[nolistsep,topsep=-\parskip]
+	\item Bei gleichem Risiko wird Anlage mit größerem Ertrag bevorzugt.
+	\item Bei gleichem Ertrag wird Anlage mit kleinerem Risiko bevorzugt.
+\end{itemize}
+d.h. \begriff{Pareto-optimal}: Es gibt keine Anlagestrategie mit größerem Ertrag und kleinerem Risiko.
+
+Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele:
+
+\begin{description}
+	\item[\fbox{Toy-Model 1:}] Einperiodenmodell, eine risikofreie und eine risikobehaftete Anlagemöglichkeit \linebreak
+	Wir setzen den Zeithorizont auf $T = 1$. Für die risikofreie Anlage sei $S_0^0 = 1$ und $S_T^0 = (1+r)$. Für die risikobehaftete Anlage gelte $S_0^1 = 1$ und $S_T^1 = (1+R)$, wobei $R$ stochastisch ist mit Erwartungswert $\mu = \EW[R]$ (Ertrag) und Standardabweichung $\sigma = \sqrt{\Var[R]} > 0$ (Risiko).
+	Mit $s \defeq \mu  - r$ bezeichnen wir die Überrendite [excess return]. Ist $s \le 0$, dann sollte alles in $S^0$ investiert werden (Pareto-optimal). Sei $s > 0$: teile das Vermögen $w$ auf in zwei Teile $(w_0, w - w_0)$ auf $(S^0, S^1)$\footnote{investiere also $w_0$ in $S^0$ und den Rest in $w_1$}. Dabei entspricht $w - w_0 < 0$ einem Leerverkauf und $w_0 < 0$ einer Kreditaufnahme. Gelte $w=1$. 
+	\begin{itemize}[nolistsep]
+		\item Endvermögen: $P_T = w_0 (1+r) + (1-w_0) (1+R)$
+		\item zu erwartende Rendite\footnote{Rendite $= \frac{P_T - P_0}{P_0}$}: $\mu_P = \EW[P_T - 1] = w_0 (1+r) + (1-w_0)(1+\mu) -1 = w_0 r + (1-w_0) \mu + 1$
+		\item Risiko:  $\sigma_P = (1-w_0) * \sigma$
+		\item Überrendite: $s_P = (1-w_0) (\mu - r)$
+	\end{itemize}
+	Somit ist jede Strategie Pareto-optimal und das Pareto-Prinzip hilft nicht bei der Auswahl. Insbesondere ist \begriff{Sharpe-Ratio}:
+	\begin{equation*}
+		\SR(w_0) = \frac{\text{''Überrendite``}}{\text{''Risiko``}} = \frac{s_p}{\sigma_p} = \frac{\mu - r}{\sigma} = \text{const.}
+	\end{equation*}
+	Alternative zum Pareto-Prinzip: Festlegen von individueller Risikoaversion (mehr dazu später)
+	\item[\fbox{Toy-Model II:}] Einperiodenproblem, zwei risikobehaftete Anlagemöglichkeiten, Zeithorizont $T=1$, Vermögen $w=1$ mit
+	\begin{equation*}
+		\begin{aligned}
+		S_0^1 &= 1 & S_T^1 = (1+R-1) &\mit \EW[R_1] &= \mu, \Var[R_1] = \sigma_1^2 \\
+		S_0^2 &= 1 & S_T^2 = (1+R_2) &\mit \EW[R_2] &= \mu, \Var[R_2] = \sigma_2^2
+		\end{aligned}
+	\end{equation*}
+%	und $R_1 \upmodels R_2$. 
+	\begin{itemize}
+		\item Portfoliowert: $P_T = w_1 (1+R_1) + (1-w_1)(1+R_2)$
+		\item Rendite: $\mu_P = \EW[P_T - 1] = w_1 \EW[R_1] + (1-w_1) \EW[R_2] = \mu$
+		\item Risiko: $\sigma_P^2 = \Var[w_1 R_2 + (1-w_1) R_2] = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2$
+		\item Pareto-optimales Portfolio:
+		\begin{equation*}
+			\begin{aligned}
+			\partdiff{w_1} \sigma_P = 2w_1 * \sigma_1^2 - 2(1-w_1)\sigma_2^2 &= 0 \\
+			\follows w_1 ( \sigma_1^2 + \sigma_2^2) &= \sigma_2^2 \\
+			\follows w_\ast &= \frac{\sigma_2^2}{\sigma_1^2 + \sigma_2^2} \in (0,1)
+			\end{aligned}
+		\end{equation*}
+		Somit existiert also genau eine Pareto-optimale Strategie.
+	\end{itemize}
+	Das Vermögen wird proportional zum Verhältnis der Risiken aufgeteilt. Außerdem wird das Vermögen \textit{nicht} vollständig in risikoärmere Anlage gesteckt. Man nennt dies auch das \begriff{Diversifikationsprinzip}. $w_\ast$ ist auch die Strategie mit maximaler Sharpe-Ratio.
+\end{description}

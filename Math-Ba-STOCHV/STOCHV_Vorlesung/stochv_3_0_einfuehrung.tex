@@ -1,0 +1,364 @@
+\begin{itemize}
+	\item Ziel: Übergang vom CRR-Modell (zeitdiskret) zum Black-Scholes-(BS-) Modell (zeitstetig) durch Grenzwertbildung.
+	\item Herleitung der Black-Scholes-Formel für Preise von europäischen Put- und Call-Optionen.
+\end{itemize}
+
+Wir betrachten ein Zeitintervall $[0,T]$. Für jedes $n \in \N$ gelteilt in Schritte der Länge $\Delta_N \defeq \frac{T}{N}$. Wähle Parameter $r \in \R$, $\mu \in \R$ (Trendparameter), $\sigma > 0$ (Volatilität).
+Definiere eine Folge von CRR-Modellen $\folge{S^N}{n \in \N}$ eingebettet in $[0,T]$ mit Parametern $r_N = r * \Delta_N$
+\begin{equation*}
+b_N \defeq \mu \Delta_N + \sigma \sqrt{\Delta_N} \qquad a_N \defeq \mu \Delta_N - \sigma \sqrt{\Delta_N} \qquad p \in (0,1) \qquad s > 0
+\end{equation*}
+d.h. 
+\begin{equation*}
+S_0^N = s, \quad S_{t_k}^N = s * \prod_{i=1}^{k} \brackets{1 + R_i^N} \mit t_k = k * \Delta_N 
+\tag{CRR-N}
+\label{eq: crrn}
+\end{equation*} 
+bzw.
+\begin{equation*}
+\schlange{S}_0^N = s, \schlange{S}_{t_k}^N = s * \prod_{i=1}^k \frac{1 + R_i^N}{1 + r_N}
+\end{equation*}
+wobei
+\begin{equation*}
+\P(R_i^N = b_N) = p \und \P(R_i^N = a_N) = 1-p
+\end{equation*}
+Falls notwendig, interpolieren wir zwischen den Gitterpunkten mit $S_t^N = S_{t_k}^N$ für $t \in [t_k, t_{k+1}]$ (d.h. konstante Interpolation).
+
+Berechne risikoneutrale Wahrscheinlichkeiten
+\begin{equation*}
+q_N = \Q_N(R_i^N * b_N) = \frac{r_N - a_N}{b_N - a_N} = \frac{(r-\mu) \Delta_N + \sigma \sqrt{\Delta_N}}{2 \sigma \sqrt{\Delta_N}} = \frac{1}{2} - \frac{\lambda}{2} \sqrt{\Delta_N}
+\end{equation*}
+mit $\lambda \defeq \frac{\mu - r}{\sigma}$.
+
+\begin{*bemerkung}
+	\begin{itemize}
+		\item Für $\mu = r$ gilt $q_N = \frac{1}{2}$, im Allgemeinen $\lim_{N \to \infty} q_N = \frac{1}{2}$.
+		\item $\lambda = \frac{\mu - r}{\sigma}$ heißt ''Sharpe-Ratio`` oder Marktrisikopreis. (großes $\lambda$ heißt entweder hoher Ertrag oder geirnges Riskio)
+	\end{itemize}
+\end{*bemerkung}
+
+Frage: Konvergenz der Verteilung von $S_T^N$ unter $\Q_N$ für $N \to \infty$?
+
+Übergang zum Logarithmus:
+\begin{equation*}
+Z_N \defeq \log\brackets{\frac{S_T^N}{S_0}} = \sum_{k = 1}^N \underbrace{\log\brackets{1 + R_k^N}}_{\defqe L_k^N}
+\end{equation*}
+Summe von unabhängigen, identisch verteilten Zufallsvariablenv $\follows$ Zentraler Grenzwertsatz?
+
+Es liegt ein sogenanntes Dreiecksschema vor:
+\begin{align*}
+Z_1 = L_1^1 \\
+Z_2 = L_1^2 + L_2^2 \\
+Z_3 = L_1^3 + L_2^3 + L_3^3 \\
+\vdots
+\end{align*}
+Die Zufallsvariablen in einer Zeile sind unabhängige Zufallsvariablen.
+
+\begin{theorem}[CLT für Dreiecksschemata] %3.1
+	\label{theorem: 3.1}
+	Sei für jedes $N \in \N$ ein Vektor $L^N \defeq (L_1^N, L_2^N, \dots, L_N^N)$ von Zufallsvariablen gegeben (''Dreiecksschema``) mit folgenden Eigenschaften:
+	\begin{enumerate}[label = (\alph*), nolistsep]
+		\item für alle $N \in \N$ sind die $(L_1^N, L_2^N, \dots, L_N^N)$ unabhängig mit identischer Verteilung
+		\item es existiert eine Folge von (deterministischen) Konstanten $c_N \to 0$, sodass $\abs{L_k^N} \le c_N$ für alle $k \in [N]$.
+		\item Mit $Z_N \defeq L_1^N + \dots L_N^N$ gilt $\EW[Z_N] \to m \in \R$ sowie $\Var[Z_N] \to s^2 > 0$ jeweils für $N \to \infty$.
+	\end{enumerate}
+	Dann konvergiert $\folge{Z_N}{N \in \N}$ in Verteilung gegen eine normalverteilte Zufallsvariable $Z$ mit $\EW[Z] = m$ und $\Var[Z] = s^2$. 
+\end{theorem}
+\begin{proof}
+	siehe z.B. ''Wahrscheinlichkeitstheorie mit Martingalen``
+\end{proof}
+
+\begin{*bemerkung_inline}
+	Die Dichte der Standardnormalverteilung ist gegeben durch
+	\begin{equation*}
+	\phi(x) \defeq \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{x}}
+	\end{equation*}
+	und für die Verteilungsfunktion gilt
+	\begin{equation*}
+	\Phi(x) \defeq \int_{-\infty}^x \phi(y) \diffskip{y} = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^x e^{-\frac{y^2}{2}} \diffskip{y}
+	\end{equation*}
+	Eine Normalverteilung mit Erwartungswert $m$ und Varianz $s^2$ hat Verteilungsfunktion $\Phi\brackets{\frac{x-m}{s}}$.
+\end{*bemerkung_inline}
+
+\begin{*definition}
+	Eine strikt positive Zufallsvariable $X$ heißt \begriff{lognormalverteilt} mit Parametern $m$ und $s^2$, wenn gilt $\log(X) \sim \Normal(m,s^2)$.
+\end{*definition}
+
+\begin{theorem} %3.2
+	Betrachte eine Folge $\folge{S^N}{N \in \N}$ von CRR-Modellen wie in \eqref{eq: crrn} beschrieben. Dann konvergiert $S_T^N$ unter $\Q$ in Verteilung gegen eine Zufallsvariable $S_T$ und $\frac{S_T}{S_0}$ ist lognormalverteilt mit Parametern $m = T \brackets{r - \frac{\sigma^2}{2}}$ und $s^2 = T \sigma^2$. Äquivalent dazu gilt mit $Z_N = \log\brackets{\frac{S_T^N}{S_0}}$
+	\begin{equation*}
+	\Q_N(Z_N \le x) \overset{N \to \infty}{\longrightarrow} \Phi\brackets{\frac{x - T \brackets{r - \frac{\sigma^2}{2}}}{\sigma \sqrt{T}}}
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	Das Dreiecksschema $L^N = (L_1^N, \dots, L_N^N)$ mit $L_k^N = \log(1 + R_k^N)$ erfüllt (unter $\Q_N$) offensichtlich Bedingungen (a) und (b) aus \cref{theorem: 3.1}. Für (b) wähle z.B.
+	\begin{equation*}
+	c_N = \max\menge{\abs{\log(1+\mu\Delta_N + \sigma \sqrt{\Delta_N})}, \abs{\log(1+\mu\Delta_N - \sigma \sqrt{\Delta_N}}}
+	\end{equation*}
+	Wir berechnen Erwartungswert und Varianz von $L_k^N$ bzw. $Z_N$. Verwende Taylorentwicklung des Logarithmus um die Entwicklungsstelle $1$:
+	\begin{equation*}
+	\log(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} + \mathcal{O}(x^4) \quad (x \to 0)
+	\end{equation*}
+	Das heißt
+	\begin{equation*}
+	\log(1 + \mu \Delta_N \pm \sigma \sqrt{\Delta_N}) = \pm \sigma \sqrt{\Delta_N} + \mu \Delta_N - \frac{\sigma^2}{2} \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}})
+	\end{equation*}
+	Für die risikoneutralen Wahrscheinlichkeiten gilt $q_N = \frac{1}{2} + \frac{\lambda}{2} \sqrt{\Delta_N}$ und $1 - q_N = \frac{1}{2} - \frac{\lambda}{2} \sqrt{\Delta_N}$.
+	\begin{align*}
+	\E^\Q[L_k^N] &= \E^{\Q_N}[\log(1 + R_k^N)] = q_N * \log(1+b_N) + (1-q_N) \log(1+a_N) \\
+	&= (\mu - \frac{\sigma^2}{2}) \Delta_N - \lambda \sigma \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}}) \\
+	&= \brackets{\mu - (\mu - r) - \frac{\sigma^2}{2}} \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}}) \\
+	&= \brackets{r - \frac{\sigma^2}{2}} \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}}) \\
+	\E^{\Q_N}[(L_k^N)^2] &= q_N \log^2(1+b_N) + (1-q_N) \log^2(1+a_N) \\
+	&= \sigma^2 \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}}) \\
+	\Varianz^{\Q_N}(L_k^N) &= \E^{\Q_N}[(L_k^N)^2] - \E^{\Q_N}[L_k^N]^2 \\
+	&= \sigma^2 \Delta_N + \mathcal{O}(\Delta_N^{\sfrac{3}{2}})
+	\end{align*}
+	Also gilt 
+	\begin{equation*}
+		\begin{alignedat}{5}
+			\E^{\Q_N}[Z_N] &=& N * \E^{\Q_N}[L_k^N] &=& \brackets{r - \frac{\sigma^2}{2}} T + \mathcal{O}(N^{-\sfrac{1}{2}}) \overset{N \to \infty}&{\longrightarrow}& (r-\frac{\sigma^2}{2}) T &=& m \\
+			\Varianz^{\Q_N}[Z_N] &=&  N * \Varianz^{\Q_N}[L_k^N] &=& \sigma^2 T + \mathcal{O}(N^{-\sfrac{1}{2}}) \overset{N \to \infty}&{\longrightarrow}& \sigma^2 T &=& s^2
+		\end{alignedat}
+	\end{equation*}
+	Das Resultat folgt nun aus dem Zentralen Grenzwertsatz (\cref{theorem: 3.1}).
+\end{proof}
+
+\section{Asymptotik von Put- und Call-Preisen}
+
+Wir fixieren die Laufzeit $T$ und den Ausübungspreis $K$ und schreiben
+$C_N(t,S_t^N)$ für den Preis einer europäischen Call-Option im \eqref{eq: crrn}-Modell in Abhängigkeit von Zeit $t$ und Basisgut $S_t^N$. Analog gilt dies auch für den Put-Preis $P_N(t,S_t^N)$.
+\begin{theorem}[Black-Scholes-Formel] %3.3
+	\label{theorem: 3.3}
+	Die Preise $C_N$ und $P_N$ konvergieren für $N \to \infty$ gegen den Black-Scholes-Preis
+	\begin{equation*}
+		\begin{aligned}
+			C_{BS}(t, S_t) &\defeq \lim_{N \to \infty} C_N(t,S_t^N) \\
+			P_{BS}(t, S_t) &\defeq \lim_{N \to \infty} P_N(t, S_t^N)	
+		\end{aligned}
+	\end{equation*}
+	und es gilt die Black-Scholes-Formel
+	\begin{equation*}
+		\begin{aligned}
+			C_{BS}(t,S_t) &= S_t \Phi(d_1) - e^{-r (T-t)} K \Phi(d_2) \\
+			P_{BS}(t,S_t) &= - S_t \Phi(- d_1) + e^{-r (T-t)} K \Phi(- d_2)
+		\end{aligned}
+	\end{equation*}
+	wobei
+	\begin{equation*}
+		\begin{aligned}
+			d_1 &= d_1(t,S_t) = \frac{\log\brackets{\frac{S_t}{K}} + \brackets{r + \frac{\sigma^2}{2}} (T - t)}{\sigma \sqrt{T-t}} \\
+			d_2 &= d_2(t,S_t) = \frac{\log\brackets{\frac{S_t}{K}} + \brackets{r - \frac{\sigma^2}{2}} (T - t)}{\sigma \sqrt{T-t}}  = d_1 - \sigma \sqrt{T-t}
+		\end{aligned}
+	\end{equation*}
+\end{theorem}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item geschlossener Ausdruck für Bewertung von europäischen Put- und Call-Optionen
+		\item Herleitung als Grenzwert aus dem CRR-Modell entspricht nicht der ursprünglichen Herleitung von Black und Scholes mittels stochastischer Analysis (siehe Vorlesung ''Stochastic Calculus``)
+		\item Für Entwicklung der BS-Formel und des BS-Modells erhielten \person{Scholes} und \begriff{Merton} den Wirtschaftsnobel(gedenk)preis 1997
+		\item Der Parameter $\sigma$ heißt \begriff{Volatilität} und entspricht der Schwankungsbreite der Preisänderungen
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item innerer Wert $(S_t - K)_+$ konvergiert gegen Auszahlungsprofil $(S_T - K)_+$ für $t \to T$
+		\item Zeitwert $C_{BS}(t,S_t) - (S_t - K)_+ \ge 0$ konvergiert gegen Null für $t \to T$
+		\item ''out-of-the-money`` (OTM): innerer Wert $ = 0$ bzw. $S_t < K$
+		\item ''in-the-money`` (ITM): innerer Wert $> 0$ bzw. $S_t > K$
+		\item ''at-the-money`` (ATM): Grenzfall $S_t = K$
+		\item Zeitwert ist am größten für ATM-Optionen
+		\item $t \mapsto C_{BS}(t,S_t)$ ist streng monoton fallend bzw. $\partdiff{t} C_{BS}(t,S_t) < 0$
+		\item $S_t \mapsto C_{BS}(t,S_t)$ ist streng monoton wachsend und konvex bzw. $\partdiff{S}C_{BS}(t,S_t) > 0$ und $\frac{\partial^2}{\partial S^2} C_{BS}(t,S_t) > 0$
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item innerer Wert $(K - S_t)_+$ konvergiert gegen Auszahlungsprofil $(K - S_T)_+$ für $t \to T$
+		\item Zeitwert $P_{BS}(t,S_t) - (K - S_t)_+ \ge 0$ konvergiert gegen Null für $t \to T$
+		\item ''out-of-the-money`` (OTM): innerer Wert $ = 0$ bzw. $S_t > K$
+		\item ''in-the-money`` (ITM): innerer Wert $> 0$ bzw. $S_t < K$
+		\item ''at-the-money`` (ATM): Grenzfall $S_t = K$
+		\item Zeitwert ist am größten für ATM-Optionen
+		\item $t \mapsto P_{BS}(t,S_t)$ ist streng monoton fallend bzw. $\partdiff{t} P_{BS}(t,S_t) < 0$
+		\item $S_t \mapsto P_{BS}(t,S_t)$ ist streng monoton fallend und konvex bzw. $\partdiff{S} P_{BS}(t,S_t) < 0$ und $\frac{\partial^2}{\partial S^2} P_{BS}(t,S_t) > 0$
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{proof}[\cref{theorem: 3.3}]	
+	Wir beweisen das Resultat für $t = 0$, andere Zeitpunkte $t \in [0,T]$ können analog mittels konstanter Interpolation behandelt werden. Nach \cref{theorem: 2.7} gilt für den Preis der Put-Option im CRR${}_N$-Modell 
+	\begin{align*}
+		P^N(0,S_0^N) &= \brackets{1 + r \Delta_N}^{-N} * \E^{\Q_N}\sqbrackets{(K- S_T^N)_+} 
+		= \brackets{1 + r \Delta_N}^{-N} *  \E^{\Q_N}\sqbrackets{(K- S_0 e	{Z_N})_+} \\
+		&= \brackets{1 + r \Delta_N}^{-N} * \E^{\Q_N}\sqbrackets{f(Z_N)} \mit f(z) (K - S_0 e^z)_+ \text{ stetig und beschränkt }
+	\end{align*}
+	wobei $Z_N = \log\brackets{\frac{S_T^N}{S_0}}$ gilt. Aus der Stochastik ist bekannt, dass aus $Z_N \overset{\mathrm{d}}{\to} Z$ in Verteilung bereits $\EW[f(Z_N)] = \EW[f(Z)]$ folgt für alle $f \in C_b(\R)$.
+	
+	Weiterhin gilt $\lim_{N \to \infty} \brackets{1 + r \Delta_N}^{-N} = \lim_{N \to \infty} \brackets{1 + r \sfrac{T}{N}}^{-N} = e^{-r t}$.
+	
+	$\lim_{N \to \infty} \E^{\Q_N}\sqbrackets{f(Z_N)} = \EW[f(Z)]$ nach \cref{theorem: 3.1} mit $Z \sim \Normal((r-\frac{\sigma^2}{2})T , \sigma^2 T)$. Im Folgenden schreiben wir $m \defeq (r-\frac{\sigma^2}{2})$. 
+	\begin{align*}
+		\EW[f(Z)] &= \frac{1}{\sqrt{2 \pi}} \frac{1}{6 \sqrt{T}}  \int_{-\infty}^\infty (K - S_0 e^z)_+ * \exp \brackets{- \frac{(z - mT)^2}{2 \sigma^2 T}} \diff{z} \\
+		&= \frac{1}{\sqrt{2 \pi}}  \frac{1}{6 \sqrt{T}} \int_{-\infty}^{\log\brackets{\frac{K}{S_0}}} (K - S_0 e^z) * \exp \brackets{- \frac{1}{2} \brackets{\frac{z - mT}{ \sigma \sqrt{T}}}} \diff{z} \\
+		&= \sqbrackets{ \begin{array}{c}
+			y = \frac{z - m T}{\sigma \sqrt{T}} \\
+			\diff y = \frac{\diff z}{\sigma \sqrt{T}}
+			\end{array} } \\
+		&= \frac{1}{\sqrt{2 \pi}}  \int_{-\infty}^{-d_2} (K - S_0  * \exp \brackets{y \sigma \sqrt{T} + mT} * e^{-\frac{y}{2}} \diff{y} \\
+		&= K \Phi(-d_2) - S_0 \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{-d_2} \exp \brackets{- \frac{y^2}{2} + y \sigma \sqrt{T} + mT} \diff{y} 
+	\end{align*}
+	
+	Nebenrechnung liefert
+	\begin{equation*}
+		-\frac{y^2}{2} + y \sigma \sqrt{T} + mT = rT - \frac{1}{2} (y^2 - 2y \sigma \sqrt{T} + \sigma^2 T) = rT - \frac{1}{2} (y - \sigma\sqrt{T})^2
+	\end{equation*}
+	
+	\begin{alignat*}{2}
+		&K \Phi(-d_2) - S_0 e^{rT} \underbrace{\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{-d_2} e^{-\frac{(y-\sigma \sqrt{T})^2}{2}} \diff{y}}_{= \Phi(-d_2 - \sigma \sqrt{F})}
+		&= K \Phi(-d_2) - S_0 e^{rT} \Phi(-d_1) \\
+		\follows &\lim_{N \to \infty} P_N(0,S_0^N) &= e^{-rT} K \Phi(-d_2) - S_0 \Phi(-d_1)
+	\end{alignat*}
+	
+	Für den Call bedienen wir uns der Put-Call-Parität: 
+	\begin{equation*}
+		C^N(0,S_0^N) - \underbrace{P^N(0,S_0^N)}_{\to P_{BS}(0,S_0)} = \underbrace{S_0^N}_{=S_0} - \underbrace{(1+ r \Delta_N)^{-N} * K}_{\to e^{-cT} * K}
+	\end{equation*}
+	Somit gilt mit Grenzübergang
+	\begin{align*}
+		C_{BS}(0,S_0) &= \lim_{N \to \infty} C^N(0,S_0) \\
+		&= P_{BS}(0,S_0) + S_0 - e^{-rT} * K = e^{-rT} * K * (\underbrace{\Phi(-d_2) - 1}_{= - \Phi(d_2)}) - S_0 \underbrace{(\Phi(-d_1) - 1)}_{= - \Phi(d_1)} \\
+		&= S_0 \Phi(d_1) - e^{-rT} * K * \Phi(d_2)
+	\end{align*}
+	was genau der Black-Scholes-Formel für den Call entspricht.
+\end{proof}
+
+Wir haben gezeigt, dass die $\text{CRR}_\text{N}$-Preise gegen BS-Preise konvergieren.
+
+Frage: Was gilt für die Replikationsstrategie? Konvergiert auch diese?
+
+\begin{theorem}
+	Für die Replikationsstrategie $\xi_{t_N}^N$ der Put- bzw. Call-Option im $CRR_N$-Modell gilt:
+	\begin{equation*}
+		\begin{alignedat}{2}
+			\lim_{N \to \infty} \xi_{t_N}^N &= \partdiff{S} P_{BS}(t,S_t) &&= -\Phi(-d_1) \\
+			\lim_{N \to \infty} \xi_{t_N}^N &= \partdiff{S} C_{BS}(t,S_t) &&= \Phi(d_1)
+		\end{alignedat}
+	\end{equation*}
+	Diese partiellen Ableitungen heißen auch ''Delta`` des Put- bzw. Call-Preises.
+\end{theorem}
+\begin{proof}
+	Wir betrachten den Zeitpunkt $t = 0$, $t \in [0,T]$ kann analog betrachtet werden.
+	Nach \cref{theorem: 2.3} ist $\xi_0^N$ für den Put gegeben durch
+	\begin{equation*}
+		\begin{aligned}
+			\xi_0^N &= \frac{P_N(\Delta_N, S_0(1+b_N)) - P_N(\Delta_N, S_0 (1+a_N))}{S_0 (b_N - a_N)} \\
+			&= \frac{P_N(\Delta_N, S_0(1 + \mu \Delta_N + \sigma \sqrt{\Delta_N})) - P_N (\Delta_N, S_0 (1+ \mu \Delta_N - \sigma \sqrt{\Delta_N})))}{2 * S_0 \sigma \sqrt{\Delta_N}}
+		\end{aligned}
+	\end{equation*}
+	Es gilt $\lim_{N \to \infty} P_N(\Delta_N, S_0 + (1 + \mu \Delta_N)) = P_{BS}(0,S_0)$. Unter geeigneten Annahmen an gleichmäßige Konvergenz folgt 
+	\begin{equation*}
+		\lim_{N \to \infty} \xi_0^N = \partdiff{S} P_{BS} (t, S_t)
+	\end{equation*}
+	und analog zeigt man dies auch für den Call.
+	Wir berechnen $\partdiff{S} C_{BS}$ explizit:
+	\begin{align*}
+		\partdiff{S} C_{BS}(t,S) &= \Phi(d_1) + S \phi(d_1) * \partdiff{S} d_1 - e^{-r(T-t)} K \phi(d_2) * \partdiff{d_1} d_2 \\
+		&= \Phi(d_1) + \partdiff{S} d_1 \brackets{S \phi(d_1) - e^{-r(T-t)} K \phi(d_2)}
+	\end{align*}
+	Nebenrechnung: Setze $\tau = T - t$.
+	\begin{align*}
+		e^{-r \tau} \frac{K}{S} \phi(d_2) &= \frac{1}{\sqrt{2\pi}} e^{-r \tau} \frac{K}{S} \exp \brackets{-\frac{1}{2} \brackets{\frac{\log\brackets{\frac{S}{K}} + r \tau - \frac{\sigma^2 \tau}{2}}{\sigma \tau}}^2} \\
+		&= \frac{1}{\sqrt{2\pi}} e^{-r \tau} \frac{K}{S} \exp\brackets{-\frac{1}{2} \brackets{\frac{(\log\brackets{\frac{S}{K}} + r \tau)^2}{\sigma^2 \tau}} - 2 \frac{1}{2} \brackets{\log\brackets{\frac{S}{K}} - r \tau} + \frac{\sigma^2 \tau}{4}} \\
+		&= \frac{1}{\sqrt{2\pi}} \exp\brackets{-\frac{1}{2} \brackets{\frac{(\log\brackets{\frac{S}{K}} + r \tau)^2}{\sigma^2 \tau}} + \brackets{\log\brackets{\frac{S}{K}} + r \tau} + \frac{\sigma^2 \tau}{4}} \\
+		&= \phi(d_1)
+	\end{align*}
+	d.h. $e^{-r (T-t)} K \phi(d_2) = S \phi(d_1)$. Somit gilt
+	\begin{equation*}
+		\partdiff{S} C_{BS}(t,S) = \Phi(d_1)
+	\end{equation*}
+	Die Gleichung für den Put folgt analog oder mithilfe der Put-Call-Parität.
+\end{proof}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item Die Ableitungen $\partdiff{S} C_{BS}$ bzw. $\partdiff{S} P_{BS}$ lassen sich auch interpretieren als Sensitivität des Call- bzw. Put-Preises gegenüber Preisänderungen des Basisguts.
+	\end{itemize}
+\end{*bemerkung}
+
+Analog lassen sich die Sensitivitäten (''Greeks``) nach den weiteren Parametern berechnen.
+
+\begin{*definition}
+	Die Greeks des BS-Preises sind folgende partielle Ableitungen:
+\end{*definition}
+
+\begin{tabular}{|l|c|c|c|l|}
+	\hline
+	Bezeichnung & Def. & Wert Call & Wert Put & Bemerkungen \\
+	\hline \hline
+	Delta & $\partdiff{S}$ & $\Phi(d_1)$ & $-\Phi(-d_1)$ & bestimmt die Replikations- bzw. Hedgingstrategie \\ \hline
+	Gamma & $\frac{\partial^2}{\partial S^2}$ & \multicolumn{2}{c|}{$\frac{\phi(d_1)}{S_t \sigma \sqrt{T - t}}$} & Sensitivität von Delta gegenüber Basisgut, ''wie oft`` muss Replikatonsstrategie angepasst werden, Konvexität \\ \hline
+	Vega & $\partdiff{\sigma}$ & \multicolumn{2}{c|}{$S_t \sqrt{T -t} \phi(d_1)$} & Sensitivität gegenüber Änderungen der Volatilität \\ \hline
+	Theta & $\partdiff{t}$ & \multicolumn{2}{c|}{siehe Übung} & Änderung in der Zeit \\ \hline
+	Rho & $\partdiff{r}$ & $K (T - t)e^{-r(T-t)} \Phi(d_2)$ & $- K (T - t)e^{-r(T-t)} \Phi(-d_2)$ & Sensitivität gegenüber Änderungen der Zinsrate \\ \hline	
+\end{tabular}
+
+\begin{korollar} %3.5
+	Der BS-Preis $C_{BS}(t,S_t)$ erfüllt die folgende partielle Differentialgleichung
+	\begin{equation*}
+		\partdiff{t} C_{BS} + r S \partdiff{S} C_{BS} + \frac{\sigma^2}{2} S^2 \frac{\partial^2}{\partial S^2} C_{BS} - r C_{BS} = 0
+		\tag{BS-PDE} \label{eq: bs-pde}
+	\end{equation*}
+	auf $(t,s) \in [0,T) \times \R_{\ge 0}$ mit der Endwertbedingung $\lim_{t \to T} C_{BS}(t,S) = (S - K)_+$. Für den Put $P_{BS}$ gilt die gleiche PDE mit Endwertbedingung $\lim_{t \to T} P_{BS}(t,S) = (K-S)_+$.
+\end{korollar}
+\begin{proof}
+	siehe Übung
+\end{proof}
+
+\begin{*bemerkung_inline}
+	In Erweiterungen des Black-Scholes-Modells gibt es keine geschlossenen Ausdrücke für Put- bzw. Call-Preise, aber eine partielle Differentialgleichung ähnlich zur \eqref{eq: bs-pde} gilt weiterhin.
+\end{*bemerkung_inline}
+
+\section{Implizite Volatilität \& Grenzen des BS-Modells}
+
+Wir schreiben etwas ausführlicher 
+\begin{equation*}
+	C_{BS}(t,S_t;T,K,\sigma) \defeq C_{BS}(t,S_t)
+\end{equation*}
+um die Abhängigkeit von $T$, $K$ und $\sigma$ zu verdeutlichen.
+
+\begin{theorem}[Implizite Volatilität] %3.6
+	Sei $C_\ast(0,S_0,T,K)$ ein vorgegebener (beobachteter) Preis einer Call-Option mit Fälligkeit $T$, Ausübungspreis $K$, welcher innerhalb der Arbitragegrenzen liegt, d.h. $(S_0 - e^{-rT} K)_+ < C_\ast(0,S_0,T,K) < S_0$. Dann existiert ein eindeutiges $\sigma_\ast(T,K) \in (0,\infty)$, die implizite Volatilität von $C_\ast$, sodass
+	\begin{equation*}
+		C_\ast(0,S_0;T,K) = C_{BS}(0,S_0;T,K,\sigma_\ast(T,K))
+ 	\end{equation*}
+ 	gilt.
+\end{theorem}
+
+\begin{*bemerkung_inline}
+	$\sigma_\ast(T,K)$ ist Lösung eines inversen Problems:
+	\begin{itemize}[nolistsep, topsep=-\parskip]
+		\item Vorwärtsproblem: Parameter $\to$ Call-Preis
+		\item inverses Problem: Call-Preis $\to$ Parameter
+	\end{itemize}
+	Es kann zur empirischen Überprüfung des BS-Modells verwendet werden:
+	\begin{itemize}[nolistsep, topsep=-\parskip]
+		\item BS-Modell passt gut zu Daten: $(T,K) \mapsto \sigma_\ast(T,K)$ ist annähernd konstant
+		\item BS-Modell passt nicht gut zu Daten: $(T,K) \mapsto \sigma_\ast(T,K)$ variiert stark mit $(T,K)$
+	\end{itemize}
+\end{*bemerkung_inline}
+
+\textbf{Typische tatsächliche Beobachtung }
+% TODO BILD
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item konvex
+	\item asymmetrisch (höher für große $K$)
+	\item Minimum bei at-the-money
+	\item flacher für lange Laufzeiten, steiler für kurze Laufzeiten
+\end{itemize}
+
+Die Form weist darauf hin, dass das Black-Scholes-Modell große Preissprünge des Basisguts unterschätzt.
+
+Die Form des Vola-Smiles in Modellen jenseits des Black-Scholes-Modell ist ein aktuelles Forschungsthema.
