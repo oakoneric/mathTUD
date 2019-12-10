@@ -12,7 +12,7 @@ Ich bin natürlich stets bemüht fehlerfrei zu arbeiten, aber dadurch ist natür
 Aktuell wird an folgenden Skripten gearbeitet / *Currently I am working on the following notes*:
 - Vorlesung "Stochastik" bei Frau Prof. Behme im Sommersemester 2019 / *Lecture "Stochastics"*
 - Vorlesung "Optimierung & Numerik" bei Dr. John Martinovic im Wintersemester 2019/20 / *Lecture "Optimisation & Numerical Mathematics"*
-- Vorlesung "Modellierung & Simulation" bei Prof. Walther im Wintersemester 2019/20 / *Lecture "Modelling and Simulation"*
+- Vorlesung "Vertiefung in der Stochastik - Diskrete Finanzmathematik" bei Prof. Keller-Ressel im Wintersemester 2019/20 / *Lecture "Discrete Mathematical Finance"*
 
 Bereits fertig gestellte Übungen und Hausaufgaben / *Already finished tutorials and homework*:
 - Hausaufgaben zur Vorlesung "Elemente der Algebra & Zahlentheorie" von Prof. Fehm im Sommersemester 2019 / *Homework "Elements of algebra and number theory"*
