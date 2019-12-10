@@ -1,0 +1,363 @@
+\section{Transportoptimierung}
+
+\subsection{Problemstellung}
+
+\textbf{Zur Erinnerung:}
+Es gebe Erzeuger $i \in I = \menge{0, \dots, r}$ und Verbraucher $k \in K = \menge{1, \dots, s}$. Weiterhin seien die Kosten $c_{ik}$ für den Transport einer Einheit von $i$ nach $k$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_k > 0$ für alle $i \in I$ und $k \in K$ bekannt. Wie ist der gesamte Transport kostenminimal zu gestalten.
+
+Als Variablen verwenden wir die Transportmenge $x_{ik}$ von $i$ nach $k$.
+\begin{equation}
+\begin{alignedat}{3}
+	z = \sum_{i \in I} \sum_{k \in K} c_{ik} x_{ik} \to \min \quad \bei \quad 
+	&\sum_{k \in K} x_{ik} &= a_i \quad &(i \in I) \\
+	&\sum_{i \in I} x_{ik} &= b_k \quad &(k \in K) \\
+	& x_{ik} &\ge 0 \quad &(i,k) \in I \times K \\
+\end{alignedat}
+\label{eq: 3.13}
+\end{equation}
+
+Mit   
+\begin{equation*}
+	\begin{aligned}
+		x &= \transpose{x_{11}, x_{12}, \dots, x_{1s}, x_{21}, \dots, x_{rs}} \\
+		c &= \transpose{c_{11}, c_{12}, \dots, c_{1s}, c_{21}, \dots, c_{rs}} \\
+		\quer{b} &= \transpose{a_1, \dots, a_r, b_1, \dots, b_s}
+	\end{aligned}
+\end{equation*}
+hat \eqref{eq: 3.13} die Form
+\begin{equation*}
+	z = \trans{c} x \to \min \bei Ax = \quer{b}, x \ge 0
+\end{equation*}
+
+\begin{bemerkung} %3.6
+	Das Transportproblem ist eine sehr spezielle Optimierungsaufgabe. Dei Koeffizientenmatrix 
+	\begin{equation*}
+		A = 
+		\left( \begin{array}{cccc|cccc|cccc}
+		1 & 1 & \cdots & 1 &   &   &        &   &   &   &        &\\
+		  &   &        &   & 1 & 1 & \cdots & 1 &   &   &        &\\
+		  &   &        &   &   &   &        &   & 1 & 1 & \cdots & 1  \\
+		\hline
+		1 &   &        &   & 1 &   &        &   & 1 &   &        &  \\
+		  & \multicolumn{2}{c}{\ddots} & & & \multicolumn{2}{c}{\ddots} & & & \multicolumn{2}{c}{\ddots} & \\
+		  &   &        & 1 &   &   &        & 1 &   &   &        & 1  \\	  
+		\end{array} \right) \in \R^{(r+s) \times (r*s)}
+	\end{equation*}
+	ist schwach besetzt. Insbesondere hat die Spalte von $A$, die zur Variablen $x_{ik}$ gehört, die Gestalt $A^{ik} = \begin{psmallmatrix} e^i \\ e^k \end{psmallmatrix} \in \R^{r+s}$.
+\end{bemerkung}
+
+\begin{satz} %3.13
+	Das Transportproblem ist genau dann lösbar, wenn die Sättigungsbedingung
+	\begin{equation}
+		\sum_{i \in I} a_i = \sum_{k \in K} b_k
+		\label{eq: 3.15}
+	\end{equation}
+	gilt.
+\end{satz}
+\begin{proof}
+	Wir zeigen zuerst, dass \eqref{eq: 3.15}  äquivalent zu $G \neq \emptyset$ ist.
+	\begin{itemize}
+		\item Einerseits folgt aus $x \in G \neq \emptyset$ durch Summation der Gleichungsnebenbedingungen
+		\begin{equation*}
+			\sum_{i \in I} a_i = \sum_{i \in I} \sum_{k \in K} x_{ik} = \sum_{k \in K} \sum_{i \in I} x_{ik} = \sum_{k \in K} b_k
+		\end{equation*}
+		\item  Gilt hingegen \eqref{eq: 3.15}, so ist mit $\sigma \defeq \sum_{i \in I} a_i = \sum_{k \in K} b_k$ ein zulässiger Punkt $x = (x_{ik})$ wie folgt definiert:
+		\begin{equation*}
+			x_{ik} \defeq \frac{a_i b_k}{\sigma}
+		\end{equation*}
+	\end{itemize}
+	Der zulässige Bereich $G$ ist polyedrisch (und damit abgeschlossen) und ferner wegen $0 \le x_{ik} \le \min\menge{a_i, b_k}$ beschränkt und somit kompakt.
+	Mit dem Satz von Weierstraß\footnote{Die Zielfunktion ist linear, d.h. stetig, auf einer komapkten Menge $G$.} folgt dann die Lösbarkeit des Transportproblems.
+\end{proof}
+
+Die Systemmatrix $A$ besitzt für praxisrelevante Problemgrößen eine sehr große Anzahl an Einträgen, sodass die Anwendung des Simplexverfahrens im Allgemeinen nicht empfehlenswert ist; insbesondere deshalb, weil dieses die Struktur von $A$ nicht mit einbezieht.
+
+Zur Lösung des Transportproblems hat sich daher ein Verfahren etabiliert, das auch die duale Aufgabe 
+\begin{equation}
+	w \defeq \trans{a} u + \trans{b} v \to \max \bei \trans{A} \begin{psmallmatrix} u \\ v \end{psmallmatrix} \le c, u \in \R^r, v \in \R^s
+	\label{eq: 3.16}
+\end{equation}
+bzw.
+\begin{equation}
+	w \defeq \sum_{i \in I} a_i u_i + \sum_{k \in K} b_k v_k \to \max \bei u_i + v_k \le c_{ik} \quad (u_i, v_k \in \R, i \in I, k \in K)
+	\label{eq: 3.17}
+\end{equation}
+
+\begin{satz}[Optimalitätskriterium] %3.14
+	\label{satz: 3.14}
+	Sei $x \in G$, d.h. $x$ ist zulässiger Transportplan, dann gilt
+	\begin{equation*}
+		\begin{aligned}
+			x \text{ optimal} \equivalent \exists u \in \R^r, v \in \R^s \mit u_i + v_k \le c_{ik}, x_{ik} * (c_{ik} - u_i - v_k) = 0 \quad \forall i \in I, k \in K
+		\end{aligned}
+	\end{equation*}
+\end{satz}
+\begin{proof}
+	Nach dem Charakterisierungssatz gilt: $x \in G$ ist genau dann optimal, wenn duale Variablen $u \in \R^r$ und $v \in \R^s$ existieren, sodass $(u,v)$ dual zulässig ist und die Komplementaritätsbedingungen gelten.
+\end{proof}
+
+\begin{aussage} %3.15
+	Der Rang von $A$ ist $\card{I} + \card{K} - 1 = r+s-1$.
+\end{aussage}
+\begin{proof}
+	Einerseits sind die Spalten $A^{11}, \dots, A^{1s}, A^{21}, A^{31}, \dots, A^{r1}$ von $A$ linear unabhängig, d.h. $\rg(A) \ge r + s - 1$.
+	Andererseits ist die Summe der ersten $r$ Zeilen identisch mit der Summe der letzten $s$ Zeilen. Somit ist der Rang von oben beschränkt mit $\rg(A) \le r + s -1$.
+\end{proof}
+
+\begin{folgerung} %3.16
+	Jede Ecke des zulässigen Bereichs $G$ hat höchstens $r+s-1$ positive Komponenten.
+\end{folgerung}
+
+\begin{definition} %3.4
+	Eine Folge von Zellen (Indexpaaren) $(i_1, k_1), (i_2, k_1), (i_2, k_2) \dots (i_\ell, k_\ell), (i_1, k_\ell), (i_1, k_1)$ mit $i_\nu \neq i_\mu$, $k_\nu \neq k_\mu$ für $\nu \neq \mu$ heißt \begriff{Zyklus} (der Länge $2 \ell$).
+\end{definition}
+
+\begin{beispiel} %3.5
+	Im folgenden Schema ist ein Zyklus der Länge $2 \ell = 8$ abgebildet:
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$i / k$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+			1       & $\ast$ & & $\ast$ & & \\
+			2 & & $\ast$ & & & $\ast$ \\
+			3 & $\ast$ & & & & $\ast$ \\
+			4 & & $\ast$ & $\ast$ & & 
+		\end{tabular}
+	\end{center}
+	Dieses Beispiel spielt eine wichtige Rolle bei der Feststellung, ob ein gegebener Transportplan eine Ecke von $G$ ist.
+\end{beispiel}
+
+\begin{aussage} %3.17
+	\begin{enumerate}[label=(\roman*), nolistsep, topsep=-\parskip]
+		\item Sei $J$ eine Menge von Zellen. Gilt $\card{J} \ge r+s$, so enthält $J$ mindestens einen Zyklus.
+		\item Sei $x = (x_{ik})$ ein zulässiger Transportplan. $x$ ist genau dann eine Ecke von $G$, wenn $J_+ \defeq \menge{(i,k) : x_{ik} > 0}$ keinen Zyklus enthält.
+	\end{enumerate}
+\end{aussage}
+\begin{proof}
+	vielleicht in der Übung --- oder auch nicht.
+\end{proof}
+
+\subsection{Erzeugung eines ersten Transportplans}
+Dieser Teil entspricht der ersten Phase des Simplexverfahrens, d.h. also der Bestimmung einer Startecke.
+Gemäß der vorherigen Beobachtungen genügt es einen zyklenfreien zulässigen Transportplan zu finden. Hierfür können unterschiedliche Methoden genutzt werden.
+
+\begin{description}
+	\item[Nordwest-Ecken-Regel:] Die jeweilige noch nicht belegte Nordwest-Zelle wird mit maximaler Transportmenge belegt.
+	\item[Regel der minimalen Kosten:] In jedem Schritt wird eine noch nicht belegte Zelle, die minimale Kosten hat, mit maximaler Transportmenge belegt.
+	\item[Methode von Vogel:] Bestimme in jeder Zeile und Spalte die Differenz der zwei kleinsten Kostenkoeffizienten der noch freien Zellen. Wähle dann eine Zeile/Spalte mit maximaler Differenz und belege die Zelle mit kleinsten Kosten.
+\end{description}
+
+Darstellung der Inputdaten oder zulässigen Punkte in folgenden Schemata:
+
+\begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
+	\centering
+	\begin{tabular}{c|cccc}
+		C & $b_1$ & $b_2$ & $\dots$ & $b_s$ \\ \hline
+		$a_1$ & $c_{11}$ & $c_{12}$ & $\dots$ & $c_{1s}$ \\
+		$\vdots$  & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+		$a_r$ & $c_{r1}$ & $c_{r2}$ & $\dots$ & $c_{rs}$
+	\end{tabular}
+	\captionof{table}{Inputdaten}
+\end{minipage}
+\begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
+	\centering
+	\begin{tabular}{c|cccc}
+		X & $b_1$ & $b_2$ & $\dots$ & $b_s$ \\ \hline
+		$a_1$ & $x_{11}$ & $x_{12}$ & $\dots$ & $x_{1s}$ \\
+		$\vdots$  & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+		$a_r$ & $x_{r1}$ & $x_{r2}$ & $\dots$ & $x_{rs}$
+	\end{tabular}
+	\captionof{table}{Transportplan}
+\end{minipage}
+
+
+
+
+\begin{beispiel} %3.6
+	\label{beispie: 3.6}
+	Gegeben Sei das folgende Transportproblem:
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			C & 12 &  5 &  6 &  7 &  7 \\ \hline
+			4 & 12 &  6 & 10 &  9 &  5 \\
+			19 & 10 & 16 & 17 &  3 &  7 \\
+			14 &  4 & 11 &  5 &  8 & 10
+		\end{tabular}
+	\end{center}
+	
+	Man erhält folgende Startecken:
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			$\text{X}_{\text{NW}}$ & \cancel{12} \cancel{8} 0 &  \cancel{5} 0 &  \cancel{6} 0 &  \cancel{7} 0 &  \cancel{7} 9 \\ \hline
+			0 &  4 &  0 &  0 &  0 &  0 \\
+			0 \cancel{6} \cancel{11} \cancel{19} &  8 & 5 & 6 & 0 & 0 \\
+			0 \cancel{7} \cancel{14} &  0 & 0 &  0 &  7 & 7
+		\end{tabular}
+	\end{center}
+
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			$\text{X}_{\text{NW}}$ & \cancel{12} \cancel{8} 0 &  \cancel{5} 0 &  \cancel{6} 0 &  \cancel{7} 0 &  \cancel{7} 9 \\ \hline
+			0 &  4 &  0 &  0 &  0 &  0 \\
+			0 \cancel{6} \cancel{11} \cancel{19} &  8 & 5 & 6 & 0 & 0 \\
+			0 \cancel{7} \cancel{14} &  0 & 0 &  0 &  7 & 7
+		\end{tabular}
+	\end{center}
+
+	Zielfunktionswert: $z(x_{\text{NW}}) = 4 * 12 + 8 * 10 + 5 * 16 + 6 * 17 + 7 * 8 + 7 * 10 = 436$
+	
+	\vspace{\parskip}
+	
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			$\text{X}_{\text{NW}}$ & 12 &  5 &  6 & \cancel{7} 0 &  \cancel{7} 3 \\ \hline
+			0 \cancel{4} & 0 &  0 & 0 &  0 &  $\fbox{4}^3$ \\
+			0 \cancel{12} \cancel{19} & 0 & $\fbox{5}$ & $\fbox{4}$ &  $\fbox{7}^1$ &  $\fbox{3}$ \\
+			0 \cancel{2} \cancel{14} &  $\fbox{12}^2$ & 0 &  $\fbox{2}^4$ &  0 & 0
+		\end{tabular}
+	\end{center}
+
+	Zielfunktionswert: $z(x_{\text{MK}}) = 268$
+
+	\vspace{\parskip}
+	
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			X & 0 &  5 &  6 &  7 &  7 \\ \hline
+			4 &  &  4 &  &   &   \\
+			19 &  & 1 & 4 &  7 &  7 \\
+			14 &  12 &  &  2 &   & 
+		\end{tabular}
+	\end{center}
+	Zielfunktionswert: $z(x_{\text{V}}) = 236$
+\end{beispiel}
+
+Je nach Qualität der Startlösung können unterschiedlich viele Iterationen des Transportalgorithmus vonnöten sein.
+
+\subsection{Der Transportalgorithmus}
+
+Ausgehend von einer Startlösung berechnet der Algorithmus zunächst ein Paar $(u,v)$ dualer Variablen und prüft dann die Optimalität mit \cref{satz: 3.14}. Liegt keine Optimalität vor, wird ein neuer Plan erzeugt.
+
+\textbf{Vorgehensweise:}
+
+\begin{enumerate}
+	\item Bestimme einen zulässigen, zyklenfreien Transportplan $X_0$ mit genau $r+s-1$ markierten Basiszellen. (Diese bilden dann die Menge $J_B = J_B(X_0)$.)
+	\item Bestimme für den aktuellen Plan $X$ die zugehörigen dualen Variablen $u_i$ und $v_k$ aus dem Gleichungssystem 
+	\begin{equation}
+		u_i + v_k = c_{ik} \qquad (i,k) \in J_B = J_B(X)
+		\label{eq: 3.18}
+	\end{equation}
+	\item Berechne für alle $(i,k) \notin J_B$ die Koeffizienten $w_{ik} = c_{ik} - u_i - v_k$. Falls $w_{ik} \ge 0$ für alle Zellen ist, dann ist $X$ optimal. Andernfalls wähle man eine Zelle $(p,q)$ mit $w_{pq} = \min\menge{w_{ik} : i \in I, k \in K} < 0$.
+	\item Markiere $(p,q)$ im Schema von $X$, bestimme den  (eindeutigen) Zyklus $J_{pq}$ in $J_B \cup \menge{(p,q)}$ und markiere abwechselnd die Zellen in $J_{pq}$ mit ''+`` und ''-``. Sei $J_{pq}^-$ die Menge der mit ''-`` gekennzeichneten Zellen.
+	\item Ermittle $\delta = x_{gh} \defeq \min\menge{x_{ik} : (i,k) \in J_{pq}^-}$ und aktualisiere den Plan $X$ gemäß
+	\begin{equation*}
+		X^{\text{neu}} \defeq \brackets{x_{ik}^{\text{neu}}} \quad \mit \quad  
+		x_{ik}^{\text{neu}} \defeq \begin{cases}
+		x_{ik} + \delta & \text{ falls }(i,k) \in \brackets{J_{pq} \cup \menge{(g,h)}} \setminus J_{pq}^-\\
+		x_{ik} - \delta & \text{ falls }(i,k) \in J_{pq}^-\\
+		x_{ik} & \text{ sonst}
+		\end{cases}
+	\end{equation*}
+	Aktualisere die Menge der Basiszellen
+	\begin{equation*}
+		J_B^{\text{neu}} \defeq \brackets{J_B \cup \menge{(p,q)}} \setminus \menge{(g,h)}
+	\end{equation*}
+	und gehe zu Schritt 2.
+\end{enumerate}
+
+\begin{bemerkung} %3.7
+	Aufgrund von $\card{J_B} = r + s - 1$ ist das in Schritt 2 zu lösende Gleichungssystem (zur Ermittlung von $u$ und $v$) unterbestimmt. Eine der Variablen kann also beliebig festgelegt werden. Die in Schritt 3 bestimmten Werte $w_{ik}$ sind jedoch unabhängig von dieser Wahl.
+\end{bemerkung}
+
+Im gesamten Algorithmus gilt stets $w_{ik} = 0$ für die aktuellen Basiszellen $(i,k) \in J_B$ (per Konstruktion in Schritt 2), diese beeinflussen den Optimalitätstest in Schritt 3 also nicht. Daher kann zur Darstellung das folgende komprimierte Schema genutzt werden:
+
+\begin{center}
+	\begin{tabular}{c|cccc}
+		T & $v_1$ & $v_2$ & $\dots$ & $v_s$ \\ \hline
+		$u_1$ & \fbox{$x_{11}$} & $w_{12}$  & $\dots$ & $w_{1s}$ \\
+		$u_2$ & $w_{21}$ & $w_{22}$ & \fbox{$x_{23}$} & $w_{2s}$ \\
+		$\vdots$ &  $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+		$u_r$ & $w_{r1}$ & \fbox{$x_{r2}$} & $\dots$ & $w_{rs}$ 
+	\end{tabular}
+\end{center}
+
+
+\begin{beispiel}[Fortsetzung von \cref{beispie: 3.6}] %3.7
+	Gegeben Sei das Problem
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			C & 12 &  5 &  6 &  7 &  7 \\ \hline
+			4 & 12 &  6 & 10 &  9 &  5 \\
+			19 & 10 & 16 & 17 &  3 &  7 \\
+			14 &  4 & 11 &  5 &  8 & 10
+		\end{tabular}
+	\end{center}
+	Mit der Minimale-Kosten-Regel haben wir bereits den Plan $X_0$ bestimmt:
+	\begin{center}
+		\begin{tabular}{r|rrrrr}
+			$X_0$ & 12 &  5 &  6 & 7 & 7 \\ \hline
+			4 & 0 &  0 & 0 &  0 &  \fbox{4} \\
+			19 & 0 & \fbox{5} & \fbox{4} &  \fbox{7} &  \fbox{3} \\
+			14 &  \fbox{12} & 0 &  \fbox{2} &  0 & 0
+		\end{tabular}
+	\end{center}
+	Bestimmung der dualen Variablen (Potenziale) $u_i$ und $v_k$
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$T_0$ & $v_1=16$ & $v_2 = 16$ & $v_3=17$ & $v_4=3$ & $v_5=7$ \\ \hline
+			$u_1 = -2$ & $-2$ & $-8$  & $-5$ & $8$ & \fbox{$4$} \\
+			$u_2 = 0$ & $-6$ & \fcolorbox{black}{cdgray!10}{$5$} & \fbox{$4$} &\fbox{$7$} & \fbox{$3$} \\
+			$u_3 = \fcolorbox{cdgreen!10}{cdgreen!10}{-12}$ &  \fbox{$12$} & $7$ & \fbox{$2$} & $17$ & $15$ \\
+		\end{tabular}
+	\end{center}
+	\fcolorbox{black}{cdgray!10}{$5$} : $\underbrace{u_2}_{=0} + v_2 = c_{22} = 16 \follows v_2 = 16$
+	
+	\fcolorbox{cdgreen!10}{cdgreen!10}{$-12$} : $u_3 + \underbrace{v_3}_{=17} = c_{33} = 5 \follows u_3 = c_{33} - 17 = -12$
+	
+	Dieser Plan ist nicht optimal, da negative Einträge $w_{ik}$ existieren.
+	Wir wählen also den eindeutig bestimmten Zyklus $-8 \to 4 \to 3 \to 5 \to 8$ und geben alternierende ''Vorzeichen``, d.h. $-8^+ \to 4^- \to 3^+ \to 5^- \to 8^+$. 	
+	Wir wählen das kleinste mit einem ''$-$`` markierte Zellenelement des Zyklus: $\delta = \min\menge{x_{ik} : (i,k) \in J_{pq}^-} = 4$.
+	
+	Ein neuer Plan ergibt sich nun mit
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$X_1$ & \\ \hline
+			&  & \fcolorbox{black}{cdgray!10}{$4$}  & & & $0$ \\
+			&  & \fbox{$1$} & \fbox{$4$} &\fbox{$7$} & \fbox{$7$} \\
+			&  \fbox{$12$} &  & \fbox{$2$} & &  \\
+		\end{tabular}
+	\end{center}
+
+	Achtung: $x_{21} = \fcolorbox{black}{cdgray!10}{4}$ war vorher nicht in der Basis (also $x_{21} = 0$) und somit $x_{21}^{\text{neu}} = x_{21} + \delta = 4$.
+	
+	Bestimmung der Potenziale $u_i$ und $v_k$ für $X_1$:
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$T_1$ & $v_1=16$ & $v_2 = 16$ & $v_3=17$ & $v_4=3$ & $v_5=7$ \\ \hline
+			$u_1 = -10$ & $6$ & \fbox{$4$}  & $4$ & $16$ & $8$ \\
+			$u_2 = 0$ & $-6$ & \fbox{$1$} & \fbox{$4$} &\fbox{$7$} & \fbox{$7$} \\
+			$u_3 = -12$ &  \fbox{$12$} & $7$ & \fbox{$2$} & $17$ & $15$ \\
+		\end{tabular}
+	\end{center}
+	Auch dieses Tableau ist noch nicht optimal. Wir erkennen den Zyklus $-6^+ \to 12^- \to 2^+ \to 4^-$.
+	
+	Ein neuer Plan ergibt sich zu
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$X_2$ & \\ \hline
+			&  & \fbox{$4$}  & & &  \\
+			& \fbox{$4$} & \fbox{$1$} & &\fbox{$7$} & \fbox{$7$} \\
+			&  \fbox{$8$} &  & \fbox{$6$} & &  \\
+		\end{tabular}
+	\end{center}
+	mit den Potenzialen
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			$T_2$ & $v_1=10$ & $v_2 = 16$ & $v_3=11$ & $v_4=3$ & $v_5=7$ \\ \hline
+			$u_1 = -10$ & $12$ & \fbox{$4$}  & $9$ & $16$ & $8$ \\
+			$u_2 = 0$ & \fbox{$4$} & \fbox{$1$} & $6$ &\fbox{$7$} & \fbox{$7$} \\
+			$u_3 = -6$ & \fbox{$8$} & $1$ & \fbox{$6$} & $11$ & $9$ \\
+		\end{tabular}
+	\end{center}
+
+	Alle $w_{ik} \ge 0$, d.h. der das Tableau ist optimal und $X_2$ ist eine Lösung der gegebenen Optimierungsaufgabe. Es gilt $z(X_2) = 212$.
+\end{beispiel}

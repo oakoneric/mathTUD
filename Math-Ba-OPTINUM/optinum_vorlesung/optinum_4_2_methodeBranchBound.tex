@@ -1,0 +1,79 @@
+\section{Die Methode Branch \& Bound}
+
+Branch \& Bound (B \& B) ist eine sehr flexible Technik, um exakte Lösungsverfahren für Probleme der diskreten Optimierung zu entwickeln. Anschaulich betrachtet wird dabei eine schwierige Optimierungsaufgabe sukzessiv in Teilprobleme zerlegt, die wiederum ''leich`` (näherungsweise) gelöst werden können und somit zur Lösung des Gesamtproblems beitragen. Näherungslösungen erhält man dabei oftmals mithilfe geeigneter Relaxationen.
+
+\subsection{Grundlagen}
+%\leqnomode
+
+Wir betrachten das Anfangsproblem
+\begin{equation*}
+	(P) \qquad f(x) \to \min \bei x \in E \cap D
+	\tag{$P_0$}
+	\label{eq: p_0}
+\end{equation*}
+und eine zugehörige Relaxation
+\begin{equation*}
+	g(x) \to \min \bei x \in E
+	\tag{Q}
+	\label{eq: q}
+\end{equation*}
+wobei $g(x) \le f(x)$ auf $D \cap E$ gilt.
+
+Prinzip der B\&B-Methode
+
+Die Menge $E$ wird durch Separation in Teilmengen $E_i$ mit $i \in I$ zerlegt. Dadurch entstehen \begriff{Teilprobleme} 
+\begin{equation*}
+	f(x) \to \min \bei x \in D \cap E_i
+	\tag{$P_i$}
+	\label{eq: p_i}
+\end{equation*}
+Jedem dieser Teilprobleme \eqref{eq: p_i} soll nun eine Zahl $b(P_i)$, genannt \begriff{untere Schranke}, zugeordnet werden, sodass gilt
+\begin{enumerate}[label=(\alph*), nolistsep]
+	\item $b(P_i) \le \min\menge{f(x) : x \in D \cap E_i}$
+	\item $b(P_i) = f(\dach{x})$ falls $D \cap E = \menge{\dach{x}}$
+	\item $b(P_i) \le b(P_j)$ falls $E_j \subset E_i$
+\end{enumerate}
+
+Eine geeignete Möglichkeit besteht darin, z.B. die stetige Relaxation der Teilprobleme \eqref{eq: p_i} zu betrachten, d.h. 
+\begin{equation*}
+	b(P_i) \defeq \begin{cases}
+	\min\menge{g(x) : x \in E_i} & \falls \card{E_i \cap D} > 1 \\
+	f(\dach{x}) & \falls \card{E_i \cap D} = 1 \\
+	+ \infty & \falls E_i \cap D = \emptyset
+	\end{cases}
+\end{equation*}
+
+\subsection{Allgemeiner B\&B-Algorithmus}
+Bezeichne mit $R$ die Menge der noch zu bearbeitenden Teilprobleme (''Restmenge``) und mit $\quer{z}$ den Zielfunktionswert der bisher besten gefundenen zulässigen Lösung $\quer{x} \in D \cap E$.
+
+\begin{enumerate}[label=\underline{\textbf{Schritt \arabic*:}}, leftmargin=*]
+	\setcounter{enumi}{-1}
+	\item \textbf{Initialisierung} --- Bestimme $b(P_0)$.
+	\begin{enumerate}[label=(\alph*), noitemsep]
+		\item Falls $\quer{x} \in D \cap E$ bekannt ist mit $f(\quer{x}) = b(P_0)$, dann \texttt{STOP}.
+		\item Setze $R \defeq \menge{P_0}$ und $\quer{z} \defeq + \infty$ oder $\quer{z} = f(x)$, wenn ein $x \in D \cap E$ bekannt ist.
+	\end{enumerate}	
+	\item \textbf{Abbruchtest} --- Falls $R \neq \emptyset$, dann \texttt{STOP}. Falls $\quer{z} = +\infty$, dann ist \eqref{eq: p_0} nicht lösbar (leerer zulässiger Bereich), andernfalls ist $\quer{x}$ Lösung von \eqref{eq: p_0}
+	\item \textbf{Strategie} --- Wähle entsprechend einer Auswahlstrategie ein $P_i \in R$ und setze $R \defeq R \setminus \menge{P_i}$.
+	\item \textbf{Zerlegung (''branch``)} --- Zerlege $P_i$ durch Separation in endlich viele Teilprobleme $P_{i,1}, \dots, P_{i,k_i}$. Setze $j \defeq 1$.
+	\item \textbf{Schranken- und Dominanztests (''bound``)}
+	\begin{enumerate}[label=(\alph*), noitemsep]
+		\item Berechne $b(P_{i,j})$. Falls dabei ein $\schlange{x} \in D \cap E$ gefunden wurde mit $f(\schlange{x}) < \quer{z}$, setze $\quer{x} \defeq \schlange{x}$ und $\quer{z} \defeq f(\schlange{x})$.
+		\item Falls $b(P_{i,j}) < \quer{z}$, dann setze $R \defeq R \cup \menge{P_{i,j}}$. Falls $j < k_i$, setze $j \defeq j + 1$ und gehe zu (a).
+		\item Setzte $R \defeq R \setminus \menge{P_k}$ für alle $P_k \in R$ mit $b(P_k) \ge \quer{z}$. 
+	\end{enumerate}	
+	Gehe zu Schritt 1.
+\end{enumerate}
+
+\begin{*bemerkung}
+	\begin{enumerate}
+		\item Die Endlichkeit des Verfahrens ist zu sichern, z.B. durch $\card{E_{i,j} \cap D} \le \card{E_i \cap D}$ für alle $j$ (falls $E_i \cap D$ endlich ist) oder durch $b(P_{i,j}) > b(P_i) + \epsilon$ mit $\epsilon > 0$ für alle $j$ und $i$.
+		\item Das B\&B-Verfahren kann mithilfe eines Verzweigungsbaumes veranschaulicht werden.
+		\item In Schritt 2 können verschiedene Auswahlstrategien gewählt werden, z.B. 
+		\begin{itemize}[noitemsep]
+			\item \begriff{Minimalsuche} (best bound search): wähle $P_i \in R$ mit $b(P_i) \le b(P_k)$ für alle $P_k \in R$.
+			\item \begriff{Tiefensuche} (depth-first search, LIFO): wähle $P_i \in R$ mit kleinstem Schrankenwert unter allen Teilproblemen mit maximaler Verzweigungstiefe.
+			\item \begriff{Breitensuche} (breadth-first-search, FIFO): wähle $P_i \in R$ mit kleinstem Schrankenwert unter allen Teilproblemen mit minimaler Verzweigungstiefe.
+		\end{itemize}
+	\end{enumerate}
+\end{*bemerkung}

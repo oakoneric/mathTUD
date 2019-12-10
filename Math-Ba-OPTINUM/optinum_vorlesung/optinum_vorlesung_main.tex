@@ -1,0 +1,113 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 11pt]{report}
+
+\usepackage[ngerman]{babel}
+\usepackage{../../texmf/tex/latex/layoutMathTUD}
+\usepackage[smallequationskip]{../../texmf/tex/latex/mathworkMathTUD}
+
+\usepackage{../../texmf/tex/latex/mathoperatorsMathTUD}
+\usepackage{optinum_theorem}
+
+\usepackage{../../texmf/tex/latex/titlepageMathTUD}
+\usepackage{../../texmf/tex/latex/graphicsMathTUD}
+
+\input{./optinum_local_headings}
+\input{./optinum_local_changes}
+
+%\usepackage{../../texmf/tex/latex/referencesMathTUD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+% none
+
+%---------------------------------------
+% general settings
+%---------------------------------------
+
+\name{Eric Kunze}
+\matnr{Nummer}
+\email{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\modul{Optimierung und Numerik}
+\period{Wintersemester 2019/20}
+
+%\renewcommand{\tutor}{Dr. Legrand}
+%\renewcommand{\group}{Tag x. DS, (un)gerade Woche}
+
+\lecturer{Dr. John Martinovic}
+\faculty{Mathematik}
+\institute{Numerik}
+\professorship{Numerik der Optimalen Steuerung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\undef\folge
+\NewDocumentCommand{\folge}{m m}{\left\{ #1 \right\}_{#2}}
+\renewcommand{\complement}{\mathsf{C}}
+
+\newcommand{\widesim}[1][2.5]{
+	\mathrel{\scalebox{#1}[1]{\ensuremath{\sim}}}
+}
+
+\newenvironment{indentpar}{\vspace{\parskip} \par \setlength{\parindent}{1cm}}{\vspace{\parskip} \par}
+
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\makeatletter
+\newcommand{\leqnomode}{\tagsleft@true\let\veqno\@@leqno}
+\newcommand{\reqnomode}{\tagsleft@false\let\veqno\@@eqno}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\makeTUtitle
+    
+\tableofcontents
+
+\chapter{Einführung}
+\label{chapter_1_einfuehrung}
+\input{optinum_1_1_aufgabenstellungGrundbegriffe}
+\input{optinum_1_2_beispieleKontinuierlicheOptimierung}
+\input{optinum_1_3_beispieleDiskreteOptimierung}
+
+\chapter{Grundlagen}
+\label{chapter_2_grundlagen}
+\input{optinum_2_1_existenzLoesungen}
+\input{optinum_2_2_optimalitaetsbedingungen}
+\input{optinum_2_3_lemmaVonFarkas}
+
+\chapter{Lineare Optimierung}
+\label{chapter_3_lineareOptimierung}
+\input{optinum_3_0_intro}
+\input{optinum_3_1_basisloesungenEcken}
+\input{optinum_3_2_primalesSimplexverfahren}
+\input{optinum_3_3_dualesSimplexverfahren}
+\input{optinum_3_4_dualitaet}
+\input{optinum_3_5_transportoptimierung}
+
+\chapter{Diskrete Optimierung}
+\label{chapter_4_diskreteOptimierung}
+\input{optinum_4_0_intro}
+\input{optinum_4_1_spaltengenerierung}
+\input{optinum_4_2_methodeBranchBound}
+
+\end{document}

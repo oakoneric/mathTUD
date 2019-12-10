@@ -1,0 +1,31 @@
+\section{Spaltengenerierung}
+
+Wir betrachten die stetige Relaxation des Bin-Packing-Problems (vgl. \cref{chapter_1_einfuehrung}). Zur Erinnerung: Es sind $b_i$ Teile der Länge $\ell_i$ ($i = 1, \dots, m$) in möglichst wenige Behälter der Kapazität $L$ zu packen. 
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Packungsvarianten: $a^j = \transpose{a_1^j , \dots , a_m^j} \in \Z_+^m$ mit $\trans{\ell}a^j \le L$ ($j \in J$)
+	\item Variablen: $x_j$ beschreibt Häufigkeit, wie oft Variante $a^j$ genutzt wird.
+\end{itemize}
+\begin{equation*}
+	z = \sum_{j \in  J} x_j \to \min \quad \bei \quad \sum_{j \in J} a_i^j * x_j = b_i \quad (i \in I) \quad \und \quad x_j \ge 0 \quad (j \in J)
+\end{equation*}
+Grundsätzlich ist diese Aufgabe mit dem Simplexverfahren lösbar, jedoch gibt es im Allgemeinen exponentiell viele Variablen, sodass pro Austauschschritt ein großer Aufwand entstünde.
+
+Wir können uns hierbei zu Nutze machen, dass alle Spalten der Systemmatrix $A$ eine gemeinsame Struktur aufweisen:
+\begin{equation*}
+	a^j \text{ ist Spalte von } A \equivalent a^j \in \Z_+^m \und \trans{\ell} a^j \le L
+\end{equation*}
+
+Offenbar gilt hie $c = e = \transpose{1, \dots, 1}$, sodass für eine gewählte Basismatrix $A_B$ in Schritt 2 des Simplexalgorithmus folgendes zu bestimmen wäre:
+\begin{equation*}
+	\quer{q} \defeq \min_{j \in J_N} q_j \quad \mit \quad q_j = c_j - \trans{d} a^j = 1 - \trans{d}a^j, \quad a^j \in \Z_+^m, \trans{\ell} a^j \le L
+\end{equation*}
+wobei $\trans{d} \defeq \trans{c_B} A_B^{-1}$. In Schritt 2 wäre folglich die Aufgabe 
+\begin{equation*}
+	1 - \trans{d} a^j = q_j \to \min \bei \trans{\ell} a^j \le L \und a^j \in \Z_+^m
+\end{equation*}
+bzw. 
+\begin{equation*}
+	\trans{d} a^j \to \max \bei \trans{\ell} a^j \le L, a^j \in \Z_+^m
+\end{equation*}
+zu lösen.
+Gilt $q_j^\ast < 0$, so liegt keine Optimalität vor und eine zugehörige Lösung $a^{j, \ast}$ wäre in die Basismatrix aufzunehmen. Gilt $g_j^\ast \ge 0$, so sind wir fertig.
