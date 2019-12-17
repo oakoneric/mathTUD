@@ -1,13 +1,12 @@
 \section{Die Methode Branch \& Bound}
 
-Branch \& Bound (B \& B) ist eine sehr flexible Technik, um exakte Lösungsverfahren für Probleme der diskreten Optimierung zu entwickeln. Anschaulich betrachtet wird dabei eine schwierige Optimierungsaufgabe sukzessiv in Teilprobleme zerlegt, die wiederum ''leich`` (näherungsweise) gelöst werden können und somit zur Lösung des Gesamtproblems beitragen. Näherungslösungen erhält man dabei oftmals mithilfe geeigneter Relaxationen.
+Branch \& Bound (B\&B) ist eine sehr flexible Technik, um exakte Lösungsverfahren für Probleme der diskreten Optimierung zu entwickeln. Anschaulich betrachtet wird dabei eine schwierige Optimierungsaufgabe sukzessiv in Teilprobleme zerlegt, die wiederum ''leicht`` (näherungsweise) gelöst werden können und somit zur Lösung des Gesamtproblems beitragen. Näherungslösungen erhält man dabei oftmals mithilfe geeigneter Relaxationen.
 
 \subsection{Grundlagen}
-%\leqnomode
 
 Wir betrachten das Anfangsproblem
 \begin{equation*}
-	(P) \qquad f(x) \to \min \bei x \in E \cap D
+	f(x) \to \min \bei x \in E \cap D
 	\tag{$P_0$}
 	\label{eq: p_0}
 \end{equation*}
@@ -19,7 +18,8 @@ und eine zugehörige Relaxation
 \end{equation*}
 wobei $g(x) \le f(x)$ auf $D \cap E$ gilt.
 
-Prinzip der B\&B-Methode
+\vspace{\parskip}
+\fbox{\textbf{Prinzip der B\&B-Methode}}
 
 Die Menge $E$ wird durch Separation in Teilmengen $E_i$ mit $i \in I$ zerlegt. Dadurch entstehen \begriff{Teilprobleme} 
 \begin{equation*}
@@ -42,6 +42,8 @@ Eine geeignete Möglichkeit besteht darin, z.B. die stetige Relaxation der Teilp
 	+ \infty & \falls E_i \cap D = \emptyset
 	\end{cases}
 \end{equation*}
+
+\pagebreak
 
 \subsection{Allgemeiner B\&B-Algorithmus}
 Bezeichne mit $R$ die Menge der noch zu bearbeitenden Teilprobleme (''Restmenge``) und mit $\quer{z}$ den Zielfunktionswert der bisher besten gefundenen zulässigen Lösung $\quer{x} \in D \cap E$.
@@ -77,3 +79,302 @@ Bezeichne mit $R$ die Menge der noch zu bearbeitenden Teilprobleme (''Restmenge`
 		\end{itemize}
 	\end{enumerate}
 \end{*bemerkung}
+
+\subsection{Beispiele für B\&B-Verfahren}
+
+\subsubsection{Das 0/1-Rucksackproblem}
+
+Zur Erinnerung: Gegeben seien ganze Zahlen $c_i > 0$, $0 < a_i < b$ für $i \in I \defeq \menge{1, \dots, n}$
+\begin{align*}
+	f(x) &= \trans{c} x \to \max \bei \trans{a} x \le b, \enskip x \in \menge{0,1}^n 
+	\tag{P} \\
+	f(x) &= \trans{c} x \to \max \bei \trans{a} x \le b, \enskip c \in [0,1]^n 
+	\tag{Q} \label{eq: rucksack-q}
+\end{align*}
+Hier gilt also $E = \menge{x \in \Rn : \trans{a} x \le b, 0 \le x \le 1, i \in I}$ und $D = \mathbb{B}^n = \menge{0,1}^n$.
+
+\begin{bemerkung}
+	Die stetige Relaxation \eqref{eq: rucksack-q} besitzt unter der Voraussetzung
+	\begin{equation*}
+		\frac{c_i}{a_i} \ge \frac{c_{i+1}}{a_{i+1}} \quad \text{ für } 1 \le i \le n
+	\end{equation*}
+	die Lösung
+	\begin{equation*}
+		\dach{x_i} = 1 \quad (i = 1, \dots, k) \qquad \dach{x}_{k+1} = \frac{b - \sum_{i=1}^k a_i}{a_{k+1}} \qquad \dach{x}_i = 0 \enskip i = k+2, \dots, n 
+		\tag{R} \label{eq: rucksack-r}
+	\end{equation*}
+	mit $k \defeq \max\menge{j \in I : \sum_{i=1}^j a_i \le b}$.
+\end{bemerkung}
+
+\begin{*bemerkung_inline}
+	Wir sortieren also abfallend nach Nutzen pro Volumen und packen dann soviel wie möglich in den Rucksack ($k$ Elemente). Dann füllen wir den Restplatz noch mit (einem Anteil von) dem nächsten Element auf ($k+1$-tes Element), alles danach können wir nicht mehr mitnehmen.
+\end{*bemerkung_inline}
+
+Innerhalb des Verzweigungsbaums ergeben sich die folgenden Teilprobleme (für bereits fixierte Variablen $\quer{x}_i$, $i \in I_k \subseteq I$).
+\begin{align*}
+	\sum_{i \in I_k} c_i \quer{x}_i + \sum_{i \notin I_k} c_i x_i &\to \max \bei \sum_{i \notin I_k} a_i x_i \le b - \sum_{i \in I_k} a_i \quer{x}_i, \quad i \notin I_k, x_i \in \mathbb{B}
+	\tag{$P_k(\quer{x})$} \label{eq: rucksack-pk}\\
+	\sum_{i \in I_k} c_i \quer{x}_i + \sum_{i \notin I_k} c_i x_i &\to \max \bei \sum_{i \notin I_k} a_i x_i \le b - \sum_{i \in I_k} a_i \quer{x}_i, \quad i \notin I_k, x_i \in [0,1]  \tag{$Q_k(\quer{x})$} \label{eq: rucksack-qk}
+\end{align*}
+
+\textbf{Beachte:} Da es sich um eine Maximierungsaufgabe handelt, werden im B\&B-Algorithmus \textit{obere} Schranken $b(P_k(\quer{x}))$ benötigt. Diese gewinnen wir aus den Optimalwerten der stetigen Relaxation $Q_k(\quer{x})$.
+
+\begin{beispiel}
+	Gegeben sei das binäre Rucksackproblem 
+	\begin{equation*}
+		\begin{alignedat}{8}
+		z = \trans{c} x &= &8x_1 &+ &16x_2 &+ &20x_3 &+ &12x_4 &+ &6x_5 &+ &10x_6 &+ &4x_7 &\to \max \\
+		\bei \trans{a} x &= &3x_1 &+ &7x_2 &+ &9x_3 &+ &6x_4 &+ &3x_5 &+ &5x_6 &+ &2x_7 &\le 17 = b, \quad x_i \in \menge{0,1}, i = 1, \dots, 7
+		\end{alignedat}
+		\tag{P} \label{eq: rucksack-bsp-p}
+	\end{equation*}
+	
+	\begin{itemize}[leftmargin=*]
+		\item Die korrekte Sortierung liegt bereits vor.
+		\item Wurzelknoten \eqref{eq: rucksack-bsp-p}$=(\text{P}_0)$: Die stetige Relaxation besitzt die Lösung $x_1 = x_2 = 1$ und $x_3 = \frac{7}{9}$ sowie $x_4 = \dots = x_7 = 0$. Somit ist $b(\text{P}_0) = \lfloor 8 + 16 + 20 * \frac{7}{9} \rfloor = 39$. Die Abrundung ist dabei erlaubt, da $\trans{c} x \in \Z$ für alle zulässigen Punkte von \eqref{eq: rucksack-bsp-p}. Ein zulässiger Punkt für \eqref{eq: rucksack-bsp-p} ist gegeben durch $\quer{x}_1 = \quer{x}_2 = \quer{x}_4 = 1$, $\quer{x}_i = 0$ sonst. Dabei ist $z(\quer{x}) = 8 + 16 + 12 = 36 \defqe \quer{z}$. Wegen $36 < 39$ muss weiter verzweigt werden.
+		\item Verzweigung: $x_3 = 0$ vs. $x_3 = 1$.
+		\begin{itemize}
+			\item Teilproblem: $(P_1) = (P_{0,1})$. Setzt man $x_3 = 0$, so hat die stetige Relaxation die Lösung $x_1 = x_2 = x_4 = 1$, $x_5 = \frac{1}{3}$ und $x_6 = x_7 = 0$. Somit ist $b(P_1) = \lfloor 8 + 16 + 12 + 6 * \frac{1}{3} = 38$. Ein daraus ableitbarer Punkt ist gegeben durch $\quer{x}_1 = \quer{x}_2 = \quer{x}_4 = 1$ mit $z = 36$, d.h. $\quer{z}$ muss nicht aktualisiert werden.
+			\item $(P_2) = (P_{0,2})$. Setzt man $x_3 = 1$, so erhält man $x_1 = 1$, $x_2 = \frac{5}{7}$ mit $b = \lfloor 8 + 20 + 16 * \frac{5}{7} \rfloor = 39$ und einen zulässigen Punkt für \eqref{eq: rucksack-bsp-p} durch $\quer{x}_1 = \quer{x}_3 = \quer{x}_5 = \quer{x}_7 = 1$ mit $\quer{z} = 38$, d.h. $\quer{z}$ wurde verbessert.
+			\item Damit kann ($P_1$) abgeschlossen werden, da maximal noch der Zielfunktionswert $38$ möglich ist, der in ($P_2$) bereits erreicht worden ist.
+		\end{itemize}
+		%
+		\item Verzweigung: $x_2 = 0$ vs. $x_2 = 1$.
+		\begin{itemize}
+			\item Teilproblem $(P_3) = (P_{2,1})$. Setzt man $x_2 = 0$ (und $x_3 = 1$ von oben), dann hat die stetige Relaxation die Lösung $x_1 = 1$, $x_4 = \frac{5}{6}$ mit $b(P_3) = 38 = \quer{z}$, also sind wir hier fertig.
+			\item Teilproblem $(P_4) = (P_{2,2})$. Setzt man $x_2 = 1$ (und $x_3 = 1$) so folgt $x_1 = \frac{1}{3}$, also $b(P_4) = 38 = \quer{z}$, d.h. wir sind hier wieder fertig.
+		\end{itemize}
+		%
+		\item Nun ist $R = \emptyset$ und wir haben eine Lösung gefunden:
+		\begin{equation*}
+			x_1 = x_3 = x_5 = x_7 = 1 \quad \mit \quad z = 38
+		\end{equation*}
+	\end{itemize}
+\end{beispiel}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsubsection{Ganzzahlige lineare Optimierung nach Land/Doig/Dahin}
+
+Wir betrachten die ganzzahlige Optimierungsaufgabe 
+\begin{equation*}
+	\trans{c}x  \to \min \bei x \in D \cap E
+	\tag{P} \label{eq: ldl-p}
+\end{equation*}
+mit $D = \Z^n$ und $E = E_0 = \menge{x \in \Rn: Ax = b, x \ge 0}$, wobei alle Inputdaten $(A,b,c)$ ganzzahlig sind. Die im Verlauf des Verfahrens zu betrachtenden Teilprobleme \eqref{eq: ldl-pi} haben die Form
+\begin{equation*}
+	\trans{c} x \to \min \bei x \in D \cap E_i
+	\tag{P${}_\text{i}$} \label{eq: ldl-pi}
+\end{equation*}
+wobei $E_i$ durch eine oder mehrere zusätzliche Ungleichungen aus $E_0$ entsteht. Sei $x^{\text{LP}}$ eine Lösung der zu \eqref{eq: ldl-pi} gehörenden stetigen Relaxation
+\begin{equation*}
+	z(Q_i) = \min \menge{\trans{c} x : x \in E_i} 
+	\tag{Q${}_\text{i}$} \label{eq: ldl-qi}
+\end{equation*}
+mit $x^{\text{LP}}_j \notin \Z$ für mindestens einen Index $j$. Dann kann der (gerundete) Optimalwert als Schranke $b(P_i)$ genutzt werden.
+\begin{align*}
+	E_{i,1} &= \menge{x \in E_i : x_j \le \left\lfloor x^{\text{LP}} \right\rfloor}
+	\tag{P${}_{i,1}$} \\
+	E_{i,2} &= \menge{x \in E_i : x_j \ge \left\lfloor x^{\text{LP}} \right\rfloor + 1 = \left\lceil x^{\text{LP}} \right\rceil} 
+	\tag{P${}_{i,2}$}	
+\end{align*}
+
+\begin{bemerkung}
+	Das Runden des Optimalwertes einer Relaxation zur Schrankenbestimmung ist nur für $c \in \Z^n$ zulässig.
+\end{bemerkung}
+
+\begin{beispiel}
+	Betrachte 
+	\begin{equation*}
+	\begin{alignedat}{4}
+		z = -7x_1 - 2x_2 \to \min \bei &&-x_1 &+ &2x_2 &+ &x_4 &= 4 \\
+		&&5x_1 &+ &x_2 &+ &x_4 &= 20, \quad x_1, \dots, x_n \in \Z_+
+	\end{alignedat}
+	\end{equation*}
+	Die Relaxation ergibt sich durch $x_1, \dots, x_n \ge 0$.
+	\begin{itemize}[leftmargin=*]
+		\item Wurzelknoten:
+		\begin{center}
+			\begin{tabular}{r|rr|r}
+				$T_1$ & $x_1$ & $x_2$ & $1$ \\ \hline
+				$x_3 = $ & $1$ & $-2$ & $4$ \\
+				$x_4 = $ & $-5$ & $-1$ & $20$ \\ \hline
+				$z = $   & $-7$ & $-2$ & $0$
+			\end{tabular}
+			$\qquad \overset{x_1 \leftrightarrow x_4}{\longrightarrow} \quad \dots \quad \overset{x_2 \leftrightarrow x_3}{\longrightarrow} \qquad$
+			\begin{tabular}{r|rr|r}
+				$T_3$ & $x_4$ & $x_3$ & $1$ \\ \hline
+				$x_2 = $ & $-\frac{1}{11}$ & $-\frac{5}{11}$ & $\frac{40}{11}$ \\
+				$x_1 = $ & $\frac{-2}{11}$ & $\frac{1}{11}$ & $\frac{26}{11}$ \\ \hline
+				$z = $   & $\frac{16}{11}$ & $\frac{3}{11}$ & $-\frac{332}{11}$
+			\end{tabular}
+		\end{center}	
+		%
+		\item Verzweigung: nach $x_2$, da $\min \menge{4-\frac{40}{11}, \frac{40}{11} - 3} > \min \menge{4 - \frac{36}{11}, \frac{36}{11} - 3}$. 
+		\begin{itemize}
+			\item 1. Teilproblem: $x_2 \ge 4$ (führe $s_2 \ge 0$ ein)
+			\begin{equation*}
+				\begin{aligned}
+					\follows s_2 &= x_2 - 4 
+					\overset{\text{aus T}_3}{=} \brackets{-\frac{1}{11}x_4 - \frac{5}{11} x_3 + \frac{40}{11}} - 4 \\
+					&= -\frac{1}{11} x_4 - \frac{5}{11} x_3 - \frac{4}{11} < 0
+				\end{aligned}
+			\end{equation*}
+			Damit ist $x_2 \ge 4$ nicht möglich (leerer zulässiger Bereich) und dieser Fall muss nicht betrachtet werden.
+			%
+			\item 2. Teilproblem: $x_2 \le 3$ (führe $s_2 \ge 0$ ein)
+			\begin{equation*}
+				\begin{aligned}
+					s_2 &= 3 - x_2 = 3 - (-\frac{1}{11} x_4 - \frac{5}{11} x_3 + \frac{40}{11}) \\
+					&= \frac{1}{11} x_4 + \frac{5}{11} x_3 - \frac{7}{11}
+				\end{aligned}
+			\end{equation*}
+			Füge dies ist $T_3$ ein:
+			
+			\begin{center}
+				\begin{tabular}{r|rr|r}
+					$T_3'$ & $x_4$ & $x_3$ & $1$ \\ \hline
+					$x_2 = $ & $-\frac{1}{11}$ & $-\frac{5}{11}$ & $\frac{40}{11}$ \\
+					$x_1 = $ & $\frac{-2}{11}$ & $\frac{1}{11}$ & $\frac{26}{11}$ \\
+					$s_2 = $ & $\frac{1}{11}$ & \fbox{$\frac{5}{11}$} & $-\frac{7}{11}$ \\ \hline
+					$z = $   & $\frac{16}{11}$ & $\frac{3}{11}$ & $-\frac{332}{11}$ \\ \hline
+					Keller & $-\frac{1}{5}$ & $\ast$ & $\frac{7}{5}$
+				\end{tabular}	
+				$\quad \overset{s_2 \leftrightarrow x_3}{\longrightarrow} \quad$		
+				\begin{tabular}{r|rr|r}
+					$T_4$ & $x_4$ & $s_2$ & $1$ \\ \hline
+					$x_2 = $ & $0$ & $-1$ & $3$ \\
+					$x_1 = $ & $-\frac{1}{5}$ & $\frac{1}{5}$ & $\frac{17}{5}$ \\
+					$x_3 = $ & $-\frac{1}{5}$ & $\frac{11}{5}$ & $\frac{7}{5}$ \\ \hline
+					$z = $   & $\frac{7}{5}$ & $\frac{3}{5}$ & $-\frac{149}{5}$
+				\end{tabular}
+			\end{center}
+		\end{itemize}
+		%
+		\item Verzweigung: $x_1$ ($x_3$ ebenso möglich)
+		\begin{itemize}
+			\item 3. Teilproblem: $x_1 \ge 4 \follows s_1 = x_1 - 4 = -\frac{1}{5}x_4 + \frac{1}{5} s_2 - \frac{3}{5}$
+			
+			\begin{center}
+				\begin{tabular}{r|rr|r}
+					$T_4'$ & $x_4$ & $s_2$ & $1$ \\ \hline
+					$x_2 = $ & $0$ & $-1$ & $3$ \\
+					$x_1 = $ & $-\frac{1}{5}$ & $\frac{1}{5}$ & $\frac{17}{5}$ \\
+					$x_3 = $ & $-\frac{1}{5}$ & $\frac{11}{5}$ & $\frac{7}{5}$ \\
+					$s_1 = $ & $-\frac{1}{5}$ & \fbox{$\frac{1}{5}$} & $\frac{3}{5}$ \\ \hline
+					$z = $   & $\frac{7}{5}$ & $\frac{3}{5}$ & $-\frac{149}{5}$
+				\end{tabular}
+				$\quad \overset{s_1 \leftrightarrow s_2}{\longrightarrow} \quad$	
+				\begin{tabular}{r|rr|r}
+					$T_5$ & $x_4$ & $s_1$ & $1$ \\ \hline
+					$x_2 = $ &  &  & $0$ \\
+					$x_1 = $ &  &  & $4$ \\
+					$x_3 = $ &  &  & $3$ \\
+					$s_2 = $ &  &  & $8$ \\ \hline
+					$z = $   & $2$ & $3$ & $-28$
+				\end{tabular}
+			\end{center}
+			Damit haben wir zumindest \textit{eine} ganzzahlige Lösung $z = -28$. Wir wissen jedoch noch nicht, ob es tatsächlich die optimale Lösung ist.
+			%
+			\item 4. Teilproblem: $x_1 \le 3 \follows s_1 = 3-x_1 = \frac{1}{5} x_4 - \frac{1}{5} s_2 - \frac{2}{5}$. Dies fügt man zu $T_4$ hinzu. Ein dualer Simplexschritt führt dann zu
+			\begin{center}
+				\begin{tabular}{r|rr|r}
+					$T_6$ & $s_1$ & $s_2$ & $1$ \\ \hline
+					$x_2 = $ &  &  & $3$ \\
+					$x_1 = $ &  &  & $3$ \\
+					$x_3 = $ &  &  & $2$ \\
+					$x_3 = $ &  &  & $1$ \\ \hline
+					$z = $   & $2$ & $3$ & $-27$
+				\end{tabular}
+			\end{center}
+			Dabei haben wir also eine ganzzahlige Lösung mit $z = -27$.
+		\end{itemize}
+	\end{itemize}
+	Insgesamt wissen wir also $x^\ast = (4,0,3,0)$ mit $z^\ast = -28$ aus dem dritten Teilproblem.
+\end{beispiel}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsubsection{Das Rundreiseproblem (Traveling Salesman Problem, TSP)}
+
+Gegeben seien $n$ Orte, eine Kostenmatrix $C = (c_{ik}) \in \R^{n \times n}$, wobei $c_{ik}$ die Entfernung (Zeit, Kosten, ...) von $i$ nach $k$ beschreibt. \\
+\textit{Annahme:} $c_{ii} = + \infty$ für alle $i \in I = \menge{1, \dots, n}$. In einigen Anwendungen ist $C$ auch symmetrisch.
+
+\textbf{Variablen:} $x_{ik} \in \menge{0,1}$, $(i,k) \in I \times I$ mit $x_{ik} = 1 \equivalent $ man reist von $i$ nach $k$
+
+\textbf{Optimierungsproblem:}
+\begin{align}
+	z = \sum_{i \in I} \sum_{k \in I} c_{ik} x_{ik} \to \min 
+	\label{eq: 4.1} \\
+	\bei \sum_{i \in I} x_{ik} &= 1 \quad (k \in I) 
+	\label{eq: 4.2} \\
+	\sum_{k \in I} x_{ik} &= 1 \quad (i \in I)
+	\label{eq: 4.3} \\
+	x_{ik} &\in \menge{0,1} \quad (i,k) \in I \times I 
+	\label{eq: 4.4} \\
+	\sum_{i,k} x_{ik} \in S &\le \card{S} - 1 \quad (S \subset I, 0 < \card{S})
+	\label{eq: 4.5} 
+\end{align}
+
+Die Bedingung \eqref{eq: 4.5} wird auch \begriff{Subtoureliminationsbedingung} (SEB) genannt.
+Die Bedingungen \eqref{eq: 4.1} bis \eqref{eq: 4.4} modellieren ein spezielles Transportproblem (das \begriff{Zuordnungsproblem}).
+Für das Problem \eqref{eq: 4.1} -- \eqref{eq: 4.5} kann man auf folgende Weise Schranken erhalten:
+\begin{itemize}
+	\item Lösung des (ganzzahligen) Zuordnungsproblems
+	\item stetige Relaxation von \eqref{eq: 4.1} -- \eqref{eq: 4.5}: löse zunächst das Zuordnungsproblem. Falls dabei Subtouren entstehen, verbiete man diese mit geeigneten Bedingungen vom Typ \eqref{eq: 4.5} und löse danach das um diese Bedingung erweiterte Zuordnungsproblem.
+	\item Zeilen- und Spaltenreduktion: Ermittlung einer zulässigen Lösung $(u,v)$ des dualen Problems (der stetigen Relaxation des Zuordnungsproblems) mithilfe der folgenden Idee:
+	\begin{equation*}
+		\begin{alignedat}{3}
+			&u_i &&\defeq \min\menge{c_{ik} : k \in I} \qquad &&(i \in I) \\
+			&v_i &&\defeq \min\menge{c_{ik} - u_i : i \in I} \qquad &&(k \in I) \\
+			\follows &w_{ik} &&\phantom{:}= c_{ik} - u_i - v_k \ge 0 \qquad &&\forall (i,k) \in I \times I \text{ (duale Zulässigkeit)}
+		\end{alignedat}
+	\end{equation*}
+	Somit gilt
+	\begin{equation*}
+		\begin{aligned}
+			z &= \sum_{i \in I} \sum_{k \in I} c_{ik} x_{ik} 
+			\overset{(\star)}{=} \sum_{i \in I} \sum_{k \in I} \underbrace{w_{ik}}_{\ge 0} \underbrace{x_{ik}}_{\ge 0} + \sum_{i \in I} u_i + \sum_{k \in I} v_k \\
+			&\ge \sum_{i \in I} u_i + \sum_{k \in I} v_k \qquad \text{ (untere Schranke für $z$) }
+		\end{aligned}
+	\end{equation*}
+	Im Schritt ($\star$) haben wir dabei $w_{ik} = c_{ik} + u_i + v_i$ und die Bedingungen \eqref{eq: 4.2} sowie \eqref{eq: 4.3} verwendet.
+	
+	Die oben genannten Schrankenwerte unterscheiden sich (mitunter stark) hinsichtlich des numerischen Aufwands und der Güte der erhaltenen Näherungen. In dieser Vorlesung betrachten wir die dritte Variante.
+\end{itemize}
+
+\begin{beispiel}
+	Wir betrachten die Kostenmatrix
+	
+	\begin{center}
+		\begin{tabular}{r|ccccc|r}
+			$C = (c_{ik})$ &          &    &    &    &    & $u_i$ \\ \hline 
+			& $\infty$ & 32 & \underline{22} & 30 & 24 & 22 \\
+			& 10       & $\infty$ & \underline{3} & 18 & $\infty$ & 3\\
+			& $\infty$ & \underline{9} & $\infty$ & 14 & 12 & 9\\
+			& 16 & 10 & 7 & $\infty$ & \underline{6} & 6 \\
+			& 15 & 19 & 15 & \underline{12} & $\infty$ & 12 \\ \hline
+			$v_k$ & 3 & 0 & 0 & 0 & 0 & $b = 55$ \\ 
+		\end{tabular}
+	\end{center}
+
+	Damit ist $b = \sum_i u_i + \sum_k v_k = 55$ eine untere Schranke für den Optimalwert.
+\end{beispiel}
+
+\begin{bemerkung}
+	Die Schranke, die aus Zeilen- und anschließender Spaltenreduktion erhalten wird, weicht im Allgemeinen von der Schranke ab, die aus Spalten- und anschließender Zeilenreduktion gewonnen wird.
+\end{bemerkung}
+
+Unter Einbeziehung der reduzierten Kostenmatrix $D = (w_{ik})$ mit $w_{ik} = c_{ik} - u_i - v_i$ kann eine Verzweigungs- und Auswahlstrategie formuliert werden:
+Dabei betrachten wir die Elemente mit $w_{ik} = 0$ und verzweigen gemäß $x_{ik} = 0$ vs. $x_{ik} = 1$.
+\begin{itemize}
+	\item Die Belegung $x_{ik} = 0$ ist gleichbedeutend mit der Änderung des aktuellen Kostenwertes auf $+\infty$.
+	\item Eingedenk\footnote{Alternativer Vorschlag: im Lichte der Bedingungen \dots} der Bedingungen \eqref{eq: 4.2} und \eqref{eq: 4.3} impliziert die Wahl $x_{ik} = 1$, dass $x_{jk} = 0$ für alle $j \neq i$ und $x_{i\ell} = 0$ für alle $\ell \neq k$ gelten muss. Für diese Indexpaare kann man die Kosten auf $+\infty$ erhöhen. Weiterhin muss die Subtour $i \to k \to i$ verhindert werden, d.h. es gilt $x_{ki} = 0$ und damit $w_{ki} = +\infty$. (Analog verfahre man gegebenenfalls mit längeren Subtouren.)
+	Infolge dieser Änderung der Kostenmatrix können im Anschluss weitere Zeilen- und Spaltenreduktionen ermöglicht werden, die zu verbesserte Schranken (in den entsprechenden Teilproblemen) führen können.
+\end{itemize}
