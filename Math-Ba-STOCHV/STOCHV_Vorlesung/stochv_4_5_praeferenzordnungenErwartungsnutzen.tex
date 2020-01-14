@@ -1,0 +1,231 @@
+\section{Präferenzordnungen und Erwartungsnutzen}
+
+\textbf{Kritik an Markowitz:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Standardabweichung $\sqrt{\Var[R]}$ nicht unbedingt gutes Risikomaß
+	\item Entwicklungen unter Unsicherheit meist komplexer als durch Erwartungswert-Varianz-Prinzip beschrieben.
+\end{itemize}
+
+\vspace{\parskip}
+
+\fbox{\textbf{Axiomatischer Zugang:}} Präferenzordnungen (PO)
+Sei $\Omega, \F, \P)$ ein Wahrscheinlichkeitsraum und wie üblich $L_1(\Omega, \F, \P)$ der Raum der integrierbaren Zufallsvariablen. Setze
+\begin{equation*}
+	\mathcal{M} \defeq \text{Menge der Verteilungsfunktionen } F_X \text{ von } X \in L_1(\Omega, \F, \P)
+\end{equation*}
+Seien $X,Y \in L_1(\Omega)$ mit der Interpretation als risikobehaftete Auszahlungen (''Lotterie``) versehen. Wir wollen eine Ordnungsrelation $\leqslant$ mit Bedeutung
+\begin{equation*}
+	X \unlhd Y \equivalent ''Y \text{ wird bevorzugt gegenüber } X``
+\end{equation*}
+Wir beschränken uns auf ''verteilungsinvariante`` Präferenzordnungen (unabhängig von der Verteilung), welche durch Relation auf $\mathcal{M}$ erklärt werden, d.h.
+\begin{equation*}
+	X \unlhd Y \equivalent F_X \unlhd F_Y
+\end{equation*}
+
+\begin{*definition}
+	Eine Relation $\unlhd$ auf $\mathcal{M}$ heißt \begriff{Präferenzordnung}, wenn gilt
+	\begin{align*}
+		F \unlhd F \quad &\forall F \in \mathcal{M} \tag{Reflexivität} \\
+		(F \unlhd G) \land (G \unlhd H) \follows (F \unlhd H) \quad &\forall F, G, H \in \mathcal{M} \tag{Transitivität} \\
+		(F \unlhd G) \lor (G \unlhd F) \quad &\forall F,G \in \mathcal{M} \tag{Vollständigkeit}
+	\end{align*}
+\end{*definition}
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item Menge $\mathcal{M}$ ist konvex, d.h. für alle $F,G \in \mathcal{M}$ und $\alpha \in [0,1]$ gilt
+		\begin{equation*}
+			H \defeq (1-\alpha) F + \alpha G \in \mathcal{M}
+			\tag{$\star$} \label{eq: praeferenz-star}
+		\end{equation*}
+		\item \eqref{eq: praeferenz-star} lässt sich als ''Mischen`` von $F$ und $G$ interpretieren.
+		\item Sei $X \sim F_X$ und $Y \sim F_Y$ sowie $A \upmodels (X,Y)$ mit $\P(A = 0) = \alpha$ und $\P(A = 1) = (1-\alpha)$. Dann gilt
+		\begin{equation*}
+			(1-A) X + A Y \sim (1-\alpha) F_X + \alpha F_Y
+		\end{equation*}
+		\item Aus gegebener Präferenzordnung können wir ableiten:
+		\begin{itemize}
+			\item Aquivalenzrelation $F \sim G \equivalent (F \unlhd G) \land (G \unlhd F)$ -- ''Indifferenz zwischen $F$ und $G$``
+			\item strikte Relation: $F \lhd G \equivalent (F \unlhd G) \land \lnot (G \unlhd F)$ -- ''$G$ wird strikt gegenüber $F$ bevorzugt``
+		\end{itemize}
+		\item Für ''deterministische Zufallsvariable`` $a \in \R$ ist die Verteilungsfunktion $F_a = \one_{[a,\infty)}$.
+	\end{itemize}
+\end{*bemerkung}
+
+Eine Präferenzordnung kann folgende Eigenschaften besitzen:
+\begin{enumerate}[label=(\Roman*)]
+	\item \textbf{Monotonie:} Für alle $a,b \in \R$ mit $a \le b$ gilt $F_a \unlhd F_b$ (''mehr besser als weniger``)
+	\item \textbf{Risikoaversion:} Für alle $X \in L_1(\Omega)$ gilt $F_X \unlhd F_{\EW[X]}$ (''sicher besser als unsicher``)
+	\item \textbf{Mittelwertseigenschaft:} Seien $F,G,H \in \mathcal{M}$ mit $F \unlhd G \unlhd H$. Dann existiert ein $\alpha \in [0,1]$ mit $(1-\alpha) F + \alpha H \sim G$.
+	\item \textbf{Unabhängigkeitsaxiom:} Für alle $F, G, H \in \mathcal{M}$ und alle $\alpha \in [0,1]$ gilt
+	\begin{equation*}
+		F \unlhd G \follows (1-\alpha) F + \alpha H \unlhd (1-\alpha) G + \alpha H
+	\end{equation*}
+\end{enumerate}
+
+\begin{*definition}[Erwartungsnutzen]
+	Sei $\abb{U}{\R}{[-\infty, \infty]}$ monoton steigend und konkav (''(Bernoulli'sche) Nutzenfunktion``).  Dann definiert
+	\begin{equation*}
+		F \unlhd_U G \equivalent \int U \diff{F} \le \int U \diff{G}
+		\tag{$\star$} \label{eq: erwartungsnutzen-star}
+	\end{equation*}
+	eine Präferenzordnung auf $\mathcal{M}$. Wir sagen ''$\unlhd_U$`` folgt dem Erwartungsnutzenprinzip (ENP).
+\end{*definition}
+
+\begin{*bemerkung}
+	Wenn wir \eqref{eq: erwartungsnutzen-star} für Zufallsvariablen $X,Y \in L_1$ formulieren, erhalten wir 
+	\begin{equation*}
+		X \unlhd_U Y \equivalent \EW[U(X)] \le \EW[U(Y)]
+	\end{equation*}
+\end{*bemerkung}
+
+\begin{*beispiel}
+	Wichtige Beispiele für Nutzenfunktionen:
+	\begin{itemize}
+		\item \textbf{logarithmischer Nutzen:}
+		$U(x) = \begin{cases}
+		\log(x) & \text{für } x > 0 \\ - \infty &\text{für } x \le 0
+		\end{cases}$
+		\item \textbf{Potenznutzen:}
+		$U(x) = \begin{cases} \frac{x^{1-\alpha}}{1 - \alpha} &\text{für } x \ge 0 \\ - \infty &\text{für } x \le 0
+		\end{cases}$ mit $\alpha \in (0,\infty) \setminus \menge{1}$
+		\item \textbf{Exponentialnutzen:} $U(x) - \gamma \exp(-\gamma x)$ mit $\gamma \in \R$.
+	\end{itemize}
+\end{*beispiel}
+
+\begin{theorem}[Satz von \person{von Neumann} \& \person{Morgenstern}, 1953]
+	\label{theorem: 4.6}
+	Sei $\card{\Omega} < \infty$ und $\unlhd$ eine Präferenzordnung auf $\mathcal{M}_\Omega$. Dann sind äquivalent:
+	\begin{enumerate}
+		\item Die Präferenzordnung erfüllt (I) bis (IV)
+		\item Die Präferenzordnung folgt dem Erwartungsnutzenprinzip.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Wir zeigen hier nur die Rückrichtung, d.h. $\unlhd$ erfüllt die Eigenschaften (I) bis (IV).
+	\begin{enumerate}[label=(\Roman*)]
+		\item Sei $a \le b$. Dann gilt $\int U \diff{F_a} = U(a) \overset{U \text{ steigend}}{\le} U(b) = \int U \diff{F_b}$, also $F_a \unlhd F_b$.
+		\item Sei $X \in L_1$. Es gilt
+		\begin{equation*}
+			\int U \diffskip{F_X} 
+			= \int_{-\infty}^\infty U(x) \diffskip{F_X} \overset{\text{Jensen}}{\le} U \brackets{\int_{-\infty}^\infty x \diffskip{F_X} } 
+			= U \brackets{\EW[X]} = \int U \diff{F_{\EW[X]}}
+		\end{equation*} 
+		und somit $F_X \unlhd F_{\EW[X]}$ (oder alternativ $\EW[U(X)] \le U(\EW[X])$ mit der Jensen-Ungleichung).
+		\item Sei $F \unlhd G \unlhd H$. Zu zeigen: es existiert ein $\alpha \in [0,1]$ mit $(1-\alpha) F + \alpha H \sim G$.
+		Setze
+		\begin{equation*}
+			\alpha_\ast \defeq \frac{\int U \diffskip{G} - \int U \diffskip{F}}{\int U \diffskip{H} - \int U \diffskip{F}}
+		\end{equation*}
+		Es gilt 
+		\begin{equation*}
+			\begin{aligned}
+				\int U ((1-\alpha) \diff{F} + \alpha_\ast \diff{H}) 
+				&= (1-\alpha_\ast) \int U \diff{F} + \alpha_\ast \int U \diff{H} \\
+				&= \int U \diff{F} + \alpha_\ast \brackets{\int U \diff{H} - \int U \diff{F}} \\
+				&= \int U \diff{G}	
+			\end{aligned}
+		\end{equation*}	
+		\item zu zeigen: $F \unlhd G \follows (1-\alpha) F + \alpha H \unlhd (1-\alpha) G + \alpha H$
+		\begin{equation*}
+			\begin{aligned}
+			\int U ((1-\alpha) \diff{F} + \alpha \diff{H}) 
+			&= (1-\alpha) \int U \diff{F} + \alpha \int U \diff{H} \\
+			\overset{F \unlhd G}&{\le} (1-\alpha)  \int U \diff{G} + \alpha \int  U \diff{H} \\
+			&= \int U ((1-\alpha) \diff{G} + \alpha \diff{H})
+			\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+	
+\end{proof}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item \cref{theorem: 4.6} wurde in den 50ern als starke Rechtfertigung für das Erwartungsnutzenprinzip wahrgenommen.
+		\item (Empirische) Kritik Ende der 70er durch die Psychologen \person{Kahnemann} und \person{Tversky} \\
+		$\Rightarrow$ ''Prospect Theory``
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{*definition}
+	Sei $U$ eine Bernoullische Nutzenfunktion und $\unlhd_U$ die zugehörige Präferenzordnung.
+	\begin{enumerate}[label=(\alph*)]
+		\item Für $X \in L_1$ heißt $c \defeq c_\ast(X,U) \in \R$ mit $c \sim_U X$ das \begriff{certainty equivalent} von $X$.
+		\item Für $U \in C^2$ heißen
+		\begin{equation*}
+			A_U(x) \defeq - \frac{U''(x)}{U'(x)} \qquad R_U(x) \defeq -\frac{x U''(x)}{U'(x)}
+		\end{equation*}
+		die \begriff{\person{Arrow}-\person{Pratt}-Koeffizienten} der absoluten bzw. relativen Riskioaversion.
+	\end{enumerate}
+\end{*definition}
+
+\begin{*bemerkung}
+	\begin{itemize}
+		\item Für $U$ streng monoton steigen gilt $c_\ast(X,U) = U^{-1}(\EW[U(X)])$, denn
+		\begin{equation*}
+			c \sim_U X \equivalent U(c) = \EW[U(X)]
+		\end{equation*}
+		\item Motivation für $A_U(x)$: Einer Person mit Vermögen $x \in \R$ werde eine ''Lotterie`` $\epsilon Y$ angeboten (mit $\epsilon$ klein). Nach dem Erwartungsnutzenprinzip sollte die Person diese annehmen, wenn $\EW[U(x + \epsilon Y)] \ge U(x)$. Taylor-Entwicklung liefert
+		\begin{equation*}
+			\EW[U(x + \epsilon Y)] - U(x) = \EW[\epsilon Y] U'(x) + \frac{1}{2} \EW[\epsilon^2 Y^2] U''(x) + \dots
+		\end{equation*}
+		Die Person sollte also annehmen, wenn 
+		\begin{equation*}
+			2 * \frac{\EW[\epsilon Y]}{\EW[\epsilon^2 Y^2]} \ge - \frac{U''(x)}{U'(x)} = A_U(x) \qquad\qquad \textcolor{cdgray}{\frac{\text{erw. Gewinn}}{\text{Risiko}}}
+		\end{equation*}
+	\end{itemize}
+\end{*bemerkung}
+
+
+\fbox{\parbox{\linewidth}{\textbf{\osfamily Klassisches Beispiel zum ''certainty equivalent`} \\ \textbf{St. Petersburger Paradoxon} (\person{Nicholas Bernoulli}, 1713)}}
+
+
+
+\begin{description}
+	\item[Spiel:] Es werde eine faire Münze solange geworfen bis in der $N$-ten Runde das erste Mal ''Zahl`` fällt. Der Gewinn beträgt $2^{N-1}$ Euro.
+	%
+	\item[Frage:] Wie hoch soll der Einsatz sein um am Spiel teilzunehmen?
+	%
+	\item[Antwort 1:] Einsatz = erwarteter Gewinn: $N$ ist geometrisch verteilt, d.h. $\P(N = k) = \brackets{\frac{1}{2}}^k$ für $k \in \N$.
+	\begin{equation*}
+		\EW[2^{N-1}] 
+		= \sum_{k=1}^\infty \brackets{\frac{1}{2}}^k 2^{k-1} 
+		= \sum_{k=1}^\infty \brackets{\frac{1}{2}} 
+		= + \infty
+	\end{equation*}
+	%	
+	Die Antworten 2 und 3 von Gabriel Cramer und Daniel Bernoulli entsprechen dem certainty equivalent mit Nutzenfunktionen
+	\begin{align*}
+			U_1(x) &= \sqrt{x} \tag{Cramer} \\
+			U_2(x) &= \log(x) \tag{Bernoulli}
+	\end{align*}
+	%	
+	\item[Antwort 2 von Cramer:] Es ist $c_1 = c_\ast (2^{N-1}, U_1) = U_1^{-1} \brackets{\EW[U_1(2^{N-1})]}$ und
+	\begin{equation*}
+		\begin{aligned}
+			\EW[U_1(2^{N-1})] 
+			&= \sum_{k=1}^\infty \brackets{\frac{1}{2}}^k \sqrt{2^{k-1}} 
+			= \sum_{k=1}^\infty 2^{-k + \frac{k-1}{2}} 
+			= \frac{1}{\sqrt{2}} \sum_{k=1}^\infty 2^{-\frac{k}{2}} \\
+			&= \frac{1}{\sqrt{2}} \sum_{k = 1}^\infty \brackets{\frac{1}{\sqrt{2}}}^k \\
+			&= \frac{1}{\sqrt{2}} * \frac{\frac{1}{\sqrt{2}}}{1 - \frac{1}{\sqrt{2}} = \frac{1}{2 - \sqrt{2}}}
+		\end{aligned}
+	\end{equation*}
+	Somit also $c_1 = \brackets{\frac{1}{2-\sqrt{2}}}^2 \approx 2.914$, d.h. der faire Einsatz beträge $2.91$ Euro.
+	%
+	\item[Antwort 3 von Bernoulli:] $c_2 = c_\ast (2^{N-1}, U_2)$.
+	\begin{equation*}
+		\begin{aligned}
+			\EW[U_2(2^{N-1})] 
+			= \sum_{k=1}^\infty \brackets{\frac{1}{2}}^k \log\brackets{2^{k-1}} 
+			&= \log(2) * \sum_{k=1}^\infty 2^{-k} (k-1) \\
+			&= \frac{\log(2)}{2} * \sum_{k=0}^\infty k * 2^{-k} \\
+			\overset{(\star)}&{=} \frac{\log(2)}{4} * \frac{1}{(1- \frac{1}{2})^2} \\
+			&= \log(2)
+		\end{aligned}
+	\end{equation*}
+	wobei wir in $(\star)$ verwendet haben, dass
+	\begin{equation*}
+		\sum_{k=0}^\infty z^k = \frac{1}{1-z} \overset{\partdiff{z}}{\follows} \sum_{k=0}^\infty k * z^{k-1} = \frac{1}{(1-z)^2}
+	\end{equation*}
+	Somit gilt $c_2 = e^{\log(2)} = 2$, d.h. der faire Einsatz beträgt $2$ Euro.
+\end{description}

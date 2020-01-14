@@ -1,0 +1,97 @@
+\section{Value-at-Risk}
+
+\begin{*definition}
+	Der Value-at-Risk von $L$ mit Verteilungsfunktion $F_L$ zum Level $\alpha \in (0,1)$ ist gegeben durch
+	\begin{equation*}
+		\VaR_\alpha(L) \defeq \inf \menge{\ell \in \R: F_L(\ell) \ge \alpha} = \inf \menge{\ell \in \R: \P(L > l) \le 1 - \alpha}
+	\end{equation*}
+\end{*definition}
+
+\begin{itemize}[nolistsep]
+	\item In Worten: $\VaR_\alpha(L)$ ist die kleinste Zahl $\ell$ mit der Eigenschaft, dass die Wahrscheinlichkeit einen Verlust $L$ zu erleiden, der $\ell$ übersteigt, kleiner als $1-\alpha$ ist.
+	\item Value-at-Risk entspricht genau dem $\alpha$-Quantil $q_\alpha(L)$ von $F_L$.
+	\item Typische Werte für $\alpha$ sind beispielsweise $0.95$ oder $0.99$.
+\end{itemize}
+
+Skizze: Dichte von $L$, Verteilung von $L$
+
+Die Quantilfunktion
+\begin{equation*}
+	q_\alpha(L) = \inf \menge{\ell \in \R: F_L(\ell) \ge \alpha}
+	\tag{$\star$} \label{eq: quantil-star}
+\end{equation*}
+wird auch als verallgemeinerte Inverse von $F_L$ bezeichnet.
+
+\begin{lemma}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wenn $F_L$ stetig und streng monoton ist, dann gilt $q_\alpha(L) = F_L^{-1}(\alpha)$ für alle $\alpha \in (0,1)$.
+		\item Wenn $F_L$ eine Dichte $f_L$ besitzt, dann gilt $\int_{-\infty}^{q_\alpha(L)} f_L(u) \diff{u} = \alpha$ für alle $\alpha \in (0,1)$.
+		\item Ein Wert $x_0 \in \R$ ist das $\alpha$-Quantil einer Verteilung genau dann, wenn gilt
+		\begin{equation*}
+			F_L(x_0) \ge \alpha \und F_L(x) < \alpha \text{ für alle } x < x_0
+		\end{equation*} 
+	\end{enumerate}
+\end{lemma}
+
+\begin{*bemerkung}[Problematische Fälle]
+	\begin{itemize}
+		\item $F_L$ nicht stetig (Sprung über Schwelle $\alpha$). In diesem Fall ist $F_L(q_\alpha(L)) \neq \alpha$.
+		\item $F_L$ ist nicht streng monoton (flache Stelle). Dann hat $F_L(x_0) = \alpha$ mehrere Lösungen, d.h. $F_L^{-1}$ ist nicht wohldefiniert.
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{proof}
+	Sei $F_L$ stetig, dann ist $\abb{F_L}{\R}{(0,1)}$ surjektiv und das Infimum in \eqref{eq: quantil-star} wird angenommen, d.h. $F_L(q_\alpha(L)) = \alpha$.
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*, nolistsep]
+		\item $F_L$ ist streng monoton, d.h. auch injektiv und somit mit der Eingangsfeststellung bijektiv. Somit existiert $F_L^{-1}$ und es gilt $q_\alpha(L) = F_L^{-1}(\alpha)$.
+		\item $F_L$ besitze eine Dichte $f_L$. Dann ist $F_L(x) = \int_{-\infty}^x f_L(u) \diff{u}$ stetig. Mit $x = q_\alpha(L)$ gilt $\alpha = \int_{-\infty}^{q_L(\alpha)} f_L(u) \diff{u}$.
+		\item entspricht der Definition des Infimums als größte untere Schranke
+	\end{enumerate}
+\end{proof}
+
+\begin{*beispiel}
+	\begin{enumerate}[leftmargin=*]
+		\item Sei $L = \Normal(\mu, \sigma^2)$, d.h. $F_L(x) = \Phi\brackets{\frac{x-\mu}{\sigma}}$. 
+		\begin{equation*}
+			\alpha = F_L(x_0) \follows \alpha = \Phi\brackets{\frac{x_0 - \mu}{\sigma}} \follows\Phi^{-1}(\alpha) = \frac{x_0 - \mu}{\sigma} \follows x_0 = \mu + \sigma \Phi^{-1}(\alpha)
+		\end{equation*}
+		d.h. $\VaR_\alpha(L) = \mu + \sigma \Phi^{-1}(\alpha)$.
+		\item Verallgemeinerung: Sei $L \sim F_{\mu, \sigma}$ mit $F_{\mu, \sigma}(x) = F(\frac{x-\mu}{\sigma})$ und $F$ ist stetig und streng monoton
+		(\enquote{Lage-Skalen-Familie} von Verteilungen). Dann gilt
+		\begin{equation*}
+			\VaR_\alpha(L) = \mu + \sigma F^{-1}(\alpha)
+		\end{equation*}
+		Aber im Allgemeinen muss $\mu$ nicht dem Erwartungswert von $L$ entsprechen und $\sigma^2$ nicht der Varianz.
+		\item Betrachte die Student-t-Verteilung mit $\nu > 0$ Freiheitsgraden und Dichte
+		\begin{equation*}
+			f(x) = c_\nu * \brackets{1 + \frac{x^2}{\nu}}^{-\brackets{\frac{\nu+1}{2}}}
+		\end{equation*}
+		Es sei $L \sim F_{\mu, \sigma}$ mit $F_{\mu, \sigma}(x) = F\brackets{\frac{x-\mu}{\sigma}}$ als Verteilungsfunktion von $L$.
+		Es gilt: 
+		\begin{equation*}
+			\EW[L] = \begin{cases}
+			\text{n. def.} & \text{für } \nu \in [0,1] \\ \mu &\text{für } \nu > 1
+			\end{cases} \quad \und \quad
+			\Var[L] = \begin{cases}
+			\text{n. def.} & \text{für } \nu \in [0,2] \\ \sigma \sqrt{\frac{\nu}{\nu-1}} &\text{für } \nu > 2
+			\end{cases}
+		\end{equation*}
+		\item Sei $L = \sigma B_t$ mit einer Brownschen Bewegung $B$ (d.h. $B_t \sim \Normal(0,t)$). Es gilt $\VaR_\alpha(L) = \sigma \sqrt{t} * \Phi^{-1}(\alpha)$.
+		Intuition: $B_t$ beschreibt die Summe viele kleiner Verluste über ein Zeitintervall $[0,t]$ $\to \VaR$ skaliert mit $\sqrt{t}$ (\enquote{square-root-law})
+	\end{enumerate}
+\end{*beispiel}
+
+\textbf{Vorteile des $\VaR$:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item für jede Verteilung $F_L$ definiert
+	\item einfach zu berechnen
+	\item einfach zu vestehen / zu erklären
+\end{itemize}
+
+\textbf{Nachteile des $\VaR$:}
+% TODO Skizze
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item berücksichtigt \textit{Wahrscheinlichkeit} hoher Verluste, aber nicht deren \textit{Ausmaß}
+	\item nicht subadditiv, d.h. bestraft unter Umständen Risikostreuung bzw. Diversifikation (mehr dazu im Kapitel 5.3)
+\end{itemize}
+

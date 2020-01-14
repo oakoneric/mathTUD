@@ -48,3 +48,110 @@ Ein $x \in \Rn$, welches \eqref{eq: nb} erfüllt, heißt \begriff{zulässig}, ei
 
 Zwischen \eqref{eq: opt} und \eqref{eq: d} gilt \begriff{schwache Dualität}, d.h. $d_\ast \le p_\ast$.
 Unter bestimmten Voraussetzungen gilt auch die \begriff{starke Dualität}, d.h. $d_\ast = p_\ast$.
+
+\begin{lemma}[Schwache Dualität]
+	Zwischen \eqref{eq: opt} und \eqref{eq: d} gilt die schwache Dualität, d.h.
+	\begin{equation*}
+		d_\ast \le p_\ast
+		\tag{WD} \label{eq: wd}
+	\end{equation*}
+\end{lemma}
+
+\begin{*bemerkung}
+	\begin{itemize}[nolistsep]
+		\item Die Differenz $p_\ast - d_\ast \ge 0$ heißt \begriff{Dualitätslücke} [duality gap].
+		\item Wenn die Dualitätslücke verschwindet, dann spricht man von starker Dualität, d.h. 
+		\begin{equation*}
+			d_\ast = p_\ast
+		\end{equation*}
+		\item Hinreichende Bedingungen für starke Dualität existieren vor allem für \textit{konvexe} Probleme.
+	\end{itemize}
+\end{*bemerkung}
+
+\begin{*definition}
+	Das Optimierungsproblem \eqref{eq: opt} heißt \begriff{konvex}, wenn $f_0$ konvex ist und die Menge der zulässigen Werte konvex ist. In diesem Fall kann \eqref{eq: opt} in folgende Form gebracht werden:
+	\begin{equation*}
+	\begin{aligned}
+		\min f_0(x) \text{ über } x \in \Rn \text{ 	unter NB }
+		\left\{ \begin{array}{rclcl}
+		f_i(x) &\le& 0 & \quad & i = 1, \dots, m \\
+		Ax &=& b & \quad & i = 1, \dots, p
+	\end{array} \right.
+	\end{aligned}
+		\tag{K-OPT} \label{eq: k-opt}
+	\end{equation*}
+	mit $f_0, f_1, \dots, f_m$ konvex, $A \in \R^{p \times m}$, $b \in \R^p$.
+\end{*definition}
+
+\begin{theorem}[Slaters Bedingung] \label{theorem: 4.2}
+	Betrachte das konvexe Optimierungsproblem \eqref{eq: k-opt}. Wenn $x \in \Rn$ existiert mit 
+	\begin{equation*}
+		f_i(x) < 0 \quad  \text{ für alle } i \in [m] \quad \und \quad Ax = b
+	\end{equation*}
+	dann gilt starke Dualität.
+\end{theorem}
+
+Für den Beweis verwenden wir den folgenden Trennungssatz für konvexe Mengen:
+\begin{theorem}[Trennungssatz für konvexe Mengen]
+	Seien $A,B \subseteq \Rn$ konvex,  nichtleer und disjunkt, d.h. $A \cap B = \emptyset$. Dann existieren $a \in \Rn \setminus \menge{0}$ und $b \in \R$, sodass 
+	\begin{equation*}
+		\begin{aligned}
+		\trans{a} x &\ge b \qquad \forall x \in A \\
+		\trans{a} x &\le b \qquad \forall x \in B
+		\end{aligned}
+	\end{equation*}
+	Die Hyperebene $h = \menge{x \in \Rn : \trans{a}x = b}$ heißt trennende Hyperebene für $A$ und $B$.
+\end{theorem}
+\begin{proof}
+	siehe Funktionalanalysis
+\end{proof}
+
+% TODO grafik
+
+\begin{proof}[\cref{theorem: 4.2}]
+	Betrachte folgende Teilmengen von $\R^N = \R^{m+p+1}$
+	\begin{equation*}
+		\begin{aligned}
+			\mathcal{G} &\defeq \menge{(u,v,t) \in \R^N : \exists x \in \Rn \text{ mit } f_i(x) = 0 \ \forall i \in [m] , Ax - b = v, f_0(x) = t} \\
+			\mathcal{A} &\defeq \menge{(u,v,t) \in \R^N : \exists x \in \Rn \text{ mit } f_i(x) \le u_i \ \forall i \in [m], Ax - b = v, f_0(x) \le t} \\
+			&= \mathcal{G} \oplus \Rm_{\ge 0} \times \menge{0}^p \times \R_{\ge 0} \\
+			\mathcal{B} &\defeq \menge{(0,0,t) \in \R^N : t \le p_\ast}
+		\end{aligned}
+	\end{equation*}
+	Es gilt: $\mathcal{A}$ und $\mathcal{B}$ sind konvex. \\
+	Behauptung: $A \cap B = \emptyset$ --- Beweis mit Widerspruch. Angenommen es existiert $(u,v,t) \in \mathcal{A} \cap \mathcal{B}$, dann gilt (wegen $\mathcal{B}$) $u = 0$, $v=0$ und $t < p_\ast$ sowie (wegen $\mathcal{A}$), dass ein $x \in \Rn$ existiert mit 
+	\begin{itemize}
+		\item $f_i(x) \le u_i = 0$ für alle $i \in [m]$ 
+		\item $h_i(x) \le v_i = 0$ für alle $i \in [p]$
+		\item $f_(x) \le t < p_\ast$ 
+	\end{itemize}
+	d.h. $x$ ist zulässig für \eqref{eq: k-opt} und besser als optimal.
+	Somit ist $\mathcal{A} \cap \mathcal{B} = \emptyset$.
+	
+	Wir wenden den Trennungssatz an und erhalten, dass ein $(\lambda, \nu, \mu) \in \R^N \setminus \menge{0}$ und $\alpha \in \R$ mit 
+	\begin{enumerate}[label=\Roman*., nolistsep]
+		\item $\trans{\lambda} u + \trans{\nu} v + \mu  t \ge \alpha \qquad \forall (u,v,t) \in \mathcal{A}$
+		\item $\trans{\lambda} u + \trans{\nu} v + \mu  t \le \alpha \qquad \forall (u,v,t) \in \mathcal{B}$
+	\end{enumerate}
+	Aus (II) erhalten wir $\mu t \le \alpha$ für alle $t < p_\ast$ (da $u = 0 = v$) und somit auch (wegen Stetigkeit linearer Funktionen) $\mu p_\ast \le  \alpha$. Aus (I) erhält man $\lambda_i \ge 0$ für alle $i \in [m]$ und $\mu \ge 0$ (sonst Widerspruch, da linke Seite mit negativer Komponente beliebig klein werden kann). Mit (I) und (II) folgt nun für alle $x \in \Rn$	\begin{equation*}
+		\sum_i \lambda_i f_i(x) + \sum_i \nu_i (Ax - b) \sum_i \mu f_0(x) 
+		=
+		\trans{\lambda} u + \trans{\nu} v + \mu t \overset{(I)}{\ge} \alpha \ge \mu p_\ast 
+		\tag{$\star$} \label{eq: theorem 4.3}
+	\end{equation*}
+	Falls $\mu > 0$ ist, setze $\schlange{\lambda} \defeq \frac{\lambda}{\mu}$ und $\schlange{\nu} \defeq \frac{\nu}{\mu}$. Dann gilt für alle $x \in \Rn$
+	\begin{equation*}
+		\sum_i \schlange{\lambda_i} f_i(x) + \sum_i \schlange{\nu_i} (Ax - b) + f_0(x) \ge p_\ast
+	\end{equation*}
+	Daraus folgt nun $g(\schlange{\lambda}, \schlange{\nu}) \ge p_\ast$, d.h. $d_\ast = \max_{(\lambda,\nu) \in \Rm_{\ge 0} \times \Rn} g(\lambda, \nu) \ge p_\ast$. Aber mit schwacher Dualität gilt $d_\ast \le p_\ast$ und somit $p_\ast = d_\ast$.
+	
+	Falls $\mu = 0$, dann folgt aus \eqref{eq: theorem 4.3} 
+	\begin{equation*}
+		\sum_i \lambda_i f_i(x) + \sum_i \nu_i (Ax - b) \ge 0 \qquad \forall x \in \Rn
+	\end{equation*}
+	Mit Slaters Bedingung existiert ein $\quer{x} \in \Rn$ mit $f_i(x) < 0$ für alle $i \in [m]$ und $A \quer{x} - b = 0$.
+	\begin{equation*}
+		\follows \sum_i \underbrace{\lambda_i}_{\ge 0} \underbrace{f_i(\quer{x})}_{< 0} \ge 0 \quad \follows \lambda = 0
+	\end{equation*}
+	$(\lambda, \nu, \mu) = (0,\nu,0) \in \R^N \setminus \menge{0}$, also $\nu \neq 0$ und $\trans{\nu} (A \quer{x} - b) = 0$, dann exisitert auch $\schlange{x}$ mit $\trans{\nu} (A \schlange{x} - b) < 0$ im Widerspruch zur Annahme. Also tritt der Fall $\mu = 0$ nicht ein.
+\end{proof}

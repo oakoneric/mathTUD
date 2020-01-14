@@ -1,0 +1,79 @@
+\section{Capital Asset Pricing Model (CAPM)}
+
+Ausgangspunkt: Optimalportfolio im zweiten Markowitz-Problem $p_\ast = \lambda * \Sigma^{-1}\brackets{\mu - r * \one}$. Wir normieren dies so, dass $\trans{p_\ast} \one = \one$. Damit brauchen wir $\lambda_\ast = \frac{1}{\trans{\one} \Sigma^{-1} \brackets{\mu - r\one}} = \frac{1}{b-cr}$.
+
+Wert des Marktportfolios: $M_0 = 1$ und $M_T = \brackets{1 + \trans{p_\ast} * R}$, Rendite $R_M = \trans{p_\ast} * R$
+
+\textbf{Zentrale Idee des CAPM:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Betrachte $M$ als beobachtbare Größe (im Gegensatz zum Markovitz-Modell, wo $M$ der Output war)
+	\item Aktienindex wie DAX oder S\&P500 sollte gute Näherung  für $M$ ergeben.
+\end{itemize}
+
+\vspace{\parskip}
+
+Wir betrachten folgende Kennzahlen.
+\begin{itemize}
+	\item Überschussrendite [excess return] (alpha):
+	\begin{equation*}
+		\begin{aligned}
+		\alpha_i &= \EW[R_i] - r \text{für Wertpapier} S^i \\
+		\alpha_M 
+		&= \EW[R_M] - r = \trans{p_\ast} \mu - r 
+		= \frac{\trans{\mu} \Sigma^{-1} (\mu - r \one)}{\trans{\one} \Sigma^{-1} (\mu - r \one)} - r 
+		= \frac{a - rb}{b - rc} - r 
+		= \frac{a - 2rb + r^2 c}{b - cr}
+		\end{aligned}
+	\end{equation*}
+	\item Beta-Koeffizient:
+	\begin{equation*}
+		\beta_i = \frac{\Cov{R_i}{R_M}}{\Var[R_M]} \text{skalierte Kovarianz zwischen Erträgen von } S^i \und M
+	\end{equation*}
+	\begin{itemize}[nolistsep]
+		\item Maß für Korrelation der Wertpapiere $S^i$ und Marktportfolio
+		\item volle Kovarianzmatrix wird nicht benötigt
+	\end{itemize}
+	Wir berechnen:
+	\begin{equation*}
+		\begin{aligned}
+			\beta_i 
+			&= \frac{\EW[(R_i - \mu_i)(R_M - \mu_M)]}{\EW[(R_M - \mu_M)^2]} \\
+			&= \frac{\EW[\trans{e_i}(R-\mu)\transpose{R-\mu}p_\ast]}{\EW[\trans{p_\ast} (R-\mu) \transpose{R-\mu} p_\ast]} \\
+			&= \frac{\trans{e_i} \Sigma p_\ast}{\trans{p_\ast}\Sigma p_\ast} \\
+			&= \frac{\lambda_\ast \trans{e_i} \Sigma \Sigma^{-1} (\mu - r \one)}{\lambda_\ast^2 \transpose{\mu - r\one} \Sigma^{-1} \Sigma \Sigma^{-1} (\mu - r\one)} \\
+			&= \frac{\mu_i - r}{\lambda_\ast (a-2rb - r^2 c)} \\
+			&= \frac{\mu_i - r}{\mu_M - r}
+		\end{aligned}
+	\end{equation*}
+	Durch Umstellen erhalten wir die CAPM-Gleichung
+	\begin{equation*}
+		\beta_i (\mu_M - r) = (\mu_i - r) \qquad \forall i \in [n]
+	\end{equation*}
+	Dabei bezeichnet $\beta_i$ den Beta-Koeffizienten von $S^i$, $(\mu_M - r)$ die Überschussrendite des Marktportfolios und $(\mu_i - r)$ als Überschussrendite von $S^i$ (alpha). 
+	\begin{itemize}[nolistsep]
+		\item Das kann als Regressionsgleichung für $(\alpha_i, \beta_i)_{i \in [n]}$ interpretiert werden.
+		\item  Entscheidend für die Attraktivität eines Wertpapiers $S^i$ ist nicht die Überschussrendite $\alpha_i = \mu_i - r$ alleine, sondern in Relation zu $\beta_i$.
+		\item CAPM kann empirisch überprüft werden durch Schätzung $(\dach{\alpha}_i, \dach{\beta}_i)$ und Regression
+		\begin{equation*}
+			\dach{\beta}_i (\mu_M - r) = \dach{\alpha}_i + \epsilon_i
+			\tag{$\star$} \label{eq: capm-star}
+		\end{equation*}
+		wobei ideal bedeutet, dass $\sum_{i=1}^n \epsilon_i^2$ klein ist.
+	\end{itemize}
+\end{itemize}
+
+\textbf{Kritik am CAPM:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Regrssion \eqref{eq: capm-star} empirisch im Allgemeinen nicht besonders gut (Fehler $\sum \epsilon_i^2$ groß)
+	\item Schätzung von $\mu_i$ und $\mu_M$ schwierig
+\end{itemize}
+
+\vspace{\parskip}
+
+\textbf{Erweiterungen:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Ergänze Schätzer $\dach{\mu}_i$ und $\dach{\mu}_M$ um Expertenmeinungen und Kofidenzaussagen \\
+	$\Rightarrow$ Black-Littermann-Modell
+	\item Erweiterung der Regressionsgleichung \eqref{eq: capm-star} um weiter Variablen \\
+	$\Rightarrow$ Fama-French-Modell
+\end{itemize}
