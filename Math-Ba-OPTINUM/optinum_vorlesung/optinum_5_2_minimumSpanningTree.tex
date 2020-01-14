@@ -1,0 +1,15 @@
+\section{Das Minimalgerüst-Problem / Minimum Spanning Tree Problem}
+
+Gegeben sei ein ungerichteter, zusammenhängender und gewichteter Graph $G = (V,E,c)$, wobei $\abb{c}{E}{\R}$ die Gewichtsfunktion ist.
+
+Gesucht ist eine Teilmenge $T \subseteq E$ mit $\card{T} = \card{V} - 1$, sodass der induzierte Teilgraph $G_T = (V,T)$ kreisfrei ist.
+
+\begin{definition}
+	Jede Teilmenge $T$ mit diesen Eigenschaften wird \begriff{Gerüst} oder \begriff{Spannbaum} genannt.
+\end{definition}
+
+\begin{bemerkung}
+	Der zu einem Spannbaum $T$ gehörende Teilgraph $G_T$ ist zusammenhängend.
+\end{bemerkung}
+
+Das Minimum-Spanning-Tree (MST) Problem besteht nun darin, einen Spannbaum zu finden, dessen Gesamtgewicht $\sum_{e \in T} c(e)$ kleinstmöglich ist. Es lässt sich mithilfe eines sogenannten \begriff{Greedy-Algorithmus} effizient lösen.

@@ -1,0 +1,122 @@
+\section{Dynamische Optimierung}
+
+Die Grundidee der dynamischen Optimierung  besteht in der Dekomposition des Ausgangsproblems in eine Folge ähnlich strukturierter Teilprobleme, deren Optimalwerte im Rahmen einer Rekursionsvorschrift zur Lösung der Originialaufgabe genutzt werden können. Eine solche Zerlegung erscheint besonders dann effektiv und zielführend, wenn der Einfluss einer Variable (oder Variablengruppe) auf das Gesamtproblem (also Zielfunktion und Nebenbedingung) \enquote{unabhängig} von den anderen Variablen (Variablengruppen) beschrieben werden kann ($\to$ Separabilität). Hier erfolgt die Betrachtung nur anhand zweier Beispiele.
+
+\subsection{Das Rucksackproblem in der dynamischen Optimierung}
+Wir betrachten das klassische Rucksackproblem 
+\begin{equation*}
+	f(x) = \trans{c} x \to \max \bei \trans{a}x \le b \und x \in \Z_+^n \tag{P} \label{eq: p-4.3.1}
+\end{equation*}
+mit ganzzahligen Eingabedaten $c$, $a$ und $b$.
+
+Für $k \in I \defeq \menge{1, \dots, n}$ und $y \in \menge{0,1,\dots, b}$ definieren wir nun ein Teilproblem von \eqref{eq: p-4.3.1} mittels
+\begin{equation*}
+	F(k,y) \defeq \max\menge{\sum_{i=1}^k c_i x_i : \sum_{i=1}^k a_i x_i \le y, x_i \in \Z_+, 1 \le i \le k}
+\end{equation*}
+Dabei hat der Rucksack durch $y$ eine verminderte Kapazität und es liegen durch $k$ beschränkt weniger Teiletypen vor.
+Um \eqref{eq: p-4.3.1} muss also $F(n,b)$ bestimmt werden.
+Zunächst beobachten wir
+\begin{equation*}
+	F(1,y) = c_1 * \left\lfloor \frac{y}{a_1} \right\rfloor \quad \forall y \in {0, \dots, b}
+\end{equation*}
+Außerdem legen wir fest, dass $F(k,y) = 0$ falls $y < 0$.
+Aufgrund der Linearität der Zielfunktion und der Nebenbedingung gilt für $k > 1$ der Zusammenhang
+\begin{equation*}
+	F(k,y) = \max\menge{c_k x_k + F(k-1, y-a_k x_k): x_k = 0,1,\dots \left\lfloor \frac{y}{a_k} \right\rfloor}
+\end{equation*}
+bzw. äquivalent dazu (für $y \ge a_n$)
+\begin{equation}
+	F(k,y) = \max \Bigl\{  \underbrace{F(k-1,y)}_{\dach{=} x_k = 0}, \underbrace{c_k + F(k,y-a_n)}_{\dach{=} x_k \ge 1} \Bigr\}
+	\label{eq: 4.6}
+\end{equation}
+Der Optimalwert des Zustandes $(k,y)$ wird auf Optimalwerte \enquote{kleinerer} Zustände zurückgeführt. Diese müssen also zur Berechnung von $F(k,y)$ bereits bekannt sein.
+
+\begin{*algorithmus}[Gilmore \& Gomory]
+	\begin{enumerate}[label=Schritt \arabic*:, leftmargin=*]
+		\item Setze $F(1,y) = c_1 * \left\lfloor \frac{y}{a_1} \right\rfloor$ für $y = 0, \dots, b$
+		\item Für $k = 2, \dots, n$ :
+		\begin{itemize}
+			\item für $y = 0, \dots a_k - 1$ setze $F(k,y) = F(k-1,y)$
+			\item für $y = a_k, \dots, b$ setze $F(k,y) = \max\menge{F(k-1,y), F(k,y-a_k)+c_k}$
+		\end{itemize}
+	\end{enumerate}
+\end{*algorithmus}
+
+
+\begin{beispiel}
+	Betrachte das Rucksackproblem 
+	\begin{equation*}
+		5x_1 + 10x_2 + 12x_3 + 6x_4 \to \max \bei 4x_1 + 7x_2 + 9x_3 + 5x_4 \le 15, x_i \in \Z_+, i=1, \dots, 4
+	\end{equation*}
+	Dieses Rucksackproblem lösen wir mithilfe einer Tabelle: 
+	\begin{center}
+		\begin{tabular}{r|rrrrrrrrrrrrrrrr}
+			$k \backslash y$ & 0     & 1     & 2     & 3     & 4     & 5     & 6     & 7     & 8     & 9     & 10    & 11    & 12    & 13    & 14    & 15 \\ \hline
+			1     & 0     & 0     & 0     & 0     & 5     & 5     & 5     & 5     & 10    & 10    & 10    & 10    & 15    & 15    & 15    & 15 \\
+			2     & 0     & 0     & 0     & 0     & 5     & 5     & 5     & \fbox{10}    & 10    & 10    & 10    & 15    & 15    & 15    & 20    & 20 \\
+			3     & 0     & 0     & 0     & 0     & 5     & 5     & 5     & 10    & 10    & 12    & 12    & 15    & 15    & 15    & 20    & 20 \\
+			4     & 0     & 0     & 0     & 0     & 5     & 6     & 6     & 10    & 10    & 12    & 12    & 15    & 16    & 17    & 20    & 20 \\
+			&       &       &       &       &       &       &       &       &       &       &       &       &       &       &       &  
+		\end{tabular}
+	\end{center}	
+	$\fbox{\phantom{M}}= \max\menge{F(1,7), F(2,7-7) + 10} = \max\menge{5,10} = 10$
+	
+	Somit ist der Zielfunktionswert $F(n,b) = 20$. 	
+	Einen zulässigen Punkt mit diesem Zielfunktionswert findet man durch Rückwärtsauswertung der Rekursion, z.B. ergibt die Auswertung
+	\begin{equation*}
+	(4,15) \overset{x_4 = 0}{\longleftarrow} (3,15) \overset{x_3 = 0}{\longleftarrow} (2,15) \overset{x_2 \ge 1}{\longleftarrow} (2,8) \overset{x_2 = 1}{\longleftarrow} (1,8) \overset{x_1 \ge 1}{\longleftarrow} (1,4) \overset{x_1 = 2}{\longleftarrow} (1,0)
+	\end{equation*}
+	den Punkt $x^\ast = (2,1,0,0)$. 
+	Diese Lösung ist nicht zwangsläufig eindeutig. Auch $x^\ast = (0,2,0,0)$ ist hier eine Lösung.
+\end{beispiel}
+
+\subsection{2D-Guillotine-Zuschnitt}
+
+\begin{center}
+	\color{cdgray} \osfamily \itshape Dieses Thema ist informativ und wird nicht geprüft werden.
+\end{center}
+
+Aus einem Rechteck der Größe $L \times W$ sollen kleinere Rechtecke der Größe $\ell_i \times w_i$ mit $i \in I = \menge{1, \dots, m}$ durch Guillotine-Schnitte so zugeschnitten werden, dass der Abfall minimal ist. Wir nehmen an, dass alle Inputdaten ganzzahlig sind und die gewünschten Teile auch mehrfach erhalten werden können.
+
+\begin{center}
+	\begin{tikzpicture}
+	\node(W) at (-.3,1) {$W$};
+	\node(r) at (.5,-.3) {$r$};
+	\node(Lr) at (2,-.3) {$L-r$};
+	
+	\draw (0,0) rectangle (3,2);
+	\draw (1,2.1) -- (1,-.1);
+	\end{tikzpicture}
+	\hspace{4em}
+	\begin{tikzpicture}
+	\node(Ws) at (-.7,1.66) {$W-s$};
+	\node(s) at (-.3,.66) {$s$};
+	\node(L) at (1.5,-.3) {$L$};
+	
+	\draw (0,0) rectangle (3,2);
+	\draw (-.1,1.33) -- (3.1,1.33);
+	\end{tikzpicture}
+\end{center}
+
+Es bezeichnet $F(\ell, w)$ den Maximalwert der genutzten Fläche des (Teil-)Rechtecks $\ell \times w$, also
+\begin{equation*}
+	F(\ell, w) = \max\menge{\sum_{i \in I} (\ell_i * w_i) * a_i : a = \transpose{a_1, \dots, a_m} \text{ ist eine zulässige } 
+		\footnotesize \begin{array}{l}
+			\text{Packungsvariante /} \\
+			\text{Zuschnittsvariante}
+		\end{array}
+		}
+\end{equation*}
+Der Faktor $\ell_i * w_i$ beschreibt dabei die Fläche von Objekt $i$.
+Offensichtlich ist $F(\ell, w) = 0$ falls $0 \le \ell < \min\menge{\ell_i : i \in I}$ oder $0 \le w < \min\menge{w_i : i \in I}$ gelten. Außerdem kann $F(\ell_i, w_i) = \ell_i * w_i$ für $i \in I$ initialisiert werden. Darauf aufbauend lässt sich gemäß
+\begin{equation*}
+	F(\ell,w) \defeq \max\menge{h(\ell,w), v(\ell, w)}
+\end{equation*}
+eine Rekursion für alle noch verbleibenden Paare $(\ell,w)$ mit $0 \le \ell \le L$, $0 \le w \le W$ definieren. Dabei gilt
+\begin{equation*}
+	\begin{aligned}
+	h(\ell,w) &= \max_{r=1, \dots \left\lfloor \frac{\ell}{2} \right\rfloor} \menge{F(r,w) + F(\ell-r, w)} \\
+	v(\ell, w) &= \max_{s=1, \dots \left\lfloor \frac{w}{2} \right\rfloor} \menge{F(\ell,s) + F(\ell, w-s)}
+	\end{aligned}
+\end{equation*}
+Der Optimalwert für ein großes Rechteck kann also aus den Optimalwerten kleinerer Rechtecke gewonnen werden.

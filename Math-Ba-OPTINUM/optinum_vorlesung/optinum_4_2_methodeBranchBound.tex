@@ -349,7 +349,7 @@ Für das Problem \eqref{eq: 4.1} -- \eqref{eq: 4.5} kann man auf folgende Weise 
 	Die oben genannten Schrankenwerte unterscheiden sich (mitunter stark) hinsichtlich des numerischen Aufwands und der Güte der erhaltenen Näherungen. In dieser Vorlesung betrachten wir die dritte Variante.
 \end{itemize}
 
-\begin{beispiel}
+\begin{beispiel} \label{beispiel: 4.3}
 	Wir betrachten die Kostenmatrix
 	
 	\begin{center}
@@ -378,3 +378,74 @@ Dabei betrachten wir die Elemente mit $w_{ik} = 0$ und verzweigen gemäß $x_{ik
 	\item Eingedenk\footnote{Alternativer Vorschlag: im Lichte der Bedingungen \dots} der Bedingungen \eqref{eq: 4.2} und \eqref{eq: 4.3} impliziert die Wahl $x_{ik} = 1$, dass $x_{jk} = 0$ für alle $j \neq i$ und $x_{i\ell} = 0$ für alle $\ell \neq k$ gelten muss. Für diese Indexpaare kann man die Kosten auf $+\infty$ erhöhen. Weiterhin muss die Subtour $i \to k \to i$ verhindert werden, d.h. es gilt $x_{ki} = 0$ und damit $w_{ki} = +\infty$. (Analog verfahre man gegebenenfalls mit längeren Subtouren.)
 	Infolge dieser Änderung der Kostenmatrix können im Anschluss weitere Zeilen- und Spaltenreduktionen ermöglicht werden, die zu verbesserte Schranken (in den entsprechenden Teilproblemen) führen können.
 \end{itemize}
+
+Um wenigstens in einem der beiden Fälle ($x_{ik} = 0$, $x_{ik}=1$) einen möglichst guten Anstieg der unteren Schranke zu erreichen, ist folgende Auswahlregel empfehlenswert. Für jedes $(i,k)$ mit $w_{ik} = 0$ überlege man im Vorfeld bereits, welcher Zuwachs der Schranke im Fall $x_{ik} = 0$ (d.h. wenn $w_{ik} = \infty$ gesetzt wird) zu erwarten ist. Dieses Gewicht $\schlange{w}_{ik}$ bestimmt sich zu 
+\begin{equation*}
+	\schlange{w}_{ik} \defeq \min_{q \neq k} w_{iq} + \min_{p \neq i} w_{pk}
+\end{equation*}
+und kann an jeder Nullzelle vorab notiert werden. Für die Verzweigung ist dann eine solche Zelle zu wählen, deren Wert $\schlange{w}_{ik}$ am größten ist.
+
+\begin{beispiel}[Fortsetzung]
+	Die reduzierte Matrix aus \cref{beispiel: 4.3} ergibt sich zu
+	\begin{center}
+		\begin{tabular}{r|ccccc}
+			$w_{ik}$ &          &    &    &    &   \\ \hline 
+			& $\infty$ & 10 & $0^{\textcolor{cdpurple}{2}}$ & 8 & 2 \\
+			& 4       & $\infty$ & $0^{\textcolor{cdpurple}{4}}$ & 15 & $\infty$\\
+			& $\infty$ & $0^{\textcolor{cdpurple}{7}}$ & $\infty$ & 5 & 3 \\
+			& 7 & 4 & 1 & $\infty$ & $0^{\textcolor{cdpurple}{3}}$ \\
+			& $0^{\textcolor{cdpurple}{4}}$ & 7 & 3 & $0^{\textcolor{cdpurple}{5}}$ & $\infty$ \\ 
+		\end{tabular}
+	\end{center}
+	Die Hilfsgröße $\textcolor{cdpurple}{\schlange{w}_{ik}}$ ist für $(i,k) = (3,2)$ maximal. Die nächste Verzweigung wäre also $x_{32} = 0$ vs. $x_{32} = 1$.
+	
+	$x_{32} = 0$ liefert
+	\begin{center}
+		\begin{tabular}{r|ccccc|r}
+			$w_{ik}$ &          &    &    &    &  & $u_i$  \\ \hline 
+			& $\infty$ & 10 & $0^{\textcolor{cdpurple}{2}}$ & 8 & 2 & 0 \\
+			& 4       & $\infty$ & $0^{\textcolor{cdpurple}{4}}$ & 15 & $\infty$ & 0 \\
+			& $\infty$ & $\infty$ & $\infty$ & 5 & 3& 3 \\
+			& 7 & 4 & 1 & $\infty$ & $0^{\textcolor{cdpurple}{3}}$ & 0\\
+			& $0^{\textcolor{cdpurple}{4}}$ & 7 & 3 & $0^{\textcolor{cdpurple}{5}}$ & $\infty$ & 0 \\ \hline
+			$v_k$ & 0 & 4 & 0 & 0 & 0 & $b = 55 + 7 = 62$
+		\end{tabular}
+		$\overset{\text{Reduktion}}{\longrightarrow}$
+		\begin{tabular}{r|ccccc}
+			$w_{ik}$ &          &    &    &    &    \\ \hline 
+			& $\infty$ & 6 & 0 & 8 & 2  \\
+			& 4       & $\infty$ & 0 & 15 & $\infty$ \\
+			& $\infty$ & $\infty$ & $\infty$ & 2 & 0 \\
+			& 7 & 4 & 1 & $\infty$ & 0 \\
+			& 0 & 3 & 3 & 0 & $\infty$ \\ 
+		\end{tabular}
+	\end{center}
+	
+	$x_{32} = 1$ liefert
+	\begin{center}
+		\begin{tabular}{r|ccccc|r}
+			$w_{ik}$ &          &    &    &    &  & $u_i$  \\ \hline 
+			& $\infty$ & $\textcolor{cdpurple}{\infty}$ & 0 & 8 & 2 & 0 \\
+			& 4       & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ & 15 & $\infty$ & 4 \\
+			& $\infty$ & 0 & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ & 0 \\
+			& 7 & $\textcolor{cdpurple}{\infty}$ & 1 & $\infty$ & 0 & 0 \\
+			& $0$ & $\textcolor{cdpurple}{\infty}$ & 3 & 0 & $\infty$ & 0 \\ \hline
+			$v_k$ & 0 & 0 & 0 & 0 & 0 & $b = 55 + 4 = 59$
+		\end{tabular}
+		$\overset{\text{Reduktion}}{\longrightarrow}$
+		\begin{tabular}{r|ccccc}
+			$w_{ik}$ &          &    &    &    &  \\ \hline 
+			& $\infty$ & $\textcolor{cdpurple}{\infty}$ & 0 & 8 & 2\\
+			& 0       & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ & 11 & $\infty$ \\
+			& $\infty$ & 0 & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ & $\textcolor{cdpurple}{\infty}$ \\
+			& 7 & $\textcolor{cdpurple}{\infty}$ & 1 & $\infty$ & 0 \\
+			& $0$ & $\textcolor{cdpurple}{\infty}$ & 3 & 0 & $\infty$ \\
+		\end{tabular}
+	\end{center}
+Fazit: 
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item $z \ge 59$ für jede Rundreise mit $x_{32} = 1$
+	\item $z \ge 62$ für jede Rundreise mit $x_{32} = 0$
+\end{itemize}
+Ein vollständiges Beispiel befindet sich auf dem Übungsblatt.
+\end{beispiel}

@@ -1,0 +1,243 @@
+\section{Schnittebenenverfahren}
+
+Wir betrachten 
+\begin{equation*}
+	\trans{c} x \to \min \bei Ax=b, x \in \Z_+^n 
+	\tag{P} \label{eq: 4-4-p}
+\end{equation*}
+mit zumindest rationalen Daten $A,b,c$ und die zugehörige stetige Relaxation
+\begin{equation*}
+	\trans{c} x \to \min \bei Ax=b, x \in \R_+^n 
+	\tag{Q} \label{eq: 4-4-q}
+\end{equation*}
+
+Idee: Lösung der stetigen Aufgabe und anschließende Hinzunahme geeigneter Nebenbedingungen zur schrittweisen Konstruktion einer ganzzahligen Lösung
+
+Nehmen wir also an, dass \eqref{eq: 4-4-q} mit dem Simplex-Verfahren gelöst wurde. Dann existiert eine Partition $\menge{1, \dots, n} = B \cup N$, sodass (mit $P = -A_B^{-1} A_N$) das endgültige Tableau wie folgt darstellbar ist:
+\begin{equation*}
+	\begin{array}{rcll}
+		x_B &=& Px_N + p \quad &(p \ge 0) \\
+		z   &=& \trans{q} x_n + q_0  \quad &(q \ge 0)
+	\end{array}
+	\qquad \text{ bzw. } \qquad 
+	\begin{array}{rcl}
+		x_B - Px_n &=& p \\
+		z &=& \trans{q} x_N + q_0
+	\end{array}
+\end{equation*}
+Die Lösung von \eqref{eq: 4-4-q} lautet demnach $(x_B, x_N) = (p,0)$. Falls $x_B = p$ bereits ganzzahlig ist, löst $x$ auch \eqref{eq: 4-4-p}. Andernfalls (für nicht ganzzahliges $x_B = p$) möchten wir eine (oder mehrere) Nebenbedingung(en) zu \eqref{eq: 4-4-q} hinzufügen, sodass
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item der Punkt $x$ nicht mehr zulässig für \eqref{eq: 4-4-q} ist
+	\item jeder ganzzahlige Punkt des zulässigen Bereichs von \eqref{eq: 4-4-p} (bzw. \eqref{eq: 4-4-q}) noch immer zulässig ist.
+\end{itemize}
+Dazu eignet sich folgender Ansatz: Es sei $p_i \notin \Z_+$ für $i \in I_B$. Wegen
+\begin{equation*}
+	[x_B]_i + \sum_{j \in N} (-P_{ij}) x_j = p_i \quad \forall x \in \Rn_+ \mit Ax = b
+\end{equation*}
+erhält man zunächst 
+\begin{equation*}
+	\begin{aligned}
+		[x_B]_i + \sum_{j \in N} \left\lfloor -P_{ij} \right\rfloor x_j &\le p_i \quad \forall x \in \Rn_+ \mit Ax = b \\
+		\follows [x_B]_i + \sum_{j \in N} \left\lfloor -P_{ij} \right\rfloor x_j &\le \left\lfloor p_i \right\rfloor \quad \forall x \in \Z^n_+ \mit Ax = b
+	\end{aligned}
+\end{equation*}
+Beide Beobachtungen zusammen ergeben
+\begin{equation*}
+	\underbrace{p_i - \left\lfloor p_i \right\rfloor}_{\defqe r_i} \le \sum_{j \in N} (-P_{ij} - \left\lfloor - P_{ij} \right\rfloor) x_j = \sum_{j \in N} \underbrace{(\left\lceil P_{ij} \right\rceil - P_{ij})}_{\defqe r_{ij}} x_j \quad \forall x \in \Z_+^n \mit Ax = b
+\end{equation*}
+
+\begin{definition}
+	Die Ungleichung $\sum_{j \in N} r_{ij} x_j \ge r_i$ heißt \begriff{\person{Gomory}-Schnitt} zur Zeile $i \in I_B$.
+\end{definition}
+
+Aufgrund von $x_j = 0$ für alle $j \in N$ (für die aktuell betrachtete Lösung $x$ von \eqref{eq: 4-4-q}) und $p_i \in \Z_+$ erhält man
+\begin{itemize}
+	\item $r_i = p_i - \left\lfloor p_i \right\rfloor > 0$
+	\item $0 \overset{x_N = 0}{=} \sum_{j \in N} r_{ij} x_j \ge r_i > 0 \follows \lightning$ 
+\end{itemize}
+Das heißt also, dass die aktuelle (stetige) Lösung $x$ vom zulässigen Bereich \enquote{abgetrennt} wird.
+
+Setzt man zulässig man zusätzlich $r_{ij} = 0$ für $j \in B$, so erhält man einen Koeffizientenvektor $r^{(1)} \in \Rn$ und es gilt
+\begin{equation*}
+	G_p \defeq \menge{x \in \Z_+^n: Ax = b} = \menge{x \in \Z_+^n: Ax = b, \transpose{r^{(1)}} x \ge r_i}
+\end{equation*}
+Durch Gormory-Schnitte erhält man eine im Allgmeinen strengere Relaxation zu \eqref{eq: 4-4-p}
+\begin{equation*}
+	z = \trans{q} x_N + q_0 \to \min \bei x_B = Px_ N + p, \quad s = \sum_{j \in N} r_{ij} x_j \underbrace{- r_i}_{< 0}, \quad x_B, x_N, s \ge 0
+	\tag{$Q_1$} \label{eq: 4-4-q1}
+\end{equation*}
+Die Nebenbedingung $s = \sum_{j \in N} r_{ij} x_j \underbrace{- r_i}_{< 0}$ stellt dabei den Gomory-Schnitt mit Schlupfvariablen $s$ dar.
+
+Insgesamt ergibt sich damit das Gomory-Verfahren:
+\begin{enumerate}[label=Schritt \arabic*:, nolistsep, leftmargin=*, start=0]
+	\item Initialisierung: $k \defeq 0$, $(Q_k) = (Q)$.
+	\item Löse $(Q_k)$, z.B. mit einem Simplex-Verfahren. 
+	\begin{itemize}
+		\item Falls $(Q_k)$ nicht zulässig ist (leerer zulässiger Bereich), dann ist auch \eqref{eq: 4-4-p} nicht zulässig. \texttt{STOP}
+		\item Falls $z$ für $(Q_k)$ unbeschränkt ist, dann ist auch $(P)$ nicht lösbar. \texttt{STOP}
+		\item Falls Lösungen von $(Q_k)$ ganzzahlig sind, dann sind diese auch Lösungen von \eqref{eq: 4-4-p}. \texttt{STOP}
+	\end{itemize}
+	\item Füge einen Gomory-Schnitt zu $(Q_k)$ hinzu und erhalte $(Q_{k+1})$. Setze $k \defeq k+1$ und gehe zu Schritt 1.
+\end{enumerate}
+
+\begin{beispiel}
+	\label{beispiel: 4.6}
+	Wir betrachten
+	\begin{equation*}
+		x_1 \to \min \bei -4x_1 + 4x_2 \le -1 , 8x_1 + 16x_2 \le 0, x_1, x_2 \in \Z_+ 
+		\tag{P} \label{eq: 4.6-p}
+	\end{equation*}
+	Die Einführung von Schlupfvariablen liefert
+	
+	\begin{tabular}{l m{5cm}}
+		\begin{tabular}{r|cc|c}
+			$T_0$ & $x_1$ & $x_2$ & $1$ \\ \hline
+			$x_3$ & \fbox{$4$} & $-4$ & $-1$ \\
+			$x_4$ & $-8$ & $-16$ & $9$ \\ \hline
+			$z$ & $1$ & $0$ & $0$ \\ \hline
+			K & $\ast$ & $1$ & $\frac{1}{4}$
+		\end{tabular}
+		&
+		\begin{tabular}{r|cc|c}
+			$T_1$ & $x_3$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{4}$ & $1$ & $\frac{1}{4}$ \\
+			$x_4$ & $-2$ & $-24$ & $7$ \\ \hline
+			$z$ & $\frac{1}{4}$ & $1$ & $\frac{1}{4}$ \\
+		\end{tabular} 
+		\\
+		dual zulässig
+		&
+		optimales Tableau, aber nicht ganzzahlig	
+	\end{tabular}
+
+	Es gilt $p_1 = \frac{1}{4} \notin \Z$, also erhält man den Gomory-Schnitt
+	\begin{equation*}
+			\underbrace{\brackets{\left\lceil \frac{1}{3} \right\rceil - \frac{1}{4}}}_{=r_{13}} x_3 + \underbrace{\brackets{\left\lceil 1 \right\rceil - 1}}_{= r_{12}} x_2 \ge \underbrace{\frac{1}{4} - \left\lfloor \frac{1}{4} \right\rfloor}_{=r_1}
+			\equivalent \frac{3}{4} x_3 \ge \frac{1}{4} \leadsto s_1 = \frac{3}{4} x_3 - \frac{1}{4} (s_1 \ge 0)
+	\end{equation*}
+	
+	\begin{center}
+		\begin{tabular}{r|cc|c}
+			$T_1$ & $x_3$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{4}$ & $1$ & $\frac{1}{4}$ \\
+			$x_4$ & $-2$ & $-24$ & $7$ \\
+			$s_1$ & \fbox{$\frac{3}{4}$} & $0$ & $-\frac{1}{4}$ \\ \hline
+			$z$ & $\frac{1}{4}$ & $1$ & $\frac{1}{4}$ \\
+		\end{tabular}
+		\begin{tabular}{r|cc|cr}
+			$T_2$ & $s_1$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{3}$ & $1$ & $\frac{1}{3}$ \\
+			$x_4$ & $-\frac{8}{3}$ & $-24$ & $\frac{19}{3}$ \\
+			$x_3$ & $\frac{4}{3}$ & $0$ & $\frac{1}{3}$ & \phantom{\fbox{$\frac{3}{4}$}} \\ \hline
+			$z$ & $\frac{1}{3}$ & $1$ & $\frac{1}{3}$ \\
+		\end{tabular}
+	\end{center}
+
+	Es gilt $p_1 = \frac{1}{3} \notin \Z$, also erhält man den Schnitt
+	\begin{equation*}
+		\brackets{\rdceil{\frac{1}{3}} - \frac{1}{3}} s_1 + \brackets{\rdceil{1} - 1} x_2 \ge \frac{1}{3} - \rdfloor{\frac{1}{3}} \equivalent \frac{2}{3} s_1 \ge \frac{1}{3} \leadsto s_2 = \frac{2}{3} s_1 - \frac{1}{3} (s_2 \ge 0)
+	\end{equation*}
+	
+	\begin{center}
+		\begin{tabular}{r|cc|c}
+			$T_2$ & $s_1$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{3}$ & $1$ & $\frac{1}{3}$ \\
+			$x_4$ & $-\frac{8}{3}$ & $-24$ & $\frac{19}{3}$ \\
+			$x_3$ & $\frac{4}{3}$ & $0$ & $\frac{1}{3}$ \\
+			$s_2$ & \fbox{$\frac{2}{3}$} & $0$ & $-\frac{1}{3}$ \\ \hline
+			$z$ & $\frac{1}{3}$ & $1$ & $\frac{1}{3}$ \\
+		\end{tabular}
+		$\longrightarrow$
+		\begin{tabular}{r|cc|c}
+			$T_3$ & $s_2$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{2}$ & $1$ & $\frac{1}{2}$ \\
+			$x_4$ & $-4$ & $-24$ & $5$ \\
+			$x_3$ & $2$ & $0$ & $1$ \\
+			$s_1$ & $\frac{3}{2}$ & $0$ & $\frac{1}{2}$ \\ \hline
+			$z$ & $\frac{1}{2}$ & $1$ & $\frac{1}{2}$ \\
+		\end{tabular}
+	\end{center}
+
+	Es gilt $p_1 = \frac{1}{2} \notin \Z$, also erhält man den Schnitt 
+	\begin{equation*}
+		\brackets{\rdceil{\frac{1}{2}} - \frac{1}{2}} s_2 + \brackets{\rdceil{1} - 1} x_2 \ge \frac{1}{2} - \rdfloor{\frac{1}{2}} \equivalent \frac{1}{2} s_2 \ge \frac{1}{2} \leadsto s_3 = \frac{1}{2} s_2 - \frac{1}{2} (s_3 \ge 0)
+	\end{equation*}
+	
+	\begin{center}
+		\begin{tabular}{r|cc|c}
+			$T_3$ & $s_2$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $\frac{1}{2}$ & $1$ & $\frac{1}{2}$ \\
+			$x_4$ & $-4$ & $-24$ & $5$ \\
+			$x_3$ & $2$ & $0$ & $1$ \\
+			$s_1$ & $\frac{3}{2}$ & $0$ & $\frac{1}{2}$ \\
+			$s_3$ & \fbox{$\frac{1}{2}$} & $0$ & $-\frac{1}{2}$ \\ \hline
+			$z$ & $\frac{1}{2}$ & $1$ & $\frac{1}{2}$ \\
+		\end{tabular}
+		$\longrightarrow$
+		\begin{tabular}{r|cc|c}
+			$T_4$ & $s_3$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & & & $1$ \\
+			$x_4$ & & & $1$ \\
+			$x_3$ & & & $3$ \\
+			$s_1$ & & & $2$ \\
+			$s_2$ & \phantom{\fbox{$\frac{1}{2}$}} & \phantom{\fbox{$\frac{1}{2}$}} & $1$ \\ \hline
+			$z$ & $1$ & $1$ & $1$ \\
+		\end{tabular}
+	\end{center}
+	
+	Die Lösung lautet also $x^\ast = (1,0)$ mit $z^\ast = 1$.
+\end{beispiel}
+
+Für eine grafische Visualisierung der Schnitte ist es (z.B. in \cref{beispiel: 4.6}) notwendig, diese auf eine Form zu bringen, die nur die Originalvariablen (hier: $x_1$, $x_2$) enthält. Für den ersten Schnitt gilt
+\begin{equation*}
+	\frac{3}{4} x_3 \ge \frac{1}{4} 
+\end{equation*}
+erhält man unter Verwendung von $x_3 = -1 + 4x_1 - 4x_2$ (aus dem Tableau $T_0$)
+\begin{equation*}
+	x_3 \ge \frac{1}{3} \equivalent -1 + 4x_1 - 4x_2 \ge \frac{1}{3} \equivalent x_1 - x_2 \ge \frac{1}{3}
+\end{equation*}
+Die Anzahl der Gomory-Schnitte ist im Allgemeinen exponentiell (zumindest bei willkürlicher Auswahl der Zeilen $i \in B$). Es gilt:
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item Ist die Menge der zulässigen Punkte beschränkt, so liefert der Algorithmus nach endlich vielen Schritten eine ganzzahlige Lösung oder es existiert keine solche.
+	\item Das lexikographische Gomory-Verfahren (d.h. immer Auswahl der Variable mit kleinstem Index) ist endlich.
+\end{itemize}
+\vspace{\parskip}
+
+Das Verfahren zur Lösung von \eqref{eq: 4-4-p} kann mitunter dadurch beschleunigt werden, dass 
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item \enquote{bessere} (problemspezifische) Schnitte verwendet werden (z.B. Chvatal-Gomory-Schnitte, facettendefinierende Schnitte)
+	\item Teilbarkeiten (bzw. Runden) geschickt genutzt werden
+\end{itemize}
+\vspace{\parskip}
+
+\begin{beispiel}[Fortsetzung von \labelcref{beispiel: 4.6}]
+	Wir betrachten erneut \eqref{eq: 4.6-p} aus \cref{beispiel: 4.6} und formen dieses äquivalent um zu
+	\begin{equation*}
+		x_1 \to \min \bei -x_1 + x_2 \le -\frac{1}{4}, x_1 + 2x_2 \le \frac{9}{8}, x_1, x_2 \in \Z_+
+	\end{equation*}
+	Da alle Terme auf der linken Seite der Nebenbedingung ganzzahlig sind, ist dies wiederum gleichwertig zu
+	\begin{equation*}
+		x_1 \to \min \bei -x_1 + x_2 \le -1, x_1 + 2x_2 \le 1, x_1, x_2 \in \Z_+
+		\tag{P'} \label{eq: 4.-p'}
+	\end{equation*}
+	Dann erhält man als (dual zulässiges) Starttableau
+	\begin{center}
+		\begin{tabular}{r|cc|c}
+			$T_0$ & $x_1$ & $x_2$ & $1$ \\ \hline
+			$x_3$ & \fbox{$1$} & $-1$ & $-1$ \\
+			$x_4$ & $-1$ & $-2$ & $1$ \\ \hline
+			$z$ & $1$ & $0$ & $0$ \\
+			K & $\ast$ & $1$  & $1$ \\
+		\end{tabular}
+		$\qquad \longrightarrow \qquad$	
+		\begin{tabular}{r|cc|c}
+			$T_1$ & $x_3$ & $x_2$ & $1$ \\ \hline
+			$x_1$ & $1$ & $1$ & $1$ \\
+			$x_4$ & $-1$ & $-3$ & $0$ \\ \hline
+			$z$ & $1$ & $1$ & $1$ \\
+		\end{tabular}
+	\end{center}	
+	
+	$T_1$ ist optimal und ganzzahlig, d.h. wir erhalten die gleiche Lösung $x^\ast = (1,0)$ mit $z^\ast = 1$.
+	Die Verbesserungen führen also hier dazu, dass kein einziger Gomory-Schnitt betrachtet werden muss.
+\end{beispiel}
