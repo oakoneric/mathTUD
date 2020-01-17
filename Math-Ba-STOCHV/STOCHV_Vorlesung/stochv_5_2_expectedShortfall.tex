@@ -1,0 +1,90 @@
+\section{Expected Shortfall}
+\begin{*definition}
+	Für einen Verlust $L$ mit $\EW[L^+] < \infty$ ist der \begriff{Expected Shortfall} (ES) zum Level $\alpha \in (0,1)$ definiert als
+	\begin{equation*}
+	\ES_\alpha(L) \defeq \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u}
+	\end{equation*}
+\end{*definition}
+
+\begin{*bemerkung_inline}
+	Der Expected Shortfall wird auch \enquote{Average Value-at-Risk} oder \enquote{Conditional Value-at-Risk} genannt.
+\end{*bemerkung_inline}
+
+\textbf{Skizze:} %TODO
+
+\pagebreak
+
+\begin{theorem}
+	Sei $\EW[L^+] < \infty$.
+	\begin{enumerate}[label=(\alph*), nolistsep]
+		\item $\ES_\alpha(L) \ge \VaR_\alpha(L)$ für alle $\alpha \in [0,1]$
+		\item Besitzt $L$ eine stetige, streng monotone Verteilungsfunktion, so gilt
+		\begin{equation*}
+			\ES_\alpha(L) = \EW[L | L \ge \VaR_\alpha(L)]
+		\end{equation*}
+		\item Besitzt $L$ eine Dichte $f_L$, so gilt
+		\begin{equation*}
+			\ES_\alpha(L) = \frac{1}{1-\alpha} \int_{\VaR_\alpha(L)}^\infty u f_L(u)
+		\end{equation*}
+	\end{enumerate}
+\end{theorem}
+
+\textbf{Interpretation von (b):} Der $\ES_\alpha$ ist der erwartete Verlust gegeben, dass der Verlust die Schwelle $\VaR_\alpha$ übersteigt.
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Die Abbildung $u \mapsto \VaR_u(L)$ ist monoton steigend. 
+		\begin{equation*}
+			\follows \ES_\alpha(L) = \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u} \ge \frac{1}{1-\alpha} \int_\alpha^1 \VaR_\alpha(L) \diff{u} = \Var_\alpha(L)
+		\end{equation*}
+		\item Sei $F$ Verteilungsfunktion von $L$. Aus der Wahrscheinlichkeitstheorie ist bekannt, dass $U \defeq F(L)$ ist gleichverteilt\footnote{$\P(U \le x) = \P(F(L) \le x) = \P(L \le F^{-1}(x)) = F(F^{-1}(x)) = x \quad \forall x \in [0,1] \follows U \sim U[0,1]$} auf $[0,1]$ und $\VaR_\alpha(L) = F^{-1}(\alpha)$. Also ist 
+		\begin{equation*}
+		\begin{aligned}
+			\EW[L | L \ge \VaR_\alpha(L)] 
+			= \frac{\EW[L * \one_{L \ge \VaR_\alpha(L)}]}{\P(L \ge \VaR_\alpha(L))} 
+			&= \frac{1}{1-\alpha} \EW[L * \one_{L \ge F^{-1}(\alpha)}] \\
+			&= \frac{1}{1-\alpha} \EW[F^{-1}(U) \one_{U \ge \alpha}] \\
+			&= \frac{1}{1-\alpha} \int_\alpha^1 F^{-1}(u) \diff{u} \\
+			&= \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u} \\
+			&= \ES_\alpha(L)
+		\end{aligned}
+		\end{equation*}
+		\item $\EW[L | L \ge \VaR_\alpha(L)] = \frac{1}{1-\alpha} \EW[L * \one_{L \ge \VaR_\alpha(L)}] = \frac{1}{1-\alpha} \int_{\VaR_\alpha(L)}^\infty u f_L(u) \diff{u}$
+	\end{enumerate}
+\end{proof}
+
+\begin{*beispiel}
+	\begin{enumerate}
+		\item $L \sim \Normal(\mu, \sigma^2)$, d.h. $F_L(x) = \Phi\brackets{\frac{x-\mu}{\sigma}}$ und Dichte $f_L(x) = \frac{1}{\sigma} \phi\brackets{\frac{x-\mu}{\sigma}}$ sowie $\phi(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$. Diese hat die Eigenschaft $\phi'(x) = -x \phi(x)$. Für den Expected Shortfall geht
+		\begin{equation*}
+		\begin{aligned}
+			\ES_\alpha(L) 
+			= \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u} 
+			&= \frac{1}{1-\alpha} \int_\alpha^1 \brackets{\mu + \sigma \Phi^{-1}(u)} \diff{u} \\
+			&= \mu + \frac{\sigma}{1-\alpha} \int_\alpha^1 \Phi^{-1}(u) \diff{u} \\
+			&\phantom{=} \sqbrackets{\begin{array}{rcl}
+			x &=& \Phi^{-1}(u) \\ \Phi(x) &=& u \\ \phi(x) \diff{x} &=& \diff{u}
+			\end{array}}  \\
+			&= \mu + \frac{\sigma}{1-\alpha} \int_{\Phi^{-1}(\alpha)}^\infty x \phi(x) \diff{x} \\
+			&= \mu - \frac{\sigma}{1-\alpha} \phi(x) \mid_{x = \Phi^{-1}(\alpha)}^\alpha \\
+			&= \mu + \frac{\sigma}{1-\alpha} \phi\brackets{\Phi^{-1}(\alpha)}
+		\end{aligned} 
+		\end{equation*} 
+		vergleiche dazu $\VaR_\alpha(L) = \mu + \sigma \Phi^{-1}(\alpha)$
+		\item Student-t-Verteilung: siehe Übung
+	\end{enumerate}
+\end{*beispiel}
+
+\textbf{Vorteile des ES:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item brücksichtigt die Wahrscheinlichkeit \textit{und} das Ausmaß hoher Verluste (d.h. Form des Verteilungsende wird erfasst)
+	\item Subadditivität, d.h. er berücksichtigt das Diversifikationsprinzip (mehr dazu später)
+\end{itemize}
+
+\vspace{\parskip}
+
+\textbf{Nachteile des ES:}
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item nicht immer definiert ($\EW[L^+] < \infty$) 
+	\item im Allgmeinen schwieriger zu berechnen und zu erklären
+\end{itemize}
