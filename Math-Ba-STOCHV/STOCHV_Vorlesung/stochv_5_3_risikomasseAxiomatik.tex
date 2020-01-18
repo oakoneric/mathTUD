@@ -2,7 +2,7 @@
 
 Sei $\mathcal{M}$ die Menge der $\R$-wertigen Zufallsvariablen auf $(\Omega, \F, \P)$. Wir wollen untersuchen, welche Abbildungen 
 \begin{equation*}
-	\abb{\rho}{\mathcal{M}}{\R}, L \mapsto \rho(L)
+\abb{\rho}{\mathcal{M}}{\R}, L \mapsto \rho(L)
 \end{equation*}
 als Risikomaße geeignet sind.
 
@@ -23,11 +23,11 @@ als Risikomaße geeignet sind.
 	\begin{itemize}[nolistsep]
 		\item Es gilt (c) $+$ (d) $\follows$ (e), denn
 		\begin{equation*}
-			\rho(\gamma L_1 + (1-\gamma) L_2) \overset{(c)}{\le} \rho(\gamma L_1) + \rho((1-\gamma) L_2) \overset{(d)}{=} \gamma \rho(L_1) + (1-\gamma) \rho(L_2)
+		\rho(\gamma L_1 + (1-\gamma) L_2) \overset{(c)}{\le} \rho(\gamma L_1) + \rho((1-\gamma) L_2) \overset{(d)}{=} \gamma \rho(L_1) + (1-\gamma) \rho(L_2)
 		\end{equation*}
 		\item Es gilt (d) $+$ (e) $\follows$ (c), denn
 		\begin{equation*}
-			\rho(L_1 + L_2) \overset{(d)}{=} 2 * \rho(\frac{L_1}{2} + \frac{L_2}{2}) \overset{(e)}{=} \rho(L_1) + \rho(L_2)
+		\rho(L_1 + L_2) \overset{(d)}{=} 2 * \rho(\frac{L_1}{2} + \frac{L_2}{2}) \overset{(e)}{=} \rho(L_1) + \rho(L_2)
 		\end{equation*}
 	\end{itemize}
 \end{*bemerkung_inline}
@@ -43,7 +43,7 @@ als Risikomaße geeignet sind.
 \begin{*bemerkung_inline}
 	Offensichtlich gilt:
 	\begin{equation*}
-		\text{kohärente Risikomaße } \subseteq \text{ konvexe Risikomaße } \subseteq \text{ monetäre Risikomaße }
+	\text{kohärente Risikomaße } \subseteq \text{ konvexe Risikomaße } \subseteq \text{ monetäre Risikomaße }
 	\end{equation*}
 \end{*bemerkung_inline}
 
@@ -71,3 +71,169 @@ als Risikomaße geeignet sind.
 		\item Der Expected-Shortfall ist ein kohärentes, verteilungsinvariantes Risikomaß (siehe Übung).
 	\end{itemize}
 \end{*beispiel}
+
+\begin{theorem}
+	\begin{enumerate}[label=(\alph*), nolistsep]
+		\item Für $\alpha \in (0,1)$ ist $\VaR_\alpha$ ein monetäres, positiv homogenes und verteilungsinvariantes Risikomaß.
+		\item Für $\alpha \in (0,1)$ ist $\ES_\alpha$ ein kohärentes, verteilungsinvariantes Risikomaß auf $\mathcal{M}' = \menge{L \in \mathcal{M}: \EW[L^+] < \infty}$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	\begin{enumerate}
+		\item siehe Übung
+		\item Per Definition ist $\ES_\alpha(L) = \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diffskip{u}$. 
+		Folgende Eigenschaften folgen direkt aus (a): Monotonie, Translationsinvarianz, positive Homogenität, Verteilungsinvarianz. Wir zeigen die Subadditivität unter der Annahme einer stetigen, streng monotonen Verteilungsfunktion, d.h. für die Darstellung 
+		\begin{equation*}
+		\ES_\alpha(L) = \EW[L | L \ge \VaR_\alpha(L)] = \frac{1}{1-\alpha} * \EW[L * \one_{\menge{L \ge \VaR_\alpha(L)}}]
+		\tag{$\star$} \label{eq: 5.3-star}
+		\end{equation*}Fixiere $\alpha \in (0,1)$ und schreibe $q_L \defeq \VaR_\alpha(L)$. Damit ist nun zu zeigen, dass $c \defeq \ES_\alpha(L) + \ES_\alpha(M) - \ES_\alpha(L+M) \ge 0$ für alle $L, M \in \mathcal{M}'$
+		Mit \eqref{eq: 5.3-star} gilt
+%		\begin{equation*}
+%		\begin{aligned}
+%		(1+\alpha) * c 
+%		&= \EW[{L * \one_{\menge{L \ge q_L}} + M \one_{\menge{M \ge q_M}} - (L+M) \one_{\menge{L+M \ge q_{M+N}}}}] \\
+%		&= \EW[{L(\underbrace{\one_{\menge{L \ge q_L}}} - \one_{\menge{L+M \ge q_{M+L}}}_{\defqe D_L})}}] + \EW[{M (\underbrace{\one_{\menge{M \ge q_M}} - \one_{\menge{L+M \ge q_{M+L}}}_{\defqe D_M})}}]
+%	\end{aligned}
+%	\end{equation*}
+	Es gilt
+	\begin{equation*}
+	\left. \begin{array}{rcl}
+	D_L > 0 & \Rightarrow & L \ge q_L \\
+	D_L < 0 & \Rightarrow & L < q_L
+	\end{array}
+	\right\} \follows L * D_L \ge q_L *  D_L
+	\end{equation*}
+	Analog zeigt man $M * D_M \ge q_M * D_M$. Somit gilt
+	\begin{equation*}
+	\begin{aligned}
+	(1-\alpha) * c &= \EW[L * D_L] + \EW[M * D_M] \ge q_L \EW[D_L] + q_M \EW[D_M] \\
+	\EW[D_L] &= \P(L \ge q_L) - \P(L+M \ge q_{L+M}) = (1-\alpha) - (1-\alpha) = 0
+	\end{aligned}
+	\end{equation*}
+	und schließlich folgt daraus $c \ge 0$.
+\end{enumerate}
+\end{proof}
+
+\begin{*definition}
+Sei $\rho$ ein monetäres Risikomaß. Die Menge 
+\begin{equation*}
+	A_\rho \defeq \menge{L \in \mathcal{M} : \rho(L) \le 0}
+\end{equation*}
+heißt Akzeptanzmenge (d.h. die Menge aller akzeptablen Risiken)
+\end{*definition}
+
+Eigenschaften von Risikomaßen $\rho$ können über $A_\rho$ beschrieben werden:
+\begin{theorem}
+\begin{enumerate}[label=\Roman*., nolistsep, leftmargin=*]
+	\item Sei $\rho$ ein monetäres RIsikomaß mit Akzeptanzmenge $A_\rho$. Dann gilt:
+	\begin{enumerate}[label=(\alph*)]
+		\item $A_\rho \neq \emptyset$ und diese erfüllt
+		\begin{equation*}
+			L \in A_\rho \land \schlange{L} \le L \follows \schlange{L} \in A_\rho
+			\tag{Mon} \label{eq: 4.4-mon}
+		\end{equation*}
+		\item $\rho$ kann aus $A_\rho$ rekonstruiert werden:
+		\begin{equation*}
+			\rho_A(L) = \inf\menge{m \in \R : L - m \in A_\rho}
+		\end{equation*}
+		Interpreatation: $\rho(L)$ ist Mindestanforderung an Kapital, welche hinterlegt werden muss um $L$ akueptabel zu machen.
+	\end{enumerate}
+	\item Sei $A \subseteq \mathcal{M}$ eine Menge, welche \eqref{eq: 4.4-mon} erfüllt. Dann definiert
+	\begin{equation*}
+		\rho(L) = \inf\menge{m \in \R : L - m \in A}
+	\end{equation*}
+	ein monetäres Risikomaß und es gilt $A \subseteq A_\rho$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \Roman*.), leftmargin=*, nolistsep]
+		\item \begin{enumerate}[label=(\alph*)]
+			\item 
+				\begin{itemize}
+					\item Sei $L$ beliebig, setze $c \defeq \rho(L)$. Dann gilt $\rho(L-c) = \rho(L) - c = 0$ und somit $L - c \in A_\rho$, d.h. $A_\rho \neq \emptyset$.
+					\item  $L \in A_\rho \land \schlange{L} \le L \follows \rho(L) \le 0 \follows \rho(\schlange{L}) \le 0 \follows \schlange{L} \in A_\rho$
+				\end{itemize}
+			\item $\inf\menge{ m \in \R : L - m \in A_\rho} = \inf \menge{\rho(L-m) \le 0} \overset{\text{Transl.}}{=} \inf\menge{m \in \R : \rho(L) \le m} = \rho(L)$
+		\end{enumerate}
+		\item
+			\begin{itemize}[leftmargin=*]
+				\item Monotonie: Sei $\schlange{L} \le L$. Dann gilt $\schlange{L} - m \le L - m$ und damit $L - m \in A \follows \schlange{L} - m \in A$.
+				\begin{equation*}
+				\rho_A(L) = \inf\menge{m \in \R : L - m \in A}
+				\ge \inf\menge{m \in \R : \schlange{L} - m \in A} = \rho_A(\schlange{L})
+				\end{equation*}
+				\item Translaionsinvarianz: Sei $c \in \R$.
+				\begin{equation*}
+				\begin{aligned}
+					\rho_A(L+c) 
+					&= \inf\menge{m \in \R : L + c - m \in A} \\
+					\overset{\schlange{m} = m -c}&{=} \inf\menge{\schlange{m} \in \R : L - \schlange{m} \in A} + c \\
+					&= \rho_A(L) + c
+				\end{aligned}
+				\end{equation*}
+				\item Sei $L \in A$. 
+				\begin{equation*}
+				\rho_A(L) = \inf\underbrace{\menge{m : L + m \in A}}_{\text{enthält } m = 0} \le 0 \follows L \in A_\rho \follows A \subseteq A_\rho
+				\end{equation*}
+			\end{itemize}
+	\end{enumerate}
+\end{proof}
+
+\begin{*definition}
+	Eine konvexe Menge $K$ in einem Vektorraum $V$ heißt \begriff{konvexer Kegel}, wenn gilt $x \in K \follows c x \in K$ für alle $c > 0$.
+\end{*definition}
+
+\begin{theorem}
+	\begin{enumerate}[label=\Roman*., leftmargin=*, nolistsep]
+		\item Sei $\rho$ ein monetäres Risikomaß mit Akzeptanzmenge $A_\rho$. Dann gilt
+		\begin{enumerate}[label=(\alph*)]
+			\item $\rho$ konvexes Risikomaß $\equivalent A_\rho$ konvex
+			\item $\rho$ kohärentes Risikomaß $\equivalent A_\rho$ konvexer Kegel
+		\end{enumerate} 
+		\item Sei $A \subseteq M$ und nichtleer. Sei $\rho_A$ definiert wie in Thm.4.4. Dann gilt:
+		\begin{enumerate}[label=(\alph*)]
+			\item $A$ konvex $\follows \rho_A$ ist konvexes Risikomaß
+			\item $A$ konvexer Kegel $\follows \rho_A$ ist kohärentes Risikomaß.
+		\end{enumerate}
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Wir zeigen hier exemplarisch nur die Aussage (Ia):
+	\begin{proof-equivalence}
+		\hinrichtung Sei $\rho$ konvexes Risikomaß, $L_1, L_2 \in A_\rho$, $\gamma \in [0,1]$, $L_\gamma = \gamma L_1 + (1-\gamma) L_2$. Wir müssen nun zeigen, dass $L_\gamma \in A_\rho$.
+		\begin{equation*}
+			\rho(L_\gamma) = \rho(\gamma L_1 + (1-\gamma) L_2) \overset{\text{konvex}}{\le} \gamma \rho(L_1) + (1-\gamma) \rho(L_2) \le 0 \follows L_\gamma \in A_\rho
+		\end{equation*}
+		\rueckrichtung Sei $L_1, L_2 \in \mathcal{M}$. Es gilt $\rho(L_i + \rho(L_i)) \overset{TI}{=} \rho(L_i) - \rho(L_i) = 0$, woraus folgt, dass $L_i - \rho(L_i) \in A_\rho$ für $i \in \menge{1,2}$. Wir zeigen nun, dass $A_\rho$ konvex ist: Definiere $\schlange{L}_\gamma \defeq \gamma(L_1  \rho(L_1)) + (1-\gamma)(L_2 - \rho(L_2)) \in A_\rho$. Daraus folgt
+		\begin{equation*}
+			\begin{aligned}
+			&0 \ge \rho(\schlange{L}_\gamma) \overset{\text{TI}}{=} \rho(\gamma L_1 + (1-\gamma) L_2) - \brackets{\gamma \rho(L_1) + (1-\gamma)\rho(L_2)} \\
+			\follows &\rho(\gamma L_1 + (1-\gamma) L_2) \le \gamma \rho(L_1) + (1-\gamma) \rho(L_2)
+			\end{aligned}
+		\end{equation*}
+		Somit ist $\rho$ konvex.
+	\end{proof-equivalence}
+	Die anderen Aussagen folgen analog.
+\end{proof}
+
+\begin{beispiel}
+	\begin{enumerate}[label=(\alph*)]
+		\item Sei $u$ eine Bernoulli'sche Nutzenfunktion, definiere $X \defeq -L$. Betrachte das Certainty Equivalent $c_\ast(X,u) = u^{-1}\brackets{\EW[u(X)]}$. Sei $c \in \R$ und definiere $A = \menge{L \in \mathcal{M} : c_\ast(-L, u) \ge c} = \menge{L \in \mathcal{M} : \EW[u(-L)] \ge u(c)}$. Dann ist $A$ konvex. Seien $L_1, L_2 \in A$, $\gamma \in [0,1]$, $L_\gamma = \gamma L_1 + (1-\gamma) L_2$.
+		\begin{equation*}
+			\EW[u(-L_\gamma)] \ge \gamma * \EW[u(-L_1)] + (1-\gamma) \EW[u(-L_2)] \ge u(c) \follows L_\gamma \in A
+		\end{equation*}
+		Das heißt also, dass $\rho_A(L) = \inf\menge{m \in \R : L-m \in A} = \inf\menge{m \in \R : \EW[u(m-L)] \ge u(c)}$ ein konvexes Risikomaß ist.
+		
+		Für den Exponentialnutzen $u(x) = - e^{-\alpha x}$ ($\alpha > 0$) ergibt sich
+		\begin{equation*}
+			\begin{aligned}
+			\rho_A(L) = \inf\menge{m \in \R : \EW[e^{\alpha (L-m)}] \le e^{-\alpha c}} \\
+			&= \inf\menge{m \in \R : \EW[e^{\alpha L}] \le e^{\alpha (m-c)}} \\
+			&= \inf\menge{m \in \R : \frac{1}{2} \log \EW[e^{\alpha L}] \le m - c} \\
+			&= \frac{1}{2} \log \EW[e^{\alpha L}] + c
+			\end{aligned}
+		\end{equation*}
+	\end{enumerate}
+\end{beispiel}
+
