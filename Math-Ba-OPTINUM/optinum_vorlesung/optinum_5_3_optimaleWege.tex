@@ -1,0 +1,46 @@
+\section{Optimale Wege}
+
+\subsection{Das Kürzeste-Wege-Problem}
+
+Gegeben sei ein gerichteter, gewichteter Graph $G = (V,E,c)$ mit $c(e) \ge 0$ für alle $(u,v) \in E$. Der Wert $c(e)$ kann zum Beispiel als Länge  (oder allgemein \enquote{Kosten}) interpretiert werden.
+Es sind nun ausgehend von einem Startknoten $v_1$ ein kürzester Weg zu jedem anderen Knoten $v_k \in V$ zu finden.
+
+\begin{aussage}
+	Es existiert eine Bogenmenge $E_w \subseteq E$ mit $\card{E_w} = \card{V} - 1$, die für jeden Knoten $v_k \neq v_1$ einen kürzesten Weg von $v_1$ zu $v_k$ beinhaltet.
+\end{aussage}
+\begin{proof}
+	Weniger als $\card{V} - 1$ Bögen würden einen Widerspruch zum Zusammenhang liefern. Angenommen es gäbe mehr als $\card{V} - 1$ Bögen. Dann existiert ein Knoten $v \neq v_1$ mit (Eingangs-) Grad $\delta^-(v) \ge 2$, d.h. es gibt zwei optimale Wege von $v$ zu $v_1$. Nur einer dieser Bögen, die in $v$ enden, ist erforderlich, um eine Bogenmenge gemäß Aufgabenstellung zu erhalten.
+\end{proof}
+
+\begin{folgerung}
+	$E_w$ ist zusammenhängend und kreisfrei, also ein (gerichteter) Spannbaum.
+\end{folgerung}
+
+Ein konkretes Verfahren zur Lösung dieses Problems liefert der \person{Dijkstra}-Algorithmus. Dabei werden, ausgehend von einem Startknoten $s = v_1$, bereits bekannte kürzeste Wege durch Hinzufügen weiterer Bögen/Kanten verlängert, um somit kürzeste Wege für bisher unerreichte Knoten zu finden.
+
+Hierfür nutzen wir die Notation: Es sei
+\begin{itemize}[nolistsep, topsep=-\parskip]
+	\item $M$ die Menge der Knoten, zu denen ein kürzester Weg bekannt ist
+	\item $p(v_k) = p(k)$ der Vorgängerknoten von $v_k$ auf dem kürzesten Weg zu $v_k$
+	\item $d(v_k) = d(k)$ die Länge des (bisher) kürzesten Weges zu $v_k$
+\end{itemize}
+Schließlich erhalten wir den folgenden Algorithmus:
+
+\fbox{\textbf{Algorithmus von \person{Dijkstra}:}}
+\begin{enumerate}[label=Schritt \arabic*:, leftmargin=*, start=0]
+	\item Initialisierung: Setze $M \defeq \menge{s}$, $d(s) = 0$ und initialisiere für $v \neq s$
+	\begin{equation*}
+		p(v) \defeq \begin{cases}
+		s & (s,v) \in E \\ 0 & (s,v) \notin E
+		\end{cases} 
+		\qquad
+		d(v) \defeq \begin{cases}
+		c(s,v) & (s,v) \in E \\ +\infty &(s,v) \notin E
+		\end{cases}
+	\end{equation*}
+	\item Bestimme $u \notin M$ mit $d(u) = \min\menge{d(v) : v \notin M}$. Falls $d(u) = +\infty$, dann \texttt{STOP}. Andernfalls setze $M \defeq M \cup \menge{u}$.
+	\item Für alle $v \notin M$ mit $(u,v) \in E$: falls $d(v) > d(u) + c(u,v)$ (also ein kürzerer Weg ist gefunden), dann setze $d(v) = d(u) + c(u,v)$ und $p(v) = u$.
+	\item Falls $M \neq V$, gehe zu Schritt 1. Sonst \texttt{STOP}.
+\end{enumerate}
+
+Offenbar terminiert dieser Algorithmus nach endlich vielen Schritten, da in jeder Iteration entweder ein Element zu $M$ hinzugefügt wird oder der Algorithmus gänzlich abbricht (Schritt 1). Somit wird Schritt 1 höchstens $\mathcal{O}(n)$ mal ausgeführt und bewirkt dabei höchstens $\mathcal{O}(n)$ Durchläufe der in Schritt 2 benötigten Schleife. Bei naiver Implementierung besitzt dieser Algorithmus also eine Komplexität von $\mathcal{O}(\card{V}^2)$, es sind aber auch bessere Abschätzungen (z.B. $\mathcal{O}(\card{E} + \card{V} * \log\card{V})$) möglich.
