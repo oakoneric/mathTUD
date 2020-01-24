@@ -36,10 +36,13 @@
 \newcommand*{\und}{\text{ und }}
 \newcommand*{\bzw}{\text{ bzw. }}
 \newcommand*{\bei}{\text{ bei }}
+\newcommand*{\falls}{\text{ falls }}
 
 \newcommand{\brackets}[1]{\left( #1 \right)}
 \newcommand{\klammer}[1]{\left( #1 \right)}
 \newcommand{\sqbrackets}[1]{\left[ #1 \right]}
+\newcommand{\rdfloor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\rdceil}[1]{\left\lceil #1 \right\rceil}
 
 % >> sets and mappings
 \newcommand{\menge}[1]{\left\{ #1 \right\}}
@@ -164,6 +167,8 @@
 \newcommand{\P}{\mathbb{P}}
 \newcommand{\ereignisF}{\mathcal{F}}
 
+\newcommand{\upmodels}{\perp\!\!\!\perp}
+
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\EW}[1][X]{\ensuremath{\E \left[ #1 \right]}}
 \newcommand{\Varianz}{\mathbb{V}\mathrm{ar}}
@@ -175,6 +180,11 @@
 \newcommand{\Normal}{\mathcal{N}}
 
 \newcommand{\disteq}{\mathrel{\overset{\mathrm{d}}{=}}}
+
+% >> functional analysis
+\newcommand{\schwachstern}{ schwach${}^\ast$ }
+\newcommand{\weakconv}{\rightharpoonup}
+\newcommand{\weakstarconv}{\overset{\ast}{\rightharpoonup}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % math operators
@@ -192,6 +202,7 @@
 %%%%%% C
 \DeclareMathOperator{\charak}{char} % characteristic
 \DeclareMathOperator{\cl}{cl}       % closure
+\DeclareMathOperator{\Col}{Col}     % Spaltenraum
 \DeclareMathOperator{\cond}{cond}   % condition of a matrix/algorithm
 \DeclareMathOperator{\cdiff}{C}     % stetig differenzierbare Abbildungen
 
@@ -206,6 +217,8 @@
 \DeclareMathOperator{\Eig}{Eig}     % Eigenspace
 \DeclareMathOperator{\End}{End}     % Endomorphism
 \DeclareMathOperator{\eps}{eps}     % Maschinengenauigkeit
+\DeclareMathOperator{\ES}{ES}       % expected shortfall
+\DeclareMathOperator*{\esssup}{ess \ sup}
 \DeclareMathOperator{\Exp}{Exp}     % exponential distribution
 \DeclareMathOperator{\ext}{ext}     % Exterior
 \DeclareMathOperator{\Ext}{ext}     % 2nd time?
@@ -225,6 +238,7 @@
 %%%%%% H
 \DeclareMathOperator{\Hom}{Hom}     % family of Homomorphisms
 \DeclareMathOperator{\Hau}{Hau}     % Hauptraum (generalized Eigenspace)
+\DeclareMathOperator{\Hol}{H\ddot{o}l}
 \DeclareMathOperator{\Hyper}{Hyper} % hypergeometric distribution
 
 %%%%%% IJK
@@ -268,6 +282,7 @@
 \DeclareMathOperator{\rk}{rk}       % Rank of a matrix
 \DeclareMathOperator{\rg}{rg}
 \DeclareMathOperator{\rot}{rot}     % Rotation (Curl)
+\DeclareMathOperator{\Row}{Row}     % Zeilenraum
 \DeclareMathOperator{\rang}{rang}   % Matrix Rank
 
 %%%%%% S
@@ -293,6 +308,7 @@
 \DeclareMathOperator{\UG}{UG}       % Untergruppe (subgroup)
 \DeclareMathOperator{\Ugr}{Ugr}     % Menge der Untergruppen (set of subgroups)
 \DeclareMathOperator{\Uni}{U}       % Unitary Group / uniform distribution
+\DeclareMathOperator{\VaR}{VaR}     % value-at-risk
 
 %%%%%% XYZ
 \DeclareMathOperator{\ZR}{ZR}       % Zeilenraum

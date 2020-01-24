@@ -44,10 +44,13 @@
 
 \RequirePackage{tikz}
 \usetikzlibrary{calc,arrows}
-
-\RequirePackage{amsmath,amssymb,amsfonts}
 \RequirePackage[ntheorem,framemethod=TikZ]{mdframed}
-\RequirePackage[amsthm,thmmarks,hyperref]{ntheorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages for theorem environments
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage[amsmath,thmmarks,framed]{ntheorem}
+
 
 %\ifx\thename\undefined
 %\newcommand*{\thename}{\hfill}
@@ -225,6 +228,15 @@ skipbelow=\skiparound,%
 nobreak,%
 ]{aufgabe}[taskcount]{Aufgabe}
 
+\theoremstyle{plain}
+\theorempreskip{6pt}
+\theorempostskip{6pt}
+\theoremheaderfont{\osfamily\normalsize\bfseries\upshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\newtheorem{lemma}{Lemma}
+\counterwithin{lemma}{blattcount}
+
 %
 % >> Solution
 \newtheoremstyle{solutionstyle}%
@@ -254,10 +266,10 @@ nobreak,%
 \theoremheaderfont{\normalsize\slshape}
 \theorembodyfont{}
 \theoremseparator{.}
-\theorempreskip{5pt}
+\theorempreskip{0pt}
 \theorempostskip{5pt}
 \theoremsymbol{$\square$}
-\renewtheorem{proof}{Beweis}
+\newtheorem{proof}{Beweis}
 
 % >> Equivalences
 \newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
