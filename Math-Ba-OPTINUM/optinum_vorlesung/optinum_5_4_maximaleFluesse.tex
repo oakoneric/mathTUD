@@ -1,0 +1,96 @@
+\section{Maximale Flüsse in Graphen}
+
+\subsection{Problemstellung}
+
+Sei $G = (V,E,k)$ ein gerichteter Graph mit \begriff{Kapazitätsschranken} $k_e \ge 0$ für alle $e \in E$. Weiterhin sei $q \in V$ einzige \begriff{Quelle} und $s \in V$ einzige \begriff{Senke}. Ohne Einschränkung seien ale Inputdaten ganzzahlig. Für jedes $v \in V$ definieren wir
+\begin{equation*}
+	E^+(v) \defeq \menge{e \in E : e = (v,p)} \qquad E^-(v) \defeq \menge{e \in E : e = (p,v)}
+\end{equation*}
+der ausgehenden und eingehenden Bögen für $v$.
+
+\begin{definition}
+	Eine Funktion $\abb{x}{E}{\R}$ heißt \begriff{Fluss}, wenn gilt
+	\begin{equation*}
+		\begin{aligned}
+			0 \le x_e \le k_e \quad (e \in E) \\
+			\sum_{e \in E^-(v)} x_e = \sum_{e \in E^+(v)} x_e \quad (v \in V \setminus \menge{q,s})
+		\end{aligned}
+	\end{equation*}
+	Die zweite Bedingung (Flusserhaltung) ist auch als \person{Kirchhoff}'sches Gesetz bekannt.
+\end{definition}
+
+Die Flusserhaltung impliziert 
+\begin{equation*}
+	\sum_{e \in E^+(q)} x_e = \sum_{e \in E^-(1)} x_e \defqe f(x)
+\end{equation*}
+wobei $f(x)$ die Flussstärke angibt.
+
+\begin{beispiel} \label{beispiel: 5.3}
+%	(1,2,0/7)
+%	(1,3,5/5)
+%	(2,3,0/4)
+%	(3,5,0/4)
+%	(3,4,5/6)
+%	(4,2,0/5)
+%	(4,5,0/6)
+%	(4,6,5/8)
+%	(5,6,0/4)
+
+	Dargestellt ist ein zulässiger Fluss der Stärke $f(x) = 5$. Die Bogenmarkierungen entsprechen dabei \enquote{$x_e / k_e$}. Der angegebene Fluss ist nicht optimal.
+\end{beispiel}
+
+Ein geeignetes Hilfsmittel zur Prüfung der Optimalität ist der \begriff{Residualgraph} (\enquote{Restgraph}). Ohne Einschränkung nehmen wir an, dass für alle $(u,v) \in E$ auch $(v,u) \in E$ gilt. Sofern dies nicht a priori erfüllt ist, ergänzen wir diese mit Kapazität $k_{(v,u)} = 0$.
+
+\begin{definition}
+	Sei $\abb{x}{E}{\R}$ ein zulässiger Fluss, d.h. insbesondere ist $0 \le x_e \le k_e$ für alle $e \in E$. Für $e = (u,v) \in E$ definieren wir
+	\begin{equation*}
+		r(e) = r(u,v) \defeq k_e - x_e + x_{(v,u)}
+	\end{equation*}
+	das \begriff{Residuum} (\enquote{Restkapazität}) von $e$.
+	Weiterhin sei
+	\begin{equation*}
+		E(x) \defeq \menge{e \in E : r(e) > 0}
+	\end{equation*}
+	die Menge aller Bögen mit positiven Residuum\footnote{nur dort besteht die Möglichkeit der Flusserhöhung für den Gesamtgraphen}. Der \begriff{Residualgraph} ist definiert als 
+	\begin{equation*}
+		G(x) \defeq (V, E(x), r(e)_{e \in E(x)})
+	\end{equation*}
+	wobei $r(e)$ eine \enquote{aktualisierte Kapazität} beschreibt.
+\end{definition}
+
+\begin{beispiel}[Fortsetzung von \labelcref{beispiel: 5.3}]
+	Aus dem oben angegebenen Fluss ergibt sich der folgende Residualgraph $G(x)$:
+	%	(1,2,/7)
+	%	(3,1,/5)
+	%	(2,3,/4)
+	%	(3,5,/4)
+	%	(3,4,/1)
+	%   (4,3,/5)
+	%	(4,2,/5)
+	%	(4,5,/6)
+	%	(4,6,/3)
+	%   (6,4,/5)
+	%	(5,6,/4)
+	
+	Offenbar gilt stets $r(e) \ge 0$ für alle $e \in E$. $G(x)$ enthält also all jene Bögen, die die Möglichkeit zur Flussvergrößerung modellieren, ergänzt um einige Rückwärtsbögen zur Verminderung von Flüssen auf bisher zu stark genutzten Verbindungen.
+\end{beispiel}
+
+Eine mögliche Vorgehensweise zur Erzeugung eines maximalen Flusses ist der folgende Algorithmus:
+
+\fbox{\textbf{Algorithmus von \person{Ford}-\person{Fulkerson}}}
+\begin{enumerate}[label=Schritt \arabic*:, leftmargin=*, start=1]
+	\item Initialisierung --- Setze $x_e = 0$ für alle $e \in E$ (oder ein \enquote{besserer Startfluss}).
+	\item Konstruiere den Residualgraphen $G(x)$. Wenn $G(x)$ keinen Weg von $q$ nach $s$ mit positiver Flussstärke enthält: \texttt{STOP} (Optimalität)
+	\item Finde einen Fluss $x'$ in $G(x)$, d.h. einen Weg von $q$ nach $s$ in $G(x)$ mit positiver Flussstärke $f'$. Aktualisiere $x$ gemäßt $x_e \defeq x_e + x_e'$ für alle $e \in E(x)$. Gehe zu Schritt~2.
+\end{enumerate}
+
+Bei ganzzahligen Kapazitäten findet in jedem Durchlauf des Algorithmus eine Flussvergrößerung um mindestens eine Einheit statt (sofern er nicht in Schritt~2 abbricht). Damit terminiert das Verfahren nach endliche vielen Schritten. Diese Anzahl an Schritten kann jedoch proportional zum Optimalwert $f^\ast = f(x^\ast)$ sein.
+Darüber hinaus gibt es Beispiele mit irrationalen Eingabedaten, für die der obige Algorithmus nicht abbricht.
+
+\subsection{Algorithmus von \person{Edmonds} \& \person{Karp}}
+
+\begin{description}
+	\item[Idee:] grundsätzlich analog zu \person{Ford}/\person{Fulkerson}, aber im Schritt~3 wird jeweils ein Weg von $s$ nach $q$ mit kleinster Bogenzahl ermittelt
+\end{description}
+
+Es bezeichne $\delta_x(u,v)$ den Abstand zwischen $u \in V$ und $v in V$ in $G(x)$, also die Anzahl der Bögen auf einem kürzesten Weg von $u$ nach $v$.
