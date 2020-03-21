@@ -1,0 +1,31 @@
+\documentclass{standalone}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}   % in my packages used compat=1.15
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\usepackage[table,dvipsnames]{tudscrcolor}
+
+\usepackage[default]{opensans}
+
+\begin{document}
+	\color{cddarkblue}
+	\begin{tikzpicture}[auto]
+	% Knoten
+		\node (1) at (-1.5,1.5)  [circle,draw, fill=cdblue!20] {$v_1$};
+		\node (2) at (1.5,1.5) [circle,draw, fill=cdorange!20] {$v_2$};
+		\node (3) at (0,0) [circle,draw,fill=cdgreen!20] {$v_3$};
+	% Kanten
+%		\path (1) -> node[weight] {$3$} (3)
+		\draw (1) -- (2);
+		\draw (2) -- (3);
+		\draw (3) -- (1);
+		
+		\node (Delta) at (3,1) {$\Delta(K_3) = 2$};
+		\node (k) at (3.05,.5) {$\chi(K_3) = 3$};
+	\end{tikzpicture}
+\end{document}
