@@ -41,7 +41,7 @@
 %---------------------------------------
 % additional packages
 %---------------------------------------
-
+\usepackage[autostyle=true,english=british]{csquotes}
 
 
 
@@ -70,10 +70,13 @@
 \NewDocumentCommand{\folge}{m m}{\left\{ #1 \right\}_{#2}}
 \renewcommand{\complement}{\mathsf{C}}
 
+\renewcommand{\i}{\mathrm{i}}
+
 \newlength{\zulength}
 \settowidth{\zulength}{(zu a)}
 \addtolength{\zulength}{1em}
 
+\newcommand{\dast}{{\ast\ast}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -87,5 +90,13 @@
 \include{hana_uebungen-1}
 \include{hana_uebungen-2}
 \include{hana_uebungen-3}
+\include{hana_uebungen-4}
+\include{hana_uebungen-5}
+\include{hana_uebungen-6}
+\include{hana_uebungen-7}
+\include{hana-uebungen-8}
+\stepcounter{blattcount}
+\include{hana-uebungen-10}
+\include{hana-uebungen-11}
 
 \end{document}
