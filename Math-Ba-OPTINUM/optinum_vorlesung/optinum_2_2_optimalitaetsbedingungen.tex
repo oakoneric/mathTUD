@@ -4,15 +4,15 @@
 	\label{definition: 2.3_kegel}
 	Eine Menge $K \subseteq \Rn$ heißt \begriff{Kegel}, falls gilt:
 	\begin{equation*}
-	x \in K \follows \lambda x \in K \quad \forall \lambda \ge 0
+		x \in K \follows \lambda x \in K \quad \forall \lambda \ge 0
 	\end{equation*}
 	Ein Kegel $K$ ist ein \begriff{konvexer Kegel}, falls $K$ eine konvexe Menge bzw. falls gilt
 	\begin{equation*}
-	x,y \in K \follows x+y \in K
+		x,y \in K \follows x+y \in K
 	\end{equation*}
 	für alle $x,y \in K$. Der \begriff{Kegel der zulässigen Richtungen} $Z(\schlange{x})$ ist definiert durch
 	\begin{equation*}
-	Z(\schlange{x}) \defeq \menge{d \in \Rn \mid \exists \quer{t} \defeq \quer{t}(\schlange{x},d) > 0 \text{ sodass } \schlange{x} + td \in G \enskip \forall t \in [0,\quer{t}]}
+		Z(\schlange{x}) \defeq \menge{d \in \Rn \mid \exists \ \quer{t} \defeq \quer{t}(\schlange{x},d) > 0 \text{ sodass } \schlange{x} + td \in G \enskip \forall t \in [0,\quer{t}]}
 	\end{equation*}
 \end{definition}
 
@@ -49,6 +49,7 @@ Dieses Kriterium sagt aus, dass im Punkt $\schlange{x}$ alle Richtungsableitunge
 \end{bemerkung}
 
 \begin{bemerkung} %2.3
+	\label{bemerkung: 2.3}
 	Bei der freien Minimierung (d.h. für $G = \Rn$) ergibt sich wegen $Z(\schlange{x}) = \Rn$ für alle $\schlange{x} \in G$ die notwendige Bedingung
 	\begin{equation*}
 	\schlange{x} \text{ ist lokales Minimum} \follows \nabla f(\schlange{x}) = 0
@@ -56,7 +57,7 @@ Dieses Kriterium sagt aus, dass im Punkt $\schlange{x}$ alle Richtungsableitunge
 	Wähle dafür $d \in \menge{\pm e^i}_{i=1}^n$.
 \end{bemerkung}
 
-Für konvexe Optimierungsaufgaben gilt auch die Umkehrung des Resultats der vorherigen Aussage.
+Für konvexe Optimierungsaufgaben gilt auch die Umkehrung in \cref{bemerkung: 2.3}
 
 \begin{aussage}[hinreichendes Optimalitätskriterium] %2.5
 	Es seien $G \subseteq \Rn$ sowie $\abb{f}{G}{\R}$ konvex und stetig differenzierbar. Falls ein $\schlange{x} \in G$ existiert, welches der Bedingung \eqref{eq: 2.3} genügt, dann ist $\schlange{x}$ (globales) Minimum von \eqref{eq: 2.1}.
@@ -116,7 +117,7 @@ Für einen zulässigen Punkt $x \in G$ kann somit folgende Beobachtung angegeben
 \end{equation}
 Außerdem ist die Größe $\schlange{t}$ (maximale Schrittweite) wohldefiniert.
 \begin{equation}
-\schlange{t} \defeq \schlange{t} \defeq \min\menge{\frac{b_i - \trans{a_i}x}{\trans{a_i}d} \colon i \in I(x,d)} \label{eq: 2.5}
+	\schlange{t} \defeq \min\menge{\frac{b_i - \trans{a_i}x}{\trans{a_i}d} \colon i \in I(x,d)} \label{eq: 2.5}
 \end{equation}
 wobei $I(x,d) \defeq \menge{ i \in I \colon \trans{a_i}d > 0}$.
 
@@ -142,7 +143,7 @@ wobei $I(x,d) \defeq \menge{ i \in I \colon \trans{a_i}d > 0}$.
 		Somit ist $d^1$ keine zulässige Richtung wegen \eqref{eq: 2.4}.
 		\item Für $d = d^2$ gilt
 		\begin{equation*}
-		\trans{a_i} d = \trans{\begin{pmatrix} 1 \\ 2 \\ 1	\end{pmatrix}} \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} = -6 \le 0
+		\trans{a_i} d = \transpose{\begin{smallmatrix} 1 \\ 2 \\ 1	\end{smallmatrix}} \left(\begin{smallmatrix} -1 \\ -2 \\ -1 \end{smallmatrix} \right) = -6 \le 0
 		\end{equation*}
 		Somit ist $d^2$ eine zulässige Richtung wegen \eqref{eq: 2.4}. Zur maximalen Schrittweite: Die Ungleichung $\transpose{3,1,1}(x + td) \le 6$ liefert die Bedingung $t \in [-\frac{1}{6}, \infty)$. Aus $x+td \ge 0$ folgt die Bedingung $t \le \frac{1}{2}$. Insgesamt gilt $\schlange{t} = \frac{1}{2}$.
 	\end{itemize} 

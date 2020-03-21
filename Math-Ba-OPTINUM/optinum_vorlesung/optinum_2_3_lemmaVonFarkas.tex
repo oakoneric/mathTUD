@@ -4,17 +4,23 @@ Das folgende Resultat besitzt vielfältige Anwendungen in der Optimierung ($\nea
 
 \begin{lemma}[Farkas] %2.7
 	Es seien $A \in \R^{m \times n}$ und $a \in \Rm$.  Von den Systemen
-	\begin{enumerate}[label=(\roman*), nolistsep, topsep=-\parskip]
-		\item $Az \le 0$, $\trans{a} z > 0$
-		\item $\trans{A} u = a$, $u \ge 0$.
-	\end{enumerate}
+	\begin{equation*}
+		\begin{alignedat}{4}
+		\text{(i)} & \qquad & Az &\le 0 & \quad  \trans{a} z &> 0 \\
+		\text{(ii)}& \qquad  & \trans{A} u &= a  \quad & u &\ge 0
+		\end{alignedat}
+	\end{equation*}
+%	\begin{enumerate}[label=(\roman*), nolistsep, topsep=-\parskip]
+%		\item $Az \le 0$, $\quad \trans{a} z > 0$
+%		\item $\trans{A} u = a$, $\quad u \ge 0$.
+%	\end{enumerate}
 	ist \textit{genau} eines lösbar.
 \end{lemma}
 \begin{proof}
 	\begin{itemize}[leftmargin=*, nolistsep]
 		\item \textit{höchstens} eines der Systeme ist lösbar: Seien (i) und (ii) lösbar. Dann gilt
 		\begin{equation*}
-			0 < \trans{a} z = \trans{\trans{A}u} z = \underbrace{\trans{u}}_{\ge 0} \underbrace{A z}_{\le 0} \le 0 \quad \lightning
+			0 < \trans{a} z = \transpose{\trans{A}u} z = \underbrace{\trans{u}}_{\ge 0} \underbrace{A z}_{\le 0} \le 0 \quad \lightning
 		\end{equation*}
 		\item  \textit{mindestens} eines der Systeme ist lösbar --- die Unlösbarkeit von (ii) impliziert die Lösbarkeit von (i):  Sei (ii) nicht lösbar. Dann gilt
 		$a \notin K \defeq \menge{x = \trans{A} u \colon u \ge 0}$, wobei $K$ ein konvexer, abgeschlossener Kegel ist. Wir betrachten die Optimierungsaufgabe
@@ -27,8 +33,8 @@ Das folgende Resultat besitzt vielfältige Anwendungen in der Optimierung ($\nea
 			\qquad \qquad 
 			(2) \quad \nabla \trans{f(\quer{x})} x \ge 0 \enskip \forall x \in K
 		\end{equation*}
-		Zunächst folgt gemäß \cref{aussage: 2.4}, dass $\nabla \trans{f(\quer{x})} (x - \quer{x}) \ge 0$ für alle $x \in K$. Durch Einsetzen von $x = \frac{1}{2} \quer{x} \in K$ und $x = 2*\quer{x} \in K$ (beachte: $K$ ist Kegel) erhält man (1). Dies wiederum lässt sich zur notwendigen Bedingung ddazu addieren und man erhält (2). 
-		Nun zeigen wir, dass $z \defeq a - \quer{x} \neq 0$ (wegen $a \notin K$) das System (i) löst. Es gilt $\nabla f(\quer) = -z$ und damit folgt
+		Zunächst folgt gemäß \cref{aussage: 2.4}, dass $\nabla \trans{f(\quer{x})} (x - \quer{x}) \ge 0$ für alle $x \in K$. Durch Einsetzen von $x = \frac{1}{2} \quer{x} \in K$ und $x = 2*\quer{x} \in K$ (beachte: $K$ ist Kegel) erhält man (1). Dies wiederum lässt sich zur notwendigen Bedingung dazu addieren und man erhält (2). 
+		Nun zeigen wir, dass $z \defeq a - \quer{x} \neq 0$ (wegen $a \notin K$) das System (i) löst. Es gilt $\nabla f(\quer{x}) = -z$ und damit folgt
 		\begin{equation*}
 			0 = \nabla \trans{f(\quer{x})} \quer{x} = -\trans{z} * (\quer{x} - a + a) = \trans{z} (z-a)  \follows \trans{a} z = \trans{z} z \overset{z \neq 0}{>} 0
 		\end{equation*}
@@ -69,7 +75,7 @@ Gerade im Hinblick auf die praktische Anwendbarkeit ist \eqref{eq: 2.8} in der j
 	ist, dann existiert ein Vektor $u$, sodass das Paar $(x,u)$ das folgende System löst:
 	\begin{align}
 		\begin{split}
-		\nabla f(x) + \sum_{i \in I} u_i a_i &= 0 \qquad u_i \ge 0 , \quad \trans{a_i} - b_i \le 0 \quad (i \in I) \\
+		\nabla f(x) + \sum_{i \in I} u_i a_i &= 0 \qquad u_i \ge 0 , \qquad \trans{a_i} - b_i \le 0 \quad (i \in I) \\
 		u_i \brackets{\trans{a_i}x - b_i} &= 0 \qquad (i \in I)
 		\end{split} \label{eq: 2.9}
 	\end{align}

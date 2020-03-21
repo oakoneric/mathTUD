@@ -2,9 +2,9 @@
 
 \subsection{Transportoptimierung}
 
-$\to$ lineare Optimierung
+Die Transportoptimierung ist ein Beispiel einer linearen Optimierung.
 
-Es gebe Erzeuger $i \in I = \menge{0, \dots , n}$ und Verbraucher $j \in J = \menge{1, \dots , n}$. Weiterhin seien die Kosten $c_{ij}$ für den Transport einer Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_j > 0$ für alle $i$ und $j$ gegeben. Wie muss der Transport organisiert werden, damit die Gesamtkosten minimal sind?
+Es gebe Erzeuger $i \in I = \menge{1, \dots , n}$ und Verbraucher $j \in J = \menge{1, \dots , n}$. Weiterhin seien die Kosten $c_{ij}$ für den Transport einer Einheit von $i$ nach $j$ sowie der Vorrat $a_i > 0$ und der Bedarf $b_j > 0$ für alle $i$ und $j$ gegeben. Wie muss der Transport organisiert werden, damit die Gesamtkosten minimal sind?
 
 Für jedes mathematische Modell einer OA braucht man
 \begin{itemize}[nolistsep, topsep=-\parskip]
@@ -17,6 +17,12 @@ Für jedes mathematische Modell einer OA braucht man
 	\item[Variablen] $x_{ij} \ge 0$ für alle $i \in I$ und $j \in J$ beschreibe die Einheiten, die von $i$ nach $j$ transportiert werden.
 	\item[Zielfunktion] $f(x) = \sum\limits_{i \in I} \sum\limits_{j \in J} c_{ij} x_{ij} \to \min$
 	\item[Nebenbedingungen] \leavevmode
+%	\begin{equation*}
+%		\begin{alignedat}{2}
+%		\text{Kapazitätsbeschränkung der Erzeuger: } \qquad  \sum\limits_{j \in J} x_{ij} &\le a_i & \qquad & (i \in I) \\
+%		\text{Bedarfserfüllung von Verbrauchern: } \qquad \sum\limits_{i \in I} x_{ij} &\ge b_j & \qquad & (j \in J)
+%		\end{alignedat}
+%	\end{equation*}
 	\begin{itemize}[nolistsep, topsep=-\parskip]
 		\item Kapazitätsbeschränkung der Erzeuger $i \in I$: $\sum\limits_{j \in J} x_{ij} \le a_i \quad (i \in I)$
 		\item Bedarfserfüllung von Verbrauchern $j \in J$: $\sum\limits_{i \in I} x_{ij} \ge b_j \quad (j \in J) $
@@ -25,21 +31,21 @@ Für jedes mathematische Modell einer OA braucht man
 
 Somit können wir als Modell formulieren:
 \begin{equation*}
-	\begin{aligned}
-	f(x) = \sum_{i \in I} \sum_{j \in J} c_{ij} x_{ij} \to \min \quad \bei &\sum_{j \in J} x_{ij} \le a_i \enskip (i \in I), \\
-	&\sum_{i \in I} x_{ij} \ge b_j \enskip (j \in J), \\
-	& x_{ij} \ge 0 \enskip ((i,j) \in I \times J)
-	\end{aligned}
+	\begin{alignedat}{2}
+	f(x) = \sum_{i \in I} \sum_{j \in J} c_{ij} x_{ij} \to \min \quad \bei \quad \sum_{j \in J} x_{ij} &\le a_i &\quad &(i \in I), \\
+	\sum_{i \in I} x_{ij} &\ge b_j &\quad & (j \in J), \\
+	 x_{ij} &\ge 0 & \quad & ((i,j) \in I \times J)
+	\end{alignedat}
 \end{equation*}
 
 \subsection{Kürzeste euklidische Entfernung}
 
-$\to$ nichtlineare Optimierung
+Die Optimierung der kürzesten euklidischen Entfernung ist nichtlinear.
 
-Gegeben seien ein Punkt $\schlange{x} \in \Rn$ und eine Menge $G \subseteq \Rn$ mit $x \notin G$. Wir betrachten die folgende OA:
+Gegeben seien ein Punkt $\schlange{x} \in \Rn$ und eine Menge $G \subseteq \Rn$ mit $\schlange{x} \notin G$. Wir betrachten die folgende OA:
 \begin{equation*}
 	f(x) = \norm{x - \schlange{x}}_2^2 \to \min \quad \bei x \in G
 \end{equation*}
 Ist $G \neq \emptyset$ und abgeschlossen, so existiert eine Lösung. Ist $G$ zusätzlich konvex, so ist die Lösung sogar eindeutig.
 
-Weitere Beispiele und Theorie sind in der Vorlesung ''Kontinuierliche Optimierung`` im Master Mathematik zu erfahren.
+Weitere Beispiele und Theorie sind in der Vorlesung \enquote{Kontinuierliche Optimierung} im Master Mathematik zu erfahren.

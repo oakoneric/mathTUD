@@ -1,9 +1,10 @@
 \section{Beispiele zur diskreten Optimierung}
+\label{sec: 1.3}
 
 \subsection{Das Rucksackproblem}
+\label{subsec: 1.3.1}
 
-Gegeben seien ein Behälter (''Rucksack``) mit Kapazität $b \in \Z_+ \defeq \menge{0, 1, \dots}$ sowie $m$ Teile, die jeweils durch ein Gewicht $a_i \in \Z_+$ und einen Nutzen $c_i \in \Z_+$ beschrieben werden ($i = 1, \dots , m$). Aus dieser Menge von Objekten ist eine nutzenmaximale Teilmenge auszuwählen.
-
+Gegeben seien ein Behälter (\enquote{Rucksack}) mit Kapazität $b \in \Z_+ \defeq \menge{0, 1, \dots}$ sowie $m$ Teile, die jeweils durch ein Gewicht $a_i \in \Z_+$ und einen Nutzen $c_i \in \Z_+$ beschrieben werden ($i = 1, \dots , m$). Aus dieser Menge von Objekten ist eine \textit{nutzenmaximale} Teilmenge auszuwählen.
 
 \begin{description}
 	\item[Variablen] \begin{equation*}
@@ -18,7 +19,7 @@ Gegeben seien ein Behälter (''Rucksack``) mit Kapazität $b \in \Z_+ \defeq \me
 Als Modell können wir somit formulieren:
 \begin{equation*}
 	\begin{aligned}
-	f(x) = \sum_{i=1}^{m} c_i x_i \to \max \quad \bei \sum_{i=1}^m a_i x_i \le b \und x_i \in \menge{0,1} \enskip (i = 1, \dots , m)
+	f(x) = \sum_{i=1}^{m} c_i x_i \to \max \quad \bei \quad \sum_{i=1}^m a_i x_i \le b \enskip \und \enskip x_i \in \menge{0,1} \quad (i = 1, \dots , m)
 	\end{aligned}
 \end{equation*}
 
@@ -41,7 +42,7 @@ ist.
 		\item $y_k = \begin{cases}
 		1 & \text{wenn Rucksack } k \text{ benutzt wird} \\ 0 & \text{sonst}
 		\end{cases} \quad (k = 1 , \dots , u)$
-		\item $x_{ik} \in \Z_+$, die angeben, wieviele Objekte vom Typ $i$ in Rucksack $k$ gepackt werden ($(i,k) \in \menge{1, \dots , m} \times \menge{1, \dots , u}$)
+		\item $x_{ik} \in \Z_+$, die angeben, wieviele Objekte vom Typ $i$ in Behälter $k$ gepackt werden ($(i,k) \in \menge{1, \dots , m} \times \menge{1, \dots , u}$)
 	\end{itemize}
 	Daraus ergibt sich nun folgendes Modell:
 	\begin{equation*}
@@ -61,7 +62,7 @@ ist.
 	Daraus ergibt sich folgendes Modell:
 	\begin{equation*}
 		\begin{aligned}
-		f^{GG}(x) = \sum_{j \in J} x_j \to \min \quad \bei \quad 
+		f^{\text{GG}}(x) = \sum_{j \in J} x_j \to \min \quad \bei \quad 
 		& \sum_{j \in J} a_i^j * x_j = b_i \quad && (i = 1, \dots , m) \\
 		& x_j \in \Z_+ && (j \in J)
 		\end{aligned}
@@ -72,7 +73,7 @@ ist.
 	
 	Eine Relaxation erhält man zum Beispiel durch $x_j \in \R_+$. Diese stetige Relaxation ist sehr gut; man vermutet, dass folgende Bedingung gilt:
 	\begin{equation*}
-		f^{GG, \ast} - f^{GG, \ast}_\text{relax} < 2
+		f^{\text{GG}, \ast} - f^{\text{GG}, \ast}_\text{relax} < 2
 	\end{equation*}
 \end{description}
 
@@ -80,6 +81,8 @@ Erfreulicherweise gibt es zum Gilmore-Gomory-Modell äquivalente Formulierungen,
 
 
 \subsection{Standortplanung}
+\label{subsec: 1.3.3}
+
 Ein Dienstleister möchte neue Filialen aufbauen, um seine Kunden $k \in K \defeq \menge{1, \dots , m}$ zu versorgen. Dabei sind aus der Menge $S \defeq \menge{1, \dots , n}$ mögliche Standorte, die neuen Standorte so auszuwählen, dass der Bedarf aller Kunden befriedigt wird und die Gesamtkosten minimial sind.
 
 Wir benötigen
@@ -87,12 +90,14 @@ Wir benötigen
 	\item $c_s > 0$ \dots Fixkosten für den Aufbau von Standort $s \in S$
 	\item $d_{ks} > 0$ \dots Kosten, um den Kunden $k \in K$ (vollständig) von Standort $s \in S$ zu beliefern.
 \end{itemize}
+\vspace{\parskip}
 
 Variablen:
 \begin{itemize}[nolistsep, topsep=-\parskip]
 	\item $x_s = \begin{cases} 1 & \text{wenn Standort } s \in S \text{ gebaut wird} \\ 0 & \text{sonst} \end{cases}$ 
-	\item $y_{ks} \ge 0$ \dots Anteil des Bedarfs des Kunden $k \in K$, der vom Standort $s \in S$ bedient wird (implizit: $y_{ks} \in [0,1]$)
+	\item $y_{ks} \ge 0$ \dots Anteil des Bedarfs des Kunden $k \in K$, der vom Standort $s \in S$ bedient wird\footnote{implizit: $y_{ks} \in [0,1]$}
 \end{itemize}
+\vspace{\parskip}
 
 Modell zur Standortplanung:
 \begin{equation*}
@@ -103,30 +108,34 @@ bei
 \begin{alignedat}{2}
 	\sum_{s \in S} y_{ks} &= 1 &&(k \in K) \\
 	y_{ks} &\le x_s &&(s \in S, k \in K) \\
-	x_s &\in \menge{0,1}  &&(s \in S) \\
+	x_s &\in \menge{0,1}  & \quad &(s \in S) \\
 	y_{ks} &\ge 0\qquad &&(k \in K, s \in S)
 \end{alignedat}
 \end{equation*}
 
 \subsection{Quadratisches Zuordnungsproblem}
+\label{subsec: 1.3.4}
 
-Es sollen $n$ Personen auf $n$ Räume verteilt werden. Person $i$ muss Person $j$ $c_{ij}$ mal am Tag treffen. Außerdem habe Büro $k$ von Büro $\ell$ die Entfernung $d_{k \ell}>0$. Wird Person $i$ das Büro $k$ zugewiesen und Person $j$ das Büro $\ell$, so ergibt sich eine Gesamtwegstrecke von $2 c_{ij} d_{kl}$ (beachte Hin- und Rückweg). Gesucht ist die wegminimale Belegung der Büros.
+Es sollen $n$ Personen auf $n$ Räume verteilt werden. Person $i$ muss Person $j$ genau $c_{ij}$ mal am Tag treffen. Außerdem habe Büro $k$ von Büro $\ell$ die Entfernung $d_{k \ell}>0$. Wird Person $i$ das Büro $k$ zugewiesen und Person $j$ das Büro $\ell$, so ergibt sich eine Gesamtwegstrecke von $2 c_{ij} d_{kl}$ (beachte Hin- und Rückweg). Gesucht ist die wegminimale Belegung der Büros.
 
-Variablen: $x_{ik} = \begin{cases}
+\begin{description}
+	\item[Variablen] $x_{ik} = \begin{cases}
 	1 & \text{wenn Person $i$ das Büro $k$ zugewiesen wird} \\ 0 & \text{sonst}
 	\end{cases} \quad (i,k) \in \menge{1, \dots , n} \times \menge{1, \dots , n}$
 	
-Zielfunktion:
-\begin{equation*}
-	f(x) = \sum_{i=1}^n \sum_{k=1}^n \sum\limits_{\substack{j=1 \\ j \neq i}}^n \sum\limits_{\substack{\ell =1 \\ \ell \neq k}}^n x_{j \ell} x_{i k} * 2c_{ij} d_{kl} \to \min
-\end{equation*}
-bei
-\begin{equation*}
-	\begin{alignedat}{3}
-	\sum_{i=1}^n x_{ik} &= 1 \quad &&(k = 1, \dots, n) \quad &&\text{Büro $k$ bekommt genau einen Einwohner} \\
-	\sum_{k=1}^n x_{ik} &= 1 &&(i = 1, \dots, n) &&\text{Person $i$ bekommt genau ein Büro} \\
-	x_{ik} \in &\menge{0,1} \quad &&(i,k) \in \menge{1, \dots , n} \times \menge{1, \dots , n} &&
-	\end{alignedat}
-\end{equation*}
+	\item[Zielfunktion]
+	\begin{equation*}
+		f(x) = \sum_{i=1}^n \sum_{k=1}^n \sum\limits_{\substack{j=1 \\ j \neq i}}^n \sum\limits_{\substack{\ell =1 \\ \ell \neq k}}^n x_{j \ell} x_{i k} * 2c_{ij} d_{kl} \to \min
+	\end{equation*}
+	bei
+	\begin{equation*}
+		\begin{alignedat}{3}
+		\sum_{i=1}^n x_{ik} &= 1 \quad &&(k = 1, \dots, n) \quad &&\text{Büro $k$ bekommt genau einen Einwohner} \\
+		\sum_{k=1}^n x_{ik} &= 1 &&(i = 1, \dots, n) &&\text{Person $i$ bekommt genau ein Büro} \\
+		x_{ik} \in &\menge{0,1} \quad &&(i,k) \in \menge{1, \dots , n} \times \menge{1, \dots , n} &&
+		\end{alignedat}
+	\end{equation*}
+\end{description}
 
-Weitere Beispiele sind in der Vorlesung ''Diskrete Optimierung`` (Master Mathe) zu finden..
+
+Weitere Beispiele sind in der Vorlesung \enquote{Diskrete Optimierung} (Master Mathe) zu finden..

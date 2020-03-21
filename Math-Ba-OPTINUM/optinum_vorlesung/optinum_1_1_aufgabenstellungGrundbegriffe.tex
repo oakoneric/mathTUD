@@ -9,9 +9,11 @@ Man nennt
 	\item $f$ die \begriff{Zielfunktion},
 	\item $G$ den \begriff{zulässigen Bereich} und
 	\item ein $x \in  G$ \begriff{zulässigen Punkt} (oder zulässige Lösung).
-\end{itemize}
+\end{itemize} 
+\vspace{\parskip}
+
 Ein zulässiger Punkt $x^\ast \in G$ heißt \begriff{optimal} (oder Lösung oder optimale Lösung), wenn für alle $x \in G$ die Ungleichung
-\begin{equation} \label{eq: 1_2_optimal}
+\begin{equation} \label{eq: 1.2}
 	f(x^\ast) \le f(x)
 \end{equation}
 gilt. Falls das Problem \eqref{eq: oa} lösbar ist, so wird mit $f^\ast = f(x^\ast)$ der \begriff{Optimalwert} bezeichnet. Das Problem \eqref{eq: oa} ist ein
@@ -21,10 +23,11 @@ gilt. Falls das Problem \eqref{eq: oa} lösbar ist, so wird mit $f^\ast = f(x^\a
 \end{itemize}
 und außerdem eine
 \begin{itemize}[nolistsep, topsep=-\parskip]
-	\item \begriff{diskrete} (oder ganzzahlige) OA (engl. integer program), falls jede Variable eine diskreten Menge angehört
+	\item \begriff{diskrete} (oder ganzzahlige) OA (engl. integer program), falls jede Variable einer diskreten Menge angehört
 	\item \begriff{kontinuierliche} (oder stetige) OA, falls alle Variablen stetige Werte annehmen
 	\item gemischt ganzzahlige OA, wenn sowohl stetige als auch diskrete Variablen vorkommen.
-\end{itemize}
+\end{itemize} 
+\vspace{\parskip}
 
 Gilt in \eqref{eq: oa} $f(x) = \trans{c} x$ für ein $c \in \Rn$ und ist $G$ durch lineare Bedingungen beschreibbar, so heißt \eqref{eq: oa} \begriff{linear}. In diesem Fall lässt sich \eqref{eq: oa} schreiben als
 \begin{equation} \label{eq: 1_3_lineareOA}
@@ -36,11 +39,11 @@ Gerade für (gemischt) ganzzahlige OA kann die Lösung der Originalaufgabe schwi
 
 \begin{definition}
 	Wir betrachten die Optimierungsaufgaben
-	\begin{itemize}[nolistsep, topsep=-\parskip]
-		\item[(P)] $f(x) \to \min \quad \bei x \in D \cap E$
-		\item[(Q)] $g(x) \to \min \quad \bei x \in E$
-	\end{itemize}
-	(Q) heißt \begriff{Relaxation} zu (P) falls $g(x) \le f(x)$ für alle $x \in D \cap E$ gilt. In vielen Fällen wird dabei $g = f$ gewählt.
+	\begin{align}
+		f(x) \to \min \quad &\bei x \in D \cap E \tag{P} \label{def: 1.1_p} \\
+		g(x) \to \min \quad &\bei x \in E \tag{Q} \label{def: 1.1_q}
+	\end{align}
+	\eqref{def: 1.1_q} heißt \begriff{Relaxation} zu \eqref{def: 1.1_p} falls $g(x) \le f(x)$ für alle $x \in D \cap E$ gilt. In vielen Fällen wird dabei $g = f$ gewählt.
 \end{definition}
 
 Der Optimalwert der Relaxation kann als Näherung (bzw. untere Schranke) für den tatsächlichen Optimalwert von (P) genutzt werden. Meistens liefert die Lösung von (Q) jedoch keinen zulässigen Puntk für (P).

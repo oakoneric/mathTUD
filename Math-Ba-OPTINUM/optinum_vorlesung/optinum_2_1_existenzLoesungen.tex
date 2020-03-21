@@ -7,22 +7,23 @@ Wir betrachten die Optimierungsaufgabe
 wobei folgende Bedingungen erfüllt seinen:
 \begin{itemize}[nolistsep, topsep=-\parskip]
 	\item $f$ ist stetig (zumindest auf $G$)
-	\item $G$ ist kompakt
+	\item $G \subseteq \Rn$ ist kompakt
 	\item $G \neq \emptyset$
 \end{itemize}
 \vspace{\parskip}
 
 \begin{satz}[Weierstrass] \label{satz: 2.1_weierstrass}
-	Unter diesen Voraussetzungen existiert ein $\quer{x} \in G$ mit 
+	Unter diesen Voraussetzungen existiert ein $x^\ast \in G$ mit 
 	\begin{equation*}
-		f^\ast \defeq f(\quer{x}) \le f(x) \quad \forall x \in G
+		f^\ast \defeq f(x^\ast) \le f(x) \quad \forall x \in G
 	\end{equation*}
 \end{satz}
 \begin{proof}
-	Sei $f^\ast \defeq \inf_{x \in G} f(x)$. Wegen $G \neq \emptyset$, finden wir eine Folge $\folge{f_k}{k \in \N} \subseteq \R$ mit $f_k = f(x_k) \ge f^\ast$ mit $x_k \in G$ für alle $k \in \N$ und $\lim_{k \to \infty} f_k = f^\ast$. Die daraus resultierende Folge $\folge{x_k}{k \in \N}$ besitzt wegen der Kompaktheit von $G$ eine konvergente Teilfolge $\folge{\schlange{x_k}}{k \in \N} \subseteq \folge{x_k}{k \in \N}$ mit $\lim_{k \to \infty} \schlange{x_k} = \quer{x} \in G$ (Abgeschlossenheit von $G$). Die Stetigkeit von $f$ ergibt nun $\lim_{k \to \infty} f(\schlange{x_k}) = f(\quer{x}) = f^\ast$ (insbesondere $f^\ast \in \R$)
+	Sei $f^\ast \defeq \inf_{x \in G} f(x)$. Wegen $G \neq \emptyset$, finden wir eine Folge $\folge{f_k}{k \in \N} \subseteq \R$ mit $f_k = f(x_k) \ge f^\ast$ und $x_k \in G$ für alle $k \in \N$ und $\lim_{k \to \infty} f_k = f^\ast$. Die daraus resultierende Folge $\folge{x_k}{k \in \N}$ besitzt wegen der Kompaktheit von $G$ eine konvergente Teilfolge $\folge{\schlange{x}_k}{k \in \N} \subseteq \folge{x_k}{k \in \N}$ mit $\lim_{k \to \infty} \schlange{x}_k = x^\ast \in G$ (Abgeschlossenheit von $G$). Die Stetigkeit von $f$ ergibt nun $\lim_{k \to \infty} f(\schlange{x}_k) = f(x^\ast) = f^\ast$ (insbesondere $f^\ast \in \R$)
 \end{proof}
 
 \begin{beispiel}
+	~
 	\begin{enumerate}[nolistsep, leftmargin=*, topsep=-\parskip]
 		\item \cref{satz: 2.1_weierstrass} anwendbar ($G$ kompakt, Minimum existiert):
 		\begin{equation*}
@@ -44,7 +45,7 @@ wobei folgende Bedingungen erfüllt seinen:
 	\end{enumerate}
 \end{beispiel}
 
-Offensichtlich besitzen also nicht alle Optimierungsaufgaben eine (globale) Lösung, insbesondere deshalb, weil Bedingung \eqref{eq: 1.2_optimal} ziemlich stark ist. Stattdessen hat sich in der Literatur auch der folgende ''schwächere`` Lösungsbegriff etabliert.
+Offensichtlich besitzen also nicht alle Optimierungsaufgaben eine (globale) Lösung, insbesondere deshalb, weil Bedingung \eqref{eq: 1.2} ziemlich stark ist. Stattdessen hat sich in der Literatur auch der folgende \enquote{schwächere} Lösungsbegriff etabliert.
 
 \begin{definition}
 	Ein zulässiger Punkt $\quer{x} \in G$ heißt lokale Lösung von \eqref{eq: 2.1}, falls ein $\rho > 0$ existiert mit 
@@ -61,18 +62,19 @@ Offensichtlich besitzen also nicht alle Optimierungsaufgaben eine (globale) Lös
 Sofern eine globale Lösung existiert, ist diese in der Menge der lokalen Lösungen enthalten. Die Betrachtung lokaler Lösungen ist damit im Allgemeinen ausreichend. Für eine spezielle Klasse von Optimierungsaufgaben sind beide Lösungskonzepte sogar äquivalent. Dazu betrachten wir die folgenden Definitionen:
 
 \begin{definition}[Konvexität] %2.2
+	~
 	\begin{enumerate}[nolistsep]
-		\item $G \subseteq \Rn$ ist konvex, falls für alle $x,y \in G$ gilt
+		\item $G \subseteq \Rn$ ist \begriff{konvex}, falls für alle $x,y \in G$ gilt
 		\begin{equation*}
-			[x,y] \defeq \menge{x(\lambda) \in \Rn : x(\lambda) = (1-\lambda)x + \lambda y, \lambda \in [0,1]} \subseteq G
+			[x,y] \defeq \menge{x(\lambda) \in \Rn : x(\lambda) = (1-\lambda)x + \lambda y, \ \lambda \in [0,1]} \subseteq G
 		\end{equation*}
 		% TODO Abbildung konvexe Menge, nichtkonvexe Menge
-		\item Sei $G$ konvex. Die Funktion $\abb{f}{G}{\R}$ heißt konvex, wenn gilt
+		\item Sei $G$ konvex. Die Funktion $\abb{f}{G}{\R}$ heißt \begriff{konvex}, wenn gilt
 		\begin{equation*}
 			f(x + \lambda (y-x)) \le f(x) + \lambda \brackets{f(y) - f(x)}
 		\end{equation*}
 		für alle $x,y \in G$ und $\lambda \in [0,1]$.
-		\item  Sei $G$ konvex. Eine Funktion $\abb{f}{G}{\R}$ heißt streng konvex, wenn gilt
+		\item  Sei $G$ konvex. Eine Funktion $\abb{f}{G}{\R}$ heißt \begriff{streng konvex}, wenn gilt
 		\begin{equation*}
 			f(x + \lambda (y-x)) < f(x) + \lambda \brackets{f(y) - f(x)}
 		\end{equation*}
@@ -82,17 +84,19 @@ Sofern eine globale Lösung existiert, ist diese in der Menge der lokalen Lösun
 
 %TODO Abbildung konvexe Funktion
 
+\pagebreak
+
 Ausgehend von diesen Begrifflichkeiten erhalten wir das folgende Resultat:
 
 \begin{satz} %2.2
 	Sei $G \subseteq \Rn$ eine konvexe Menge und $\abb{f}{G}{\R}$ eine konvexe Funktion.
-	\begin{enumerate}
+	\begin{enumerate}[label=(\alph*)]
 		\item Jede lokale Lösung ist gleichzeitig auch globale Lösung von \eqref{eq: 2.1}.
 		\item Falls $f$ sogar streng konvex ist, dann existiert höchstens eine Lösung.
 	\end{enumerate}
 \end{satz}
 \begin{proof}
-	\begin{enumerate}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
 		\item Sei $\schlange{x} \in G$ eine lokale Lösung von \eqref{eq: 2.1}. Wir nehmen an, dass dies jedoch keine globale Lösung ist, d.h. es existiert ein $\quer{x} \in G$ mit $f(\quer{x}) < f(\schlange{x})$. Wegen der Konvexität von $G$ gilt dann $x(\lambda) = \schlange{x} + \lambda(\quer{x} - \schlange{x}) \in G$ für alle $\lambda \in [0,1]$. Mit der Konvexität von $f$ folgt letzlich
 		\begin{equation*}
 			f(x(\lambda)) = f(\schlange{x} + \lambda (\quer{x} - \schlange{x})) 
@@ -101,7 +105,7 @@ Ausgehend von diesen Begrifflichkeiten erhalten wir das folgende Resultat:
 		\end{equation*}
 		Somit ist $\schlange{x}$ keine lokale Lösung im Widerspruch zur Annahme.
 		%
-		\item Seien $x,y$ zwei voneinander verschiedene Lösungen., d.h. $f(x) = f(y) = f^\ast$. Wir erhalten $x(\lambda) \in G$ für alle $\lambda \in [0,1]$ und
+		\item Seien $x,y$ zwei voneinander verschiedene Lösungen, d.h. $f(x) = f(y) = f^\ast$ für $x \neq y$. Wir erhalten $x(\lambda) \in G$ für alle $\lambda \in [0,1]$ und
 		\begin{equation*}
 			f(x(\lambda)) = f(x + \lambda(y-x)) \overset{f \text{ streng konvex}}{<} f(x) + \lambda \underbrace{\brackets{f(y) - f(x)}}_{= 0}
 		\end{equation*}
@@ -114,16 +118,16 @@ Für konvexe Optimierungsaufgaben sind lokale und globale Lösungen also äquiva
 \begin{aussage} %2.3
 	Sei $G$ gegeben durch
 	\begin{equation*}
-		G \defeq \menge{x \in \Rn : g_i(x) \le 0, i \in I, h_j(x) = 0, j \in J}
+		G \defeq \menge{x \in \Rn : g_i(x) \le 0 \ (i \in I), \enskip h_j(x) = 0 \ (j \in J)}
 	\end{equation*}
-	Dann gilt: falls alle Funktionen $g_i$ ($i \in i$) konvex und alle Funktionen $h_j$ ($j \in J$) affin-linear sind, dann ist $G$ konvex.
+	Dann gilt: falls alle Funktionen $g_i$ ($i \in I$) konvex und alle Funktionen $h_j$ ($j \in J$) affin-linear sind, dann ist $G$ konvex.
 \end{aussage}
 \begin{proof}
-	Seien $x,y \in G$ und $\lambda \in (0,1)$. Zur Klärung der Konvexität, stellt sich die Frage, ob $x(\lambda) \in G$?
+	Seien $x,y \in G$ und $\lambda \in (0,1)$. $G$ ist genau dann konvex, wenn $x(\lambda) \in G$:
 	\begin{equation*}
 		\begin{aligned}
-		g_i(x(\lambda)) &= g_i(x + \lambda (y-x)) \le g_i(x) + \lambda \brackets{g_i(y) - g_i(x)} = \underbrace{1-\lambda}_{>0} \underbrace{g_i(x)}_{\le 0} + \underbrace{\lambda}_{>0} \underbrace{g_i(y)}_{\le 0} \\
-		&\le 0 \\
+		g_i(x(\lambda)) &= g_i(x + \lambda (y-x)) \le g_i(x) + \lambda \brackets{g_i(y) - g_i(x)} = \underbrace{1-\lambda}_{>0} \underbrace{g_i(x)}_{\le 0} + \underbrace{\lambda}_{>0} \underbrace{g_i(y)}_{\le 0} 
+		\le 0 \\
 		%
 		h_j(x(\lambda)) &= h_j(x + \lambda(y-x)) = A_j(x+\lambda(y-x)) + b_j = (1-\lambda) A_j x + \lambda A_j y + b_j \\
 		&= (1-\lambda) [\underbrace{A_j x + b_j}_{h_j(x) = 0}] + \lambda [\underbrace{A_j y + b_j}_{h_j(y) = 0}] \\
@@ -133,4 +137,4 @@ Für konvexe Optimierungsaufgaben sind lokale und globale Lösungen also äquiva
 	Somit ist $x(\lambda) \in G$ und $G$ also konvex.
 \end{proof}
 
-Jeder zulässige Bereich einer linearen Optimierungsaufgabe ($\nearrow$ Kapitel 3) hat diese Gestalt. %TODO ref
+Jeder zulässige Bereich einer linearen Optimierungsaufgabe ($\nearrow$ \cref{chapter_3_lineareOptimierung}) hat diese Gestalt.

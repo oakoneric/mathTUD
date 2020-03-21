@@ -93,4 +93,80 @@ Darüber hinaus gibt es Beispiele mit irrationalen Eingabedaten, für die der ob
 	\item[Idee:] grundsätzlich analog zu \person{Ford}/\person{Fulkerson}, aber im Schritt~3 wird jeweils ein Weg von $s$ nach $q$ mit kleinster Bogenzahl ermittelt
 \end{description}
 
-Es bezeichne $\delta_x(u,v)$ den Abstand zwischen $u \in V$ und $v in V$ in $G(x)$, also die Anzahl der Bögen auf einem kürzesten Weg von $u$ nach $v$.
+Es bezeichne $\delta_x(u,v)$ den Abstand zwischen $u \in V$ und $v \in V$ in $G(x)$, also die Anzahl der Bögen auf einem kürzesten Weg von $u$ nach $v$.
+
+\begin{lemma}
+	\label{lemma: 5.5}
+	Sei $x'$ ein Fluss, der aus dem Fluss $x$ erhalten wird (durch einen flussvergrößernden Weg $P$ in $G(x)$). Dann gilt
+	\begin{equation*}
+		\delta_x(q,v) \le \delta_{x'}(q,v) \quad \text{ für alle } v \in V \setminus \menge{q}
+	\end{equation*}
+\end{lemma}
+\begin{proof}
+	Angenommen es gilt $\delta_x(q,v) > \delta_{x'}(q,v)$ für mindestens ein $v \neq q$. Ohne Einschränkung wählen wir dasjenige $v$ mit minimalem Wert $\delta_{x'}(q,v)$. Also gilt
+	\begin{equation}
+		\delta_{x'}(q,u) < \delta_{x'}(q,v) \follows \delta_x(q,u) \le \delta_{x'}(q,u)
+		\label{eq: 5.1}
+	\end{equation}
+	weil $v$ das \enquote{minimale Gegenbeispiel} war. Sei $P'$ ein kürzester Weg von $q$ nach $v$ in $G(x')$ und $u$ der letzte Knoten vor $v$. Dann gilt $\delta_{x'}(q,u) = \delta_{x'}(q,v) - 1$ und folglich wegen \eqref{eq: 5.1} 
+	\begin{equation}
+		\delta_x(q,u) \le \delta_{x'}(q,u)
+		\label{eq: 5.2}
+	\end{equation}
+	Betrachten wir $x(u,v)$ vor der Flussvergrößerung:
+	\begin{enumerate}[label=(\alph*), nolistsep]
+		\item $x(u,v) < k(u,v)$: Dann ist $(u,v)$ in $G(x)$ vorhanden und es gilt
+		\begin{equation*}
+			\delta_x(q,v) \le \delta_x(q,u) + 1 \overset{\eqref{eq: 5.2}}{\le} \delta_{x'}(q,u) + 1 = \delta_{x'}(q,v)
+		\end{equation*}
+		im Widerspruch zur Annahme.
+		\item $x(u,v) = k(u,v)$: Dann ist $(u,v)$ nicht in $G(x)$ enthalten, wohl aber $(v,u)$. Da jedoch $P'$ den Bogen $(u,v)$ wieder nutzt, muss dieser in $G(x')$ vorkommen. Das geht nur dann, wenn der flussvergrößernde Weg $P$ (der zum Fluss $x$ gehörte) den Bogen $(v,u)$ enthielt (um somit $x'(u,v) < k(u,v)$ und $(u,v) \in G'(x)$ zu bewirken). Man erhält
+		\begin{equation*}
+			\delta_x(q,v) \le \delta_x(q,u) - 1 \overset{\eqref{eq: 5.2}}{\le} \delta_{x'}(q,u) < \delta_{x'}(q,v)
+		\end{equation*}
+		im Widerspruch zur Annahme.
+	\end{enumerate}
+\end{proof}
+
+Der Algorithmus von \person{Edmonds} und \person{Karp} besitzt eine polynomielle Laufzeit für beliebige (nichtnegative) Kapazitäten.
+
+\begin{lemma}
+	Der Algorithmus führt höchstens $\mathcal{O}(\card{V} * \card{E})$ Flussvergrößerungen durch.
+\end{lemma}
+\begin{proof}
+	Jede Flussvergrößerung wird durch einen kritischen Bogen charakterisiert, d.h. auf jedem Weg $P$ gibt es einen Bogen $(u,v)$ mit $r_x(u,v) = \min\menge{r_x(e) : e \in P}$, der die Erhöhung des Flusses am meisten beschränkt. Gemäß Konstruktion verschwindet ein kritischer Bogen im nächsten Schritt aus dem Restgraphen. 
+	
+	\textbf{Frage:} Wie oft kann ein Bogen $(u,v)$ kritisch werden?  
+	Ein kritischer Bogen $(u,v)$ kann in einem späteren Restgraphen wieder auftreten, wenn zuvor $(v,u)$ auf einem flussvergrößernden Weg liegt. Sei $x^0$ ein Fluss, bei dem $(u,v)$ kritisch war. Dann gilt $\delta_{x^0}(q,v) = \delta_{x^0}(q,u) + 1$. Ausgehend von $x^0$ betrachten wir nun die vom Algorithmus erzeugte Folge der Flüsse
+	\begin{equation*}
+		x^0 \to x^2 \to \dots \to x^t \to \dots \to x^k \qquad (t \neq 0, t \neq k, k \ge 2)
+	\end{equation*}
+	wobei $(u,v)$ in $x^0$ kritisch ist und das nächste Mal in $x^k$; außerdem wird $(v,u)$ in $x^t$ genutzt. Nun gilt
+	\begin{equation*}
+		\begin{aligned}
+		\delta_{x^k}(q,v) = \delta_{x^k}(q,u) + 1 \overset{\text{\cref{lemma: 5.5}}}{\ge} \delta_{x^t}(q,u) + 1 = \delta_{x^t}(q,v) + 2 \overset{\text{\cref{lemma: 5.5}}}{\ge} \delta_{x^0}(q,v) + 2 
+		\end{aligned}
+	\end{equation*}
+	Also gilt: zwischen zwei Wegen, in denen $(u,v)$ kritisch ist, wächst der Abstand zur Quelle um mindestens zwei Einheiten. Ein solcher Abstand kann höchsten $\mathcal{O}(\card{V})$ Einheiten betragen. Demzufolge kann ein Bogen auch höchstens $\mathcal{O}(\card{V})$ Mal kritisch werden. Insgesamt gibt es höchstens $\mathcal{O}(\card{V} * \card{E})$ Flussvergrößerungen.
+\end{proof}
+
+Dies impliziert:
+\begin{aussage}
+	Der Algorithmus besitzt eine Komplexität von $\mathcal{O}(\card{V} * \card{E}^2)$
+\end{aussage}
+
+\begin{beispiel}
+%	(1,2,2/5)
+%	(1,3,5/5)
+%	(2,4,2/6)
+%	(3,4,5/5)
+%	(3,5,0/4)
+%	(4,5,2/2)
+%	(5,6,2/4)
+%	(4,6,5/5)
+Wir betrachten den folgenden Graphen
+
+	\includegraphics[width=.3\linewidth]{./optinum_abb/optinum_5_4_bsp5-5.jpg}
+
+Flusstärke $= 7$
+\end{beispiel}
