@@ -1,0 +1,181 @@
+\section{Optimales Stoppproblem}
+
+Gegeben sei ein Wahrscheinlichkeitsraum $(\Omega, \F, \P)$ mit einer Filtration $\folge{\F_n}{n \in \N}$.
+
+\begin{*definition}
+	Eine Zufallsvariable $\abb{\tau}{\Omega}{\N_0 \cup \menge{+\infty}}$ heißt \begriff{Stoppzeit} bezüglich $\folge{\F_n}{n \in \N_0}$ wenn gilt
+	\begin{equation*}
+		\menge{\tau \le n} \in \F_n \quad \forall n \in \N_0
+	\end{equation*}
+\end{*definition}
+
+\textbf{Interpretation:} Zu jedem Zeitpunkt $n \in \N_0$ ist bekannt, ob $\tau$ bereits in der Vergangenheit liegt ($\menge{\tau \le n}$) oder noch nicht eingetreten ist ($\tau > n$).
+
+Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \land n = \min\menge{\tau, n}$ können wir den gestoppten Prozess $\folge{X_{n \land \tau}}{n \in \N_0}$ definieren. Es gilt
+\begin{equation*}
+	X_{n \land \tau} = \begin{cases}
+	X_n &\text{wenn } n \le \tau \\
+	X_\tau &\text{wenn } n \ge \tau
+	\end{cases}
+\end{equation*}
+
+\begin{theorem}[Optionales Stoppen]
+	\label{theorem: 6.1}
+	Sei $X$ ein (Sub-/Super-) Martingal und $\tau$ eine Stoppzeit bezüglich einer Filtration $\folge{\F_n}{n \in \N_0}$. Dann ist auch der gestoppte Prozess $\folge{X_{n \land \tau}}{n \in \N_0}$ ein (Sub-/Super-) Martingal.
+\end{theorem}
+\begin{proof}
+	$X_{n \land \tau} = X_0 + \sum_{k=1}^n (X_{k \land \tau} - X_{(k-1) \land \tau})$. Der Ausdruck $X_{k \land \tau} - X_{(k-1) \land \tau}$ ist für $k \le \tau$ gleich $X_k - X_{k-1}$ und für $k > \tau$ gilt $X_\tau - X_\tau = 0$.
+	\begin{equation*}
+		X_{n \land \tau} = X_0 + \sum_{k=1}^n (X_{k \land \tau} - X_{(k-1) \land \tau}) = X_0 + \sum_{k=1}^n \one_{k \le \tau} \brackets{X_k - X_{k-1}} 
+		\tag{$\star$} \label{eq: 6.1-star}
+	\end{equation*}
+	Es gilt
+	\begin{equation*}
+		\menge{k \le \tau} = \menge{k > \tau}^\complement = \menge{\tau \le k-1}^\complement \in \F_{k-1} \subseteq \F_n 
+		\tag{$\star\star$} \label{eq: 6.1-starstar}
+	\end{equation*}
+	und somit ist $X_{n \land \tau}$ $\F_n$-messbar für alle $n \in \N_0$, d.h. $\folge{X_{n \land \tau}}{n \in \N_0}$ ist adaptiert.
+	
+	Außerdem gilt $\EW[\abs{X_{n \land \tau}}] \le X_0 + \sum_{k=1}^n \brackets{\EW[X_k] + \EW[X_{k-1}]} < \infty$, d.h. $\folge{X_{n \land \tau}}{n \in \N_0}$ ist integrierbar.
+	
+	Des Weiteren gilt
+	\begin{equation*}
+		\EW[X_{n \land \tau} - X_{(n-1) \land \tau} \mid \F_{n-1}] \overset{\eqref{eq: 6.1-star}}{=} \EW[\one_{n \le c} (X_n - X_{n-1}) \mid \F_{n-1}]  \overset{\eqref{eq: 6.1-starstar}}{=} \one_{\menge{n \le \tau}} \EW[X_n - X_{n-1} \mid \F_{n-1}]
+	\end{equation*}
+	Wegen \eqref{eq: 6.1-starstar} ist $\one_{\menge{n \le c}}$ $\F_{n-1}$-messbar und wir konnten die Pull-out-Property verwenden. Es ist
+	\begin{equation*}
+		\EW[X_n - X_{n-1} \mid \F_{n-1}] = \begin{cases}
+		= 0 &\text{wenn $X$ ein Martingal ist} \\
+		> 0 &\text{ wenn $X$ ein Submartingal ist} \\
+		< 0 &\text{ wenn $X$ ein Supermartingal ist}
+		\end{cases}
+	\end{equation*}
+\end{proof}
+
+\begin{*definition}
+	Sei $\folge{Z_n}{n \in [N]}$ ein adaptierter, integrierbarer stochastischer Prozess (\enquote{Auszahlungsprozess}). Das Optimierungsproblem 
+	\begin{equation*}
+		\max\menge{\EW[Z_\tau] : \tau \text{ ist Stoppzeit}, \tau \le N}
+		\tag{OSP} \label{eq: osp}
+	\end{equation*} 
+	heißt \begriff{optimales Stoppproblem} (OSP). Eine Stoppzeit $\dach{\tau}$ welche \eqref{eq: osp} maximiert heißt \begriff{optimale Stoppzeit}.
+\end{*definition}
+
+\begin{lemma} %6.2
+	\label{lemma: 6.2}
+	Für das optimale Stoppproblem gilt:
+	\begin{enumerate}[label=(\alph*), nolistsep, topsep=-\parskip]
+		\item Wenn $Z$ ein Martingal ist, dann ist jede Stoppzeit $\tau \le N$ optimal.
+		\item Wenn $Z$ ein Supermartingal ist, dann ist $\tau = 0$ optimal.
+		\item Wenn $Z$ ein Submartingal ist, dann ist $\tau = N$ optimal.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $\tau$ eine beliebige Stoppzeit mit $\tau \le N$. Nach \cref{theorem: 6.1} ist der gestoppte Prozess $\folge{Z_{n \land \tau}}{n \in [N]}$ ein Martingal.
+		\begin{equation*}
+			\EW[Z_\tau] = \EW[Z_{N \land \tau}] \overset{\text{Mart.}}{=} Z_{0 \land \tau} = Z_0
+		\end{equation*}
+		Somit ist $\tau$ optimal.
+		\item $\tau \le N$ eine beliebige Stoppzeit. Da $Z$ ein Supermartingal ist, liefert \cref{theorem: 6.1}, dass auch $\folge{Z_{n \land \tau}}{n \ \in [N]}$ ein Supermartingal ist.
+		\begin{equation*}
+			\EW[Z_\tau] = \EW[Z_{N \land \tau}] \le Z_{0 \land \tau} = Z_0 = \EW[Z_0]
+		\end{equation*}
+		Damit ist $\dach{\tau} = 0$ optimal.
+		\item  Es gilt
+		\begin{equation*}
+			\EW[Z_N] = Z_0 + \sum_{k=1}^N \EW[Z_k - Z_{k-1}] 
+			= Z_0 + \sum_{k=1}^N \EW[{\EW[Z_k - Z_{k-1} \mid \F_{k-1}]}]
+		\end{equation*}
+		wobei $\EW[Z_k - Z_{k-1} \mid \F_{k-1}] \defqe c_k \ge 0$, aufgrund der Supermartingaleigenschaft. 
+		\begin{equation*}
+			\begin{aligned}
+				\EW[Z_\tau] 
+				= \EW[Z_{\tau \land N}] 
+				&= Z_0 + \sum_{k=1}^N \EW[\one_{\menge{k \le \tau}}(Z_k - Z_{k-1})] \\
+				&=  Z_0 + \sum_{k=1}^N \EW[\one_{\menge{k \le \tau}} {\EW[(Z_k - Z_{k-1}]}] \\
+				&= Z_0 + \sum_{k=1}^N c_k \\ 
+				&= \EW[Z_N]
+			\end{aligned}
+		\end{equation*}
+		d.h. es gilt $\EW[Z_\tau] \le \EW[Z_N]$ für alle Stoppzeiten $\tau \le N$ und damit ist $\dach{\tau} = N$ optimal.
+	\end{enumerate}
+\end{proof}
+
+\begin{*definition}
+	Der stochastische Prozess $\folge{S_n}{n \in [N]}$ definiert durch Rückwärtsrekursion
+	\begin{equation*}
+		\begin{aligned}
+			S_N &\defeq Z_N \\
+			S_n &\defeq \max\menge{Z_n , \EW[S_{n+1} \mid \F_n]}
+		\end{aligned}
+		\tag{Rek} \label{eq: snell-rek}
+	\end{equation*}
+	heißt \begriff{Snellsche Einhüllende} von $Z$.
+\end{*definition}
+
+\begin{theorem} %6.3
+	\label{theorem: 6.3}
+	Die Snellsche Einhüllende ist ein Supermartingal und sie ist das kleinste Supermartingal, welches $Z$ dominiert, d.h. $Z_n \le S_n$ für alle $n \in [N]$.
+\end{theorem}
+\begin{proof}
+	Mit \eqref{eq: snell-rek} gilt $S_N \ge \EW[S_{n+1} \mid \F_n]$ für alle $n \in [N-1]$, d.h. $S$ ist ein Supermartingal. Ebenfalls aus \eqref{eq: snell-rek} folgt $S_n \ge Z_n$ für alle $n \in [N]$, also dominiert $S$ den Prozess $Z$. Sei $Y$ nun ein weiteres Supermartingal, welches $Z$ dominiert. Wir zeigen $S_n \le Y_n$ für alle $n \in [N]$ mittels Rückwärtsinduktion:
+	\begin{induction}
+		\ianfang[$n = N$] $S_N = Z_N \le Y_N$
+		\ischritt[$n+1 \to n$] Aus
+		\begin{equation*}
+			\begin{aligned}
+			Y_n &\ge \EW[Y_{n+1} \mid \F_n] \overset{\text{(IV)}}{\ge} \EW[S_{n+1} \mid \F_n] \\
+			\text{und} \quad Y_n &\ge Z_n
+			\end{aligned}
+		\end{equation*}
+		folgt nun $Y_n \ge \max\menge{\EW[S_{n+1} \mid \F_n], Z_n} = S_N$ für alle $n \in [N]$.
+	\end{induction}
+\end{proof}
+
+\begin{lemma} \label{lemma: 5.4}
+	Sei $\dach{\tau} \defeq \min\menge{n \in [N] : S_n = Z_n}$, d.h. $\dach{\tau}$ ist der erste Zeitpunkt, zu dem $Z$ und Snellsche Einhüllende zusammentreffen. Es gilt $\dach{\tau} \le N$, $\dach{\tau}$ ist Stoppzeit und $\folge{S_{n \land \dach{\tau}}}{n \in \N}$ ist ein Martingal.
+\end{lemma}
+\begin{proof}
+	\begin{itemize}[nolistsep, leftmargin=*]
+		\item Aus $S_N = Z_N$ folgt $\dach{\tau} \le N$.
+		\item Es ist
+		\begin{equation*}
+			\menge{\dach{\tau} \le n} = \underbrace{\menge{S_0 = Z_0}}_{\in \F_0} \cup \underbrace{\menge{S_1 = Z_1}}_{\in \F_1} \cup \dots \cup \underbrace{\menge{S_n = Z_n}}_{\in \F_n} \in \F_n
+		\end{equation*}
+		für alle $n \in [N]$, d.h. $\dach{\tau}$ ist eine Stoppzeit.
+		\item $S_{n \land \dach{\tau}} - S_{(n-1) \land \dach{\tau}} \overset{\eqref{eq: 6.1-star}}{=} \one_{\menge{n \le \dach{\tau}}} (S_n - S_{n-1})$. Auf dem Ereignis $\menge{n \le \dach{\tau}}$ gilt $S_{n-1} > Z_{n-1}$ und mit \eqref{eq: snell-rek} gilt $S_{n-1} = \EW[S_n \mid F_{n-1}]$. Also:
+		\begin{equation*}
+			S_{n \land \dach{\tau}} - S_{(n-1) \land \dach{\tau}} = \one_{\menge{n \le \dach{\tau}}} (S_n - \EW[S_n \mid \F_{n-1}])
+		\end{equation*}
+		Bilde nun den bedingten Erwartungswert $\EW[\cdot \mid \F_{n-1}]$:
+		\begin{equation*}
+			\EW[S_{n \land \dach{\tau}} \mid \F_{n-1}]  S_{(n-1) \land \dach{\tau}} = \one_{\menge{n \le \dach{\tau}}} (\underbrace{\EW[S_n \mid \F_{n-1}] - \EW[S_n \mid \F_{n-1}]}_{=0}) = 0
+		\end{equation*}
+		für alle $n \in [N]$, d.h. $\folge{S_{n \land \dach{\tau}}}{n \in [N]}$ ist ein Maringal.
+	\end{itemize}
+\end{proof}
+
+\begin{theorem} %6.5
+	\label{theorem: 6.5}
+	Sei $S$ die Snellsche Einhüllende von $Z$ und $\dach{\tau} = \min\menge{n \ge 0 : Z_n = S_n}$. Dann ist $\dach{\tau}$ optimal für \eqref{eq: osp} und es gilt
+	\begin{equation*}
+		S_0 = \EW[Z_{\dach{\tau}}] = \max\menge{\EW[Z_\tau] : \tau \text{ Stoppzeit}, 0 \le \tau \le N}
+	\end{equation*}
+\end{theorem}
+\begin{proof}
+	Es gilt
+	\begin{equation*}
+		S_0 = S_{0 \land \dach{\tau}} \overset{\cref{lemma: 5.4}}{=} \EW[S_{N \land \dach{\tau}}] = \EW[S_{\dach{\tau}}] \overset{\text{Def.}}{=} \EW[Z_{\dach{\tau}}]
+	\end{equation*}
+	Sei $\tau$ eine beliebige Stoppzeit  mit $\tau \le N$
+	\begin{equation*}
+		S_0 = S_{0 \land \tau} \ge \EW[S_{N \land \tau}] = \EW[S_\tau] \ge \EW[Z_\tau]
+	\end{equation*}
+	Damit gilt
+	\begin{equation*}
+		\EW[Z_{\dach{\tau}}] = S_0 \ge \EW[Z_\tau] \qquad \forall \text{ Stoppzeiten } \tau \mit \tau \le N
+	\end{equation*}
+	d.h. $\dach{\tau}$ ist optimal (Martingale Optimality Principle).
+\end{proof}
+

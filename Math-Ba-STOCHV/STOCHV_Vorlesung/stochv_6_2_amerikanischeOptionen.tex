@@ -1,0 +1,102 @@
+\section{Amerikanische Optionen im CRR-Modell}
+
+CRR-Modell:
+\begin{itemize}
+	\item Risikofreie Anlage (Bankkonto): $S_0^0 = 1$, $S_n^0 = (1+r)^n$
+	\item Wertpapier:  $S_0 = s$, $S_n = s \prod_{k=1}^{n} \brackets{1 + R_k}$
+\end{itemize}
+wobei $\folge{R_i}{i \in \N}$ stochastisch unabhängig und identisch verteilt sind mit
+\begin{equation*}
+	p = \P(R_i = b) \qquad 1-p = \P(R_i = a) \qquad \text{wobei } a < r < b \und p \in (0,1)
+\end{equation*}
+Für die Bewertung von Optionen sind die Wahrscheinlichkeiten $p$, $1-p$ \textit{nicht relevant}, sondern die riskikoneutrale Wahrscheinlichkeit 
+\begin{equation*}
+	q = \Q(R_i = b) = \frac{r-a}{b-a} \qquad 1-q = \Q(R_i = a) = \frac{b-r}{b-a}
+\end{equation*}
+Unter $\Q$ ist $\tilde{S}_n = (1+r)^{-n} S_n$ ein Martingal.
+Für ein Derviat $C = h(S_1, \dots, S_N)$ mit Fälligkeit $N$ gilt die risikoneutrale Bewertungsformel (\cref{theorem: 2.7})
+\begin{equation*}
+	\Pi_0 = \E^\Q\sqbrackets{(1+r)^{-N} C}
+	\tag{Wert von $C$ zum Zeitpunkt $0$}
+\end{equation*}
+Für eine amerikansiche Call-Option, welche zur Stoppzeit $\tau$ ausgeübt wird, gilt demnach
+\begin{equation*}
+	\Pi_0^{\ACall}(\tau) = \E^\Q \sqbrackets{(1+r)^{-\tau} (S_\tau - K)_+}
+\end{equation*}
+Bei optimaler Wahl von $\tau$ gilt also
+\begin{equation*}
+	\Pi_0^{\ACall} = \max\menge{\E^\Q\sqbrackets{(1+r)^{-\tau} (S_\tau - K)_+} : \tau \text{ Stoppzeit}, \tau \le N}
+\end{equation*}
+$\implies$ optimales Stoppproblem mit Auszahlungspreis
+\begin{equation*}
+	Z_n^{\ACall} = (1+r)^{-n} (S_n - K)_+
+\end{equation*}
+
+Analog gilt für die amerikaische Put-Option
+\begin{equation*}
+	\Pi_0^{\APut} = \max\menge{\E^\Q\sqbrackets{(1+r)^{-\tau} (K - S_\tau)_+} : \tau \text{ Stoppzeit}, \tau \le N}
+\end{equation*}
+$\implies$ optimales Stoppproblem mit Auszahlungspreis
+\begin{equation*}
+Z_n^{\APut} = (1+r)^{-n} (K - S_n)_+
+\end{equation*}
+
+\begin{theorem}
+	Betrachte die amerikanische Call-Option im CRR-Modell mit $r \ge 0$. Dann gilt
+	\begin{enumerate}[label=(\alph*), nolistsep]
+		\item Ausübung zur Endfälligkeit ist optimal, d.h. $\dach{\tau} = N$
+		\item $\Pi_0^{\ACall} = \E^\Q \sqbrackets{(1+r)^{-N} (S_N - K)_+}$, d.h. der Wert des amerikanischen Calls ist gleich dem Wert des europäischen Calls.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Es gilt 
+	\begin{equation*}
+		Z_n^{\ACall} = (1-r)^{-N} (S_N - K)_+ = \brackets{\schlange{S}_n - \frac{K}{(1-r)^n}}_+ \ge \brackets{\schlange{S}_n - \frac{K}{(1+r)^{n-1}}}_+
+	\end{equation*}
+	Außerdem ist die Funktion $s \mapsto \brackets{s - \frac{K}{(1-r)^{n-1}}}_+$ konvex (hockeystick function).
+	\begin{equation*}
+		\begin{aligned}
+			\E^\Q \sqbrackets{Z_n^{\ACall} \mid \F_{n-1}} 
+			&\ge \E^\Q \sqbrackets{\brackets{\tilde{S}_n - \frac{K}{(1+r)^{n-1}}}_+ \mid \F_{n-1}} \\
+			\overset{\text{Jensen}}&{\ge} \brackets{\underbrace{\E^\Q \sqbrackets{\schlange{S}_n \mid \F_{n-1}}}_{= \schlange{S}_{n-1}} - \frac{K}{(1+r)^{n-1}}}_+ \\
+			&= \brackets{\schlange{S}_{n-1} - \frac{K}{(1+r)^{n-1}}}_+ \\
+			&= (1-r)^{-(n-1)} \brackets{S_{n-1} - K}_+ \\
+			&= Z_{n-1}^{\ACall}
+		\end{aligned}
+	\end{equation*}
+	Damit ist $\E^\Q\sqbrackets{Z_n^{\ACall} \mid \F_{n-1}} \ge Z_{n-1}^{\ACall}$ und somit ist $Z^{\ACall}$ ein Submartingal (unter $\Q$). Mit \cref{lemma: 6.2} folgt, dass die spätere Ausübung $\dach{\tau} = N$ optimal ist.
+\end{proof}
+
+\begin{theorem}
+	Betrachte die amerikanische Put-Option im CRR-Modell. Dann gilt
+	\begin{enumerate}[label=(\alph*)]
+		\item Es existieren messbare Funktionen $\abb{f_m}{\R}{\R}$, deren Werte an den Knoten des CRR-Baumes rekursiv bestimmt werden durch
+		\begin{equation*}
+			\begin{aligned}
+				f_N(S_N) &= (1+r)^{-N} \brackets{K - S_N}_+ \\
+				f_n(S_n) &= \max\menge{(1+r)^{-n} \brackets{K - S_n}_+ , \brackets{\frac{r-a}{b-a} f_{n+1}^b + \frac{b-r}{b-a} f_{n+1}^a }}
+			\end{aligned}
+		\end{equation*}
+		wobei $f_{n+1}^b = f_{n+1}(S_n(1+b))$ und $f_{n+1}^a = f_{n+1}(S_n (1+a))$ und es gilt 
+		\begin{equation*}
+			\Pi_0^{\APut} = f_0(S_0)
+		\end{equation*}
+		Man bezeichnet
+		\begin{itemize}
+			\item $(1+r)^{-n} \brackets{K - S_n}_+ $ als \enquote{exercise value} und
+			\item $\frac{r-a}{b-a} f_{n+1}^b + \frac{b-r}{b-a} f_{n+1}^a$ als \enquote{continuation value}
+		\end{itemize}
+	\item Der optimale Ausübungszeitpunkt ist $\dach{\tau} = \min\menge{n \ge 0 :  f_n(S_n) = (1+r)^{-n} (K - S_n)_+}$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Bewertung der amerikanischen Put-Option entspricht der Lösung des OSP mit $Z_n^{\APut} = (1+r)^{-n} \brackets{K - S_n}_+$. Mit \cref{theorem: 6.5} reicht es zu zeigen, dass $f_n(S_n)$ die Snellsche Einhüllende $E$ von $Z^{\APut}$ ist.
+	\cref{theorem: 6.3} liefert die Snellsche Einhüllende rekursiv durch
+	\begin{align*}
+			E_N &= Z_N = (1+r)^{-N} (K-S_N) = f_N(S_N) \\
+			E_n &= \max\menge{Z_n , \E^\Q[E_{n+1} \mid \F_n]} \mit  Z_n = (1+r)^{-n} (K-S_n)_+ \\
+			\E^\Q \sqbrackets{E_{n+1} \mid \F_n} &= \E^\Q \sqbrackets{f_{n+1}(S_{n+1}) \mid \F_n} \\
+			&= f_{n+1} (S_n (1+b)) \underbrace{\Q(R_{n+1} = b \mid \F_n)}_{= \frac{r-a}{b-a}} + f_{n+1}(S_n(1+a)) \underbrace{\Q(R_{n+1} = a \mid \F_n)}_{= \frac{b-r}{b-a}} \\
+			&= f_{n+1}^b \frac{r-a}{b-a} + f_{n+1}^a \frac{b-r}{b-a}
+	\end{align*}
+\end{proof}
