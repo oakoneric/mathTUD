@@ -72,7 +72,7 @@ bzw. $\quer{t} = \infty$, falls $P_{i \tau} \ge 0$ für alle $i \in I_B$.
 
 Im sogenannten nicht-entscheidbaren Fall, d.h. falls
 \begin{equation*}
-	\brackets{\exists \ \tau \in I_N \colon a_\tau < 0} \land \brackets{ \exists \ \sigma \in I_B \colon \quer{t} = -\frac{p_\sigma}{P_{\sigma \tau}} = \min \menge{-\frac{p_i}{P_{i \tau}} \colon P_{i \tau < 0, i \in I_B}} < \infty}
+	\brackets{\exists \ \tau \in I_N \colon a_\tau < 0} \land \brackets{ \exists \ \sigma \in I_B \colon \quer{t} = -\frac{p_\sigma}{P_{\sigma \tau}} = \min \menge{-\frac{p_i}{P_{i \tau}} \colon P_{i \tau} < 0, i \in I_B} < \infty}
 \end{equation*}
 ergibt die (maximale) Schrittweite $\quer{t}$ den Punkt
 \begin{equation*}
@@ -91,7 +91,7 @@ Für entartete Ecken kann man die Schrittweite $\quer{t} = 0$ erhalten. In diese
 	\end{equation*}
 \end{satz}
 
-Um zu zeigen, dass die Matrix $\quer{A_B} \defeq (A')_{i \in \quer{I_B}}$ regulär ist, nutzen wir das folgende Resultat.
+Um zu zeigen, dass die Matrix $\quer{A_B} \defeq \brackets{A^i}_{i \in \quer{I_B}}$ regulär ist, nutzen wir das folgende Resultat.
 
 \begin{lemma}[Sherman / Morrison] %3.7
 	\label{lemma: 3.7}
@@ -121,10 +121,16 @@ Um zu zeigen, dass die Matrix $\quer{A_B} \defeq (A')_{i \in \quer{I_B}}$ regul�
 
 \begin{beispiel} %3.2
 	\label{beispiel: 3.2}
-	Wir betrachten $z = -x_1 - x_2 \to \min$ bei $x_1 + 2 x_2 \le 6$, $4x_1 + x_2 \le 10$, $x_1, x_2 \ge 0$. Um aus den Ungleichungen Gleichungsnebenbedingungen zu machen, führen wir sogenannte Schlupfvariablen $x_3, x_4 \ge 0$ ein und erhalten
+	Wir betrachten die lineare Optimierungsaufgabe
 	\begin{equation*}
-		x_1 + 2 x_2 + x_3 = 6, \quad  4x_1 + x_2 + x_4 = 10, \quad x_1, x_2, x_3, x_4 \ge 0 \\
-		\follows x_3 = 6 - x_1 - 2x_2 \und x_4 = 10 - 4x_1 + x_2
+		z = -x_1 - x_2 \to \min \bei x_1 + 2 x_2 \le 6, 4x_1 + x_2 \le 10, x_1, x_2 \ge 0
+	\end{equation*} 
+	Um aus den Ungleichungen Gleichungsnebenbedingungen zu machen, führen wir sogenannte \begriff{Schlupfvariablen} $x_3, x_4 \ge 0$ ein und erhalten
+	\begin{equation*}
+		\begin{alignedat}{3}
+			x_1 + 2 x_2 + x_3 &= 6, &\quad  4x_1 + x_2 + x_4 &= 10, &\quad x_1, x_2, x_3, x_4 &\ge 0 \\
+			\follows \qquad \qquad \qquad x_3 &= 6 - x_1 - 2x_2, & \quad x_4 &= 10 - 4x_1 + x_2 &&
+		\end{alignedat}
 	\end{equation*}
 	Damit liegt nun eine Optimierungsaufgabe in Standardform \eqref{eq: 3.1} vor. Notieren wir dies nun in Tableauform mit $I_N = \menge{1,2}$ und $I_B = \menge{3,4}$ (betrachte dazu $x_B = Px_N + p$):	
 	\begin{center}
@@ -140,11 +146,9 @@ Um zu zeigen, dass die Matrix $\quer{A_B} \defeq (A')_{i \in \quer{I_B}}$ regul�
 	
 	Mit $\tau = 1$ und $\sigma = 4$ sowie $\quer{t} = \frac{5}{2}$ erhält man
 	\begin{equation*}
-		\quer{x} = x + \quer{t} d = \begin{pmatrix} 0 \\ 0 \\ 6 \\ 10 \end{pmatrix} + \frac{5}{2} \begin{pmatrix} 1 \\ 0 \\ -1 \\-4 \end{pmatrix}
-		= \begin{pmatrix} \frac{5}{2} \\ 0 \\ \frac{7}{2} \\ 0 \end{pmatrix}
-	\end{equation*}
-	und 
-	\begin{equation*}
+		\quer{x} = x + \quer{t} d = \left( \begin{smallmatrix} 0 \\ 0 \\ 6 \\ 10 \end{smallmatrix} \right) + \frac{5}{2} \left( \begin{smallmatrix} 1 \\ 0 \\ -1 \\-4 \end{smallmatrix} \right)
+		= \left( \begin{smallmatrix} \frac{5}{2} \\ 0 \\ \frac{7}{2} \\ 0 \end{smallmatrix} \right)
+		\quad \und \quad 
 		z(\quer{x}) = -\frac{5}{2}
 	\end{equation*}
 \end{beispiel}
@@ -152,25 +156,32 @@ Um zu zeigen, dass die Matrix $\quer{A_B} \defeq (A')_{i \in \quer{I_B}}$ regul�
 Der Austausch von $x_\tau$ und $x_\sigma$ im Simplextableau kann formal durch die sogenannten Austauschregeln erfolgen.
 
 \begin{center}
-	\begin{tabular}{r|c|c}
-		$T_0$ & $x_N$ & $1$ \\ \hline
-		$x_B = $ & $P$ & $p$ \\ \hline
-		$z =$ & $\trans{q}$ & $q_0$
-	\end{tabular}
-	$\quad \implies \quad$
-	\begin{tabular}{r|c|c}
-		$T_1$ & $x_{\schlange{N}}$ & $1$ \\ \hline
-		$x_{\schlange{B}} = $ & $\schlange{P}$ & $\schlange{p}$ \\ \hline
-		$z =$ & $\trans{\schlange{q}}$ & $\schlange{q_0}$
-	\end{tabular}
-	\begin{align*}
-		\schlange{I_B} &= \brackets{I_B \cup \menge{\tau}} \setminus \menge{\sigma} \\
-		\schlange{I_N} &= \brackets{I_B \cup \menge{\sigma}} \setminus \menge{\tau}
-	\end{align*}
+	\begin{minipage}{\dimexpr0.6\linewidth-\fboxrule-\fboxsep}
+		\centering
+		\begin{tabular}{r|c|c}
+			$T_0$ & $x_N$ & $1$ \\ \hline
+			$x_B = $ & $P$ & $p$ \\ \hline
+			$z =$ & $\trans{q}$ & $q_0$
+		\end{tabular}
+		$\quad \implies \quad$
+		\begin{tabular}{r|c|c}
+			$T_1$ & $x_{\schlange{N}}$ & $1$ \\ \hline
+			$x_{\schlange{B}} = $ & $\schlange{P}$ & $\schlange{p}$ \\ \hline
+			$z =$ & $\trans{\schlange{q}}$ & $\schlange{q_0}$
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}{\dimexpr0.4\linewidth-\fboxrule-\fboxsep}
+		\begin{equation*}
+			\begin{aligned}
+			\schlange{I_B} &= \brackets{I_B \cup \menge{\tau}} \setminus \menge{\sigma} \\
+			\schlange{I_N} &= \brackets{I_B \cup \menge{\sigma}} \setminus \menge{\tau}
+			\end{aligned}
+		\end{equation*}
+	\end{minipage}
 \end{center}
+\vspace{\parskip}
 
-Austauschregeln:
-
+\fbox{Austauschregeln:}
 \begin{align*}
 	\schlange{P}_{\sigma , \tau} &\defeq \frac{1}{P_{\sigma,  \tau}} 
 	\tag{Pivotelement} \\
@@ -187,15 +198,17 @@ Austauschregeln:
 	\schlange{p}_i &\defeq p_i - \frac{p_\sigma}{P_{\sigma, \tau}} P_{i,\tau} \quad (i \in I_B \setminus \menge{\sigma}) \\
 	\schlange{q}_j &\defeq q_j - \frac{P_{\sigma, j}}{P_{\sigma, \tau}} q_\tau \quad (j \in I_N \setminus \menge{\tau}) \\
 \end{align*}
-Vergleiche dazu auch das Merkblatt zum Simplex-Verfahren unter \vspace{-\parskip}
-\begin{center}
-	\url{https://www.math.tu-dresden.de/~martinovic/Zusammenfassung_Simplexverfahren.pdf}
-\end{center}
 
-\vspace{\parskip}
+Vergleiche dazu auch das Merkblatt zum Simplex-Verfahren unter auf den folgenden Seiten. 
+
+\includepdf[pages=-]{optinum_zsfSimplex.pdf}
 
 \begin{beispiel} %3.3
-	Wir betrachten wie in \cref{beispiel: 3.2} die Optimierungsaufgabe $z = -x_1 - x_2 \to \min$ bei $x_1 + 2 x_2 \le 6$, $4x_1 + x_2 \le 10$, $x_1, x_2 \ge 0$. mit Simplex-Starttableau:
+	Wir betrachten wie in \cref{beispiel: 3.2} die Optimierungsaufgabe
+	\begin{equation*}
+	z = -x_1 - x_2 \to \min \quad \bei \quad x_1 + 2 x_2 \le 6, \enskip 4x_1 + x_2 \le 10, \enskip x_1, x_2 \ge 0
+	\end{equation*} 
+	mit Simplex-Starttableau:
 	\begin{indentpar}
 		\begin{tabular}{R{1.8cm}|R{0.6cm}R{0.6cm}|R{0.6cm} l}
 			$T_0$ & $x_1$ & $x_2$ & $1$ \\ \cline{1-4}

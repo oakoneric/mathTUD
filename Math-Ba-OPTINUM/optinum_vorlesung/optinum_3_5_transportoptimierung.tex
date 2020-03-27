@@ -30,7 +30,7 @@ hat \eqref{eq: 3.13} die Form
 \end{equation*}
 
 \begin{bemerkung} %3.6
-	Das Transportproblem ist eine sehr spezielle Optimierungsaufgabe. Dei Koeffizientenmatrix 
+	Das Transportproblem ist eine sehr spezielle Optimierungsaufgabe. Die Koeffizientenmatrix 
 	\begin{equation*}
 		A = 
 		\left( \begin{array}{cccc|cccc|cccc}
@@ -72,7 +72,7 @@ hat \eqref{eq: 3.13} die Form
 
 Die Systemmatrix $A$ besitzt für praxisrelevante Problemgrößen eine sehr große Anzahl an Einträgen, sodass die Anwendung des Simplexverfahrens im Allgemeinen nicht empfehlenswert ist; insbesondere deshalb, weil dieses die Struktur von $A$ nicht mit einbezieht.
 
-Zur Lösung des Transportproblems hat sich daher ein Verfahren etabiliert, das auch die duale Aufgabe 
+Zur Lösung des Transportproblems hat sich daher ein Verfahren etabliert, das auch die duale Aufgabe 
 \begin{equation}
 	w \defeq \trans{a} u + \trans{b} v \to \max \bei \trans{A} \begin{psmallmatrix} u \\ v \end{psmallmatrix} \le c, u \in \R^r, v \in \R^s
 	\label{eq: 3.16}
@@ -82,6 +82,7 @@ bzw.
 	w \defeq \sum_{i \in I} a_i u_i + \sum_{k \in K} b_k v_k \to \max \bei u_i + v_k \le c_{ik} \quad (u_i, v_k \in \R, i \in I, k \in K)
 	\label{eq: 3.17}
 \end{equation}
+löst.
 
 \begin{satz}[Optimalitätskriterium] %3.14
 	\label{satz: 3.14}
@@ -109,7 +110,7 @@ bzw.
 \end{folgerung}
 
 \begin{definition} %3.4
-	Eine Folge von Zellen (Indexpaaren) $(i_1, k_1), (i_2, k_1), (i_2, k_2) \dots (i_\ell, k_\ell), (i_1, k_\ell), (i_1, k_1)$ mit $i_\nu \neq i_\mu$, $k_\nu \neq k_\mu$ für $\nu \neq \mu$ heißt \begriff{Zyklus} (der Länge $2 \ell$).
+	Eine Folge von Zellen (Indexpaaren) $(i_1, k_1)$, $(i_2, k_1)$, $(i_2, k_2)$ $\dots$ $(i_\ell, k_\ell)$, $(i_1, k_\ell)$, $(i_1, k_1)$ mit $i_\nu \neq i_\mu$ und $k_\nu \neq k_\mu$ für $\nu \neq \mu$ heißt \begriff{Zyklus} (der Länge $2 \ell$).
 \end{definition}
 
 \begin{beispiel} %3.5
@@ -209,7 +210,7 @@ Darstellung der Inputdaten oder zulässigen Punkte in folgenden Schemata:
 	
 	\begin{center}
 		\begin{tabular}{r|rrrrr}
-			$\text{X}_{\text{NW}}$ & 12 &  5 &  6 & \cancel{7} 0 &  \cancel{7} 3 \\ \hline
+			$\text{X}_{\text{MK}}$ & 12 &  5 &  6 & \cancel{7} 0 &  \cancel{7} 3 \\ \hline
 			0 \cancel{4} & 0 &  0 & 0 &  0 &  $\fbox{4}^3$ \\
 			0 \cancel{12} \cancel{19} & 0 & $\fbox{5}$ & $\fbox{4}$ &  $\fbox{7}^1$ &  $\fbox{3}$ \\
 			0 \cancel{2} \cancel{14} &  $\fbox{12}^2$ & 0 &  $\fbox{2}^4$ &  0 & 0
@@ -222,7 +223,7 @@ Darstellung der Inputdaten oder zulässigen Punkte in folgenden Schemata:
 	
 	\begin{center}
 		\begin{tabular}{r|rrrrr}
-			X & 0 &  5 &  6 &  7 &  7 \\ \hline
+			X & 12 &  5 &  6 &  7 &  7 \\ \hline
 			4 &  &  4 &  &   &   \\
 			19 &  & 1 & 4 &  7 &  7 \\
 			14 &  12 &  &  2 &   & 

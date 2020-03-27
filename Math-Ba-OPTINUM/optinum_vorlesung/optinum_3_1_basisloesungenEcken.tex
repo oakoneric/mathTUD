@@ -1,6 +1,6 @@
 \section{Basislösungen und Ecken}
 
-Sei $I \defeq \menge{1, \dots , n}$. Da $\rg(A) = m$, existiert eine Indexmenge $I_B \subseteq I$ mit $\card{I_B} = m$ derart, dass alle Spalten $A^i$ ($i \in I_B$) linear unabhängig sind. $I_B$ wird \begriff{Basis-Indexmenge} genannt. Mit $I_N \defeq I \setminus I_B$ (Nichtbasis) definieren wir
+Sei $I \defeq \menge{1, \dots , n}$. Da $\rg(A) = m \le n$, existiert eine Indexmenge $I_B \subseteq I$ mit $\card{I_B} = m$ derart, dass alle Spalten $A^i$ ($i \in I_B$) linear unabhängig sind. $I_B$ wird \begriff{Basis-Indexmenge} genannt. Mit $I_N \defeq I \setminus I_B$ (Nichtbasis) definieren wir
 \begin{align*}
 A_B &= (A^i)_{i \in I_B} & A_N &= (A^i)_{i \in I_N} \\
 c_B &= (c_i)_{i \in I_B} & c_N &= (c_i)_{i \in I_N} \\
@@ -12,7 +12,7 @@ Dann lässt sich \eqref{eq: 3.1} schreiben als
 \end{equation}
 bzw. durch Auflösen der Gleichung nach $x_B$ (beachte: $A_B$ hat Vollrang) als
 \begin{equation}
-	z = \brackets{\trans{c_N} - \trans{c_B} A_B^{-1}A_N} x_N + \trans{c_B} A_B^{-1} b \to \min \bei x_B = -A_B^{-1} A_N x_N + A_B^{-1}b, x_B \ge 0, x_N \ge 0 \label{eq: 3.3}
+	z = \brackets{\trans{c_N} - \trans{c_B} A_B^{-1}A_N} x_N + \trans{c_B} A_B^{-1} b \to \min \bei x_B = -A_B^{-1} A_N x_N + A_B^{-1}b, x_B, x_N \ge 0 \label{eq: 3.3}
 \end{equation}
 
 \begin{definition} %3.1
@@ -45,14 +45,14 @@ Dabei gilt: Eine Ecke $x \in G$ ist genau dann degeneriert, wenn ein $i \in I_B$
 \begin{beispiel} %3.1
 	Sei
 	\begin{equation*}
-		G \defeq \menge{x \in \Rn \colon x_1+x_2+x_3=1, \enskip 2x_1+x_2+x_4=2, \enskip x_1,\dots , x_4 \ge 0}
+		G \defeq \menge{x \in \R^4 \colon x_1+x_2+x_3=1, \enskip 2x_1+x_2+x_4=2, \enskip x_1,\dots , x_4 \ge 0}
 	\end{equation*}
 	Hierbei ist die Ecke $E_1 = \transpose{0,1,0,1}$ nicht degeneriert, da sie nur die Zerlegung $I_B = \menge{2,4}$ und $I_N = \menge{1,3}$ gestattet.
 	Die Ecke $E_2 = \transpose{1,0,0,0}$ ist degeneriert, weil ein $i \in I_B$ zwangsläufig $x_i = 0$ erfüllen muss.
 \end{beispiel}
 
 \begin{satz} %3.2
-	Seo $G \neq \emptyset$. Dann besitzt $G$
+	Sei $G \neq \emptyset$. Dann besitzt $G$
 	\begin{enumerate}[nolistsep, topsep=-\parskip]
 		\item mindestens eine Ecke
 		\item höchstens endlich viele Ecken.

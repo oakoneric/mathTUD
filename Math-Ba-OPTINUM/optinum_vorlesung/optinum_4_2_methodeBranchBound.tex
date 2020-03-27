@@ -1,6 +1,6 @@
 \section{Die Methode Branch \& Bound}
 
-Branch \& Bound (B\&B) ist eine sehr flexible Technik, um exakte Lösungsverfahren für Probleme der diskreten Optimierung zu entwickeln. Anschaulich betrachtet wird dabei eine schwierige Optimierungsaufgabe sukzessiv in Teilprobleme zerlegt, die wiederum ''leicht`` (näherungsweise) gelöst werden können und somit zur Lösung des Gesamtproblems beitragen. Näherungslösungen erhält man dabei oftmals mithilfe geeigneter Relaxationen.
+Branch \& Bound (B\&B) ist eine sehr flexible Technik, um exakte Lösungsverfahren für Probleme der diskreten Optimierung zu entwickeln. Anschaulich betrachtet wird dabei eine schwierige Optimierungsaufgabe sukzessiv in Teilprobleme zerlegt, die wiederum \enquote{leicht} (näherungsweise) gelöst werden können und somit zur Lösung des Gesamtproblems beitragen. Näherungslösungen erhält man dabei oftmals mithilfe geeigneter Relaxationen.
 
 \subsection{Grundlagen}
 
@@ -88,7 +88,7 @@ Zur Erinnerung: Gegeben seien ganze Zahlen $c_i > 0$, $0 < a_i < b$ für $i \in 
 \begin{align*}
 	f(x) &= \trans{c} x \to \max \bei \trans{a} x \le b, \enskip x \in \menge{0,1}^n 
 	\tag{P} \\
-	f(x) &= \trans{c} x \to \max \bei \trans{a} x \le b, \enskip c \in [0,1]^n 
+	f(x) &= \trans{c} x \to \max \bei \trans{a} x \le b, \enskip x \in [0,1]^n 
 	\tag{Q} \label{eq: rucksack-q}
 \end{align*}
 Hier gilt also $E = \menge{x \in \Rn : \trans{a} x \le b, 0 \le x \le 1, i \in I}$ und $D = \mathbb{B}^n = \menge{0,1}^n$.
@@ -122,11 +122,16 @@ Innerhalb des Verzweigungsbaums ergeben sich die folgenden Teilprobleme (für be
 \begin{beispiel}
 	Gegeben sei das binäre Rucksackproblem 
 	\begin{equation*}
-		\begin{alignedat}{8}
-		z = \trans{c} x &= &8x_1 &+ &16x_2 &+ &20x_3 &+ &12x_4 &+ &6x_5 &+ &10x_6 &+ &4x_7 &\to \max \\
-		\bei \trans{a} x &= &3x_1 &+ &7x_2 &+ &9x_3 &+ &6x_4 &+ &3x_5 &+ &5x_6 &+ &2x_7 &\le 17 = b, \quad x_i \in \menge{0,1}, i = 1, \dots, 7
-		\end{alignedat}
-		\tag{P} \label{eq: rucksack-bsp-p}
+	\begin{split}
+	\setlength{\arraycolsep}{2pt}
+	\begin{array}{rcrcrcrcrcrcrcrl}
+	z = \trans{c} x &= &8x_1 &+ &16x_2 &+ &20x_3 &+ &12x_4 &+ &6x_5 &+ &10x_6 &+ &4x_7 &\to \max \\
+	\bei \trans{a} x &= &3x_1 &+ &7x_2 &+ &9x_3 &+ &6x_4 &+ &3x_5 &+ &5x_6 &+ &2x_7 &\le 17 = b, 
+	\end{array}
+	\\
+	x_i \in \menge{0,1}, i = 1, \dots, 7
+	\end{split}
+	\tag{P} \label{eq: rucksack-bsp-p}
 	\end{equation*}
 	
 	\begin{itemize}[leftmargin=*]
