@@ -1,0 +1,266 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 11pt]{article}
+
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+% \usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{parskip}  	% split paragraphs by vspace instead of intendations
+\usepackage[onehalfspacing]{setspace} % increase row-space
+
+\usepackage{lmodern}
+\usepackage{eufrak}
+\usepackage{ulem} 		% better underlines
+
+\usepackage[scale=0.95]{opensans}	% new font OpenSans
+\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\osfamily}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\thename}{Eric Kunze}
+\newcommand{\thematnr}{4679202}
+\newcommand{\theemail}{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\newcommand{\themodul}{Optimierung \& Numerik -- Teil 2}
+\newcommand{\theperiod}{Sommersemester 2020}
+
+%\renewcommand{\tutor}{Dr. Legrand}
+%\renewcommand{\group}{Tag x. DS, (un)gerade Woche}
+
+\newcommand{\thelecturer}{Prof. Dr. Oliver Sander}
+\newcommand{\thefaculty}{Mathematik}
+\newcommand{\theinstitute}{Numerik}
+\newcommand{\theprofessorship}{Numerik partieller Differentialgleichungen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage[smallequationskip]{../../texmf/tex/latex/mathworkMathTUD}
+
+\usepackage{../../texmf/tex/latex/mathoperatorsMathTUD}
+%\usepackage{../../texmf/tex/latex/maththeorems2MathTUD}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            GRAFIKEN                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage[font=small,labelfont=bf]{caption} % captions of non-floated figures
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}   % in my packages used compat=1.15
+\usepgfplotslibrary{fillbetween}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usetikzlibrary{matrix}
+
+\usepackage[table,dvipsnames]{tudscrcolor}
+%\usepackage[table,dvipsnames]{xcolor}
+% official colours in cooperate design TUD (include xcolor)
+% main colours:
+% cddarkblue, cdblue, cdgray, cdindigo, cdpurple, cddarkgreen, cdgreen, cdorange
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tabulars
+
+\usepackage{tabularx} 
+\usepackage{multirow}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{../../texmf/tex/latex/homeworkMathTUD}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           TITLEPAGE                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\makeTUtitle}[1][]{%
+	\begin{titlepage}
+		\pagecolor{cddarkblue!90}%
+		\color{white}%
+		\raggedright%
+		\fosfamily%
+		\setlength{\parindent}{0pt}% 
+		
+		% Logo / Kopf
+		\hspace{-18.6mm} %
+		\includegraphics[scale=0.6]{TUD-white.pdf} \\
+		\vspace{3mm} 
+		\begin{tabular}{m{\textwidth}}
+			\hline
+			\hspace{-4pt}\small{\textbf{Fakultät \thefaculty} Institut für \theinstitute, Professur für \theprofessorship} \\
+			\hline
+		\end{tabular} \\
+		
+		% Titel
+		\vspace{5cm}
+		{\Huge\bfseries \MakeUppercase \themodul \par}
+		\ifthenelse{\isempty{#1}}{}{
+			\vspace{0.5cm}%
+			{\Large \itshape #1} \\%
+		}
+		\vspace{1.5cm}
+		\textbf{{\Large \thelecturer}} \par
+		\vspace{0.5cm}
+		{\large \theperiod}
+		
+		% Fußzeile
+		\vfill%
+		\begin{tabular}{lll}
+			Autor  & : & \thename \\
+			E-Mail & : & \theemail \\
+		\end{tabular}%
+		
+	\end{titlepage}
+	\nopagecolor
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          HIGHLIGHTING                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            EQUATIONS                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{etoolbox}
+\apptocmd\normalsize{%
+	\abovedisplayskip=3pt
+	\abovedisplayshortskip=1pt
+	\belowdisplayskip=3pt
+	\belowdisplayshortskip=3pt
+}{}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             COUNTER                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chngcntr}
+
+% automatic reset of section after chapter ended 
+\pretocmd{\chapter}{\setcounter{section}{0}}{}{}
+
+% automatic reset of equation counter in each section
+\pretocmd{\section}{\setcounter{equation}{0}}{}{}
+
+%\counterwithin{themcount}{chapter}
+%\numberwithin{page}{blattcount}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          ENUMERATIONS                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumerate}
+\usepackage[inline]{enumitem} 		%customize label
+
+\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.6}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{\roman{enumii}.}
+%\renewcommand{\labelenumiii}{\roman{enumiii}.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage{listings}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              REFERENCES                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[unicode,bookmarks=true]{hyperref}
+\hypersetup{
+	% pdfborder={0 0 0}			% no boxed around links
+	pdfborderstyle={/S/U/W 1},	% underlining insteas of boxes
+	linkbordercolor=cdblue,
+	urlbordercolor=cdblue
+	%	colorlinks,
+	%	citecolor=black,
+	%	filecolor=cddarkblue!80,
+	%	linkcolor=black,
+	%	urlcolor=cddarkblue!80
+}
+
+\usepackage{cleveref}
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{proposition}{Proposition}{Propositionen}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{korollar}{Korollar}{Korollare}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{algorithmus}{Algorithmus}{Algorithmen}
+
+
+\usepackage{bookmark}		% pdf-bookmarks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%---------------------------------------
+% additional packages
+%---------------------------------------
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\undef\folge
+\NewDocumentCommand{\folge}{m m}{\left\{ #1 \right\}_{#2}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\makeTUtitle[Numerik gewöhnlicher Differentialgleichungen --- Übungen]
+
+%\smallequationskip
+
+\include{optinum_2_uebungen-1}
+
+\end{document}

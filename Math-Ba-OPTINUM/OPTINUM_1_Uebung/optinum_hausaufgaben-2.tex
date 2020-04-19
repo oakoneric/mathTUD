@@ -1,0 +1,68 @@
+\begin{exercisePage}[Optimalität und Konvexität]
+%
+% Aufgabe 1
+\begin{homework}
+	Gegeben sei das lineare Optimierungsproblem
+	\begin{equation*}
+		z = -x_1 - x_2 \to \min \bei x_1 + 2x_2 \le 8, x_1 + x_2 \le 5, x_1, x_2 \le 0
+	\end{equation*}
+	Ermitteln Sie für die Punkte
+	\begin{equation*}
+		x^1 = \trans{(1, 1)}, \quad x^2 = \trans{(3, 3)}, \quad x^3 = \trans{(4, 1)}, \quad x^4 = \trans{(2, 3)}
+	\end{equation*}
+	jeweils den Kegel der zulässigen Richtungen $Z(x^k)$ für $k = 1,2,3,4$.
+\end{homework}
+
+Wir wiederholen zunächst ein Kriterium der Vorlesung. Für ein lineares Optimierungsproblem $f(x) \to \min \bei Ax \le b$ gilt
+\begin{equation*}
+	d \in Z(x) \equivalent \forall i \in I_0(x) \colon \trans{a_i} d \le 0 \tag{2.4} \label{2_eq1}
+\end{equation*}
+
+Der zulässige Bereich lässt sich offensichtlich darstellen als $G = \menge{x \in \R^2 \colon Ax \le b}$ für $A = \left( \begin{smallmatrix} 1 & 2 \\ 1 & 1 \end{smallmatrix} \right)$ und $b = \transpose{8, 5}$. 
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+	\item Betrachten wir $x^1 = \transpose{1,1}$. Dann gilt $Ax^1 \le b$. Da beiden Nebenbedingungen erfüllt sind, gilt $x \in \inn(G)$ und somit $Z(x^1) = \R^2$.
+	%
+	\item Betrachten wir $x^2 = \transpose{3,3}$. Dann gilt $Ax^2 > b$, d.h. $x \notin G$ und somit $Z(x^2) = \emptyset$.
+	%
+	\item Für $x^3 = \transpose{4,1}$ gilt $Ax^3 \le b$ und insbesondere $x_1 + x_2 = 4 + 1 = 5$, d.h. die zweite Nebenbedingung ist mit Gleichheit erfüllt. Damit ist $I_0(x^3) = \menge{2}$. Dann ist $\trans{a_2} d \le 0$ äquivalent zu $d_2 \le - d_1$. Nach Gleichung \eqref{2_eq1} gilt also $Z(x^3) = \menge{d = \transpose{d_1,d_2} \in \R^2 \colon d_2 \le - d_1}$.
+	%
+	\item Für $x^4 = \transpose{2,3}$ ist $Ax^4 = b$ und $I_0(x^4) = \menge{1,2}$. Nach \eqref{2_eq1} muss also $d_1 + 2d_2 \le 0$ und $d_1 + d_2 \le 0$ gelten. Somit gilt $Z(x^4) = \menge{d \in \R^2 \colon A * d \le 0}
+	= \menge{d \in \R^2 \colon \left( \begin{smallmatrix} 1 & 2 \\ 1 & 1 \end{smallmatrix} \right) d \le 0}$. 
+\end{enumerate}
+
+\pagebreak
+
+\begin{homework}
+	Beweisen Sie folgende Aussagen:
+	\begin{enumerate}[leftmargin=*, nolistsep, topsep=-\parskip]
+		\item Es seien $G \subseteq \Rn$ eine konvexe Menge und $\abb{f}{G}{\R}$ eine konvexe Funktion. Dann ist die Lösungsmenge der Optimierungsaufgabe
+		\begin{equation*}
+			f(x) \to \min \bei x \in G \tag{$\star$} \label{2_eq2}
+		\end{equation*}
+		konvex.
+		\item Es sei $K \subseteq \Rn$ ein Kegel. Die Menge $K$ ist genau dann konvex, wenn
+		\begin{equation*}
+			x,y \in K \follows x+y \in K
+		\end{equation*}
+	\end{enumerate}
+\end{homework}
+
+\begin{enumerate}[label=(zu \alph*), leftmargin=\zulength]
+	\item Sei $G \subseteq \Rn$ eine konvexe Menge und $\abb{f}{G}{\R}$ eine konvexe Funktion. Wir wollen nun zeigen, dass die Lösungsmenge $\mathcal{L}$ von \eqref{2_eq2} eine konvexe Menge ist. Seien dazu $x,y \in \mathcal{L} = \menge{x \in \Rn \colon f(x) \le f(\quer{x}) \enskip \forall \quer{x} \in G}$. Daraus folgt nun aber direkt schon, dass $f(x) = f(y)$ gelten muss. Betrachten wir nun eine Konvexkombination $z = \lambda x + (1-\lambda) y \in G$.
+	\begin{align*}
+		f(z) = f(\lambda x + (1-\lambda) y) 
+		&= \lambda f(x) + (1-\lambda) f(y) \tag{Konvexität von $f$} \\
+		&= \lambda f(x) + (1-\lambda) f(x) \tag{$f(x) = f(y)$} \\
+		&= f(x) \in f(\mathcal{L})
+	\end{align*}
+	d.h. also $z \in \mathcal{L}$.
+	%
+	\item Sei $K \subseteq \Rn$ ein Kegel. Wir wollen zeigen, dass $K$ genau dann ein Kegel ist, wenn $x+y \in K$ für alle $x,y \in K$.
+	\begin{proof-equivalence}
+		\hinrichtung Sei $K$ konvex und $x,y \in K$ beliebig. Dann ist auch $\lambda x + (1-\lambda) y \in K$ für alle $\lambda \in (0,1)$. Wähle nun $\lambda = \sfrac{1}{2}$. Dann ist $0.5 z \defeq 0.5x + 0.5y \in K$. Da $K$ nun ein Kegel ist, ist auch $\mu z \in K$ für alle $\mu \ge 0$. Insbesondere gilt dies auch für $\mu = 2$, d.h. $z = x + y \in K$.
+		\rueckrichtung Es gelte $x+y \in K$ für alle $x,y \in K$. Seien $x,y \in K$ beliebig und $\lambda \in (0,1)$. Dann ist aufgrund der Kegeleigenschaft von $K$ auch $\lambda x \in K$ und $(1-\lambda)y \in K$. Da $K$ additiv abgeschlossen ist, ist also auch $\lambda x + (1-\lambda) y \in K$ für alle $x,y \in K$. Somit ist $K$ konvex.
+	\end{proof-equivalence}
+\end{enumerate}
+
+
+\end{exercisePage}
