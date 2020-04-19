@@ -1,0 +1,843 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 12pt]{article}
+
+\usepackage[ngerman]{babel}
+\RequirePackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\RequirePackage{parskip}  	% split paragraphs by vspace instead of intendations
+\RequirePackage[onehalfspacing]{setspace} % increase row-space
+\RequirePackage[title,titletoc]{appendix}
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{chngcntr}
+\RequirePackage{eufrak}
+
+\RequirePackage{lmodern}
+\RequirePackage{ulem} 
+
+\usepackage{fancyhdr} 	% customize header / footer
+\usepackage{tocloft}
+%\renewcommand{\cfttoctitlefont}{\titlefont\Huge\bfseries}
+%\renewcommand{\cftbeforetoctitleskip}{0pt}
+%\renewcommand{\cftchapnumwidth}{2em}
+%\renewcommand{\cftsecindent}{2em}
+%\renewcommand{\cftsecnumwidth}{2em}
+%\renewcommand{\cftsubsecindent}{4em}
+
+\RequirePackage{amsmath,amssymb,amsfonts,mathtools}
+\RequirePackage{blkarray}
+\RequirePackage{latexsym}
+\RequirePackage{marvosym} 	% lightning (contradiction)
+\RequirePackage{stmaryrd} 	% Lightning symbol
+\RequirePackage{bbm} 		% unitary matrix
+\RequirePackage{wasysym}	% add some symbols
+
+\RequirePackage{systeme}	% easy typesetting systems of equations
+\RequirePackage{witharrows} % arrows from one equation to another
+
+% further support for different equation setting
+\RequirePackage{cancel}
+\RequirePackage{xfrac}		% sfrac -> fractions e.g. 3/4
+\RequirePackage{units}		% units and fractions
+\RequirePackage{diagbox}
+
+\usepackage{../texmf/tex/latex/mathoperatorsMathTUD}
+
+\RequirePackage[table,dvipsnames]{tudscrcolor}
+\RequirePackage{tabularx} 	% tabularx-environment (explicitly set width of columns)
+\RequirePackage{longtable} 	% Tabellen mit Seitenumbrüchen
+\RequirePackage{multirow}
+\RequirePackage{booktabs}	% improved rules
+\RequirePackage{colortbl}
+
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             COUNTER                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pretocmd{\chapter}{\setcounter{section}{0}}{}{}
+\pretocmd{\chapter}{\setcounter{equation}{0}}{}{}
+
+\usepackage{enumerate}
+\usepackage[inline]{enumitem} 		%customize label
+
+\renewcommand{\labelitemi}{\raisebox{2pt}{\scalebox{.4}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\renewcommand{\labelenumii}{\alph{enumii}.}
+\renewcommand{\labelenumiii}{\roman{enumiii}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec}   % change title headings look
+\usepackage{chngcntr}   % modify counters
+\usepackage{relsize}    % relative font size (smaller[i], larger[i], ...)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% headings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\titlefont}{\osfamily}
+\newcommand{\chaptersize}{\huge}
+\newcommand{\sectionsize}{\LARGE}
+
+\renewcommand{\thepart}{\Alph{part}}
+
+% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before-code>}[<after-code>]
+% \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}[<right-sep>]
+
+%%%%%%%%% section
+%\titlelabel{\thetitle \quad} % no "." behind section/sub... (3 instead of 3.)
+\titleformat{\section}[hang]{\bfseries\LARGE}{\thesection}{8pt}{}%
+%\titleformat*{\section}{\bfseries\titlefont\sectionsize}
+%\titleformat*{\subsection}{\bfseries\titlefont\sectionsize\smaller}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           REFERENCES                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{titlesec}   % change title headings look
+\usepackage{relsize}    % relative font size (smaller[i], larger[i], ...)
+
+\usepackage{titling}
+%\pretitle{\begin{center}\Huge\bfseries\sffamily}
+%\posttitle{\par}
+%\preauthor{\par \normalfont \large \scshape}
+%\postauthor{\par}
+%\postdate{\end{center}
+
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
+\counterwithin{equation}{section}
+\newcounter{themcount}
+\counterwithin{themcount}{section}
+\usepackage{ntheorem}
+
+\newcommand{\skiparound}{10pt}
+\theorempreskip{\skiparound}
+\theorempostskip{\skiparound}
+
+\theoremstyle{plain}
+\theoremseparator{.}
+\theorembodyfont{}
+\newtheorem{definition}[themcount]{Definition}
+\newtheorem{lemma}[themcount]{Lemma}
+\newtheorem{satz}[themcount]{Satz}
+
+\newtheorem{beispiel}[themcount]{Beispiel}
+
+\theorembodyfont{\itshape}
+\newtheorem{bemerkung}[themcount]{Bemerkung}
+
+%\newtheoremstyle{proofstyle}%
+%{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+%{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+\usepackage[
+type={CC},
+modifier={by-nc-sa},
+version={4.0},
+]{doclicense}
+
+\RequirePackage[unicode,bookmarks=true]{hyperref}
+\hypersetup{
+	% pdfborder={0 0 0}			% no boxed around links
+	pdfborderstyle={/S/U/W 1},	% underlining insteas of boxes
+	linkbordercolor=cdblue,
+	urlbordercolor=cdblue
+	%	colorlinks,
+	%	citecolor=black,
+	%	filecolor=cddarkblue!80,
+	%	linkcolor=black,
+	%	urlcolor=cddarkblue!80
+}
+
+\RequirePackage{cleveref}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\RequirePackage{bookmark}		% pdf-bookmarks
+
+
+\begin{document}
+	\title{\bfseries \sffamily \huge Grundlagen der linearen Algebra}
+	\author{\scshape Eric Kunze}
+	\date{\today}
+	\maketitle
+	{ \footnotesize \doclicenseThis }
+	
+	\begin{center}
+		\small \slshape Mit dieser Zusammenfassung ist keine Garantie auf Vollständigkeit und/oder Korrektheit verbunden!
+	\end{center}
+	
+\section{Vektorräume}
+	
+	\begin{definition}[Vektorraum]
+		Unter einem ($K$-)Vektorraum $V$ verstehen wir das Tupel $(V,+,*)$ bestehend aus einer Menge $V$ und den Operationen ''Addition`` und ''Skalarmultiplikation``, die definiert sind durch
+		\begin{equation*}
+			\begin{aligned}
+				\abb{+}{V \times V}{V} \mit (x,y) \mapsto x + y \\
+				\abb{*}{K \times V}{V} \mit (\lambda , x) \mapsto \lambda * x
+			\end{aligned}
+		\end{equation*}
+		und folgende Eigenschaften erfüllen:
+		\begin{enumerate}[label=(V\arabic*), leftmargin=*]
+			\item $(V,+)$ bildet eine abelsche Gruppe\footnote{Gruppen und auch abelsche Gruppen werden in der Vorlesung ''Diskrete Strukturen`` noch eingeführt werden.}:
+			\begin{enumerate}[label=(\alph*), noitemsep]
+				\item \textit{Assoziativgesetz}: Für alle $u,v,w \in V$ gilt $u + (v + w) = (u + v) + w$
+				\item \textit{neutrales Element}: es gibt $0_V \in V$ mit $0_V + v = v + 0_V = 0_V$ für alle $v \in V$
+				\item \textit{inverses Element}: für alle $v \in V$ existiert ein Inverses $-v \in V$, sodass $v + (-v) = (-v) + v = 0_V$
+				\item \textit{Kommutativgesetz}: für alle $u,v \in V$ gilt $u + v = v + u$
+			\end{enumerate}
+		\item Addition und Skalamultiplikation sind miteinander verträglich: 
+			\begin{enumerate}[label=(\alph*), noitemsep]
+				\item \textit{Distributivgesetz 1}: Für alle $u,v \in V$ und $\lambda \in K$ gilt $\lambda * (u + v) = \lambda * u + \lambda * v$
+				\item \textit{Distributivgesetz 2}: Für alle $v \in V$ und $\lambda, \mu \in K$ gilt $(\lambda + \mu) * v = \lambda * v + \mu * v$
+				\item \textit{Assoziativgesetz}: für alle $v \in V$ und $\lambda, \mu \in K$ gilt $(\lambda * \mu) * v = \lambda * (\mu * v)$
+				\item \textit{neutrales Element}: für alle $v \in V$ gilt $1_K * v = v$
+			\end{enumerate}
+		\end{enumerate}
+	\end{definition}
+
+	Man beachte, dass wir nun sowohl im Körper $K$ als auch im Vektorraum $V$ eine Addition definiert haben, die wir der Einfachheit halber mit dem selben Symbol $+$ notieren. Ebenso benutzen wir das Symbol $*$ sowohl für die Multiplikation im Körper $K$ als auch für die Skalarmultiplikation. Welche dieser Abbildungen jeweils gemeint ist, wird immer aus dem Kontext hervorgehen, und es ist wichtig, dass man sich der Unterscheidung immer bewusst ist! Zur Unterscheidung nennt man die Elemente von $V$ oft auch \textit{Vektoren} und die Elemente von $K$ \textit{Skalare}. 
+
+	Insbesondere erlaubt die Definition in einem Vektorraum noch keine Multikplikation zweier Vektoren, wie man sie zum Beispiel als Skalar- und Kreuzprodukt aus der Schule kennt. Wir können einen Vektor $v \in V$ nur mit einem Skalar multiplizieren. Anschaulich entspricht dies der Streckung bzw. Stauchung eines Vektors im euklidischen Raum $\R^3$.
+	
+	\begin{beispiel}
+		\begin{itemize}
+			\item Ein sehr anschauliches Beispiel für einen Vektorraum ist der aus der Schule bekannte euklidische Raum $\R^3$ über dem Körper $\R$. Die Vektoren $v \in \R$ haben dann die Gestalt $\left( \begin{smallmatrix} v_1 \\ v_2 \\ v_3 \end{smallmatrix} \right)$. Die Einträge $v_1, v_2, v_3$ stammen stets aus dem zugrundeliegenden Körper, d.h. hier $v_1, v_2, v_3 \in \R$.
+			\item In Verallgemeinerung des erstes Punktes ist $\R^n$ über dem Körper $\R$ ein Vektorraum für alle $n \in \N$. Die Vektoren $v \in \Rn$ haben dann genau $n$ Einträge, d.h. sie sind von der Form\footnote{Um besonders große Vektoren platzsparend notieren zu können, schreiben wir Spaltenvektoren oft einfach als Zeilenvektoren und transponieren diese.} $v = \transpose{v_1, v_2, \dots, v_n}$.
+			\item Es gibt aber auch abstraktere Vektorräume, wie beispielsweise den Raum der Abbildungen von $\R$ nach $\R$, den wir mit $\Abb(\R,\R) \defeq \menge{\abb{f}{\R}{\R}}$ notieren. Als zugrundeliegenden Körper wählen wir wieder $\R$. Die Vektoren aus diesem Vektorraum haben jetzt aber nicht mehr die ''typische`` Gestalt aus den ersten beiden Punkten, sondern sind lediglich bestimmte Funktionen. So ist zum Beispiel die Funktion $\abb{f}{\R}{\R}$ mit $x \mapsto x^2$ ein ''Vektor`` in $\Abb(\R,\R)$.
+		\end{itemize}
+	\end{beispiel}
+
+	Nun haben wir Mengen mit einer Struktur ausgestattet und wenn diese Mengen bestimmte Eigenschaften erfüllen, dann haben wir sie Vektorraum genannt. Nun kann man sich die Frage stellen, was denn mit Teilmengen passiert. Bilden diese wieder einen Vektorraum?
+	
+	\begin{definition}[Untervektorraum]
+		Sei $(V,+,*)$ ein $K$-Vektorraum. Wir nennen $U \subseteq V$ einen Untervektorraum von $V$, wenn folgenden Eigenschaften erfüllt sind:
+		\begin{enumerate}[label=(UV\arabic*), leftmargin=*]
+			\item $0 \in U$
+			\item Für $x,y \in U$ ist auch $x+y \in U$ (Abgeschlossenheit unter $+$)
+			\item Für $\lambda \in K$ und $x \in U$ ist auch $\lambda * x \in U$ (Abgeschlossenheit unter $*$)
+		\end{enumerate}
+	\end{definition}
+
+	\begin{bemerkung}
+		Die Eigenschaft (UV1) kann auch durch $U \neq \emptyset$ ersetzt werden, d.h. unser Untervektorraum muss einfach nichtleer sein. Das zeigt auch das folgende Lemma, was als kleines Beispiel für das Führen eines Beweises dienen soll.
+	\end{bemerkung}
+
+	\begin{lemma}
+		Sei $U \subseteq V$ und $U$ erfülle die Bedingungen (UV2) und (UV3). Dann gilt 
+		\begin{equation*}
+			U \text{ ist Untervektorraum } \equivalent 0 \in U  \equivalent U \neq \emptyset
+		\end{equation*}
+	\end{lemma}
+	\begin{proof}
+		Die Voraussetzungen des Lemmas können wir als gegeben annehmen, d.h. $U \subseteq V$ und $U$ erfüllt (UV2) und (UV3). Nun müssen wir die beiden Äquivalenzen zeigen. Äquivalenzen zeigt man meistens, indem man beiden RIchtungen der Implikation beweist. Die erste Äquivalenz
+		\begin{equation*}
+			U \text{ ist Untervektorraum } \equivalent U \neq \emptyset
+		\end{equation*}
+		folgt direkt aus der Definition: Ist $U$ ein Untervektorraum, dann erfüllt er auch (UV1), d.h. es gilt $0 \in U$. Andersherum sei $0 \in U$, d.h. $U$ erfüllt nun auch (UV1). Somit gelten dann die Eigenschaften (UV1) bis (UV3) und $U$ ist ein Untervektorraum von $V$. Analog verfahren wir für die zweite Äquivalenz
+		\begin{equation*}
+			0 \in U  \equivalent U \neq \emptyset
+		\end{equation*}
+		Wir zeigen zuerst die Hinrichtung, d.h. wir nehmen an, dass $0 \in U$ gilt und müssen nun zeigen, dass $U \neq \emptyset$ ist. Dies ist aber schon offensichtlich, weil mit dem Nullvektor schon ein Element in $U$ enthalten ist. Für die Rückrichtung ist ein wenig mehr Arbeit notwendig. Wir wissen, dass $U \neq \emptyset$ gilt. Somit muss es mindestens ein Element in $U$ geben, bezeichnen wir dieses mit $u$, d.h. $u \in U$. Da $U$ aber nach Voraussetzung bereits (UV3) erfüllt, dürfen wir mit beliebigen Skalaren multiplizieren, also insbesondere auch mit der Null des Körpers. Somit gilt dann $0 * u \in U$ nach (UV3) und wegen $0 * u = 0$ ist also auh $0 \in U$. Das ist die Behauptung, die wir zeigen wollten.
+	\end{proof}
+
+	\begin{beispiel}[triviale Untervektorräume]
+		Sei $V$ ein Vektorraum. Der kleinste Untervektorraum, den wir finden können, ist stets $U = \menge{0}$, d.h. der Raum, der nur den Nullvektor enthält. Damit ist offensichtlich (UV1) erfüllt und da wir nur ein Element haben, ist auch (UV2) und (UV3) schnell gezeigt: $0 + 0 = 0 \in U$ und $\lambda * 0 = 0 \in U$.
+		Der größte Untervektorraum ist dagegen immer der Vektorraum $V$ selbst, weil er nach Definition (UV1) bis (UV3) erfüllt.
+	\end{beispiel}
+
+	\begin{beispiel}[Untervektorräume im $\R^3$]
+		Wir betrachten den $\R$-Vektorraum $\R^3$ und wollen uns Untervektorräume von diesem ansehen. Untervektorräume können auf verschiedene Art und Weise angegeben werden. Wir betrachten hier die erste Möglichkeit, indem wir Bedingungen an die Einträge der Vektoren stellen. Betrachten wir
+		\begin{equation*}
+			U \defeq \menge{\begin{pmatrix} u_1 \\ u_2 \\ u_3 \end{pmatrix} \in \R^3 \mid u_3 = 0}
+		\end{equation*}
+		Offensichtlich ist $U \subseteq \R^3$. Außerdem ist $0 = \transpose{0,0,0} \in U$.
+		Nun wählen wir uns zwei Vektoren $u,v \in U$, d.h $u_3 = 0 = v_3$. Es gilt
+		\begin{equation*}
+			u + v = \begin{pmatrix} u_1 \\ u_2 \\ 0 \end{pmatrix} + \begin{pmatrix} v_1 \\ v_2 \\ 0 \end{pmatrix} = \begin{pmatrix}  u_1 + v_1 \\ u_2 + v_2  \\ 0 +0 \end{pmatrix}
+		\end{equation*}
+		Nun ist für die Zugehörigkeit zu $U$ nur die dritte Koordinate interessant, d.h. wir müssen nur schauen, wie der dritte Eintrag von $u+v$ aussieht. Da $u_3 + v_3 = 0+0 = 0$ ist, muss also auch $u + v \in U$ gelten, d.h. (UV2) ist gezeigt. Sei nun $\lambda \in \R$ ein beliebiger Skalar und $u \in U$, d.h $u_3 = 0$. Dann gilt
+		\begin{equation*}
+			\lambda * u = \lambda * \begin{pmatrix} u_1 \\ u_2 \\ 0 \end{pmatrix} = \begin{pmatrix} \lambda * u_1 \\ \lambda * u_2 \\ \lambda * 0 \end{pmatrix}
+		\end{equation*}
+		Wieder ist die dritte Koordinate gleich Null\footnote{Die ersten beiden Koordinaten interessieren uns nicht, da an diese in $U$ keine Bedingung gestellt wird.}. Somit ist $\lambda * u \in U$ für alle $\lambda \in \R$ und alle $u \in U$, d.h. (UV3) ist erfüllt. Schlussendlich sind (UV1) bis (UV3) erfüllt und $U$ damit ein Untervektorraum des $\R^3$
+		
+		Anschaulich gesprochen beschreibt $U$ gerade die $x$-$y$-Ebene im dreidimensionalen Raum.
+	\end{beispiel}
+
+	Um eine weitere Darstellung von Untervektorräumen zu bekommen, benötigen wir zuerst noch ein neues Konzept: Linearkombinationen.
+	
+	\begin{definition}[Linearkombination]
+		\label{definition: linearkombination}
+		Sei $V$ ein $K$-Vektorraum. Gegeben seien beliebig viele Vektoren $v_1, \dots, v_n \in V$ und eine gleiche Anzahl an Skalaren $\lambda_1, \dots, \lambda_n \in K$.
+		Die Darstellung
+		\begin{equation}
+			\lambda_1 * v_1 + \lambda_2 * v_2 + \dots + \lambda_n * v_n \in V
+			\label{eq: linearkombination}
+		\end{equation}
+		nennt man eine Linearkombination der $v_1, \dots, v_n$.
+	\end{definition}
+
+	\begin{bemerkung}
+		Die Linearkombination in \eqref{eq: linearkombination} lässt sich auch verkürzt schreiben als
+		\begin{equation*}
+			\sum_{i=1}^n \lambda_i *  v_i
+		\end{equation*}
+		Jede Linearkombination beschreibt wieder ein Element des Vektorraumes $V$, weil dieser abgeschlossen unter Skalarmultiplikation (d.h. jedes $\lambda_i *  v_i$ ist in $V$) und abgeschlossen unter Addition ist (d.h. auch die Summe verlässt $V$ nicht).
+	\end{bemerkung}
+
+	Betrachten wir nun die folgende Situation: wir haben eine Menge von Vektoren $v_1, v_2, \dots, v_n$ gegeben und wollen diese Menge so vervollständigen, dass sie die Struktur eines Vektorraums besitzt, d.h. ein Untervektorraum wird.
+	
+	Fixieren wir dazu die $v_1, \dots, v_n$ in \eqref{eq: linearkombination} und variieren die Skalare $\lambda_1, \dots, \lambda_n \in K$ beliebig. Dann bekommen wir automatisch einen neuen Untervektorraum, den wir als Spannraum oder auch als lineare Hülle bezeichnen.
+	
+	\begin{definition}[lineare Hülle]
+		Seien $v_1, v_2, \dots, v_n \in V$ gegeben und fixiert. Dann bezeichnet
+		\begin{equation*}
+			\Span(\menge{v_1, v_2, \dots, v_n}) \defeq \menge{\lambda_1 * v_1 + \lambda_2 * v_2 + \dots + \lambda_n * v_n \mid \lambda_1, \dots, \lambda_n \in K}
+		\end{equation*}
+		die lineare Hülle bzw. den Spannraum von $v_1, v_2, \dots, v_n$.
+	\end{definition}
+	
+	Die lineare Hülle der Vektoren $v_1, v_2, \dots, v_n$ ist der kleinste Untervektorraum von $V$, der $v_1, v_2, \dots, v_n$ enthält. Wir haben uns gerade die Konstruktion ''von unten`` angesehen, d.h. aus den gegebenen Vektoren durch Linearkombination die Menge immer weiter vergrößert.
+	
+	Eine andere Herangehensweise wäre die Konstruktion ''von oben``:  wir nehmen uns zuerst alle Untervektorräume her, die die Vektoren $v_1, v_2, \dots, v_n$ enthalten und bilden dann den Schnitt über all diese Vektorräume. Dann kann man zeigen, dass der Schnitt von Untervektorräumen wieder ein Untervektorraum bildet und wir erhalten die lineare Hülle als Schnitt aller Untervektorräume von $V$, die $v_1, v_2, \dots, v_n$ enthalten. Mathematisch geschrieben erhalten wir also
+	\begin{equation*}
+		\Span(\menge{v_1, v_2, \dots, v_n}) = \bigcap \menge{U \subseteq V \mid U \text{ ist Untervektorraum},  v_1, v_2 \dots, v_n \in U} 
+	\end{equation*}
+
+\pagebreak
+
+	\begin{beispiel}
+		Wir betrachten nun den $\R$-Vektorraum $\R^3$ und die beiden Vektoren $u = \left( \begin{smallmatrix} 1 \\ 1  \\ 1\end{smallmatrix}\right)$ sowie $v = \left( \begin{smallmatrix} -1 \\ 2 \\ 1 \end{smallmatrix}\right)$.
+		Dann gilt 
+		\begin{equation*}
+			U \defeq \Span(\menge{v}) = \Span(v) = \menge{\lambda * \begin{pmatrix} -1 \\ 2  \\ 1 \end{pmatrix} \mid \lambda \in \R} = \menge{\begin{pmatrix} -\lambda \\ 2 \lambda \\ \lambda \end{pmatrix} \mid \lambda \in \R}
+		\end{equation*}
+		Somit haben wir eine Darstellung gefunden, die die Einträge in den zu $U$ gehörigen Vektoren charakterisiert. Anschaulich beschreibt $U$ nun eine Gerade, die durch den Ursprung gehen muss (weil $0 \in U$) und den Richtungsvektor $v = \left( \begin{smallmatrix} -1 \\ 2 \\ 1 \end{smallmatrix}\right)$ besitzt.
+		Betrachten wir nun 
+		\begin{equation*}
+			U' \defeq \Span(\menge{u,v}) = \Span(u,v) = \menge{\lambda \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} + \mu \begin{pmatrix} -1 \\ 2 \\ 1\end{pmatrix} \mid \lambda, \mu \in \R}
+		\end{equation*}
+		Wir wissen wieder, dass $U'$ ein Untervektorraum bildet, d.h. es ist $0 \in U'$. Dann können wir die Vektoren $u$ und $v$ als aufspannende Vektoren einer Ebene betrachten und den Nullvektor als Stützvektor nutzen.
+	
+		Daran erkannt man nun schon, dass die Darstellung eines Untervektorraums als Spannraum mitunter schöner sein wird als die Charakterisierung der Vektoreinträge.
+	\end{beispiel}
+
+	\begin{beispiel}[Untervektorräume als Spannräume]
+		Wir gehen zurück zu Untervektorräumen und wollen nun mithilfe der neuen Erkenntnisse untersuchen, ob gegebene Mengen Untervektorräume sind. Sei dazu $V = \R^2$ ein $\R$-Vektorraum und 
+		\begin{equation*}
+			U = \menge{\begin{pmatrix} 2x-y \\ x+4y \end{pmatrix} \mid x,y \in \R}
+		\end{equation*}
+		Nun haben wir hier also eine Menge gegeben, die durch Charakterisierung der Einträge festgelegt wird. Wir wollen diese Darstellung nun ein wenig zerlegen:
+		\begin{equation*}
+			\begin{pmatrix} 2x-y \\ x+4y \end{pmatrix} = \begin{pmatrix} 2x \\ x \end{pmatrix} + \begin{pmatrix} -y \\ 4y \end{pmatrix} = x * \begin{pmatrix} 2 \\ 1 \end{pmatrix} + y * \begin{pmatrix} -1 \\ 4 \end{pmatrix}
+		\end{equation*}
+		Da die Einträge $x$ und $y$ Skalare aus dem Körper $\R$ sind, steht nun eine Linearkombination der Vektoren $\begin{psmallmatrix} 2 \\ 1 \end{psmallmatrix}$ und $\begin{psmallmatrix} -1 \\ 4 \end{psmallmatrix}$ da, d.h. jedes Element in $U$ lässt sich als Linearkombination dieser beiden Vektoren schreiben. Somit ergibt sich
+		\begin{equation*}
+			U = \Span\brackets{\menge{\begin{pmatrix} 2 \\ 1 \end{pmatrix}, \begin{pmatrix} -1 \\ 4 \end{pmatrix}}}
+		\end{equation*}
+		Da Spannräume immer Untervektorräume sind, ist auch $U$ ein Untervektorraum von $V$.
+	\end{beispiel}
+
+\section{Lineare Unabhängigkeit}
+	
+	Nun können wir den Spannraum $\Span(X)$ von einer relativ beliebigen Menge $X$ von Vektoren betrachten. Allerdings kann diese Menge $X$ eventuell sehr groß sein und vor allem auch Redundanzen enthalten, d.h. in $X$ sind Elemente enthalten, die eigentlich nicht notwendig sind und ihr Fehlen den Spannraum nicht verändert. Dazu nutzen wir das Konzept der linearen Unabhängigkeit.
+	
+	\begin{definition}[lineare Unabhängigkeit]
+		Sei $V$ ein $K$-Vektorraum und $v_1, v_2, \dots, v_n \in V$. Die $v_1, v_2, \dots, v_n$ heißen \begriff{linear abhängig}, wenn es $\lambda_1, \lambda_2, \dots, \lambda_n \in K$ gibt, die nicht alle gleich Null sind\footnote{$\lambda_1, \lambda_2, \dots, \lambda_n \in K$ sind nicht alle gleich Null, wenn mindestens eines der $\lambda_i$ ungleich Null ist.} und 
+		\begin{equation}
+			\lambda_1 * v_1 + \lambda_2 * v_2 + \cdots + \lambda_n * v_n = 0
+			\label{eq: lineare_unabhaengigkeit}
+		\end{equation}
+		erfüllen. Andernfalls heißen die $v_1, v_2, \dots, v_n$ \begriff{linear unabhängig}. 
+	\end{definition}
+	
+	Weil gerade der Fall der linearen \textit{Un}abhängigkeit sehr wichtig sein wird, schreiben wir diesen Fall noch einmal explizit hin:
+	Die $v_1, v_2, \dots, v_n$ sind genau dann linear unabhängig, wenn die Darstellung 
+	\eqref{eq: lineare_unabhaengigkeit} nur für $\lambda_1 = \lambda_2 = \dots = \lambda_n = 0$ erfüllt ist.
+	
+	Testen wir auf lineare (Un-)Abhängigkeit im $\Rn$, dann beginnen wir meistens mit der Darstellung \eqref{eq: lineare_unabhaengigkeit}. Die einzelnen Zeilen der Vektoren ergeben ein lineares Gleichungssystem, welches wir anschließend lösen. Wir brauchen keine exakte Lösung sondern vielmehr nur \textit{eine} mögliche Belegung für die ''Variablen`` $\lambda_1, \lambda_2, \dots, \lambda_n$. Stellt sich heraus, dass mindestens eines der $\lambda_i \neq 0$ ist, dann liegt lineare Abhängigkeit vor, bekommen wir als einzige Lösung den Nullvektor, dann liegt lineare Unabhängigkeit vor.
+	
+	Anschaulich kann man sich das Konzept wie folgt klar machen: Die Vektoren $v_1, v_2, \dots, v_n$ seien linear abhängig, d.h. es gibt $\lambda_1, \lambda_2 \dots, \lambda_n$ (nicht alle gleich Null) mit $\lambda_1 * v_1 + \dots + \lambda_n * v_n = 0$. Dann können wir eines der $v_i$ als Linearkombination der anderen schreiben, z.B. $v_1 = \mu_2 *  v_2 + \mu_3 * v_3 + \dots + \mu_n * v_n$. Man stellt fest, dass dabei gerade $\mu_i = - \frac{\lambda_i}{\lambda_1}$ gilt. 
+	
+	\begin{beispiel}
+		Sei wieder $V = \R^2$ ein $\R$-Vektorraum. 
+		\begin{itemize}
+			\item Ein einzelner Vektor $v \neq 0$ ist stets linear unabhängig, denn aus $\lambda * v = 0$ muss wegen $v \neq 0$ schon $\lambda = 0$ gelten. Somit sind also alle Skalare gleich Null - $v$ ist linear unabhängig. Sei dagegen $v = 0$ der Nullvektor, dann gilt für alle $\lambda \in \R$ schon $\lambda * v = \lambda * 0 = 0$. Beispielsweise ist die Gleichung auch für $\lambda = 5$ erfüllt. Somit existiert mindestens ein Nicht-Null-Skalar, also ist der Nullvektor stets linear abhängig. Aus dem gleichen Grund ist jede Menge von Vektoren, die den Nullvektor enthält, automatisch linear abhängig (man kann den Koeffizienten vor dem Nullvektor stets beliebig wählen).
+			\item Betrachten wir die beiden Vektoren $u = \begin{psmallmatrix} 1 \\ 2 \end{psmallmatrix}$ und $v = \begin{psmallmatrix} 5 \\ 6 \end{psmallmatrix}$. Wir wollen wissen, ob $u$ und $v$ linear unabhängig sind. Also starten wir mit \eqref{eq: lineare_unabhaengigkeit}, d.h.
+			\begin{equation*}
+				0 = \lambda_1 * u + \lambda_2 * v = \lambda_1 * \begin{pmatrix} 1 \\ 2 \end{pmatrix} + \lambda_2 * \begin{pmatrix} 5 \\ 6 \end{pmatrix} = \begin{pmatrix} 1 * \lambda_1 + 5 * \lambda_2 \\ 2 * \lambda_1 + 6 * \lambda_2 \end{pmatrix}
+			\end{equation*}
+			Nun müssen alle Einträge des Vektors auf der rechten Seite gleich Null sein, damit die Gleichung erfüllt ist. Somit können wir als Gleichungssystem formulieren
+			\begin{equation*}
+				\begin{aligned}
+					0 &= 1 * \lambda_1 + 5 * \lambda_2 \\
+					0 &= 2 * \lambda_1 + 6 * \lambda_2
+				\end{aligned} 
+				\qquad \Longleftrightarrow \qquad
+				0 = \begin{pmatrix} 1 & 5 \\ 2 & 6 \end{pmatrix} * \begin{pmatrix} \lambda_1 \\ \lambda_2 	\end{pmatrix} 
+			\end{equation*}
+			Addieren wir nun das $-2$-fache der ersten Zeile zur zweiten Zeile, dann ergibt sich
+			\begin{equation*}
+			\begin{aligned}
+				0 &= 1 * \lambda_1 + 5 * \lambda_2 \\
+				0 &= -4 * \lambda_2
+			\end{aligned}
+			\qquad \Longleftrightarrow \qquad
+			0 = \begin{pmatrix} 1 & 5 \\ 0 & -4 \end{pmatrix} * \begin{pmatrix} \lambda_1 \\ \lambda_2 	\end{pmatrix} 
+			\end{equation*}
+			Aus der zweiten Zeile folgt nun $\lambda_2 = 0$ und nach Einsetzen in die erste Zeile liefert schließlich $\lambda_1 = 0$. Damit sind alle Koeffizienten gleich Null und $u$ und $v$ sind linear unabhängig.
+			Anschaulich gesprochen heißt das, dass $u$ nicht durch Strecken oder Stauchen aus $v$ gewonnen werden kann.
+		\end{itemize}
+	\end{beispiel}
+
+\section{Basis und Dimension}
+
+	Wir haben uns bereits einige Linearkombinationen angesehen. Man kann nun versuchen, die Vektoren $v_1, v_2, \dots, v_n$ in einem Vektorraum $V$ so zu wählen, dass die Linearkombinationen eindeutig werden. Das führt uns zum Begriff der Basis.
+	
+	Vorher wollen wir noch einen Begriff klären: Für einen $K$-Vektorraum $V$ ist $v_1, v_2, \dots, v_n$ ein \textbf{Erzeugendensystem}, wenn $V = \Span(\menge{v_1, v_2, \dots, v_n})$ gilt, d.h. wenn jedes Element $v \in V$ geschrieben werden kann als $v = \lambda_1 * v_1 + \lambda_2 * v_2 + \dots + \lambda_n * v_n$ für Skalare $\lambda_1, \dots, \Lambda_n  \in K$. Somit kann also jedes Element in $V$ als Linearkombination der $v_1, \dots, v_n$ geschrieben werden, man sagt auch $v_1, \dots, v_n$ \textit{erzeugen} $V$.
+
+	\begin{definition}[Basis]
+		Sei $V$ ein $K$-Vektorraum. Wir nennen $\mathcal{B} = \menge{v_1, v_2, \dots, v_n} \subseteq V$ eine \begriff{Basis} von $V$, wenn gilt:
+		\begin{enumerate}[nolistsep, topsep=-\parskip]
+			\item $\mathcal{B}$ ist ein Erzeugendensystem von $V$.
+			\item $\mathcal{B}$ ist linear unabhängig.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{beispiel}
+		Wir betrachten den Standardraum $\R^3$ über dem Körper $\R$. Dann ist eine einfache Basis die sogenannte Standardbasis $\mathcal{E} = \menge{e_1, e_2, e_3}$ wobei $e_1 = \begin{psmallmatrix} 1 \\ 0 \\ 0 \end{psmallmatrix}$, $e_2 = \begin{psmallmatrix} 0 \\ 1 \\ 0 \end{psmallmatrix}$, $e_3 = \begin{psmallmatrix} 0 \\ 0 \\ 1 \end{psmallmatrix}$. Jedes $v = \begin{psmallmatrix} v_1 \\ v_2 \\ v_3 \end{psmallmatrix} \in V$ lässt sich schreiben als $v = v_1 * e_1 + v_2 * e_2 + v_3 * e_3$. $\mathcal{E}$ ist also ein Erzeugendensystem von $\R^3$. Außerdem sind $e_1, e_2, e_3$ linear unabhängig (jede Zeile ergibt, dass ein Koeffizient Null sein muss). Somit ist $\mathcal{E}$ wirklich eine Basis von $\R^3$.
+	\end{beispiel}
+
+	Oftmals ist ein gegebener Untervektorraum schon als lineare Hülle (Spannraum) gegeben, woraus automatisch die Erzeugungseigenschaft folgt, d.h. wir müssen noch die lineare Unabhängigkeit der erzeugenden Vektoren beweisen.
+	
+	Es gibt weitere nützliche Charakterisierungen von Basen:
+	
+	\begin{satz}
+		Sei $V$ ein $K$-Vektorraum und $\mathcal{B} = \menge{v_1, v_2, \dots, v_n}$ eine Menge von Vektoren. Dann sind folgende Aussagen äquivalent:
+		\begin{enumerate}[nolistsep, topsep=-\parskip]
+			\item $\basisB$ ist eine Basis von $V$.
+			\item $\basisB$ ist ein minimales Erzeugendensystem.
+			\item $\basisB$ ist maximal linear unabhängig.
+		\end{enumerate}
+	\end{satz}
+
+	Wir verzichten an dieser Stelle auf einen Beweis und verdeutlichen uns lieber die Begriffe ''minimal erzeugend`` und ''maximal linear unabhängig``.
+	\begin{itemize}
+		\item Sei $\basisB$ ein minimales Erzeugendensystem. Da $\basisB$ ein Erzeugendensystem ist gilt $V = \Span(\menge{v_1, v_2, \dots, v_n})$. $\basisB$ ist minimal, wenn das Weglassen eines beliebigen $v_i$ zum Verlust der Erzeugungseigenschaft führt, d.h. $\Span(\menge{v_1, \dots, v_{i-1}, v_{i+1}, \dots, v_n}) \subsetneq V$. $\basisB$ ist also minimal, wenn wir keine Redundanz, d.h. keine überflüssigen Elemente, mehr in unserer erzeugenden Menge haben.
+		\item Sei $\basisB$ nun maximal linear unabhängig. $\basisB$ ist also insbesondere linear unabhängig und wenn wir einen beliebigen Vektor $v \in V$, der nicht schon in $\basisB$ ist, hinzufügen, dann wird $\basisB$ linear abhängig. Formal heißt das: $\basisB$ ist linear unabhängig und $\basisB \cup \menge{v}$ ist linear abhängig für alle $v \in V \setminus \basisB$. 
+	\end{itemize}
+
+	Diese Charakterisierungen sind insbesondere dann nützlich, wenn wir einen Untervektorraum $U$ als Spannraum von $ B = \menge{v_1, \dots, v_n}$ gegeben haben und nun eine Basis von $U$ finden müssen. Da $U$ als Spannraum gegeben ist, ist auch die Eigenschaft ''Erzeugendensystem`` klar. Jedoch ist zu erwarten, dass $v_1, \dots, v_n$ linear abhängig sind. Wir müssen nun also Vektoren aus $B$ entfernen (damit die lineare Abhängigkeit beseitigt wird), dürfen aber den Spannraum nicht verändern. 
+	
+	Durch das Streichen eines linear abhängigen Vektors ändern wir den Spannraum aber nicht, da jedes Vorkommen des linear abhängigen Vektors durch die Linearkombination ersetzt werden kann, die ohnehin schon im Spannraum enthalten sein muss. Korrekt heißt das also:
+	Ist $v_1, v_2, \dots, v_n$ linear abhängig und wir nehmen oBdA an, dass $\lambda_n \neq 0$. Dann existiert also eine Darstellung $v_n = \lambda_1 * v_1 + \lambda_2 * v_2 + \dots + \lambda_{n-1} * v_{n-1} \in \Span(\menge{v_1, v_2, \dots, v_{n-1}})$. Dementsprechend ist
+	\begin{equation*}
+		\begin{aligned}
+			\Span\brackets{\menge{v_1, v_2, \dots, v_n}} 
+			&= \Span( \{ v_1, v_2, \dots, v_{n-1}, \underbrace{\lambda_1 * v_1 + \lambda_2 * v_2 + \dots + \lambda_{n-1} * v_{n-1}}_{\in \Span(\menge{v_1, v_2, \dots, v_{n-1}})} \} )\\
+			&= \Span\brackets{\menge{v_1, v_2, \dots, v_{n-1}}}
+		\end{aligned}
+	\end{equation*}
+	
+	Die Basis eines Vektorraumes ist nicht eindeutig bestimmt, aber wir können etwas über die Anzahl der Basisvektoren aussagen, denn diese ist eindeutig bestimmt.
+	
+	\begin{definition}[Dimension]
+		Sei $V$ ein endlich erzeugter\footnote{endlich erzeugt: es gibt ein endliches Erzeugendensystem} $K$-Vektorraum und $\mathcal{B} = \menge{v_1, v_2, \dots, v_n}$ eine Basis\footnote{Genauer sollten wir auch fordern, dass $v_i \neq v_j$ für $i \neq j$ gilt.} von $V$. Die Dimension von $V$ bezüglich $K$ ist dann definiert als die Mächtigkeit einer Basis, d.h.
+		\begin{equation*}
+			\dim_K(V) = \card{\mathcal{B}} = n
+		\end{equation*}
+	\end{definition}
+
+	\begin{bemerkung}
+		Existiert kein endliches Erzeugendensystem von $V$, d.h. $V$ ist nicht endlich erzeugt, dann sagt man $V$ hat ''unendliche Dimension`` und schreibt $\dim_K(V) = \infty$.
+	\end{bemerkung}
+
+	\begin{bemerkung}
+		Die gesamte Theorie, die wir bis hierher entwickelt haben (d.h. Linearkombinationen, lineare Unabhängigkeit, Basen und Dimension) sind stets abhängig vom Körper $K$, über dem wir den Vektorraum betrachten. Dies verdeutlichen wir auch im folgenden Beispiel.
+	\end{bemerkung}
+
+	\begin{beispiel}
+		\begin{itemize}
+			\item Der Standardraum $\Rn$ hat Dimension $\dim_\R(\Rn) = n$, denn die Standardbasis $\mathcal{E}$ hat immer $n$ Elemente.
+			\item  Der $\mathbb{C}$-Vektorraum $\mathbb{C}$ hat Dimension $\dim_{\mathbb{C}} (\mathbb{C}) = 1$, denn eine Basis ist $\mathcal{B} = \menge{1}$. Wir können nämlich jedes $z \in \mathbb{C}$ darstellen als $z = \lambda * 1$ für $\lambda \in \mathbb{C}$ und ein einzelner Vektor ist (sofern er nicht der Nullvektor ist) immer linear unabhängig. 
+			\item Betrachten wir dagegen $\mathbb{C}$ als $\R$-Vektorraum, d.h. die Skalare dürfen nur aus $\R$ stammen, dann ist $\dim_\R(\mathbb{C}) = 2$ mit einer Basis $\mathcal{B'} = \menge{1, i}$. Da wir nur Skalare aus $\R$ zulassen, müssen wir den Imaginärteil mit einem eigenen Basisvektor beschreiben. Somit ist nun jedes $z \in \mathbb{C}$ darstellbar mit $z = \lambda_1 * 1 + \lambda_2 * i$. Dies entspricht der bekannten Darstellung einer komplexen Zahl mit $z = a + bi$.
+			\item Der Vektorraum $\Abb(\R,\R)$ ist nicht endlich erzeugt, d.h. $\dim_\R(\Abb(\R,\R)) = \infty$.
+		\end{itemize}
+	\end{beispiel}
+
+\section{Kern und Rang}
+
+	Gegeben Sei nun eine Matrix $A \in \R^{n \times m}$. Nun kann man sich fragen, was $A$ mit den Elementen von einem (Unter-)Vektorraum macht. Dafür interessieren uns zwei Dinge 
+	\begin{itemize}
+		\item Welche Elemente lässt $A$ verschwinden, d.h. für welche $x \in \Rn$ gilt $Ax = 0$.
+		\item Was passiert mit den anderen Elementen?
+	\end{itemize}
+
+	\begin{definition}[Kern und Bild einer Matrix]
+		Sei $A \in \R^{m \times n}$ ist der Kern von $A$ definiert als
+		\begin{equation*}
+			\Ker(A) = \menge{x \in \Rn : Ax = 0}
+		\end{equation*}
+		und das Bild von $A$ als
+		\begin{equation*}
+			\Image(A) = \menge{Ax : x \in \Rn}
+		\end{equation*}
+	\end{definition}
+
+	Wollen wir den Kern bestimmen, dann müssen wir also das homogene lineare Gleichungssystem $Ax = 0$ lösen. 
+	
+	\begin{beispiel} \label{beispiel: kern}
+		Wir betrachen die Matrix
+		\begin{equation*}
+			A = \begin{pmatrix}
+			0 & 1 & -1 & 2 \\
+			-1 & 0 & -2 & 3 \\
+			-2 & -2 & -2 & 2 \\
+			\end{pmatrix} \in \R^{3 \times 4}
+		\end{equation*}
+		und wollen den Kern von $A$ bestimmen, d.h. alle $x \in  \R^4$ mit $Ax = 0$ finden. Dazu lösen wir das (homogene) lineare Gleichungssystem mit dem Gauß-Jordan-Verfahren:
+		\begin{align*}
+			\begin{pmatrix}
+			0 & 1 & -1 & 2 \\
+			-1 & 0 & -2 & 3 \\
+			-2 & -2 & -2 & 2 \\
+			\end{pmatrix} \overset{-1 * II \ \& \  I \leftrightarrow II}{\leadsto}
+			\begin{pmatrix}
+			1 & 0 & 2 & -3 \\
+			0 & 1 & -1 & 2 \\
+			-2 & -2 & -2 & 2 \\
+			\end{pmatrix} \overset{2 * I + III}&{\leadsto}
+			\begin{pmatrix}
+			1 & 0 & 2 & -3 \\
+			0 & 1 & -1 & 2 \\
+			0 & -2 & 2 & -4 \\
+			\end{pmatrix}  \\ \overset{2 * II + III}&{\leadsto}
+			\begin{pmatrix}
+			1 & 0 & 2 & -3 \\
+			0 & 1 & -1 & 2 \\
+			0 & 0 & 0 & 0 \\
+			\end{pmatrix}
+		\end{align*}
+		Nun haben wir eine Nullzeile erhalten und können nicht weiter ''vereinfachen``. Wir haben nun effektiv nur noch zwei beschreibende Gleichungen für vier Variablen (da $x \in \R^4$). Somit brauchen wir zwei freie Parameter und wählen hierfür $s$ und $t$\footnote{Der Name der Parameter ist frei wählbar, überlich sind Buchstaben zwischen ''s`` und ''w`` oder griechische Buchstaben.}. Wir setzen also $x_4 = t$ und $x_3 = s$. Auch diese Wahl ist relativ frei, man beginnt aber üblicherweise ''von hinten``. \pagebreak
+		
+		Nun können wir die ersten beiden Zeilen der umgeformten Matrix wieder als Gleichungen schreiben\footnote{Da wir immer noch das homgene System $Ax=0$ lösen, gilt immer ''$\text{Zeile }= 0$``.} und ersetzen $x_4$ durch $t$ und $x_3$ durch $s$.
+		\begin{equation*}
+			\begin{alignedat}{3}
+			0 &=& x_1 + 2x_3 - 3x_4 &=& x_1 + 2s - 3t \\
+			0 &=& x_2 - x_3 + 2x_4 &=& x_2 - s+ 2t 
+			\end{alignedat}
+		\end{equation*}
+		Die zweite Gleichung können wir nach $x_2$ umstellen und erhalten
+		\begin{equation*}
+			x_2 = s - 2t
+		\end{equation*} 
+		Nun können wir die erste Gleichung nach $x_1$ umstellen, was uns
+		\begin{equation*}
+			x_1 = - 2s + 3t 
+		\end{equation*}
+		liefert. Somit ergibt sich als Lösung des Gleichungssystems und damit auch als Elemente des Kerns von $A$ 
+		\begin{equation*}
+			\begin{aligned}
+			\Ker(A) &= \menge{\begin{psmallmatrix} -2s + 3t \\ s-2t \\ s \\ t \end{psmallmatrix} : s,t \in \R} = \menge{ s * \begin{psmallmatrix}
+				-2 \\ 1 \\ 1 \\ 0 \end{psmallmatrix} + t * \begin{psmallmatrix}
+				3 \\ -2 \\ 0 \\ 1 \end{psmallmatrix} : s,t \in \R} \\
+			&= \Span\brackets{\menge{\begin{psmallmatrix}
+					-2 \\ 1 \\ 1 \\ 0 \end{psmallmatrix} , \begin{psmallmatrix}
+					3 \\ -2 \\ 0 \\ 1
+					\end{psmallmatrix}}}
+			\end{aligned}
+		\end{equation*}
+		Wollen wir nun noch éine Basis des Kerns bestimmen, so testen wir wieder die aufspannenden Vektoren auf lineare Unabhängigkeit: sind sie linear unabhängig, dann haben wir eine Basis gefunden; sind sie linear abhängig, müssen wir einen Vektor streichen und testen den Rest auf lineare Unabhängigkeit usw.
+		Für unser Beispiel hier kann man nun nachrechnen und feststellen, dass beide Vektoren linear unabhängig sind und somit eine Basis von $\Ker(A)$ gegeben ist durch 
+		\begin{equation*}
+			\mathcal{B} = \menge{\begin{psmallmatrix} -2 \\ 1 \\ 1 \\ 0 \end{psmallmatrix} , \begin{psmallmatrix} 3 \\ -2 \\ 0 \\ 1
+				\end{psmallmatrix}}
+		\end{equation*}
+		und es gilt $\dim_\R(\Ker(A)) = 2$.
+	\end{beispiel}
+	
+\pagebreak
+
+	Nun wollen wir uns der zweiten Frage widmen: Was passiert mit allen anderen Elementen? Wie verändert die Matrix also das ''Aussehen`` einer Menge von Vektoren bzw. eines Untervektorraums.
+	Dazu bezeichnen wir im Folgenden mit $s_1, \dots, s_n$ die Spalten und mit $z_1, \dots, z_m$ die Zeilen von $A \in \R^{n \times m}$.
+	\begin{equation*}
+		A = \begin{pmatrix}
+		| & | & & | \\
+		s_1 & s_2  & \dots & s_n \\
+		| & | & & | \\
+		\end{pmatrix}
+		= \begin{pmatrix}
+		- & z_1 & - \\
+		- & z_2 & - \\
+		& \vdots & \\
+		- & z_m & -
+		\end{pmatrix}
+	\end{equation*}
+	
+	\begin{definition}[Spalten- und Zeilenraum einer Matrix]
+		Sei $A \in \R^{m \times n}$. Der Zeilenraum von $A$ ist
+		\begin{equation*}
+			\Row(A) \defeq \Span(\menge{z_1, z_2, \dots, z_m})
+		\end{equation*} 
+		Der Spaltenraum von $A$ ist
+		\begin{equation*}
+			\Col(A) \defeq \Span(\menge{s_1, s_2, \dots, s_n})
+		\end{equation*}
+	\end{definition}
+
+	Für $A \in \R^{m \times n}$ und $x \in \Rn$ gilt
+	\begin{equation*}
+		Ax = x_1 * s_1 + x_2 * s_2 + \dots + x_n * s_n
+	\end{equation*}
+	und deswegen $\Image(A) = \Span(\menge{s_1, s_2, \dots, s_n}) = \Col(A)$.
+
+	Erneut können wir uns die Frage stellen, ob in den jeweiligen Spannräume die minimale Anzahl an Vektoren steht. Dies können wir nun aber schon mit den alten Methoden behandeln, wenn wir $\Row(A)$ bzw. $\Col(A)$ als Untervektorräume auffassen. Wenn wir dann schließlich eine Basis von $\Row(A)$ bzw. $\Col(A)$ gefunden haben, können wir auch die Dimension bestimmen. Dabei stellt man fest, dass
+	\begin{equation}
+		\dim_K(\Row(A)) = \dim_K(\Col(A)) = \dim_K(\Im(A))
+		\label{eq: dimension_bild}
+	\end{equation}
+	gilt. Man beachte aber, dass daraus im Allgemeinen nicht $\Col(A) = \Row(A)$ folgt. 
+	
+	Motiviert durch \eqref{eq: dimension_bild} definiert man nun den Begriff des Rangs einer Matrix.
+	
+	\begin{definition}[Rang einer Matrix]
+		Sei $A \in \R^{m \times n}$. Der Rang von $A$ ist definiert als
+		\begin{equation*}
+			\rg(A) \defeq \dim_\R(\Image(A))
+		\end{equation*}
+	\end{definition}
+
+	\begin{beispiel}
+		\label{beispiel: bild}
+		Man bestimme das Bild und den Rang der Matrix
+		\begin{equation*}
+			A = \begin{pmatrix} 3 & 2 & 1 \\ 1 & 2 & 3 \\ 1 & 1 & 1 \\ \end{pmatrix}
+		\end{equation*}
+		Wir haben gesehen, dass $\Image(A) = \Col(A) = \Span(s_1, s_2, s_3)$ gilt. Daher ist
+		\begin{equation*}
+			\Image(A) = \Span\brackets{\menge{\begin{psmallmatrix}  3 \\ 1 \\ 1 \end{psmallmatrix}, \begin{psmallmatrix}  2 \\ 2 \\ 1 \end{psmallmatrix}, \begin{psmallmatrix}  1 \\ 3 \\ 1 \end{psmallmatrix}}}
+		\end{equation*}
+		Nun wollen wir natürlich wieder eine Basis $\mathcal{B}$ von $\Image(A)$ bestimmen, d.h. wir prüfen auf lineare Unabhängigkeit.
+		\begin{equation*}
+			\begin{aligned}
+			0 = \lambda_1 * \begin{psmallmatrix}  3 \\ 1 \\ 1 \end{psmallmatrix} + \lambda_2 * \begin{psmallmatrix}  2 \\ 2 \\ 1 \end{psmallmatrix} + \lambda_3 * \begin{psmallmatrix}  1 \\ 3 \\ 1 \end{psmallmatrix}
+			\end{aligned} 
+		\end{equation*}
+		Somit müssen wir auch hier das homogene System $A * \begin{psmallmatrix} \lambda_1 \\ \lambda_2 \\ \lambda_3	\end{psmallmatrix} = 0$ lösen. Also nutzen wir erneut das Gauß-Jordan-Verfahren:
+		\begin{equation}
+			\begin{pmatrix} 3 & 2 & 1 \\ 1 & 2 & 3 \\ 1 & 1 & 1 \\ \end{pmatrix} \leadsto
+			\begin{pmatrix} 1 & 1 & 1  \\  0 & 1 & 2 \\ 0 & -1 & -2 \\  \end{pmatrix}
+			\leadsto
+			\begin{pmatrix} 1 & 1 & 1  \\  0 & 1 & 2 \\ 0 & 0 & 0 \\  \end{pmatrix}
+			\label{eq: bsp_gauss}
+		\end{equation}
+		Nun benötigen wir aber keine allgemeine Lösung (d.h. nicht alle Lösungen des LGS), sondern nur eine (das reicht ja schon für lineare Abhängigkeit).
+		Wir setzen also der Einfachheit halber $\lambda_3 = 1$. Dann ergibt sich aus der zweiten Zeile
+		\begin{equation*}
+			\lambda_2 + 2 \lambda_3 = 0 \equivalent \lambda_2 = - 2 * \lambda_3 = -2 * 1 = -2
+		\end{equation*}
+		Aus der ersten Zeile folgt nun
+		\begin{equation*}
+			\lambda_1 + \lambda_2 + \lambda_3 = 0 \equivalent \lambda_1 = - \lambda_2 - \lambda_3 = -(-2) - 1 = 1
+		\end{equation*}
+		Testen wir dies, so ergibt sich mit 
+		\begin{equation*}
+			0 = 1 * \begin{psmallmatrix}  3 \\ 1 \\ 1 \end{psmallmatrix} - 
+			2 * \begin{psmallmatrix}  2 \\ 2 \\ 1 \end{psmallmatrix} +
+			1 * \begin{psmallmatrix}  1 \\ 3 \\ 1 \end{psmallmatrix}
+		\end{equation*}
+		eine wahre Aussage. Somit sind die Spalten also linear abhängig und wir können eine Spalte streichen, z.B. streichen wir $s_3$. Dann ergibt sich
+		\begin{equation*}
+			\Image(A) = \Span(\menge{s_1, s_2, s_3}) = \Span(\menge{s_1, s_2})
+		\end{equation*}
+		Testen wir diese beiden Vektoren wieder auf lineare Unabhängigkeit, so ergibt sich analog zu \eqref{eq: bsp_gauss} die umgeformte Matrix des Gleichungssystems zu
+		\begin{equation*}
+			\begin{pmatrix} 3 & 2  \\ 1 & 2 \\ 1 & 1 \\ \end{pmatrix}
+			\leadsto
+			\begin{pmatrix} 1 & 1   \\  0 & 1  \\ 0 & 0  \\  \end{pmatrix}
+		\end{equation*}
+		Aus der zweiten Zeile folgt nun aber schon $\lambda_2 = 0$ und mit der ersten Zeile schließlich auch schon $\lambda_1 = 0$. Somit sind $s_1$ und $s_2$ linear unabhängig und $\mathcal{B} = \menge{s_1, s_2}$ eine Basis von $\Image(A) = \Col(A)$. Es gilt
+		\begin{equation*}
+			\rg(A) = \dim_\R (\Image(A)) = \dim_\R(\Col(A)) = 2
+		\end{equation*}
+	\end{beispiel}
+
+	\begin{bemerkung}[Zusammenfassung]
+		Den Kern $\Ker(A)$ von $A$ erhalten wir durch Lösen des homogenen Systems $Ax = 0$. Das Bild $\Image(A)$ erhalten wir durch den Spaltenraum $\Col(A)$. Eine Basis derer wird wie üblich durch den Test auf lineare Unabhängigkeit und eventuelles Streichen von Spalten berechnet.
+	\end{bemerkung}
+
+	Wir haben im vorangeganenen Beispiel also die linear abhängige \textit{Spalte} aus der Matrix gestrichen. Dies passiert nicht ohne Grund: 
+	Wir bestimmen den Rang als Dimension des Bildes bzw. des Spaltenraumes oder Zeilenraumes. Den Spaltenraum erhalten wir als Spannraum der Spalten. Finden wir dort lineare Abhängigkeiten zwischen den Spalten, dann streichen wir diese aus der potenziellen Basismenge. Diesen Streichvorgang kann man auch direkt anhand der Matrix vollziehen. Somit kann der Rang der Matrix auch beschrieben werden als die Anzahl linear unabhängiger Spalten. Alternativ kann man dies auch für Zeilen statt Spalten machen und erhält dann den Rang als Anzahl linear unabhängiger Zeilen.
+		
+	Man kann damit auch feststellen, dass für $A \in \R^{m \times n}$ stets gilt, dass $\rg(A) \le \min\menge{m,n}$. Also der Rang ist immer maximal so groß, wie die kleinste ''Ausdehnung`` der Matrix.
+	
+	Während wir die Gleichungssysteme im Beispiel oben gelöst haben, ist uns aufgefallen, dass oft eine gesamte Zeile nach den Umformungen des Gauß-Jordan-Verfahrens nur Nullen enthält. Dies kann man ausnutzen um den Rang einer Matrix einfach anzugeben: 
+	
+	Dazu wendet man das Gauß-Jordan-Verfahren auf die Matrix an, d.h. man führt elementare Zeilenumformungen durch. Diese lassen den Rang der Matrix unverändert. Abschließend zählt man die Nicht-Null-Zeilen, d.h. die Zeilen, die mindestens eine von Null verschiedene Zahl enthalten. Diese Anzahl ist dann der Rang der Matrix.
+	
+	\begin{lemma}
+		Sei $A \in \R^{m \times n}$ in Zeilenstufenform. Dann ist der Rang von $A$ gleich der Anzahl an Nicht-Null-Zeilen.
+	\end{lemma}
+
+	\begin{beispiel} \label{beispiel: rang}
+		Wir betrachten erneut die Matrix 
+		\begin{equation*}
+				A = \begin{pmatrix}
+			0 & 1 & -1 & 2 \\
+			-1 & 0 & -2 & 3 \\
+			-2 & -2 & -2 & 2 \\
+			\end{pmatrix} \in \R^{3 \times 4}
+		\end{equation*}
+		aus  \cref{beispiel: kern}. Dort hatten wir die Umwandlung in Zeilenstufenform
+		\begin{equation*}
+		\begin{pmatrix}
+		1 & 0 & 2 & -3 \\
+		0 & 1 & -1 & 2 \\
+		-2 & -2 & -2 & 2 \\
+		\end{pmatrix} \leadsto
+		\begin{pmatrix}
+		1 & 0 & 2 & -3 \\
+		0 & 1 & -1 & 2 \\
+		0 & -2 & 2 & -4 \\
+		\end{pmatrix}  \\\leadsto
+		\begin{pmatrix}
+		1 & 0 & 2 & -3 \\
+		0 & 1 & -1 & 2 \\
+		0 & 0 & 0 & 0 \\
+		\end{pmatrix} \defqe \quer{A}
+		\end{equation*}
+		In der Zeilenstufenform haben wir nur zwei Nicht-Null-Zeilen, d.h. es gilt $\rg(\quer{A}) = 2$. Nun haben die elementaren Zeilenumformungen aber den Rang nicht verändert, d.h. es gilt auch
+		\begin{equation*}
+			\rg(A) = \rg(\quer{A}) = 2
+		\end{equation*}
+	\end{beispiel}
+		
+	Wir haben eingangs schon zwei Fragen gestellt, die zwei gegensätzliche Szenarien beschrieben: Welche Elemente verschwinden und was passiert mit dem Rest? Dies spiegelt sich auch in der Struktur von Kern und Bild bzw. ihrer Dimensionen wieder.
+	
+	\begin{satz}[Dimensionsformel]
+		Sei $K$ ein Körper und $A \in K^{m \times n}$. Dann gilt
+		\begin{equation*}
+			\rg(A) + \dim_K(\Ker(A)) = n
+		\end{equation*}
+	\end{satz}
+
+	In der Situation von \cref{beispiel: kern} haben wir für 
+	\begin{equation*}
+		A = \begin{pmatrix}
+			0 & 1 & -1 & 2 \\
+			-1 & 0 & -2 & 3 \\
+			-2 & -2 & -2 & 2 \\
+		\end{pmatrix} \in \R^{3 \times 4}
+	\end{equation*}
+	herausgefunden, dass $\dim_\R(\Ker(A)) = 2$ und $\rg(A) = 2$ nach \cref{beispiel: rang}. Somit gitl
+	\begin{equation*}
+		\dim_\R(\Ker(A)) + \rg(A) = 2 + 2 = 4
+	\end{equation*}
+	was der horizontalen Ausdehnung der Matrix $A$ entspricht.
+	
+	Diese Formel hilft insbesondere auch zur Überprüfung der eigenen Rechnung. 
+ 	
+\section{Lösungen von linearen Gleichungssystemen}
+
+	Wir wollen nun die Methoden aus dem letzten Abschnitt nutzen, um zu entscheiden, ob ein lineares Gleichungssystem lösbar ist und wenn ja, wieviele Lösungen existieren.
+	
+	Im Folgenden sei $K$ ein Körper. Man kann sich hier zuerst auch stets den Körper $K = \R$ vorstellen. Jedoch sind die Resultate auch für andere Körper wie die endlichen Körper $GF(2)$ oder $GF(3)$ richtig, deswegen verwenden wir hier $K$ als stellvertretende ''Variable``.
+	
+	Für eine Matrix $A \in K^{m \times n}$ und $b \in K^m$ betrachten wir das lineare Gleichungssystem $Ax = b$. Man nennt dieses \begriff{homogen}\footnote{Ein homogenes Gleichungssystem hat also stets die Form $Ax = 0$.}, wenn $b = 0$ der Nullvektor ist, sonst \begriff{inhomogen}.
+	Die Lösungsmenge des Systems bezeichnen wir mit $\mathcal{L}(A,b) \defeq \menge{x \in K^n : Ax = b}$.
+	
+	Betrachten wir nun zuerst nur homogene lineare Gleichungssysteme, d.h. wir betrachten $Ax = 0$ für $A \in K^{m \times n}$. Man macht sich schnell klar, dass der Nullvektor stets eine Lösung des Systems ist, d.h $0 \in \mathcal{L}(A,0)$. Hat das System weitere Lösungen, so ist 
+	\begin{equation*}
+		\mathcal{L}(A,0) = \Ker(A) = \menge{x \in K^n : Ax = 0}
+	\end{equation*}
+	Da der Kern einer Matrix stets ein Untervektorraum bildet, ist nun also auch die Lösungsmenge $\mathcal{L}(A,0)$ eines homogenen Systems einen Untervektorraum des $K$-Vektorraums $K^n$.
+	
+	Betrachten wir nun inhomogene Systeme, d.h. $Ax = b$ mit $b \neq 0$. Nun kann es sinnvoll sein sich trotzdem auch das zugehörige homogene System $Ax = 0$ anzusehen. Wir nehmen an, dass homogene System habe eine Lösung $x_{\text{hom}}$. Außerdem nehmen wir nun an, dass wir schon eine Lösung $x_{\text{inhom}}$ des inhomogenen Systems kennen (bspw. durch gezieltes ''raten``). Dann ist auch $x_{\text{inhom}} + x_{\text{hom}}$ eine Lösung des inhomogenen Systems. Wir überprüfen die Behauptung durch Einsetzen:
+	\begin{equation*}
+		A(x_{\text{inhom}} + x_{\text{hom}}) = \underbrace{A * x_{\text{inhom}}}_{=b} + \underbrace{A * x_{\text{hom}}}_{=0} =  b + 0 = b
+	\end{equation*}
+	
+	Somit erhalten wir also \textit{alle} Lösungen des inhomogenen Systems, indem wir \textit{eine} Lösung kennen und \textit{alle} Lösungen des homogenen Systems addieren. 
+	
+	Um dies kompakt notieren zu können und eine algebraische Struktur zu erhalten, betrachten wir nun einen Verwandten des Untervektorraums: den affinen Teilraum.
+	
+	\begin{definition}[affiner Teilraum]
+		Sei $V$ ein $K$-Vektorraum und $U$ ein Untervektorraum sowie $x \in V$. Dann ist 
+		\begin{equation*}
+			x + U = \menge{x + u : u \in U}
+		\end{equation*}
+		ein affiner Teilraum von $V$.
+	\end{definition}
+
+	\begin{bemerkung}
+		Man beachte, dass $x + U$ im Allgemeinen kein Untervektorraum mehr ist, da beispielsweise die Bedingung $0 \in x + U$ verletzt ist, wenn $x \neq 0$.
+	\end{bemerkung}
+
+	\begin{beispiel}
+		Wir betrachten den $\R$-Vektorraum $\R^3$. Dann ist $U = \Span\brackets{\menge{\begin{psmallmatrix} 1 \\ 2 \end{psmallmatrix}}}$ ein Untervektorraum. Dieser beschreibt eine Gerade durch den Ursprung mit Anstieg $2$. Nun können wir diese Gerade verschieben, beispielsweise um eine Einheit in $y$-Richtung. Dann erhalten wir die Geradengleichung $y = 2x + 1$ und diese beschreibt einen affinen Teilraum, nämlich $\begin{psmallmatrix} 0 \\ 1 \end{psmallmatrix} + U = \begin{psmallmatrix} 0 \\ 1 \end{psmallmatrix}  + \Span\brackets{\menge{\begin{psmallmatrix} 1 \\ 2 \end{psmallmatrix}}}$.
+	\end{beispiel}
+	
+	Affine Teilräume erlauben also quasi eine gewisse Verschiebung von Untervektorräumen.
+	
+	Dies nutzen wir nun und können \textit{alle} Lösungen eines inhomogenen Gleichungssystems durch \textit{eine} Lösung dessen und dem Lösungsraum des zugehörigen homogenen Systems beschreiben.
+	
+	\begin{satz}
+		Für die Lösungsmenge $\mathcal{L}(A,b)$ eines inhomogenen Systems $Ax = b$ gilt
+		\begin{equation*}
+			\mathcal{L}(A,b) = x^\ast + \mathcal{L}(A,0)
+		\end{equation*}
+		wobei $x^\ast$ \textit{eine} Lösung des inhomogenen Systems ist.
+	\end{satz}
+	\begin{proof}
+		Den Beweis dazu haben wir oben schon angeschnitten: 
+		Sei  $x_{\text{hom}} \in \mathcal{L}(A,0)$ eine beliebige Lösung des homogenen Systems und $x^\ast$ eine Lösung des inhomogenen Systems.
+		Wegen
+		\begin{equation*}
+				A(x^\ast + x_{\text{hom}}) = \underbrace{A x^\ast}_{=b} + \underbrace{A  x_{\text{hom}}}_{=0} =  b + 0 = b
+		\end{equation*}
+		ist $x^\ast + x_{\text{hom}} \in \mathcal{L}(A,b)$ für alle $x_{\text{hom}} \in \mathcal{L}(A,0)$, d.h. $x^\ast + \mathcal{L}(A,0)$ sind alle Lösung des inhomogenen Systems.
+	\end{proof}
+	
+	Abschließend wollen wir noch ein Lösbarkeitskriterium für lineare Gleichungssysteme formulieren, mithilfe dessen wir entscheiden können, ob überhaupt eine Lösung vorliegen kann.
+	
+	\begin{satz}
+		Das lineare Gleichungssystem $Ax = b$ mit $A \in K^{m \times n}$ und $b \in K^m$ ist genau dann lösbar, wenn
+		\begin{equation*}
+			\rg(A) = \rg(A \mid b)
+		\end{equation*}
+		gilt.
+	\end{satz}
+	
+\end{document}
+
