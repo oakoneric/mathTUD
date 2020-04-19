@@ -51,18 +51,22 @@
 \newcommand{\ohne}[1]{\setminus}
 \newcommand{\ohneNull}{\setminus \menge{0}}
 \newcommand{\pows}[1]{\mathcal{P}\left( #1 \right)}
+\renewcommand{\complement}{\mathsf{C}}
 
-\newcommand{\N}{\mathbb{N}}		% natural numbers
-\newcommand{\Z}{\mathbb{Z}}		% integers
+\newcommand{\N}{\mathbb{N}}     % natural numbers
+\newcommand{\Z}{\mathbb{Z}}     % integers
 \newcommand{\Q}{\mathbb{Q}}     % rational numbers
-\newcommand{\R}{\mathbb{R}}		% real numbers
+\newcommand{\R}{\mathbb{R}}     % real numbers
 \newcommand{\Rn}{\mathbb{R}^n}  % IR^n
 \newcommand{\Rm}{\mathbb{R}^m}  % IR^m
 \newcommand{\Rd}{\mathbb{R}^d}  % IR^d
-\undef{\C}
-\newcommand{\C}{\mathbb{C}}		% complex numbers
+\newcommand{\CC}{\mathbb{C}}    % complex numbers
 \newcommand{\K}{\mathbb{K}}     % any field (real or complex)
 \newcommand{\F}{\mathbb{F}}     % (prime) field
+
+\renewcommand{\i}{\mathrm{i}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
 
 % % Abbildungen mit Namen, einzeilig
 %\newcommand{\abb}[3]{#1 \colon #2 \to #3}
@@ -70,19 +74,19 @@
 
 % Abbildungen mit Namen, zweizeilig
 \newcommand{\bigabb}[5]{#1 \colon \left\lbrace%
-	\begin{array}{rcl}%
-		#2 & \to & #3 \\%
-		#4 & \mapsto & #5%
-	\end{array}%
-	\right.}
+    \begin{array}{rcl}%
+        #2 & \to & #3 \\%
+        #4 & \mapsto & #5%
+    \end{array}%
+    \right.}
 %
 % Abbildungen ohne Namen, zweizeilig
 \newcommand{\bigabbnoname}[4]{\left\lbrace%
-	\begin{array}{rcl}%
-		#1 & \to & #2 \\%
-		#3 & \mapsto & #4%
-	\end{array}%
-	\right.}
+    \begin{array}{rcl}%
+        #1 & \to & #2 \\%
+        #3 & \mapsto & #4%
+    \end{array}%
+    \right.}
 
 % >> logic
 \newcommand{\follows}{\ensuremath{\enskip \Rightarrow \enskip}}                 % =>
@@ -113,14 +117,14 @@
 
 \newcommand{\einheit}[1]{{#1}^{\times}} % Einheiten
 \newcommand{\Rx}{\einheit{R}}           % Einheiten Ring
-\newcommand{\Kx}{\einheit{K}}			% Einheiten Körper
+\newcommand{\Kx}{\einheit{K}}           % Einheiten Körper
 
 \NewDocumentCommand{\polynom}{O{R} O{X}}{#1 \left[ #2 \right]}
 % following commands just for compatibility
 \newcommand{\polynomring}[2]{#1 \left[ #2 \right]}  % Polynomring *[*]
 %\newcommand{\polynom}[1]{\polynomring{#1}{X}} % Polynomring *[X]
 \newcommand{\polynomR}{\polynom{R}}   % Polynomring R[X]
-% in older documents insert 
+% in older documents insert
 % \renewcommand{\polynom}[1]{#1 $\left[ X \right]$}
 % for old \polynom-command
 
@@ -135,7 +139,7 @@
 \newcommand{\rest}[1]{\Z / #1 \Z}           % Restklassen Z/(*)Z
 
 % >> metric spaces
-\newcommand{\folge}[2][]{\left\{ #2 \right\}_{#1}}          % sequence (*)_*
+\NewDocumentCommand{\folge}{m m}{\left\{ #1 \right\}_{#2}}
 \newcommand{\dist}[2]{\mathrm{d} \! \left( #1 , #2 \right)} % d(*,*)
 \newcommand{\abs}[1]{\left| #1 \right|}                     % |*|
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}          % ||*||

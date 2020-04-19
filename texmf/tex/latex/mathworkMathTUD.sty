@@ -12,7 +12,7 @@
 
 \RequirePackage{zref-base}
 \RequirePackage{etoolbox}
-\RequirePackage{xparse} 
+\RequirePackage{xparse}
 \RequirePackage{calc}
 \RequirePackage{xstring}
 \RequirePackage{xkeyval}
@@ -25,57 +25,35 @@
 \RequirePackage{blkarray}
 
 \RequirePackage{latexsym}
-\RequirePackage{marvosym} 	% lightning (contradiction)
-\RequirePackage{stmaryrd} 	% Lightning symbol
-\RequirePackage{bbm} 		% unitary matrix
-\RequirePackage{wasysym}	% add some symbols
+\RequirePackage{marvosym}   % lightning (contradiction)
+\RequirePackage{stmaryrd}   % Lightning symbol
+\RequirePackage{bbm}        % unitary matrix
+\RequirePackage{wasysym}    % add some symbols
 
-\RequirePackage{systeme}	% easy typesetting systems of equations
+\RequirePackage{systeme}    % easy typesetting systems of equations
 \RequirePackage{witharrows} % arrows from one equation to another
 
 % further support for different equation setting
 \RequirePackage{cancel}
-\RequirePackage{xfrac}		% sfrac -> fractions e.g. 3/4
-\RequirePackage{units}		% units and fractions
+\RequirePackage{xfrac}      % sfrac -> fractions e.g. 3/4
+\RequirePackage{units}      % units and fractions
 \RequirePackage{diagbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         OPTIONS                                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% >> first number or first name in theorems
-% possible values: firstnumber, firstname
-\def\theoremheader@order@val{firstnumber}
-\DeclareOptionX{order}{%
-	%sets accordingly the required ntheoremoptions
-	\let\tempa\@empty
-	\IfEq{#1}{firstnumber}{\def\tempa{changebreak}}{%
-		\IfEq{#1}{firstname}{\def\tempa{break}}{%
-			\PackageWarning{mathscript}{Unknown Value for key `order'}
-		}
-	}
-	\edef\theoremheader@order@val{\tempa}
-}
-
-% >> disables theorem environments
-% possible values: all you can imagine.
-% usefull values: theorem-names defined in this class, new theorems defined by \newmdtheoremenv
-\listadd{\theorem@disable}{\@empty}
-\DeclareOptionX{disable}{%
-	\listadd{\theorem@disable}{#1}
-}
-
 % >> determines the notation for fracs (lfrac & rfrac)
 %\OptFractionAppearence - differenciate between multiple appearences of fraction
-%	- 0: simple slash: a/b (option slash)(default)
-%	- 1: fraction by slash, raised nominator, lowered denominator	(option lowerraise)
+%   - 0: simple slash: a/b (option slash)(default)
+%   - 1: fraction by slash, raised nominator, lowered denominator   (option lowerraise)
 \let\OptFractionAppearence\z@
 \DeclareOptionX{fractionappearence}{%
-	\IfStrEq{#1}{slash}{}{%
-		\IfStrEq{#1}{lowerraise}{%
-			\let\OptFractionAppearence\@ne
-		}{} % further options can be inserted here
-	}
+    \IfStrEq{#1}{slash}{}{%
+        \IfStrEq{#1}{lowerraise}{%
+            \let\OptFractionAppearence\@ne
+        }{} % further options can be inserted here
+    }
 }
 
 \DeclareOptionX*{\PackageWarning{mathoperator}{Unknown option >\CurrentOption<}}
@@ -135,34 +113,33 @@
 % >> fractions
 \RequirePackage{nicefrac}
 \newcommand\bsfrac[2]{%
-	\scalebox{-1}[1]{\nicefrac{\scalebox{-1}[1]{$#1$}}{\scalebox{-1}[1]{$#2$}}}%
+    \scalebox{-1}[1]{\nicefrac{\scalebox{-1}[1]{$#1$}}{\scalebox{-1}[1]{$#2$}}}%
 }
 \newcommand{\lfrac}[2]{ % fractions, e.g. A/B
-	\ifcase\OptFractionAppearence\relax%
-		\ifmmode%
-			#1\slash #2%
-		\else%
-			$#1\slash #2$%
-		\fi%
-	\or%
-		\nicefrac{#1}{#2}%
-	\else%
-		\PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
-	\fi%
+    \ifcase\OptFractionAppearence\relax%
+        \ifmmode%
+            #1\slash #2%
+        \else%
+            $#1\slash #2$%
+        \fi%
+    \or%
+        \nicefrac{#1}{#2}%
+    \else%
+        \PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
+    \fi%
 }
 \newcommand{\rfrac}[2]{ % fractions with backslash, e.g. B\A
-	\ifcase\OptFractionAppearence\relax%
-		\ifmmode%
-			#1\backslash#2%
-		\else%
-			$#1\backslash#2$%
-		\fi%
-	\or%
-		\bsfrac{#1}{#2}% Menge der Rechtsnebenklassen
-	\else%
-		\PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
-	\fi%
+    \ifcase\OptFractionAppearence\relax%
+        \ifmmode%
+            #1\backslash#2%
+        \else%
+            $#1\backslash#2$%
+        \fi%
+    \or%
+        \bsfrac{#1}{#2}% Menge der Rechtsnebenklassen
+    \else%
+        \PackageWarning{mathoperator}{Unkown value for option >fractionAppearence<: \meaning\OptFractionAppearence}%
+    \fi%
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
