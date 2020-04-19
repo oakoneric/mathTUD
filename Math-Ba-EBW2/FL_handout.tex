@@ -1,0 +1,245 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{parskip}  	% split paragraphs by vspace instead of intendations
+\usepackage[onehalfspacing]{setspace} % increase row-space
+%\usepackage[title,titletoc]{appendix}
+%
+%\usepackage{chngcntr}
+%\usepackage{eufrak}
+%
+\usepackage{lmodern}
+%\usepackage[default, scale=0.9]{opensans}
+\usepackage[normalem]{ulem} 
+\usepackage{csquotes}
+
+\usepackage{graphicx}
+
+%\usepackage{fancyhdr} 	% customize header / footer
+%\usepackage{tocloft}
+%%\renewcommand{\cfttoctitlefont}{\titlefont\Huge\bfseries}
+%%\renewcommand{\cftbeforetoctitleskip}{0pt}
+%%\renewcommand{\cftchapnumwidth}{2em}
+%%\renewcommand{\cftsecindent}{2em}
+%%\renewcommand{\cftsecnumwidth}{2em}
+%%\renewcommand{\cftsubsecindent}{4em}
+%
+%\usepackage{amsmath,amssymb,amsfonts,mathtools}
+%\usepackage{blkarray}
+%\usepackage{latexsym}
+%\usepackage{marvosym} 	% lightning (contradiction)
+%\usepackage{stmaryrd} 	% Lightning symbol
+%\usepackage{bbm} 		% unitary matrix
+%\usepackage{wasysym}	% add some symbols
+%
+%\usepackage{systeme}	% easy typesetting systems of equations
+%\usepackage{witharrows} % arrows from one equation to another
+%
+%% further support for different equation setting
+%\usepackage{cancel}
+%\usepackage{xfrac}		% sfrac -> fractions e.g. 3/4
+%\usepackage{units}		% units and fractions
+%\usepackage{diagbox}
+%
+%\usepackage{../texmf/tex/latex/mathoperatorsMathTUD}
+%
+%\usepackage[table,dvipsnames]{tudscrcolor}
+%\usepackage{tabularx} 	% tabularx-environment (explicitly set width of columns)
+%\usepackage{longtable} 	% Tabellen mit Seitenumbrüchen
+%\usepackage{multirow}
+%\usepackage{booktabs}	% improved rules
+%\usepackage{colortbl}
+%
+\newcommand{\begriff}[1]{\textit{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                             COUNTER                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\pretocmd{\chapter}{\setcounter{section}{0}}{}{}
+%\pretocmd{\chapter}{\setcounter{equation}{0}}{}{}
+%
+%\usepackage{enumerate}
+%\usepackage[inline]{enumitem} 		%customize label
+%
+%\renewcommand{\labelitemi}{\raisebox{2pt}{\scalebox{.4}{$\blacksquare$}}}
+%\renewcommand{\labelitemii}{$\vartriangleright$}
+%\renewcommand{\labelitemiii}{--}
+%% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+%
+%\renewcommand{\labelenumi}{(\arabic{enumi})}
+%\renewcommand{\labelenumii}{\alph{enumii}.}
+%\renewcommand{\labelenumiii}{\roman{enumiii}.}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec}   % change title headings look
+\usepackage{chngcntr}   % modify counters
+\usepackage{relsize}    % relative font size (smaller[i], larger[i], ...)
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% headings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\titlefont}{\osfamily}
+%\newcommand{\chaptersize}{\huge}
+%\newcommand{\sectionsize}{\LARGE}
+%
+%\renewcommand{\thepart}{\Alph{part}}
+%
+%% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before-code>}[<after-code>]
+%% \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}[<right-sep>]
+%
+%%%%%%%%%% section
+%%\titlelabel{\thetitle \quad} % no "." behind section/sub... (3 instead of 3.)
+\titleformat{\section}[hang]{\centering\bfseries\normalsize\MakeUppercase}{\thesection}{8pt}{}%
+\titleformat*{\section}{\centering\bfseries\normalsize\MakeUppercase}
+\titlespacing*{\section}{0pt}{\parskip}{0pt}
+%%\titleformat*{\subsection}{\bfseries\titlefont\sectionsize\smaller}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\usepackage{listings}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           REFERENCES                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\usepackage{titlesec}   % change title headings look
+%\usepackage{relsize}    % relative font size (smaller[i], larger[i], ...)
+%
+%\usepackage{titling}
+%%\pretitle{\begin{center}\Huge\bfseries\sffamily}
+%%\posttitle{\par}
+%%\preauthor{\par \normalfont \large \scshape}
+%%\postauthor{\par}
+%%\postdate{\end{center}
+%
+%\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+%
+%\counterwithin{equation}{section}
+%\newcounter{themcount}
+%\counterwithin{themcount}{section}
+%\usepackage{ntheorem}
+%
+%\newcommand{\skiparound}{10pt}
+%\theorempreskip{\skiparound}
+%\theorempostskip{\skiparound}
+%
+%\theoremstyle{plain}
+%\theoremseparator{.}
+%\theorembodyfont{}
+%\newtheorem{definition}[themcount]{Definition}
+%\newtheorem{lemma}[themcount]{Lemma}
+%\newtheorem{satz}[themcount]{Satz}
+%
+%\newtheorem{beispiel}[themcount]{Beispiel}
+%
+%\theorembodyfont{\itshape}
+%\newtheorem{bemerkung}[themcount]{Bemerkung}
+%
+%%\newtheoremstyle{proofstyle}%
+%%{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+%%{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+%
+%\theoremstyle{nonumberplain}
+%\theoremheaderfont{\normalsize\slshape}
+%\theorembodyfont{}
+%\theoremseparator{.}
+%\theorempreskip{5pt}
+%\theorempostskip{5pt}
+%\theoremsymbol{$\square$}
+%\newtheorem{proof}{Beweis}
+%
+%\usepackage[
+%type={CC},
+%modifier={by-nc-sa},
+%version={4.0},
+%]{doclicense}
+%
+%\usepackage[unicode,bookmarks=true]{hyperref}
+%\hypersetup{
+%	% pdfborder={0 0 0}			% no boxed around links
+%	pdfborderstyle={/S/U/W 1},	% underlining insteas of boxes
+%	linkbordercolor=cdblue,
+%	urlbordercolor=cdblue
+%	%	colorlinks,
+%	%	citecolor=black,
+%	%	filecolor=cddarkblue!80,
+%	%	linkcolor=black,
+%	%	urlcolor=cddarkblue!80
+%}
+%
+%\usepackage{cleveref}
+%\crefname{satz}{Satz}{Sätze}
+%\crefname{lemma}{Lemma}{Lemmata}
+%\crefname{definition}{Definition}{Definitionen}
+%\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+%\crefname{beispiel}{Beispiel}{Beispiele}
+%\usepackage{bookmark}		% pdf-bookmarks
+
+\usepackage{abstract}
+\renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}:}
+
+\begin{document}
+	
+	\hspace{-18.6mm}
+	\includegraphics[scale=0.6]{TUD-blue.pdf} \\
+		\setlength{\tabcolsep}{0pt}
+		\begin{tabular}{p{\textwidth}}
+			\hline
+			\small \sffamily \textbf{Math--Ba--EBWII --- Oral communication in university and career}  Mr Mueller  \\
+			\hline
+		\end{tabular} 
+		\par 
+		\vspace{3\parskip}
+	\begin{center}
+		\bfseries \large \MakeUppercase{Formal Languages}  \\
+		\mdseries \smaller with Respect to the \person{Chomsky}-\person{Schützenberger} Hierarchy
+		
+		{\scshape \normalsize Eric Kunze} \\		
+		{\footnotesize 27 January 2020}
+	\end{center}
+	
+	\vspace{2\parskip}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\section*{Outline}
+	\begin{enumerate}
+		\item Foundations of Formal Languages
+		\item Formal Grammar and the \person{Chomsky}-Hierarchy
+		\item Consequences and applications of Formal Languages
+	\end{enumerate}
+	
+
+	\section*{Keywords}
+	Formal Language, Formal Grammar, \person{Chomsky}-\person{Schützenberger} Hierarchy, Logic, Computability Theory
+	
+	\section*{Abstract}
+%	\begin{onehalfspace}
+	Every natural language complies with long time developed rules called grammar. A \begriff{formal language} describes the syntax of a language in a more formal way as a set of \begriff{words} over an (arbitrary) \begriff{alphabet}. In this way the structured construction, analysis and classification of languages are possible. In general, there are two methods of describing the syntax of words: generating strings by replacement starting with a fixed start symbol, or accepting given strings via an automaton. As \person{Noam Chomsky} in the 1950’s did we focus on the former and analyse (formal) \begriff{grammar} connected with their generated languages. Afterwards we can classify languages by differentiating the corresponding grammar and especially their replacement behaviour. As result we get the so-called \begriff{Chomsky-Schützenberger Hierarchy} which distributes languages into four types: recursively enumerable, context-sensitive, context-free and regular languages, which are more restrictive in each step. This knowledge can be applied both in mathematics and computer science. Defining a language of logic, we get the fundament of (pure) mathematics and we can formalize terms like e.g. \enquote{proof} or \enquote{theorem}. Furthermore, problems of computability theory can be specified and proven with the result that we are able to express the limits of computation.
+%	\end{onehalfspace}
+	
+	\section*{Vocabulary}
+%	\begin{onehalfspace}
+	\begin{description}
+		\item[Alphabet $\Sigma$] set of symbols
+		\item[Language $L$] subset of words over an alphabet $\Sigma$ ($L \subseteq \Sigma^\ast$)
+		\item[Grammar $G = (N, \Sigma, P, S)$] Language description with an (finite) alphabet $\Sigma$ (terminal symbols), a (finite) set $N$ of non-terminal symbols, a set $P$ of productions (replacement rules) and a start symbol $S \in N$
+		\item[Production $A \to aAb$] replacement of $A$ by $aAb$
+		\item[Chomsky-Schützenberger Hierarchy] Classification of formal languages into four types
+		\item[(Mathematical) Logic] theory of propositions and their logical connections; fundament of mathematics; propositional logic can be defined as a formal language
+		\item[Computability Theory] examines the question if a function is computable and especially with which (mathematical model of a) machine the computation can be done 
+	\end{description}
+%	\end{onehalfspace}
+
+	\nocite{*}	
+	\bibliographystyle{abbrv}
+	\bibliography{FL_bib}
+	
+\end{document}
