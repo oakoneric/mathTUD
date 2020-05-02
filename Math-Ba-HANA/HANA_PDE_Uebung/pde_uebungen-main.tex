@@ -342,7 +342,7 @@ nobreak,%
 \usepackage{enumerate}
 \usepackage[inline]{enumitem} 		%customize label
 
-\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.6}{$\blacksquare$}}}
+\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.5}{$\blacksquare$}}}
 \renewcommand{\labelitemii}{$\vartriangleright$}
 \renewcommand{\labelitemiii}{--}
 % Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
@@ -405,6 +405,7 @@ nobreak,%
 \renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
 
+\newcommand{\dsq}[1]{\left[\left[ #1 \right]\right]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -417,5 +418,6 @@ nobreak,%
 \include{pde-uebungen-1}
 \include{pde-uebungen-2}
 \include{pde-uebungen-3}
+\include{pde-uebungen-4}
 
 \end{document}
