@@ -80,17 +80,17 @@ Für die Burgers-Gleichung gilt in Anlehnung an die Notation der Vorlesung $F(u)
 			\dot{\alpha}(\tau, \sigma) &= a(\alpha, y) * Du = - b(u,y) = 0 \enskip \mit \enskip \alpha(0,\sigma) = g(\sigma)
 		\end{aligned}
 	\end{equation*}
-	Aus der zweiten Gleichung erhalten wir die Lösung $\alpha(\tau, \sigma) = g(\sigma)$, d.h. $u$ ist entlang der Charakteristiken konstant. Aus der ersten Gleichung erhalten wir zum einen die Identifizierung $\tau = t$, d.h. die Charakteristiken können durch die Zeit $t$ parametrisiert werden. Zum anderen die gewöhnliche Differentialgleichung $\dot{x} = \alpha$ mit der Lösung $x(\tau, \sigma) = \alpha(\tau,\sigma) * \tau + s = g(\sigma) * \tau + s$ bzw. mit der Identifizierung dann $x(t) = g(\sigma) * t + \sigma$. Setzen wir die Definition von $g$ ein, so erhalten wir
+	Aus der zweiten Gleichung erhalten wir die Lösung $\alpha(\tau, \sigma) = g(\sigma)$, d.h. $u$ ist entlang der Charakteristiken konstant. Aus der ersten Gleichung erhalten wir zum einen die Identifizierung $\tau = t$, d.h. die Charakteristiken können durch die Zeit $t$ parametrisiert werden. Zum anderen die gewöhnliche Differentialgleichung $\dot{x} = \alpha$ mit der Lösung $x(\tau, \sigma) = g(\sigma) * \tau + s$ bzw. mit der Identifizierung dann $x(t) = g(\sigma) * t + \sigma$. Setzen wir die Definition von $g$ ein, so erhalten wir
 	\begin{equation*}
 		x(t) = \begin{cases}
-			t + s       & s \le 0 \\
-			(1-s) t + s & 0 \le s \le 1 \\
-			s           & s \ge 1
+			t + \sigma       & \sigma \le 0 \\
+			(1-\sigma) t + \sigma & 0 \le \sigma \le 1 \\
+			\sigma           & \sigma \ge 1
 		\end{cases}
 	\end{equation*}
 	Für $t \le 1$ können wir jeden Fall umstellen und erhalten
 	\begin{equation*}
-		s = \begin{cases}
+		\sigma = \begin{cases}
 			x - t & x - t \le 0\\
 			\frac{x-t}{1-t} & x-t \ge 0 \land x \le 1 \\
 			x & x \ge 1
@@ -98,7 +98,7 @@ Für die Burgers-Gleichung gilt in Anlehnung an die Notation der Vorlesung $F(u)
 	\end{equation*}
 	Nach Konstruktion erhalten wir dann die Lösung
 	\begin{equation*}
-		u(x,t) = \alpha(\tau,\sigma) = g(s(t,x)) = \begin{cases}
+		u(x,t) = \alpha(\tau,\sigma) = g(\sigma(t,x)) = \begin{cases}
 			1                   & x - t \le 0 \\
 			1 - \frac{x-t}{1-t} & x-t \ge 0 \land x \le 1 \\
 			0                   & x \ge 1
@@ -115,4 +115,107 @@ Für die Burgers-Gleichung gilt in Anlehnung an die Notation der Vorlesung $F(u)
 	\end{itemize}
 	Somit ist $u$ Lösung der Differentialgleichung für alle $x \in \R$ und $t \in (0,1)$.
 \end{enumerate}
+
+
+
+\begin{task}
+	Betrachten Sie das Beispiel \enquote{Ampel (von rot auf grün)} aus der Vorlesung, modelliert durch
+	\begin{equation*}
+		\begin{aligned}
+			u_t + F(u)_x &= 0 \qquad \text{für } (x,t) \in \R \times (0,\infty) \\
+			u(x,0) &= g(x) \qquad \text{für alle } x \in \R
+		\end{aligned}
+	\end{equation*}
+	mit 
+	\begin{equation*}
+		F(u) = u(60 - \frac{2}{5} u)\quad \text{und} \quad g(x) = \begin{cases} 150 & \text{für } x<0 \\ 0 & \text{für } x \ge 0\end{cases}
+	\end{equation*}
+	\begin{enumerate}
+		\item In der Vorlesung wurde in Teil a) eine Funktion $u_a$ explizit gegeben. In Teil b) wurde eine weitere Lösung $u_b$ skizziert. Ermitteln Sie $u_b$ explizit.
+		
+		\emph{Hinweis}: Die charakteristischen Gleichungen geben $u_b$ auf eine großen Menge vor. Ermitteln Sie $u_b$ für die restlichen $(x,t)$, indem sie eine differenzierbare reelle Funktion $v$ derat bestimmen, dass $u_b(x,t) = v(\frac{x}{t})$ die Differentialgleichung löst.
+		
+		\item Überprüfen Sie für $u_a$ und $u_b$ entlang aller Sprungkurven die Rankine-Hugoniot-Bedingung und die Entropiebedingung.
+	\end{enumerate}
+\end{task}
+
+\begin{enumerate}[label=(zu \alph*)]
+	\item Für die skalare Erhaltungsgleichung erhalten wir die aus der Vorlesung bekannten Bezeichnungen mit $y = (x,t)$, $a(u,y) = (60 - \frac{4}{5} u \ , \ 1)$ und $b \equiv 0$. Außerdem sind die Startwerte der charakteristischen Gleichungen gegeben durch $x_0(s) = s$, $t_0(s) = 0$, und als Randwerte $g(s) = 150 * \one_{\menge{s < 0}}(s)$. Wir erhalten die charakteristischen Gleichungen
+	\begin{equation*}
+		\begin{aligned}
+			\dot{y}(\tau, \sigma) &= \begin{pmatrix} \dot{x} \\ \dot{t} \end{pmatrix} = a(\alpha, y) = \begin{pmatrix} 60 - \frac{4}{5} u \\ 1 \end{pmatrix} \\
+			\dot{\alpha}(\tau, \sigma) \overset{\text{DGl}}&{=} - b(\alpha, y) = 0  
+		\end{aligned}
+	\end{equation*}
+	Aus der letzten Zeile der ersten Gleichung erhalten wir dabei die Identifizierung $t(\tau, \sigma) = \tau$. Die zweite charakteristische Gleichung löst sich unter Nutzung des Anfangswertes $\alpha(0,\sigma) = g(\sigma)$ zu $\alpha(\tau, \sigma) = g(\sigma)$. Setzen wir dies in die erste Zeile der ersten Gleichung ein, so erhalten wir $\dot{x}(\tau, \sigma) = 60 - \frac{4}{5} g(\sigma)$. Dies löst sich mit dem Anfangswert $x(0,\sigma) = \sigma$ zu 
+	\begin{equation*}
+		x(\tau, \sigma) = 60\tau - \frac{4}{5} g(\sigma) * \tau + \sigma = 
+		\begin{cases}
+			-60 t + \sigma & \sigma < 0 \\
+			 60 t + \sigma & \sigma \ge 0
+		\end{cases}
+	\end{equation*}
+	Für $\tau =  t > 0$ lässt sich dies umstellen zu
+	\begin{equation*}
+		\sigma(x,t) = 
+		\begin{cases}
+			x + 60 t & x < 0 \\
+			x - 60 t & x \ge 0
+		\end{cases}
+	\end{equation*}
+	Damit erhalten wir die Lösung 
+	\begin{equation*}
+		u(x,t) = \alpha(t, \sigma) = 
+		\begin{cases}
+			150 & \sigma(x,t) < 0 \\
+			0   & \sigma(x,t) \ge 0
+		\end{cases}
+	\end{equation*}
+	Da $t \in (0, \infty)$ ist, ist somit $u$ auf der Menge $\menge{(x,t) : t \in (0,\infty), x \notin (-60t, 60t)}$ eindeutig vorgegeben. Wir erweitern nun auf $t \in \R$ und betrachte $x \in (-60t, 60t)$. Dabei soll eine Funktion $v$ mit $u(x,t) = v(\frac{x}{t})$ bestimmt werden, die die PDE erfüllt. Die Funktion $u$ muss gemäß Vorlesung ihr Maximum auf der $t$-Achse, also für $x=0$ annehmen. Dementsprechend gilt $u(0,t) = v(\frac{0}{t}) = v(0) = u_\text{opt} = 75$. Da wir $x \in (-60t, 60t)$ betrachten, gilt $\frac{x}{t} = (-60,60)$. Die Randwerte sollten dabei mit minimaler (rechts) bzw. maximaler (links) Dichte gegeben sein, d.h. $v(-60) = 150$ und $v(60) = 0$. Diese drei Punkte definieren uns eine eindeutige Polynomfunktion zweiten Grades:
+	\begin{equation*}
+		v(\xi) = -\frac{5}{4s} \xi + 75 \qquad \text{auf } (-60, 60)
+	\end{equation*}
+	Damit können wir $u$ definieren als
+	\begin{equation*}
+		u(x,t) = v(\frac{x}{t}) = -\frac{5}{4} \frac{x}{t} + 75 \qquad \text{für } t \in \R \und x \in (-60t, 60t)
+	\end{equation*}
+	Damit gilt $u_x(x,t) = -\frac{5}{4} \frac{1}{t}$ und $u_t(x,t) = \frac{5}{4} \frac{x}{t^2}$. In die PDE eingesetzt liefert dies
+	\begin{equation*}
+		\begin{aligned}
+			u_t + F(u)_x &= u_t + \brackets{60 - \frac{4}{5} u} u_x \\
+			&= \frac{5}{4} \frac{x}{t^2} + \brackets{60 + \frac{x}{t} - 60} \brackets{-\frac{5}{4} \frac{1}{t}} 
+			= \frac{5}{4} \frac{x}{t^2} -\frac{5}{4} \frac{x}{t^2} 
+			= 0 \qquad \checkmark
+		\end{aligned}
+	\end{equation*} 
+	Somit können wir $u$ schlussendlich definieren als
+	\begin{equation*}
+		u(t,x) = 
+		\begin{cases}
+			150 & x < -60t \\
+			-\frac{5}{4} \frac{x}{t} + 75 & -60t \le x \le 60t \\
+			0 & x > 60t
+		\end{cases}
+	\end{equation*}
+	\item Definiere $u_b \defeq u$ von oben. Man sieht leicht, dass $u_b$ eine stetige Funktion ist. Daher existieren keine Sprungkurven und die Rankine-Hugoniot- bzw. Entropie-Bedingungen müssen nicht betrachtet werden. (Die Rankine-Hugoniot-Bedingungen werden trivialerweise trotzdem erfüllt, aber die Entropie-Bedingung nicht mehr).
+	
+	Aus der Vorlesung bekannt ist 
+	\begin{equation*}
+		u_a(x,t) = 
+		\begin{cases}
+			150 & x < 0 \\
+			0   & x \ge 0
+		\end{cases}
+	\end{equation*}
+	Wir betrachten die Sprungkurve $x=s(t)=0$. Dann ist auch $\dot{s} = 0$ und mit $F(u) = u \brackets{60 - \frac{2}{5} u}$ gilt
+	\begin{equation*}
+		\left.\begin{array}{rcl}
+			\dsq{u} &=& 150 \\
+			\dsq{F(u)} &=& 0
+		\end{array}
+		\right\} \follows \dsq{F(u)} = \dot{s} * \dsq{u}
+	\end{equation*}
+	Es ist $F'(u) = 60 - \frac{4}{5} u$ und damit $F'(u_l) = F'(150) = -60$ sowie $F'(u_r) = F'(0) = 60$. Somit ist die Entropie-Bedingung verletzt.
+\end{enumerate}
+
 \end{exercisePage}

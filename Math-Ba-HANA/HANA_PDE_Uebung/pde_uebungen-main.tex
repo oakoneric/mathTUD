@@ -25,8 +25,8 @@
 \usepackage[autostyle=true,english=british]{csquotes}
 
 \usepackage[scale=0.95]{opensans}	% new font OpenSans
-\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
-\DeclareTextFontCommand{\textos}{\osfamily}
+%\newcommand*{\fosfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\fosfamily}
 
 \usepackage{xifthen}
 
@@ -114,7 +114,7 @@
 
 \usepackage{tcolorbox}
 \newcommand{\header}{%
-        {\osfamily%
+        {\fosfamily%
             \fcolorbox{cddarkblue}{cdblue!20}{%
                 \begin{minipage}{\dimexpr0.7\linewidth-\fboxrule-\fboxsep}
                     {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
@@ -137,7 +137,7 @@
     \setcounter{themcount}{0}
     %
     \ifthenelse{\isempty{#1}}{}{%
-        {\osfamily \itshape Thema: #1} \par%\\[12pt]%
+        {\fosfamily \itshape Thema: #1} \par%\\[12pt]%
     }
 }{}
 
@@ -155,7 +155,7 @@
 
 % >> Exercises
 \theoremstyle{plain}
-\theoremheaderfont{\osfamily\normalsize\bfseries\upshape}
+\theoremheaderfont{\fosfamily\normalsize\bfseries\upshape}
 \theorembodyfont{\normalsize}
 \theoremseparator{.}
 \theoremsymbol{}
@@ -195,7 +195,7 @@ nobreak,%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % >> Lemma
 \theoremstyle{plain}
-\theoremheaderfont{\osfamily\normalsize\bfseries\upshape}
+\theoremheaderfont{\fosfamily\normalsize\bfseries\upshape}
 \theorembodyfont{}
 \theoremseparator{.}
 \theorempreskip{6pt}
