@@ -64,8 +64,8 @@
 			\end{aligned}
 		\end{equation*}
 		Die gleiche Rechnung funktioniert auch mit $-u$ bzw. $f(u,x) = -h(x)$, sodass $c \defeq e^2 - 1$ vollständig unabhängig ist.
-		
 	\end{enumerate} 
+	
 	
 	\begin{task}
 		Für $t>0$ ist die Fundamentallösung der Wärmeleitungsgleichung auf $\Rn$ gegeben durch $u(x,t) = (c t)^{-n/2} e^{-\frac{|x|^2}{4t}}$ mit einer Konstante $c>0$. Zeigen Sie:
@@ -75,4 +75,50 @@
 			\item $\int_{\Rn} u(x,t)dx = 1$ für alle $t>0$ und $c= 4\pi$.
 		\end{enumerate}
 	\end{task}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Es sei $u(x,t) = (ct)^{-\frac{n}{2}} * e^{- \frac{\abs{x}^2}{4t}}$. Dann ist
+		\begin{align*}
+			u_t(x, t) &= c^{-\frac{n}{2}} \brackets{- \frac{n}{2}} t^{-\frac{n}{2} - 1} e^{-\frac{\abs{x}^2}{4t}} + (ct)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} * \frac{4 \abs{x}^2}{16 t^2} \\
+			&= (ct)^{-\frac{n}{2}} * e^{- \frac{\abs{x}^2}{4t}} * \brackets{- \frac{n}{2} t^{-1} + \frac{\abs{x}^2}{4t^2}} \\
+			&= (ct)^{-\frac{n}{2}} * e^{- \frac{\abs{x}^2}{4t}} * \brackets{\frac{\abs{x}^2 - 2nt}{4t^2}} \\
+			%
+			u_{x_i}(x,t) &= (ct)^{-\frac{n}{2}} * e^{- \frac{\abs{x}^2}{4t}} * \brackets{-\frac{2x_i}{4t}} = - (ct)^{-\frac{n}{2}} * e^{- \frac{\abs{x}^2}{4t}} * \frac{x_i}{2t} \\
+			u_{x_i x_i}(x) &= (ct)^{-\frac{n}{2}} \brackets{e^{- \frac{\abs{x}^2}{4t}} * \frac{x_i}{2t} * \frac{x_i}{2t} - \frac{1}{2t} e^{- \frac{\abs{x}^2}{4t}}} \\
+			&= (ct)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} \brackets{ \frac{x_i^2}{4t^2} - \frac{1}{2t}} \\
+			%
+			\Delta_x u(x,t) &= \sum_{i=1}^n x_{x_i x_i}(x)  
+			= (ct)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} \brackets{\frac{1}{4t^2} * \sum_{i=1}^n x_i^2 - \frac{n}{2t}} \\
+			&= \sum_{i=1}^n x_{x_i x_i}(x)  
+			= (ct)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} \brackets{\frac{\abs{x}^2 - 2nt}{4t^2}}
+		\end{align*}
+		Somit gilt also $u_t = \Delta u$ auf $\Rn \times \R_+$.
+		
+		\item \begin{itemize}
+			\item Sei $t_k \to  0+$ für $k \to \infty$ und $x \neq 0$.
+			
+			\item Sei $t_k \to 0+$ für $k \to \infty$. Dann ist 
+			\begin{equation*}
+				\lim_{t \to 0+} u(0,t) = \lim_{k \to \infty} (c \ t_k)^{- \frac{n}{2}} = \lim_{k \to \infty} \frac{1}{(c \ t_k)^{\frac{n}{2}}} = \infty
+			\end{equation*} 
+			
+			\item Sei nun $t_k \to \infty$ für $k \to \infty$. Dann ist
+			\begin{equation*}
+				\lim_{t \to \infty} (c \ t)^{- \frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} = \lim_{k \to \infty} \frac{1}{(c \ t_k)^{\frac{n}{2}}} * \exp\brackets{\lim_{k \to \infty} - \frac{\abs{x}^2}{4t_k}} = 0 * 1 = 0
+			\end{equation*}
+		\end{itemize}
+		
+		\item Wir wollen die Substitution $y_i = \frac{x_i}{2\sqrt{t}}$ verwenden. Dabei ist $\ableitung{x_i} y_i = \frac{1}{2 \sqrt{t}}$. Es gilt
+		\begin{align*}
+			\int_{\Rn} (ct)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}} \dx
+			&= (ct)^{-\frac{n}{2}} \int_{\Rn} e^{- \frac{\abs{x}^2}{4t}} \dx \\
+			&= (ct)^{-\frac{n}{2}} \int_\R \dots \int_\R e^{\frac{-x_1^2 - \dots - x_n^2}{4t}} \diffskip{x_1} \dots \diff{x_n} \\
+			&= (ct)^{-\frac{n}{2}} \int_\R \dots \int_\R \prod_{i=1}^n e^{\frac{-x_i^2}{4t}} \diffskip{x_1} \dots \diff{x_n} \\
+			&= (4\pi t)^{- \frac{n}{2}} \prod_{i=1}^n \int_\R e^{-\frac{x_i^2}{4t}} \diffskip{x_i} \\
+			&= \pi^{- \frac{n}{2}} \prod_{i=1}^n \int_\R e^{-\frac{x_i^2}{4t}} * \frac{1}{2 \sqrt{t}} \diffskip{x_i} \\
+			\overset{\text{subst.}}&{=} \pi^{- \frac{n}{2}} \prod_{i=1}^n \int_\R e^{-y_i^2} \diffskip{y_i} \\
+			&= \prod_{i=1}^n \underbrace{\frac{1}{\sqrt{\pi}} \int_\R e^{-y_i^2} \diffskip{y_i}}_{=1} \\
+			&= 1
+		\end{align*}
+	\end{enumerate}
 \end{exercisePage}
