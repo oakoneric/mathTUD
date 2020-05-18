@@ -20,13 +20,13 @@
 	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
 		\item Es sei $f(u) = u - u^3$ und $g \equiv 0$. Da $U$ beschränktes Gebiet ist und $\quer{U}$ eine abgeschlossene Menge, ist also $\quer{U}$ kompakt. Da $u$ stetig auf $\quer{U}$ ist, nimmt $u$ ein Maximum in einem $x_0 \in \quer{U}$ an. Nehmen wir an es sei $u(x_0) > 1$. Es gilt $ \equiv g \equiv 0$ auf $\rand U$, d.h. um ein Maximum $u(x_0 > 1$ zu besitzen, muss $x_0 \in \inn U$ sein. Da $u(x_0)$ Maximum ist mit $u \in C^2(U)$, gilt $u_{x_i x_i}(x_0) \le 0$ für alle $i=1, \dots, n$. Nach Differentialgleichung ist dann also
 		\begin{equation*}
-			0 \le - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) > 1}{<} 0
+			0 \ge - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) > 1}{<} 0
 		\end{equation*}
 		ein Widerspruch. Somit ist dann $u(x_0) \le 1$ und aufgrund der Maximalität von $u(x_0)$ auch $u(x) \le u(x_0) \le 1$ für alle $x \in \quer U$.
 		
 		Analog dazu nimmt $u$ auf $\quer U$ ein globales Minimum in $x_0 \in \quer U$ an, für welches nach gleicher Argumentation wie oben $x_0 \in \inn U$ gilt. Nehmen wir an, es sei $u(x_0) < -1$. Als Minimalstelle gilt $u_{x_i  x_i} (x_0) \ge 0$ für alle $i = 1, \dots, n$. Nach PDE gilt dann
 		\begin{equation*}
-			0 \ge - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) < -1}{<} 0
+			0 \le - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) < -1}{<} 0
 		\end{equation*} 
 		ein Widerspruch. Somit ist $u(x) \ge u(x_0) \ge -1$ für alle $x \in \quer U$ und schließlich gilt die Einschließung $-1 \le u(x) \le 1$ für alle $x \in \quer U$.
 		
@@ -94,8 +94,26 @@
 		\end{align*}
 		Somit gilt also $u_t = \Delta u$ auf $\Rn \times \R_+$.
 		
-		\item \begin{itemize}
-			\item Sei $t_k \to  0+$ für $k \to \infty$ und $x \neq 0$.
+		\item \begin{itemize}[leftmargin=*]
+			\item Sei $x \neq 0$.
+			Es ist
+			\begin{equation*}
+				\lim\limits_{t \to 0+} \frac{n}{2} \ln(t) + \frac{\abs{x}^2}{4} * \frac{1}{t} = \lim\limits_{t \to 0+} \frac{2nt \ln(t) + \abs{x}^2}{4t}
+			\end{equation*}
+			Betrachten wir zunächst den Ausdruck $2nt * \ln(t) = 2n * \frac{\ln(t)}{\frac{1}{t}}$. Mit der Regel von l'Hôpital erhalten wir
+			\begin{equation*}
+				\lim_{t \to 0+} 2n * \frac{\ln(t)}{\frac{1}{t}} = 2n * \lim_{t \to 0+} \frac{\frac{1}{t}}{- \frac{1}{t^2}} = -2n * \lim_{t \to 0+} t = 0
+			\end{equation*}
+			Damit erhalten wir dann recht einsichtig
+			\begin{equation*}
+				\lim_{t \to 0+} \frac{2nt \ln(t) + \abs{x}^2}{4t} = \infty
+			\end{equation*}
+			und schließlich 			
+			\begin{equation*}
+				\lim_{t \to 0+} (ct)^{-\frac{n}{2}} * e^{-\frac{\abs{x}^2}{4t}} = c' * \lim_{t \to 0+} e^{\ln(t^{-\frac{n}{2})}} * e^{-\frac{\abs{x}^2}{4t}} 
+				= c' * \lim_{t \to 0+} e^{-\brackets{\frac{n}{2} \ln(t) + \frac{\abs{x}^2}{4t}}}
+				= 0
+			\end{equation*}
 			
 			\item Sei $t_k \to 0+$ für $k \to \infty$. Dann ist 
 			\begin{equation*}
