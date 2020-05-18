@@ -1,0 +1,31 @@
+# LaTeX temporary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+*.upa
+*.upb
+
+# tikz images
+tikzimages
+
+# latexmk stuff
+*.fdb_latexmk
+*.fls
+*.auxlock
+
+# Kile backup files
+*.backup
+
+# vim tmp files
+# *.tex.swp
+
+# Final document
+skript-numerik-sander.pdf
+

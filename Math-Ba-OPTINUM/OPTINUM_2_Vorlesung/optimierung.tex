@@ -1,0 +1,737 @@
+\chapter{Optimierung}
+
+Wir verallgemeinern unser Problem weiter.
+
+\begin{itemize}
+ \item Sei $f \colon \R^n \to \R$ gegeben.
+ \item Aufgabe: Finde einen (lokalen) Minimierer von $f$.
+\end{itemize}
+
+\begin{bsp}
+\begin{itemize}
+ \item $x_1,\ldots,x_n$: Designparameter eines Rennautos \\ (z.B.\ Hubraum, Reifengröße, Gewicht, etc.)
+ \item $f \colon \R^n \to \R$: Höchstgeschwindigkeit des Autos.
+ \item Finde Minimierer von $-f$.
+\end{itemize}
+\end{bsp}
+
+\medskip
+
+\begin{bsp}[Festkörpermechanik]
+\begin{itemize}
+ \item Elastisches Objekt $\Omega \subset \R^3$
+ \item Deformation: $\Phi \colon \Omega \to \R^3$
+ \item Hyperelastizität: stabile Zustände $\Phi$ minimieren eine Energie
+  \begin{equation*}
+   \mathcal{J} \colon C^1(\Omega,\R^3) \to \R
+   \qquad
+   \mathcal{J}(\Phi) = \int_{\Omega} W(\nabla \Phi(x))\,dx.
+  \end{equation*}
+ \item Diskretisierung: Fülle $\Omega$ mit Dreiecken bzw. Tetraedern.
+ \item Betrachte nur noch Position der Eckpunkte der Dreiecke (Knoten) ($n$ viele).
+ \item Aus $\mathcal{J} \colon C^1(\Omega,\R^3) \to \R$ wird $f \colon \R^{3n} \to \R$
+ \item Stichwort: Finite Elemente
+\end{itemize}
+\end{bsp}
+
+\bigskip
+
+Sei zunächst $f$ quadratisch mit symmetrischer Matrix $A \in \R^{n \times n}$:
+\begin{equation*}
+ f(x)=\frac{1}{2}x^TAx-b^Tx+c.
+\end{equation*}
+\begin{itemize}
+ \item Falls $A$ positiv definit ist, dann existiert genau ein Minimierer $x^*$.
+ \item Dieser löst
+  \begin{equation*}
+   \nabla f (x^* )=0=Ax-b \iff Ax=b
+  \end{equation*}
+ \item Problem zurückgeführt auf lineares Gleichungsystem $\rightarrow$ schon bekannt.
+\end{itemize}
+
+\section{Gradientenartige Verfahren}
+
+Sei ab jetzt $f$ \emph{nicht} quadratisch.
+
+\medskip
+
+Alle bekannten Verfahren sind iterativ.
+
+Allgemeiner Ansatz: Sei $x^0 \in \R^n$ gegeben.
+
+Für $k=1,2,\ldots$
+\begin{itemize}
+	\item Wähle eine Richtung $p_k \in \R^n$
+	\item Wähle eine Schrittweite $t_k \in \R$
+	\item Setze $x^{k+1}=x^k+t_kp_k$.
+\end{itemize}
+Hoffnung:
+\begin{enumerate}
+ \item $(x_k)$ konvergiert gegen einen Minimierer von $f$ für möglichst viele Startwerte $x^0$.
+ \item Die Konvergenz ist schnell.
+\end{enumerate}
+Hängt ab von:
+\begin{enumerate}[a)]
+ \item geschickter Wahl der Suchrichtungen $p_k$
+ \item geschickter Wahl der Schrittweiten $t_k$.
+\end{enumerate}
+In den allermeisten Fällen will man \emph{Abstiegsverfahren}, d.h. es soll gelten
+\begin{equation*}
+ f (x^{k+1} ) \leq f (x^k)
+\end{equation*}
+für alle $k \in \N$, mit Gleichheit nur wenn $x^k$ Minimierer ist.
+
+
+\subsection{Schrittweiten}
+Sei $x^k \in \R^n$ und eine Abstiegsrichtung $p_k$ gegeben.
+
+Wie sollte man ein "`gutes"' $t_k$ wählen?
+
+Dilemma:
+\begin{itemize}
+	\item $t_k$ muss sorgfältig gewählt werden, um möglichst viel Energiereduktion zu erhalten.
+	\item Die Wahl von $t_k$ selbst darf nicht zu aufwändig sein.
+\end{itemize}
+\emph{Idealerweise}: Wähle $t_k$ als globalen Minimierer von
+\begin{equation*}
+ \Theta \colon \R \to \R, t \mapsto f(x^k+tp_k),
+ \qquad
+ \text{(exakte Liniensuche)}
+\end{equation*}
+aber das ist i.A.\ viel zu teuer.
+
+Stattdessen: inexakte Liniensuche
+\begin{itemize}
+ \item Gegeben eine Folge von möglichen Schrittweiten.
+ \item Wähle die erste Schrittweite, die einer gewissen Bedingung genügt.
+\end{itemize}
+\emph{Hoffnung:} mit deutlich weniger Aufwand eine Schrittweise zu finden, die fast genauso gut ist.
+
+\bigskip
+
+Diese Methode ist der Dämpfungsstrategie im gedämpften Newton-Verfahren sehr ähnlich.
+
+\emph{Aber:}
+\begin{itemize}
+ \item Dort wusste man, dass $t_k \in (0,1]$ sein muss und dass $t_k=1$ gewisse Vorteile bietet.
+ \item Dieses Wissen hat man hier nicht.
+\end{itemize}
+Die einfachste Bedingung an die Schrittweite ist
+\begin{itemize}
+\item Wähle $t_k$ so, dass $f (x^k+t_kp_k) < f(x^k)$ für alle $k \in \N$.
+\end{itemize}
+Das reicht nicht: betrachet beispielsweise die Funktion $f(x)=x^2-1$.
+
+\missingfigure{Absteigende Folge, die nicht gegen den Minimierer konvergiert.}
+
+
+
+Wir brauchen \emph{hinreichenden Abstieg}.
+
+\subsubsection{Die Wolfe-Bedingungen}
+
+\begin{enumerate}[a)]
+ \item Armijo-Regel: Fordere Reduktion, die linear ist in der Schrittweite $t_k$ und der Richtungsableitung
+  \begin{equation*}
+   \dfrac{df}{dp} = \dfrac{d}{dt}f (x^k+tp_k ) \bigg|_{t=0}=\nabla f(x)^Tp_k.
+  \end{equation*}
+
+  Das bedeutet
+  \begin{equation}
+   \label{equa:eqI}
+   f (x^k+tp_k ) \leq f (x^k )+c_1t \nabla f (x^k )^Tp_k, \qquad c_1 \in (0,1)
+  \end{equation}
+  Auch diese Bedingung wird in der Literatur Armijo-Regel genannt \todo{z.B. bei Nocedal \& Wright?}
+
+  \missingfigure{Bild für die Armijo-Regel}
+
+  \emph{Achtung:} Die Armijo-Regel alleine reicht nicht aus. Eie Schrittweiten können unnötig klein werden.
+
+  Um das zu vermeiden fordern wir:
+
+ \item Krümmungsbedingung:
+  \begin{equation*}
+   \Theta^{\prime}(t) \geq \underbrace{c_2 \Theta^{\prime}(0)}_{<0}
+   \qquad
+   c_2 \in (c_1,1)
+  \end{equation*}
+  oder auch
+  \begin{equation}
+   \label{equa:eqII}
+   \nabla f(x^k+tp_k)^T p_k \geq c_2 \nabla f (x^k ) p_k,
+  \end{equation}
+  \emph{Idee:}
+  \begin{itemize}
+   \item Falls $\Theta^{\prime}(t)$ stark negativ ist, bekomme ich mehr Abstieg, wenn ich $t$ vergrößere.
+   \item Falls $\Theta^{\prime}(t)$ positiv oder nur wenig negativ ist, dann lohnt es sich nicht/kaum, $t$ zu vergrößern.
+  \end{itemize}
+\end{enumerate}
+
+\eqref{equa:eqI} \& \eqref{equa:eqII} heißen zusammen \emph{Wolfe-Bedingungen}.
+
+\begin{satz}[\citet{nocedal_wright:2006}, Lemma 3.1]
+Sei $f \colon \R^n \to \R$ stetig differenzierbar und von unten bschränkt
+Sei $p_k$ Abstiegsrichtung in $x^k$. Für alle $c_1,c_2 \in \R$ mit $0<c_1<c_2<1$ existieren
+Intervalle von Schrittweiten $t$ für die die Wolfe-Bedingungen gelten.
+\end{satz}
+\begin{proof}
+\begin{itemize}
+ \item $\phi(t)=f (x^k+tp_k )$ ist von unten beschränkt.
+ \item Da $p_k$ Abstiegsrichtung $\implies \nabla f (x^k )^Tp_k<0$.
+ \item Deshalb ist $\ell (t)=f (x^k )+tc_1 \nabla f (x^k )^Tp_k$ für $t>0$ nicht von unten beschränkt.
+ \item $f$ ist stetig: $\exists$ ein kleinstes $t'>0$ mit
+  \begin{equation*}
+   f (x^k+t'p_k )=f (x^k )+t'c_1 \nabla f (x^k )^Tp_k.
+  \end{equation*}
+ \item Also gilt die Armijo-Bedingung \eqref{equa:eqI} für alle $t<t'$.
+ \item Mittelwertsatz: $\exists t'' \in (0,t' )$ so dass
+  \begin{equation*}
+   \underbrace{f (x^k+t'p_k )-f (x^k )}_{=t'c_1 \nabla f (x^k )^Tp_k}=t' \nabla f (x^k+t''p_k )^Tp_k.
+  \end{equation*}
+ \item Teile durch $t'$:
+  \begin{equation*}
+   \nabla f(x^k+t''p_k)^Tp_k=\underbrace{c_1}_{<c_2} \underbrace{\nabla f(x^k)^Tp_k}_{<0} \geq c_2 \nabla f(x^k)^Tp_k.
+  \end{equation*}
+ \item $t''$ erfüllt auch Bedingung \eqref{equa:eqII}. \qedhere
+\end{itemize}
+\end{proof}
+
+\subsection{Suchrichtungen}
+
+Wie wählt man die Suchrichtungen $p_k$?
+
+Eine scheinbar vernünftige Idee:
+
+Wähle $p_k$ als Richtung des steilsten Abstiegs von $f$ in $x^k$ (engl.: steepest descent).
+
+Richtungsableitung:
+\begin{equation*}
+ \dfrac{df}{dp} \colonequals \dfrac{d}{dx} f(x+\alpha p) \bigg|_{\alpha =0}
+\end{equation*}
+\begin{defi}
+Die Richtung des steilsten Abstiegs von $f$ in $x$ ist der Minimierer von $\dfrac{df}{dp}$ bezüglich $p$ unter der Nebenbedingung $\Vert p \Vert =1$.
+\end{defi}
+\begin{lemma}
+Der Minimierer ist
+\begin{equation*}
+ p^*=\frac{-\nabla f(x)}{\norm{\nabla f(x)}}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Sei $\theta$ der Winkel zwischen $p$ und $\nabla f(x)$.
+\begin{itemize}
+ \item Dann ist
+  \begin{equation*}
+   \dfrac{df}{dp}=p^T \nabla f(x)=\norm{p} \norm{\nabla f(x)} \cos \theta = \norm{\nabla f(x)} \cos \theta
+  \end{equation*}
+ \item Minimal, wenn $\cos \theta =-1 \implies \theta = \pi$
+  \begin{equation*}
+   p=\frac{- \nabla f}{\norm{\nabla f}}.
+   \qedhere
+ \end{equation*}
+\end{itemize}
+\end{proof}
+
+Das Gradientenverfahren wirkt vernünftig, kann aber sehr langsam sein.
+\begin{bsp}
+Sei
+\begin{equation*}
+ f \colon \R^2 \to \R,
+ \qquad
+ x \mapsto x^T \underbrace{\begin{pmatrix}
+		\varepsilon & 0 \\
+		0 & 1 \\
+	\end{pmatrix}}_{\equalscolon A}x
+\end{equation*}
+mit $\varepsilon > 0$ klein.
+
+\begin{bem}
+Das Problem ist schlecht konditioniert.
+\end{bem}
+
+Man kann die optimale Schrittweite mit vertretbarem Aufwand berechnen:
+\begin{equation*}
+ t^*_k = \frac{\nabla f (x^k )^T \nabla f (x^k )}{\nabla f (x^k )^T A \nabla f (x^k )}
+\end{equation*}
+Und dennoch:
+\missingfigure{Bild vom schlecht konvergierenden Gradientenverfahren}
+
+\end{bsp}
+
+Viele Algorithmen verwenden deshalb andere Suchrichtungen.
+
+Man will aber häufig, dass die Richtungen $p_k$ wenigstens ähnlich dem steilsten Abstieg sind (engl.: gradient-related),
+die also zumindest ungefähr in Richtung $-\nabla f(x^k)$ zeigen.
+
+Denn dann kann man Konvergenz beweisen.
+
+Definiere $\theta_k$ als Winkel zwischen $p_k$ und $-\nabla f (x^k )$
+\begin{equation*}
+ \cos \theta_k=\frac{-\nabla f (x^k )^T p_k}{\norm{\nabla f(x^k)} \cdot \norm{p_k}}.
+\end{equation*}
+
+\begin{satz}[\citet{nocedal_wright:2006}, Satz~3.2]
+\label{thm:gradient_related_convergence}
+Gegeben sei ein Verfahren
+\begin{equation*}
+ x^{k+1}=x^k+t_kp_k,
+\end{equation*}
+wobei $p_k$ immer Absiegsrichtung ist und $t_k$ immer die Wolfe-Bedingung erfüllt.
+Sei $f \colon \R^n \to \R$ von unten beschränkt und stetig differenzierbar.
+Der Gradient $\nabla f$ sei Lipschitz-stetig mit Konstante $L$. Dann folgt
+\begin{equation*}
+ \sum_{k=0}^{\infty} \cos^2 \theta_k \norm{\nabla f(x^k)}^2 < \infty.
+\end{equation*}
+\end{satz}
+Konsequenzen:
+\begin{itemize}
+ \item Es gilt
+  \begin{equation*}
+   \lim_{k \to \infty} \cos^2 \theta_k \norm{\nabla f(x^k)}^2 =0.
+  \end{equation*}
+ \item Falls $p_k$ so gewählt ist, dass $\theta_k$ von $90^{\circ}$ weg beschränkt ist, dann
+  \begin{equation*}
+   \exists \delta >0 \colon \cos \theta_k \geq \delta > 0
+  \end{equation*}
+  für alle $k \in \N$.  Also gilt
+  \begin{equation*}
+   \lim \norm{\nabla f(x^k)} = 0.
+  \end{equation*}
+
+ \item Das Verfahren konvergiert also gegen einen stationären Punkt, wenn die Suchrichtungen nicht "`zu senkrecht"' auf $-\nabla f (x^k )$  stehen.
+
+ \item Insbesondere "`konvergiert"' das Gradientenverfahren gegen einen stationären Punkt, wenn die Schrittweite immer die Wolfe-Bedingung erfüllt.
+
+ \item Konvergenz gegen stationäre Punkte, \emph{nicht} gegen Minimierer!
+
+ \item Mehr ist mit den oben genannten Annahmen nicht zu erreichen.
+
+ \item Konvergenz gegen Minimierer nur mit zusätzlichen Annahmen an die $p_k$
+
+  (Krümmung, d.h.\ Information über $\nabla^2 f$)
+
+ \item Das ist natürlich teurer.
+\end{itemize}
+
+\emph{Beachte:} Stationäre Punkte (außer Minimierer) sind instabil!
+\begin{itemize}
+ \item Sei $x^*$ ein Sattelpunkt und $(x^k )$ mit $x^k \to x^*$ durch das Liniensuchverfahren erzeugt.
+
+ \item Dann ist $f(x^k) \geq f(x^*)$ für alle $k \in \N$.
+
+ \item Tatsächlich aber treten Rundungsfehler auf: Wenn $x^k$ schon sehr nah an $x^*$ ist,
+  kann eventuell gelten
+  \begin{equation*}
+   f (x^{k+1} ) \geq f (x^* )
+  \end{equation*}
+  aber
+  \begin{equation*}
+  f (\operatorname{gerundet}(x^{k+1}) ) < f(x^*).
+  \end{equation*}
+	\item Danach kann die Folge nicht mehr gegen $x^*$ konvergieren.
+\end{itemize}
+\begin{proof}[Beweis von Satz~\ref{thm:gradient_related_convergence}]
+Die Wolfe-Bedingungen sind:
+\begin{enumerate}[a)]
+ \item $f (x^{k+1} ) \leq f (x^k )+c_1t_k \nabla f (x^k )^Tp_k$ (Armijo)
+ \item $\nabla f (x^{k+1})^T p_k \geq c_2 \nabla f (x^k )^Tp_k$ (Krümmung)
+\end{enumerate}
+
+Subtrahiere $\nabla f (x^k )^Tp_k$ von b)
+\begin{equation*}
+ \Big(\nabla f (x^{k+1} )-\nabla f (x^k ) \Big)^T p_k \geq (c_2-1) \nabla f (x^k )^Tp_k.
+\end{equation*}
+$\nabla f$ ist Lipschitz-stetig, deshalb gilt
+\begin{align*}
+ \left\vert \Big(\nabla f (x^{k+1} )-\nabla f (x^k ) \Big)^Tp_k \right\vert
+ & \leq
+ \left\Vert\nabla f (x^{k+1} )-\nabla f (x^k ) \right\Vert \cdot \norm{p_k} \\
+& \leq
+L \overbrace{\norm{x^{k+1}-x^k}}^{t_kp_k} \cdot \norm{p_k} =Lt_k \norm{p_k}^2
+\end{align*}
+Zusammen \begin{align*}
+    t_kL \left\Vert p_k \right\Vert^2 & \geq (\nabla f (x^{k+1} )-\nabla f (x^k ) )^Tp_k \geq (c_2-1) \nabla f (x^k )^Tp_k \\
+    \implies t_k & \geq \frac{c_2-1}{L} \cdot \frac{\nabla f (x^k )^T p_k}{\left\Vert p_k \right\Vert^2}.
+\end{align*}
+Einsetzen in Armijo-Bedingung:
+\begin{align*}
+    f (x^{k+1} ) & \leq f (x^k ) +c_1t_k \underbrace{f (x^k )^Tp_k}_{\leq 0} \\
+    & \leq f (x^k )+c_1 \frac{c_2-1}{L} \frac{(\nabla f (x^k )^Tp_k )^2}{\left\Vert p_k \right\Vert^2} \\
+    & = f (x^k )-\underbrace{c_1 \frac{1-c_2}{L}}_{\equalscolon c} \cdot \underbrace{\frac{(\nabla f (x^k )^Tp_k )^2}{\norm{p_k}^2 \cdot \norm{\nabla f(x^k)}^2}}_{=\cos^2 \theta_k} \cdot \norm{\nabla f(x^k)}^2 \\
+    & = f (x^k )-c \cdot \cos^2 \theta_k \cdot \norm{\nabla f(x^k)}^2.
+\end{align*}
+Rekursives Einsetzen \begin{equation*}
+    f (x^{k+1} ) \leq f (x^0 )-c \sum_{j=0}^k \cos^2 \theta_j \norm{ \nabla f(x^j) }^2
+\end{equation*}
+beziehungsweise
+\begin{equation*}
+    \sum_{j=0}^k \cos^2 \theta_j \norm{\nabla f(x^j)}^2 \leq \frac{1}{c} (f (x^0 )-f (x^{k+1} ) ).
+\end{equation*}
+\begin{itemize}
+ \item Rechte Seite ist nach oben beschränkt, da $f$ nach unten beschränkt ist.
+ \item Partialsummen sind also beschränkt, außerdem monoton steigend:
+ \begin{equation*}
+  \implies \lim_{k \to \infty} \sum_{j=0}^k \cos^2 \theta_j \norm{ \nabla f (x^j)}^2 <\infty.
+  \qedhere
+\end{equation*}
+\end{itemize}
+\end{proof}
+
+
+\subsection{Das Gradientenverfahren}
+
+Gegeben $x^0 \in \R^n$.
+
+Für $k=0,1,2,\ldots$
+\begin{equation*}
+ x^{k+1} = x^k-t_k \nabla f(x^k).
+\end{equation*}
+Verfahren konvergiert global, falls die $t_k$ die Wolfe-Bedingungen erfüllen.
+
+\medskip
+
+\emph{Aber}: Konvergenz kann sehr langsam sein.
+
+\medskip
+
+Das zeigen wir jetzt ordentlicher:
+
+\begin{satz}[\citet{nocedal_wright:2006}, Satz~3.3]
+Sei $f$ quadratisch, also
+\begin{equation*}
+ f(x)=\frac{1}{2}x^TAx-b^Tx
+\end{equation*}
+mit symmetrischer, positiv definiter Matrix $A$.
+\begin{itemize}
+ \item Exakte Liniensuche
+  \begin{equation*}
+   t_k=\frac{\nabla f(x^k)^T \nabla f(x^k)}{\nabla f(x^k)^TA \nabla f(x^k)}
+  \end{equation*}
+ \item Energie-Norm $\norm{x}_A^2 \colonequals x^TAx$.
+\end{itemize}
+Dann gilt für den $k+1$-ten Fehler
+\begin{equation*}
+ \norm{x^{k-1}-x^*}_A \leq \frac{\lambda_n-\lambda_1}{\lambda_n+\lambda_1} \norm{x^k-x^*}_A
+\end{equation*}
+mit $0<\lambda_1 \leq \ldots \leq \lambda_n$ den Eigenwerten von $A$.
+\end{satz}
+
+\medskip
+
+\emph{Beachte:} Die Konvergenz ist umso besser, je näher die Eigenwerte beieinander liegen
+
+\medskip
+
+\emph{Beachte} ($\kappa (A)$ ist die Kondition von $A$):
+\begin{equation*}
+ \frac{\lambda_n-\lambda_1}{\lambda_n+\lambda_1}
+ =
+ \frac{\frac{\lambda_n}{\lambda_1}-1}{\frac{\lambda_n}{\lambda_1}+1}
+ =
+ \frac{\kappa(A)-1}{\kappa(A)+1}
+ \to
+ \begin{cases}
+  1 & \text{für $\kappa(A) \to \infty$}, \\
+  0 & \text{für $\kappa(A) \to 1$}.
+ \end{cases}
+\end{equation*}
+Für nichtquadratische $f$ gilt folgendes Resultat.
+\begin{satz}[\citet{nocedal_wright:2006}, Satz~3.4]
+Sei $f \colon \R^n \to \R$ zweimal stetig differenzierbar. Angenommen, die Iterierten $x^k$ des Gradientenverfahrens konvergieren zu einem $x^*$, wo $\nabla^2 f (x^* )$ positiv definit ist. Sei außerdem
+\begin{equation*}
+ r \in \bigg( \frac{\lambda_n-\lambda_1}{\lambda_n+\lambda_1},1 \bigg)
+\end{equation*}
+wobei $0 <\lambda_1 \leq \ldots \leq \lambda_n$ die Eigenwerte von $\nabla^2 f(x^*)$ sind.
+Dann gilt
+\begin{equation*}
+ f(x^{k+1})-f(x^*) \leq r^2 (f(x^k)-f(x^*) )
+\end{equation*}
+für alle $k$ groß genug.
+\end{satz}
+
+%TODO
+
+\section{Das Newton-Verfahren}
+
+\begin{itemize}
+ \item Sei $x^k \in \R^n$.
+
+ \item Approximiere $f$ um $x^k$ durch ein quadratisches Modell
+  \begin{equation*}
+   m_k (x^k+p) \colonequals f(x^k)+\nabla f (x^k )^Tp+\frac{1}{2} p^T \nabla ^2 f(x^k)p.
+  \end{equation*}
+
+  \item Falls $\nabla^2 f(x^k)$ positiv definit ist, hat $m_k$ einen eindeutigen Minimierer
+   \begin{equation*}
+    p_k = -\nabla^2 f (x^k )^{-1} \nabla f (x^k )
+   \end{equation*}
+\end{itemize}
+Im Prinzip liegt das bekannte Newton-Verfahren für die Optimalitätsbedingung $F(x) \colonequals \nabla f(x)=0$ vor.
+
+\medskip
+
+Aber Abstiegsrichtungen erhält man nur, falls $\nabla F(x)=\nabla^2 f(x)$ positiv definit ist.
+
+\bigskip
+
+\missingfigure{Bild von $f$ und $x_k$ und $m_k$.}
+
+Wir wissen schon:
+\begin{itemize}
+ \item Das ungedämpfte Newton-Verfahren konvergiert lokal quadratisch, also viel schneller als das Gradientenverfahren.
+ \item Insbesondere gibt es eine besondere Schrittweite: zumindest in der Nähe einer Lösung ist $t_k=1$ eine gute Wahl.
+ \item Weiterer Vorteil bei Optimierungsproblemen: Anders als $\nabla F$ für beliebige Vektorfunktionen ist $\nabla^2 F$ auf jeden Fall symmetrisch.
+\end{itemize}
+
+Falls $\nabla^2 f (x^k )$ nicht positiv definit ist, dann $\ldots$ müssen wir tricksen:
+\begin{itemize}
+ \item Ersetze $\nabla^2 f (x^k )$ durch eine ähnliche Matrix, die symmetrisch und positiv definit ist.
+ \item Addiere Vielfaches der Identität (Einheitsmatrix)
+ \item Modifizierte Cholesky-Zerlegung
+ \item $\ldots$
+\end{itemize}
+
+\subsection{Konvergenzeigenschaften des Newton-Verfahrens}
+
+Wir hatten gesehen, dass
+ein allgemeines Liniensuchverfahren konvergiert, falls ein $\sigma > 0$ existiert, so dass
+\begin{equation*}
+ \cos \theta_k
+ \colonequals
+ \frac{-\nabla f (x^k )^Tp_k}{\norm{\nabla f(x^k)} \cdot \norm{p_k}} \ge \sigma
+ \qquad
+ \forall k \in \N.
+\end{equation*}
+
+\begin{lemma}[Übung]
+Sei $M \in \R$ eine obere Schranke der Kondition von $\nabla^2f$, also
+\begin{equation*}
+ \kappa (\nabla^2f) = \norm{\nabla^2f} \cdot \norm{\nabla^2f^{-1}} \leq M
+ \qquad
+ \forall k \in N.
+\end{equation*}
+Dann gilt $\cos \theta_k \geq \frac{1}{M}$.
+\end{lemma}
+
+Es folgt:  Das Newton-Verfahren konvergiert,
+falls die Folge der $\nabla^2 f (x^k )$ beschränkte Kondition hat.
+
+\begin{satz}[\citet{nocedal_wright:2006}, Satz~3.5]
+Sei $f \colon \R^n \to \R$ zweimal stetig differenzierbar und $x^* \in \R^n$ mit $\nabla f (x^* )=0$ und $\nabla^2 f (x^* )$ positiv definit. Sei $\nabla^2f$ Lipschitz-stetig in einer Umgebung von $x^*$, $(x^k )$ die Newton-Folge $x^{k+1}=x^k-\nabla^2f (x^k )^{-1} \nabla f (x^k )$. Falls $x^0$ hinreichend nah an $x^*$ liegt
+\begin{enumerate}[a)]
+ \item konvergiert die Folge gegen $x^*$.
+ \item Die Konvergenz ist lokal quadratisch.
+ \item Die Folge $( \norm{\nabla f(x^k)} )_{k \in \N}$ konvergiert quadratisch gegen $0$.
+\end{enumerate}
+\end{satz}
+\emph{Beachte:} Für alle $x^k$ hinreichend nah an $x^*$ erfüllt die Schrittweite $t_k=1$ die Wolfe-Bedingung.
+
+\section{Quasi-Newton-Verfahren}
+Nachteil des Newton-Verfahrens:
+
+Die Auswertung von $\nabla^2f$ kann schwierig/teuer sein.
+
+\bigskip
+
+Quasi-Newton-Verfahren:
+\begin{itemize}
+\item Ersetze $\nabla^2 f(x^k)$ durch eine Approximation $B_k \in \R^{n \times n}$.
+	\item Suchrichtung $p_k=-B_k^{-1} \nabla f (x^k )$.
+	\item Konstruktion der $B_k$:
+\end{itemize}
+
+\emph{Idee:} Die Folge der Gradienten $( \nabla f (x^k ) )_k$ enthält Information über die zweiten Ableitungen von $f$. \begin{equation*}
+ f'(x^{k+1}) > f'(x^k) \text{\glqq}\implies\text{\grqq} f'' (x^{k+1} )>0.
+\end{equation*}
+\todo[inline]{Dazu ein Bild?}
+
+Formaler: Taylor-Entwicklung
+\begin{equation*}
+ \nabla f(x+p)=\nabla f(x)+\nabla^2 f(x) p+\underbrace{\int_0^1 \left[ \nabla^2 f(x+sp)-\nabla^2 f(x) \right] p \,ds}_{\equalscolon R(p)}
+\end{equation*}
+$\nabla f$ ist stetig, deshalb gilt für das Restglied $R$
+\begin{equation*}
+ \norm{R(p)} \in o (\norm{p}) \iff \lim_{\norm{p} \to 0} \frac{\norm{R(p)}}{\norm{p}}=0.
+\end{equation*}
+Also folgt
+\begin{equation*}
+ \nabla f (x^{k+1} )=\nabla f (x^k )+\nabla^2 f (x^k ) \cdot (x^{k+1}-x^k )+o (\norm{x^{k+1}-x^k} ).
+\end{equation*}
+Seien $x^{k+1},x^k$ in einer Umgebung von $x^*$, in der $\nabla^2 f$ "`hinreichend"' positiv definit ist. Dann ist \begin{equation*}
+  \nabla^2 f(x^k) \underbrace{(x^{k+1}-x^k)}_{\equalscolon s^k} \approx \underbrace{\nabla f(x^{k+1})-\nabla f(x^k)}_{\equalscolon y^k}
+\end{equation*}
+Idee des Quasi-Newton-Verfahrens:
+
+Konstruiere $B_{k+1}$ so, dass diese Bedingung erfüllt ist:
+\begin{equation*}
+ B_{k+1}s^k=y^k
+ \qquad
+ \text{(Sekantengleichung)}.
+\end{equation*}
+Die Sekantengleichung bestimmt $B_{k+1}$ allerdings nur falls $n=1$.
+
+\medskip
+
+Wir benötigen also zusätzliche Bedingungen.
+
+\medskip
+
+Weitere Wünsche:
+\begin{itemize}
+	\item Symmetrie
+	\item $B_{k+1}-B_k$ habe niedrigen Rang (spart viel Speicher, falls $k \leq n$)
+\end{itemize}
+Es existieren viele Varianten.
+
+\medskip
+
+Die wohl wichtigste Variante ist die \emph{BFGS-Formel} (nach Broyden, Fletcher, Goldfarb, Shanno) \begin{equation*}
+	B_{k+1}=B_k-\frac{B_ks_k \cdot s_k^TB_k^T}{s_k^TB_ks_k}+\frac{y_ky_k^T}{y_k^Ts_k}
+\end{equation*}
+Nützlich: \begin{itemize}
+	\item $B_{k+1}-B_k$ hat Rang $2$
+	\item Alle $B_k$ sind symmetrisch.
+	\item Alle $B_k$ erfüllen die Sekantengleichung.
+	\item Alle $B_k$ sind positiv definit, falls auch $B_0$ positiv definit ist.
+\end{itemize}
+Für Quasi-Newton-Methoden brauchen wir eine neue Art von Konvergenzgeschwindigkeit.
+\begin{defi}
+Eine Folge $(x^k )$ konvergiert \emph{superlinear} gegen $x^*$, falls
+\begin{equation*}
+ \lim_{k \to \infty} \frac{\norm{x^{k+1}-x^k}}{\norm{x^k-x^*}}=0.
+\end{equation*}
+\end{defi}
+\begin{satz}[\citet{nocedal_wright:2006}, Satz~3.6]
+\label{thm:quasi_newton_konvergenz}
+Sei $f \in C^2 (\R^n,\R )$. Betrachte die Iteration \begin{equation*}
+	x^{k+1}=x^k+t_kp_k
+\end{equation*}
+wobei:
+\begin{enumerate}[a)]
+ \item $p_k$ ist Abstiegsrichtung
+ \item $t_k$ erfülle die Wolfe-Bedingungen mit $c \leq \frac{1}{2}$.
+\end{enumerate}
+Die Folge $(x^k )$ konvergiere gegen ein $x^*$ mit $\nabla f (x^* )=0$ und $\nabla^2f (x^* )$ positiv definit. Falls \begin{equation*}
+ \lim_{k \to \infty} \frac{\norm{\nabla f(x^k)+\nabla^2 f(x^k )p_k}}{\norm{p_k}}=0,
+\end{equation*}
+dann gilt:
+\begin{enumerate}[i)]
+ \item Die Schrittweite $t_k=1$ erfüllt die Wolfe-Bedingungen für alle $k$ groß genug.
+ \item Falls $t_k=1$ gewählt wird für alle $k$ groß genug, dann konvergiert $(x^k )$ superlinear.
+\end{enumerate}
+\end{satz}
+
+Was heißt das für Quasi-Newton-Verfahren?
+
+\medskip
+
+Sei $p_k=-B_k^{-1} \nabla f(x^k)$.
+
+\medskip
+
+Dann ist die zentrale Bedingung aus Satz~\ref{thm:quasi_newton_konvergenz}
+\begin{equation*}
+ \lim_{k \to \infty} \frac{\norm{\nabla f(x^k)+\nabla^2 f(x^k )p_k}}{\norm{p_k}}
+ =
+ \lim_{k \to \infty} \frac{\norm{(B_k-\nabla^2f (x^k ) )p_k}}{\norm{p_k}}
+ =
+ 0.
+\end{equation*}
+Dabei haben wir benutzt, dass
+\begin{equation*}
+ \nabla f (x^k )=B_kB_k^{-1} \nabla f (x^k )=-B_kp_k.
+\end{equation*}
+Das sind gute Nachrichten! \begin{itemize}
+	\item[$\rightarrow$] Es heißt nämlich NICHT, dass die $B_k$ immer bessere Approximationen von $\nabla^2 f (x^k )$ werden müssen.
+	\item[$\rightarrow$] Sie müssen $\nabla^2 f (x^k )$ nur \emph{entlang der Suchrichtungen} immer besser approximieren.
+\end{itemize}
+\section{Trust-Region-Verfahren}
+Bisher haben wir Liniensuchmethoden behandelt \begin{itemize}
+	\item Suche \emph{erst} eine Richtung $p_k \in \R^n$
+	\item Suche dann eine Schrittweite $t_k \in \R$
+	\item Setze $x^{k+1}=x^k+t_kp_k$
+\end{itemize}
+Trust-Region-Verfahren wählen $p_k$ und $t_k$ zusammen. \begin{itemize}
+	\item Sei $x^k$ die aktuelle Iterierte
+	\item Approximiere $f$ um $x^k$ durch ein quadratisches Modell \begin{equation*}
+			m_k(p)=f (x^k )+g^Tp+\frac{1}{2} p^TB_kp
+		\end{equation*}
+		mit $g_k=\nabla f (x^k )$, $B_k \in \R^{n \times n}$ ist Approximation von $\nabla^2 f (x^k )$, zum Beispiel $\nabla^2 f(x^k )$ selbst.
+\end{itemize}
+\emph{Idee}: Vertraue $m_k$ nur in einer Kugel um $x^k$ (der Trust-Region) mit Radius $\triangle_k$. \\ Wähle als Korrektur-Schritt \begin{equation*}
+	p_k=\operatorname{argmin}_{\left\Vert p \right\Vert \leq \triangle_k} m_k(p)
+\end{equation*}
+Wir erhalten den Vorteil, dass $p_k$ immer definiert ist, selbst wenn $B_k$ nicht positiv definit ist, dafür aber den Nachteil, dass in jedem Schritt ein Minimierungsproblem \emph{mit Nebenbedingung} zu lösen ist. \emph{Wie wählt man $\triangle_k$ ?} Grundlage: Wie gut hat $m_k$ den Energieverlust $x^k \rightarrow x^k+p_k$ prognostiziert? Definiere: \begin{equation*}
+	\rho_k=\frac{f (x^k )-f (x^k+p_k )}{m_k(0)-m_k (p_k )}
+\end{equation*}
+Wähle zwei Konstanten $0< \eta_1< \eta_2<1$, z.B. $\eta_1=0,1,\eta_2=0,9$. Für $k=0,1,2,\ldots$ \begin{itemize}
+	\item Setze $p_k=\operatorname{argmin}_{\lVert p \rVert < \triangle_k} m_k(p)$
+	\item Berechne $\varrho_k$
+	\item Fall 1: $\varrho_k< \eta_1$ \begin{itemize}
+			\item[1)] $x^{k+1}=x^k$
+			\item[2)] $\triangle_{k+1}=\frac{1}{2} \triangle_k$
+		\end{itemize}
+	\item Fall 2: $\eta_1 \leq \varrho_k \leq \eta_2$ \begin{itemize}
+            \item[1)] $x^{k+1}=x^k+p_k$
+		\end{itemize}
+	\item Fall 3: $\varrho_k> \eta_2$ \begin{itemize}
+			\item[1)] $x^{k+1}=x^k+p_k$
+			\item[2)] $\triangle_{k+1}=2 \triangle_k$
+		\end{itemize}
+\end{itemize}
+\section{Globale Konvergenz}
+\begin{defi}[Cauchy-Punkt]
+Der Cauchy-Punkt $p_k^c$ ist der Minimierer von $m_k$ innerhalb der Trust-Region in Richtung des negativen Gradienten. \begin{equation*}
+	p_k^c=-\frac{g_k}{\left\Vert g_k \right\Vert} \cdot \tau_k
+\end{equation*}
+wobei
+\begin{equation*}
+  \tau_k=
+  \reboxSmashedUnderbraces{
+    \begin{cases}
+      \triangle_k, & \mathrm{falls}\ g_k^TB_kg_k<0 \\
+      \min \left\lbrace \triangle_k, \smashedUnderbrace{
+      \scriptstyle\frac{\left\Vert g_k \right\Vert^3}{g_k^TB_kg_k}}{\mathrm{billig}} \right\rbrace, & \mathrm{sonst}
+    \end{cases}
+  }
+\end{equation*}
+
+\end{defi}
+Der Cauchy-Punkt erzeugt Energieabstieg \emph{im Modell} ähnlich wie der von der Armijo-Bedingung gefordert.
+\begin{lemma}[\citet{nocedal_wright:2006}, Satz~4.3]
+Für den Cauchy-Punkt $p_k^c$ gilt \begin{equation*}
+	m(0)-m (p_k^c ) \geq \frac{1}{2} \left\Vert g_k \right\Vert \cdot \min \left\lbrace \triangle_k, \frac{\left\Vert g_k \right\Vert}{\left\Vert B_k \right\Vert} \right\rbrace \tag{*} \label{inequa:ineq*}
+\end{equation*}
+\end{lemma}
+\begin{satz}
+Falls [technische Bedingungen], und $p_k$ so gewählt wird, dass \eqref{inequa:ineq*} für alle $k \in \N$ erfüllt ist, dann folgt \begin{equation*}
+	\lim_{k \to \infty} \left\Vert g_k \right\Vert =0
+\end{equation*}
+\end{satz}
+\section{Das Hundebein-Verfahren}[dogleg method]
+Sei $B_k$ positiv definit. Der Minimierer von $m_k$ ohne Nebenbedingung ist \begin{equation*}
+	p^B=-B_k^{-1}g_k
+\end{equation*}
+Falls $p^B$ zulässig ist, also $\left\Vert p^B \right\Vert \leq \triangle$, dann ist $p^B$ auch Lösung des quadratischen Minimierungsproblems \emph{mit Nebenbedingungen}. Sei $p^* ( \triangle )$ der Minimierer von $m_k$ in der Trust-Region als Funktion des Radius. Sei $\triangle$ klein im Verhältnis zu $\left\Vert p^B \right\Vert$. Dann ist der quadratische Term in $m(p)=f (x^k )+g_k^Tp+\frac{1}{2}p^TB_kp$ eher irrelevant. Dann ist der Minimierer von $m_k$ ungefähr der Cauchy-Punkt \begin{equation*}
+	p^* ( \triangle ) \approx -\triangle \frac{g}{\left\Vert g \right\Vert}
+\end{equation*}
+dogleg-Methode: Wähle $p_k$ als Minimierer von $m_k$ auf dem gelben Pfad unter der Nebenbedingung $\left\Vert p_k \right\Vert \leq \triangle_k$.
+\begin{satz}
+Der Vektor $p^*$ ist Minimierer von \begin{equation*}
+	\min_{\left\Vert p \right\Vert \leq \triangle_k} m(p)=f (x^k )+g^Tp+\frac{1}{2}p^TB_kp
+\end{equation*}
+$\iff$ $\left\Vert p^* \right\Vert \leq \triangle_k$, und es eine Zahl $\lambda \geq 0$ gibt so dass \begin{align*}
+	(B+ \lambda I )p^* & =-g \\
+	\lambda ( \triangle-\left\Vert p^* \right\Vert ) & = 0
+\end{align*}
+und $(B+\lambda I )$ ist positiv semidefinit.
+\end{satz}
+Berechnungsmethode von Minimierern
+\begin{algo}
+Für $\lambda$ groß genug definiere \begin{equation*}
+	p ( \lambda )=- (B+\lambda I )^{-1}g
+\end{equation*}
+Falls $\left\Vert p^* \right\Vert$ auf dem Rand der Trust-Region liegt, dann verwende das Newton-Verfahren zu Lösen von \begin{equation*}
+	\left\Vert p ( \lambda ) \right\Vert-\triangle_k=0
+\end{equation*}
+\end{algo}

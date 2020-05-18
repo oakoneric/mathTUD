@@ -1,0 +1,375 @@
+\chapter{Nichtlineare Ausgleichsprobleme}
+
+Bisher haben wir Vektoren $x^* \in \R^n$ gesucht, sodass
+\begin{equation*}
+ F (x^*)=0 \qquad \text{bzw.} \qquad \norm{F(x^*)} = 0.
+\end{equation*}
+Wir verallgemeinern nun diese Situation.
+
+\medskip
+
+\emph{Gegeben:} $m$ Messwerte $b_1,\ldots,b_m \in \R$ zu Zeitpunkten $t_1,\ldots,t_m \in \R$.
+
+\medskip
+
+
+\emph{Gesucht:} Funktion $\varphi \colon \R \to \R$, die die Daten "`möglichst gut approximiert"'.
+
+\bigskip
+
+Wir kennen schon:
+\begin{enumerate}
+ \item Polynominterpolation: Es existiert ein Polynom vom Grad höchstens $m-1$,
+   welches die Daten interpoliert.
+
+   Dies funktioniert aber schlecht, wenn $m$ groß ist.
+
+   Das ist aber gerade der interessante Fall.
+
+
+ \item Spline-Interpolation: Ja, \emph{aber:} häufig vermuten wir schon eine Gesetzmäßigkeit und wollen eigentlich nur ein paar Parameter bestimmen.
+\end{enumerate}
+
+\begin{bsp} [Normalverteilung]
+\begin{equation*} \\
+ \varphi(t;\mu,\sigma)= \frac{1}{\sqrt{2 \pi \sigma^2}} \exp ( -\frac{(t-\mu)^2}{2 \sigma^2} )
+\end{equation*}
+mit nur zwei Parametern: dem Erwartungswert $\mu$ und der Standardabweichung $\sigma$.
+
+\medskip
+
+Das Problem ist hier: Finde $\mu,\sigma \in \R$, so dass $\varphi (t_i;\mu,\sigma) = b_i$ für alle $i=1,\ldots,m$.
+\end{bsp}
+
+\bigskip
+
+Abstrakt: Gegeben eine Modellfunktion mit $n$ reellen Parametern $x_1,\ldots,x_n$
+\begin{equation*}
+ \varphi(t;x_1,x_2,\ldots,x_n)
+\end{equation*}
+Falls die Messwerte die Gesetzmäßigkeit exakt erfüllen, dann gibt es Parameter $x_1,\ldots,x_n$ so dass
+\begin{equation*}
+ b_i=\varphi(t_i;x_1,\ldots,x_n) \qquad \forall i=1,\ldots,m
+\end{equation*}
+Normalerweise ist aber $m \gg n$.
+
+Deswegen kann man nur
+\begin{equation*}
+ b_i \approx \varphi(t_0;x_1,\ldots,x_n) \qquad \forall i=1,\ldots,m
+\end{equation*}
+erwarten.
+
+Betrachte die Differenzen
+\begin{equation*}
+ \triangle_i\colonequals b_i-\varphi(t_i;x_1,\ldots,x_n) \qquad \forall i=1,\ldots,m.
+\end{equation*}
+Diese sollen \glqq irgendwie klein\grqq{} werden.
+
+
+\section{Prinzip der kleinsten Quadrate}
+Es ist sinnvoll, die $x_1,\ldots,x_n \in \R$ so zu wählen, dass das Fehlerfunktional
+\begin{equation*}
+ \triangle^2
+ \colonequals
+ \sum_{i=1}^m \triangle_i^2
+ =
+ \sum_{i=1}^m \Big( b_i-\varphi(t_i;x_1,\ldots,x_n) \Big)
+\end{equation*} minimal wird.
+
+Es gibt Alternativen, z.B.
+\begin{itemize}
+ \item Minimiere $\triangle_1 \colonequals \sum_{i=1}^m \abs{ \triangle_i }$.
+ \item Minimiere $\triangle_\infty \colonequals \max_{i=1}^m \abs{ \triangle_i }$.
+\end{itemize}
+Diese sind aber zum Beispiel nicht differenzierbar.
+
+\section{Lineare Ausgleichsprobleme}
+
+Wir nehmen zunächst an, dass $\varphi$ linear sei in $x_1,\ldots,x_n$, also
+\begin{equation*}
+ \varphi(t;x_1,\ldots,x_n)=a_1(t)x_1+a_2(t)x_2+a_3(t)x_3+\ldots+a_n(t)x_n
+\end{equation*}
+mit Funktionen $a_1,\dots, a_n : \R \to \R$.
+
+Dann ist
+\begin{equation*}
+ \triangle^2=\sum_{i=1}^m \left[b_i-(a_1(t_i)x_1+\ldots+a_n(t_i)x_n) \right]^2=\Vert b-Ax \Vert_2^2
+\end{equation*}
+mit
+\begin{equation*}
+A \in \R^{m \times n},\ A_{ij}=a_j(t_i)
+\qquad
+x=(x_1,\ldots,x_n)^T \in \R^n.
+\end{equation*}
+
+\bigskip
+
+Geometrisch heißt das: Wir suchen einen Punkt $z=Ax$ aus dem Bildraum $R(A)$ von $A$,
+der den kleinsten Abstand zu $b$ hat.
+
+\todo[inline]{Bild}
+
+\begin{itemize}
+ \item $R(A)$ ist ein linearer Raum.
+ \item $b-Ax$ steht senkrecht auf $R(A)$.
+\end{itemize}
+
+\begin{satz}[\citet{deuflhard_hohmann:1993}, Satz~3.7]
+ \begin{enumerate}[i)]
+ \item Der Vektor $x \in \R^n$ ist genau dann Lösung von $\norm{b-Ax} \to \min$, falls er die
+ sogenannte \emph{Normalengleichung}
+ \begin{equation*}
+  A^TAx = Ab
+ \end{equation*}
+ erfüllt.
+
+ \item Das Problem ist genau dann eindeutig lösbar, wenn $\operatorname{Rang} A = n$, also maximal ist.
+ \end{enumerate}
+\end{satz}
+
+\begin{proof}
+ i)  Es gilt
+ \begin{align*}
+  \norm{b-Ax} \to \min
+  & \iff
+  \langle b-Ax, Ax'\rangle = 0 \qquad \text{für alle $x' \in \R^n$} \\
+  & \iff
+  \langle A^T(b-Ax), x'\rangle = 0 \qquad \text{für alle $x' \in \R^n$} \\
+  & \iff
+  A^T(b-Ax) = 0 \\
+  & \iff
+  A^TAx = A^Tb.
+ \end{align*}
+
+ ii)
+ \begin{itemize}
+  \item Es gilt $\operatorname{Rang} A^T A = \operatorname{Rang} A$.
+  \item Also ist $A^TA$ genau dann invertierbar, wenn $A$ den Rang $n$ hat.
+  \qedhere
+ \end{itemize}
+
+\end{proof}
+
+\subsection{Pseudoinverse}
+
+Die Lösungen der Normalengleichung lassen sich elegant mittels sogenannter Pseudoinversen darstellen.
+
+Betrachte:
+\begin{equation*}
+ \norm{b-Ax} \longrightarrow \min
+\end{equation*}
+mit $A\in \R^{m \times n}$, $m \geq n$.
+\begin{itemize}
+    \item Falls $A$ invertierbar ist, dann gilt $x=A^{-1}b$
+    \item Falls A nicht invertierbar ist, dann löst $x$ die Normalengleichung
+    \begin{equation*}
+     A^TAx = A^Tb
+    \end{equation*}
+    \item Die Matrix $A$ habe Rang $n$. Dann ist $A^TA$ invertierbar und es folgt
+    \begin{equation*}
+     x = (A^TA)^{-1}A^Tb.
+    \end{equation*}
+\end{itemize}
+
+\begin{defi}[Pseudoinverse] Sei $\operatorname{rank} A = n$.  Dann ist die Pseudoinverse von $A$
+  definiert als $A^+ \colonequals (A^TA)^{-1}A^T$.
+\end{defi}
+
+Allgemeiner:
+
+\begin{defi}
+ $A^+$ is die Matrix aus $\R^{n \times m}$, so dass für alle $b \in \R^n$ der Vektor $x = A^+b$
+ die kleinste Lösung von $\norm{b-Ax} \to \min$ ist.
+\end{defi}
+
+
+
+
+\begin{satz}
+Die Moore-Penrose-Pseudoinverse $A^+ \in \R^{n \times m}$ einer Matrix $A \in \R^{m \times n}$ besitzt folgende Eigenschaften
+\begin{enumerate}
+  \item $AA^+A=A$
+  \item $A^+AA^+=A^+$
+  \item $A^+A$ und $AA^+$ sind symmetrisch.
+  \item $(A^+)^+=A$
+  \item $(A^T)^+=(A^+)^T$
+\end{enumerate}
+Falls $A \in \R^{m \times n}$ vollen Rang hat, dann gilt
+\begin{equation*}
+  A^+A = I_n \in \R^{n \times n}
+\end{equation*}
+und
+\begin{equation*}
+  AA^+ = I_m \in \R^{m \times m}.
+\end{equation*}
+\end{satz}
+
+
+\section{Das Gauß--Newton-Verfahren}
+
+Nun zu \emph{nichtlinearen} Ausgleichsproblemen.
+\begin{itemize}
+ \item Seien wieder $b_1, \ldots, b_m \in \R$ Messdaten zu Zeitpunkten $t_1, \ldots, t_m$.
+
+ \item Sei $\varphi ( \cdot,x_1,\ldots,x_n)$ jetzt eine nichtlineare Modellfunktion,
+   die von $n$ reellen Parametern abhängt.
+
+ \item Gesucht werden Parameter $x=(x_1,\ldots,x_n ) \in \R^n$, so dass das Residuum
+ \begin{equation*}
+  \norm{F(x)}^2 \colonequals \sum_{i=1}^m (b_i-\varphi (t_i, x_1,\ldots, x_n ) )^2
+ \end{equation*}
+ (lokal) minimal wird.
+\end{itemize}
+
+Der Bequemlichkeit halber definieren wir
+\begin{equation*}
+ g(x)\colonequals\frac{1}{2} \norm{F(x)}_2^2.
+\end{equation*}
+
+Hinreichende Kriterien für einen lokalen Minimierer sind
+\begin{equation*}
+ g^{\prime} (x^* )=0, \qquad \qquad \qquad \qquad \text{$g'' (x^*)$ positiv definit}.
+\end{equation*}
+
+\begin{idea}
+Benutze ein Newton-Verfahren für die Gleichung
+\begin{equation*}
+ 0=g^{\prime}(x)=F^{\prime}(x)^T F(x)\equalscolon  G(x), \qquad \qquad G \colon \R^n \to \R^n.
+\end{equation*}
+\end{idea}
+
+Eine Newton-Korrektur $\triangle x^k$ für diese Gleichung löst:
+\begin{equation*}
+  G'(x^k ) \triangle x^k = -G (x^k ) \qquad \forall k=0,1,2, \ldots
+\end{equation*}
+Ausrechnen
+\begin{equation*}
+  G'(x) = F^{\prime}(x)^T F^{\prime}(x) + F''(x)^T F(x).
+\end{equation*}
+$G'$ is unter den gemachten Annahmen in der Nähe von $x^*$ positiv definit, also invertierbar.
+
+(In $x^*$ selbst ist $G'(x^*) = g''(x^*)$ nach Annahme pos.\, def.  Weil $g$ nach Annahme $C^2$
+ist gilt die pos.Def.heit auch in der Nähe von $x^*$.)
+
+Wir haben ein Problem: $F''$ wird benötigt, dies ist ein Tensor dritter Ordnung.
+\begin{itemize}
+  \item[$\rightarrow$] Ausrechnen davon kann beschwerlich sein.
+  \item[$\rightarrow$] Ausrechnen davon kann teuer sein, denn $F^{\prime \prime}$ hat $n^3$ Einträge.
+  \item[$\rightarrow$] Können wir den $2$. Summanden in $G^{\prime}$ einfach weglassen?
+\end{itemize}
+\begin{itemize}
+	\item Wir erwarten/glauben, dass die Modellfunktion $\varphi$ "`gut"' ist,
+	  d.h., dass es Punkte/offene Mengen gibt, bei denen $\norm{F(x)}^2$ zumindest "`klein"' wird.
+	\item Diese Probleme nennt man dann "`fast kompatible Probleme"'.
+\end{itemize}
+Wir lassen also den zweiten Summanden in $G^{\prime}$ weg und hoffen auf das Beste.
+
+\begin{definition}
+ Das Newton-Verfahren für die Gleichung $G(x) = $ ohne den zweiten Term in $G'$
+ nennt man \emph{Gauß-Newton}-Verfahren.
+\end{definition}
+
+Es ist kein echtes Newton-Verfahren.
+
+Deswegen bekommt man nicht alle schönen Eigenschaften eines Newton-Verfahrens.
+
+\bigskip
+
+Iterationsvorschrift mit modifizierten $G^{\prime}$ lautet:
+\begin{equation}
+ \label{eq:gauss_newton_normalengleichung}
+  F' (x^k)^T F' (x^k) \triangle x^k = - F^{\prime} (x^k )^T F (x^k )
+\end{equation}
+
+Das ist gerade die Normalengleichung des \emph{linearen} Ausgleichsproblems
+\begin{equation*}
+ \norm{F (x^k ) + F' (x^k) \triangle x^k} \longrightarrow \min.
+\end{equation*}
+Wir können ein nichtlineares Ausgleichsproblem lösen, indem wir eine Folge von linearen Problemen lösen.
+
+\bigskip
+
+Mit der Definition der Pseudoinversen erhalten wir
+\begin{equation*}
+ \norm{F (x^k)+F' (x^k) \triangle x^k} \to \min \implies \triangle x^k=-F^{\prime} (x^k )^+F (x^k).
+\end{equation*}
+
+\begin{satz}[\citet{deuflhard_hohmann:1993}, Satz~4.15]
+Sei $D \subset \R^m$ offen und konvex, $F \colon D \to \R^m$, $m\geq n$, stetig differenzierbar und $F^{\prime}(x)$ habe vollen Rang $\forall x \in D$. Es existiere eine Lösung $x^*$ des dazugehörigen Ausgleichsproblems. $F^{\prime}$ sei
+affin-invariant Lipschitz-stetig, d.h. es gibt ein $\omega>0$ so dass für alle $s \in [0,1]$
+\begin{equation*}
+ \big\Vert F'(x)^+(F'(x+s(y-x))-F'(x)) \big\Vert \leq s \omega \norm{y-x}^2
+ \qquad \forall x,y \in D.
+\end{equation*}
+Es gebe eine Konstante $\kappa_* \in [0,1)$ so, dass
+\begin{equation*}
+    \forall x \in D \colon \big\Vert F'(x)^+F(x^*) \big\Vert \leq \kappa_* \norm{x-x^*}.
+\end{equation*}
+Diese Bedingung fordert, dass das Problem "`fast kompatibel "', also $\left\Vert F (x^* ) \right\Vert$ klein ist. Sei weiterhin der Startwert $x^0 \in D$ so, dass
+\begin{equation*}
+ \norm{x^0-x^*} < \frac{2}{\omega}(1-\kappa_*).
+\end{equation*}
+\begin{enumerate}
+  \item Dann konvergiert das Gauß-Newton-Verfahren gegen $x^*$
+  \item Die Konvergenzgeschwindigkeit ist
+    \begin{equation}
+      \norm{x^{k+1}-x^*} \le \frac{\omega}{2} \norm{x^k-x^*}^2+\kappa_* \norm{x^k-x^*}.
+    \end{equation}
+\end{enumerate}
+\end{satz}
+
+\begin{proof} Der Beweis ist dem Beweis der Konvergenz Newton-Verfahren sehr ähnlich.
+
+\medskip
+
+Für alle $x,y \in D$ gilt:
+\begin{align*}
+ \left\Vert F'(x)^+ \left[F(y)-F(x)-F'(y-x) \right] \right\Vert
+ & \leq
+ \left\Vert F'(x)^+ \int_0^1 \left[F'(x+s(y-x))-F'(x) \right](y-x) \,ds \right\Vert \\
+ %
+ & \leq
+ \int_0^1 \left\Vert F'(x)^+ \left[F'(x+s(y-x))-F'(x) \right](y-x) \right\Vert ds \\
+ %
+ & \leq
+ \int_0^1 s \omega \left\Vert y-x \right\Vert_2^2 ds \\
+ %
+ & =
+ \frac{\omega}{2} \norm{y-x}_2^2.
+\end{align*}
+Beachte: $F^{\prime}(x)^+F^{\prime}(x)=I_n\ \forall x \in D$, da $F'$ vollen Range habe.
+
+Damit erhält man
+\begin{align*}
+  x^{k+1}-x^* & =(x^k-x^* )-F'(x^k )^+F (x^k)  \\
+  & = \underbrace{F'(x^k)^+F'(x^k)}_{=I_n} (x^k-x^* )-F'(x^k)^+ F(x^k )+\underbrace{F'(x^k)^+ F(x^*)-F'(x^k )^+F (x^* )}_{=0} \\
+  & = \underbrace{F'(x^k)^+\left[ F (x^* )-F (x^k )-F'(x^k) (x^*-x^k) \right]}_{\leq \frac{\omega}{2}\norm{x^k-x^*}^2}
+     -\underbrace{F'(x^k)^+F(x^*)}_{\leq \kappa_* \norm{x^k-x^*}} \\
+  & \implies \lVert x^{k+1}-x^* \rVert \leq \left( \frac{\omega}{2} \norm{x^k-x^*} + \kappa_* \right) \norm{x^k-x^*}.
+\end{align*}
+Das ist gerade Behauptung~2) zur Konvergenzgeschwindigkeit.
+
+Man erhält damit die Konvergenz des Verfahrens, falls
+\begin{align*}
+  \frac{\omega}{2} \norm{x^k-x^*} +\kappa_*<c<1 \qquad \forall k
+\end{align*}
+Nach Voraussetzung:
+\begin{equation*}
+ \norm{x^0-x^*} < \frac{2}{\omega}(1-\kappa_*)
+ \iff
+ \underbrace{\frac{\omega}{2} \norm{x^0-x^*} +\kappa_*}_{\colonequals c} <1
+\end{equation*}
+Nach Induktion ist damit
+\begin{align*}
+ & \forall k \in \N \colon \norm{x^{k+1}-x^*}
+ < \left( \frac{\omega}{2} \norm{x^k-x^*} + \kappa_* \right) \norm{x^k-x^*}
+ < \norm{x^k-x^*} \\
+ \implies & \forall k \in \N \colon \frac{\omega}{2}\norm{x^k-x^*} + \kappa_*< \frac{\omega}{2} \norm{x^0 - x^*} + \kappa_* = c.
+\end{align*}
+Das Verfahren konvergiert.
+\end{proof}
+Das Verfahren konvergiert nur dann lokal quadratisch, falls $\kappa_*=0$, falls also das Problem kompatibel ist.
+
+\medskip
+
+Das ist der Preis dafür, dass wir $F^{\prime \prime}$ weggelassen haben.

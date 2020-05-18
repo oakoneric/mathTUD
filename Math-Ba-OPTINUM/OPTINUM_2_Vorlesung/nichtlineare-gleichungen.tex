@@ -1,0 +1,1065 @@
+\chapter{Numerische Lösung nichtlinearer Gleichungen}
+
+\section{Fixpunktiterationen}
+Sei $f \colon \R \to \R$ eine Funktion. Wir interessieren uns für Lösungen $x$ der Gleichung
+\begin{equation*}
+ f(x)=0.
+\end{equation*}
+
+\medskip
+
+\emph{Idee der Fixpunktiteration:}
+\begin{itemize}
+ \item Forme diese Gleichung äquivalent in eine \emph{Fixpunktgleichung}
+\begin{equation*}
+ g(x)=x
+\end{equation*}
+um.
+ \item Konstruiere mit Hilfe der Iterationsvorschrift
+ \begin{equation*}
+  x_{k+1}=g(x_k) \qquad k=0,1,2,\ldots
+ \end{equation*}
+für einen gegebenen Startwert $x_0$ eine Folge $x_0,x_1,\ldots$.
+\end{itemize}
+Wunsch: Die Folge $( x_k )$ konvergiert gegen einen \emph{Fixpunkt},
+  d.h.\ gegen einen Punkt $x^*$ mit $g(x^*)=x^*$.
+  Dieser ist dann auch Lösung der nichtlinearen Gleichung $f(x^*)=0$.
+
+\bigskip
+
+Die Existenz von Fixpunkten folgt z.B. aus dem Fixpunktsatz von Banach.
+\begin{satz}
+Sei $I=\left[a,b \right] \subset \R$ ein Intervall und $g \colon I \to I$ eine kontrahierende Abbildung,
+d.h.\ $g$ ist Lipschitz-stetig mit Lipschitz-Konstante $L<1$. Dann folgt:
+\begin{enumerate}[a)]
+ \item Es existiert genau ein Fixpunkt $x^*$ von $g$.
+ \item Für jeden Startwert $x_0 \in I$ konvergiert die Fixpunktiteration
+   $x_{k+1} = g(x_k)$ gegen $x^*$ mit
+  \begin{equation*}
+   \abs{ x_{k+1}-x_k } \leq L \abs{ x_k - x_{k-1}}
+   \qquad \text{und} \qquad
+   \abs{ x^* -x_k } \leq \frac{L^k}{1-L} \abs{ x_1-x_0 }.
+  \end{equation*}
+\end{enumerate}
+\end{satz}
+%
+\begin{proof}
+\begin{itemize}
+ \item Für alle $x_0 \in I$ gilt
+  \begin{equation*}
+   \abs{x_{k+1} - x_k} = \abs{g(x_k) -g(x_{k-1})} \leq L \abs{x_k-x_{k-1}}.
+  \end{equation*}
+
+ \item Induktiv erhält man
+  \begin{equation*}
+   \abs{x_{k+1}-x_k} \leq L^k \abs{x_1-x_0}.
+  \end{equation*}
+
+ \item Wir wollen zeigen, dass $(x_k )$ eine Cauchy-Folge ist und betrachten
+  \begin{align*}
+   \abs{x_{k+m} -x_k}
+   & \leq
+   \abs{x_{k+m}-x_{k+m-1}} + \ldots + \abs{x_{k+1}-x_k} \\
+   & \leq
+   \underbrace{\left( L^{k+m-1}+L^{k+m-2}+\ldots +L^k \right)}_{=L^k (1+L+\ldots +L^{m-1})} \abs{x_1-x_0} \\
+   & \leq
+   \frac{L^k}{1-L} \abs{x_1 -x_0}.
+  \end{align*}
+  Hierbei wurde verwendet, dass
+  \begin{equation*}
+   \forall L \in (0,1) \quad \colon \qquad \sum_{k=0}^{\infty} L^k=\frac{1}{1-L}.
+  \end{equation*}
+\end{itemize}
+Damit ist gezeigt, dass $(x_k )$ eine Cauchy-Folge ist.
+
+\begin{itemize}
+ \item Diese konvergiert in $\R$ gegen den Grenzwert
+  \begin{equation*}
+   x^* \colonequals \lim_{k \to \infty} x_k.
+  \end{equation*}
+
+  \item Der Punkt $x^*$ ist aber auch Fixpunkt von $g$, da
+   \begin{align*}
+    \abs{x^* -g(x^*)}
+    & =
+    \abs{x^* -x_{k+1}+x_{k+1}-g(x^*)} \\
+    & =
+    \abs{x^* -x_{k+1}+g(x_k) - g(x^*)} \\
+    & \leq
+    \abs{x^* - x_{k+1}} + \abs{g(x_k) - g(x^*)} \\
+    & \leq
+    \abs{x^* -x_{k+1}} + L \abs{x_k-x^*} \\
+    & \to
+    0 \qquad k \to \infty.
+\end{align*}
+\end{itemize}
+Damit haben wir \ref{}(b) und die Existenz des Fixpunktes gezeigt.
+
+\medskip
+
+Für die Eindeutigkeit seien $x^*,y^*$ zwei Fixpunkte. Dann gilt
+\begin{equation*}
+ 0 \leq \abs{x^* -y^*} = \abs{g(x^*) - g(y^*)} \leq L \abs{x^* -y^*} < \abs{x^*-y^*}.
+\end{equation*}
+Da $L<1$ ist dies nur für $\abs[{x^* - y^*}=0$ möglich.
+
+Daher ist der Fixpunkt von $g$ eindeutig bestimmt.
+\end{proof}
+
+\bigskip
+
+\begin{bsp}
+Betrachte die nichtlineare Gleichung
+\begin{equation*}
+f(x)=x^2-\operatorname{ln}(x)-2=0
+\qquad \text{bzw.} \qquad
+x^2-2=\operatorname{ln}(x).
+\end{equation*}
+Die Gleichung hat in $\R$ zwei Lösungen $x_1^*$ und $x_2^*$.
+
+Diese sind anscheinend in den Intervallen $I_1 = [0,0{,}2]$ bzw. $I_2 = [1,2]$ enthalten.
+
+
+\todo[inline]{BILD!}
+
+
+Wie sieht eine geeignete Fixpunktiteration aus?
+\begin{enumerate}[a)]
+ \item
+  \begin{equation*}
+   x=x^2+x-\operatorname{ln}(x)-2\equalscolon g_1(x).
+  \end{equation*}
+   Hinreichend für Lipschitz-Stetigkeit:
+   \begin{equation*}
+    \max_{x \in \R} \vert g_1'(x) \vert=L<1.
+   \end{equation*}
+  Differenziere $g_1$ und erhalte
+  \begin{equation*}
+   g_1'(x)=2x+1-\frac{1}{x} \implies L \geq 1
+  \end{equation*}
+  für alle $x \in I_1$ und $x \in I_2$.
+
+  Es gibt also keine Garantie für die Konvergenz gegen einen Fixpunkt.
+
+ \item
+  \begin{equation*}
+   \operatorname{ln}(x)=x^2-2 \iff x=e^{x^2-2}\equalscolon g_2(x)
+  \end{equation*}
+  Ableitung: $g_2'(x)=2xe^{x^2-2}$.
+
+  Es ist $\abs{g_2'(x)} <1$ in einer Umgebung von $0 \implies$ Konvergenz gegen $x_1^*$.
+
+ \item
+  \begin{equation*}
+  x^2=\operatorname{ln}(x)+2 \iff x=\sqrt{\operatorname{ln}(x)+2}\equalscolon g_3(x)
+  \end{equation*}
+  Ableitung:
+  \begin{equation*}
+   g_3'(x)=\frac{1}{2x \sqrt{\operatorname{ln}(x)+2}}
+  \end{equation*}
+  $\abs{g_3'(x)} <1$ in $[1,2] \implies$ Konvergenz gegen $x_2^*$.
+\end{enumerate}
+\end{bsp}
+
+\subsection{Konvergenzgeschwindigkeit}
+
+\begin{defi}
+Eine gegen $x^*$ konvergente Folge $(x_k)_{k \in \mathbb{N}}$ heißt \emph{linear konvergent},
+falls es eine Konstante $0 \le C < 1$ gibt, so dass
+\begin{equation*}
+ \norm{ x_{k+1}-x^* } \leq C \norm{ x_k-x^*}.
+\end{equation*}
+
+Die Folge heißt \emph{quadratisch konvergent}, falls es eine Konstante $C \geq 0$ gibt,
+so dass
+\begin{equation*}
+ \norm{ x_{k+1}-x^* } \leq C \norm{ x_k-x^* }^2.
+\end{equation*}
+\end{defi}
+
+Die Fixpunktiteration ist im Allgemeinen nur linear konvergent. Erstrebenswert wäre eine Iteration, die quadratisch konvergiert. \newline Kann in speziellen Fällen die Fixpunktiteration quadratisch konvergieren?
+\begin{satz}
+\label{thm:nichtlineare_gleichungen:fixpunkt_quadratische_konvergenz}
+Die Funktion $g \colon \R \to \R$ besitze in $x^* \in I$ einen Fixpunkt.
+Auf der Menge $U = [x^*-r,x^*+r] \subset I$ sei $g \in C^2 (U)$
+mit $g' (x^*)=0$. Dann konvergiert die Fixpunktiteration für jeden Startwert $x_0 \in U$
+mit $\abs{x_0-x^*} \leq \varrho=\frac{1}{\max_{x \in U} \abs{g^{\prime \prime}(x)}}$ quadratisch.
+\end{satz}
+\begin{proof}
+Wir zeigen mittels vollständiger Induktion
+\begin{equation}
+\label{eq:estim:est1}
+ \abs{x_k-x^*} \leq \frac{1}{2^k} \abs{x_0-x^*}.
+\end{equation}
+
+Induktionsanfang:\ $k=0$ klar
+
+\medskip
+
+Induktionsschritt:
+\begin{align}
+\nonumber
+\abs{x_{k+1}-x^*}
+& =
+\abs{g(x_k)-g(x^*)} \\
+%
+\nonumber
+& \leq
+\vert g(x^*)+\underbrace{g'(x^*)}_{=0} (x_k-x^*)+\frac{g''( \xi)}{2} (x_k-x^*)^2-g (x^*) \vert \\
+%
+\nonumber
+& \qquad \text{(Taylorentwicklung mit Lagrange-Restglied)} \\
+%
+\nonumber
+& = \Big\vert \frac{g''(\xi)}{2} (x_k-x^*)^2 \Big\vert \\
+%
+\label{eq:estim:est2}
+& \leq
+\frac{M}{2} \abs{x_k-x^*}^2 \qquad \text{mit $M\colonequals\max_{x \in U} \abs{g'' (x)} = \frac{1}{\varrho}$}.
+\end{align}
+Nun gilt: $\abs{x_k-x^*} \leq \abs{x_0-x^*} \leq \varrho$, also
+\begin{equation*}
+ \abs{x_{k+1}-x^*}
+ \leq
+ \frac{M}{2} \varrho \frac{1}{2^k} \abs{x_0-x^*}
+ =
+ \frac{1}{2^{k+1}} \abs{x_0-x^*}.
+\end{equation*}
+Also gilt \eqref{eq:estim:est1} und es folgt Konvergenz. Aus \eqref{eq:estim:est2} folgt Ordnung $2$.
+\end{proof}
+
+\subsection{Das Newton-Verfahren als Fixpunktiteration}
+
+Wir benutzen den obigen Satz um das Newton-Verfahren zu konstruieren.  Schreibe die folgende
+Fixpunktform:
+\begin{equation*}
+ f(x)=0 \iff x=x-h(x)f(x)\equalscolon g(x)
+\end{equation*}
+mit noch zu bestimmender Funktion $h$.
+
+Die Ableitung von $g$ ist
+\begin{equation*}
+ g'(x) = 1-h'(x)f(x) - h(x)f'(x).
+\end{equation*}
+
+\medskip
+
+Um Satz~\ref{thm:nichtlineare_gleichungen:fixpunkt_quadratische_konvergenz} anwenden zu können, muss gelten:
+\begin{equation*}
+ g'(x^*) = 0 = 1 - h(x^*)f'(x^*).
+\end{equation*}
+\emph{Idee:} Wir wählen
+\begin{equation*}
+ h(x)=\frac{1}{f'(x)}.
+\end{equation*}
+Wir erhalten die Fixpunktiteration
+\begin{equation*}
+ x_{k+1} = x_k-\frac{f(x_k)}{f'(x_k)}
+\end{equation*}
+Dies ist das Newton-Verfahren.
+
+
+\subsection{Alternative Interpretation des Newton-Verfahrens}
+
+Sei $f \colon \R \to \R$ stetig differenzierbar. \emph{Gesucht:} $x^* \in \R \colon f(x^*)=0$.
+
+\todo[inline]{Bild einer Funktion mit Tangente und nächster Iterierten}
+
+\begin{itemize}
+ \item Wähle einen Startpunkt $x_0$.
+
+ \item Für $k=0,1,2,\ldots$ approximiere $f$ durch eine Tangente $p_k$ in $x_k$.
+
+ \item Anstelle der Nullstelle $x^*$ von $f$ berechne die Nullstelle der Tangente $p_k$.
+   Wähle diese als $x_{k+1}$.
+\end{itemize}
+
+In Formeln:
+\begin{itemize}
+ \item Die Tangente $p_k$ von $f$ in $x_k$ hat die Darstellung $p_k(x)=f(x_k)+f'(x_k)(x-x_k)$.
+
+ \item Die Nullstelle davon ist
+  \begin{equation*}
+   x_{k+1} = x_k - \frac{f(x^k)}{f'(x^k)}
+  \end{equation*}
+ (sofern $f'(x_k) \neq 0$).
+\end{itemize}
+
+\bigskip
+
+\emph{Folgerung:} Sei $f$ hinreichend glatt und besitze eine Nullstelle $x^*$ mit $f'(x^*) \neq 0$.
+Für hinreichend gute Startwerte $x_0$ konvergiert das Newton-Verfahren quadratisch gegen $x^*$.
+
+\bigskip
+
+\begin{bsp}
+Sei $f(x)=x^2-3$. Die Nullstellen sind $x^*=\pm \sqrt{3}$.
+
+\medskip
+
+$f'(x)=2x \implies$ Das Newton-Verfahren ist in der Nähe der Lösungen durchführbar.
+
+\medskip
+
+Mit $x_0=1$ ergeben sich die folgenden 5 ersten Iterationen:
+\begin{center}
+\begin{tabular}{l | r}
+ 0 & 1{,}00000000 \\
+ 1 & 2{,}00000000 \\
+ 2 & 1{,}\underline{7}5000000 \\
+ 3 & 1{,}\underline{73}214286 \\
+ 4 & 1{,}\underline{7320}5081 \\
+ 5 & 1{,}\underline{73205081}
+\end{tabular}
+\end{center}
+\end{bsp}
+
+\bigskip
+
+\begin{bsp}[Lokale Konvergenz]
+Sei
+\begin{equation*}
+ f(x) =\frac{x}{\sqrt{1+c^3x^2}}
+ \qquad
+ \text{mit}
+ \qquad
+ f(x)=0 \; \Leftrightarrow \; x=0.
+\end{equation*}
+Wie gut muss der Startwert sein, damit das Newton-Verfahren konvergiert?
+\begin{align*}
+ f'(x) & = \frac{1}{(1+c^3x^2)^{\frac{3}{2}}} \\
+ %
+ \frac{f(x)}{f'(x)} & = x (1+c^3x^2)
+ \qquad \Longrightarrow \qquad g(x)=-c^3x^3.
+\end{align*}
+
+\medskip
+
+Das Newton-Verfahren dazu ist
+\begin{align*}
+ x_{k+1} = -c^3 (x_k)^3
+ \qquad \text{bzw.} \qquad
+ x_k = (-1)^kc^{\frac{-3}{2}} (c^{\frac{3}{2}}x_0)^{3^k}.
+\end{align*}
+(Herleitung: Vollständige Induktion!)
+
+\medskip
+
+Konvergenz ist garantiert, falls $c^{\frac{3}{2}}x_0<1$ gilt.
+\end{bsp}
+
+\todo[inline]{Bild für $c=2$ und das Verhalten der Iterierten}
+
+
+\subsection{Mehrfache Nullstellen}
+
+Betrachte wieder eine Funktion $f \colon \R \to \R$ und $f(x^*)=0$.
+
+\medskip
+
+Sei $m \in \N_{\geq 2}$, $x^*$ eine $m$-fache Nullstelle von $f$. Dann gilt
+\begin{equation*}
+ f^{(\nu)}(x^*)=0 \quad \forall \nu =0,\ldots,m-1
+ \qquad \text{and} \qquad
+ f^{(m)}(x^*) \neq 0.
+\end{equation*}
+Dann besitzen $f$ und $f'$ eine Darstellung der Form
+\begin{align*}
+ f(x) & = (x-x^*)^mh(x) \\
+ f'(x) & =m(x-x^*)^{m-1}h(x)+(x-x^*)^mh'(x)
+\end{align*}
+mit einer differenzierbaren Funktion $h$, welche $h(x^*) \neq 0$ erfüllt.
+
+Es folgt nun
+\begin{align*}
+ g(x) & = x-\frac{f(x)}{f'(x)}=x-\frac{(x-x^*)^m h(x)}{m(x-x^*)^{m-1} h(x)+(x-x^*)^m h'(x)} \\
+ & =x-\frac{(x-x^*)h(x)}{mh(x)+(x-x^*)h'(x)} \\
+ & \implies g'(x^*)=1-\frac{1}{m}.
+\end{align*}
+
+\emph{Folgerung:} Für mehrfache Nullstellen ist das Verfahren zwar noch konvergent,
+aber nicht mehr quadratisch konvergent, denn nach Satz~\ref{thm:nichtlineare_gleichungen:fixpunkt_quadratische_konvergenz}
+erhält man quadratische Konvergenz nur wenn $g'(x^*)=0$.
+
+
+\section{Das Newton-Verfahren für Systeme von Gleichungen}
+Die Verallgemeinerung des Newton-Verfahrens auf Systeme von Gleichungen ist relativ einfach.
+
+Sei $F \colon \R^n  \to \R^n$ stetig differenzierbar.
+
+\medskip
+
+Gesucht: ein $x^* \in \R^n$ mit $F(x^*)=0$.
+
+\medskip
+
+Formel für $x_{k+1}$ (Nullstelle der Tangente in $x_k$)
+\begin{equation*}
+ x_{k+1} \colonequals x_k - F'(x_k)^{-1} F(x_k).
+\end{equation*}
+
+Da das Invertieren der Matrix $F(x_k)$ sehr teuer ist, schreibt man den Iterationsschritt
+stattdessen als lineares Gleichungssystem für die Newton-Korrektur $\triangle x_k \in \R^n$:
+\begin{align*}
+ F' (x^k) \triangle x^k & = -F (x^k) \\
+  x^{k+1} & = x^k+ \triangle x^k
+\end{align*}
+
+\bigskip
+
+Wir haben gesehen:
+
+\begin{itemize}
+ \item konvergiert manchmal, manchmal auch nicht
+ \item Wenn es konvergiert, dann konvergiert es \emph{quadratisch} (d.h. schnell!),
+\end{itemize}
+
+\bigskip
+
+Wir zeigen jetzt einen alternativen Beweis der quadratischen Konvergenz des Newton-Verfahrens.
+
+\medskip
+
+Wann konvergiert das Verfahren gut?
+\begin{itemize}
+\item Falls $F$ affin-linear ist: Dann findet es die Lösung in einem Schritt.
+\item Vermutlich: Verfahren konvergiert, falls $F$ "`fast affin-linear"' ist.
+\end{itemize}
+Was bedeutet nun "`fast affin-linear"'?
+\begin{itemize}
+ \item $F''$ klein, bzw.
+ \item $F' : \R^n \to \R^{n \times n}$ Lipschitz-stetig, d.h., es existiert ein $L>0$ mit
+  \begin{equation*}
+    \norm{F'(x)-F'(y)} \leq L \norm{x-y}
+    \qquad
+    \forall x,y.
+  \end{equation*}
+\end{itemize}
+
+\begin{satz}[Fischer-Skript 5.2]
+\label{thm:nichtlineare_gleichungen:fischer_newton_konvergenz}
+ Sei $D \subseteq \R^n$ offen und konvex, und $F \colon D \to \R^n$ stetig differenzierbar
+ mit invertierbarer Jacobi-Matrix $F'(x)$ für alle $x \in D$.
+ Sei $F'$ Lipschitz-stetig in $D$ mit Lipschitz-Konstante $L$.
+ Sei $x^* \in D$ Nullstelle von $F$.
+ \begin{enumerate}[a)]
+  \item Dann existiert eine offene Kugel $B_{\varrho}(x^* )\colonequals\lbrace x \in \R^n \colon \Vert x-x^* \Vert <\varrho \rbrace \subset D$, sodass das Newton-Verfahren für jede Startiterierte $x^0 \in B_{\varrho}(x^*)$ wohldefiniert ist.
+
+ \item Falls $x_0 \in B_\varrho(x^*)$ und $\varrho$ hinreichend klein ist konvergiert die Folge $(x^k)$ quadratisch gegen $x^*$.
+ \end{enumerate}
+\end{satz}
+
+Für den Beweis brauchen wir folgende Variante der Taylor-Formel:
+\begin{lemma}
+\label{lem:nichtlineare_gleichungen:taylor_spezial}
+Sei $F \in C^1$. Dann gilt $\forall x,y \colon$
+\begin{equation*}
+ F(y) = F(x)+F'(x)(y-x)+\int_0^1 (F'(x+s(y-x))-F'(x))(y-x) \, ds
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Hauptsatz der Integralrechnung, sowie die Substitutionsregel liefern:
+\begin{equation*}
+ f(y)=f(x)+\int_x^y f'(t) \,dt = f(x)+\int_0^1 f'(x+s(y-x))(y-x) \,ds.
+\end{equation*}
+Für $F \colon \R^n \to \R^n$ gilt
+\begin{equation*}
+ F(y)=F(x)+\int_0^1 F'(x+s(y-x))(y-x) \,ds.
+\end{equation*}
+Addiere zur rechten Seite dieser Gleichung $F' (x)(y-x)-F'(x)(y-x)=0$.
+\todo[inline]{Der Übergang zum vektorwertigen $F$ ist nicht sehr hübsch.
+  Sauberer wäre es, $f$ als Restriktion von $F$ auf dem Streckensegment von $x$ nach $y$
+  einzuführen.}
+\end{proof}
+
+\bigskip
+
+\begin{proof}[Beweis von Satz~\ref{thm:nichtlineare_gleichungen:fischer_newton_konvergenz}]\mbox{}\\
+\begin{itemize}
+ \item $F'$ ist stetig in $D$, d.h. $\exists \varrho_1>0$ und $M \ge 0$ mit $B_{\varrho_1}(x^*) \subset D$
+  sowie
+\begin{equation*}
+ \Vert F'(x)^{-1} \Vert \leq M
+ \qquad
+ \forall x \in B_{\varrho_1}(x^*).
+\end{equation*}
+
+ \item Also gilt für beliebiges $x^k \in B_{\varrho_1} (x^*)$
+  \begin{align*}
+   \norm{x^{k+1}-x^*}
+   & =
+   \big\Vert x^k-F'(x^k)^{-1} F(x^k) - x^* \big\Vert \\
+   %
+   & =
+   \left\Vert -F' (x^k)^{-1} \left[ F(x^k)+F'(x^k)(x^* -x_k) \right] \right\Vert \\
+   %
+   & \leq
+   M \left\Vert F(x^k) + F'(x^k) (x^*-x^k) \right\Vert \\
+   %
+   & = M \left\Vert F(x^*)-F(x^k)-F'(x^k) (x^*-x^k) \right\Vert \\
+   %
+   & \leq
+   \frac{1}{2}ML \norm{x^*-x_k}^2.
+\end{align*}
+
+ \item Taylor-Formel aus Lemma~\ref{lem:nichtlineare_gleichungen:taylor_spezial}: $\forall x,y \in D$ gilt
+  \begin{equation*}
+   F(x)=F(y)+F'(y)(x-y)+\int_0^1 \Big[F'(y+s(x-y))-F'(y)\Big](x-y)\,ds.
+  \end{equation*}
+
+ \item Daraus folgt für alle $x,y \in D$:
+  \begin{align*}
+   M \left\Vert F(x^*)-F(x^k)-F'(x^k)(x^*-x^k) \right\Vert
+   & =
+   M \left\Vert \int_0^1 \Big[ F'(x^k+s(x^*-x^k))-F'(x^k) \Big](x^*-x^k)\,ds \right\Vert \\
+   %
+   & \leq M \int_0^1 \Vert \ldots \Vert \, ds \\
+   %
+   & \leq M \int_0^1 \Vert F'(x^k+s(x^*-x^k))-F'(x^k) \Vert \,ds \cdot \Vert x^*-x^k \Vert \\
+   %
+   & \leq M \int_0^1 L \Vert (x^k+s(x^*-x^k))-x^k \Vert \,ds \cdot \Vert x^*-x^k \Vert \\
+   %
+   & = M L \int_0^1 s \,ds \cdot \Vert x^*-x^k \Vert^2 \\
+   %
+   & = \frac{1}{2} M L \Vert x^*-x_k \Vert^2.
+  \end{align*}
+
+
+  \item Sei $\varrho \in (0,\varrho_1] \colon ML \varrho \leq 1$. Dann gilt für alle $x^k \in B_{\varrho}(x^*)$
+   \begin{equation*}
+    \Vert x^{k+1}-x^* \Vert
+    \leq
+    \frac{1}{2}ML \norm{x^k-x^*}^2
+    \leq
+    \frac{1}{2} \underbrace{ML \underbrace{\left\Vert x^k-x^* \right\Vert}_{\varrho}}_{\leq 1} \cdot \left\Vert x^k-x^* \right\Vert \leq \frac{1}{2} \norm{x^k-x^*}.
+   \end{equation*}
+\end{itemize}
+Somit konvergiert die Folge $(x_k)$ gegen $x^*$, und zwar quadratisch.
+\end{proof}
+
+
+\section{Affin-Invarianz}
+
+\begin{itemize}
+ \item Es gibt viele Varianten des Satzes, dass das Newton-Verfahren lokal quadratisch konvergiert.
+
+ \item Peter Deuflhard hat folgendes Kriterium vorgeschlagen, das solche Sätze erfüllen sollten.
+\end{itemize}
+
+Sei $A \in \R^{n \times n}$ invertierbar. Dann ist
+\begin{equation*}
+ F(x)=0
+\end{equation*}
+äquivalent zu
+\begin{equation*}
+ G(x)\colonequals AF(x)=0.
+\end{equation*}
+(Dann heißt das Problem $F(x)=0$ affin-invariant.)
+
+\bigskip
+
+Auch das Newton-Verfahren ist affin-invariant, denn
+\begin{align*}
+- \triangle x^k
+ & =
+ F' (x^k)^{-1} F(x^k)
+ =
+ F'(x^k)^{-1}A^{-1}AF(x^k) \\
+ %
+ & =
+ (AF'(x^k))^{-1} \cdot AF(x^k)
+ =
+ G'(x^k)^{-1} \cdot G(x^k).
+\end{align*}
+$\implies$ Die vom Newton-Verfahren erzeugte Folge $(x^k)_{k \in \N}$ ist unabhängig von der Matrix~$A$.
+
+\bigskip
+
+Wir verlangen, dass auch die Konvergenzresultate unabhängig von $A$ sein sollten.
+\begin{satz}[\citet{deuflhard_hohmann:1993}, Satz~4.10]
+Sei $D \subset \R^n$ offen und konvex.
+\begin{itemize}
+ \item Sei $F \in C^1(D, \R^n)$, und so dass $F'(x)^{-1}$ für alle $x \in D$ existiert.
+
+ \item Für ein $\omega>0$ gelte die Lipschitz-Bedingung
+ \begin{equation*}
+  \Vert F'(x)^{-1} (F'(x+s(y-x)) -F'(x) ) (y-x) \Vert \leq s \omega \Vert y-x \Vert^2
+\end{equation*}
+für alle $s \in [0,1]$ und $x,y \in D$.
+
+ \item Es existiere eine Lösung $x^* \in D$ (also $F(x^*)=0$) und ein Startwert $x^0 \in D$ derart, dass
+  \begin{equation*}
+   \varrho \colonequals \Vert x^*-x^0 \Vert < \frac{2}{\omega} \qquad \mathrm{und} \qquad B_{\varrho} ( x^* ) \subseteq D
+  \end{equation*}
+\end{itemize}
+Dann gilt:
+\begin{enumerate}[i)]
+ \item Die durch die Newton-Iteration definierte Folge $(x^k)$ bleibt in der
+    offenen Kugel $B_{\varrho} (x^*)$, und konvergiert gegen $x^*$.
+
+ \item Konvergenz ist quadratisch; genauer
+  \begin{equation*}
+   \forall k \in \N \colon \quad \norm{x^{k+1}-x^*} \leq \frac{\omega}{2} \norm{x^k-x^*}^2
+  \end{equation*}
+\end{enumerate}
+\end{satz}
+
+
+\begin{proof}[Beweis des Satzes]\mbox{}
+\paragraph{Beweis von (ii)}
+\begin{align*}
+ x^{k+1}-x^*
+ & =
+ x^k- F'(x^k)^{-1} F(x^k) - x^* \\
+ %
+ & =
+ x^k-x^*-F'(x^k)^{-1} \Big(F(x^k)-\underbrace{F(x^*)}_{=0} \Big) \\
+ %
+ & =
+ F'(x^k)^{-1} F'(x^k) (x^k-x^*) - F'(x^k)^{-1} \big(F(x^k)-F(x^*) \big) \\
+ %
+ & =
+ F'(x^k)^{-1} \Big(F(x^*) - F(x^k) - F'(x^k) (x^*-x^k) \Big)
+\end{align*}
+
+Aus Lemma~\ref{lem:nichtlineare_gleichungen:taylor_spezial} wissen wir
+\begin{equation*}
+ F(y)-F(x)-F'(x)(y-x) = \int_0^1 (F'(x+s(y-x))-F'(x) )(y-x)\,ds.
+\end{equation*}
+Damit folgt
+\begin{align*}
+ \big \Vert F'(x)^{-1} (F(y)-F(x)- F'(x)(y-x) ) \big \Vert
+ & =
+ \bigg \Vert \int_0^1 F'(x)^{-1} F'(x+s (y-x))-F'(x) (y-x) \,ds \bigg\Vert \\
+ & \leq \int_0^1 s \omega \norm{y-x}^2 \,ds \qquad \text{nach\ Voraussetzung} \\
+ & = \frac{\omega}{2} \norm{y-x}^2.
+\end{align*}
+
+Das wenden wir an und erhalten
+\begin{equation*}
+ \norm{x^{k+1} -x^*} \leq \frac{\omega}{2} \norm{x^k-x^*}^2.
+\end{equation*}
+Das heißt, falls $(x^k)$ konvergiert, so konvergiert es quadratisch.
+
+\bigskip
+
+\paragraph{Beweis von (i)}
+Falls $\norm{x^k - x^*} \le \varrho$, so folgt
+\begin{equation*}
+ \norm{x^{k+1}-x^*}
+ \leq
+ \underbrace{\frac{\omega}{2} \norm{x^k-x^*}}_{\leq \varrho \frac{\omega}{2} <1} \cdot \norm{x^k-x^*}.
+\end{equation*}
+Da $\norm{x^0-x^*} =\varrho$ gilt $\norm{x^k-x^*} <\varrho$ für alle $k>0$,
+und $(x^k)$ konvergiert gegen $x^*$.
+\end{proof}
+
+
+\section{Konvergenzkriterien}
+
+\begin{itemize}
+ \item Die Voraussetzungen des vorherigen Satzes können nicht algorithmisch geprüft werden.
+
+ \item Trotzdem möchte man gern während der Durchführung der Newton-Methode wissen, ob das Verfahren konvergiert.
+ \end{itemize}
+
+\subsection{Der Monotonietest}
+Betrachte das Residuum $F (x^k )$.
+
+\medskip
+
+$\implies$ Das Lösen von $F(x)=0$ ist äquivalent zum Minimieren von $\norm{F(x)}$.
+
+\bigskip
+
+Wir vermuten/hoffen: Falls $(x^k )$ konvergiert, dann ist $\norm{F(x^k)}$ eine monoton fallende Folge.
+
+
+\emph{Monotonietest:} Für ein $\theta<1$ prüfe nach jedem Schritt, ob
+\begin{equation*}
+ \norm{F(x^{k+1})} \leq \theta \norm{F(x^k)}.
+\end{equation*}
+Breche das Verfahren ab, wenn die Bedingung nicht erfüllt ist.
+
+\bigskip
+
+\emph{Problem:} Dieses Verfahren ist nicht affin-invariant.
+
+\begin{bsp}
+Betrachte zwei Iterierte $x^k, x^{k+1} \in \R^2$ so dass
+\begin{align*}
+ F (x^{k+1} )=\begin{pmatrix} \frac{1}{2} \\ 0 \end{pmatrix},
+ \qquad
+ F (x^k) = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
+\end{align*}
+Es gilt
+\begin{align*}
+ \left\Vert \begin{pmatrix} \frac{1}{2} \\ 0 \end{pmatrix} \right\Vert_2
+ \leq
+ \left\Vert \begin{pmatrix} 0 \\ 1 \end{pmatrix} \right\Vert_2,
+\end{align*}
+der Monotonietest ist also erfüllt.
+
+\medskip
+
+Für ein $\varepsilon > 0$ wähle nun $A \in \R^{2 \times 2}$ als
+\begin{align*}
+ A & =\begin{pmatrix}
+       1 & 0 \\ 0 & \varepsilon \\
+ \end{pmatrix}
+\end{align*}
+Dann ist
+\begin{align*}
+ \norm{ AF (x^{k+1}) }_2
+ & \leq
+ \norm{ AF (x^k) }_2 \\
+ %
+				\iff \left\Vert \begin{pmatrix}
+					1 & 0 \\ 0 & \varepsilon
+				\end{pmatrix} \begin{pmatrix}
+					\frac{1}{2} \\ 0
+				\end{pmatrix} \right\Vert_2
+ & \leq
+ \left\Vert \begin{pmatrix}
+					1 & 0 \\ 0 & \varepsilon
+				\end{pmatrix} \begin{pmatrix}
+					0 \\ 1
+				\end{pmatrix} \right\Vert_2 \\
+ %
+				\iff \left\Vert \begin{pmatrix}
+					\frac{1}{2} \\ 0 \\
+				\end{pmatrix} \right\Vert_2
+ & \leq
+ \left\Vert \begin{pmatrix}
+					0 \\ \varepsilon \\
+ \end{pmatrix} \right\Vert_2.
+			\end{align*}
+Der Monotonietest ist also nicht erfüllt, falls $\varepsilon > \frac{1}{2}$.
+Und das obwohl sich das Verfahren nicht geändert hat!
+\end{bsp}
+
+\subsection{Der natürliche Monotonietest}
+
+Deuflhard hat stattdessen den folgenden affin-invarianten Test vorgeschlagen:
+
+\begin{equation*}
+ \big\Vert F' (x^k )^{-1}F (x^{k+1} ) \big\Vert \leq \theta \big\Vert F' (x^k )^{-1}F (x^k ) \big\Vert.
+\end{equation*}
+Wie berechnet man diese Terme?
+
+\begin{enumerate}
+ \item  Rechte Seite
+   \begin{equation*}
+    F' (x^k )^{-1}F (x^k )=\triangle x^k.
+   \end{equation*}
+   Die ist die Newton-Korrektur, die wir ohnehin berechnen müssen.
+
+ \item
+   Linke Seite
+   \begin{equation*}
+    F' (x^k )^{-1}F (x^{k+1} )=\overline{\triangle x^{k+1}}
+   \end{equation*}
+   ist die Lösung eines weiteren linearen Gleichungssystems, was teuer werden kann.
+   \begin{itemize}
+    \item ABER: Die Matrix $F' (x^k )$ ist die gleiche wie bei 1).
+    \item Deshalb ist die LR-Zerlegung bereits bekannt.
+    \item Es sind nur Vorwärts- und Rückwärtssubstitution nötig, der Aufwand ist damit $\mathcal{O} (n^2 )$.
+   \end{itemize}
+\end{enumerate}
+
+\section{Newton-Verfahren mit Dämpfung}
+
+\begin{itemize}
+ \item Kann man das Verfahren so erweitern, dass es für alle (oder zumindest mehr) Startwerte konvergiert?
+ \item Solch eine Erweiterung nennt man \emph{Globalisierung}.
+ \item Gleichzeitig möchte man die schnelle quadratische Konvergenz behalten.
+\end{itemize}
+
+\begin{idea} Wir messen die "`Güte"' einer Approximation $x^k$ von $x^*$ durch eine skalare Funktion, hier
+ \begin{equation*}
+  \phi(x)\colonequals\frac{1}{2} \Vert F(x) \Vert_2^2.
+ \end{equation*}
+\end{idea}
+
+Wie wirkt das Newton-Verfahrens auf $\phi$?
+
+\begin{lemma}
+\label{lem:newton_korrektur_ist_abstiegsrichtung}
+Die Newton-Korrektur $\triangle x \colonequals -(F'(x) )^{-1}F(x)$ ist eine Abstiegsrichtung für $\phi$, d.h.
+\begin{equation*}
+ \phi (x + t \triangle x ) < \phi (x)
+\end{equation*}
+für $t>0$ klein genug.
+\end{lemma}
+%
+\begin{proof}
+Zunächst ist
+\begin{align*}
+ \phi'(x) = F(x)^T F'(x).
+\end{align*}
+Daraus folgt
+\begin{align*}
+ \phi'(x) \triangle x & = F(x)^TF'(x) \triangle x \\
+   & =-F(x)^T F'(x)F'(x)^{-1} F(x) \\
+	& = -F(x)^TF(x)=-2 \phi(x)<0,
+\end{align*}
+falls $x$ nicht Lösung von $F(x)=0$ ist.
+
+Damit berechnen wir
+\begin{align*}
+	\phi (x+t \triangle x) & = \phi(x)+\phi'(x) \cdot t \triangle x+o(t) \qquad \mathrm{(Taylor)} \\
+	& = \phi(x)-2t \phi(x)+o(t) \\
+	& = (1-2t) \phi(x)+o(t).
+\end{align*}
+\todo[inline]{Präzisieren, wie daraus die Behauptung folgt.  Begründung: $o(t)$ steht für eine Funktion $\theta(t)$,
+mit $\lim_{t\to 0} \theta/t = 0$.  Das heißt aber dass für jedes $\epsilon>0$ ein $T$ existiert so dass
+$\abs{\theta(t)} < \epsilon t$ für alle $t<T$.}
+\end{proof}
+
+\begin{idea}
+Wähle anstelle der Korrektur $\triangle x^k$ die Korrektur $t_k \triangle x^k$.
+Dabei sei $t_k \in (0,1)$ so gewählt, dass "`hinreichender Abstieg"' von $\phi$ erzeugt wird.
+\end{idea}
+
+
+Was heißt "`hinreichender Abstieg"'?
+\begin{itemize}
+ \item Angenommen, $\phi (x^k )$ sei streng monoton fallend.
+ \item[$\rightarrow$] Dann konvergiert diese Folge (da $\phi$ von unten beschränkt ist).
+ \item[$\rightarrow$] Aber sie konvergiert nicht notwendigerweise gegen $0$.
+ \item[$\rightarrow$] Sie konvergiert nur dann gegen Null, wenn der Abstieg in jedem Schritt groß genug ist.
+\end{itemize}
+
+\bigskip
+
+Die Armijo-Schrittweitenregel (nach Larry Armijo):
+
+Sei $q \in (0,1)$ ein Parameter. Wähle $t_k$ als das größte Element aus
+\begin{equation*}
+\left\lbrace 1,\frac{1}{2},\frac{1}{4},\frac{1}{8},\ldots,\frac{1}{2^n},\ldots \right\rbrace,
+\end{equation*}
+für welches
+\begin{equation*}
+ \phi (x^k+t_k \triangle x^k ) \leq (1-qt) \phi (x^k).
+\end{equation*}
+So ein $t_k$ existiert wegen Lemma~\ref{lem:newton_korrektur_ist_abstiegsrichtung}.
+\todo[inline]{Achtung, das folgt nicht einfach aus der Aussage!  Man muss schon
+in den Beweis schauen.  Am besten man baut das noch in den Beweis für den folgenden Satz ein.}
+
+\begin{satz}[Fischer-Skript, Satz~5.3]
+Es sei $F \colon \R^n \to \R^n$ stetig differenzierbar.
+Sei $F'$ lokal Lipschitz-stetig, und $F'(x)$ regulär für alle $x$ aus
+\begin{equation*}
+ W (x^0)\colonequals\left\lbrace x \in \R^n \; \colon \; \phi(x) \leq \phi (x_0 ) \right\rbrace.
+\end{equation*}
+Dann ist das Newton-Verfahren mit der Armijo-Dämpfung wohldefiniert, und es gilt
+$x^k \in W(x^0)$ für alle $k \in \mathbb{N}$.
+\end{satz}
+%
+\begin{proof}
+Sei $x^k \in W (x^0)$.
+\begin{itemize}
+ \item Nach Voraussetzung ist $F' (x^k )$ regulär, daher ist $\triangle x^k$ wohldefiniert.
+ \item Nach Konstruktion ist auch $t_k$ wohldefiniert und
+  \begin{equation*}
+   \phi (x^{k+1} )<\phi (x^k ) \implies x^{k+1} \in W (x^0).
+   \qedhere
+  \end{equation*}
+\end{itemize}
+\end{proof}
+
+\begin{satz}[Fischer-Skript, Satz~5.3]
+Voraussetzungen wie eben.
+Falls die Folge $(x^k)$ eine Teilfolge besitzt, die gegen ein $\tilde{x}$ konvergiert, so gilt $F(\tilde{x})=0$.
+\end{satz}
+So eine Teilfolge gibt es insbesondere dann, wenn $W(x^0)$ beschränkt ist.
+\begin{proof}
+\begin{enumerate}[(1)]
+ \item Wir brauchen eine obere Schranke für $\norm{\triangle x^k}$.
+   \begin{itemize}
+    \item $F$ und $F'$ sind stetig in $\R^n$.
+
+    \item Da $\tilde{x} \in W(x_0)$ ist $F'(\tilde{x})$ regulär.
+
+    \item Wähle $\varrho>0$ so klein, dass $B_{\varrho}(\tilde{x}) \subset W (x_0)$.
+
+    \item Dann ist $x \mapsto \norm{\triangle x} = \norm{F'(x)^{-1}F(x)}$ stetig in $B_{\varrho}(\tilde{x})$.
+
+    \item[$\implies$] $\exists c>0$ mit $\Vert \triangle x \Vert \leq c$ für alle $x \in B_{\varrho}(\tilde{x})$.
+   \end{itemize}
+
+ \item Da $F'$ Lipschitz-stetig ist, ist auch $\phi'=F^TF'$ Lipschitz-stetig.
+
+   D.h. Es gibt ein $L>0$ so dass
+  \begin{equation*}
+   \norm{\phi'(x)-\phi'(y)} \leq L \norm{x-y}
+   \qquad
+   \forall x,y \in B_{\varrho}(\tilde{x}).
+  \end{equation*}
+
+ \item Nach Voraussetzung existiert eine Teilfolge $(x^{k_i})$, die gegen $\tilde{x}$ konvergiert.
+   Bezeichne diese Teilfolge wieder als $(x^k)$.
+   \todo[inline]{Erklären wofür das das hier braucht:}
+   \begin{itemize}
+    \item Konvergenz gegen $\tilde{x}$ heißt insbesondere: $\exists k_0 \in \N$ so dass $x^k \in B_{\varrho}(\tilde{x})$
+      für alle $k>k_0$.
+
+    \item Da $x^k$ gegen den Kugelmittelpunkt konvergiert, bildet sich ein endlicher Abstand zum Kugelrand, also \begin{equation*}
+     \exists \overline{t}>0 \ \text{und}\ k_0 \in \N\ \text{so dass}\ x^k+t \triangle x^k \in B_{\varrho} (\tilde{x})
+     \qquad
+     \forall k \geq k_0\ \text{und}\ \forall t \in [0,\overline{t}].
+    \end{equation*}
+   \end{itemize}
+\end{enumerate}
+
+Jetzt benutzen wir wieder die spezielle Taylorformel aus Lemma~\ref{lem:nichtlineare_gleichungen:taylor_spezial},
+diesmal für die Funktion $\phi$:
+\begin{equation*}
+ \phi(y)=\phi(x)+\phi'(x)(y-x)+\int_0^1 ( \phi'(x+s(y-x))-\phi'(x) )(y-x) \,ds
+\end{equation*}
+Für $y=x+t \triangle x$ ist dann
+\begin{equation*}
+ \phi(x+t \triangle x)
+ =
+ \phi(x)+\phi'(x)(t \triangle x)+\int_0^1 ( \phi'(x+st \triangle x)-\phi'(x) )t \triangle x \,ds.
+\end{equation*}
+Wegen $\phi'(x) \triangle x=-2 \phi(x)$ folgt
+\begin{align}
+\nonumber
+ \phi (x+t \triangle x) & =(1-2t) \phi (x)+\int_0^1 \ldots \,ds \\
+\nonumber
+ & \leq (1-2t) \phi (x)+\left\vert \int_0^1 \ldots \,ds \right\vert \\
+\nonumber
+ & \leq (1-2t) \phi (x)+\int_0^1 \norm{ \phi'(x+st \triangle x)-\phi'(x) } \,ds \cdot t \underbrace{\norm{\triangle x}}_{\leq c} \\
+\nonumber
+ & \leq (1-2t) \phi (x)+\max_s \norm{ \phi'(x+st \triangle x)-\phi'(x) } \cdot t \cdot c \\
+\nonumber
+ & \leq (1-2t) \phi (x)+\max_s L \norm{ x+st \triangle x-x } \cdot t \cdot c \\
+\nonumber
+ & \leq (1-2t) \phi (x)+L \cdot t \left\Vert \triangle x \right\Vert \cdot t \cdot c \\
+\label{eq:armijo_konvergenz_zwischenrechnung}
+ & \leq (1-2t) \phi (x)+Lt^2c^2.
+\end{align}
+
+Wir wollen zeigen, dass die $t_k$ von $0$ weg beschränkt sind.
+
+\medskip
+
+Armijo: Wähle $t_k$ als größtes $t$ der Form $k_k = 2^{-n}$, $n \in \N_0$, für dass
+\begin{equation*}
+ \phi (x^k+t_k \triangle x^k ) \leq (1-qt_k ) \phi (x^k).
+\end{equation*}
+Da $t_k$ die größte Zweierpotenz ist, für die diese Bedingung gilt, gilt sie für die nächst-größere Potenz $2t_k$
+nicht mehr:
+\begin{align*}
+ (1-2qt_k ) \phi (x^k) < \phi (x^k+2t_k \triangle x^k ).
+\end{align*}
+Mit \eqref{eq:armijo_konvergenz_zwischenrechnung} folgt
+\begin{align*}
+ (1-2qt_k ) \phi (x^k) < (1-4t_k) \phi(x) + 4Lt_k^2c^2.
+\end{align*}
+Auflösen nach $t_k$:
+\begin{align*}
+ -2qt_k \phi (x^k) & \le -4t_k \phi (x^k ) + 4Lt_k^2c^2 \\
+ -q \phi (x^k) & \le -2 \phi (x^k ) + 2Lt_kc^2 \\
+ \frac{(2-q) \phi (x^k )}{2Lc^2} & \le t_k.
+\end{align*}
+Das heißt noch nicht, dass $t_k$ von $0$ weg beschränkt ist, da $\phi (x^k ) \to 0$ sein könnte.
+(Genau das wollen wir ja sogar beweisen, aber noch ist es nur eine Möglichkeit.)
+
+\medskip
+
+Stattdessen: Angenommen $\phi (\tilde{x})>0$. Wg.\ $x^k \to \tilde{x}$ und Stetigkeit von $\phi$ gilt
+\begin{align*}
+ \phi (x^k ) & \geq \frac{1}{2} \phi ( \tilde{x} )
+\end{align*}
+für unendlich viele $k$.
+
+Für die dazugehörigen $t_k$ gilt
+\begin{align*}
+ t_k \geq \hat{t} & \colonequals \frac{(2-q) \phi (\tilde{x})}{4Lc^2}>0.
+\end{align*}
+Aber $(\phi (x^k ) )$ ist monoton fallend
+\begin{equation*}
+ \phi (x^{k+1})=\phi (x^k+t_k \triangle x^k) <(1-qt_k) \phi (x^k) \leq (1-q \hat{t}) \phi(x^k),
+\end{equation*}
+also $\phi(x^{k+1}) < \alpha \phi(x^k)$ für ein $\alpha < 1$.
+Diese Ungleichung gilt für unendlich viele Indizes $k$. Daraus folgt $\lim_{k \to \infty} \phi (x^k )=0$.
+
+Stetigkeit von $\phi$ liefert
+\begin{equation*}
+ 0 = \lim_{k \to \infty} \phi(x^k) = \phi (\lim_{k \to \infty} x^k )=\phi (\tilde{x}).
+ \qedhere
+\end{equation*}
+\end{proof}
+
+\bigskip
+
+\begin{satz}[Fischer-Skript, Satz~5.3]
+\label{thm:nichtlineare_gleichungen:globales_newton_iii}
+Sei $F \colon \R^n \to \R^n$ stetig differenzierbar. Weiter sei $F'$ lokal Lipschitz-stetig mit Konstante $L_0$ und für alle $x \in W(x_0)\colonequals\left\lbrace x \in \R^n \colon \phi(x)<\phi(x_0) \right\rbrace$ sei $F'(x_0)$ invertierbar. Dann gibt es ein $k_0 \in \N$, sodass $t_k=1$ für alle $k \geq k_0$.
+\end{satz}
+
+Die Dämpfung schaltet sich also irgendwann automatisch ab.
+
+\begin{kor}
+Das gedämpfte Verfahren konvergiert lokal quadratisch.
+\end{kor}
+\begin{proof}
+\begin{itemize}
+ \item Für $k \ge k_0$ degeneriert das Verfahren zum normalen Newton-Verfahren.
+
+ \item Da zumindest eine Teilfolge konvergiert, erhält man früher oder später ein $x^k$,
+  das so nah an $x^*$ liegt, dass der lokale Konvergenzsatz greift.
+ \qedhere
+\end{itemize}
+\end{proof}
+
+\begin{proof}[Beweis von Satz~\ref{thm:nichtlineare_gleichungen:globales_newton_iii}]
+Man verwendet wieder die Taylor-Formel.
+\begin{itemize}
+	\item Sei $\varrho$ so klein, dass $B_{\varrho} (x^* ) \subset W (x_0 )$.
+	\item Dann ist $F'$ regulär für alle $x \in B_{\varrho} (x^* )$ und es existiert ein $M>0$, sodass $\Vert F'(x)^{-1} \Vert \leq M$ für alle $x \in B_{\varrho} (x^* )$.
+	\item Da $(x^k)$ gegen $x^*$ konvergiert gibt es ein $N \in \N$, sodass $x^k \in B_{\varrho} (x^* )$ für alle $k \geq N$.
+	\item Für solche $k$ gilt für jedes $s \in [0,1]$
+	\begin{align*}
+	\norm{F' (x^k+s \triangle x^k )-F' (x^k )} & \leq L_0 \norm{s \triangle x^k} \leq L_0 \norm{\triangle x^k} \\
+	& = L_0 \norm{F' (x^k )^{-1}F (x^k)} \leq L_0M \norm{F (x^k)}.
+  \end{align*}
+ \item Wieder die Taylor-Formel  mit Integralrestglied:
+  \begin{align*}
+   \norm{F (x^k+\triangle x^k)}
+   & =
+   \bigg\Vert \underbrace{F (x^k )+F' (x^k ) \triangle x^k}_{\text{$=0$, nach Def.\ von $\triangle x^k$}}+\int_0^1 \left[F' (x^k+s \triangle x^k )-F'(x^k ) \right] \triangle x^k \,ds \bigg\Vert \\
+   %
+   & \leq \underbrace{\max_{s \in [0,1]} \left\Vert F' (x^k+s \triangle x^k )-F' (x^k ) \right\Vert}_{\leq L_0M \norm{F(x^k)}} \cdot \underbrace{\norm{\triangle x^k}}_{\leq M \norm{F (x^k)}} \\
+   & \leq L_0M^2 \Vert F (x^k ) \Vert^2.
+  \end{align*}
+
+ \item Wähle $\varrho>0$ so klein, dass
+ \begin{equation*}
+  \Vert F(x) \Vert \leq L_0^{-1}M^{-2} \sqrt{1-q} \qquad \forall x \in B_{\varrho} (x^*).
+ \end{equation*}
+
+ \item Dann ist für alle $k$ groß genug
+  \begin{equation*}
+   \norm{F (x^k+\triangle x^k)}
+   \leq
+   L_0 M^2 \norm{F(x^k)}^2
+   \leq
+   \sqrt{1-q} \norm{F (x^k)},
+  \end{equation*}
+  also
+  \begin{align*}
+   \phi (x^k+\triangle x^k)
+   & =
+   \frac{1}{2} \norm{F (x^k+\triangle x^k)}^2
+   \leq
+   \frac{1}{2} (1-q) \norm{F (x^k)}^2 \\
+   & = (1-q) \phi (x^k).
+  \end{align*}
+
+  \item Das Armijo-Kriterium ist also mit $t_k=1$ erfüllt.
+  \qedhere
+\end{itemize}
+\end{proof}

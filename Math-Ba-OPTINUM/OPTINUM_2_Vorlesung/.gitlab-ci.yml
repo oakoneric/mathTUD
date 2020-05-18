@@ -1,0 +1,10 @@
+image: mirisbowring/texlive_ctan_full:2019
+
+compiling:
+  script:
+      # use settings from .latexmkrc
+    - latexmk
+  artifacts:
+    paths:
+    - "out/skript-numerik-sander.pdf"
+    expire_in: 40 weeks
