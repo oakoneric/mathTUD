@@ -20,13 +20,13 @@
 	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
 		\item Es sei $f(u) = u - u^3$ und $g \equiv 0$. Da $U$ beschränktes Gebiet ist und $\quer{U}$ eine abgeschlossene Menge, ist also $\quer{U}$ kompakt. Da $u$ stetig auf $\quer{U}$ ist, nimmt $u$ ein Maximum in einem $x_0 \in \quer{U}$ an. Nehmen wir an es sei $u(x_0) > 1$. Es gilt $ \equiv g \equiv 0$ auf $\rand U$, d.h. um ein Maximum $u(x_0 > 1$ zu besitzen, muss $x_0 \in \inn U$ sein. Da $u(x_0)$ Maximum ist mit $u \in C^2(U)$, gilt $u_{x_i x_i}(x_0) \le 0$ für alle $i=1, \dots, n$. Nach Differentialgleichung ist dann also
 		\begin{equation*}
-			0 \ge - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) > 1}{<} 0
+			0 \le - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) > 1}{<} 0
 		\end{equation*}
 		ein Widerspruch. Somit ist dann $u(x_0) \le 1$ und aufgrund der Maximalität von $u(x_0)$ auch $u(x) \le u(x_0) \le 1$ für alle $x \in \quer U$.
 		
 		Analog dazu nimmt $u$ auf $\quer U$ ein globales Minimum in $x_0 \in \quer U$ an, für welches nach gleicher Argumentation wie oben $x_0 \in \inn U$ gilt. Nehmen wir an, es sei $u(x_0) < -1$. Als Minimalstelle gilt $u_{x_i  x_i} (x_0) \ge 0$ für alle $i = 1, \dots, n$. Nach PDE gilt dann
 		\begin{equation*}
-			0 \le - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) < -1}{<} 0
+			0 \ge - \Delta u(x_0) =  - \sum_{i=1}^n u_{x_i x_i} (x_0) = u(x_0) - u^3(x_0) = u(x_0) \brackets{1 - u(x_0)^2} \overset{u(x_0) < -1}{<} 0
 		\end{equation*} 
 		ein Widerspruch. Somit ist $u(x) \ge u(x_0) \ge -1$ für alle $x \in \quer U$ und schließlich gilt die Einschließung $-1 \le u(x) \le 1$ für alle $x \in \quer U$.
 		
