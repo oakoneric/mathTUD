@@ -1,4 +1,4 @@
-\documentclass{scrreprt}
+\documentclass[german]{scrreprt}
 
 \usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
 
@@ -18,6 +18,11 @@
 
 \let\emph\textbf
 \newcommand{\begriff}[1]{\textbf{#1}}
+
+\addtokomafont{disposition}{\fosfamily}
+\addtokomafont{chapter}{\Huge}
+\addtokomafont{section}{\LARGE}
+\addtokomafont{subsection}{\Large}
 
 \usepackage{scrlayer-scrpage}
 \usepackage[linesnumbered,inoutnumbered]{algorithm2e}
@@ -162,7 +167,7 @@
 	skipabove=\skiparound,%
 	skipbelow=\skiparound,%
 	nobreak,%
-]{lemma}[satz]{Lemma}
+]{lemma}{Lemma}
 
 
 \theoremstyle{nonumberplain}
@@ -255,6 +260,7 @@
 
 \usepackage{chngcntr}
 \counterwithin{satz}{chapter}
+\counterwithin{lemma}{chapter}
 
 %\pagestyle{scrheadings}
 %\clearscrheadings
@@ -272,23 +278,64 @@
 %\frontmatter
 
 \begin{titlepage}
-
-
+	\pagecolor{cddarkblue!90} \color{white}%
+	\raggedright \fosfamily%
+	\setlength{\parindent}{0pt}% 
+	% Logo / Kopf
+	\hspace{-18.6mm} %
+	\includegraphics[scale=0.6]{TUD-white.pdf} \\
+	\vspace{3mm} 
+	\begin{tabular}{m{\textwidth}}
+		\hline
+		\hspace{-4pt}\small{\textbf{Fakultät Mathematik} Institut für Numerik, Professur für Numerik partieller Differentialgleichungen} \\
+		\hline
+	\end{tabular} \\
+	% Titel
+	\vspace{5cm}
+	{\Huge\bfseries \MakeUppercase Optimierung \& Numerik --- Teil 2 \par}
+		\vspace{0.5cm}%
+		{\Large \itshape Numerik gewöhnlicher Differentialgleichungen} \\%
+	\vspace{1.5cm}
+	\textbf{{\Large Prof. Dr. Oliver Sander}} \par
+	\vspace{0.5cm}
+	{\large Sommersemester 2020} \par
+	
+	\vspace{1.5cm}
+	
+	
+	\vfill%
+	% Fußzeile
+	\begin{tabular}{lll}
+		Name  & : & Eric Kunze \\
+		E-Mail & : & \url{eric.kunze@mailbox.tu-dresden.de} \\
+		Datum & : & \today
+	\end{tabular}%
 \end{titlepage}
+\nopagecolor
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Copyright notice
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\vspace*{\fill}
+
+\begin{center}
+	\slshape
+	Das vorliegende Skript basiert nahezu vollständig auf dem Vorlesungsskript von Prof. Dr. Oliver Sander für die Vorlesung \enquote{Optimierung und Numerik} an der Technischen Universität Dresden. Das aktuelle Original ist unter \\ \url{https://gitlab.mn.tu-dresden.de/osander/skript-numerik} \\
+	zu finden.
+\end{center}
+
+\vspace*{\fill}
+
+\pagebreak
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \tableofcontents
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\mainmatter
 
 %\include{interpolation}
 %
@@ -308,14 +355,11 @@
 %
 %\include{direkte-duenne-loeser}
 
-\include{anfangswertprobleme}
+%\include{anfangswertprobleme}
 
 \include{steife-differentialgleichungen}
 
 %\include{hamilton-systeme}
-
-%\printbibliography
-
 
 \bibliographystyle{alpha}
 \bibliography{skript-numerik-sander}
