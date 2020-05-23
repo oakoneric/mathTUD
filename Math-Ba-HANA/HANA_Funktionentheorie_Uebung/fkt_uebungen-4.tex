@@ -1,0 +1,78 @@
+\begin{exercisePage}
+	
+	\begin{task}
+		Berechnen Sie das Integral $\int_\gamma \abs{z} * \quer{z} \diff{z}$ folgende Wege $\gamma$ mit Anfangspunkt $-1$ und Endpunkt $+1$.
+		\begin{enumerate}[nolistsep]
+			\item geradlinige Verbindung
+			\item obere Halbkreislinie
+			\item untere Halbkreislinie
+		\end{enumerate}
+	\end{task}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $f(z) \defeq \abs{z} * \quer{z}$. Parametrisiere die geradlinige Verbindungsstrecke durch den Weg $\abb{\gamma}{[-1,1]}{\CC}$ mit $\gamma(t) = t$ für alle $t \in [-1,1]$. Dann ist $\gamma'(t) = 1$ für $t \in [-1,1]$ und $f(\gamma(t))  = \abs{t} * \quer{t} = \sgn(t) * t^2$, da $t \in [-1,1] \subset \R$. Somit gilt also
+		\begin{equation*}
+			\int_\gamma \abs{z} \quer{z} \dz 
+			= \int_{-1}^1 \sgn(t) * t^2 \dt 
+			= \int_{-1}^0 -t^2 \dt + \int_0^1 t^2 \dt 
+			= \sqbrackets{-\frac{1}{3}t^3}_{-1}^0 + \sqbrackets{\frac{1}{3}t^2}_0^1 
+			= - \frac{1}{3} + \frac{1}{3} = 0
+		\end{equation*}
+		
+		\item Parametrisiere den Weg durch $\abb{\gamma}{[0, \pi]}{\CC}$ mit $\gamma(t) = -e^{-\i t}$. Dann ist $\gamma'(t) = \i e^{-\i t}$ und $f(\gamma(t)) = \abs{\gamma(t)} * \quer{\gamma(t)} = \abs{- e^{- \i t}} * \brackets{-e ^{\i t}} = - e^{\i t}$. Somit gilt
+		\begin{equation*}
+			\int_\gamma \abs{z} \quer{z} \dz 
+			= \int_0^\pi  - e^{\i t} * \i e^{-\i t} \dt 
+			= -\i * \int_0^\pi 1 \dt
+			= - \pi \i
+		\end{equation*}
+		
+		\item Parametrisiere den Weg durch $\abb{\gamma}{[0, \pi]}{\CC}$ mit $\gamma(t) = -e^{\i t}$. Dann ist $\gamma'(t) = -\i e^{\i t}$ und $f(\gamma(t)) = \abs{\gamma(t)} * \quer{\gamma(t)} = \abs{- e^{\i t}} * \brackets{-e ^{-\i t}} = - e^{-\i t}$. Somit gilt
+		\begin{equation*}
+			\int_\gamma \abs{z} \quer{z} \dz 
+			= \int_0^\pi   - e^{-\i t} * \brackets{-\i e^{\i t}} \dt 
+			= \i * \int_0^\pi 1 \dt
+			= \pi \i
+		\end{equation*}
+	\end{enumerate}
+
+	\begin{task}
+		Sei $\Omega \subseteq \CC$ offen, $\abb{f}{\Omega}{\CC}$ holomorph, $f'$ stetig und $\gamma$ ein stückweise stetig differenzierbarer Weg in $\Omega$. Zeigen Sie: $f \circ \gamma$ ist ein stückweise stetig differenzierbarer Weg in $\CC$ und für $\abb{g}{\Image (f \circ \gamma)}{\CC}$ stetig gilt
+		\begin{equation*}
+			\int_{f \circ \gamma} g(w) \diffskip{w} = \int_\gamma g(f(z)) * f'(z) \dz
+		\end{equation*}
+	\end{task}
+	Sei $\gamma$ ein stückweise stetig differenzierbarer Weg auf dem Intervall $[a,b]$, d.h. es existiert eine Unterteilung $a = t_0 < t_1 < \dots < t_n = b$, sodass $\gamma|_{[t_i, t_{i+1}]}$ für alle $i \in \menge{1, \dots, n-1}$ stetig differenzierbar ist. Wir betrachten ein fixiertes Intervall $[t_i, t_{i+1}]$. Dort ist $f \circ \gamma$ nach Kettenregel differenzierbar mit $(f \circ \gamma)'(t) = f'(\gamma(t)) * \gamma'(t)$. Aufgrund der Stetigkeit von $f'$ und $\gamma'$ auf dem oben gewählten Intervall, ist auch $(f \circ \gamma)'$ stetig. Diese Betrachtung kann für jedes $i \in \menge{1, \dots, n-1}$ ausgeführt werden mit dem Ergebnis, dass $f \circ \gamma$ ein stückweise stetig differenzierbarer Weg ist. 
+	Mit der oben ausgeführten Kettenregel und der Definiton für Integrale über stückweise stetig differenzierbare Wege aus der Vorlesung gilt
+	\begin{align*}
+		\int_{f \circ \gamma} g(w) \diffskip{w} 
+		&= \int_a^b g(f(\gamma(t))) * (f \circ \gamma)'(t) \dt \\
+		&= \int_a^b (g \circ (f \circ \gamma))(t) * \brackets{f'(\gamma(t)) * \gamma'(t)} \dt \\
+		&= \int_a^b \bigg( ((g \circ f)\circ \gamma)(t) * f'(\gamma(t)) \bigg) * \gamma'(t) \dt \\
+		&= \int_\gamma (g \circ f)(z) * f'(z) \dz
+	\end{align*}
+	
+	\begin{task}
+		Für $\sigma \in \CC$ sei $\abb{f_\sigma}{\CC \setminus (- \infty, 0]}{\CC}$ definiert durch
+		\begin{equation*}
+			f_\sigma(z) \defeq \exp(\sigma \ \Ln(z))
+		\end{equation*}
+		mit dem Hauptzweig $\Ln$ des Logarithmus (siehe Aufgabe 3.2). Zeigen Sie:
+		\begin{enumerate}
+			\item Für $n \in \Z$ gilt $f_n(z) = z^n$ ($z \in \CC \setminus (-\infty, 0]$)
+			\item Für alle $\sigma, \tau \in \CC$ gilt $f_\sigma * f_\tau = f_{\sigma + \tau}$.
+			\item Für $\sigma \in [-1,1]$ und $\tau \in \CC$ gilt $f_\tau \circ f_\sigma = f_{\tau \sigma}$. Gilt dies auch für beliebige $\sigma \in \CC$.
+			\item Für $\sigma \in \CC \setminus \N_0$ hat die binomische Reihe $b_\sigma(z) = \sum_{k=0}^{\infty} \binom{\sigma}{k} z^k$ den Konvergenzradius $1$.
+			\item Für $\abs{z} < 1$ gilt $f_\sigma(1+z) = b_\sigma(z)$.			
+		\end{enumerate}
+		Hinweis: Taylor-Entwicklung von $z \mapsto f_\sigma(1+z)$ um $z=0$.
+	\end{task}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $\phi = \Arg(z) \in (-\pi, \pi)$. Dann gilt $z = \abs{z} * e^{\i \phi}$. 
+		\begin{equation*}
+			f_n(z) = e^{n * (\ln\abs{z} + \i \Arg(z))} = \brackets{e^{\ln\abs{z}}}^n * \brackets{e^{\i \phi}}^n = \brackets{\abs{z} * e^{\i \phi}}^n = z^n
+		\end{equation*}
+		\item $(f_\sigma * f_\tau)(z) = \exp(\sigma \Ln(z)) * \exp(\tau \Ln(z)) = \exp((\sigma + \tau) \Ln(z)) = f_{\sigma + \tau}(z)$
+	\end{enumerate}
+\end{exercisePage}
