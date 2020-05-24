@@ -42,8 +42,8 @@
 			\int_{f \circ \gamma} g(w) \diffskip{w} = \int_\gamma g(f(z)) * f'(z) \dz
 		\end{equation*}
 	\end{task}
-	Sei $\gamma$ ein stückweise stetig differenzierbarer Weg auf dem Intervall $[a,b]$, d.h. es existiert eine Unterteilung $a = t_0 < t_1 < \dots < t_n = b$, sodass $\gamma|_{[t_i, t_{i+1}]}$ für alle $i \in \menge{1, \dots, n-1}$ stetig differenzierbar ist. Wir betrachten ein fixiertes Intervall $[t_i, t_{i+1}]$. Dort ist $f \circ \gamma$ nach Kettenregel differenzierbar mit $(f \circ \gamma)'(t) = f'(\gamma(t)) * \gamma'(t)$. Aufgrund der Stetigkeit von $f'$ und $\gamma'$ auf dem oben gewählten Intervall, ist auch $(f \circ \gamma)'$ stetig. Diese Betrachtung kann für jedes $i \in \menge{1, \dots, n-1}$ ausgeführt werden mit dem Ergebnis, dass $f \circ \gamma$ ein stückweise stetig differenzierbarer Weg ist. 
-	Mit der oben ausgeführten Kettenregel und der Definiton für Integrale über stückweise stetig differenzierbare Wege aus der Vorlesung gilt
+	Sei $\gamma$ ein stückweise stetig differenzierbarer Weg auf dem Intervall $[a,b]$, d.h. es existiert eine Unterteilung $a = t_0 < t_1 < \dots < t_n = b$, sodass $\gamma|_{[t_i, t_{i+1}]}$ für alle $i \in \menge{1, \dots, n-1}$ stetig differenzierbar ist. Da $f$ als holomorphe Funktion stetig ist und $\gamma$ ein Weg, ist insbesondere auch $f \circ \gamma$ stetig, also ein Weg. Wir betrachten ein fixiertes Intervall $[t_i, t_{i+1}]$. Dort ist $f \circ \gamma$ nach Kettenregel differenzierbar mit $(f \circ \gamma)'(t) = f'(\gamma(t)) * \gamma'(t)$. Aufgrund der Stetigkeit von $f'$ und $\gamma'$ auf dem oben gewählten Intervall, ist auch $(f \circ \gamma)'$ stetig. Diese Betrachtung kann für jedes $i \in \menge{1, \dots, n-1}$ ausgeführt werden mit dem Ergebnis, dass $f \circ \gamma$ ein stückweise stetig differenzierbarer Weg ist. 
+	Mit der oben ausgeführten Kettenregel und der Definition für Integrale über stückweise stetig differenzierbare Wege aus der Vorlesung gilt
 	\begin{align*}
 		\int_{f \circ \gamma} g(w) \diffskip{w} 
 		&= \int_a^b g(f(\gamma(t))) * (f \circ \gamma)'(t) \dt \\
@@ -74,5 +74,49 @@
 			f_n(z) = e^{n * (\ln\abs{z} + \i \Arg(z))} = \brackets{e^{\ln\abs{z}}}^n * \brackets{e^{\i \phi}}^n = \brackets{\abs{z} * e^{\i \phi}}^n = z^n
 		\end{equation*}
 		\item $(f_\sigma * f_\tau)(z) = \exp(\sigma \Ln(z)) * \exp(\tau \Ln(z)) = \exp((\sigma + \tau) \Ln(z)) = f_{\sigma + \tau}(z)$
+		\item Sei $\sigma \in [-1,1]$ und $\tau \in \CC$. Dann gilt
+		\begin{align*}
+			(f_\tau \circ f_\sigma)(z) = e^{\tau \Ln\brackets{e^{\sigma \Ln(z)}}} 
+			&= e^{\tau \Ln\brackets{e^{\sigma \ln\abs{z} + \sigma \i \Arg(z)}}} \\
+			&= e^{\tau \ln\abs{e^{\sigma \ln\abs{z} + \sigma \i \Arg(z)}} + \tau \i \Arg\brackets{e^{\sigma \ln\abs{z} + \sigma \i \Arg(z)}}} \\
+			&= e^{\tau \ln\abs{e^{\sigma \ln\abs{z}}} + \tau \i \Arg\brackets{e^{\sigma \i \Arg(z)}}} \tag{$\Im(\sigma) = 0$}\\
+			&= e^{\sigma \tau \ln\abs{z} + \sigma \tau \i \Arg(z)} \tag{$\Re(\sigma) \le 1$}\\
+			&= e^{\sigma \tau \brackets{\ln\abs{z} + \i \Arg(z)}} \\
+			&= e^{\sigma \tau \Ln(z)} 
+			= f_{\sigma \tau}(z)
+		\end{align*}
+		Da wir sowohl $\Im(\sigma) = 0$ als auch $\Re(\sigma) \le 1$ ausgenutzt haben, funktioniert der Beweis nicht für alle $\sigma \in \CC$.
+		\item Sei $a_n \defeq \binom{\sigma}{n} = \prod_{j=1}^{n} \frac{\sigma - j + 1}{j}$. Dann gilt nach Quotientenkriterium für den Konvergenzradius $R$ von $b_\sigma(z)$
+		\begin{equation*}
+			R = \lim_{n \to \infty} \abs{\frac{a_n}{a_{n+1}}} = \lim_{n \to \infty} \abs{\frac{\prod_{j=1}^{n} \frac{\sigma - j + 1}{j}}{\prod_{j=1}^{n+1} \frac{\sigma - j + 1}{j}}} 
+			= \lim_{n \to \infty} \abs{\frac{1}{\frac{\sigma -(n + 1) + 1}{n+1}}}
+			= \lim_{n \to \infty} \abs{\frac{n+1}{\sigma - n}} = 1
+		\end{equation*}
+		\item Wir betrachten die Taylor-Entwicklung von $f_\sigma(1+z)$ um $z=0$. Es gilt für die Ableitungen
+		\begin{equation*}
+			f_\sigma^{(n)}(z) = \exp(\sigma \Ln(z)) * \brackets{\frac{1}{z^{n}} \prod_{j=1}^n (\sigma - j + 1)}
+		\end{equation*} 
+		Vollständige Induktion nach $n \in \N_0$:
+		\begin{induction}
+			\ianfang[$n=0$] Es ist $\exp(\sigma \Ln(z)) * \brackets{\frac{1}{z^0} \prod_{j=1}^0 (\sigma - j + 1)} = \exp(\sigma \Ln(z)) = f_\sigma^{(0)}(z)$.
+			\ischritt Definiere $\phi_\sigma(n) \defeq \prod_{j=1}^n (\sigma - j + 1)$.
+			\begin{align*}
+				f_\sigma^{(n+1)}(z) 
+				&= \ableitung{z} \brackets{\exp(\sigma \Ln(z)) * \brackets{\frac{1}{z^{n}} \phi_\sigma(n)}} \\
+				&= \exp(\sigma \Ln(z)) * \frac{\sigma}{z} \brackets{\frac{1}{z^{n}} \phi_\sigma(n)} - \exp(\sigma \Ln(z)) \brackets{\frac{n}{z^{n+1}} \phi_\sigma(n)} \\
+				&= \exp(\sigma \Ln(z)) \brackets{\frac{\sigma}{z^{n+1}} \phi_\sigma(n)} - \exp(\sigma \Ln(z)) \brackets{\frac{n}{z^{n+1}} \phi_\sigma(n)} \\
+				&= \exp(\sigma \Ln(z)) \brackets{\frac{\sigma-n}{z^{n+1}} \phi_\sigma(n)} \\
+				&= \exp(\sigma \Ln(z)) \brackets{\frac{1}{z^{n+1}} \phi_\sigma(n+1)} \\
+				&= \exp(\sigma \Ln(z)) \brackets{\frac{1}{z^{n+1}} \prod_{j=1}^{n+1} (\sigma - j + 1)}
+			\end{align*}
+		\end{induction}
+		Somit ist $f_\sigma^{(n)}(1) = \phi_\sigma(n) = \prod_{j=1}^n (\sigma - j + 1)$.
+		Setzen wir dies in die Taylorreihe ein, so erhalten wir
+		\begin{equation*}
+			f_\sigma(1+z) = \sum_{n=0}^{\infty} \frac{f_\sigma^{(n)}(1)}{n!} z^n = \sum_{n=0}^{\infty} \prod_{j=1}^n \frac{\sigma - j + 1}{j} z^n 
+			= \sum_{n=0}^{\infty} \binom{\sigma}{n} z^n 
+			= b_\sigma(z)
+		\end{equation*}
+		für alle $\abs{z} < 1$.
 	\end{enumerate}
 \end{exercisePage}
