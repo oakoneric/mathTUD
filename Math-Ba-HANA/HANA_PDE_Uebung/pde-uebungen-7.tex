@@ -1,0 +1,45 @@
+\begin{exercisePage}
+	\setcounter{taskcount}{17}
+	
+	\begin{task}
+		Für $x\in\mathbb R^n$, $t\in \mathbb R$ und $r>0$ ist
+		\begin{equation*}
+			E(x,t;r) = \left\{(y,s)\in \R^{n+1}\mid s\leq t, \Phi(x-y,t-s)\geq \frac{1}{r^n}\right\}
+		\end{equation*}
+		wobei $\Phi$ die Fundamentallösung der Wärmeleitungsgleichung ist.
+		Zeigen Sie
+		\begin{equation*}
+			E(0,0;r) =\left\{ (y,s)\in \R^{n+1}\mid s\leq 0, |y|^2\leq 2n s\ {\ln}\left(-\frac{4\pi s}{r^2}\right)\right\}
+		\end{equation*}
+		und bestimmen Sie für jedes $s\in \R$ den Schnitt $B_s := \{y\in \R^n \mid (y,s)\in E(0,0;r)\}$
+		
+		\textit{Hinweis}: $E(x,t;r)$ ist der aus der Vorlesung bekannte \textit{Wärmeball}. Dabei ist $\Phi(x,0)$ als Grenzwert $\lim_{ s\to 0+} \Phi(x,s)$ zu interpretieren. Analoges gilt in der Darstellung von $E(0,0;r)$.
+	\end{task}
+	
+	\begin{task}
+		Lösen Sie die \textit{Wellengleichung} für $n=1$, also das Problem
+		\begin{align*}
+			u_{tt} - u_{xx} = 0\quad&\text{in } \R \times(0,\infty),\\
+			u = g,\quad u_t = h\quad&\text{auf } \R \times \{0\}
+		\end{align*}
+		Gehen Sie dazu wie folgt vor:
+		\begin{enumerate}
+			\item Zeigen Sie, dass die allgemeine Lösung der partiellen Differentialgleichung $\quer{u}_{\eta\xi} = 0$ auf $\R^2$.
+			gegeben ist durch $\overline{u}(\eta,\xi) = F(\eta) + G(\xi)$, wobei $F,G \in C^1(\R)$ beliebig sind.
+			\item 
+			Betrachten Sie im $\mathbb{R}^2$ die Koordinatentransormation
+			\begin{equation*}
+				\phi(t,x) = (t + x,t - x)\quad \text{für } x,t\in \mathbb{R}.
+			\end{equation*}
+			und zeigen Sie, dass die Gleichung $u_{tt} - u_{xx} = 0$ genau dann erfüllt ist, wenn $\overline{u}_{\eta\xi} = 0$ für
+			$\quer{u}(\eta, \xi) := (u \circ \phi^{-1})(\eta,\xi)$ gilt.
+			\item 
+			Nutzen Sie (a) und (b), um die \textit{Formel von d'Alembert} herzuleiten, also die Lösungs\-darstellung
+			\begin{equation*}
+				u(x,t) = \tfrac12\left(g(x+t)+g(x-t)\right) + \tfrac1{2} \int_{x-t}^{x+t} h(y)\,\mathrm{d}y
+			\end{equation*}
+		\end{enumerate}
+		\textit{Hinweis}: Die Wellengleichung wird demnächst Gegenstand der Vorlesung sein. Dort wird die Formel von d'Alembert geschickt mittels der Methode der Charakteristiken hergeleitet.
+	\end{task}
+
+\end{exercisePage}
