@@ -15,6 +15,54 @@
 		
 		\textit{Hinweis}: $E(x,t;r)$ ist der aus der Vorlesung bekannte \textit{Wärmeball}. Dabei ist $\Phi(x,0)$ als Grenzwert $\lim_{ s\to 0+} \Phi(x,s)$ zu interpretieren. Analoges gilt in der Darstellung von $E(0,0;r)$.
 	\end{task}
+
+	Es ist $\Phi(x,t) = (4 \pi t)^{-\frac{n}{2}} e^{- \frac{\abs{x}^2}{4t}}$ für $t>0$ die Fundamentallösung der Wärmeleitungsgleichungen. Betrachten wir $E(0,0;r)$. Die Bedingung $s \le t$ wird damit automatisch zu $s \le 0$ und wir können umstellen:
+	\begin{align*}
+		\Phi(-y,-s) = (-4 \pi s)^{-\frac{n}{2}} e^{- \frac{\abs{y}^2}{-4s}} &\ge \frac{1}{r^n} 
+		&\equivalent && e^{- \frac{\abs{y}^2}{-4s}} &\ge \frac{(-4 \pi s)^{\frac{n}{2}}}{r^n} \\
+		&&\equivalent && - \frac{\abs{y}^2}{-4s} &\ge \ln \brackets{ \frac{-4 \pi s}{r^2} }^{\frac{n}{2}} \\
+		&&\equivalent && \frac{\abs{y}^2}{-4s} &\le \frac{n}{2} * \ln \brackets{ \frac{r^2}{-4 \pi s}} \\
+		&&\equivalent && \abs{y}^2 &\le 2ns * \ln \brackets{- \frac{4 \pi s}{r^2}}
+	\end{align*}
+	Betrachten wir nun $B_s \defeq \menge{y \in \Rn : (y,s) \in E(0,0;r)}$. Wir unterscheiden fünf Fälle:
+	\begin{enumerate}[label=(\roman*), leftmargin=*]
+		\item Ist $s > 0$, so ist $B_s = \emptyset$.
+		\item Ist $s = 0$, so ist
+		\begin{equation*}
+			\Phi(-y,0) = \lim_{t \to 0+} \Phi(-y,t) = \begin{cases}
+			0 & \text{wenn } y \neq 0 \\
+			\infty & \text{wenn } y = 0
+			\end{cases}
+		\end{equation*} 
+		Damit kann $\Phi(-y,0) \ge \frac{1}{r^2} > 0$ nur für $y = 0$ erfüllt sein, also $B_s = B_0 = \menge{(0,0)}$.
+		\item Sein nun $s < 0$. Dann müssen wir in obiger Umstellung 
+		\begin{equation*}
+			\abs{y}^2 \le 2ns * \ln \brackets{- \frac{4 \pi s}{r^2}}
+		\end{equation*}
+		beachten, wann die rechte Seite positiv bzw. Null wird. Da $s < 0$, sind alle Ausdrücke definiert. Es ist
+		\begin{equation*}
+			0 = 2ns * \ln \brackets{- \frac{4 \pi s}{r^2}} \equivalent - \frac{4 \pi s}{r^2} = 0 \equivalent s = -\frac{r^2}{4\pi}
+		\end{equation*}
+		und somit $B_s = B_{-\frac{r^2}{4\pi}} = \menge{(0,0)}$. 
+		Abschließend ist 
+		\begin{equation*}
+			0 > 2ns * \ln \brackets{- \frac{4 \pi s}{r^2}} \equivalent - \frac{4 \pi s}{r^2} < 0 \equivalent s > -\frac{r^2}{4\pi}
+		\end{equation*}
+		d.h. $B_s = \emptyset$ für $s < -\frac{r^2}{4\pi}$ und
+		\begin{equation*}
+			B_s = B_r(0) \mit r = \sqrt{2ns * \ln\brackets{-\frac{4\pi s}{r^2}}} \qquad \text{für } -\frac{r^2}{4\pi} < s < 0
+		\end{equation*}
+		Zusammengefasst gilt also
+		\begin{equation*}
+			B_s = \begin{cases}
+				\emptyset & \text{für } s > 0 \\
+				\menge{(0,0)} & \text{für } s = 0 \\
+				\menge{y \in \Rn : \abs{y} \le \sqrt{2ns * \ln\brackets{-\frac{4\pi s}{r^2}}}} & \text{für } -\frac{r^2}{4\pi} < s < 0 \\
+				\menge{(0,0)} & \text{für } s = -\frac{r^2}{4\pi} \\
+				\emptyset & \text{für } s < -\frac{r^2}{4\pi}
+			\end{cases}
+		\end{equation*}
+	\end{enumerate}
 	
 	\begin{task}
 		Lösen Sie die \textit{Wellengleichung} für $n=1$, also das Problem
@@ -41,5 +89,45 @@
 		\end{enumerate}
 		\textit{Hinweis}: Die Wellengleichung wird demnächst Gegenstand der Vorlesung sein. Dort wird die Formel von d'Alembert geschickt mittels der Methode der Charakteristiken hergeleitet.
 	\end{task}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $\quer{u}(\eta, \xi) = F(\eta) + G(\xi)$ für $F,G \in C^1(\R)$. Dann ist $\quer{u}_\eta(\eta, \xi) = F'(\eta)$ und $\quer{u}_{\eta \xi} (\eta, \xi) = 0$ für alle $\eta, \xi \in \R$.
+		\item Es ist $\phi^{-1}(\eta, \xi) = \frac{1}{2}(\eta + \xi, \eta - \xi)$. Damit gilt unter Nutzung des Satz von Schwarz
+		\begin{equation*}
+			\begin{aligned}
+				&\partdiff{\xi} \partdiff{\eta} u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} \\ 
+				= \quad &\partdiff{\xi} \brackets{\tfrac{1}{2} \partial_1 u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} + \tfrac{1}{2} \partial_2 u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}}} \\
+				= \quad & \tfrac{1}{4} \partial_{11} u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} 
+				- \tfrac{1}{4} \partial_{12} u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}}  \\
+				+ &\tfrac{1}{4} \partial_{21} u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} 
+				- \tfrac{1}{4} \partial_{22} u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} \\
+				= \quad &\tfrac{1}{4} \brackets{u_{tt}(t,x) - u_{xx}(t,x)} 
+				\enskip = \enskip 0 \\
+				\equivalent 0 \quad = \quad &u_{tt}(t,x) - u_{xx}(t,x)
+			\end{aligned}
+		\end{equation*}
+		\item Mit (a) und (b) ist $u\brackets{\frac{\eta + \xi}{2}, \frac{\eta - \xi}{2}} = F(\eta) + G(\xi)$ bzw. $u(x,t) = F(x+t) + G(x-t)$. Mit den Randwerten ist
+		\begin{align*}
+			u(x,0) &= F(x) + G(x) = g(x) & \text{für alle } x \in \R \tag{I} \\
+			u_t(x,0) &= F'(x) - G'(x) = h(x) & \text{für alle } x \in \R
+		\end{align*}
+		Aus der zweiten Randwertbedingung erhalten wir 
+		\begin{equation}
+			F(x) - G(x) = \int F'(x) - G'(x) \dx = \int_{x_0}^x h(y) \dy \tag{II}
+		\end{equation}
+		Addieren bzw. Subtrahieren wir Gleichungen~(I)~und~(II) so erhalten wir
+		\begin{equation*}
+			\begin{aligned}
+				F(x) &= \frac{1}{2} \brackets{g(x) + \int_{x_0}^x h(y) \dy} \\
+				G(x) &= \frac{1}{2} \brackets{g(x) - \int_{x_0}^x h(y) \dy}
+			\end{aligned}
+		\end{equation*}
+		Setzen wir dies nun in die allgemeine Lösung von oben ein, dann erhält man mit
+		\begin{align*}
+			u(t,x) &= \frac{1}{2} \brackets{ g(x+t) - g(x-t) + \int_{x_0}^{x+t} h(y) \dy - \int_{x_0}^{x-t} h(y) \dy } \\
+			&= \frac{1}{2} \brackets{ g(x+t) - g(x-t)} + \frac{1}{2} \int_{x-t}^{x+t} h(y) \dy
+		\end{align*}
+		die Formel von d'Alembert
+	\end{enumerate}
 
 \end{exercisePage}
