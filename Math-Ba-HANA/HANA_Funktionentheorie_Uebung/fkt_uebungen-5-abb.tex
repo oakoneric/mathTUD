@@ -1,0 +1,95 @@
+\documentclass[margin=5mm]{standalone}
+\usepackage{tudscrcolor} 
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween} 
+\pgfplotsset{
+  compat=1.10,% mit writeLaTeX bisher noch nicht möglich
+  flaeche/.style={draw=none,fill=black,fill opacity=0.2},
+  every axis/.append style={
+  	axis x line=middle,    % put the x axis in the middle
+  	axis y line=middle,    % put the y axis in the middle
+  	axis line style={->}, % arrows on the axis
+  	xlabel={$\Re(z)$},          % default put x on x-axis
+  	ylabel={$\Im(z)$},          % default put y on y-axis
+  	enlargelimits=0.05,
+  	grid,
+  	domain=-5:5,
+  	ymin = -5,
+  	ymax = 5,
+  	xmin = -5,
+  	xmax = 5,
+  }
+}
+\usetikzlibrary{decorations.pathmorphing}
+
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+
+
+
+\begin{document} 
+	
+
+
+\pgfdeclaredecoration{penciline}{initial}{
+	\state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,auto corner on length=1mm,]{
+		\pgfpathcurveto%
+		{% From
+			\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+			{\pgfdecorationsegmentamplitude}
+		}
+		{%  Control 1
+			\pgfmathrand
+			\pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+			{\pgfqpoint{-\pgfdecorationsegmentaspect\pgfdecoratedinputsegmentremainingdistance}%
+				{\pgfmathresult\pgfdecorationsegmentamplitude}
+			}
+		}
+		{%TO 
+			\pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+		}
+	}
+	\state{final}{}
+}
+
+\begin{tikzpicture}
+\begin{axis}[%
+	axis x line=middle,    % put the x axis in the middle
+	axis y line=middle,    % put the y axis in the middle
+	axis line style={->},  % arrows on the axis
+	xlabel={$\Re(z)$}, 			ylabel={$\Im(z)$},
+	enlargelimits=0.05,
+	ymin = -5,
+	ymax = 5,
+	xmin = -5,
+	xmax = 5,
+	axis equal,
+	ticks=none,
+	grid=none
+]
+ 
+\node[anchor=east](a) at (axis cs:-4, 2){$a$};
+\node[anchor=west](b) at (axis cs: 4, 4){$b$};
+\node[anchor=north](c) at (axis cs: 3,-2){$c$};
+\node[anchor=south east](d) at (axis cs:0,3){$d$};
+\node[anchor=north east](e) at (axis cs:0,-0.286){$e$};
+
+\draw[line width=2pt] 
+   (axis cs:-4, 2) node[anchor=east]{}
+-- (axis cs: 4, 4) node[anchor=west]{}
+-- (axis cs: 3,-2) node[anchor=north]{}
+-- cycle;
+
+\draw[cdorange, line width=1pt] (axis cs:-4, 2) -- (axis cs:-0.05,3) -- (axis cs:-0.05,-0.286) -- cycle;
+\draw[cdpurple, line width=1pt] (axis cs:4, 4) -- (axis cs:0.05,-0.286) -- (axis cs:0.05,3) -- cycle;
+\draw[cdgreen, line width=1pt] (axis cs:4, 3.95) -- (axis cs:0.04,-0.3) -- (axis cs: 3,-2) -- cycle;
+\end{axis} 
+\end{tikzpicture} 
+
+
+
+
+
+%\node[above,font=\large\bfseries] at (current bounding box.north) {Teil (f): $z = t e^{\mathrm{i}t} \enskip (t \ge 0)$};
+
+\end{document}

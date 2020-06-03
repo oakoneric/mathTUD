@@ -30,7 +30,56 @@
 		Hinweis: Zeigen Sie zuerst, dass $\int_\gamma f(z) \dz = 0$ für jeden geschlossenen Weg $\abb{\gamma}{[a,b]}{\menge{z \in \CC : \Re(z) \ge 0}}$.
 	\end{task}
 
+	\pagebreak
 
+	Sei $\CC^+ \defeq \menge{z \in \CC : \Re(z) > 0}$ und $\quer{\CC^+} \defeq \menge{z \in \CC : \Re(z) \ge 0}$. Wir wollen zeigen, dass $\CC^+$ sternförmig ist, d.h. es existiert ein $z_0 \in \CC^+$, sodass $\im(\sigma_{z_0,z}) \subseteq \CC^+$ für alle $z \in \CC^+$. Wähle $z_0 = 1$. Dann ist für jeden Punkt $z$ der rechten Halbebene auch die Verbindungsstrecke $\im(\sigma_{z_0, z})$ in der rechter Halbebene. Für einen Weg $\abb{\gamma}{[a,b]}{\quer{\CC^+}}$ betrachten wir den Weg $\gamma + \epsilon$ für ein $\epsilon > 0$. Dieser liegt dann vollständig in $\CC^+$. Dort ist $f$ holomorph und nach dem Cauchyschen Integralsatz gilt dann $\int_{\gamma + \epsilon} f(z) \dz = 0$. 
+	
+	Sei nun $\epsilon_n \to 0$. Definiere $f_n(\gamma(t)) \defeq f(\gamma(t) + \epsilon_n)$. Dann gilt wegen der Stetigkeit von $f$, dass $f_n(\gamma(t)) \to f(\gamma(t))$ für $n \to \infty$, d.h. $f(\gamma(t) + \epsilon) \to f(\gamma(t))$ für $\epsilon \to 0$.
+	$\gamma$ ist stückweise stetig differenzierbar, d.h. wir betrachten eine Unterteilung $a = t_0 < t_1 < \dots < t_n = b$ und notieren $\mathcal{I}_i \defeq [t_i, t_{i+1}]$ für alle $i \in \menge{0, \dots, n-1}$. Aufgrund der Stetigkeit von $f$ und der Stetigkeit von $\gamma$ auf $\mathcal{I}_i$ ist $f \circ \gamma$ stetig auf kompaktem $\mathcal{I}_i$ für alle $i \in \menge{0, \dots, n-1}$. Somit existiert für alle $i \in \menge{0, \dots, n-1}$ eine integrierbare Konstante $c_i < \infty$, sodass $f_n(\gamma(t)) \le c$ für alle $t \in \mathcal{I}_i$. Definiere nun $c \equiv \max\menge{c_i : 0 \le i \le n-1}$. Damit ist $f_n(\gamma(t)) \le c$ für alle $t \in [a,b]$. Mit majorisierter Konvergenz erhalten wir also
+	\begin{align*}
+		\lim_{\epsilon \to 0} \int_a^b f(\gamma(t) + \epsilon) \dt
+		&= \lim_{n \to \infty} \int_a^b f_n(\gamma(t)) \dt \tag{Grenzwert von Funktionen} \\
+		&= \int_a^b \lim_{n \to \infty} f_n(\gamma(t)) \dt \tag{majorisierte Konvergenz}\\
+		&= \int_a^b f(\gamma(t)) \dt \tag{Stetigkeit von $f$}
+	\end{align*}
+	
+	Es ist damit
+	\begin{align*}
+			0 = \lim_{\epsilon \to 0} \int_{\gamma + \epsilon} f(z) \dz 
+			= \lim_{\epsilon \to 0} \int_a^b f(\gamma(t) + \epsilon) * \gamma'(t) \dt 
+			= \int_a^b f(\gamma(t)) * \gamma'(t) \dt 
+			= \int_\gamma f(z) \dz
+	\end{align*}
+	Analog gilt dieses Resultat auch für alle Wege $\abb{\gamma}{[a,b]}{\quer{\CC^-}}$.
+	
+	Liegen nun $a$, $b$ und $c$ in der gleichen Halbebene $\quer{\CC^+}$ oder $\quer{\CC^-}$, dann lässt sich das Dreieck $\triangle(a,b,c)$ darstellen als geschlossener Weg in dieser Halbebene. Ohne Einschränkung seien $a,b,c \in \quer{\CC^+}$. Dann ist $\triangle(a,b,c) = \sigma_{a,b} \dot{+} \sigma_{b,c} \dot{+} \sigma_{c,a}$ in $\quer{\CC^+}$. Mithilfe des oben gezeigten Hinweises ist dann 
+	\begin{equation*}
+		\int_{\triangle(a,b,c} f(z) \dz = \int_{\sigma_{a,b} \dot{+} \sigma_{b,c} \dot{+} \sigma_{c,a}} f(z) \dz = 0
+	\end{equation*}
+	
+	Nun zum schwierigeren Fall: das Dreieck erstreckt sich über beide Halbebenen. Ohne Einschränkung nehmen wir an, dass $a \in \CC^-$ und $b,c \in \quer{\CC^+}$. Dann zerteilen wir das Dreieck wie folgt:
+	\begin{center}
+		\includegraphics[height=3.5cm]{fkt_uebungen-5-abb.jpg}
+	\end{center}
+	Die Summe aller drei Wege ist wieder das originale Dreieck. Außerdem liegen alle \enquote{kleinen} Dreiecke nur in einer von beiden Halbebenen.
+	Definiere
+	\begin{equation*}
+		\left.
+		\begin{array}{ccccccc}
+			\gamma_1 &\defeq& \sigma_{a,d} &\dot{+}& \sigma_{d,e} &\dot{+}& \sigma_{e,a} \\
+			\gamma_2 &\defeq& \sigma_{d,b} &\dot{+}& \sigma_{b,e} &\dot{+}& \sigma_{e,d} \\
+			\gamma_3 &\defeq& \sigma_{b,c} &\dot{+}& \sigma_{c,e} &\dot{+}& \sigma_{e,b} \\
+		\end{array} 
+		\right\} \follows
+		\gamma = \gamma_1 \dot{+} \gamma_2 \dot{+} \gamma_3
+	\end{equation*}
+	wobei $\im(\gamma_1) \subseteq \quer{\CC^-}$ und $\im(\gamma_2), \im(\gamma_3) \subseteq \quer{\CC^+}$. Mit dem Hinweis gilt dann
+	\begin{equation*}
+		\int_{\gamma_i} f(z) \dz = 0 \quad \text{ für alle } i \in \menge{1,2,3}
+	\end{equation*}
+	Somit ist dann auch $\int_{\triangle(a,b,c)} f(z) \dz = 0$.
+		
+		
 	\begin{task}
 		Berechnen Sie das Integral
 		\begin{equation*}
@@ -69,7 +118,7 @@
 		\end{equation*}		
 	\end{task}
 
-	Sei $\Omega \subseteq \CC$ offen und $\gamma$ nullhomotop in $\Omega$, d.h. homotop zu einem konstanten Weg $\abb{c}{[0,1]}{\CC}$. Dann gilt nach einer Bemerkung der Vorlesung für alle $\abb{f}{\Omega}{CC}$ holomorph, dass $\int_\gamma f(z) \dz = \int_c f(z) \dz$. Da $c$ konstant ist, ist 
+	Sei $\Omega \subseteq \CC$ offen und $\gamma$ nullhomotop in $\Omega$, d.h. homotop zu einem konstanten Weg $\abb{c}{[0,1]}{\CC}$. Dann gilt nach einer Bemerkung der Vorlesung für alle $\abb{f}{\Omega}{\CC}$ holomorph, dass $\int_\gamma f(z) \dz = \int_c f(z) \dz$. Da $c$ konstant ist, ist 
 	\begin{equation*}
 		\int_c f(z) \dz = \int_0^1 f(c(t)) * \underbrace{c'(t)}_{=0} \dt = 0
 	\end{equation*}
