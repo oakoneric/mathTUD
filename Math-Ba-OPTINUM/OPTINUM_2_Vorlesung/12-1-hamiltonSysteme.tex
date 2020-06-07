@@ -1,0 +1,305 @@
+\section{Hamilton-Systeme}
+
+Extrem wichtige Klasse von Differentialgleichungen entstammen der klassischen Mechanik, Quantenmechanik und relativistische Mechanik. Dazu gehören auch spezielle numerische Verfahren --- eine \enquote{schöne Mathematik}.
+
+\enquote{Vereinigendes Prinzip}: Bringt ganz unterschiedliche Gleichungen auf eine gemeinsame Form.
+
+
+\begin{bsp}
+	Mathematisches Pendel -- Fadenpendel
+	\begin{itemize}
+		\item Koordinate: Winkel $\alpha$
+		\item Masse $m$, Fadenlänge $l$, Erdbeschleunigung $g$
+	\end{itemize}
+	Bewegungsgleichungen: $\displaystyle \ddot \alpha + \frac{g}{l} \sin \alpha = 0$
+\end{bsp}
+
+\begin{bsp}
+	Teilchen in einem Kraftfeld $F(x)$
+	\begin{equation}
+	m \ddot x = F(x) \tag{Newtons Gesetz}
+	\end{equation}
+\end{bsp}
+
+\begin{bsp}
+	1d-Wellengleichung --- Longitudinale Auslenkung einer elastischen Schnur
+	\begin{alignat*}{2}
+	\frac{\partial^2 u}{\partial x^2} & = \frac{\partial^2 u}{\partial t^2} & \qquad & x \in [a, b], t \ge 0 \\
+	u(a, t) = u(b, t) & = 0 && \forall t \ge 0
+	\end{alignat*}
+\end{bsp}
+
+
+\subsection{Die Lagrange-Gleichungen}
+\label{sec:lagrange_gleichung}
+
+Wir betrachten ein mechanisches System mit $d$ Freiheitsgraden $q = (q_1, \dots, q_d)$.
+\begin{itemize}
+	\item Kinetische Energie: $T = T(q, \dot q)$
+	(häufig: $T(q, \dot{q}) = \frac12 \dot{q}^T M(q) \dot{q}$ mit $M(q)$ s.p.d.)
+	\item Potentielle Energie: $U = U(q)$
+\end{itemize}
+
+\begin{definition}
+	Die Lagrange-Funktion eines mechanischen Systems ist $L = T - U$.
+\end{definition}
+
+Das mechanische System löst die Lagrange-Gleichungen
+\begin{equation*}
+\frac{d}{dt} \left( \frac{\partial L}{\partial \dot q} \right) = \frac{\partial L}{\partial q}
+\end{equation*}
+
+\emph{Warum?} Es gilt das Prinzip der stationären Wirkung.
+
+\begin{definition}[Prinzip der stationären Wirkung / Hamilton'sches Prinzip]
+	Sei $q: [t_0, t_1] \to \R^d$ eine Trajektorie eines mechanischen Systems.
+	Für die in der Natur vorkommenden Trajektorien ist die \textit{Wirkung}
+	\begin{equation*}
+	W \colonequals \int_{t_0}^{t_1} L(q(t) \ \dot q(t)) \dt
+	\end{equation*}
+	stationär.
+\end{definition}
+
+Sei $q$ eine Trajektorie, und $\delta q$ eine Variation davon, die die Endpunkte fest lässt, also $\delta q(t_0)=\delta q(t_1) = 0$.
+Stationarität von $q$ heißt dann, dass für alle solche $\delta q$
+\begin{equation*}
+\frac{d}{d\epsilon} S(q+\epsilon\delta q)\vert_{\epsilon=0} = 0.
+\end{equation*}
+gilt. Ausrechnen:
+\begin{align*}
+\frac{d}{d\epsilon} \int_{t_0}^{t_1} L(q+ \epsilon\delta q,\dot q + \epsilon\delta \dot q)\dt\vert_{\epsilon=0} &= \int_{t_0}^{t_1} \frac{\partial L}{\partial q}\delta q + \frac{\partial L}{\partial\dot q} \delta\dot q\, dt \\
+&= \int_{t_0}^{t_1} \Bigg(\frac{\partial L}{\partial q} \delta q - \frac{d}{dt} \frac{\partial L}{\partial \dot q} \delta q\Bigg)\dt \tag{partielle Integration} \\
+&= \int_{t_0}^{t_1} \Bigg(\frac{\partial L}{\partial q} - \frac{d}{dt} \frac{\partial L}{\partial \dot q}  \Bigg)\delta q\dt
+\end{align*}
+Da dieser Ausdruck für alle hinreichend glatten Funktionen $\delta q$ gleich Null sein muss, erhält man die Lagrange-Gleichung
+\begin{equation*}
+\delta W = 0 = \frac{d}{dt} \left( \frac{\partial L}{\partial \dot q} \right) - \frac{\partial L}{\partial q}
+\end{equation*}
+
+\begin{bsp}[Pendel]
+	\begin{itemize}
+		\item Kinetische Energie
+		\begin{equation*}
+		T = \frac12 m (\dot x^2 + \dot y^2) = \frac12 m l^2 \dot\alpha^2
+		\end{equation*}
+		\item Potentielle Energie
+		\begin{equation*}
+		U = mgy = -mgl \cos \alpha
+		\end{equation*}
+		\item Lagrange-Funktion
+		\begin{equation*}
+		L(\alpha, \dot\alpha) = \frac12 m l^2 \dot\alpha^2 + mgl \cos \alpha
+		\end{equation*}
+		\item Lagrange-Gleichung
+		\begin{equation*}
+		0
+		= \frac{d}{dt} \left( \frac{\partial L}{\partial \dot q} \right) - \frac{\partial L}{\partial q}
+		= \frac{d}{dt}( ml^2\dot\alpha ) + mgl \sin \alpha
+		= ml^2\ddot\alpha + mgl \sin \alpha.
+		\end{equation*}
+	\end{itemize}
+\end{bsp}
+
+\begin{bsp}[Teilchen in einem Kraftfeld]
+	Angenommen das Kraftfeld ist \emph{konservativ}, d.h. es gibt ein $U: \R^3 \to \R$, so dass $F(x) = -\nabla U(x)$.
+	\begin{itemize}
+		\item Kinetische Energie
+		\begin{equation*}
+		T(x, \dot x) = \frac12 m \langle \dot x, \dot x \rangle
+		\end{equation*}
+		\item Potentielle Energie
+		\begin{equation*}
+		U
+		\end{equation*}
+		\item Lagrange-Gleichung
+		\begin{equation*}
+		0
+		= \frac{d}{dt} \left( \frac{\partial L}{\partial \dot q} \right) - \frac{\partial L}{\partial q}
+		= \frac{d}{dt}(m\dot x) + \nabla U(x) = m\ddot x - F(x)
+		\end{equation*}
+	\end{itemize}
+\end{bsp}
+
+\begin{bsp}[Eindimensionale Wellengleichung]
+	Ein unendlich-dimensionales System wird nicht beschrieben durch $d$
+	Freiheitsgrade $(q_1, \dots, q_d)$, sondern durch die Funktion $u: [a, b] \to \R$. Diese beschreibt die transversale Auslenkung einer Saite.
+	\begin{itemize}
+		\item Kinetische Energie
+		\begin{equation*}
+		T(u, \dot u) = \frac12 \int_a^b m \dot u(x)^2 dx
+		\end{equation*}
+		Dabei ist $m$ die Massendichte.
+		\item Potentielle Energie
+		\begin{equation*}
+		U(u)
+		=
+		\int_a^b S \Big[ \sqrt{1+ u'(x)^2} -1 \Big] dx
+		\approx
+		\int_a^b S\frac{u'(x)^2}{2} dx
+		\end{equation*}
+		Dabei ist $S$ die Zugsteifigkeit.
+		\item Lagrange-Funktion
+		\begin{equation*}
+		L(u, \dot u) = T(u, \dot u) - U(u)
+		\end{equation*}
+		\item Lagrange-Gleichung
+		\begin{equation*}
+		\frac{\partial L}{\partial u}
+		=
+		\frac{\partial}{\partial x} \frac{\partial L}{\partial u'}
+		+ \frac{\partial}{\partial t} \frac{\partial L}{\partial \dot{u}}
+		\end{equation*}
+		Einsetzen:
+		\begin{equation*}
+		0 =
+		\frac{\partial}{\partial x} \Big(- S u'(x)\Big)
+		+ \frac{\partial}{\partial t}m\dot{u}
+		\end{equation*}
+		Umstellen:
+		\begin{equation*}
+		\frac{\partial^2 u}{\partial t^2} = \frac{S}{m} \frac{\partial^2 u}{\partial x^2}
+		\end{equation*}
+		Das ist die eindimensionale Wellengleichung.
+	\end{itemize}
+\end{bsp}
+
+
+%\subsection{Die Hamiltonschen Gleichungen}
+%
+%Eine Transformation der Lagrange-Gleichung;
+%quasi \glqq die andere Seite der Medaille\grqq
+%
+%\begin{itemize}
+%\item Definiere die Impulse
+%  \begin{equation*}
+%    p_k \colonequals \frac{\partial L}{\partial \dot q_k}(q, \dot q) \qquad \text{für } k = 1, \dots, d
+%  \end{equation*}
+%  Diese Abbildung heißt \emph{Legendre-Transformation}.
+%\end{itemize}
+%
+%\begin{definition}
+%  Die Hamilton-Funktion ist
+%  \begin{equation*}
+%    H(p, q) \colonequals p^T \dot q - L(q, \dot q).
+%  \end{equation*}
+%\end{definition}
+%
+%Dabei geht man natürlich davon aus, dass die Legendre-Transformation eine $C^1$-Bijektion $\dot q \leftrightarrow p$ darstellt.
+%
+%\emph{Beispiel}: kinetische Energie ist quadratisch:
+%
+%\begin{equation*}
+%  T = \frac 12 \dot q^T M \dot q \qquad \text{ mit $M$ s.p.d.}
+%\end{equation*}
+%
+%\begin{itemize}
+%\item Legendre-Transformation: Für festes $q$ hat man
+%  \begin{equation*}
+%    p = M \dot q.
+%  \end{equation*}
+%  Transformation ist also tatsächlich glatte Bijektion.
+%\item Hamilton-Funktion
+%  \begin{align*}
+%    H(p, q)
+%    & = p^T \dot q - L(q, \dot q) \\
+%    & = p^T M^{-1} p - L(q, M^{-1} p) \\
+%    & = p^T M^{-1} p - T(q, M^{-1} p) + U(q) \\
+%    & = p^T M^{-1} p - \frac12 (M^{-1}p)^T M (M^{-1} p) + U(q) \\
+%    & = \frac12 (M^{-1}p)^T M (M^{-1}p) + U(q) \\
+%    & = T + U
+%  \end{align*}
+%  Die Hamilton-Funktion ist die Gesamtenergie!
+%\end{itemize}
+%
+%Auch mit Hilfe der Hamilton-Funktion kann man das Verhalten des mechanischen Systems einfach ausdrücken.
+%
+%\begin{satz}[{\citet[Thm.\,VI.1.3]{hairer_lubich_wanner:2006}}]
+%  Die Lagrange-Gleichung ist äquivalent zu den Hamilton-Gleichungen
+%  \begin{equation*}
+%    \dot p_k = -\frac{\partial H}{\partial q_k}(p, q),
+%    \quad
+%    \dot q_k = \frac{\partial H}{\partial p_k}(p, q),
+%    \qquad
+%    k = 1, \dots, d.
+%  \end{equation*}
+%\end{satz}
+%
+%\begin{proof}
+%  Lagrange $\implies$ Hamilton (die andere Richtung ist ähnlich)
+%  \begin{align*}
+%    \frac{\partial H}{\partial q}
+%    & = \frac\partial{\partial q}\left( p^T \dot q - L(q, \dot q) \right) & \text{(Def. von $H$)} \\
+%    & = p^T \frac{\partial \dot q}{\partial q} - \frac{\partial L}{\partial q} - \underbrace{\frac{\partial L}{\partial \dot q}}_{= p^T} \frac{\partial \dot q}{\partial q} & \text{(Kettenregel)} \\
+%    & = - \frac{\partial L}{\partial q} & \text{(Def. von $p = \frac{\partial L}{\partial \dot q}$)} \\
+%    & = - \frac{d}{dt}\left( \frac{\partial L}{\partial \dot q} \right) & \text{(Lagrange-Gleichung)} \\
+%    & = - \dot p & \text{(Def. von $p$)}
+%  \end{align*}
+%  Und:
+%  \begin{align*}
+%    \frac{\partial H}{\partial p}
+%    & = \frac{\partial}{\partial p}\left( p^T \dot q - L(q, \dot q) \right) \\
+%    & = \dot q + p^T \frac{\partial \dot q}{\partial p} - \underbrace{\frac{\partial L}{\partial \dot q}}_{=p^T} \frac{\partial \dot q}{\partial p} & \text{(Produktregel; $q$ hängt nicht von $p$ ab)} \\
+%    & = \dot q \qedhere
+%  \end{align*}
+%\end{proof}
+%
+%Sowohl die Lagrangesche als auch die Hamiltonsche Formulierungen haben ihre Daseinsberechtigung.
+%\begin{itemize}
+%\item Die Lagrange-Formulierung ist besonders fundamental: sie beruht auf Variationsprinzipien
+%\item Die Hamilton-Formulierung ist besonders fundamental: sie beruht auf der Gesamtenergie des Systems.
+%\end{itemize}
+%
+%\emph{Beispiel}: Pendel (mit $q = \alpha$)
+%\begin{itemize}
+%\item Kinetische Energie
+%  \begin{equation*}
+%    T = \frac12 m l^2 \dot q^2
+%  \end{equation*}
+%\item Potentielle Energie
+%  \begin{equation*}
+%    U = -mgl \cos q
+%  \end{equation*}
+%
+%\item Impuls
+%  \begin{equation*}
+%    p
+%    \colonequals \frac{\partial L}{\partial\dot q}
+%    = \frac{\partial}{\partial\dot q}\Big( \frac12 m l^2 \dot q^2 + mgl \cos q \Big)
+%    = m l^2 \dot q
+%  \end{equation*}
+%\item Kinetische Energie ist quadratisch, also
+%  \begin{align*}
+%    H(p, q)
+%    & = T(p, q) + U(q) \\
+%    & = \frac12 m l^2 \dot q^2 - m g l \cos q \\
+%    & = \frac12 \frac{1}{m l^2} p^2 - m g l \cos q
+%  \end{align*}
+%\item Bewegungsgleichungen:
+%  \begin{eqnarray*}
+%    \dot p = -\frac{\partial H}{\partial q} & \Leftrightarrow & \dot p = - m g l \sin q \\
+%    \dot q = \frac{\partial H}{\partial p} & \Leftrightarrow & \dot q = \frac{1}{m l^2} p
+%  \end{eqnarray*}
+%\end{itemize}
+%
+%In der letzten Vorlesung hatten wir gesehen, dass das Pendel die Größe
+%\begin{equation*}
+%  \frac12 \frac{1}{ml^2} p^2 - mgl \cos q = T(p, q) + U(p)
+%\end{equation*}
+%erhält.
+%Das ist kein Zufall.
+%
+%\begin{satz}
+%  Die Hamilton-Funktion $H$ ist Invariante des Flusses der Hamiltonschen Gleichung.
+%\end{satz}
+%
+%\begin{proof}
+%  \begin{align*}
+%    \frac{d}{dt} H(p, q)
+%    & = \frac{\partial H}{\partial p} \dot p + \frac{\partial H}{\partial q} \dot q & \text{(Kettenregel)} \\
+%    & = \frac{\partial H}{\partial p} \Big(-\frac{\partial H}{\partial q}\Big)
+%      + \frac{\partial H}{\partial q} \Big(\frac{\partial H}{\partial p}\Big) & \text{(Hamiltonsche Gl.)} \\
+%    & = 0 \qedhere
+%  \end{align*}
+%\end{proof}
+%
+%Diese sehr allgemeine Erhaltungseigenschaft wollen wir natürlich ins Diskrete übertragen!

@@ -114,13 +114,10 @@
 \newcommand{\abs}[1]{\lvert #1 \rvert}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 
+%\newcommand{\diff}{\mathrm{d}}
 \newcommand{\diffskip}[1]{\enskip \mathrm{d}#1}
 \newcommand{\dx}{\diffskip{x}}
 \newcommand{\dt}{\diffskip{t}}
-
-\usepackage{accents}
-\renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
-\renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
 
 
 \newcommand{\skiparound}{10pt}
@@ -281,93 +278,215 @@
 %%  All graphics files may be in this subdirectory
 \graphicspath{{gfx/}}
 %\includeonly{numerische-quadratur}
+
+\usepackage{accents}
+\renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
+\renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
+
 \begin{document}
 
 %\frontmatter
 
-\begin{titlepage}
-	\pagecolor{cddarkblue!90} \color{white}%
-	\raggedright \fosfamily%
-	\setlength{\parindent}{0pt}% 
-	% Logo / Kopf
-	\hspace{-18.6mm} %
-	\includegraphics[scale=0.6]{TUD-white.pdf} \\
-	\vspace{3mm} 
-	\begin{tabular}{m{\textwidth}}
-		\hline
-		\hspace{-4pt}\small{\textbf{Fakultät Mathematik} Institut für Numerik, Professur für Numerik partieller Differentialgleichungen} \\
-		\hline
-	\end{tabular} \\
-	% Titel
-	\vspace{5cm}
-	{\Huge\bfseries \MakeUppercase Optimierung \& Numerik --- Teil 2 \par}
-		\vspace{0.5cm}%
-		{\Large \itshape Numerik gewöhnlicher Differentialgleichungen} \\%
-	\vspace{1.5cm}
-	\textbf{{\Large Prof. Dr. Oliver Sander}} \par
-	\vspace{0.5cm}
-	{\large Sommersemester 2020} \par
-	
-	\vspace{1.5cm}
-	
-	
-	\vfill%
-	% Fußzeile
-	\begin{tabular}{lll}
-		Name  & : & Eric Kunze \\
-		E-Mail & : & \url{eric.kunze@mailbox.tu-dresden.de} \\
-		Datum & : & \today
-	\end{tabular}%
-\end{titlepage}
-\nopagecolor
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Copyright notice
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\vspace*{\fill}
-
-\begin{center}
-	\slshape
-	Das vorliegende Skript basiert nahezu vollständig auf dem Vorlesungsskript von Prof. Dr. Oliver Sander für die Vorlesung \enquote{Optimierung und Numerik} an der Technischen Universität Dresden. Das aktuelle Original ist unter \\ \url{https://gitlab.mn.tu-dresden.de/osander/skript-numerik} \\
-	zu finden.
-\end{center}
-
-\vspace*{\fill}
-
-\pagebreak
+%\begin{titlepage}
+%	\pagecolor{cddarkblue!90} \color{white}%
+%	\raggedright \fosfamily%
+%	\setlength{\parindent}{0pt}% 
+%	% Logo / Kopf
+%	\hspace{-18.6mm} %
+%	\includegraphics[scale=0.6]{TUD-white.pdf} \\
+%	\vspace{3mm} 
+%	\begin{tabular}{m{\textwidth}}
+%		\hline
+%		\hspace{-4pt}\small{\textbf{Fakultät Mathematik} Institut für Numerik, Professur für Numerik partieller Differentialgleichungen} \\
+%		\hline
+%	\end{tabular} \\
+%	% Titel
+%	\vspace{5cm}
+%	{\Huge\bfseries \MakeUppercase Optimierung \& Numerik --- Teil 2 \par}
+%		\vspace{0.5cm}%
+%		{\Large \itshape Numerik gewöhnlicher Differentialgleichungen} \\%
+%	\vspace{1.5cm}
+%	\textbf{{\Large Prof. Dr. Oliver Sander}} \par
+%	\vspace{0.5cm}
+%	{\large Sommersemester 2020} \par
+%	
+%	\vspace{1.5cm}
+%	
+%	
+%	\vfill%
+%	% Fußzeile
+%	\begin{tabular}{lll}
+%		Name  & : & Eric Kunze \\
+%		E-Mail & : & \url{eric.kunze@mailbox.tu-dresden.de} \\
+%		Datum & : & \today
+%	\end{tabular}%
+%\end{titlepage}
+%\nopagecolor
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Copyright notice
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\vspace*{\fill}
+%
+%\begin{center}
+%	\slshape
+%	Das vorliegende Skript basiert nahezu vollständig auf dem Vorlesungsskript von Prof. Dr. Oliver Sander für die Vorlesung \enquote{Optimierung und Numerik} an der Technischen Universität Dresden. Das aktuelle Original ist unter \\ \url{https://gitlab.mn.tu-dresden.de/osander/skript-numerik} \\
+%	zu finden.
+%\end{center}
+%
+%\vspace*{\fill}
+%
+%\pagebreak
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\renewcommand*\contentsname{\huge \centering Optimierung \& Numerik --- Vorlesung 13}
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\setcounter{chapter}{12}
+\setcounter{section}{1}
+\setcounter{satz}{1}
+\setcounter{lemma}{0}
+\setcounter{equation}{0}
 
-%\include{interpolation}
-%
-%\include{numerische-quadratur}
-%
-%\include{lineare-gleichungssysteme}
-%
-%\include{kondition}
-%
-%\include{nichtlineare-gleichungen}
-%
-%\include{nichtlineare-ausgleichsprobleme}
-%
-%\include{optimierung}
-%
-%\include{iterative-duenne-loeser}
-%
-%\include{direkte-duenne-loeser}
+\subsection{Die Hamiltonschen Gleichungen}
 
-%\include{anfangswertprobleme}
+Eine Transformation der Lagrange-Gleichung; quasi \enquote{die andere Seite der Medaille}
 
-\include{steife-differentialgleichungen}
+Definiere die Impulse
+\begin{equation*}
+p_k \colonequals \frac{\partial L}{\partial \dot q_k}(q, \dot q) \qquad \text{für } k = 1, \dots, d
+\end{equation*}
+Diese Abbildung heißt \emph{Legendre-Transformation}.
 
-\include{hamilton-systeme}
+\begin{definition}
+	Die Hamilton-Funktion ist
+	\begin{equation*}
+	H(p, q) \colonequals p^T \dot q - L(q, \dot q)
+	\end{equation*}
+\end{definition}
+
+Dabei geht man natürlich davon aus, dass die Legendre-Transformation eine $C^1$-Bijektion $\dot q \leftrightarrow p$ darstellt.
+
+\begin{bsp}
+	kinetische Energie ist quadratisch:
+	\begin{equation*}
+	T = \frac 12 \dot q^T M \dot q \qquad \text{ mit $M$ s.p.d.}
+	\end{equation*}
+	
+	\begin{itemize}
+		\item Legendre-Transformation: Für festes $q$ hat man $p = M \dot q$. Die Transformation ist also tatsächlich eine glatte Bijektion.
+		\item Hamilton-Funktion
+		\begin{align*}
+		H(p, q)
+		& = p^T \dot q - L(q, \dot q) \\
+		& = p^T M^{-1} p - L(q, M^{-1} p) \\
+		& = p^T M^{-1} p - T(q, M^{-1} p) + U(q) \\
+		& = p^T M^{-1} p - \frac12 (M^{-1}p)^T M (M^{-1} p) + U(q) \\
+		& = \frac12 (M^{-1}p)^T M (M^{-1}p) + U(q) \\
+		& = T + U
+		\end{align*}
+		Die Hamilton-Funktion ist die Gesamtenergie!
+	\end{itemize}
+\end{bsp}
+
+Auch mit Hilfe der Hamilton-Funktion kann man das Verhalten des mechanischen Systems einfach ausdrücken.
+
+\begin{satz}[{{{\cite[Thm.\,VI.1.3]{hairer_lubich_wanner:2006}}}}]
+	Die Lagrange-Gleichung ist äquivalent zu den Hamilton-Gleichungen
+	\begin{equation*}
+	\dot p_k = -\frac{\partial H}{\partial q_k}(p, q),
+	\quad
+	\dot q_k = \frac{\partial H}{\partial p_k}(p, q),
+	\qquad
+	k = 1, \dots, d
+	\end{equation*}
+\end{satz}
+%
+%\begin{proof}
+%  Lagrange $\implies$ Hamilton (die andere Richtung ist ähnlich)
+%  \begin{align*}
+%    \frac{\partial H}{\partial q}
+%    & = \frac\partial{\partial q}\left( p^T \dot q - L(q, \dot q) \right) & \text{(Def. von $H$)} \\
+%    & = p^T \frac{\partial \dot q}{\partial q} - \frac{\partial L}{\partial q} - \underbrace{\frac{\partial L}{\partial \dot q}}_{= p^T} \frac{\partial \dot q}{\partial q} & \text{(Kettenregel)} \\
+%    & = - \frac{\partial L}{\partial q} & \text{(Def. von $p = \frac{\partial L}{\partial \dot q}$)} \\
+%    & = - \frac{d}{dt}\left( \frac{\partial L}{\partial \dot q} \right) & \text{(Lagrange-Gleichung)} \\
+%    & = - \dot p & \text{(Def. von $p$)}
+%  \end{align*}
+%  Und:
+%  \begin{align*}
+%    \frac{\partial H}{\partial p}
+%    & = \frac{\partial}{\partial p}\left( p^T \dot q - L(q, \dot q) \right) \\
+%    & = \dot q + p^T \frac{\partial \dot q}{\partial p} - \underbrace{\frac{\partial L}{\partial \dot q}}_{=p^T} \frac{\partial \dot q}{\partial p} & \text{(Produktregel; $q$ hängt nicht von $p$ ab)} \\
+%    & = \dot q \qedhere
+%  \end{align*}
+%\end{proof}
+%
+%Sowohl die Lagrangesche als auch die Hamiltonsche Formulierungen haben ihre Daseinsberechtigung.
+%\begin{itemize}
+%\item Die Lagrange-Formulierung ist besonders fundamental: sie beruht auf Variationsprinzipien
+%\item Die Hamilton-Formulierung ist besonders fundamental: sie beruht auf der Gesamtenergie des Systems.
+%\end{itemize}
+%
+%\emph{Beispiel}: Pendel (mit $q = \alpha$)
+%\begin{itemize}
+%\item Kinetische Energie
+%  \begin{equation*}
+%    T = \frac12 m l^2 \dot q^2
+%  \end{equation*}
+%\item Potentielle Energie
+%  \begin{equation*}
+%    U = -mgl \cos q
+%  \end{equation*}
+%
+%\item Impuls
+%  \begin{equation*}
+%    p
+%    \colonequals \frac{\partial L}{\partial\dot q}
+%    = \frac{\partial}{\partial\dot q}\Big( \frac12 m l^2 \dot q^2 + mgl \cos q \Big)
+%    = m l^2 \dot q
+%  \end{equation*}
+%\item Kinetische Energie ist quadratisch, also
+%  \begin{align*}
+%    H(p, q)
+%    & = T(p, q) + U(q) \\
+%    & = \frac12 m l^2 \dot q^2 - m g l \cos q \\
+%    & = \frac12 \frac{1}{m l^2} p^2 - m g l \cos q
+%  \end{align*}
+%\item Bewegungsgleichungen:
+%  \begin{eqnarray*}
+%    \dot p = -\frac{\partial H}{\partial q} & \Leftrightarrow & \dot p = - m g l \sin q \\
+%    \dot q = \frac{\partial H}{\partial p} & \Leftrightarrow & \dot q = \frac{1}{m l^2} p
+%  \end{eqnarray*}
+%\end{itemize}
+%
+%In der letzten Vorlesung hatten wir gesehen, dass das Pendel die Größe
+%\begin{equation*}
+%  \frac12 \frac{1}{ml^2} p^2 - mgl \cos q = T(p, q) + U(p)
+%\end{equation*}
+%erhält.
+%Das ist kein Zufall.
+%
+%\begin{satz}
+%  Die Hamilton-Funktion $H$ ist Invariante des Flusses der Hamiltonschen Gleichung.
+%\end{satz}
+%
+%\begin{proof}
+%  \begin{align*}
+%    \frac{d}{dt} H(p, q)
+%    & = \frac{\partial H}{\partial p} \dot p + \frac{\partial H}{\partial q} \dot q & \text{(Kettenregel)} \\
+%    & = \frac{\partial H}{\partial p} \Big(-\frac{\partial H}{\partial q}\Big)
+%      + \frac{\partial H}{\partial q} \Big(\frac{\partial H}{\partial p}\Big) & \text{(Hamiltonsche Gl.)} \\
+%    & = 0 \qedhere
+%  \end{align*}
+%\end{proof}
+%
+%Diese sehr allgemeine Erhaltungseigenschaft wollen wir natürlich ins Diskrete übertragen!
+
 
 \bibliographystyle{alpha}
 \bibliography{skript-numerik-sander}
