@@ -405,8 +405,18 @@ nobreak,%
 \renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
 
+\renewcommand{\defeq}{\coloneqq}
 \newcommand{\dsq}[1]{\left[\left[ #1 \right]\right]}
-
+% Durchschnittsintegral
+\def\Xint#1{\mathchoice
+	{\XXint\displaystyle\textstyle{#1}}%
+	{\XXint\textstyle\scriptstyle{#1}}%
+	{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+	{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+	\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$ }
+		\vcenter{\hbox{$#2#3$ }}\kern-.6\wd0}}
+\def\dashint{\Xint-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -422,5 +432,6 @@ nobreak,%
 \include{pde-uebungen-5}
 \include{pde-uebungen-6}
 \include{pde-uebungen-7}
+\include{pde-uebungen-8}
 
 \end{document}

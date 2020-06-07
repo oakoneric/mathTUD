@@ -1,0 +1,66 @@
+\begin{exercisePage}
+	
+\begin{task}
+	Lösen Sie die folgenden Probleme, indem Sie die Formel von d'Alembert aus Aufgabe 19 auf geeignete Hilfsprobleme anwenden.
+	\begin{align*}
+		&\text{a)}&
+		u_{tt} - c^2u_{xx} = 0           &\quad  \text{in } \mathbb R \times (0,\infty) \text{ mit }c>0, \\
+		&&u(x,0) 	           = x^2 |e^x-1| &\quad \text{für } x\in \mathbb R, \\
+		&&u_t(x,0) 	   = x |e^x-1|   &\quad \text{für } x\in \mathbb R.\\
+		&&&~\\
+		&\text{b)}&
+		u_{tt} - u_{xx} = x^2  &\quad \text{in } \mathbb R \times (0,\infty),\\
+		&&u(x,0)          = x    &\quad \text{für } x\in \mathbb R, \\
+		&&u_t(x,0)        = 0    &\quad \text{für } x\in \mathbb R.
+	\end{align*}
+\end{task}
+
+\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+	\item Definiere $v(x,t) \defeq u(cx,t)$. Dann wird die partielle Differentialgleichung zu $v_{tt}(x,t) - v_{xx}(x,t) = u_{tt}(cx,t) - c^2 u_{xx}(cx,t) = 0$ und die Anfangswerte zu $v(x,0) = u(cx,0) = (cx)^2 \abs{e^{cx} - 1}$ sowie $v_t(x,t) = u_t(cx,t) = cx \abs{e^{cx} - 1} \defqe h(x)$ für alle $x \in \R$.
+	Wir lösen nun das Integral $\int_{x-t}^{x+t} h(y) \dy$.
+	\begin{align*}
+		\int h(y) \dy 
+		&= \int cy * \abs{e^{cy} - 1} \dy \\
+		&= \sgn(e^{cy} - 1) * c * \int y (e^{cy} - 1) \dy \\
+		&= \sgn(e^{cy} - 1) * c * \int y * e^{cy} - y \dy \\
+		&= \sgn(e^{cy} - 1) * c * \brackets{\int y * e^{cy} \dy - \int y \dy} \\
+		&= \sgn(e^{cy} - 1) * c * \brackets{\frac{1}{c} y e^{cy} - \frac{1}{c} \int e^{cy} \dy - \frac{1}{2} y^2} \\
+		&= \sgn(e^{cy} - 1) * c * \brackets{\frac{1}{c} y e^{cy} - \frac{1}{c^2} e^{cy} - \frac{1}{2} y^2} \\
+		&= \sgn(e^{cy} - 1) * \frac{2 (cy - 1) e^{cy} - c^2y^2}{2c}
+	\end{align*}
+	Damit ergibt sich für das bestimmte Integral
+	\begin{align*}
+		\int_{x-t}^{x+t} h(y) \dy
+		&= \frac{1}{2c}\sqbrackets{\sgn(e^{cy} - 1) * \brackets{2 (cy - 1) e^{cy} - c^2y^2}}_{x-t}^{x+t} \\
+		&= \frac{1}{2c} \left(\sgn(e^{c(x+t)} - 1) * \brackets{2 (c(x+t) - 1) e^{c(x+t)} - c^2(x+t)^2} \right. \\
+		&\phantom{= } \ - \enskip \ \left. \sgn(e^{c(x-t)} - 1) * \brackets{2 (c(x-t) - 1) e^{c(x-t)} - c^2(x-t)^2}\right)
+	\end{align*}
+	
+	\item Definiere $v(x,t) \defeq u(x,t) + \frac{1}{12}x^4$. Lösen wir nun das Hilfsproblem $v_{tt}(x,t) - v_{xx}(x,t) = u_{tt}(x,t) - u_{xx}(x,t) - x^2 = 0$ mit den Anfangswerten $v(x,0) = u(x,0) + \frac{1}{12} x^4 = x + \frac{1}{12}x^4 \defqe g(x)$ sowie $v_t(x,0) = u_t(x,0) = 0 \defqe h(x)$ für alle $x \in \R$.
+	Wir wollen die Formel von d'Alembert anwenden und erhalten wegen $\int_{x-t}^{x+t} h(y) \dy = 0$
+	\begin{align*}
+		v(x,t) &= \tfrac{1}{2} \brackets{g(x+t) + g(x-t)} + \tfrac{1}{2} \int_{x-t}^{x+t} h(y) \dy \\
+		&= \tfrac{1}{2} \brackets{ (x+t) + \tfrac{1}{12}(x+t)^4  + (x-t) + \tfrac{1}{12}(x-t)^4} \\
+		&= \tfrac{1}{2} \brackets{2x + \tfrac{1}{12} \brackets{t^4 + 4 t^3 x + 6 t^2 x^2 + 4 t x^3 + x^4 + t^4 - 4 t^3 x + 6 t^2 x^2 - 4 t x^3 + x^4}} \\
+		&=\tfrac{1}{2} \brackets{2x + \tfrac{1}{12} \brackets{2t^4 + 12 t^2 x^2 + 2 x^4 }} \\
+		&= x + \tfrac{1}{12}t^4 + \tfrac{1}{2} t^2x^2 + \tfrac{1}{12} x^4
+	\end{align*} 
+	Damit ergibt sich
+	\begin{equation*}
+		u(x,t) = v(x,t) - \tfrac{1}{12}x^4 = x + \tfrac{1}{12} t^4 + \tfrac{1}{2} t^2x^2
+	\end{equation*}
+\end{enumerate}
+
+
+\begin{task}
+	Es sei $u$ eine Lösung der Wärmeleitungsgleichung $u_t-\Delta u=0$ in $\mathbb R^n\times (0,\infty)$. Zeigen Sie, dass für jedes $x\in \mathbb R^n$ das \textit{sphärische Mittel}
+	\begin{equation*}
+		v(y,t) \defeq M_u(x,|y|, t) \defeq \dashint_{\partial B_1(0)} u(x + \abs{y} z, t) \ \mathrm{d} O(z)
+	\end{equation*}
+	ebenfalls eine Lösung der Wärmeleitungsgleichung ist.
+	
+	\textit{Hinweis}: Die Vorlesung vom 28. Mai kann inspirierend sein.
+\end{task}
+
+	
+\end{exercisePage}
