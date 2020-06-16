@@ -1,0 +1,75 @@
+\documentclass[margin=5mm]{standalone}
+\usepackage{tudscrcolor} 
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween} 
+\pgfplotsset{
+	compat=1.10,% mit writeLaTeX bisher noch nicht möglich
+	every axis/.append style={
+		axis x line=middle,    % put the x axis in the middle
+		axis y line=middle,    % put the y axis in the middle
+		axis line style={->}, % arrows on the axis
+		xlabel={},          % default put x on x-axis
+		ylabel={},          % default put y on y-axis
+		enlargelimits=0.05,
+		grid,
+		domain=-5:5,
+		ymin = -5,
+		ymax = 5,
+		xmin = -5,
+		xmax = 10,
+		axis equal,
+		line cap=round,
+		grid=none,
+		ticks=none
+	}
+}
+
+\usepackage[default]{opensans}
+\usepackage{sfmath}
+
+\begin{document} 
+	
+
+\begin{tikzpicture} 
+	\begin{axis}
+	
+		\addplot [domain=0:7, smooth, samples=100, variable=\x, cdorange, line width=1pt]({2*cos(deg(x)))}, {2*sin(deg(x)))});
+		
+		
+		\addplot [domain=0:6.28, smooth, samples=100, variable=\x, cdgray, line width=.5pt, dashed]({4*cos(deg(x)))}, {4*sin(deg(x)))});
+		\addplot [domain=-.524:.524, smooth, samples=100, variable=\x, cdgray, line width=1pt]({4*cos(deg(x)))}, {4*sin(deg(x)))});
+		
+		\addplot [domain=-.411:.411, smooth, samples=100, variable=\x, cdgray, line width=1pt]({5*cos(deg(x)))}, {5*sin(deg(x)))});
+		\addplot [domain=-1:1, smooth, samples=100, variable=\x, cdgray, line width=.5pt, dashed]({5*cos(deg(x)))}, {5*sin(deg(x)))});
+		
+		\addplot [domain=-.34:.34, smooth, samples=100, variable=\x, cdgray, line width=1pt]({6*cos(deg(x)))}, {6*sin(deg(x)))});
+		\addplot [domain=-1:1, smooth, samples=100, variable=\x, cdgray, line width=.5pt, dashed]({6*cos(deg(x)))}, {6*sin(deg(x)))});
+		
+		\addplot [domain=-.2:.2, smooth, samples=100, variable=\x, cdgray, line width=1pt]({10*cos(deg(x)))}, {10*sin(deg(x)))});
+		\addplot [domain=0:6.28, smooth, samples=100, variable=\x, cdgray, line width=.5pt, dashed]({10*cos(deg(x)))}, {10*sin(deg(x)))});
+		
+		\addplot [domain=-10:11, smooth, samples=100, cdorange, dotted, line width=1pt] coordinates {(-6,2) (11,2)};
+		\addplot [domain=-10:11, smooth, samples=100, cdorange, dotted, line width=1pt] coordinates {(-6,-2) (11,-2)};
+		
+		\node[anchor=center, cdorange](R) at (axis cs:-2.9, 1){\small $B_R(0)$};
+		\node[anchor=center](t) at (axis cs:1, 5){\small $B_t(0)$};
+		
+		\node[anchor=west, cdgray](w) at (axis cs:5.9, 1.2){\small $\mathcal{A}(t)$};
+		
+		\draw[->, cdblue, line width=.5pt] (axis cs: 1.42,1.42) -- (axis cs: .5,1.42);
+		\draw[->, cdblue, line width=.5pt] (axis cs: 1.7,1) -- (axis cs: .8,1);
+		\node[anchor=center](x) at (axis cs:1, .5){\scriptsize \color{cdblue} $x$};
+			
+		\node[anchor=east](A) at (axis cs:0, 1){\scriptsize \color{cdgreen} $\pi R^2$};
+		\draw[cdgreen, line width=1pt] (axis cs: 0,-2) -- (axis cs: 0,2);
+		\draw[cdgreen, line width=1pt] (axis cs: 3.46,-2) -- (axis cs: 3.46,2);
+		\draw[cdgreen, line width=1pt] (axis cs: 4.58,-2) -- (axis cs: 4.58,2);
+		\draw[cdgreen, line width=1pt] (axis cs: 5.66,-2) -- (axis cs: 5.66,2);
+		\draw[cdgreen, line width=1pt] (axis cs: 9.8,-2) -- (axis cs: 9.8,2);
+	\end{axis} 
+	
+\end{tikzpicture} 
+	
+	%\node[above,font=\large\bfseries] at (current bounding box.north) {Teil (f): $z = t e^{\mathrm{i}t} \enskip (t \ge 0)$};
+	
+\end{document}
