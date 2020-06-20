@@ -1,0 +1,125 @@
+\begin{exercisePage}
+	
+	\begin{task}
+		Bestimmen Sie die Potenzreihenentwicklung mit dem Mittelpunkt $z_0 \neq a$ für die Funktionen
+		\begin{equation*}
+			f_0(z) = \frac{1}{z-a} \qquad f_1(z) = \frac{1}{(z-a)^2} \qquad f_2(z) = \frac{1}{(z-a)^3}
+		\end{equation*}
+		Hinweis: Beachten Sie, dass $f_1 = -f_0*$ und $f_2 = -\frac{1}{2} f_1'$.
+	\end{task}
+
+	Unter Nutzung der geometrischen Reihe gilt
+	\begin{equation*}
+		\begin{aligned}
+			f_0(z) = \frac{1}{z-a} = \frac{1}{(z-z_0) + z_0 - a} = \frac{1}{z_0 - a} * \frac{1}{1 + \frac{z-z_0}{z_0 - a}} 
+			&= \frac{1}{z_0 - a} * \sum_{k=0}^\infty \frac{1}{(z_0 - a)^k} * (z-z_0)^k \\
+			&=\sum_{k=0}^\infty \frac{1}{(z_0 - a)^{k+1}} * (z-z_0)^k
+		\end{aligned}
+	\end{equation*}
+	d.h. wir haben eine Potenzreihe in $z_0$ mit Koeffizienten $a_k \defeq (z_0 - a)^{-(k+1)}$.
+	Nutzen wir nun die Holomorphie und gliedweise Differenzierbarkeit infolge der Analytizität und erhalten
+	\begin{equation*}
+		f_1(z) = - f_0'(z) 
+		= \sum_{k=0}^\infty \ableitung{z} \frac{1}{(z_0 - a)^{k+1}} * (z-z_0)^k 
+		= \sum_{k=0}^\infty \frac{-(k+1)}{(z_0 - a)^{k+2}} * (z-z_0)^k
+	\end{equation*}
+	sowie
+	\begin{equation*}
+		f_2(z) = - \frac{1}{2} f_1'(z)
+		= \sum_{k=0}^\infty \frac{1}{2} \ableitung{z} \frac{-(k+1)}{(z_0 - a)^{k+2}} * (z-z_0)^k
+		= \sum_{k=0}^\infty \frac{(k+1)(k+2)}{2 (z_0 - a)^{k+3}} * (z-z_0)^k
+	\end{equation*}
+	
+	\begin{task}
+		Sei $\gamma \colon [0, 2\pi] \to \CC$, $\gamma(t) \defeq 2 e^{\i t}$. Berechnen Sie mithilfe der Cauchyschen Integralformeln für die Ableitungen das Integral $\int_\gamma f(z) \dz$ der folgenden Funktionen:
+		\begin{enumerate}
+			\item $f(z) = \frac{\cos(z)}{z^2}$
+			\item $f(z) = \frac{z^3}{(z+\i)^3}$
+			\item $f(z) = \frac{z * \cos(z)}{(z - \frac{\pi}{2})^2}$
+			\item $f(z) = \frac{z * e^z}{(z-4)^3}$
+		\end{enumerate} 
+	\end{task}
+
+	Sei $\Omega \subseteq \CC$ und $g \colon \Omega \to \CC$ holomorph auf $B_r(z_0)$. Weiter sei $z \notin \rand B_r(z_0)$. Dann gilt die Cauchysche Integralformel für die Ableitung von $g$ mit 
+	\begin{equation*}
+		g^{(k)}(z) = \frac{k!}{2 \pi \i} \int_{\abs{\xi - z_0} = r} \frac{g(\xi)}{(\xi - z)^{k+1}} \diffskip{\xi}
+	\end{equation*}
+	
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Betrachten wir $g(z) \defeq \cos(z)$ holomorph auf $\CC$ und $z = 0 \notin \rand B_2(0)$ sowie $z_0 = 0$. Dann gilt für die erste Ableitung ($k=1$)
+		\begin{equation*}
+			g'(0) = \frac{1!}{2 \pi \i} \int_{\abs{\xi} = 2} \frac{\cos(\xi)}{\xi^2} \diffskip{\xi}
+		\end{equation*}
+		und somit
+		\begin{equation*}
+			\int_\gamma f(z) \dz = 2 \pi \i * \cos'(0) = - 2 \pi \i \sin(0) = 0
+		\end{equation*}
+		
+		\item Betrachte $g(z) \defeq z^3$ holomorph auf $\CC$ und $z = - \i \notin \rand B_2(0)$. Für die zweite Ableitung gilt diesmal 
+		\begin{equation*}
+			g''(-\i) = \frac{2}{2 \pi \i} \int_{\abs{\xi} = 2} \frac{\xi^3}{(\xi + \i)^3} \diffskip{\xi} 
+		\end{equation*}
+		Damit berechnen wir das Integral
+		\begin{equation*}
+			\int_\gamma f(z) \dz = \pi \i * g''(-\i) = \pi \i * 6 (-\i) = 6 \pi
+		\end{equation*}
+		
+		\item Betrachte nun $g(z) \defeq z * \cos(z)$ holomorph auf $\CC$ und $z = \frac \pi 2 \notin B_2(0)$. Dann ist
+		\begin{equation*}
+			g'(\tfrac{\pi}{2}) = \frac{1}{2 \pi \i} \int_{\abs{\xi} = 2} \frac{\xi * \cos(\xi)}{(\xi - \tfrac{\pi}{2})^2} \diffskip{\xi}
+		\end{equation*}
+		d.h. für das Integral
+		\begin{equation*}
+			\int_\gamma f(z) \dz = 2 \pi \i * \left. \ableitung{z} z * \cos(z) \right\vert_{z = \tfrac{\pi}{2}} = 2 \pi \i \brackets{\cos\brackets{\tfrac{\pi}{2}} - \tfrac{\pi}{2} \sin\brackets{\tfrac{\pi}{2}}} = -\i \pi^2
+		\end{equation*}
+		
+		\item Betrachte $g(z) \defeq z * e^z$ holomorph auf $\CC$ und $z = 4 \notin \rand B_2(0)$. Die zweite Ableitung ist
+		\begin{equation*}
+			g''(4) = \frac{2}{2 \pi \i} \int_{\abs{\xi} = 2} \frac{\xi * e^\xi}{(\xi - 4)^3} \diffskip{\xi} 
+		\end{equation*}
+		und damit
+		\begin{equation*}
+			\int_\gamma f(z) \dz = \pi \i * g''(4) = \pi \i \left. e^z (z+2) \right\vert_{z = 4} = 6 \pi \i * e^4
+		\end{equation*}
+	\end{enumerate}
+
+	\begin{task}
+		Entwickeln Sie die Funktion $\displaystyle f(z) = \frac{z}{(z-1)(z-2)}$ in Laurentreihen, die in folgenden Ringgebieten konvergieren:
+		\begin{enumerate}
+			\item $\abs{z} < 1$
+			\item $1 < \abs{z} < 2$
+			\item $\abs{z} > 2$
+			\item $\abs{z-1} > 1$
+		\end{enumerate}
+	\end{task}
+
+	\begin{task}
+		Sei $\Omega \subseteq \Rn$ offen. Dann ist
+		\begin{equation*}
+			\Omega \text{ ist zusammenhängend} \equivalent \Omega \text{ ist wegzusammenhängend}
+		\end{equation*}
+	\end{task}
+
+	\begin{equivalence}
+		\rueckrichtung Diese Richtung haben wir bereits in der Vorlesung bewiesen.
+		\hinrichtung Sei $\Omega \neq \emptyset$ (sonst klar). Dann existiert $z_0 \in \Omega$ --- betrachte 
+		\begin{equation*}
+			\mathcal{G}_{z_0} = \menge{z \in \Omega : \text{ex. Weg } \gamma \colon [0,1] \to \Omega \mit \gamma(0) = z_0 \und \gamma(1) = z}
+		\end{equation*}
+		Mit dem konstanten Weg ist stets $z_0 \in \Omega$, d.h. $\mathcal{G}_{z_0} \neq \emptyset$.
+		
+		Da $\Omega$ offen ist und $\mathcal{G}_{z_0} \subseteq \Omega$, existiert für alle $z \in \mathcal{G}_{z_0}$ ein $\epsilon > 0$ sodass $B_\epsilon(z) \subseteq \Omega$. Die $\epsilon$-Kugeln sind wegzusammenhängend, d.h. wir können den Weg von $z_0$ nach $z$ fortsetzen zu einem Weg von $z_0$ nach $\quer{z} \in B_\epsilon(z)$. Demnach ist $B_\epsilon(z) \subseteq \mathcal{G}_{z_0}$ für alle $z \in \mathcal{G}_{z_0}$. Somit ist $\mathcal{G}_{z_0}$ offen. 
+		
+		Betrachte $\mathcal{H}_{z_0} \defeq \Omega \setminus \mathcal{G}_{z_0}$. Gibt es $\omega \in \mathcal{H}_{z_0}$, dann gibt es auch $\epsilon > 0$ mit $B_\epsilon(\omega) \subseteq \Omega$. Angenommen es gibt nun ein $\quer{z} \in \mathcal{G}_{z_0} \cap B_\epsilon(\omega)$. Dann existiert ein fortgesetzter Weg von $z_0$ nach $\quer{z}$, was heißen würde, dass $\omega \in \mathcal{G}_{z_0}$ im Widerspruch zur Annahme. Damit ist $B_\epsilon(\omega) \subseteq \mathcal{H}_{z_0}$. 
+		
+		Damit ist $\Omega = \mathcal{G}_{z_0} \cupdot \mathcal{H}_{z_0}$. Jedoch ist $\mathcal{G}_{z_0} \neq \emptyset$, d.h. es muss $\mathbb{H}_{z_0} = \emptyset$ und $\Omega = \mathcal{G}_{z_0}$ gelten. Damit ist $\Omega$ wegzusammenhängend.
+	\end{equivalence}
+
+	\begin{task}
+		Man beweise, dass es eindeutig bestimmte ganze Funktionen $J_n$ gibt, sodass für alle $(z,\zeta) \in \CC \times (\CC \setminus \menge{0})$ die Gleichung
+		\begin{equation*}
+			\exp\brackets{\frac{z}{2} \brackets{\zeta - \frac{1}{\zeta}}} = \sum_{n = -\infty}^\infty J_n(z) * \zeta^n
+		\end{equation*}
+		gilt.
+	\end{task}
+\end{exercisePage}
