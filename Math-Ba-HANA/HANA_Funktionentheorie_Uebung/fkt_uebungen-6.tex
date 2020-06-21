@@ -1,11 +1,11 @@
-\begin{exercisePage}
+\begin{exercisePage}[Reihenentwicklung \& Zusammenhang]
 	
 	\begin{task}
 		Bestimmen Sie die Potenzreihenentwicklung mit dem Mittelpunkt $z_0 \neq a$ für die Funktionen
 		\begin{equation*}
 			f_0(z) = \frac{1}{z-a} \qquad f_1(z) = \frac{1}{(z-a)^2} \qquad f_2(z) = \frac{1}{(z-a)^3}
 		\end{equation*}
-		Hinweis: Beachten Sie, dass $f_1 = -f_0*$ und $f_2 = -\frac{1}{2} f_1'$.
+		Hinweis: Beachten Sie, dass $f_1 = -f_0$ und $f_2 = -\frac{1}{2} f_1'$.
 	\end{task}
 
 	Unter Nutzung der geometrischen Reihe gilt
@@ -93,6 +93,81 @@
 		\end{enumerate}
 	\end{task}
 
+	Wir zerlegen die Funktion in
+	\begin{equation*}
+		f(z) = \frac{z}{(z-1)(z-2)} = \frac{2}{z-2} - \frac{1}{z-1}
+	\end{equation*}
+	
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Die Laurentenwicklung von $f$ soll für alle $\abs{z} < 1$ konvergieren. Mit der geometrischen Reihe erhalten wir
+		\begin{equation*}
+			\frac{2}{2-z} = -1 * \frac{1}{1 - \frac{1}{1 - \frac{z}{2}}} = \sum_{k=0}^\infty \frac{-1}{2^k} z^k
+		\end{equation*}
+		mit Konvergenzradius $2$. Der andere Summand ergibt sich zu
+		\begin{equation*}
+			\frac{-1}{z-1} = \frac{1}{1-z} = \sum_{k=0}^\infty z^k
+		\end{equation*}
+		mit Konvergenzradius $1$. Damit konvergiert die Laurentreihe
+		\begin{equation*}
+			f(z) = \sum_{k=0}^\infty \brackets{1 - \frac{1}{2^k}} z^k
+		\end{equation*}
+		ohne Hauptteil auf dem Schnitt der Konvergenzgebiete der beiden Summanden, d.h. $f$ konvergiert für alle $\abs{z} < 1$ wie gefordert.
+		
+		\item Wir wollen das Konvergenzgebiet $1 < \abs{z} < 2$ erreichen. Dazu nutzen wir den ersten Summanden aus (a) mit Konvergenz auf $B_2(0)$. Für den zweiten erhalten wir
+		\begin{equation*}
+			\frac{-1}{z-1} = -\frac{1}{z} * \frac{1}{1 - \frac{1}{z}} = -\frac{1}{z} \sum_{k=0}^\infty \frac{1}{z^k} = - \sum_{k=0}^\infty \frac{1}{z^{k+1}} = - \sum_{k=-1}^{-\infty}	z^k	
+		\end{equation*}
+		mit Konvergenz auf $\CC \setminus \quer{B_1(0)}$ und wir erhalten für die Laurentreihe 
+		\begin{equation*}
+			f(z) = \sum_{k=0}^\infty -\frac{1}{2^k} z^k + \sum_{k=-1}^{-\infty} -z^k
+		\end{equation*}
+		das Konvergenzgebiet $B_2(0) \cap \brackets{\CC \setminus \quer{B_1(0)}} = B_2(0) \setminus \quer{B_1(0)}$, d.h. Konvergenz für alle $1 < \abs{z} < 2$.
+		
+		\item Nun wollen wir Konvergenz für alle $\abs{z} > 2$ erreichen und nutzen dafür unsere Darstellung aus Teil (b) sowie
+		\begin{equation*}
+			\frac{2}{z-2} = \frac{2}{z} * \frac{1}{1 - \frac{2}{z}} = \frac{2}{z} \sum_{k=0}^\infty \abs{\frac 2 z}^k = \sum_{k=-1}^{-\infty} \brackets{\frac 1 2}^k z^k
+		\end{equation*}
+		mit Konvergenz auf $\abs{z} > 2$. Der zweite Summand in Teil (b) hatte Konvergenz auf $\abs{z} > 1$ und somit ist die Laurentreihenentwicklung von $f$ gegeben durch
+		\begin{equation*}
+			f(z) = \sum_{k=-1}^{-\infty} \brackets{\frac 1 2}^k z^k + \sum_{k=-1}^{-\infty} -z^k = \sum_{k=-1}^{-\infty} \brackets{\brackets{\frac 1 2}^k - 1} * z^k
+		\end{equation*}
+		konvergent für alle $\abs{z} > 2$.
+		
+		\item Betrachten wir den ersten Summanden:
+		\begin{equation*}
+			\frac{2}{z-2} = \frac{2}{(z-1)-1} = \frac{2}{z-1} * \frac{1}{1 - \frac{1}{z-1}} = 2 \sum_{k=-1}^{-\infty} (z-1)^k
+		\end{equation*}
+		Für den zweiten betrachten wir eine weitere Zerlegung: es ist
+		\begin{equation*}
+			\frac{1}{(z-1)-1} = \frac{1}{z-1} * \frac{1}{1 - \frac{1}{z-1}} = \sum_{k=-1}^{-\infty} (z-1)^k
+		\end{equation*}
+		und
+		\begin{equation*}
+			\begin{aligned}
+				\frac{1}{z-1} - \frac{1}{(z-1) - 1} 
+				= \frac{z-2-z+1}{(z-1)((z-1)-1)}
+				= \frac{-1}{(z-1)^2 - (z-1)}
+				&= -\frac{1}{(z-1)^2} * \frac{1}{1 - \frac{1}{z-1}} \\
+				&= -\sum_{k=-2}^{-\infty} (z-1)^k
+			\end{aligned}
+		\end{equation*}
+		Alle drei Reihen konvergieren nun auf $\CC \setminus \quer{B_1(1)}$. Nun können wir $f$ darstellen als
+		\begin{equation*}
+			\begin{aligned}
+				f(z) &= \frac{2}{z-2} - \brackets{\frac{1}{z-1} - \frac{1}{(z-1) -1}} - \frac{1}{(z-1)-1} \\
+				&= 2 \sum_{k=-1}^{-\infty} (z-1)^k + \sum_{k=-2}^{-\infty} (z-1)^k - \sum_{k=-1}^{-\infty} (z-1)^k \\
+				&= \sum_{k=-2}^{-\infty} (z-1)^k + \sum_{k=-1}^{-\infty} (z-1)^k \\
+				&= \sum_{k=-1}^{-\infty} (2 - \delta_{-1}(k)) (z-1)^k 
+				\qquad \text{wobei } \delta_{-1}(k) = \begin{cases}
+				1 & \text{wenn } k = -1 \\
+				0 & \text{sonst} 
+				\end{cases}
+			\end{aligned}
+		\end{equation*}
+		Diese Laurentreihe konvergiert also für alle $\abs{z-1} > 1$.
+	\end{enumerate}
+	
+
 	\begin{task}
 		Sei $\Omega \subseteq \Rn$ offen. Dann ist
 		\begin{equation*}
@@ -106,13 +181,13 @@
 		\begin{equation*}
 			\mathcal{G}_{z_0} = \menge{z \in \Omega : \text{ex. Weg } \gamma \colon [0,1] \to \Omega \mit \gamma(0) = z_0 \und \gamma(1) = z}
 		\end{equation*}
-		Mit dem konstanten Weg ist stets $z_0 \in \Omega$, d.h. $\mathcal{G}_{z_0} \neq \emptyset$.
+		Mit dem konstanten Weg ist stets $z_0 \in \mathcal{G}_{z_0}$, d.h. $\mathcal{G}_{z_0} \neq \emptyset$ für alle $z_0 \in \Omega$.
 		
-		Da $\Omega$ offen ist und $\mathcal{G}_{z_0} \subseteq \Omega$, existiert für alle $z \in \mathcal{G}_{z_0}$ ein $\epsilon > 0$ sodass $B_\epsilon(z) \subseteq \Omega$. Die $\epsilon$-Kugeln sind wegzusammenhängend, d.h. wir können den Weg von $z_0$ nach $z$ fortsetzen zu einem Weg von $z_0$ nach $\quer{z} \in B_\epsilon(z)$. Demnach ist $B_\epsilon(z) \subseteq \mathcal{G}_{z_0}$ für alle $z \in \mathcal{G}_{z_0}$. Somit ist $\mathcal{G}_{z_0}$ offen. 
+		Sei $z_0 \in \Omega$ beliebig. Da $\Omega$ offen ist und $\mathcal{G}_{z_0} \subseteq \Omega$, existiert für alle $z \in \mathcal{G}_{z_0}$ ein $\epsilon > 0$ sodass $B_\epsilon(z) \subseteq \Omega$. Die $\epsilon$-Kugeln sind wegzusammenhängend, d.h. wir können den Weg von $z_0$ nach $z$ fortsetzen zu einem Weg von $z_0$ nach $\quer{z} \in B_\epsilon(z)$. Demnach ist $B_\epsilon(z) \subseteq \mathcal{G}_{z_0}$ für alle $z \in \mathcal{G}_{z_0}$ und $\mathcal{G}_{z_0}$ also offen für alle $z_0 \in \Omega$. 
 		
-		Betrachte $\mathcal{H}_{z_0} \defeq \Omega \setminus \mathcal{G}_{z_0}$. Gibt es $\omega \in \mathcal{H}_{z_0}$, dann gibt es auch $\epsilon > 0$ mit $B_\epsilon(\omega) \subseteq \Omega$. Angenommen es gibt nun ein $\quer{z} \in \mathcal{G}_{z_0} \cap B_\epsilon(\omega)$. Dann existiert ein fortgesetzter Weg von $z_0$ nach $\quer{z}$, was heißen würde, dass $\omega \in \mathcal{G}_{z_0}$ im Widerspruch zur Annahme. Damit ist $B_\epsilon(\omega) \subseteq \mathcal{H}_{z_0}$. 
+		Betrachte $\mathcal{H}_{z_0} \defeq \Omega \setminus \mathcal{G}_{z_0}$. Gibt es $\omega \in \mathcal{H}_{z_0}$, dann gibt es auch $\epsilon > 0$ mit $B_\epsilon(\omega) \subseteq \Omega$ (Offenheit von $\Omega$). Angenommen es gibt nun ein $\quer{z} \in \mathcal{G}_{z_0} \cap B_\epsilon(\omega)$. Dann existiert für den Weg von $z_0$ nach $\quer{z}$ (da $\quer{z} \in \mathcal{G}_{z_0}$) eine Fortsetzung bis $\omega$, was heißen würde, dass $\omega \in \mathcal{G}_{z_0}$ im Widerspruch zur Annahme. Damit ist $B_\epsilon(\omega) \subseteq \mathcal{H}_{z_0}$. 
 		
-		Damit ist $\Omega = \mathcal{G}_{z_0} \cupdot \mathcal{H}_{z_0}$. Jedoch ist $\mathcal{G}_{z_0} \neq \emptyset$, d.h. es muss $\mathbb{H}_{z_0} = \emptyset$ und $\Omega = \mathcal{G}_{z_0}$ gelten. Damit ist $\Omega$ wegzusammenhängend.
+		Damit ist $\Omega = \mathcal{G}_{z_0} \cupdot \mathcal{H}_{z_0}$ offen. Jedoch ist $\Omega$ nach Voraussetzung zusammenhängend und $\mathcal{G}_{z_0} \neq \emptyset$, d.h. es muss $\mathcal{H}_{z_0} = \emptyset$ und $\Omega = \mathcal{G}_{z_0}$ gelten. Damit ist $\Omega$ wegzusammenhängend.
 	\end{equivalence}
 
 	\begin{task}
