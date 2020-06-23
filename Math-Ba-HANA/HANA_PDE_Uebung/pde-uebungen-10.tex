@@ -1,0 +1,42 @@
+\begin{exercisePage}
+	
+	\setcounter{taskcount}{27}
+	
+	\begin{task}
+		Es sei $u\colon (0,1) \to \mathbb R$. Zeigen Sie:
+		\begin{enumerate}
+			\item Ist $u$ stetig und stückweise stetige differenzierbar mit gleichmäßig beschränkter Ableitung, so hat $u$ eine stückweise stetige schwache Ableitung.
+			\item Ist $u$ stückweise gleichmäßig stetig und ist $x_0 \in (0,1)$ eine Sprungstelle von $u$, so hat $u$ \textit{keine} schwache Ableitung.
+		\end{enumerate} 
+	\end{task}
+	
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Sei $0 = x_1 < x_2 < \dots < x_n = 1$ eine Zerlegung des Intervalls $(0,1)$, sodass $\left. u \right\vert_{(x_i, x_{i+1})} \defqe u_i$ für alle $i = 0, \dots, n-1$ stetig differenzierbar ist. Aufgrund der gleichmäßigen Beschränktheit von $u'$ existiert ein $0 < C < \infty$, sodass $u_i'(x) \le C$ für alle $x \in (x_i, x_{i+1})$ und alle $i \in \menge{0, 1, \dots, n-1}$. Dann gilt
+		\begin{equation*}
+			\int u'(x) \dx = \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} u_i'(x) \dx \le \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} C \dx = \sum_{i=0}^{n-1} C * \underbrace{\abs{x_{i+1} - x_i}}_{\le 1} \le (n+1) C < \infty
+		\end{equation*}
+		und somit $u' \in L^1_{\text{loc}}(0,1)$. Außerdem gilt mit stückweiser partieller Integration für alle $\phi \in C_0^\infty(0,1)$
+		\begin{equation*}
+			\begin{aligned}
+				\int_0^1 u * \phi' \dx 
+				= \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} u_i * \phi' \dx 
+				&= \sum_{i=0}^{n-1} \sqbrackets{u_i * \phi}_{x_i}^{x_{i+1}} - \int_{x_i}^{x_{i+1}} u_i' * \phi \dx \\
+				&= \sqbrackets{u * \phi}_0^1 - \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} u_i' * \phi \dx \\ 
+				&= - \sum_{i=0}^{n-1} \int_{x_i}^{x_{i+1}} u_i' * \phi \dx \\
+				&= - \int_0^1 u' * \phi \dx
+			\end{aligned}
+		\end{equation*}
+		wobei $\sqbrackets{u \phi}_0^1 = 0$, da $\phi(0) = \phi(1) = 0$ wegen $\phi \in C_0^\infty(0,1)$.
+		Somit ist $u' \in L_{\text{loc}}^1(0,1)$ und es gilt $\int_0^1 u \phi' \dx = - \int_0^1 u' \phi \dx$ für alle $\phi \in C_0^\infty(0,1)$, d.h. $u'$ ist schwache Ableitung von $u$ auf $(0,1)$. Die stückweise Stetigkeit folgt dabei aus der stetigen Differenzierbarkeit von $u_i$ für alle $i \in \menge{0, \dots, n-1}$.
+	\end{enumerate}
+
+
+	\begin{task}
+		Es seien $U \subset \mathbb R^n$ offen und beschränkt und $u,v \in W^{k,p}(U)$. Zeigen Sie:
+		\begin{enumerate}
+			\item $D^\beta(D^\alpha u) = D^{\alpha + \beta} u$, für alle $\alpha, \beta$ mit $|\alpha| + |\beta| \leq k$. 
+			\item $\lambda u + \mu v \in W^{k,p}(U)$ mit $D^\alpha(\lambda u + \mu v) = \lambda D^\alpha u + \mu D^\alpha v$ für alle $\lambda, \mu \in \mathbb{R}$ und $|\alpha|\leq k$.
+			\item $u|_V \in W^{k,p}(V)$ für jede offene Menge $V\subset U$.
+		\end{enumerate}	
+	\end{task}
+\end{exercisePage}
