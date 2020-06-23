@@ -39,4 +39,17 @@
 			\item $u|_V \in W^{k,p}(V)$ für jede offene Menge $V\subset U$.
 		\end{enumerate}	
 	\end{task}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*, start=2]
+		\item Der Sobolev-Raum $W^{k,p}(U)$ ist ein Banachraum, d.h. insbesondere ein Vektorraum über dem Körper $\R$. Somit ist er abgeschlossen unter Linearkombination und aus $u,v \in W^{k,p}(U)$ folgt auch, dass für alle $\lambda, \mu \in \R$ schon $\lambda u + \mu v \in W^{k,p}(U)$. Weiterhin ist wegen $u,v \in W^{k,p}(U)$ für $\abs{\alpha} \le k$ auch
+		\begin{equation*}
+			\begin{aligned}
+				\int_U (\lambda u + \mu v) * D^\alpha \phi \dx 
+				&= \int_U \lambda u * D^\alpha \phi + \mu v * D^\alpha \phi \dx \\
+				&= \lambda * \int_U u * D^\alpha \phi \dx + \mu \int_U v * D^\alpha \phi \dx \\
+				&= \lambda * (-1)^{\abs{\alpha}} * \int_U D^\alpha u * \phi \dx + \mu * (-1)^{\abs{\alpha}} \int_U D^\alpha v * \phi \dx \\
+				&= (-1)^{\abs{\alpha}} \int_U \underbrace{\brackets{\lambda D^\alpha u + \mu D^\alpha v}}_{= D^\alpha(\lambda u + \mu v)} * \phi \dx
+			\end{aligned}
+		\end{equation*}
+		und daher $D^\alpha (\lambda u + \mu v) = \lambda D^\alpha u + \mu D^\alpha v$ für alle $u,v \in W^{k,p}(U)$ und alle $\lambda, \mu \in \R$ sowie $\abs{\alpha} \le k$.
+	\end{enumerate}
 \end{exercisePage}
