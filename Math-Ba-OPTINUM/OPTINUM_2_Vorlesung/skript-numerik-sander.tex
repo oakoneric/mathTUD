@@ -1,6 +1,6 @@
 \documentclass[german]{scrreprt}
 
-\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=4cm]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -281,6 +281,10 @@
 %%  All graphics files may be in this subdirectory
 \graphicspath{{gfx/}}
 %\includeonly{numerische-quadratur}
+
+\usepackage{todonotes}
+\newcommand{\note}[2][]
+{\todo[color=cdblue!10, #1]{#2}}
 \begin{document}
 
 %\frontmatter

@@ -2,6 +2,586 @@
 
 \input{12-1-hamiltonSysteme}
 
+\section{Symplektizität}
+
+Flüsse von Hamiltonschen Systemen haben eine weitere wichtige Erhaltungseigenschaft, die sogenannte \begriff{Symplektizität}, die ähnlich wie Volumenerhaltung im Phasenraum vorstellbar ist.
+
+\begin{bsp}
+	Volumenerhaltung beim mathematischen Pendel (Bild aus \cite{hairer_lubich_wanner:2006}):
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{pendulum-symplecticity-cats}
+	\end{center}
+\end{bsp}
+
+
+
+Betrachte die Hamiltonschen Gleichungen
+\begin{equation*}
+	\dot p = - \frac{\partial H}{\partial q}(p, q),
+	\quad
+	\dot q = \frac{\partial H}{\partial p}(p, q)
+\end{equation*}
+
+Umschreiben:
+\begin{equation*}
+	\begin{pmatrix} \dot p \\ \dot q \end{pmatrix}
+	=
+	\begin{pmatrix} 0 & I \\ -I & 0 \end{pmatrix}^{-1}
+	\begin{pmatrix} \frac{\partial H}{\partial p} \\ \frac{\partial H}{\partial q} \end{pmatrix}
+\end{equation*}
+
+Diese Beziehung wollen wir jetzt abstrakter betrachten.
+
+\begin{bem}
+	Die harmlos aussehende Matrix $\left(\begin{smallmatrix} 0 & I \\ -I & 0 \end{smallmatrix}\right)$ hat eine besondere Eigenschaft.
+	Es gilt nämlich
+	\begin{equation*}
+		\begin{pmatrix} 0 & I \\ -I & 0 \end{pmatrix}^2
+		= - \begin{pmatrix} I & 0 \\ 0 & I \end{pmatrix}.
+	\end{equation*}
+	Sie verhält sich also wie die imaginäre Einheit $i$ und erzeugt damit eine komplexe Struktur auf $\R^{2d}$.
+\end{bem}
+
+Wir betrachten $2$-dimensionale Parallelogramme in $\R^{2d}$ aufgespannt durch Vektoren
+\begin{equation*}
+	\xi = \begin{pmatrix} \xi^p \\ \xi^q \end{pmatrix},
+	\quad
+	\eta = \begin{pmatrix} \eta^p \\ \eta^q \end{pmatrix}.
+\end{equation*}
+Hier und im Folgenden bezeichnen $\xi^p \in \R^d$ und $\xi^q \in \R^d$ die Impuls- bzw.\ Ortskomponenten
+von $\xi$.
+
+Falls $d = 1$, so ist die orientierte Fläche des Parallelogramms gerade
+\begin{equation*}
+	\det\begin{pmatrix} \xi^p & \eta^p \\ \xi^q & \eta^q \end{pmatrix}
+	= \xi^p \eta^q - \xi^q \eta^p
+	= (\xi^p \quad \xi^q)
+	\begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}
+	\begin{pmatrix} \eta^p \\ \eta^q \end{pmatrix}.
+\end{equation*}
+
+Das verallgemeinern wir jetzt für höhere Dimensionen.
+
+\begin{definition}[Symplektische Form]
+	Die symplektische Form $\omega: \R^{2d} \times \R^{2d} \to \R$ ist
+	\begin{equation*}
+		\omega(\xi, \eta)
+		\colonequals \sum_{i=1}^d \det\begin{pmatrix} \xi_i^p & \eta_i^p \\ \xi_i^q & \eta_i^q \end{pmatrix}
+		= \sum_{i=1}^d \left( \xi_i^p \eta_i^q - \xi_i^q \eta_i^p \right).
+	\end{equation*}
+\end{definition}
+
+\begin{itemize}
+	\item Bilineare Form
+	\item Interpretation: Summe der orientierten Flächen der Projektionen auf die Koordinatenebenen $(p_i, q_i)$.
+	\item Matrixdarstellung
+	\begin{equation*}
+		\omega(\xi, \eta) =
+		\begin{pmatrix} {\xi^p}^T & {\xi^q}^T \end{pmatrix}
+		\begin{pmatrix} 0 & I \\ -I & 0 \end{pmatrix}
+		\begin{pmatrix} \eta^p \\ \eta^q \end{pmatrix}.
+	\end{equation*}
+\end{itemize}
+
+Da die Matrix $\begin{pmatrix} 0 & I \\ -I & 0 \end{pmatrix}$ wichtig zu sein scheint geben wir ihr den Namen $J$.
+
+Eine wichtige Eigenschaft von Hamiltonschen Systemen ist nun, dass ihre Flüsse $\Phi^t \colon \R^{2d} \to \R^{2d}$ die symplektische Form erhalten. Das muss man natürlich erklären.
+
+\begin{definition}[Lineare symplektische Abbildung]
+	Eine lineare Abbildung $A: \R^{2d} \to \R^{2d}$ heißt \emph{symplektisch}, wenn
+	\begin{equation*}
+		\omega(A\xi, A\eta) = \omega(\xi, \eta) \qquad \forall \xi, \eta \in \R^{2d}.
+	\end{equation*}
+	Alternativ: wenn $A^T J A = J$.
+\end{definition}
+
+\begin{bem}
+	Für $d=1$ bedeutet das gerade, dass $A$ flächenerhaltend ist.
+\end{bem}
+
+\begin{definition}[Differenzierbare symplektische Abbildung]
+	Sei $U$ eine offene Teilmenge von $\R^{2d}$.
+	Eine differenzierbare Abbildung $g: U \to \R^{2d}$ heißt \begriff{symplektisch}, falls die Jacobi-Matrix $\nabla g(p,q)$ für alle $(p, q) \in U$ symplektisch ist.
+\end{definition}
+
+Jetzt kommt der zentrale Satz: die Flüsse $\Phi^t$ von Hamiltonschen Systemen erhalten die symplektische Form:
+
+\begin{satz}[Poincaré, 1899]
+	Sei $H(p, q)$ zweimal stetig differenzierbar auf $U \subset \R^{2d}$.
+	Sei $\Phi^t$ der Phasenfluss der Differentialgleichung
+	\begin{equation*}
+		\dot y = J^{-1} \nabla H(y)
+	\end{equation*}
+	mit $y = (p, q)$.
+
+	Für jedes feste $t$ ist $\Phi^t$ eine symplektische Abbildung.
+\end{satz}
+
+\begin{proof}
+	Der Beweis erfolgt in zwei Schritten:
+	\begin{enumerate}
+		\item $\Phi^0$ ist symplektisch.
+		\item Die \enquote{Abweichung von der Symplektizität} hängt nicht von $t$ ab.
+	\end{enumerate}
+	
+	\begin{enumerate}[label=(zu \arabic*), leftmargin=*]
+		\item $\Phi^0$ ist symplektisch, wenn seine erste Ableitung an jedem Punkt $y_0 = (p_0, q_0)$ symplektisch ist. Da $\Phi^0 y_0 = y_0$ gilt
+		\begin{equation*}
+			\left( \frac{\partial \Phi^0 y_0}{\partial y_0} \right)^T J \left( \frac{\partial \Phi^0 y_0}{\partial y_0} \right)
+			= I^T J I
+			= J
+		\end{equation*}
+		Also ist $\Phi^0$ symplektisch.
+		
+		\item Wir müssen die Ableitung $\frac{\partial \Phi^t y_0}{\partial y_0}$ untersuchen, d.h. die linearisierte Störung der Lösung bei einer Störung des Startwerts -- also gerade die Wronski-Matrix $\Xi$. Diese löst die Gleichung
+		\begin{equation*}
+			\dot \Xi = J^{-1} \underbrace{\nabla^2 H( \Phi^t(y_0) )}_{\text{Hesse-Matrix von $H$}} \Xi
+		\end{equation*}
+		Konkret heißt das hier
+		\begin{equation}
+			\label{eq:wronski_symplectic_form}
+			\frac{d}{dt} \frac{\partial \Phi^t}{\partial y_0}
+			= J^{-1} \nabla^2 H(\Phi^t y_0) \frac{\partial \Phi^t}{\partial y_0}
+		\end{equation}
+		Die Produktregel liefert uns
+		\begin{equation*}
+			\frac{d}{dt}\bigg[ \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)^T J \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg) \bigg]
+			= \bigg( \frac{d}{dt} \frac{\partial \Phi^t}{\partial y_0} \bigg)^T J \bigg( \frac{\partial \Phi^t}{\partial y_0} \bigg)
+			+ \bigg( \frac{\partial \Phi^t}{\partial y_0} \bigg)^T J \bigg( \frac{d}{dt} \frac{\partial \Phi^t}{\partial y_0} \bigg)
+		\end{equation*}
+		Dort wird jetzt \eqref{eq:wronski_symplectic_form} eingesetzt:
+		\begin{equation*}
+			\frac{d}{dt}\bigg[ \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)^T J \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg) \bigg]
+			=
+			\bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)^T \nabla^2 H(\Phi^t y_0)^T J^{-T} J \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)
+			+ \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)^T J J^{-1} \nabla^2 H(\Phi^t y_0) \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)
+		\end{equation*}
+		Aber $J^T = -J$, also $J^{-T} J = -I$, und $\nabla^2 H$ ist symmetrisch. Deshalb ist
+		\begin{equation*}
+			\frac{d}{dt}\bigg[ \bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg)^T
+			J
+			\bigg(\frac{\partial \Phi^t}{\partial y_0}\bigg) \bigg]
+			= 0
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+
+Es gilt sogar die Umkehrung des Satzes:
+\textit{nur} Hamiltonsche Systeme haben symplektische Flüsse!
+
+\begin{definition}[lokal Hamiltonsch]
+	Eine Differentialgleichung $x' = f(x)$ heißt \begriff{lokal Hamiltonsch}, wenn für jedes $x_0 \in U$ eine Umgebung existiert, in der
+	\begin{equation*}
+		f(x) = J^{-1} \nabla H(x)
+	\end{equation*}
+	für eine Funktion $H$.
+\end{definition}
+
+\begin{satz}[{{{\cite[Satz~VI.2.6]{hairer_lubich_wanner:2006}}}}]
+	Sei $f \colon U \to \R^{2d}$ stetig differenzierbar.
+	Dann ist $x' = f(x)$ genau dann lokal Hamiltonsch, wenn der Fluss $\Phi^t x$ für alle $x \in U$ und alle $t$ hinreichend klein symplektisch ist.
+\end{satz}
+
+
+
+
+\section{Symplektische Verfahren}
+
+Wir wollen Verfahren entwickeln, die die Symplektizität von Hamiltonschen Flüssen erben.
+
+\begin{definition}
+	Ein Einschrittverfahren heißt symplektisch, falls der diskrete Fluss
+	\begin{equation*}
+		\Psi^t \colon \R^{2d}\to\R^{2d}
+	\end{equation*}
+	symplektisch ist, wenn das Verfahren auf ein Hamiltonsches System angewendet wird.
+\end{definition}
+
+Die einfachsten symplektischen Verfahren sind die symplektischen Euler-Verfahren
+\begin{align*}
+	p_{k+1} &= p_k - \tau H_q(p_{k+1},q_k) \\
+	q_{k+1} &= q_k + \tau H_p(p_{k+1},q_k)
+\end{align*}
+und
+\begin{align*}
+	p_{k+1} &= p_k - \tau H_q(p_k,q_{k+1}) \\
+	q_{k+1} &= q_k + \tau H_p(p_k,q_{k+1}).
+\end{align*}
+
+\begin{satz}[{{\cite[Satz~VI.3.3]{hairer_lubich_wanner:2006}}}]
+	Die symplektischen Euler-Verfahren sind symplektisch.
+\end{satz}
+\begin{proof}
+	Beweis für die erste Methode:
+	\begin{itemize}
+		\item Methode ist symplektisch, wenn
+		\begin{equation*}
+		\frac{\partial\Psi^\tau y}{\partial y}\in \R^{2d\times 2d}
+		\end{equation*}
+		für alle $y=(p,q)$ die symplektisch Form erhält, wenn also
+		\begin{equation}\label{eq:symplektische_form}
+		\Big(\frac{\partial\Psi^\tau y}{\partial y}\Big)^TJ\Big(\frac{\partial\Psi^\tau y}{\partial y}\Big) = J.
+		\end{equation}
+		\item Wir bestimmen die vier Komponenten von $\frac{\partial\Psi^\tau y}{\partial y}$:
+		\item [1)] Erste Gleichung des Verfahrens:
+		\begin{equation*}
+		p_{k+1} = p_k - \tau H_q(p_{k+1},q_k)
+		\end{equation*}
+		Ableiten nach $p_k$:
+		\begin{equation*}
+		\frac{\partial p_{k+1}}{\partial p_k} = I - \tau H_{qp}(p_{k+1},q_k)\cdot \frac{\partial p_{k+1}}{\partial p_k}
+		\end{equation*}
+		$\Leftrightarrow$
+		\begin{equation*}
+		\frac{\partial p_{k+1}}{\partial p_k}\Big(I + \tau H_{qp}\Big) = I
+		\end{equation*}
+		Ebenso z.B.
+		\begin{equation*}
+		\frac{\partial p_{k+1}}{\partial q_k}\Big(I + \tau H_{qp}\Big) = -\tau H_{qq}
+		\end{equation*}
+		etc.
+	\end{itemize}
+	Zusammen erhält man
+	\begin{equation*}
+	\begin{pmatrix}
+	I + \tau H_{qp}^T & 0 \\ -\tau H_{pp} & I
+	\end{pmatrix}
+	\begin{pmatrix}
+	\frac{\partial p_{k+1}}{\partial p_k} & 	\frac{\partial p_{k+1}}{\partial q_k} \\
+	\frac{\partial q_{k+1}}{\partial p_k}  & 	\frac{\partial q_{k+1}}{\partial q_k}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	I & -\tau H_{qq} \\ 0 & I+\tau H_{qp}
+	\end{pmatrix},
+	\end{equation*}
+	also
+	\begin{equation*}
+	\frac{\partial \Psi^\tau y}{\partial y} = \begin{pmatrix}
+	I + \tau H_{qp}^T & 0 \\ -\tau H_{pp} & I
+	\end{pmatrix}^{-1} \begin{pmatrix}
+	I & -\tau H_{qq} \\ 0 & I+\tau H_{qp}
+	\end{pmatrix}.
+	\end{equation*}
+	Damit kann man die Erhaltungseigenschaft \eqref{eq:symplektische_form} direkt nachrechnen.
+\end{proof}
+
+Die symplektischen Euler-Verfahren sind \emph{keine} RK-Verfahren. 
+Stattdessen gehören sie zu den sog.\ \emph{partitionierten} RK-Verfahren.
+Betrachte Differentialgleichungen der Form
+\begin{equation*}
+	y'=f(y,z),\qquad z'=g(y,z),
+\end{equation*}
+wobei $y\in\R^{n_1}$ und $z\in\R^{n_2}$. 
+
+\textbf{Idee:} Nimm für $y$ und $z$ zwei verschiedene RK-Verfahren.
+Details bei \cite[Kapitel II.2]{hairer_lubich_wanner:2006}
+
+Es gibt auch ein \enquote{einfaches} Verfahren zweiter Ordnung, das symplektisch ist.
+\begin{satz}[{{\cite[Satz~VI.3.5]{hairer_lubich_wanner:2006}}}]
+	Die implizite Mittelpunktsregel
+	\begin{equation*}
+		y_{k+1} = y_k + \tau J^{-1}\nabla H\Big( \frac{y_{k+1}+y_k}{2}\Big)
+	\end{equation*}
+	ist symplektisch.
+\end{satz}
+\begin{proof}
+	Wir leiten wieder ab
+	\begin{align*}
+		\frac{\partial \Psi^\tau y_k}{\partial y_k} &= \frac{\partial y_{k+1}}{\partial y_k} \\
+		&= I + \tau J^{-1} \nabla^2 H\Big( \frac{y_{k+1} + y_k}{2} \Big) \cdot \Big( \frac{1}{2} \frac{\partial y_{k+1}}{y_k} + \frac{1}{2}\Big).
+	\end{align*}
+	Umformen ergibt
+	\begin{align*}
+		\frac{\partial y_{k+1}}{\partial y_k}
+		&= \Big( I - \frac{\tau}{2} J^{-1}\nabla^2H\Big)^{-1}\Big(I+\frac{\tau}{2}J^{-1}\nabla^2 H\Big).
+	\end{align*}
+	Dann kann man direkt nachrechnen dass
+	$\Big(\frac{\partial y_{k+1}}{\partial y_k}\Big)^T J \frac{\partial y_{k+1}}{\partial y_k} = J$.
+
+	\todoannot{1.5\baselineskip}{Ein paar Details zu dieser Rechnung einfügen!}
+\end{proof}
+
+
+\subsection{Symplektische RK-Verfahren}
+
+Dabei handelt es sich um relativ neue Verfahren, die erst Ende der 1980er Jahre systematisch untersucht wurden.
+
+Wir interessieren uns wieder für die Ableitung
+\begin{equation*}
+	\Xi(t) = \frac{\partial \Phi^t y_0}{\partial y_0}.
+\end{equation*}
+Diese löst bekanntlich eine lineare Differentialgleichung.
+
+\begin{lemma}[{{\cite[Lemma VI.4.1]{hairer_lubich_wanner:2006}}}]
+	Das folgende Diagramm kommutiert für alle Runge-Kutta-Verfahren und alle partitionierten Runge-Kutta-Verfahren:\\
+	\begin{center}
+		\begin{tikzpicture}
+		\draw (0,0)  node{$\{y_k\}$};
+		\draw[->] (1,0) -- node[above]{$\frac{\partial}{\partial y_0}$} (3,0); 
+		\draw (5,0) node{$\{y_k,\Xi_k\}$};
+		\draw[->] (0,2)-- node[left]{RK-Verfahren}(0,1);
+		\draw[->] (5,2)-- node[right]{RK-Verfahren}(5,1);
+		\draw[->] (1,3)-- node[above]{$\frac{\partial}{\partial y_0}$}(3,3);
+		\draw (-1,3)  node{$\dot y = f(y),\ y(0)=y_0$};
+		\draw (5.5,3.2)  node{$\dot y = f(y),\quad y(0)=y_0$};
+		\draw (5.5,2.7)  node{$\dot\Xi = f'(y)\Xi,\quad \Xi(0)=I$};
+		\end{tikzpicture}
+	\end{center}
+\end{lemma}
+\begin{proof}[Beweisidee:] Betrachte exemplarisch das explizite Euler-Verfahren
+	\begin{equation*}
+		y_{k+1} = y_k +\tau f(y_k).
+	\end{equation*}
+	Ableiten nach $y_0$ ergibt
+	\begin{equation*}
+		\Xi_{k+1} = \Xi_k + \tau f'(y_k)\Xi_k.
+	\end{equation*}
+	Das ist gerade das explizite Euler-Verfahren für die Gleichung
+	\begin{equation*}
+		\dot \Xi = f'(y)\Xi.
+	\end{equation*}
+	Startwert passt auch, denn $I=\frac{\partial y_0}{\partial y_0} = \Xi_0$.
+\end{proof}
+
+
+\begin{idea}
+	Die Symplektizitätsbedingung ist eine quadratische Invariante des
+	erweiterten Systems für die Variablen $y$ und $\Xi$.
+\end{idea}
+
+\begin{satz}
+	Alle Verfahren die quadratische Invarianten erhalten sind symplektisch.
+\end{satz}
+\begin{proof}
+	Der quadratische Ausdruck $\Xi^T J\Xi$ is Invariante der Gleichung
+	\begin{equation*}
+		\dot \Xi = J^{-1}\nabla^2 H(y)\Xi,
+	\end{equation*}
+	denn
+	\begin{align*}
+		\frac{d}{dt}\Big(\Xi^T J\Xi\Big) & = \dot \Xi^T J\Xi + \Xi^T J\dot\Xi \\
+		& = (J^{-1}\nabla^2 H\Xi)^T J\Xi + \Xi^T JJ^{-1}\nabla^2 H \Xi \\
+		& = \Xi^T \nabla^2 H \underbrace{J^{-T}J}_{=-I} + \Xi^T\underbrace{ JJ^{-1}}_{=I} \nabla^2 H \Xi \\
+		& = 0
+	\end{align*}
+\end{proof}
+
+\begin{kor}
+	Gauß-Verfahren sind symplektisch.
+\end{kor}
+
+\subsection{Reversibilität vs.\ Symplektizität}
+
+Es gibt reversible Verfahren, die nicht symplektisch sind.
+Es gibt symplektische Verfahren, die nicht reversibel sind.
+
+Für quadratische Hamilton-Funktionen ist das aber anders.
+
+\begin{satz}[{{{\cite[Satz VI.4.9.]{hairer_lubich_wanner:2006}}}}]
+	Für RK-Verfahren sind die folgenden Aussagen äquivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item Die Methode ist reversibel für lineare Probleme
+		\begin{equation*}
+			\dot y = Ly
+		\end{equation*}
+		\item Die Methode ist symplektisch für Hamilton-Gleichungen mit quadratischer Hamilton-Funktion
+		\begin{equation*}
+			H(y) = \frac{1}{2} y^TCy.\qquad C\ s.p.d.
+		\end{equation*}
+	\end{enumerate}
+\end{satz}
+\begin{proof}
+	$ii) \to i)$\\
+	\begin{itemize}
+		\item Die Hamilton-Gleichungen haben die Form
+		\begin{equation*}
+		\dot y = J^{-1} \nabla H(y) = J^{-1}Cy,
+		\end{equation*}
+		sind also linear.
+		\item Das Runge-Kutta-Verfahren dafür hat also die Form
+		\begin{equation*}
+		\Psi^\tau y = R(\tau J^{-1} C) y
+		\end{equation*}
+		wobei $R$ die Stabilitätsfunktion ist.
+		\item Da das Verfahren symplektisch ist, gilt
+		\begin{equation*}
+		R(\tau J^{-1} C)^T J R(\tau J^{-1} C) = J.
+		\end{equation*}
+		
+		\item Da $R= PQ^{-1}$ für Polynome $P,Q$ erhält man
+		\begin{equation}\label{eq:beweis_symplektisch_symmetrisch}
+		P(\tau J^{-1} C)^T JP(\tau J^{-1} C) = Q(\tau J^{-1} C)^T J Q(\tau J^{-1} C).
+		\end{equation}
+		
+		\item Betrachte das Produkt \glqq Polynom in $J^{-1} C$\grqq\ mit $J$.
+		
+		\item Für jedes Monom $(J^{-1} C)^k$, $k \in \N$ gilt
+		($C$ ist symmetrisch, und $J^T = -J$)
+		\begin{align*}
+		((J^{-1} C)^k)^T J
+		& =
+		(C^T J^{-T})^k J \\
+		& =
+		\underbrace{C^TJ^{-T} \dots C^TJ^{-T}}_{\text{$k$ mal}} J \\
+		& =
+		-C^T\underbrace{J^{-T}C^T \dots J^{-T}C^T}_{\text{$k-1$ mal}} \\
+		& =
+		-C\underbrace{J^{-T}C \dots J^{-T}C}_{\text{$k-1$ mal}} \\
+		& =
+		-J^T J^{-T} C\underbrace{J^{-T}C \dots J^{-T}C}_{\text{$k-1$ mal}} \\
+		& =
+		-J^T (J^{-T}C)^k \\
+		& =
+		J(-J^{-1} C)^k.
+		\end{align*}
+		\item Also folgt aus \eqref{eq:beweis_symplektisch_symmetrisch}
+		\begin{equation*}
+		P(-\tau J^{-1} C)\cdot P(\tau J^{-1} C) =  Q(-\tau J^{-1} C)\cdot Q(\tau J^{-1} C)
+		\end{equation*}
+		bzw.
+		\begin{equation*}
+		R(-\tau J^{-1} C)\cdot R(\tau J^{-1} C) = I.
+		\end{equation*}
+		\item  Das ist gerade die Reversibilität des Verfahrens.
+	\end{itemize}
+\end{proof}
+
+\section{Energieerhaltung}
+
+Wir haben einige Mühe in Verständnis und Erhaltung der Symplektizität gesteckt.
+Aber Symplektizität ist eine sehr abstrakte Eigenschaft. Wozu soll die gut sein? Hier komme eine etwas konkretere Rechtfertigung.
+
+Betrachte das mathematische Pendel.
+\begin{itemize}
+	\item Kinetische Energie:
+	\begin{equation*}
+		T(q, \dot q) = \frac{m l^2}{2} \dot q
+	\end{equation*}
+	($q$ ist der Winkel)
+	\item Potentielle Energie:
+	\begin{equation*}
+		U(q) = -mgl \cos q
+	\end{equation*}
+	\item Bewegungsgleichungen:
+	\begin{equation*}
+		\ddot q + \frac gl \sin q = 0
+	\end{equation*}
+	\item Gesamtenergie:
+	\begin{equation*}
+		E = \frac{m l^2}2 \dot q^2 - mgl \cos q
+	\end{equation*}
+	Dies entspricht der Hamilton-Funktion
+	\begin{equation*}
+		H(p, q) = \frac{1}{2ml^2} p^2 - mgl \cos q
+	\end{equation*}
+	Damit ist die Gesamtenergie eine Erhaltungsgröße!
+	\item Aber: weder linear noch quadratisch.
+	Wird daher nicht automatisch von z.B. Gauß-Verfahren erhalten.
+\end{itemize}
+
+Wird die Energie von symplektischen Verfahren erhalten?
+
+Nein! Aber fast...
+
+\begin{satz}[{{{\cite{benettin_giorgilli:1994}; \cite[Thm.\,IX.8.1]{hairer_lubich_wanner:2006}}}}]
+	Betrachte ein Hamilton-System mit analytischer Hamilton-Funktion $H: D \to R$ ($D \subset \R^{2d}$) und wende ein symplektisches Verfahren $\Psi^\tau$ mit Schrittweite $\tau$ an. Wenn die numerische Lösung in einer kompakten Menge $K\subset D$ bleibt, dann existiert ein $\tau_0$, so dass
+	\begin{equation*}
+		H(y_n) = H(y_0) + O(\tau^p) \vadjust{\todo{$H$ ist nicht ganz konstant, aber die Abweichung ist seeeehr klein - nämlich in $\mathcal{O}(\tau^p)$}}
+	\end{equation*}
+	für exponentiell lange Zeitintervalle $n\tau \le e^{\frac{\tau_0}{2 \tau}}$.
+\end{satz}
+
+Symplektische Verfahren erhalten also \emph{nicht} die Hamilton-Funktion bzw.\ die Gesamtenergie. Aber die numerische Energie bleibt \enquote{in der Nähe} der exakten Energie!
+
+
+\section{Variationelle Integratoren}
+
+Mit dem jetzt Gelernten können wir Zeitschrittverfahren auf eine ganz neue Art konstruieren.
+Siehe dazu \cite{marsden_west:2001} für eine detailliertere Übersicht.
+
+Wir erinnern an das Prinzip der stationären Wirkung (auch Hamiltonsches Prinzip genannt): 
+Lagrange-Funktion
+\begin{equation*}
+	L(q,\dot q) = T(q,\dot q) - U(q)
+\end{equation*}
+
+\begin{definition}
+	Die \begriff{Wirkung} eine Trajektorie $q\colon t\mapsto (q(t),\dot q(t))$ ist
+	\begin{equation*}
+		S(q)\coloneqq \int_{t_0}^{t_1} L(q(t),\dot q(t))\,dt.
+	\end{equation*}
+\end{definition}
+
+Wir betrachten nur Trajektorien mit gegebenem festen Start- und Endpunkt
+\begin{equation*}
+	q(t_0) = q_0,\qquad q(t_1) = q_1.
+\end{equation*}
+
+\begin{definition}[Hamiltonsches Prinzip]
+	Die tatsächlich vorkommenden Trajektorien sind die, die die Wirkung stationär machen.
+\end{definition}
+
+Sei $q$ eine Trajektorie, und $\delta q$ eine Variation davon, die die Endpunkte fest lässt, also $\delta q(t_0)=\delta(t_1) = 0$.
+Stationarität von $q$ heißt dann, dass für alle solche $\delta q$
+\begin{equation*}
+	\frac{d}{d\epsilon} S(q+\epsilon\delta q)\big\vert_{\epsilon=0} = 0.
+\end{equation*}
+Wie schon in Kapitel~\ref{sec:lagrange_gleichung} gezeigt ist dies äquivalent zur Euler--Lagrange-Gleichung
+\begin{equation*}
+	\frac{d}{dt}\frac{\partial L}{\partial \dot q} = \frac{\partial L}{\partial q}.
+\end{equation*}
+
+Wir betrachten jetzt das Wirkungsintegral $S$ als Funktion der Start- und Endposition
+\begin{equation*}
+	S(q_0,q_1) = \int_{t_0}^{t_1} L(q(t),\dot q(t))\,dt.
+\end{equation*}
+Dabei ist $q$ die zu $q_0,q_1$ gehörige Lösung der Lagrange-Gleichung.
+
+\subsubsection*{Exkurs Anfang: Erzeugendenfunktionen}
+
+Wir brauchen ein weiteres Kriterium für Symplektizität:
+\begin{itemize}
+	\item Betrachte ein gegebenes Hamiltonsches System $H$ auf einem festen Zeitintervall $[t_0,t_1]$
+	\item Seien $p_0 \in \R^d$ und $q_0 \in \R^d$ die Startwerte zur Zeit $t_0$
+	\item Bezeichne die Werte zur Zeit $t_1$ mit  $p_1 \in \R^d$ und $q_1 \in \R^d$
+	\item Es gibt eine Abbildung $\Phi^{t_0,t_1}(p_0,q_0) = (p_1,q_1)$.
+\end{itemize}
+
+Wie wir wissen, ist diese symplektisch.
+{[Achtung: der folgende Satz enthält überdurchschnittlich viel didaktische Reduktion]}
+
+\begin{satz}[{{\cite[Satz VI.5.1]{hairer_lubich_wanner:2006}}}]
+	\label{thm:erzeugendenfunktion}
+	Eine Abbildung $\varphi\colon (p_0,q_0) \mapsto (p_1,q_1)$ ist genau dann symplektisch, wenn lokal eine Funktion
+	\begin{equation*}
+		S\colon (q_0,q_1)\mapsto S(q_0,q_1)\in\R
+	\end{equation*}
+	existiert, so dass
+	\begin{equation}\label{eq:abbildung_symplektisch}
+		\nabla S 0
+		\begin{pmatrix}
+		\frac{\partial S}{\partial q_0}  \\
+		\frac{\partial S}{\partial q_1}
+		\end{pmatrix} = \begin{pmatrix}
+		-p_0 \\ p_1
+		\end{pmatrix}
+	\end{equation}
+\end{satz}
+
+Wenn man eine symplektische Abbildung $(p_0,q_0)\mapsto(p_1,q_1)$ hat, dann kann sie durch \eqref{eq:abbildung_symplektisch} aus der Funktion $S$ rekonstruiert werden.
+
+Aber der obige Satz ist vom Typ \enquote{Äquivalenz}. Es gilt also auch die Umkehrung: Jede hinreichen glatte (und in einem gewissen Sinne nicht degenerierte) Funktion $S$ \emph{erzeugt} via \eqref{eq:abbildung_symplektisch} eine symplektische Abbildung $(p_0,q_0)\mapsto (p_1,q_1)$.\note{Hier muss noch was hin.}
+
+Man kann also auf systematische Art symplektische Abbildungen erzeugen. Die Funktion $S$ heißt deshalb Erzeugendenfunktion.
+
+\subsubsection*{Exkurs Ende}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %\section{Symplektizität}
 %
 %Flüsse von Hamiltonschen Systemen haben eine weitere wichtige Erhaltungseigenschaft,
