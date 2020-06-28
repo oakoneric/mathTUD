@@ -1,0 +1,71 @@
+\begin{exercisePage}
+	\setcounter{taskcount}{30}
+	
+	\begin{task}
+		Bestimmen Sie die Mengen im $\R^2$, auf denen der Differentialoperator
+		\begin{equation*}
+			(Lu)(x,y) \defeq (1+x) u_{xx}(x,y) + 2xy u_{xy}(x,y) - y^2 u_{yy}(x,y)
+		\end{equation*}
+		elliptisch, hyperbolisch oder parabolisch ist.
+	\end{task}
+	
+	
+	Die Koeffizientenmatrix des Differentialoperators ist gegeben durch
+	\begin{equation*}
+		A(x,y) = 
+		- \begin{pmatrix}
+			1+x & 2xy \\ 0 & -y^2
+		\end{pmatrix}
+	\end{equation*}
+	Um die Eigenwerte zu bestimmen, betrachten wir die Nullstellen des charakteristischen Polynoms $\chi_A$ von $A(x,y)$ gegeben durch
+	\begin{equation*}
+		\chi_A(\lambda) = \det(\lambda  \id - A) = \det\begin{pmatrix}
+		\lambda + 1+x & 2xy \\ 0 & \lambda - y^2
+		\end{pmatrix} = (\lambda + 1 + x) * (\lambda - y^2)
+	\end{equation*}
+	Die Nullstellen von $\chi_A$ und damit Eigenwerte von $A(x,y)$ sind also $\lambda_1 = - 1 - x$ und $\lambda_2 = y^2$.
+	
+	\begin{itemize}[leftmargin=*]
+		\item $L$ ist per Definition genau dann \textbf{elliptisch}, wenn alle Eigenwerte von $A(x,y)$ positiv sind. Es ist $\lambda_1 > 0$ genau dann, wenn $x < -1$ und $\lambda_2 = y^2 > 0$ genau dann, wenn $y \neq 0$. Somit ist $L$ elliptisch auf $(-\infty, -1) \times (\R \setminus \menge{0})$.
+		
+		\item $L$ ist genau dann \textbf{hyperbolisch}, wenn genau ein Eigenwert negativ ist und alle anderen positiv. Nun ist $\lambda_2 = y^2 \ge 0$ für alle $y \in \R$, d.h. es kann nur $\lambda_1$ negativ sein. Das ist genau dann der Fall, wenn $x > -1$. In diesem Fall ist $\lambda_2 = y^2 > 0$ genau dann, wenn $y \ne 0$. Schlussendlich ist also $L$ hyperbolisch auf $(-1, \infty) \times (\R \setminus \menge{0})$.
+		
+		\item $L$ ist genau dann \textbf{parabolisch}, wenn mindestens ein Eigenwert gleich Null ist. Es ist
+		\begin{itemize}[nolistsep, topsep=-\parskip]
+			\item $\lambda_1 = -1 - x = 0 \equivalent x = -1$ für alle $y \in \R$
+			\item $\lambda_2 = y^2 = 0 \equivalent y = 0$ für alle $x \in \R$
+		\end{itemize}
+		Somit ist also $L$ parabolisch auf $\menge{(-1,y) : y \in \R} \cup \menge{(x,0) : x \in \R}$.
+	\end{itemize}
+	
+	
+	\pagebreak
+	
+	\begin{task}
+		Beweisen Sie den ersten Teil von Satz 15 (Poincar\'e-Ungleichung) der Vorlesung:
+		Es seien $U \subset \Rn$ beschränkt und offen, und $1 \leq p < \infty$. Dann gibt es eine Konstante $c>0$ mit
+		\begin{equation*}
+			\|u\|_{L_p}\leq c\|\nabla u\|_{L_p} \quad\text{für alle } u \in W^{1,p}_0(\Omega)
+		\end{equation*}
+		Führen Sie den Beweis unter Verwendung der Gagliardo-Nirenberg-Sobolev-Ungleichung.
+	\end{task}
+
+	Sei $U \subseteq \Rn$ offen und beschränkt. Weiter sei $u \in W_0^{1,p}(U)$ mit $1 \le p < \infty$. Dann existiert nach Theorem 8 (Approximation durch glatte Funktionen) eine Folge $\folge{u_m}{m \in \N} \subset C_0^\infty(U) \cap W^{1,p}(U)$ mit $u_m \overset{W^{1,p}(U)}{\longrightarrow} u$. Nun setzen wir die $u_m$ zu Funktionen $\schlange{u}_m$ auf $\Rn$ fort, wobei auch $\schlange{u}_m \overset{W^{1,p}(U)}{\longrightarrow} u$. Nach Satz 11 (Gagliardo-Nirenberg-Sobolev-Ungleichung) existiert dann eine (universelle) Konstante $c > 0$ mit
+	\begin{equation*}
+		\norm{\schlange{u}_m}_{L^{p^\ast}(\Rn)} \le c * \norm{D \schlange{u}_m}_{L^p(\Rn)}
+	\end{equation*}
+	und somit
+	\begin{equation*}
+		\norm{u}_{L^{p^\ast}(\Rn)} \le c * \norm{D u}_{L^p(\Rn)}
+	\end{equation*}
+	Da $u$ kompakten Träger hat, ist auch
+	\begin{equation}
+		\norm{u}_{L^{p^\ast}(U)} \le c * \norm{D u}_{L^p(\Rn)} \quad \mit \quad p^\ast = \tfrac{np}{n-p} \tag{$\star$} \label{11eq: star}
+	\end{equation}
+	Da $U$ als beschränkte Menge ein endliches Maß besitzt, ist $L^q(U) \hookrightarrow L^{p^\ast}(U)$ für alle $q \le p^\ast$. Demnach ist für alle $q \le p^\ast$
+	\begin{equation*}
+		\norm{u}_{L^q(U)} \le c * \norm{u}_{L^{p^\ast}(U)} \overset{\eqref{11eq: star}}{\le} c * \norm{D u}_{L^p(U)}
+	\end{equation*}
+	Somit gilt also $\norm{u}_{L^q(U)} \le c * \norm{D u}_{L^p(U)}$ für alle $q \le p^\ast$, also insbesondere auch für $q = p$, da $p \le p^\ast$.
+	
+\end{exercisePage}
