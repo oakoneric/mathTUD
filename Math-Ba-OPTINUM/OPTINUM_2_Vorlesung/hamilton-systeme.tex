@@ -487,7 +487,7 @@ Nein! Aber fast...
 \begin{satz}[{{{\cite{benettin_giorgilli:1994}; \cite[Thm.\,IX.8.1]{hairer_lubich_wanner:2006}}}}]
 	Betrachte ein Hamilton-System mit analytischer Hamilton-Funktion $H: D \to R$ ($D \subset \R^{2d}$) und wende ein symplektisches Verfahren $\Psi^\tau$ mit Schrittweite $\tau$ an. Wenn die numerische Lösung in einer kompakten Menge $K\subset D$ bleibt, dann existiert ein $\tau_0$, so dass
 	\begin{equation*}
-		H(y_n) = H(y_0) + O(\tau^p) \vadjust{\todo{$H$ ist nicht ganz konstant, aber die Abweichung ist seeeehr klein - nämlich in $\mathcal{O}(\tau^p)$}}
+		H(y_n) = H(y_0) + O(\tau^p) %\vadjust{\todo{$H$ ist nicht ganz konstant, aber die Abweichung ist seeeehr klein - nämlich in $\mathcal{O}(\tau^p)$}}
 	\end{equation*}
 	für exponentiell lange Zeitintervalle $n\tau \le e^{\frac{\tau_0}{2 \tau}}$.
 \end{satz}
@@ -576,6 +576,103 @@ Aber der obige Satz ist vom Typ \enquote{Äquivalenz}. Es gilt also auch die Umk
 Man kann also auf systematische Art symplektische Abbildungen erzeugen. Die Funktion $S$ heißt deshalb Erzeugendenfunktion.
 
 \subsubsection*{Exkurs Ende}
+
+Große Überraschung: Diese Funktion $S$ ist gerade die Erzeugendenfunktion einer symplektischen Abbildung!
+
+Berechne die partielle Ableitung:
+\begin{align*}
+	\frac{\partial S}{\partial q_0}
+	& =
+	\int_{t_0}^{t_1} \bigg( \frac{\partial L}{\partial q} \frac{\partial q}{\partial q_0} + \frac{\partial L}{\partial \dot q}\frac{\partial\dot q}{\partial q_0}\bigg)\,dt \\
+	%
+	\intertext{Partielle Integration des zweiten Terms in der Klammer liefert}
+	&=
+	\frac{\partial L}{\partial \dot q}\frac{\partial q}{\partial q_0}\Bigg\vert_{t_0}^{t_1} + \int_{t_0}^{t_1} \underbrace{\bigg( \frac{\partial L}{\partial q}  - \frac{d}{dt} \frac{\partial L}{\partial \dot q}\bigg)}_{=0} \frac{\partial q}{\partial q_0}\,dt \\
+	&= \frac{\partial L(q_1,\dot q_1)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_1}{\partial q_0}}_{=0}  - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_0}{\partial q_0}}_{=1}  \\
+	&= - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \\
+	&= -p_0 \tag{Def. des Impulses}
+\end{align*}
+Ebenso berechnet man
+\begin{equation*}
+	\frac{\partial S}{\partial q_1} = p_1.
+\end{equation*}
+Wir erhalten also
+\begin{equation}
+	\nabla S =
+	\begin{pmatrix}
+	\frac{\partial S}{\partial q_0}  \\
+	\frac{\partial S}{\partial q_1}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	-p_0 \\ p_1
+	\end{pmatrix}
+\end{equation}
+Dies ist gerade die Formel \eqref{eq:abbildung_symplektisch} für Erzeugendenfunktionen von symplektischen Abbildungen.
+
+Daraus folgt dass die entsprechende Abbildung $(p_0,q_0) \mapsto (p_1,q_1)$ symplektisch ist.
+
+\subsection{Idee der variationellen Integratoren}
+
+Wir ersetzen das Integral im Hamiltonschen Prinzip durch eine diskrete Approximation:
+
+Wir führen ein Zeitgitter $t_0<t_1<\hdots < t_N = T$ und die approximative Wirkung
+\begin{equation*}
+	L_h(q_k,q_{k+1})\approx \int_{t_k}^{t_{k+1}} L(q(t),\dot q(t))\,dt
+\end{equation*}
+ein (z.B.\ durch eine Quadraturformel).
+
+Hier könnte man denken dass $L_h$ ein schlechtes Symbol ist, weil es sich ja schließlich um eine Wirkung handelt. Andererseits fungiert $L_h$ später bei der Definition der diskreten Impulse wie eine Lagrange-Funktion (siehe~\eqref{eq:diskrete_lagrange_transformation}).
+
+$q$ ist hier die Lösung der Lagrange-Gleichung auf $[t_k,t_{k+1}]$ mit gegebenen Start- und Endwerten $q_k,q_{k+1}$.
+	
+Definiere das diskrete Wirkungsfunktional
+\begin{equation*}
+	S_h\Big(\big\{q_k\big\}_{k=0}^N\Big) \colonequals \sum_{k=0}^{N-1} L_h(q_k,q_{k+1})
+\end{equation*}
+
+\begin{definition}[Diskretes Hamilton-Prinzip]
+	Finde $\{q_k\}^N_{k=0}$  mit gegebenen $q_0, q_N$, so dass $S_h$ stationär wird.
+\end{definition}
+
+Wie kann man $L_h$ wählen?
+
+\begin{bsp}[{{\cite[1992]{mackay:1992}}}]
+	Approximiere $q$ auf $[t_k, t_{k+1}]$ als linear Interpolierende von $q_k$ und $q_{k+1}$.
+	
+	Approximiere das Integral durch die Trapezregel
+	\begin{equation*}
+		L_h(q_k, q_{k+1}) =
+		\tau \cdot \frac{1}{2} \Big[L\Big(q_k, \frac{q_{k+1} - q_k}{\tau}\Big) +  L\Big(q_{k+1}, \frac{q_{k+1} - q_k}{\tau}\Big)\Big].
+	\end{equation*}
+\end{bsp}
+
+\begin{bsp}[{{\cite[1997]{wendlandt_marsden:1997}}}]
+	Nimm statt der Trapezregel die Mittelpunktsregel
+	\begin{equation*}
+		L_h(q_k, q_{k+1}) = \tau \Big[L\Big(\frac{q_{k+1} + q_k}{2}, \frac{q_{k+1} - q_k}{\tau}\Big)\Big].
+	\end{equation*}
+\end{bsp}
+
+
+Wie kommen wir an stationäre Punkte von $S_h$?
+
+Wir können die Ableitung ausrechnen und gleich Null setzen --- partielle Ableitung für $k=1, \dots, N-1$:
+\begin{equation*}
+	\frac{\partial S_h}{\partial q_k}
+	=
+	\frac{\partial}{\partial q_k} \sum_{i=0}^{N-1} L_h (q_i, q_{i+1})
+	=
+	\frac{\partial}{\partial q_k} L_h(q_{k-1}, q_k) +  \frac{\partial}{\partial q_k} L_h(q_k, q_{k+1})
+\end{equation*}
+Dieser Ausdruck $=0$ sind die \emph{diskreten Euler--Lagrange-Gleichungen} -- ein System von algebraischen Gleichungen (mit Bandstruktur).
+
+\textbf{Fragen:}
+\begin{itemize}
+	\item Wann kriege ich mit diesem Ansatz symplektische Integratoren?
+	\item Kann ich das Verfahren so umschreiben dass ich wieder einen Zeitschritt nach dem anderen berechnen kann?
+\end{itemize}
+
 
 
 
