@@ -283,7 +283,12 @@
 \renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
 
+
 \begin{document}
+
+\setlength{\marginparwidth}{2cm}
+\setlength{\marginparsep}{3pt}
+
 
 %\frontmatter
 
@@ -353,41 +358,6 @@
 \setcounter{lemma}{1}
 \setcounter{equation}{4}
 
-Große Überraschung: Diese Funktion $S$ ist gerade die Erzeugendenfunktion einer symplektischen Abbildung!
-
-Berechne die partielle Ableitung:
-\begin{align*}
-\frac{\partial S}{\partial q_0}
-& =
-\int_{t_0}^{t_1} \bigg( \frac{\partial L}{\partial q} \frac{\partial q}{\partial q_0} + \frac{\partial L}{\partial \dot q}\frac{\partial\dot q}{\partial q_0}\bigg)\,dt \\
-%
-\intertext{Partielle Integration des zweiten Terms in der Klammer liefert}
-&=
-\frac{\partial L}{\partial \dot q}\frac{\partial q}{\partial q_0}\Bigg\vert_{t_0}^{t_1} + \int_{t_0}^{t_1} \underbrace{\bigg( \frac{\partial L}{\partial q}  - \frac{d}{dt} \frac{\partial L}{\partial \dot q}\bigg)}_{=0} \frac{\partial q}{\partial q_0}\,dt \\
-&= \frac{\partial L(q_1,\dot q_1)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_1}{\partial q_0}}_{=0}  - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_0}{\partial q_0}}_{=1}  \\
-&= - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \\
-&= -p_0 \tag{Def. des Impulses}
-\end{align*}
-Ebenso berechnet man
-\begin{equation*}
-\frac{\partial S}{\partial q_1} = p_1.
-\end{equation*}
-Wir erhalten also
-\begin{equation}
-\nabla S =
-\begin{pmatrix}
-\frac{\partial S}{\partial q_0}  \\
-\frac{\partial S}{\partial q_1}
-\end{pmatrix}
-=
-\begin{pmatrix}
--p_0 \\ p_1
-\end{pmatrix}
-\end{equation}
-Dies ist gerade die Formel \eqref{eq:abbildung_symplektisch} für Erzeugendenfunktionen von symplektischen Abbildungen.
-
-Daraus folgt dass die entsprechende Abbildung $(p_0,q_0) \mapsto (p_1,q_1)$ symplektisch ist.
-
 \subsection{Idee der variationellen Integratoren}
 
 Wir ersetzen das Integral im Hamiltonschen Prinzip durch eine diskrete Approximation:
@@ -448,6 +418,89 @@ Dieser Ausdruck $=0$ sind die \emph{diskreten Euler--Lagrange-Gleichungen} -- ei
 	\item Wann kriege ich mit diesem Ansatz symplektische Integratoren?
 	\item Kann ich das Verfahren so umschreiben dass ich wieder einen Zeitschritt nach dem anderen berechnen kann?
 \end{itemize}
+
+\subsection{Erzeugendenfunktionen}
+
+Wir brauchen ein weiteres Kriterium für Symplektizität:
+\begin{itemize}
+	\item Betrachte ein gegebenes Hamiltonsches System $H$ auf einem festen Zeitintervall $[t_0,t_1]$
+	\item Seien $p_0 \in \R^d$ und $q_0 \in \R^d$ die Startwerte zur Zeit $t_0$
+	\item Bezeichne die Werte zur Zeit $t_1$ mit  $p_1 \in \R^d$ und $q_1 \in \R^d$
+	\item Es gibt eine Abbildung $\Phi^{t_0,t_1}(p_0,q_0) = (p_1,q_1)$.
+\end{itemize}
+
+Wie wir wissen, ist diese symplektisch.
+{[Achtung: der folgende Satz enthält überdurchschnittlich viel didaktische Reduktion]}
+
+\begin{satz}[{{\cite[Satz VI.5.1]{hairer_lubich_wanner:2006}}}]
+	\label{thm:erzeugendenfunktion}
+	Eine Abbildung $\varphi\colon (p_0,q_0) \mapsto (p_1,q_1)$ ist genau dann symplektisch, wenn lokal eine Funktion
+	\begin{equation*}
+	S\colon (q_0,q_1)\mapsto S(q_0,q_1)\in\R
+	\end{equation*}
+	existiert, so dass
+	\begin{equation}\label{eq:abbildung_symplektisch}
+	\nabla S 0
+	\begin{pmatrix}
+	\frac{\partial S}{\partial q_0}  \\
+	\frac{\partial S}{\partial q_1}
+	\end{pmatrix} = \begin{pmatrix}
+	-p_0 \\ p_1
+	\end{pmatrix}
+	\end{equation}
+\end{satz}
+
+Wenn man eine symplektische Abbildung $(p_0,q_0)\mapsto(p_1,q_1)$ hat, dann kann sie durch \eqref{eq:abbildung_symplektisch} aus der Funktion $S$ rekonstruiert werden.
+
+Aber der obige Satz ist vom Typ \enquote{Äquivalenz}. Es gilt also auch die Umkehrung: Jede hinreichen glatte (und in einem gewissen Sinne nicht degenerierte) Funktion $S$ \emph{erzeugt} via \eqref{eq:abbildung_symplektisch} eine symplektische Abbildung $(p_0,q_0)\mapsto (p_1,q_1)$.
+
+Man kann also auf systematische Art symplektische Abbildungen erzeugen. Die Funktion $S$ heißt deshalb Erzeugendenfunktion.
+
+Wir betrachten jetzt das Wirkungsintegral $S$ als Funktion der Start- und Endposition
+\marginpar{\osfamily \footnotesize $q_k$ und $q_{k+1}$ sind zwei Zustände, dazwischen existiert genau ein Pfad $q$, der die Lagrange-Gleichungen löst.}
+\begin{equation*}
+S(q_0,q_1) = \int_{t_0}^{t_1} L(q(t),\dot q(t))\,dt 
+\end{equation*}
+Dabei ist $q$ die zu $q_0,q_1$ gehörige Lösung der Lagrange-Gleichung.
+
+
+
+
+
+Große Überraschung: Diese Funktion $S$ ist gerade die Erzeugendenfunktion einer symplektischen Abbildung!
+
+Berechne die partielle Ableitung:
+\begin{align*}
+\frac{\partial S}{\partial q_0}
+& =
+\int_{t_0}^{t_1} \bigg( \frac{\partial L}{\partial q} \frac{\partial q}{\partial q_0} + \frac{\partial L}{\partial \dot q}\frac{\partial\dot q}{\partial q_0}\bigg)\,dt \\
+%
+\intertext{Partielle Integration des zweiten Terms in der Klammer liefert}
+&=
+\frac{\partial L}{\partial \dot q}\frac{\partial q}{\partial q_0}\Bigg\vert_{t_0}^{t_1} + \int_{t_0}^{t_1} \underbrace{\bigg( \frac{\partial L}{\partial q}  - \frac{d}{dt} \frac{\partial L}{\partial \dot q}\bigg)}_{=0} \frac{\partial q}{\partial q_0}\,dt \\
+&= \frac{\partial L(q_1,\dot q_1)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_1}{\partial q_0}}_{=0}  - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \cdot \underbrace{\frac{\partial q_0}{\partial q_0}}_{=1}  \\
+&= - \frac{\partial L(q_0,\dot q_0)}{\partial \dot q} \\
+&= -p_0 \tag{Def. des Impulses}
+\end{align*}
+Ebenso berechnet man
+\begin{equation*}
+\frac{\partial S}{\partial q_1} = p_1.
+\end{equation*}
+Wir erhalten also
+\begin{equation}
+\nabla S =
+\begin{pmatrix}
+\frac{\partial S}{\partial q_0}  \\
+\frac{\partial S}{\partial q_1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+-p_0 \\ p_1
+\end{pmatrix}
+\end{equation}
+Dies ist gerade die Formel \eqref{eq:abbildung_symplektisch} für Erzeugendenfunktionen von symplektischen Abbildungen.
+
+Daraus folgt dass die entsprechende Abbildung $(p_0,q_0) \mapsto (p_1,q_1)$ symplektisch ist.
 
 \bibliographystyle{alpha}
 \bibliography{skript-numerik-sander}
