@@ -1,0 +1,537 @@
+\documentclass[german]{scrreprt}
+
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\setlength{\parindent}{0pt}
+\usepackage{parskip}
+
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+\usepackage[scale=0.95]{opensans}	% new font OpenSans
+\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\fosfamily}
+
+\let\emph\textbf
+\newcommand{\begriff}[1]{\textbf{#1}}
+
+\addtokomafont{disposition}{\fosfamily}
+\addtokomafont{chapter}{\Huge}
+\addtokomafont{section}{\LARGE}
+\addtokomafont{subsection}{\Large}
+
+\usepackage{scrlayer-scrpage}
+\usepackage[linesnumbered,inoutnumbered]{algorithm2e}
+%\usepackage[defernumbers=true,
+%            maxbibnames=99,  % Never write 'et al.' in a bibliography
+%            giveninits=true, % Abbreviate first names
+%            sortcites=true,  % Sort citations when there are more than one
+%            natbib=true,     % Allow commands like \citet and \citep
+%            backend=biber]{biblatex}
+%\addbibresource{skript-numerik-sander.bib}
+
+\usepackage[makeroom]{cancel}
+
+
+\usepackage{enumerate}
+\usepackage[inline]{enumitem} 		%customize label
+
+\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.5}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+%\renewcommand{\labelenumi}{(\alph{enumi})}
+%\renewcommand{\labelenumii}{\roman{enumii}.}
+%\renewcommand{\labelenumiii}{\roman{enumiii}.}
+
+
+
+\usepackage{microtype}
+\usepackage{todonotes}
+\usepackage{pdfcomment}  % todonotes without tikz -- the two don't play well together
+\newcommand{\todoannot}[2]{
+  \pdffreetextcomment[width=\textwidth,height=#1,color=orange]{#2}
+}
+
+\usepackage{xcolor}
+\usepackage[table,dvipsnames]{tudscrcolor}
+
+\usepackage{esdiff}
+\usepackage{url}
+\usepackage{overpic}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc,cd,decorations.pathmorphing,matrix,patterns,positioning,shapes}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween,colormaps}
+\pgfplotsset{compat=newest}
+
+
+\usepackage[ntheorem,framemethod=TikZ]{mdframed}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage[amsmath,thmmarks,framed]{ntheorem}
+\usepackage{colonequals}
+\usepackage{wasysym}
+
+% allow to smash underbraces:
+% use \smashedUnderbrace instead of \underbrace
+% surround formula with \reboxSmashedUnderbraces
+% https://web.archive.org/web/20160820203342/http://tex.stackexchange.com/questions/38930/ignoring-vertical-space-due-to-underbraces-in-cases-environment
+\newcommand\realSmashC[1]{\smash{\mathclap{#1}}}
+\newcommand\realSmashR[1]{\smash{\mathrlap{#1}}}
+\newcommand\smashedUnderbrace[2]{\underbrace{#1}_{#2}}
+\newcommand\actualSmashUnderbrace[2]{%
+	\realSmashR{\underbrace{#1}_{\realSmashC{#2}}} \phantom{#1}}
+\newcommand\reboxSmashedUnderbraces[1]{%
+	{\renewcommand{\smashedUnderbrace}{\actualSmashUnderbrace}#1}%
+	\vphantom{#1}}
+
+\allowdisplaybreaks[0]
+
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\K}{\mathbb K}
+\renewcommand{\C}{\mathbb C}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\extendadd}{\;\; \updownarrow \hspace{-12pt} \longleftrightarrow}
+\newcommand{\qq}[1]{\glqq #1\grqq}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+%\newcommand{\diff}{\mathrm{d}}
+\newcommand{\diffskip}[1]{\enskip \mathrm{d}#1}
+\newcommand{\dx}{\diffskip{x}}
+\newcommand{\dt}{\diffskip{t}}
+
+
+\newcommand{\skiparound}{10pt}
+
+\theoremstyle{plain}
+\theoremheaderfont{\osfamily\normalsize\bfseries\upshape}
+\theorembodyfont{\normalsize}
+\theoremseparator{.}
+\theoremsymbol{}
+
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdblue!10,%
+	linecolor=cddarkblue!90,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+	nobreak,%
+]{satz}{Satz}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdindigo!5,%
+	linecolor=cdindigo!50,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+	nobreak,%
+]{lemma}{Lemma}
+
+
+\theoremstyle{nonumberplain}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdorange!10,%
+	linecolor=cdorange,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+	nobreak,%
+]{defi}{Definition}
+
+\newmdtheoremenv[%
+	%style=boxedtheorem,%
+	backgroundcolor=cdorange!10,%
+	linecolor=cdorange,%
+	%innertopmargin=\boxskip,%
+	%innerbottommargin=\boxskip,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	%innertopmargin=3pt,%
+	%innerbottommargin=3pt,%
+	leftmargin=-4pt,%
+	%rightmargin=-10pt,%
+	%frametitlefont=\osfamily\bfseries,%
+	%skipabove=5pt,%
+	%skipbelow=5pt,%
+	skipabove=\skiparound,%
+	skipbelow=\skiparound,%
+	nobreak,%
+]{definition}{Definition}
+
+
+\theoremstyle{nonumberplain}
+\theorempreskip{\skiparound}
+\theorempostskip{\skiparound}
+
+\newtheorem{bsp}{Beispiel}
+\newtheorem{algo}{Algorithmus}
+\newtheorem{folg}{Folgerung}
+\newtheorem{kor}{Korollar}
+
+\theoremheaderfont{\normalfont \bfseries}
+\theorembodyfont{\itshape}
+\newtheorem{bem}{Bemerkung}
+\newtheorem{hinw}{Hinweis}
+
+\theoremheaderfont{\normalfont \bfseries}
+\newtheorem{idea}{Idee}
+\newtheorem{aim}{Ziel}
+\newtheorem{question}{Frage}
+
+\theorembodyfont{}
+\newtheorem{aufw}{Aufwand}
+
+\newtheorem{vSfS}{vSfS}
+
+%\newtheoremstyle{proofstyle}%
+%{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+%{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{0pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+\usepackage{chngcntr}
+\counterwithin{satz}{chapter}
+\counterwithin{lemma}{chapter}
+
+%\pagestyle{scrheadings}
+%\clearscrheadings
+%\ihead{Mathematik}
+%\chead{\textbf{Numerik}}
+%\ohead{Prof.~Dr.~O.\,Sander}
+%\setheadsepline{0.4pt}
+\cfoot{\pagemark}
+
+%%  All graphics files may be in this subdirectory
+\graphicspath{{gfx/}}
+%\includeonly{numerische-quadratur}
+
+\usepackage{accents}
+\renewcommand*{\dot}[1]{\accentset{\mbox{\large\bfseries .}}{#1}}
+\renewcommand*{\ddot}[1]{\accentset{\mbox{\large\bfseries .\hspace{-0.25ex}.}}{#1}}
+
+
+\begin{document}
+
+\setlength{\marginparwidth}{2cm}
+\setlength{\marginparsep}{3pt}
+
+
+%\frontmatter
+
+%\begin{titlepage}
+%	\pagecolor{cddarkblue!90} \color{white}%
+%	\raggedright \fosfamily%
+%	\setlength{\parindent}{0pt}% 
+%	% Logo / Kopf
+%	\hspace{-18.6mm} %
+%	\includegraphics[scale=0.6]{TUD-white.pdf} \\
+%	\vspace{3mm} 
+%	\begin{tabular}{m{\textwidth}}
+%		\hline
+%		\hspace{-4pt}\small{\textbf{Fakultät Mathematik} Institut für Numerik, Professur für Numerik partieller Differentialgleichungen} \\
+%		\hline
+%	\end{tabular} \\
+%	% Titel
+%	\vspace{5cm}
+%	{\Huge\bfseries \MakeUppercase Optimierung \& Numerik --- Teil 2 \par}
+%		\vspace{0.5cm}%
+%		{\Large \itshape Numerik gewöhnlicher Differentialgleichungen} \\%
+%	\vspace{1.5cm}
+%	\textbf{{\Large Prof. Dr. Oliver Sander}} \par
+%	\vspace{0.5cm}
+%	{\large Sommersemester 2020} \par
+%	
+%	\vspace{1.5cm}
+%	
+%	
+%	\vfill%
+%	% Fußzeile
+%	\begin{tabular}{lll}
+%		Name  & : & Eric Kunze \\
+%		E-Mail & : & \url{eric.kunze@mailbox.tu-dresden.de} \\
+%		Datum & : & \today
+%	\end{tabular}%
+%\end{titlepage}
+%\nopagecolor
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Copyright notice
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\vspace*{\fill}
+%
+%\begin{center}
+%	\slshape
+%	Das vorliegende Skript basiert nahezu vollständig auf dem Vorlesungsskript von Prof. Dr. Oliver Sander für die Vorlesung \enquote{Optimierung und Numerik} an der Technischen Universität Dresden. Das aktuelle Original ist unter \\ \url{https://gitlab.mn.tu-dresden.de/osander/skript-numerik} \\
+%	zu finden.
+%\end{center}
+%
+%\vspace*{\fill}
+%
+%\pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand*\contentsname{\huge \centering Optimierung \& Numerik --- Vorlesung 20}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{chapter}{12}
+\setcounter{section}{5}
+\setcounter{subsection}{2}
+\setcounter{satz}{8}
+\setcounter{lemma}{1}
+\setcounter{equation}{5}
+
+
+
+
+
+\subsection{Variationelle Integratoren sind symplektisch}
+
+Wir schreiben die diskrete Wirkung jetzt wieder als Funktion von Anfangs- und Endzustand
+\begin{equation*}
+S_h(q_0, q_N) = \sum_{k=0}^{N-1} L_h (q_k, q_{k+1}).
+\end{equation*}
+Dabei ist $\{q_k\}$ die dazugehörige Lösung des variationellen Integrators.
+
+Wir rechnen wieder die partiellen Ableitungen aus. Es bezeichne $\frac{\partial L_h}{\partial x}$, $\frac{\partial L_h}{\partial y}$ die partiellen Ableitungen von $L_h$ nach dem ersten bzw.\ zweiten Argument:
+\begin{align*}
+\frac{\partial S_h}{\partial q_0}
+& = \sum_{k=0}^{N-1} \Bigg[ \frac{\partial L_h}{\partial x} \cdot\frac{\partial q_k}{\partial q_0} +  \frac{\partial L_h}{\partial y} \cdot\frac{\partial q_{k+1}}{\partial q_0}\Bigg] \\
+%
+& = \frac{\partial L_h}{\partial x} (q_0,q_1)\cdot \underbrace{\frac{\partial q_0}{\partial q_0}}_{=1} \\
+& \qquad  + \sum_{k=1}^{N-1} \Bigg[ \underbrace{\frac{\partial L_h}{\partial y}(q_{k-1},q_k) \cdot\frac{\partial q_k}{\partial q_0} +  \frac{\partial L_h}{\partial x} (q_k,q_{k+1})\cdot\frac{\partial q_k}{\partial q_0}}_{\text{$=0$, wg.\ diskreter Lagrange-Gleichung}}\Bigg] \\
+& \qquad \qquad  + \frac{\partial L_h}{\partial y} (q_{N-1},q_N)\cdot \underbrace{\frac{\partial q_N}{\partial q_0}}_{=0} \\
+%
+& = \frac{\partial L_h}{\partial x} (q_0, q_1)
+\end{align*}
+Ebenso 
+\begin{equation*}
+\frac{\partial S_h}{\partial q_N}  = \frac{\partial L_h}{\partial y} (q_{N-1}, q_N)
+\end{equation*}
+
+Jetzt führen wir die \textbf{diskreten Impulse} durch eine \textbf{diskrete Legendre-Transformation} ein:
+\begin{equation}
+\label{eq:diskrete_lagrange_transformation}
+p_k
+\colonequals
+- \frac{\partial L_h}{\partial x} (q_k, q_{k+1})
+= \frac{\partial L_h}{\partial y} (q_{k-1}, q_k)
+\end{equation}
+Die Gleichheit ist gerade die diskrete Euler--Lagrange-Gleichung.
+
+[Vergleiche: $p = \frac{\partial L}{\partial \dot{q}}(q,\dot{q})$]
+
+Für $k=N$ erhalten wir
+\begin{equation*}
+p_N = \frac{\partial L_h}{\partial y} (q_{N-1}, q_N).
+\end{equation*}
+
+Zusammen also:
+\begin{equation*}
+\nabla S_h = \begin{pmatrix}
+\frac{\partial S_h}{\partial q_0} \\
+\frac{\partial S_h}{\partial q_N}
+\end{pmatrix} 
+=
+\begin{pmatrix}
+\frac{\partial L_h}{\partial x} (q_0, q_1) \\
+\frac{\partial L_h}{\partial y} (q_{N-1},q_N)
+\end{pmatrix}
+=
+\begin{pmatrix}
+- p_0 \\ p_N
+\end{pmatrix}
+\end{equation*}
+
+Nach Satz~\ref{thm:erzeugendenfunktion} ist $S_h$ also eine Erzeugendenfunktion für die symplektische Abbildung
+\begin{equation*}
+(p_0, q_0) \mapsto (p_N, q_N)
+\end{equation*} 
+
+
+
+\subsection{Variationelle Integratoren als klassische Einschrittverfahren}
+
+Jetzt bauen wir uns ein klassisches Zeitschrittverfahren:
+
+Angenommen die diskrete Legendre-Transformation \eqref{eq:diskrete_lagrange_transformation} sei eine Bijektion zwischen $p_k$ und $q_{k+1}$.
+
+Einschrittverfahren:
+\begin{center}
+	\begin{tikzpicture}
+	\draw (0,0)  node{$(p_k, q_k)$};
+	\draw[->] (0,-1) -- node[right]{inv. disk. Legendre-Transformation} (0,-2);
+	\draw (0,-3) node{$(q_k, q_{k+1})$};
+	\draw[->] (0,-4)-- node[right]{diskrete Euler--Lagrange-Gleichung}(0,-5);
+	\draw (0,-6) node{$(q_{k+1}, q_{k+2})$};
+	\draw[->] (0,-7)-- node[right]{diskrete Legendre-Transformation}(0,-8);
+	\draw (0,-9) node{$(p_{k+1}, q_{k+1})$};
+	\end{tikzpicture}
+\end{center}
+Schritt 2 und 3 schreibt man als
+\begin{equation*}
+p_{k+1} = \frac{\partial L_h}{\partial y} (q_k, q_{k+1}).
+\end{equation*}
+
+\begin{satz}
+	Das diskrete Hamilton Prinzip erzeugt das Zeitschrittverfahren
+	\begin{equation*}
+	(p_k, q_k) \mapsto (p_{k+1}, q_{k+1}),
+	\qquad
+	p_k = - \frac{\partial L_h}{\partial x} (q_k, q_{k+1}),
+	\qquad
+	p_{k+1}  = \frac{\partial L_h}{\partial y} (q_k, q_{k+1}).
+	\end{equation*}
+	Die erste Gleichung ist dabei als implizite Gleichung für $q_{k+1}$ zu verstehen.
+	\begin{enumerate}[label=(\roman*)]
+		\item Dieses Verfahren ist symplektisch.
+		\item Jedes symplektische Verfahren lässt sich auf diese Art darstellen.
+	\end{enumerate}
+\end{satz}
+\begin{proof}\mbox{} % Force line break
+	\begin{enumerate}[label=(\roman*)]
+		\item $L_h$ ist Erzeugendenfunktion für die symplektische Abbildung $(p_k, q_k) \mapsto (p_{k+1}, q_{k+1})$
+		\item Jede symplektische Abbildung hat eine Erzeugendenfunktion. Wähle diese als diskrete Lagrange-Funktion.
+	\end{enumerate}
+\end{proof}
+
+\begin{bsp}
+	Das Verfahren von \cite{mackay:1992}:
+	\begin{equation*}
+	L_h (q_k, q_{k+1}) = \frac{\tau}{2} L(q_k, v_{k + \frac{1}{2}}) + \frac{\tau}{2} L(q_{k+1}, v_{k + \frac{1}{2}})
+	\end{equation*}
+	mit $v_{k + \frac{1}{2}} \colonequals \frac{1}{\tau} (q_{k+1} - q_k)$.
+	\newline
+	\newline
+	Man erhält das Verfahren:
+	\begin{flalign*}
+	p_k &= - \frac{\partial L_h}{\partial x} (q_k, q_{k+1}) \\
+	&= - \frac{\tau}{2} \Big[ \frac{\partial L}{\partial q}(q_k, v_{k + \frac{1}{2}}) + \frac{\partial L}{\partial \dot{q}}(q_k, v_{k + \frac{1}{2}}) \cdot \Big(-\frac{1}{\tau}\Big) \\
+	& \quad + \frac{\partial L}{\partial q}(q_{k+1}, v_{k + \frac{1}{2}}) \cdot \underbrace{\frac{\partial q_{k+1}}{\partial q_n}}_{=0} + \frac{\partial L}{\partial \dot{q}}(q_{k+1}, v_{k + \frac{1}{2}}) \cdot \Big(-\frac{1}{\tau}\Big) \Big] \\
+	&= - \frac{\tau}{2}\frac{\partial L}{\partial q}(q_k, v_{k + \frac{1}{2}}) + \frac{1}{2} \frac{\partial L}{\partial \dot{q}}(q_k, v_{k + \frac{1}{2}}) +  \frac{1}{2}\frac{\partial L}{\partial \dot{q}}(q_{k+1}, v_{k + \frac{1}{2}}),
+	\end{flalign*}
+	sowie
+	\begin{flalign*}
+	p_{k+1}
+	& = \frac{\partial L_h}{\partial y} (q_k, q_{k+1}) \\
+	%
+	&= \frac{\tau}{2}\frac{\partial L}{\partial q}(q_{k+1}, v_{k + \frac{1}{2}}) + \frac{1}{2} \frac{\partial L}{\partial \dot{q}}(q_k, v_{k + \frac{1}{2}}) +  \frac{1}{2}\frac{\partial L}{\partial \dot{q}}(q_{k+1}, v_{k + \frac{1}{2}}) .
+	\end{flalign*}
+\end{bsp}
+
+
+Wir betrachten das mechanische System
+\begin{equation*}
+L (q, \dot{q}) = \frac{1}{2} \dot{q}^T M \dot{q} - U(q) \quad\text{mit $M$ s.p.d}
+\end{equation*}
+Damit ist
+\begin{align*}
+\frac{\partial L}{\partial \dot{q}}(q_k, v_{k + \frac{1}{2}}) & = Mv_{k + \frac{1}{2}} = \frac{\partial L}{\partial \dot{q}} (q_{k+1}, v_{k + \frac{1}{2}}) \\
+%
+\frac{\partial L}{\partial q}(q_k, v_{k + \frac{1}{2}}) & = - \nabla U(q_k) = F(q_k) \quad\text{(Kraftfeld an der Stelle $q_k$)}
+\end{align*}
+Das Verfahren wird also zu:
+\begin{align*}
+p_k & = - \frac{\tau}{2} F(q_k) + \frac{1}{2} Mv_{k+\frac{1}{2}}  + \frac{1}{2} Mv_{k+\frac{1}{2}} \\
+p_{k + 1} & =  \frac{\tau}{2} F(q_{k+1}) + \frac{1}{2} Mv_{k+\frac{1}{2}}  + \frac{1}{2} Mv_{k+\frac{1}{2}}
+\end{align*}
+Umschreiben:
+\begin{align*}
+Mv_{k+\frac{1}{2}} & = p_k + \frac{\tau}{2} F(q_k) \tag{erste Gleichung}\\
+q_{k + 1} & = q_k + \tau v_{k+\frac{1}{2}} \tag{Definition von $v_{k+ \frac{1}{2}}$}\\
+p_{k + 1} & = Mv_{k+\frac{1}{2}}  + \frac{\tau}{2} F(q_{k+1}) \tag{zweite Gleichung}\\
+\end{align*}
+
+Das ist gerade das \textbf{Störmer-Verlet-Verfahren}!
+
+Diskrete Lagrange-Gleichung in diesem Fall:
+\begin{align*}
+0 & =  \frac{\partial L_h}{\partial y} (q_{k-1}, q_k) + \frac{\partial L_h}{\partial x} (q_k, q_{k+1}) \\
+\Leftrightarrow M\underbrace{\frac{(q_{k+1} - 2q_k + q_{k-1})}{\tau^2}}_{\approx \ddot{q}_k} & = F(q_k)
+\end{align*}
+
+Kann also als direkte Diskretisierung der Bewegungsgleichung $M \ddot{q} = F(q)$ interpretiert werden!
+
+
+\bibliographystyle{alpha}
+\bibliography{skript-numerik-sander}
+
+\end{document}
