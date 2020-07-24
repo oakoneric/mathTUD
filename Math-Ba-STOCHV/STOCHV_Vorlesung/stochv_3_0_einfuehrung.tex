@@ -3,7 +3,7 @@
 	\item Herleitung der Black-Scholes-Formel für Preise von europäischen Put- und Call-Optionen.
 \end{itemize}
 
-Wir betrachten ein Zeitintervall $[0,T]$. Für jedes $n \in \N$ gelteilt in Schritte der Länge $\Delta_N \defeq \frac{T}{N}$. Wähle Parameter $r \in \R$, $\mu \in \R$ (Trendparameter), $\sigma > 0$ (Volatilität).
+Wir betrachten ein Zeitintervall $[0,T]$. Für jedes $N \in \N$ geteilt in Schritte der Länge $\Delta_N \defeq \frac{T}{N}$. Wähle Parameter $r \in \R$, $\mu \in \R$ (Trendparameter), $\sigma > 0$ (Volatilität).
 Definiere eine Folge von CRR-Modellen $\folge{S^N}{n \in \N}$ eingebettet in $[0,T]$ mit Parametern $r_N = r * \Delta_N$
 \begin{equation*}
 b_N \defeq \mu \Delta_N + \sigma \sqrt{\Delta_N} \qquad a_N \defeq \mu \Delta_N - \sigma \sqrt{\Delta_N} \qquad p \in (0,1) \qquad s > 0
@@ -26,7 +26,7 @@ Falls notwendig, interpolieren wir zwischen den Gitterpunkten mit $S_t^N = S_{t_
 
 Berechne risikoneutrale Wahrscheinlichkeiten
 \begin{equation*}
-q_N = \Q_N(R_i^N * b_N) = \frac{r_N - a_N}{b_N - a_N} = \frac{(r-\mu) \Delta_N + \sigma \sqrt{\Delta_N}}{2 \sigma \sqrt{\Delta_N}} = \frac{1}{2} - \frac{\lambda}{2} \sqrt{\Delta_N}
+q_N = \Q_N(R_i^N = b_N) = \frac{r_N - a_N}{b_N - a_N} = \frac{(r-\mu) \Delta_N + \sigma \sqrt{\Delta_N}}{2 \sigma \sqrt{\Delta_N}} = \frac{1}{2} - \frac{\lambda}{2} \sqrt{\Delta_N}
 \end{equation*}
 mit $\lambda \defeq \frac{\mu - r}{\sigma}$.
 
@@ -43,7 +43,7 @@ Frage: Konvergenz der Verteilung von $S_T^N$ unter $\Q_N$ für $N \to \infty$?
 \begin{equation*}
 Z_N \defeq \log\brackets{\frac{S_T^N}{S_0}} = \sum_{k = 1}^N \underbrace{\log\brackets{1 + R_k^N}}_{\defqe L_k^N}
 \end{equation*}
-Summe von unabhängigen, identisch verteilten Zufallsvariablenv $\follows$ Zentraler Grenzwertsatz?
+Summe von unabhängigen, identisch verteilten Zufallsvariablen $\follows$ Zentraler Grenzwertsatz?
 
 Es liegt ein sogenanntes Dreiecksschema vor:
 \begin{align*}
@@ -71,7 +71,7 @@ Die Zufallsvariablen in einer Zeile sind unabhängige Zufallsvariablen.
 \begin{*bemerkung_inline}
 	Die Dichte der Standardnormalverteilung ist gegeben durch
 	\begin{equation*}
-	\phi(x) \defeq \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{x}}
+	\phi(x) \defeq \frac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}
 	\end{equation*}
 	und für die Verteilungsfunktion gilt
 	\begin{equation*}
@@ -192,22 +192,22 @@ $C_N(t,S_t^N)$ für den Preis einer europäischen Call-Option im \eqref{eq: crrn
 	Wir beweisen das Resultat für $t = 0$, andere Zeitpunkte $t \in [0,T]$ können analog mittels konstanter Interpolation behandelt werden. Nach \cref{theorem: 2.7} gilt für den Preis der Put-Option im CRR${}_N$-Modell 
 	\begin{align*}
 		P^N(0,S_0^N) &= \brackets{1 + r \Delta_N}^{-N} * \E^{\Q_N}\sqbrackets{(K- S_T^N)_+} 
-		= \brackets{1 + r \Delta_N}^{-N} *  \E^{\Q_N}\sqbrackets{(K- S_0 e	{Z_N})_+} \\
-		&= \brackets{1 + r \Delta_N}^{-N} * \E^{\Q_N}\sqbrackets{f(Z_N)} \mit f(z) (K - S_0 e^z)_+ \text{ stetig und beschränkt }
+		= \brackets{1 + r \Delta_N}^{-N} *  \E^{\Q_N}\sqbrackets{(K- S_0 e^	{Z_N})_+} \\
+		&= \brackets{1 + r \Delta_N}^{-N} * \E^{\Q_N}\sqbrackets{f(Z_N)} \mit f(z) = (K - S_0 e^z)_+ \text{ stetig und beschränkt }
 	\end{align*}
 	wobei $Z_N = \log\brackets{\frac{S_T^N}{S_0}}$ gilt. Aus der Stochastik ist bekannt, dass aus $Z_N \overset{\mathrm{d}}{\to} Z$ in Verteilung bereits $\EW[f(Z_N)] = \EW[f(Z)]$ folgt für alle $f \in C_b(\R)$.
 	
-	Weiterhin gilt $\lim_{N \to \infty} \brackets{1 + r \Delta_N}^{-N} = \lim_{N \to \infty} \brackets{1 + r \sfrac{T}{N}}^{-N} = e^{-r t}$.
+	Weiterhin gilt $\lim_{N \to \infty} \brackets{1 + r \Delta_N}^{-N} = \lim_{N \to \infty} \brackets{1 + r * \frac{T}{N}}^{-N} = e^{-r t}$.
 	
 	$\lim_{N \to \infty} \E^{\Q_N}\sqbrackets{f(Z_N)} = \EW[f(Z)]$ nach \cref{theorem: 3.1} mit $Z \sim \Normal((r-\frac{\sigma^2}{2})T , \sigma^2 T)$. Im Folgenden schreiben wir $m \defeq (r-\frac{\sigma^2}{2})$. 
 	\begin{align*}
-		\EW[f(Z)] &= \frac{1}{\sqrt{2 \pi}} \frac{1}{6 \sqrt{T}}  \int_{-\infty}^\infty (K - S_0 e^z)_+ * \exp \brackets{- \frac{(z - mT)^2}{2 \sigma^2 T}} \diff{z} \\
-		&= \frac{1}{\sqrt{2 \pi}}  \frac{1}{6 \sqrt{T}} \int_{-\infty}^{\log\brackets{\frac{K}{S_0}}} (K - S_0 e^z) * \exp \brackets{- \frac{1}{2} \brackets{\frac{z - mT}{ \sigma \sqrt{T}}}} \diff{z} \\
+		\EW[f(Z)] &= \frac{1}{\sqrt{2 \pi}} \frac{1}{\sigma \sqrt{T}}  \int_{-\infty}^\infty (K - S_0 e^z)_+ * \exp \brackets{- \frac{(z - mT)^2}{2 \sigma^2 T}} \diff{z} \\
+		&= \frac{1}{\sqrt{2 \pi}}  \frac{1}{\sigma \sqrt{T}} \int_{-\infty}^{\log\brackets{\frac{K}{S_0}}} (K - S_0 e^z) * \exp \brackets{- \frac{1}{2} \brackets{\frac{z - mT}{ \sigma \sqrt{T}}}^2} \diff{z} \\
 		&= \sqbrackets{ \begin{array}{c}
 			y = \frac{z - m T}{\sigma \sqrt{T}} \\
 			\diff y = \frac{\diff z}{\sigma \sqrt{T}}
 			\end{array} } \\
-		&= \frac{1}{\sqrt{2 \pi}}  \int_{-\infty}^{-d_2} (K - S_0  * \exp \brackets{y \sigma \sqrt{T} + mT} * e^{-\frac{y}{2}} \diff{y} \\
+		&= \frac{1}{\sqrt{2 \pi}}  \int_{-\infty}^{-d_2} (K - S_0)  * \exp \brackets{y \sigma \sqrt{T} + mT} * e^{-\frac{y^2}{2}} \diff{y} \\
 		&= K \Phi(-d_2) - S_0 \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{-d_2} \exp \brackets{- \frac{y^2}{2} + y \sigma \sqrt{T} + mT} \diff{y} 
 	\end{align*}
 	
@@ -217,7 +217,7 @@ $C_N(t,S_t^N)$ für den Preis einer europäischen Call-Option im \eqref{eq: crrn
 	\end{equation*}
 	
 	\begin{alignat*}{2}
-		&K \Phi(-d_2) - S_0 e^{rT} \underbrace{\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{-d_2} e^{-\frac{(y-\sigma \sqrt{T})^2}{2}} \diff{y}}_{= \Phi(-d_2 - \sigma \sqrt{F})}
+		&K \Phi(-d_2) - S_0 e^{rT} \underbrace{\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{-d_2} e^{-\frac{(y-\sigma \sqrt{T})^2}{2}} \diff{y}}_{= \Phi(-d_2 - \sigma \sqrt{T})}
 		&= K \Phi(-d_2) - S_0 e^{rT} \Phi(-d_1) \\
 		\follows &\lim_{N \to \infty} P_N(0,S_0^N) &= e^{-rT} K \Phi(-d_2) - S_0 \Phi(-d_1)
 	\end{alignat*}
@@ -251,21 +251,21 @@ Frage: Was gilt für die Replikationsstrategie? Konvergiert auch diese?
 \end{theorem}
 \begin{proof}
 	Wir betrachten den Zeitpunkt $t = 0$, $t \in [0,T]$ kann analog betrachtet werden.
-	Nach \cref{theorem: 2.3} ist $\xi_0^N$ für den Put gegeben durch
+	Nach \cref{satz: 2.2.3} ist $\xi_0^N$ für den Put gegeben durch
 	\begin{equation*}
 		\begin{aligned}
 			\xi_0^N &= \frac{P_N(\Delta_N, S_0(1+b_N)) - P_N(\Delta_N, S_0 (1+a_N))}{S_0 (b_N - a_N)} \\
 			&= \frac{P_N(\Delta_N, S_0(1 + \mu \Delta_N + \sigma \sqrt{\Delta_N})) - P_N (\Delta_N, S_0 (1+ \mu \Delta_N - \sigma \sqrt{\Delta_N})))}{2 * S_0 \sigma \sqrt{\Delta_N}}
 		\end{aligned}
 	\end{equation*}
-	Es gilt $\lim_{N \to \infty} P_N(\Delta_N, S_0 + (1 + \mu \Delta_N)) = P_{BS}(0,S_0)$. Unter geeigneten Annahmen an gleichmäßige Konvergenz folgt 
+	Es gilt $\lim_{N \to \infty} P_N(\Delta_N, S_0 (1 + \mu \Delta_N)) = P_{BS}(0,S_0)$. Unter geeigneten Annahmen an gleichmäßige Konvergenz folgt 
 	\begin{equation*}
 		\lim_{N \to \infty} \xi_0^N = \partdiff{S} P_{BS} (t, S_t)
 	\end{equation*}
 	und analog zeigt man dies auch für den Call.
 	Wir berechnen $\partdiff{S} C_{BS}$ explizit:
 	\begin{align*}
-		\partdiff{S} C_{BS}(t,S) &= \Phi(d_1) + S \phi(d_1) * \partdiff{S} d_1 - e^{-r(T-t)} K \phi(d_2) * \partdiff{d_1} d_2 \\
+		\partdiff{S} C_{BS}(t,S) &= \Phi(d_1) + S \phi(d_1) * \partdiff{S} d_1 - e^{-r(T-t)} K \phi(d_2) * \partdiff{S} d_2 \\
 		&= \Phi(d_1) + \partdiff{S} d_1 \brackets{S \phi(d_1) - e^{-r(T-t)} K \phi(d_2)}
 	\end{align*}
 	Nebenrechnung: Setze $\tau = T - t$.
@@ -288,22 +288,26 @@ Frage: Was gilt für die Replikationsstrategie? Konvergiert auch diese?
 	\end{itemize}
 \end{*bemerkung}
 
-Analog lassen sich die Sensitivitäten (''Greeks``) nach den weiteren Parametern berechnen.
+Analog lassen sich die Sensitivitäten (\enquote{Greeks}) nach den weiteren Parametern berechnen.
 
 \begin{*definition}
 	Die Greeks des BS-Preises sind folgende partielle Ableitungen:
+	
+	\tiny
+	\begin{tabular}{|l|c|c|c|l|}
+		\hline
+		Bezeichnung & Def. & Wert Call & Wert Put & Bemerkungen \\
+		\hline \hline
+		Delta & $\partdiff{S}$ & $\Phi(d_1)$ & $-\Phi(-d_1)$ & bestimmt die Replikations- bzw. Hedgingstrategie \\ \hline
+		Gamma & $\frac{\partial^2}{\partial S^2}$ & \multicolumn{2}{c|}{$\frac{\phi(d_1)}{S_t \sigma \sqrt{T - t}}$} & \parbox{5.5cm}{Sensitivität von Delta gegenüber Basisgut, \enquote{wie oft} muss Replikatonsstrategie angepasst werden, Konvexität} \\ \hline
+		Vega & $\partdiff{\sigma}$ & \multicolumn{2}{c|}{$S_t \sqrt{T -t} \phi(d_1)$} & Sensitivität gegenüber Änderungen der Volatilität \\ \hline
+		Theta & $\partdiff{t}$ & \multicolumn{2}{c|}{siehe Übung} & Änderung in der Zeit \\ \hline
+		Rho & $\partdiff{r}$ & $K (T - t)e^{-r(T-t)} \Phi(d_2)$ & $- K (T - t)e^{-r(T-t)} \Phi(-d_2)$ & Sensitivität gegenüber Änderungen der Zinsrate \\ \hline	
+	\end{tabular}
+	\normalsize
 \end{*definition}
 
-\begin{tabular}{|l|c|c|c|l|}
-	\hline
-	Bezeichnung & Def. & Wert Call & Wert Put & Bemerkungen \\
-	\hline \hline
-	Delta & $\partdiff{S}$ & $\Phi(d_1)$ & $-\Phi(-d_1)$ & bestimmt die Replikations- bzw. Hedgingstrategie \\ \hline
-	Gamma & $\frac{\partial^2}{\partial S^2}$ & \multicolumn{2}{c|}{$\frac{\phi(d_1)}{S_t \sigma \sqrt{T - t}}$} & Sensitivität von Delta gegenüber Basisgut, ''wie oft`` muss Replikatonsstrategie angepasst werden, Konvexität \\ \hline
-	Vega & $\partdiff{\sigma}$ & \multicolumn{2}{c|}{$S_t \sqrt{T -t} \phi(d_1)$} & Sensitivität gegenüber Änderungen der Volatilität \\ \hline
-	Theta & $\partdiff{t}$ & \multicolumn{2}{c|}{siehe Übung} & Änderung in der Zeit \\ \hline
-	Rho & $\partdiff{r}$ & $K (T - t)e^{-r(T-t)} \Phi(d_2)$ & $- K (T - t)e^{-r(T-t)} \Phi(-d_2)$ & Sensitivität gegenüber Änderungen der Zinsrate \\ \hline	
-\end{tabular}
+
 
 \begin{korollar} %3.5
 	Der BS-Preis $C_{BS}(t,S_t)$ erfüllt die folgende partielle Differentialgleichung

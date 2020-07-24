@@ -55,7 +55,7 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 \begin{*bemerkung}
 	\begin{itemize}[leftmargin=*, label=$\bullet$, nolistsep]
 		\item Die Rekursion \eqref{eq: 2_2_rek} entspricht einem Rückwärtsdurchlauf des Baumdiagramms.$f_n$ wird als diskontierter, gewichteter Mittelwert von $f_{n+1}^b$ und $f_{n+1}^a$ bestimmt. Die Gewichte sind dabei $q_b = \frac{r-a}{b-a}$ und $q_a = \frac{b-r}{b-a}$. Es gilt $q_a + q_b = 1$.
-		\item Die ursprünglichen Übergangswahrscheinlichkeiten $p$ spielen für Bewertung von $C$ keine Rolle. Sie werden durch die ''risikoneutralen´´ Wahrscheinlichkeiten $q_b$ und $q_a = 1 - q_b$ ersetzt.
+		\item Die ursprünglichen Übergangswahrscheinlichkeiten $p$ spielen für Bewertung von $C$ keine Rolle. Sie werden durch die \enquote{risikoneutralen} Wahrscheinlichkeiten $q_b$ und $q_a = 1 - q_b$ ersetzt.
 		\item Diese Rekursion lässt sich auf dem Computer auch für große Bäume effizient implementieren.
 		\item Die Formel \eqref{eq: 2_2_dhedge} für $\xi_n$ wird auch als Delta-Hedge bezeichnet.
 		\begin{equation*}
@@ -124,11 +124,17 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 \end{*bemerkung_inline}
 
 \begin{*beispiel}[Asiatische Call-Option]
+	\begin{center}
+		%TODO BILD PFADMODELL
+		\includegraphics[width=.5\textwidth]{example-image}
+		\captionof{figure}{Pfadmodell}
+	\end{center}
+
 	Die Auszahlung ist gegeben durch $(\quer{S}_N - K)_+$ mit $\quer{S}_N = \frac{1}{1+N} \sum_{k=0}^{N} S_k$. Somit handelt es sich um ein pfadabhängiges Derivat (Summe hängt von allen $S_k$ ab). 
 	Bewertung im CRR-Modell mit zwei Perioden ($N=2$) und Parametern $b = 0.3$, $a = -0.3$, $r=0.1$, $S_0 = 100$, $K=100$.
 		Es gilt $C = h(S_1, S_2)$, also
 	\begin{align*}
-		h(120,169) &= \brackets{\frac{399}{3} - 100}_+ = 33 \\
+		h(130,169) &= \brackets{\frac{399}{3} - 100}_+ = 33 \\
 		h(130,91)  &= \brackets{\frac{321}{3} - 100}_+ = 7 \\
 		h(70, 91)  &= \brackets{\frac{261}{3} - 100}_+ = 0 \\
 		h(70, 49)  &= \brackets{\frac{219}{3} - 100}_+ = 0 \\

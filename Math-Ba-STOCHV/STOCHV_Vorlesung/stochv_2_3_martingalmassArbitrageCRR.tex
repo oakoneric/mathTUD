@@ -42,10 +42,10 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 \end{*bemerkung_inline}
 
 \begin{proof}
-	Sei $\Q$ ein beliebiges Wahrscheinlichkeitsmaß auf $(\Omega, \F)$. Setze $q_n \defeq \Q(R_n = a \mid \F_{n-1}) \in [0,1]$.
+	Sei $\Q$ ein beliebiges Wahrscheinlichkeitsmaß auf $(\Omega, \F)$. Setze $q_n \defeq \Q(R_n = b \mid \F_{n-1}) \in [0,1]$.
 	\begin{equation*}
 		\begin{aligned}
-			\E^\Q\sqbrackets{\schlange{S}_n \mid \F_{n-1}} = \E^\Q\sqbrackets{\schlange{S}_{n-1} * \brackets{\frac{1+R_n}{1-r}}  \mid \F_{n-1}} \\
+			\E^\Q\sqbrackets{\schlange{S}_n \mid \F_{n-1}} &= \E^\Q\sqbrackets{\schlange{S}_{n-1} * \brackets{\frac{1+R_n}{1-r}}  \mid \F_{n-1}} \\
 			&= \schlange{S}_{n-1} * \frac{1}{1+r} * \E^\Q\sqbrackets{1+R_n \mid \F_{n-1}} \\
 			&= \schlange{S}_{n-1} * \frac{1}{1+r} \brackets{q_n (1+b) + (1-q_n)(1+a)}
 		\end{aligned}
@@ -53,7 +53,7 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	Somit gilt 
 	\begin{equation*}
 		\begin{alignedat}{2}
-			\folge{\schlange{S}_n}{n \in [N]} \text{ ist } \Q \text{-Martingal} &\equivalent &\frac{1}{q+r} \brackets{q_n (1+b) + (1-q_n)(1+a)} &= 1 \\
+			\folge{\schlange{S}_n}{n \in [N]} \text{ ist } \Q \text{-Martingal} &\equivalent &\frac{1}{1+r} \brackets{q_n (1+b) + (1-q_n)(1+a)} &= 1 \\
 			&\equivalent &q_n b + (1-q_n) a &= r \\
 			&\equivalent &q_n (b-a) &= r-a \\
 			&\equivalent &q_n &= \frac{r-a}{b-a}
@@ -74,7 +74,7 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	\begin{equation*}
 		w = \Pi_0 = (1+r)^{-N} * \E^\Q[C]
 	\end{equation*}
-	In Worten: Der faire Preis von $C$ ist eindeutig und gegeben durch den diskontierten Erwwartunsgswert vin $C$ unter dem Martingalmaß $\Q$.
+	In Worten: Der faire Preis von $C$ ist eindeutig und gegeben durch den diskontierten Erwartungswert von $C$ unter dem Martingalmaß $\Q$.
 \end{theorem}
 \begin{proof}
 	Der Wahrscheinlichkeitsraum für das CRR-Modell ist endlich, d.h. $\card{\Omega} = 2^N < \infty$. Somit ist jede Zufallsvariable beschränkt, inbesondere $C$ und $\folge{\xi_n}{n \in [N]}$. Sei $\folge{\xi_n}{n \in [N]}$ eine Replikationsstrategie für $C$ mit diskontiertem Werteprozess $\folge{\schlange{\Pi}_n}{}$, d.h.

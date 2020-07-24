@@ -14,7 +14,7 @@ Aus Dichte $f_{XY}$ können wir ableiten:
 	Die bedingte Dichte von $X$ bzgl. $Y$ ist definiert als
 	\begin{equation*}
 	f_{X|Y}(x,y) = \begin{cases}
-	\frac{f_{XY}(x,y)}{f_Y(y)} & y \in S_y \\ 0 & \notin S_y
+	\frac{f_{XY}(x,y)}{f_Y(y)} & y \in S_y \\ 0 & y \notin S_y
 	\end{cases}
 	\end{equation*}
 \end{definition}
@@ -51,7 +51,15 @@ Allgemeiner gilt:
 \end{theorem}
 
 \begin{proof}[nur Proposition für $m=1$, Theorem analog]
-	Setze $g(y) = \int_{\R} x f_{X|Y}(x,y) \dx$. Sei $\abb{p}{\Rn}{\R}$ eine beliebige messbare Funktion mit $\EW[p(Y)^2]< \infty$. Setze weiter $g_\epsilon(y) = g(y) + \epsilon p(y)$. Minimiere $F(\epsilon) \defeq \EW[(X-g_\epsilon(y))^2] = \EW[(X - g(y) - \epsilon p(y))^2] = \EW[(X-g(Y))^2] - 2\epsilon \EW[(X-g(Y)) p(Y)] + \epsilon^2 \EW[p(Y)^2]$.
+	Setze $g(y) = \int_{\R} x f_{X|Y}(x,y) \dx$. Sei $\abb{p}{\Rn}{\R}$ eine beliebige messbare Funktion mit $\EW[p(Y)^2]< \infty$. Setze weiter $g_\epsilon(y) = g(y) + \epsilon p(y)$. Minimiere
+	\begin{equation*}
+	\begin{aligned}
+		F(\epsilon) \defeq \EW[(X-g_\epsilon(Y))^2] 
+		&= \EW[(X - g(Y) - \epsilon p(Y))^2] \\
+		&= \EW[(X-g(Y))^2] - 2\epsilon \EW[(X-g(Y)) p(Y)] + \epsilon^2 \EW[p(Y)^2]
+	\end{aligned}
+	\end{equation*}
+	Es ist
 	\begin{equation*}
 	\begin{aligned}
 	\frac{\partial F}{\partial \epsilon}(\epsilon) &= 2\epsilon \EW[p(Y)^2] - 2\EW[(X-g(Y)) p(Y)]  \follows \epsilon_\ast \defeq\frac{\EW[(X-g(Y))p(Y)]}{\EW[p(Y)^2]} = \frac{A}{B} \\
@@ -67,7 +75,7 @@ Allgemeiner gilt:
 	Seien $(X,Y)$ normalverteilt auf $\R \times \R$ mit
 	\begin{equation*}
 	\mu = \begin{pmatrix} \mu_X \\ \mu_Y \end{pmatrix} \qquad \Sigma 
-	= \begin{pmatrix} Var[X] & \Cov{X}{Y} \\ \Cov{X}{Y} & \Var[Y] \end{pmatrix}
+	= \begin{pmatrix} \Var[X] & \Cov{X}{Y} \\ \Cov{X}{Y} & \Var[Y] \end{pmatrix}
 	= \begin{pmatrix}
 	\sigma_x^2 & \rho \sigma_x \sigma_y \\ \rho \sigma_x \sigma_y & \sigma_y^2
 	\end{pmatrix}
@@ -104,7 +112,7 @@ Allgemeiner gilt:
 
 \subsection{Bedingte Erwartung: Maßtheoretischer Zugang}
 
-Wir betrachten den Wahrscheinlichkeitsraum $(\Omega, \F, \P)$. Für eine Zufallsvariable $\abb{X}{\Omega}{\R}$ und $p \in [1,\infty)$ definieren wir, doe $L_p$-Norm
+Wir betrachten den Wahrscheinlichkeitsraum $(\Omega, \F, \P)$. Für eine Zufallsvariable $\abb{X}{\Omega}{\R}$ und $p \in [1,\infty)$ definieren wir, die $L_p$-Norm
 \begin{equation*}
 \norm{X}_p \defeq \EW[\abs{X}^p]^{\frac{1}{p}} = \brackets{\int_\Omega \abs{X(\omega)}^p \diffskip{\P(\omega)}}^\frac{1}{p}
 \end{equation*}
@@ -133,11 +141,11 @@ Aus Hilbertraumtheorie folgt, dass \eqref{eq: min-2} besitzt eine eindeutige Lö
 
 % TODO Abbildung Hilbertraum
 
-Wir bezeichnen $G_\ast$ mit $\EW[X|\G]$ als bedingten Erwartunswert von $X$ bezüglich $\G$.
+Wir bezeichnen $G_\ast \in L_2(\Omega, \F, \P)$ mit $\EW[X|\G]$ als bedingten Erwartunswert von $X$ bezüglich $\G$.
 
 \begin{theorem} %1.5 
 %	\label{theorem: 1.5}
-	SSeien $X,Y \in L_2(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. Dann gilt
+	Seien $X,Y \in L_2(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. Dann gilt
 	\begin{itemize}
 		\item Linearität: $\EW[aX + bY | \G] = a \EW[X|\G] + b\EW[Y|\G]$
 		\item Turmregel: Für jede weitere $\sigma$-Algebra $\mathcal{H} \subseteq \G$ gilt ${\EW[{\EW[{X|\G}]}|\mathcal{H}]} = {\EW[X|\mathcal{H}]}$
@@ -159,11 +167,11 @@ Sei $Y$ eine Zufallsvariable und $\G= \sigma(Y)$ die von $Y$ erzeugte $\sigma$-A
 
 Aus der Maßtheorie sag uns das Doob-Dynkin-Lemma, dass eine messbare Funktion $\abb{g}{\Rn}{\R}$ existiert, sodass $\EW[X|Y] = g(Y)$. Dabei ist $g$ genau die Funktion aus \eqref{eq: min-1}.
 
-Zusammenfassung
+\subsubsection*{Zusammenfassung}
 
 Sei $X,Y$ aus $L_1(\Omega,\F,\P)$ und $\G \subseteq \F$ eine Unter-$\sigma$-Algebra. 
 \begin{enumerate}[label=(\alph*),nolistsep,topsep=-\parskip]
-	\item $\EW[X|Y=y]$ ist eine messbare Funktion $\abb{g}{\Rn}{\R^m}$ und falls eine bedingte Dichte existiert, dann gilt $\EW[X|Y=y] = \int_{\R^m} x f_{X|Y}(x,y) \dx$.
+	\item $\EW[X|Y=y]$ ist eine messbare Funktion $\abb{g}{\Rn}{\R^m}$ und falls eine bedingte Dichte existiert, dann gilt $\EW[X|Y=y] = \int_{\R^n} x f_{X|Y}(x,y) \dx$.
 	\item $\EW[X|Y]$ ist eine $\sigma(Y)$-messbare Zufallsvariable und kann als $g(Y)$ dargestellt werden. Falls eine bedingte Dichte existiert, dann gilt $\EW[X|Y](\omega) = \int_\Rn x f_{X|Y}(x,Y(\omega)) \dx$.
 	\item $\EW[X|\G]$ ist eine $\G$-messbare Zufallsvariable. Falls $\G=\sigma(Y)$ tritt Fall (b) ein.
 \end{enumerate}
@@ -182,11 +190,11 @@ Prototyp eines ''neutralen`` stochastischen Prozesses, der weder Aufwärts- noch
 	Sei $\folge{X}{n \in \N_0}$ ein stochastischer Prozess. Wenn gilt
 	\begin{equation}
 	\begin{alignedat}{2}
-		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N \\
-		\EW[X_{n+1}|X_1,\dots,X_n] &= X_n \qquad &\forall n \in \N \\
+		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0 \\
+		\EW[X_{n+1}|X_1,\dots,X_n] &= X_n \qquad &\forall n \in \N_0 \\
 	\end{alignedat}
 	\end{equation}
-	dann heißt $\folge{X_n}{n \in \N}$ \begriff{Martingal}.
+	dann heißt $\folge{X_n}{n \in \N_0}$ \begriff{Martingal}.
 \end{definition}
 
 Wenn wir $\F_n^X = \sigma(X_1,\dots,X_n)$ definieren, können wir (b) schreiben als 
@@ -211,10 +219,10 @@ Man kann von $\folge{\F_n^X}{n \in \N}$ auf beliebige Filtrationen $\folge{\F_n}
 \begin{*definition}
 	Sei $\folge{X_n}{n \in \N_0}$ ein stochastischer Prozess, adaptiert an eine Filtration $\folge{\F_n}{n \in \N_0}$. Wenn gilt
 	\begin{alignat*}{2}
-		\EW[\abs{X_n}] &< \infty &\forall n \in \N_0 \\ % (a)
-		\EW[X_{n+1}|\F_n] &= X_n &\forall n \in \N_0    % (b)
+		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0 \\ % (a)
+		\EW[X_{n+1}|\F_n] &= X_n \qquad &\forall n \in \N_0    % (b)
 	\end{alignat*}
-	dann heißt $\folge{X_N}{n \in \N}$ Martingal bezüglich der Filtration $\folge{\F_n}{n \in \N}$.
+	dann heißt $\folge{X_n}{n \in \N_0}$ Martingal bezüglich der Filtration $\folge{\F_n}{n \in \N_0}$.
 \end{*definition}
 
 Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf verfügbarer Information $\F_n$ ist der momentane Wert $X_n$.
@@ -232,20 +240,18 @@ Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf
 	\item $X$ Supermartingal $\follows n \mapsto \EW[X_n]$ ist monoton fallend
 \end{itemize}
 
-''Das Leben ist ein Supermartingal -- die Erwartungen fallen mit der Zeit`` \smiley
+\enquote{Das Leben ist ein Supermartingal -- die Erwartungen fallen mit der Zeit} \smiley
 
 \begin{beispiel}
-	\begin{itemize}
-		\item Seien $\folge{Y_n}{n \in \N}$ unabhängige Zufallsvariablen in $L_1(\Omega,\F,\P)$ mit $\EW[Y_n] = 0$. Betrachten wir die Partialsummen $X_n \defeq \sum_{k=1}^n Y_k$ und $X_0 = 0$. Dann ist $\folge{X_n}{n \in \N_0}$ ein Martingal, denn
+	Seien $\folge{Y_n}{n \in \N}$ unabhängige Zufallsvariablen in $L_1(\Omega,\F,\P)$ mit $\EW[Y_n] = 0$. Betrachten wir die Partialsummen $X_n \defeq \sum_{k=1}^n Y_k$ und $X_0 = 0$. Dann ist $\folge{X_n}{n \in \N_0}$ ein Martingal, denn
 		\begin{equation*}
 			\begin{aligned}
 			\EW[\abs{X_n}] &\le \sum_{k=1}^n \EW[\abs{Y_k}] < \infty \qquad \forall n \in \N \\
 			\EW[X_{n+1} \mid \F_n^X] &= \EW[Y_{n+1} + X_n \mid \F_n^X] \\
-			&= \EW[y_{n+1} \mid \F_n^X] + \EW[X_n \mid \F_n^X] = \underbrace{\EW[Y_{n+1}]}_{=0} + X_n \\
+			&= \EW[Y_{n+1} \mid \F_n^X] + \EW[X_n \mid \F_n^X] = \underbrace{\EW[Y_{n+1}]}_{=0} + X_n \\
 			&= X_n
 			\end{aligned}
 		\end{equation*}
-	\end{itemize}
 \end{beispiel}
 
 \begin{*definition}
@@ -294,22 +300,27 @@ Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
 		\item Adaptiertheit: klar
 		\item Integrierbarkeit: $H$ lokal beschränkt, d.h. $\abs{H_k} \le c_k < \infty$ für alle $k$.
 		\begin{equation*}
-			\EW[\abs{H_k (X_k - X_{k-1})}] \le c_k * \brackets{\EW[\abs{x_k}] + \EW[\abs{X_{k+1}}]} < \infty
+			\EW[\abs{H_k (X_k - X_{k-1})}] \le c_k * \brackets{\EW[\abs{X_k}] + \EW[\abs{X_{k-1}}]} < \infty
 		\end{equation*}
 		Mit der Dreiecksungleichung folgt daraus $\EW[\abs{(H \bullet X)_n}] < \infty$.
 		\item Martingaleigenschaft: 
 		\begin{equation*}
-			\EW[(H \bullet X)_n \mid \F_{n-1}] = (H \bullet X)_{n-1} + \EW[H_n (X_n - X{n-1}) \mid \F_{n-1}]
-			=  (H \bullet X)_{n-1} + H_n * \underbrace{\brackets{\EW[X_n \mid \F_{n-1}] - X{n-1}}}_{=0} 
-			=(H \bullet X)_{n-1} \quad \forall n \in \N
+			\begin{aligned}
+				\EW[(H \bullet X)_n \mid \F_{n-1}] &
+				= (H \bullet X)_{n-1} + \EW[H_n (X_n - X_{n-1}) \mid \F_{n-1}] \\
+				& = (H \bullet X)_{n-1} + H_n * \underbrace{\brackets{\EW[X_n \mid \F_{n-1}] - X{n-1}}}_{=0} \\
+				& = (H \bullet X)_{n-1} \quad \forall n \in \N
+			\end{aligned}
 		\end{equation*}
 		Damit ist also auch $(H \bullet X)$ ein Martingal.		
 	\end{itemize}
 	\rueckrichtung Fixiere $N \in \N$. Setze $H_n \defeq \one_{n = N}$, dieser ist lokal beschränkt und deterministisch (also auch vorhersehbar). Man stellt fest, dass $(H \bullet X)_n = 0$ für alle $n \le N-1$. Für alle $n \ge N$ gilt dagegen $(H \bullet X)_n = X_N - X_{N-1}$. Wir überprüfen nur die Martingaleigenschaft (Integrierbarkeit folgt aus Dreiecksungleichung). Wir wissen, dass $(H \bullet X)$ ein Martingal ist. 
 	\begin{align*}
-		0 = (H \bullet X)_{N-1} = \EW[(H \bullet X)_N \mid \F_{N-1}] = 
-		\EW[x_N - X_{N-1} \mid \F_{N-1}] = \EW[X_N \mid \F_{N-1}] - X_{N-1}
-		\follows X_{N-1} = \EW[X_N \mid \F_{N-1}] \mit N \in \N \text{beliebig}
+		0 = (H \bullet X)_{N-1} 
+		= \EW[(H \bullet X)_N \mid \F_{N-1}]
+		& = \EW[X_N - X_{N-1} \mid \F_{N-1}] \\
+		& = \EW[X_N \mid \F_{N-1}] - X_{N-1} \\
+		\follows X_{N-1} &= \EW[X_N \mid \F_{N-1}] \mit N \in \N \text{ beliebig}
 	\end{align*}
 	Somit ist $X$ ein Martingal.
 \end{proof_equiv}
@@ -318,15 +329,16 @@ Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
 	Sei $X = \folge{X_n}{n=1 , \dots, N}$ ein adaptierter stochastischer Prozess bezüglich einer Filtration $\folge{\F_n}{n=1 , \dots, N}$. Wenn $\EW[(H \bullet X)_N] = 0$ für alle lokal beschränkten vorhersehbaren Prozesse $H$, dann ist $X$ ein Martingal bezüglich $\folge{\F_n}{}$.
 \end{korollar}
 \begin{proof}
-	Fixiere $K \in  [N] \defeq \menge{1, 2, \dots , N}$ und eine Menge $A \in \F_{K-1}$. Definiere $H_n(\omega) = \one_A (\omega) * \one_{\menge{n=K}}$, dieser ist lokale beschränkt und vorhersehbar.
+	Fixiere $K \in  [N] \defeq \menge{1, 2, \dots , N}$ und eine Menge $A \in \F_{K-1}$. Definiere $H_n(\omega) = \one_A (\omega) * \one_{\menge{n=K}}$, dieser ist lokal beschränkt und vorhersehbar.
 	Es ist $(H \bullet X)_n = 0$ für alle $n \le K-1$. Für alle $n \ge K$ gilt $(H \bullet X)_n = \one_A * (X_K - X_{K-1})$. 
 	\begin{align*}
-%	0 = \EW[(H \bullet X)_N] = \EW[\one_A (X_K - X_{K-1})] 
-%	\overset{Turm}{=} \EW[\EW[\one_A (X_K - X_{K-1}) \mid \F_{K-1}]] 
-%	= \EW[\one_A * \brackets{\underbrace{\EW[X_K \mid \F_{K-1] - X_{K-1}}]}_{\defqe Y_{K-1}}} \quad \forall A \in \F_{K-1}
-%		\follows \int_A  Y_{K-1}(\omega) \diff{\P(\omega)} = \int_A X_{K-1}(\omega) \diff{\P(\omega)} \quad \forall A \in \F_{K-1}
-%		\follows Y_{K-1} = X_{K-1} fast sicher
-%		\follows \EW[X_K \mid \F_{K-1] - X_{K-1}}] = X_{K-1}
+		0 = \EW[(H \bullet X)_N] 
+		&= \EW[\one_A (X_K - X_{K-1})] \\
+		\overset{\text{Turm}}&{=} \EW[{\EW[\one_A (X_K - X_{K-1}) \mid \F_{K-1}]}] \\
+		&= \EW[ \one_A *  \underbrace{ \brackets{\EW[X_K \mid \F_{K-1}] - X_{K-1}}}_{\defqe Y_{K-1}} ] \quad \forall A \in \F_{K-1} \\
+		\follows \int_A  Y_{K-1}(\omega) \diff{\P(\omega)} &= \int_A X_{K-1}(\omega) \diff{\P(\omega)} \quad \forall A \in \F_{K-1} \\
+		\follows Y_{K-1} &= X_{K-1} \text{ fast sicher} \\
+		\follows \EW[X_K \mid \F_{K-1] - X_{K-1}}] &= X_{K-1}
 	\end{align*}
 	für beliebige $K$. Somit ist $X$ ein Martingal.
 \end{proof}

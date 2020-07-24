@@ -64,7 +64,7 @@ Wir modellieren Wertpapiere $\folge{S_k}{k \in [N]}$ und Verrechnungskonto $\fol
 	\begin{enumerate}[label=(zu \alph*), leftmargin=\zulength]
 		\item klar
 		\item $\frac{\schlange{S}_n}{S_0} = \brackets{\frac{1+b}{1+a}}^{U_n} * \brackets{\frac{1+a}{1+r}}^n \follows \log\brackets{\frac{\schlange{S}_n}{S_0}} = U_n \log\brackets{\frac{1+b}{1+a}} + n \log\brackets{\frac{1+a}{1+r}}$
-		\item Es ist $S_n = S_0 (1+b)^{U_1}(1+a)^{n-U_n} $. Also
+		\item Es ist $S_n = S_0 (1+b)^{U_n}(1+a)^{n-U_n} $. Also
 		\begin{equation*}
 			\P\brackets{S_n = S_0 (1+b)^k (1+a)^{n-k}} = \P(U_n = k) \overset{(a)}{=} \binom{n}{k} p^k (1-p)^{n-k}
 		\end{equation*}
