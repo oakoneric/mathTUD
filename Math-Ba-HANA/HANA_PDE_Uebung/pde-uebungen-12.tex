@@ -1,0 +1,76 @@
+\begin{exercisePage}
+	
+	\setcounter{taskcount}{33}
+	
+	\begin{task}
+		Es sei $U=B_1(0)\subset \mathbb{R}^2$. Zeigen Sie, dass die PDE
+		\begin{equation*}
+			((1+|x|)u_{x}(x,y))_x + \frac{1}{2}(\sgn(x)u_{y}(x,y))_x + \frac{1}{2}(\sgn(x)u_x(x,y))_y + u_{yy}(x,y) = -\sin(xy) \quad \text{auf } U
+		\end{equation*}
+		in $U$ eine eindeutige schwache Lösung $u\in H^1_0(U)$ besitzt. 
+	\end{task}
+
+	Wir notieren die mit $-1$ multiplizierte PDE in Divergenzform, d.h. als $-\div(\trans{A} Du) + b * Du + c * u = f$ mit
+	\begin{equation*}
+		A = \begin{pmatrix}
+		1 + \abs{x} & \frac{1}{2} \sgn(x) \\
+		\frac{1}{2} \sgn(x) & 1
+		\end{pmatrix}, \qquad
+		b = 0, \qquad
+		c = 0
+	\end{equation*}
+	Nach Theorem 3 hat das Randwertproblem $Lu + \mu u = f$ in $U$ und $u = 0$ auf $\rand U$ eine eindeutige schwache Lösung $u \in H^1_0(U)$ für alle $\mu \ge \gamma$, sofern $L$ gleichmäßig elliptisch ist und die Koeffizientenfunktionen in $L^\infty(U)$ liegen.
+	Wegen $b=0$ und $c=0$ erhalten wir $\gamma=0$, d.h. wir können insbesondere $\mu=0$ wählen, sodass unser Randwertproblem jenem in Theorem 3 entspricht. 
+	Außerdem sind die Koeffizientenfunktionen $a^{12}$, $a^{21}$ und $a^{22}$ offensichtlich durch $1$ beschränkt und somit in $L^\infty(U)$. Weiter ist $\abs{a^{11}} = \abs{1 + \abs{x}} \le 1 + \abs{x} \le 2$, da $x \in B_1(0)$ und somit auch $a^{11} \in L^\infty(U)$. Schließlich ist auch $f(x,y) = \sin(x,y) \in L^2(U)$.
+	
+	Nun ist noch zu zeigen, dass $L$ gleichmäßig elliptisch ist. Sei dazu $\xi = (\xi_1, \xi_2) \in \R^2$ beliebig.
+	Dazu betrachten wir 
+	\begin{align*}
+		\frac{1}{\abs{\xi}^2} * \sum_{i,j=1}^2 a^{ij} \ \xi_1 \ \xi_2
+		&= \frac{1}{\abs{\xi}^2} * \brackets{(1+\abs{x}) \xi_1^2 + \sgn(x) \xi_1 \xi_2 + \xi_2^2} \\
+		&\ge \frac{1}{\abs{\xi}^2} * \brackets{\xi_1^2 + \xi_2^2 - \abs{\xi_1 \xi_2}} \\
+		&= 1 - \underbrace{\frac{\abs{\xi_1 \xi_2}}{\xi_1^2 + \xi_2^2}}_{\le \tfrac{1}{2}} \\
+		&\ge \frac{1}{2} \defqe c \in (0, \infty)
+	\end{align*}
+	Damit ist $L$ gleichmäßig elliptisch auf $U$ und nach Theorem 3 existiert nun also eine eindeutige schwache Lösung $u \in H^1_0(U)$ der partiellen Differentialgleichung.	
+	
+	
+	\begin{task}
+		Beweisen Sie die beiden folgenden Transformationsaussagen:
+		\begin{enumerate}
+			\item Es sei $U\subset\mathbb R^n$ offen und beschränkt, und $a^{ij}, b^i, c \colon U\to\mathbb R$ seien gegebene 
+			Koeffizientenfunktionen mit $a^{ij}\in C^1(U)$. Dann lässt sich der Differentialoperator
+			\begin{equation*}
+				(Lu)(x)= -\sum\limits_{i,j=1}^n(a^{ij}(x)u_{x_i}(x))_{x_j} 
+				+\sum\limits_{i=1}^n b^i(x)u_{x_i}(x)
+				+c(x)u(x)
+			\end{equation*}
+			stets in die Form
+			\begin{equation*}
+				(Lu)(x)= -\sum\limits_{i,j=1}^n \tilde a^{ij}(x)u_{x_ix_j} (x) 
+				+\sum\limits_{i=1}^n b^i(x)u_{x_i}(x)
+				+c(x)u(x)
+			\end{equation*}
+			bringen und umgekehrt.
+			\item Es sei $L \equiv \sum\limits_{i,j=1}^n a^{ij} {\partial^2\over \partial x_i\partial x_j}$ ein elliptischer Operator und $C=(c^{ij})_{i,j=1,\ldots, n}$ eine orthogonale Matrix. Dann geht $L$ durch die Transformation $y=Cx$ und die Wahl
+			\begin{equation*}
+				b^{kl}=\sum\limits_{i,j=1}^n c^{ki}a^{ij}c^{lj} \qquad (k,l=1,\ldots, n),\qquad\text{d.\,h. }B = CAC^T,
+			\end{equation*}
+			über in den elliptischen Operator
+			\begin{equation*}
+				\tilde L=\sum\limits_{k,l =1}^n b^{kl} {\partial^2\over \partial y_k\partial y_l}.
+			\end{equation*}
+		\end{enumerate}
+	\end{task}
+
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Mit der Produktregel können wir die Divergenzform umschreiben zu
+		\begin{align*}
+			(Lu)(x) &= - \sum_{i,j=1}^n \brackets{a^{ij}(x) * u_{x_i}(x)}_{x_j} + \sum_{i = 1}^n b^i(x) * u_{x_i}(x) + c(x) * u(x) \\
+			&= - \sum_{i,j=1}^n \brackets{a^{ij}(x) * u_{x_i x_j}(x)} + a^{ij}_{x_j}(x) * u_{x_i}(x) + \sum_{i = 1}^n b^i(x) * u_{x_i}(x) + c(x) * u(x) \\
+			&= - \sum_{i,j=1} a^{ij}(x) * u_{x_i x_j} (x) + \sum_{i = 1}^n \underbrace{\brackets{\sum_{j = 1}^n b^i(x) - a^{ij}_{x_j}(x)}}_{\defqe \schlange{b^i}(x)} * u_{x_i} (x) + c(x) * u(x)
+		\end{align*}
+		Mit den Koeffizienten $A$, $\schlange{b}$ und $c$ hat $L$ dann Nicht-Divergenz-Form. 
+		Sei umgekehrt $L$ in Nicht-Divergenz-Form und $a^{ij} \in C^1(U)$, dann existiert $a^{ij}_{x_j}$ für alle $i,j \in \menge{1, \dots, n}$ und wir können $\schlange{b^i}(x) \defeq \sum_{j = 1}^n b^i(x) - a^{ij}_{x_j}(x)$ definieren. Mit obiger Rechnung und der Produktregel \enquote{rückwärts} erhalten wir dann $L$ in Divergenzform.
+	\end{enumerate}
+\end{exercisePage}

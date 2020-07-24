@@ -1,0 +1,115 @@
+\begin{exercisePage}
+	\newcommand{\teilaufgabe}[1]{\section{Teilaufgabe (#1)}}
+	\teilaufgabe{a}
+	Die Differentialgleichung
+	\begin{align} \label{eq: diffgleichunga}
+	u'(t) - u(t) * \tan(t) = 0
+	\end{align}
+	ist äquivalent zur Gleichung $u'(t) = \tan(t) * u(t)$, bei der die Variablen bereits getrennt sind. Dann ist nach Satz 1
+	\begin{align*}
+	\int \limits_{u_0}^u{\frac{1}{s} \diff{s}} &= \int \limits_{t_0}^t{\tan(x) \diff{x}} \\
+	\equivalent \left[ \ln \abs{s} \right]_{u_0}^u &= \left[ - \ln\abs{\cos(x)} \right]_{t_0}^t \\
+	\equivalent  \ln\abs{u} &=  - \ln\abs{\cos(t)} + \ln\abs{\cos(t_0)} + \ln\abs{u_0} \\
+	&= \ln\abs{\cos(t)}^{-1} + \ln(\abs{\cos(t_0)} *\abs{u_0}) \\
+	\equivalent u(t) &= \pm \frac{1}{\cos(t)} * \underbrace{\abs{\cos(t_0)} *\abs{u_0}}_{=: c_0}
+	\end{align*}
+	
+	Mit $u'(t) = \mp c_0 * \frac{\sin(t)}{\cos^2(t)} = c_0 * \frac{\tan(t)}{\cos(t)}$ erhalten wir eingesetzt in \cref{eq: diffgleichunga}
+	\begin{align*}
+	\mp c_0 * \frac{\tan(t)}{\cos(t)} - (\pm c_0) * \frac{1}{\cos(t)}  * \tan(t) = 0
+	\end{align*}
+	und somit ist $u$ Lösung der Differentialgleichung \labelcref{eq: diffgleichunga}.
+	
+	\teilaufgabe{b}
+	%
+	Die Differentialgleichung 
+	\begin{align} \label{eq: diffgleichungb}
+	u'(t) + t^2*u(t) = t^2
+	\end{align}
+	können wir umstellen zu
+	\begin{align*}
+	u'(t) = t^2 (1 - u(t))
+	\end{align*}
+	und haben die Variablen somit getrennt. Dann gilt mit Satz 1 und der heuristischen Methode aus der Vorlesung
+	\begin{align*}
+	\int \limits_{u_0}^{u}{\frac{1}{1-s} \diff{s}} 
+	&= \int \limits_{t_0}^{t}{x^2 \dx} \\
+	\equivalent \big[ - \ln(1-s) \big]_{u_0}^{u} &= \left[ \frac{1}{3} x^3 \right]_{t_0}^{t} \\
+	\equivalent - \ln(1-u) + \ln(1-u_0) &= \frac{1}{3} t^3 - \frac{1}{3} t_0^3 \\ 
+	\equivalent \ln(1-u) &= - \frac{1}{3} t^3 + \frac{1}{3} t_0^3 - \ln(1-u_0) \\
+	\equivalent u &= -e^{-\frac{1}{3}t^3} * \underbrace{e^{\frac{1}{3} t_0^3 - \ln(1-u_0)}}_{=: c_0} + 1
+	\end{align*}
+	Damit ist dann $u'(t) = c_0 * t^2 * e^{-\frac{1}{3}t^3}$ und für in die Differentialgleichung eingesetzt ist dann
+	\begin{align*}
+	c_0 * t^2 * e^{-\frac{1}{3}t^3} - t^2 (c_0*e^{-\frac{1}{3}}-1) - t^2
+	&= c_0*t^2 * e^{-\frac{1}{3}t^3} - t^2 * c_0 * e^{-\frac{1}{3}t^3} + t^2 -t^2 = 0
+	\end{align*}
+	Damit ist also $u$ Lösung der Differentialgleichung \labelcref{eq: diffgleichungb}.
+	
+	\pagebreak
+	%
+	\teilaufgabe{c}
+	%
+	Gegeben Sei die Differentialgleichung
+	\begin{align} \label{eq: diffgleichungc}
+	t*u'(t) + u(t) + t*e^t
+	\end{align}
+	mit dem Anfangswertproblem $u(1)=0$. Auf den Term $u'(t)*t + u'(t)$ können wir die Produktregel rückwärts anwenden und erhalten $\ableitung{t}{(u(t) * t)} + t*e^t = 0$. Damit können wir wieder "integrieren":
+	\begin{align*}
+	\int \limits_1^{t}{(u(s) * s)' \diff{s}} &= \int \limits_1^t{s * e^s \diff{s}} \\
+	\equivalent u(t) * t - u(1)*1 &= -(t-1)*e^t+(1-1)*e^{t_0} \\
+	\equivalent u(t) &= \frac{-(t-1)*e^t}{t}
+	\end{align*}
+	Damit erhalten wir für $u'(t) = \frac{-t^2*e^t + (t-1) *e^t}{t^2}$ eingesetzt in \cref{eq: diffgleichungc} 
+	\begin{align*}
+	t * \frac{-t^2*e^t+(t-1)*e^t}{t^2} * \frac{-(t-1)*e^t}{t} + t*e^t = \frac{-t^2*e^t+t*e^t+e^t-t*e^t+e^t+t^2*e^t}{t} = 0
+	\end{align*}
+	Damit ist $u$ also Lösung des Anfangswertproblems.
+	
+	\teilaufgabe{d}
+	%
+	Die Differentialgleichung 
+	\begin{align} \label{eq: diffgleichungd}
+	u'(t) + u(t) * \sin(t) = 4t^3*e^{\cos(t)}
+	\end{align}
+	ist äquivalent zu der durch Multiplikation mit $e^{-\cos(t)}$ entstandenen Differentialgleichung 
+	\begin{align*}
+	u'(t) * e^{-\cos(t)} + u(t) * \sin(t) * e^{-\cos(t)} = 4t^3
+	\end{align*}
+	Damit können wir auf der linken Seite die Produktregel rückwärts anwenden und erhalten $\ableitung{t}  \left(u(t) * e^{-\cos(t)}\right) = 4t^3$. Nun können wir integrieren mit dem Anfangswert $t_0 = \frac{\pi}{2}$.
+	\begin{align*}
+	\int\limits_{\frac{\pi}{2}}^t {\ableitung{t}  \left( u(t) * e^{-\cos(t)}\right) \diff{t} }  &= \int\limits_{\frac{\pi}{2}}^t{4t^3 \diff{t}} \\
+	\equivalent \left[ u(t) * e^{-\cos(t)} \right]_{\frac{\pi}{2}}^t &= \left[ t^4 \right]_{\frac{\pi}{2}}^t \\
+	\equivalent u(t) * e^{-\cos(t)} - u\left(\frac{\pi}{2} \right) * e^{-\cos\left( \frac{\pi}{2}\right)} &= t^4 - \frac{1}{16} \pi^4 \\
+	\equivalent u(t) * e^{-\cos(t)} - 2 &= t^4 - \frac{1}{16} \pi^4 \\
+	\equivalent u(t) &= e^{\cos(t)} \left( t^4 - \frac{1}{16} \pi^4 + 2 \right)
+	\end{align*}
+	
+	Für $u'(t) = -\sin(t) * e^{\cos(t)} \left( t^4 - \frac{1}{16} \pi^4 + 2 \right) + e^{\cos(t)} * 4t^3$ erhalten wir eingesetzt in die Differentialgleichung
+	\begin{align*}
+	& \enspace -\sin(t) * e^{\cos(t)} \left( t^4 - \frac{1}{16} \pi^4 + 2 \right) + e^{\cos(t)} * 4t^3 + e^{\cos(t)} \left( t^4 - \frac{1}{16} \pi^4 + 2 \right) * \sin(t) - 4t^3 * e^{\cos(t)} \\
+	= &\enspace e^{\cos(t)} \left( -\sin(t) \left( t^4 - \frac{1}{16} \pi^4 + 2 \right) + 4t^3 + \sin(t)  \left( t^4 - \frac{1}{16} \pi^4 + 2 \right) - 4t^3  \right) \\
+	= &\enspace 0
+	\end{align*}
+	Damit ist die Differentialgleichung \labelcref{eq: diffgleichungd} erfüllt und $u$ Lösung des Anfangswertproblems.
+	
+	\pagebreak
+	%
+	\teilaufgabe{e}
+	%
+	Die Differentialgleichung $(1+t^2)*u'(t) + t*u(t) - t*u^2(t) = 0$ lässt sich umstellen zu
+	\begin{align*}
+	u'(t) = \frac{-t*u(t) + t*u^2(t)}{1+t^2} = \frac{t (u^2(t) - u(t) )}{1+t^2} = \frac{t}{1+t^2} \left( u^2(t) - u(t) \right)
+	\end{align*}
+	Somit sind die Variablen getrennt und wir können Satz 1 anwenden.
+	\begin{align*}
+	\int \limits_{u_0}^{u}{\frac{1}{s^2-s} \diff{s}} & = \int \limits_{t_0}^{t}{\frac{x}{1+x^2} \dx} \\
+	\equivalent \left[ \ln\left(\frac{1-x}{x}\right) \right]_{u_0}^{u} &= \left[ \frac{1}{2} \ln(x^2+1) \right]_{t_0}^t \\
+	\equivalent \ln\left(\frac{1-u}{u}\right) &= \ln\left(t^2+1\right)^{\frac{1}{2}} - \ln\left(t_0^2+1\right)^{\frac{1}{2}} + \ln\left(\frac{1-u_0}{u_0}\right) \\
+	&= \ln\left(t^2+1\right)^{\frac{1}{2}} - \ln\left(\underbrace{(t_0^2+1)^{\frac{1}{2}} * \frac{1-u_0}{u_0}}_{=: c_0}\right) \\
+	\equivalent \frac{1-u}{u} = \frac{1}{u} -1 &= \frac{\exp\left(\ln(t^2+1)^\frac{1}{2}\right)}{\exp(\ln(c_0))} \\
+	\equivalent \frac{1}{u} &= \frac{\sqrt{t^2+1}}{c_0} + 1 \\
+	\equivalent u &= \frac{c_0}{\sqrt{t^2+1}+c_0}
+	\end{align*}
+	Schließlich kann man auch hier prüfen, dass mit $u'$ die Differenzialgleichung erfüllt wird und $u$ somit Lösung dieser ist.
+\end{exercisePage}
