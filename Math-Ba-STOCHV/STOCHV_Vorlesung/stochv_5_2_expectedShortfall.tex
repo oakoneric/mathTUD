@@ -35,7 +35,7 @@
 	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
 		\item Die Abbildung $u \mapsto \VaR_u(L)$ ist monoton steigend. 
 		\begin{equation*}
-			\follows \ES_\alpha(L) = \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u} \ge \frac{1}{1-\alpha} \int_\alpha^1 \VaR_\alpha(L) \diff{u} = \Var_\alpha(L)
+			\follows \ES_\alpha(L) = \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u} \ge \frac{1}{1-\alpha} \int_\alpha^1 \VaR_\alpha(L) \diff{u} = \VaR_\alpha(L)
 		\end{equation*}
 		\item Sei $F$ Verteilungsfunktion von $L$. Aus der Wahrscheinlichkeitstheorie ist bekannt, dass $U \defeq F(L)$ ist gleichverteilt\footnote{$\P(U \le x) = \P(F(L) \le x) = \P(L \le F^{-1}(x)) = F(F^{-1}(x)) = x \quad \forall x \in [0,1] \follows U \sim U[0,1]$} auf $[0,1]$ und $\VaR_\alpha(L) = F^{-1}(\alpha)$. Also ist 
 		\begin{equation*}

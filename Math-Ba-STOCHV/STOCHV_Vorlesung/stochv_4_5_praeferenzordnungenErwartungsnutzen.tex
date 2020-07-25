@@ -9,7 +9,7 @@
 \vspace{\parskip}
 
 \fbox{\textbf{Axiomatischer Zugang:}} Präferenzordnungen (PO)
-Sei $\Omega, \F, \P)$ ein Wahrscheinlichkeitsraum und wie üblich $L_1(\Omega, \F, \P)$ der Raum der integrierbaren Zufallsvariablen. Setze
+Sei $(\Omega, \F, \P)$ ein Wahrscheinlichkeitsraum und wie üblich $L_1(\Omega, \F, \P)$ der Raum der integrierbaren Zufallsvariablen. Setze
 \begin{equation*}
 	\mathcal{M} \defeq \text{Menge der Verteilungsfunktionen } F_X \text{ von } X \in L_1(\Omega, \F, \P)
 \end{equation*}
@@ -44,7 +44,7 @@ Wir beschränken uns auf ''verteilungsinvariante`` Präferenzordnungen (unabhän
 		\end{equation*}
 		\item Aus gegebener Präferenzordnung können wir ableiten:
 		\begin{itemize}
-			\item Aquivalenzrelation $F \sim G \equivalent (F \unlhd G) \land (G \unlhd F)$ -- ''Indifferenz zwischen $F$ und $G$``
+			\item Äquivalenzrelation $F \sim G \equivalent (F \unlhd G) \land (G \unlhd F)$ -- ''Indifferenz zwischen $F$ und $G$``
 			\item strikte Relation: $F \lhd G \equivalent (F \unlhd G) \land \lnot (G \unlhd F)$ -- ''$G$ wird strikt gegenüber $F$ bevorzugt``
 		\end{itemize}
 		\item Für ''deterministische Zufallsvariable`` $a \in \R$ ist die Verteilungsfunktion $F_a = \one_{[a,\infty)}$.
@@ -111,7 +111,7 @@ Eine Präferenzordnung kann folgende Eigenschaften besitzen:
 			= U \brackets{\EW[X]} = \int U \diff{F_{\EW[X]}}
 		\end{equation*} 
 		und somit $F_X \unlhd F_{\EW[X]}$ (oder alternativ $\EW[U(X)] \le U(\EW[X])$ mit der Jensen-Ungleichung).
-		\item Sei $F \unlhd G \unlhd H$. Zu zeigen: es existiert ein $\alpha \in [0,1]$ mit $(1-\alpha) F + \alpha H \sim G$.
+		\item Sei $F \unlhd G \unlhd H$. Zu zeigen: es existiert ein $\alpha_\ast \in [0,1]$ mit $(1-\alpha_\ast) F + \alpha_\ast H \sim G$.
 		Setze
 		\begin{equation*}
 			\alpha_\ast \defeq \frac{\int U \diffskip{G} - \int U \diffskip{F}}{\int U \diffskip{H} - \int U \diffskip{F}}
@@ -119,7 +119,7 @@ Eine Präferenzordnung kann folgende Eigenschaften besitzen:
 		Es gilt 
 		\begin{equation*}
 			\begin{aligned}
-				\int U ((1-\alpha) \diff{F} + \alpha_\ast \diff{H}) 
+				\int U ((1-\alpha_\ast) \diff{F} + \alpha_\ast \diff{H}) 
 				&= (1-\alpha_\ast) \int U \diff{F} + \alpha_\ast \int U \diff{H} \\
 				&= \int U \diff{F} + \alpha_\ast \brackets{\int U \diff{H} - \int U \diff{F}} \\
 				&= \int U \diff{G}	
@@ -207,7 +207,8 @@ Eine Präferenzordnung kann folgende Eigenschaften besitzen:
 			= \sum_{k=1}^\infty 2^{-k + \frac{k-1}{2}} 
 			= \frac{1}{\sqrt{2}} \sum_{k=1}^\infty 2^{-\frac{k}{2}} \\
 			&= \frac{1}{\sqrt{2}} \sum_{k = 1}^\infty \brackets{\frac{1}{\sqrt{2}}}^k \\
-			&= \frac{1}{\sqrt{2}} * \frac{\frac{1}{\sqrt{2}}}{1 - \frac{1}{\sqrt{2}} = \frac{1}{2 - \sqrt{2}}}
+			&= \frac{1}{\sqrt{2}} * \frac{\frac{1}{\sqrt{2}}}{1 - \frac{1}{\sqrt{2}}}
+			= \frac{1}{2 - \sqrt{2}}
 		\end{aligned}
 	\end{equation*}
 	Somit also $c_1 = \brackets{\frac{1}{2-\sqrt{2}}}^2 \approx 2.914$, d.h. der faire Einsatz beträge $2.91$ Euro.

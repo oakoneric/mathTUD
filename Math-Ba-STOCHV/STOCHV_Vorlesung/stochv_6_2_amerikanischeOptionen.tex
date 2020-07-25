@@ -27,7 +27,7 @@ Bei optimaler Wahl von $\tau$ gilt also
 \begin{equation*}
 	\Pi_0^{\ACall} = \max\menge{\E^\Q\sqbrackets{(1+r)^{-\tau} (S_\tau - K)_+} : \tau \text{ Stoppzeit}, \tau \le N}
 \end{equation*}
-$\implies$ optimales Stoppproblem mit Auszahlungspreis
+$\implies$ optimales Stoppproblem mit Auszahlungsprozess
 \begin{equation*}
 	Z_n^{\ACall} = (1+r)^{-n} (S_n - K)_+
 \end{equation*}
@@ -36,7 +36,7 @@ Analog gilt für die amerikaische Put-Option
 \begin{equation*}
 	\Pi_0^{\APut} = \max\menge{\E^\Q\sqbrackets{(1+r)^{-\tau} (K - S_\tau)_+} : \tau \text{ Stoppzeit}, \tau \le N}
 \end{equation*}
-$\implies$ optimales Stoppproblem mit Auszahlungspreis
+$\implies$ optimales Stoppproblem mit Auszahlungsprozess
 \begin{equation*}
 Z_n^{\APut} = (1+r)^{-n} (K - S_n)_+
 \end{equation*}
@@ -51,7 +51,7 @@ Z_n^{\APut} = (1+r)^{-n} (K - S_n)_+
 \begin{proof}
 	Es gilt 
 	\begin{equation*}
-		Z_n^{\ACall} = (1-r)^{-N} (S_N - K)_+ = \brackets{\schlange{S}_n - \frac{K}{(1-r)^n}}_+ \ge \brackets{\schlange{S}_n - \frac{K}{(1+r)^{n-1}}}_+
+		Z_n^{\ACall} = (1+r)^{-n} (S_n - K)_+ = \brackets{\schlange{S}_n - \frac{K}{(1+r)^n}}_+ \ge \brackets{\schlange{S}_n - \frac{K}{(1+r)^{n-1}}}_+
 	\end{equation*}
 	Außerdem ist die Funktion $s \mapsto \brackets{s - \frac{K}{(1-r)^{n-1}}}_+$ konvex (hockeystick function).
 	\begin{equation*}

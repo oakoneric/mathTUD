@@ -201,13 +201,13 @@ $C_N(t,S_t^N)$ für den Preis einer europäischen Call-Option im \eqref{eq: crrn
 	
 	$\lim_{N \to \infty} \E^{\Q_N}\sqbrackets{f(Z_N)} = \EW[f(Z)]$ nach \cref{theorem: 3.1} mit $Z \sim \Normal((r-\frac{\sigma^2}{2})T , \sigma^2 T)$. Im Folgenden schreiben wir $m \defeq (r-\frac{\sigma^2}{2})$. 
 	\begin{align*}
-		\EW[f(Z)] &= \frac{1}{\sqrt{2 \pi}} \frac{1}{\sigma \sqrt{T}}  \int_{-\infty}^\infty (K - S_0 e^z)_+ * \exp \brackets{- \frac{(z - mT)^2}{2 \sigma^2 T}} \diff{z} \\
+		\E^{\Q_N}[f(Z)] &= \frac{1}{\sqrt{2 \pi}} \frac{1}{\sigma \sqrt{T}}  \int_{-\infty}^\infty (K - S_0 e^z)_+ * \exp \brackets{- \frac{(z - mT)^2}{2 \sigma^2 T}} \diff{z} \\
 		&= \frac{1}{\sqrt{2 \pi}}  \frac{1}{\sigma \sqrt{T}} \int_{-\infty}^{\log\brackets{\frac{K}{S_0}}} (K - S_0 e^z) * \exp \brackets{- \frac{1}{2} \brackets{\frac{z - mT}{ \sigma \sqrt{T}}}^2} \diff{z} \\
 		&= \sqbrackets{ \begin{array}{c}
 			y = \frac{z - m T}{\sigma \sqrt{T}} \\
 			\diff y = \frac{\diff z}{\sigma \sqrt{T}}
 			\end{array} } \\
-		&= \frac{1}{\sqrt{2 \pi}}  \int_{-\infty}^{-d_2} (K - S_0)  * \exp \brackets{y \sigma \sqrt{T} + mT} * e^{-\frac{y^2}{2}} \diff{y} \\
+		&= \frac{1}{\sqrt{2 \pi}}  \int_{-\infty}^{-d_2} \brackets{K - S_0  * \exp \brackets{y \sigma \sqrt{T} + mT}} * e^{-\frac{y^2}{2}} \diff{y} \\
 		&= K \Phi(-d_2) - S_0 \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{-d_2} \exp \brackets{- \frac{y^2}{2} + y \sigma \sqrt{T} + mT} \diff{y} 
 	\end{align*}
 	
@@ -263,7 +263,7 @@ Frage: Was gilt für die Replikationsstrategie? Konvergiert auch diese?
 		\lim_{N \to \infty} \xi_0^N = \partdiff{S} P_{BS} (t, S_t)
 	\end{equation*}
 	und analog zeigt man dies auch für den Call.
-	Wir berechnen $\partdiff{S} C_{BS}$ explizit:
+	Wir berechnen $\partdiff{S} C_{BS}$ explizit (wobei $\phi = \Phi'$):
 	\begin{align*}
 		\partdiff{S} C_{BS}(t,S) &= \Phi(d_1) + S \phi(d_1) * \partdiff{S} d_1 - e^{-r(T-t)} K \phi(d_2) * \partdiff{S} d_2 \\
 		&= \Phi(d_1) + \partdiff{S} d_1 \brackets{S \phi(d_1) - e^{-r(T-t)} K \phi(d_2)}

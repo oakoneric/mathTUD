@@ -25,7 +25,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 	Mit $s \defeq \mu  - r$ bezeichnen wir die Überrendite [excess return]. Ist $s \le 0$, dann sollte alles in $S^0$ investiert werden (Pareto-optimal). Sei $s > 0$: teile das Vermögen $w$ auf in zwei Teile $(w_0, w - w_0)$ auf $(S^0, S^1)$\footnote{investiere also $w_0$ in $S^0$ und den Rest in $w_1$}. Dabei entspricht $w - w_0 < 0$ einem Leerverkauf und $w_0 < 0$ einer Kreditaufnahme. Gelte $w=1$. 
 	\begin{itemize}[nolistsep]
 		\item Endvermögen: $P_T = w_0 (1+r) + (1-w_0) (1+R)$
-		\item zu erwartende Rendite\footnote{Rendite $= \frac{P_T - P_0}{P_0}$}: $\mu_P = \EW[P_T - 1] = w_0 (1+r) + (1-w_0)(1+\mu) -1 = w_0 r + (1-w_0) \mu + 1$
+		\item zu erwartende Rendite\footnote{Rendite $= \frac{P_T - P_0}{P_0}$}: $\mu_P = \EW[P_T - 1] = w_0 (1+r) + (1-w_0)(1+\mu) -1 = w_0 r + (1-w_0) \mu$
 		\item Risiko:  $\sigma_P = (1-w_0) * \sigma$
 		\item Überrendite: $s_P = (1-w_0) (\mu - r)$
 	\end{itemize}
@@ -37,7 +37,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 	\item[\fbox{Toy-Model II:}] Einperiodenproblem, zwei risikobehaftete Anlagemöglichkeiten, Zeithorizont $T=1$, Vermögen $w=1$ mit
 	\begin{equation*}
 		\begin{aligned}
-		S_0^1 &= 1 & S_T^1 = (1+R-1) &\mit \EW[R_1] &= \mu, \Var[R_1] = \sigma_1^2 \\
+		S_0^1 &= 1 & S_T^1 = (1+R_1) &\mit \EW[R_1] &= \mu, \Var[R_1] = \sigma_1^2 \\
 		S_0^2 &= 1 & S_T^2 = (1+R_2) &\mit \EW[R_2] &= \mu, \Var[R_2] = \sigma_2^2
 		\end{aligned}
 	\end{equation*}
@@ -45,7 +45,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 	\begin{itemize}
 		\item Portfoliowert: $P_T = w_1 (1+R_1) + (1-w_1)(1+R_2)$
 		\item Rendite: $\mu_P = \EW[P_T - 1] = w_1 \EW[R_1] + (1-w_1) \EW[R_2] = \mu$
-		\item Risiko: $\sigma_P^2 = \Var[w_1 R_2 + (1-w_1) R_2] = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2$
+		\item Risiko: $\sigma_P^2 = \Var[w_1 R_1 + (1-w_1) R_2] = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2$
 		\item Pareto-optimales Portfolio:
 		\begin{equation*}
 			\begin{aligned}

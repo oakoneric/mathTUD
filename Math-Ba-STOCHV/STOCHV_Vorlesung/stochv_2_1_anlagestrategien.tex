@@ -56,15 +56,13 @@ Annahmen an die Strategie:
 		\tag{$\schlange{\text{SF}}$}
 	\end{equation}
 	d.h.
-	\begin{equation}
-		\begin{aligned}
+	\begin{align}
 			\schlange{\Pi}_n  &= w + \sum_{k=1}^n \brackets{\schlange\Pi_k - \schlange\Pi_{k-1} }
 			\overset{\eqref{eq: sf}}{=} w + \sum_{k=1}^n \xi_k \brackets{\schlange S_k - \schlange S_{k-1}} 
-			= w + \brackets{\xi \bullet \schlange{S}}_n \\
+			= w + \brackets{\xi \bullet \schlange{S}}_n \nonumber \\
 			\schlange\Pi_n &= w + \brackets{\xi \bullet \schlange{S}}_n
-		\end{aligned}
-		\tag{$\schlange{\text{Int}}$}
-	\end{equation}
+			\tag{$\schlange{\text{Int}}$}
+	\end{align}
 \end{itemize}
 
 \begin{lemma} %2.2
@@ -72,11 +70,11 @@ Annahmen an die Strategie:
 	\begin{enumerate}[label=(\alph*), leftmargin=*, nolistsep, topsep=-\parskip]
 		\item Der diskontierte Werteprozess lässt sich darstellen als
 		\begin{equation*}
-		\schlange{\Pi_n} = w + \sum_{k=1}^n \xi_k (\schlange{S_k} - \schlange{S_{k-1}}) = w + (\xi \bullet \schlange{S})_n
+		\schlange{\Pi}_n = w + \sum_{k=1}^n \xi_k (\schlange{S}_k - \schlange{S}_{k-1}) = w + (\xi \bullet \schlange{S})_n
 		\end{equation*}
 		\item Der Anteil $\eta_n$ ist eindeutig gegeben durch
 		\begin{equation*}
-		\eta_n = \schlange{\Pi_n} - \xi_n \schlange{S_n}
+		\eta_n = \schlange{\Pi}_n - \xi_n \schlange{S}_n
 		\end{equation*}
 	\end{enumerate}
 \end{lemma}

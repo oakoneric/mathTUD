@@ -25,8 +25,10 @@ Risiko (Standardabweichung):
 Optimales Anlageproblem:
 minimiere das Risiko gegeben einer Zielrendite $\mu_\ast$
 \begin{equation*}
-	\min \frac{1}{2} \trans{p} \Sigma p \text{ über } \Rn 
-	\text{unter Nebenbedingungen} \trans{p} \mu = \mu_\ast (Zielrendite \mu_\ast) \und \trans{p} \one = 1 \mit \one = \transpose{1, \dots, 1} \in \Rn
+	\begin{aligned}
+	&\min \tfrac{1}{2} \trans{p} \Sigma p \text{ über } \Rn  \\
+	\text{unter NB } &\trans{p} \mu = \mu_\ast (\text{Zielrendite } \mu_\ast) \und \trans{p} \one = 1 \mit \one = \transpose{1, \dots, 1} \in \Rn
+	\end{aligned}
 	\tag{Mark-1} \label{eq: mark-1}
 \end{equation*}
 
@@ -46,7 +48,6 @@ Für den Gradienten der Zielfunktion gilt
 		\follows p_\ast &= \Sigma^{-1} (\lambda_1 \mu + \lambda_2 \one)
 	\end{aligned}
 \end{equation*}
-
 d.h 
 \begin{align*}
 	g(\lambda_1, \lambda_2) 
@@ -62,8 +63,8 @@ Es gilt $a \ge 0$, $c \ge 0$ und mit Cauchy-Schwarz auch $ac \ge b^2$.
 
 Maximiere $g$.
 \begin{align*}
-	\partdiff{\lambda_1} g = -a \lambda_1 - b \lambda_2 + \mu_\ast \overset{!}{0} \equivalent a \lambda_1 + b \lambda_2 = \mu_\ast \\
-	\partdiff{\lambda_2} g = -b \lambda_1 -c \lambda_2 + 1 \overset{!}{=} 0 \equivalent b \lambda_1 + c \lambda_2 = 1
+	\partdiff{\lambda_1} g &= -a \lambda_1 - b \lambda_2 + \mu_\ast \overset{!}{=} 0 &\equivalent&& a \lambda_1 + b \lambda_2 &= \mu_\ast \\
+	\partdiff{\lambda_2} g &= -b \lambda_1 -c \lambda_2 + 1 \overset{!}{=} 0 &\equivalent&& b \lambda_1 + c \lambda_2 &= 1
 \end{align*}
 Wir nehmen an, dass $ac > b^2$.
 $-b$I $+a$II: $(ac - b^2) \lambda_2 = a - b \mu_\ast \follows \lambda_2^\ast = \frac{a - b \mu_\ast}{ac - b^2}$.
@@ -77,7 +78,7 @@ Minimierer von \eqref{eq: mark-1}:
 \begin{korollar}[Tobin's Two-Fund-Separation]
 	Jedes Pareto-optimale Portfolio für \eqref{eq: mark-1} kann (unabhängig von $n$) als Linearkombination der zwei Portfolios
 	\begin{equation*}
-		p^\ast = \sigma^{-1} \mu \quad \und \quad p_2^\ast = \Sigma^{-1} \one
+		p^\ast = \Sigma^{-1} \mu \quad \und \quad p_2^\ast = \Sigma^{-1} \one
 	\end{equation*}
 	dargestellt werden.
 \end{korollar}
@@ -143,17 +144,28 @@ Graph von minimalem Risiko $\sigma_\ast$ und Zielrendite $\mu_\ast$:
 
 
 \begin{*bemerkung}
-	nominales Portfolio: $\theta = (\theta_1, \dots, \Theta_n) \in \Rn$$\theta_i$ Stückzahl von Anlagegut $S^i$.
-	Portfoliowert: $V_0 = \trans{\theta} S_0 = \sum_{i=1}^n \theta_i S_0^i \defqe w$... Anfangskapital
-	$V_T = \trans{\theta} S_T = \sum_{i=1}^n \theta_i S_T^i$
-	
-	relatives Portfolio: $p = (p_1, \dots, p_n) \in \Rn$ mit $p_i = \frac{\theta_i S_0^i}{w}$ ... Vermögensanteil in $S^i$.
-	$\sum_{i=1}^n p_i = \frac{1}{w} \sum_{i=1}^n \theta_i S_0^i = \frac{w}{w} = 1$
-	
-	Renditen: Einzelnes Anlagegut: $R_i = \frac{S_T^i - S_0^i}{S_0^i}$
-	Gesamtes Portfolio: $R_p = \frac{V_T - V_0}{V_0} = \frac{1}{w} \brackets{\sum_{i=1}^n \theta_i S_T^i - \theta_i S_0^i}
-	= \frac{1}{w} \sum_{i=1}^n \theta_i (S_T^i - S_0^i)
-	= \sum_{i=1}^n \underbrace{\frac{\theta_i S_0^i}{w}}_{= p_i} * R_i
-	= \sum_{i=1}^n p_i * R_i
-	= \trans{p} R$ ist linear in $p$.
+	\begin{itemize}
+		\item nominales Portfolio: $\theta = (\theta_1, \dots, \theta_n) \in \Rn$ ($\theta_i$ Stückzahl von Anlagegut $S^i$)
+		\item Portfoliowert: $V_0 = \trans{\theta}$ und $S_0 = \sum_{i=1}^n \theta_i S_0^i \defqe w$ \dots Anfangskapital
+		\item[]
+		$V_T = \trans{\theta} S_T = \sum_{i=1}^n \theta_i S_T^i$
+		
+		\item relatives Portfolio: $p = (p_1, \dots, p_n) \in \Rn$ mit $p_i = \frac{\theta_i S_0^i}{w}$ \dots Vermögensanteil in $S^i$
+		\begin{equation*}
+			\sum_{i=1}^n p_i = \frac{1}{w} \sum_{i=1}^n \theta_i S_0^i = \frac{w}{w} = 1
+		\end{equation*}
+		
+		\item Renditen --- Einzelnes Anlagegut: $R_i = \frac{S_T^i - S_0^i}{S_0^i}$ \\
+		Gesamtes Portfolio: 
+		\begin{equation*}
+			\begin{aligned}
+				R_p &= \frac{V_T - V_0}{V_0} = \frac{1}{w} \brackets{\sum_{i=1}^n \theta_i S_T^i - \theta_i S_0^i} \\
+				&= \frac{1}{w} \sum_{i=1}^n \theta_i (S_T^i - S_0^i) \\
+				&= \sum_{i=1}^n \underbrace{\frac{\theta_i S_0^i}{w}}_{= p_i} * R_i \\
+				&= \sum_{i=1}^n p_i * R_i \\
+				&= \trans{p} R
+			\end{aligned}
+		\end{equation*} 
+		ist linear in $p$.
+	\end{itemize}
 \end{*bemerkung}

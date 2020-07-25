@@ -338,7 +338,7 @@ Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
 		&= \EW[ \one_A *  \underbrace{ \brackets{\EW[X_K \mid \F_{K-1}] - X_{K-1}}}_{\defqe Y_{K-1}} ] \quad \forall A \in \F_{K-1} \\
 		\follows \int_A  Y_{K-1}(\omega) \diff{\P(\omega)} &= \int_A X_{K-1}(\omega) \diff{\P(\omega)} \quad \forall A \in \F_{K-1} \\
 		\follows Y_{K-1} &= X_{K-1} \text{ fast sicher} \\
-		\follows \EW[X_K \mid \F_{K-1] - X_{K-1}}] &= X_{K-1}
+		\follows \EW[X_K \mid \F_{K-1}] - X_{K-1} &= X_{K-1}
 	\end{align*}
 	für beliebige $K$. Somit ist $X$ ein Martingal.
 \end{proof}

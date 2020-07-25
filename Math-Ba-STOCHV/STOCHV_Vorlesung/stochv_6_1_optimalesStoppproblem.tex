@@ -40,9 +40,9 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 	
 	Des Weiteren gilt
 	\begin{equation*}
-		\EW[X_{n \land \tau} - X_{(n-1) \land \tau} \mid \F_{n-1}] \overset{\eqref{eq: 6.1-star}}{=} \EW[\one_{n \le c} (X_n - X_{n-1}) \mid \F_{n-1}]  \overset{\eqref{eq: 6.1-starstar}}{=} \one_{\menge{n \le \tau}} \EW[X_n - X_{n-1} \mid \F_{n-1}]
+		\EW[X_{n \land \tau} - X_{(n-1) \land \tau} \mid \F_{n-1}] \overset{\eqref{eq: 6.1-star}}{=} \EW[\one_{n \le \tau} (X_n - X_{n-1}) \mid \F_{n-1}]  \overset{\eqref{eq: 6.1-starstar}}{=} \one_{\menge{n \le \tau}} \EW[X_n - X_{n-1} \mid \F_{n-1}]
 	\end{equation*}
-	Wegen \eqref{eq: 6.1-starstar} ist $\one_{\menge{n \le c}}$ $\F_{n-1}$-messbar und wir konnten die Pull-out-Property verwenden. Es ist
+	Wegen \eqref{eq: 6.1-starstar} ist $\one_{\menge{n \le \tau}}$ $\F_{n-1}$-messbar und wir konnten die Pull-out-Property verwenden. Es ist
 	\begin{equation*}
 		\EW[X_n - X_{n-1} \mid \F_{n-1}] = \begin{cases}
 		= 0 &\text{wenn $X$ ein Martingal ist} \\
@@ -87,14 +87,14 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 			\EW[Z_N] = Z_0 + \sum_{k=1}^N \EW[Z_k - Z_{k-1}] 
 			= Z_0 + \sum_{k=1}^N \EW[{\EW[Z_k - Z_{k-1} \mid \F_{k-1}]}]
 		\end{equation*}
-		wobei $\EW[Z_k - Z_{k-1} \mid \F_{k-1}] \defqe c_k \ge 0$, aufgrund der Supermartingaleigenschaft. 
+		wobei $\EW[Z_k - Z_{k-1} \mid \F_{k-1}] \defqe c_k \ge 0$, aufgrund der Submartingaleigenschaft. 
 		\begin{equation*}
 			\begin{aligned}
 				\EW[Z_\tau] 
 				= \EW[Z_{\tau \land N}] 
 				&= Z_0 + \sum_{k=1}^N \EW[\one_{\menge{k \le \tau}}(Z_k - Z_{k-1})] \\
-				&=  Z_0 + \sum_{k=1}^N \EW[\one_{\menge{k \le \tau}} {\EW[(Z_k - Z_{k-1}]}] \\
-				&= Z_0 + \sum_{k=1}^N c_k \\ 
+				&=  Z_0 + \sum_{k=1}^N \EW[\one_{\menge{k \le \tau}} {\EW[(Z_k - Z_{k-1} \mid \F_{k-1}]}] \\
+				&\le Z_0 + \sum_{k=1}^N c_k \\ 
 				&= \EW[Z_N]
 			\end{aligned}
 		\end{equation*}
@@ -119,7 +119,7 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 	Die Snellsche Einhüllende ist ein Supermartingal und sie ist das kleinste Supermartingal, welches $Z$ dominiert, d.h. $Z_n \le S_n$ für alle $n \in [N]$.
 \end{theorem}
 \begin{proof}
-	Mit \eqref{eq: snell-rek} gilt $S_N \ge \EW[S_{n+1} \mid \F_n]$ für alle $n \in [N-1]$, d.h. $S$ ist ein Supermartingal. Ebenfalls aus \eqref{eq: snell-rek} folgt $S_n \ge Z_n$ für alle $n \in [N]$, also dominiert $S$ den Prozess $Z$. Sei $Y$ nun ein weiteres Supermartingal, welches $Z$ dominiert. Wir zeigen $S_n \le Y_n$ für alle $n \in [N]$ mittels Rückwärtsinduktion:
+	Mit \eqref{eq: snell-rek} gilt $S_n \ge \EW[S_{n+1} \mid \F_n]$ für alle $n \in [N-1]$, d.h. $S$ ist ein Supermartingal. Ebenfalls aus \eqref{eq: snell-rek} folgt $S_n \ge Z_n$ für alle $n \in [N]$, also dominiert $S$ den Prozess $Z$. Sei $Y$ nun ein weiteres Supermartingal, welches $Z$ dominiert. Wir zeigen $S_n \le Y_n$ für alle $n \in [N]$ mittels Rückwärtsinduktion:
 	\begin{induction}
 		\ianfang[$n = N$] $S_N = Z_N \le Y_N$
 		\ischritt[$n+1 \to n$] Aus
@@ -129,11 +129,11 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 			\text{und} \quad Y_n &\ge Z_n
 			\end{aligned}
 		\end{equation*}
-		folgt nun $Y_n \ge \max\menge{\EW[S_{n+1} \mid \F_n], Z_n} = S_N$ für alle $n \in [N]$.
+		folgt nun $Y_n \ge \max\menge{\EW[S_{n+1} \mid \F_n], Z_n} = S_n$ für alle $n \in [N]$.
 	\end{induction}
 \end{proof}
 
-\begin{lemma} \label{lemma: 5.4}
+\begin{lemma} \label{lemma: 6.4}
 	Sei $\dach{\tau} \defeq \min\menge{n \in [N] : S_n = Z_n}$, d.h. $\dach{\tau}$ ist der erste Zeitpunkt, zu dem $Z$ und Snellsche Einhüllende zusammentreffen. Es gilt $\dach{\tau} \le N$, $\dach{\tau}$ ist Stoppzeit und $\folge{S_{n \land \dach{\tau}}}{n \in \N}$ ist ein Martingal.
 \end{lemma}
 \begin{proof}
@@ -150,7 +150,7 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 		\end{equation*}
 		Bilde nun den bedingten Erwartungswert $\EW[\cdot \mid \F_{n-1}]$:
 		\begin{equation*}
-			\EW[S_{n \land \dach{\tau}} \mid \F_{n-1}]  S_{(n-1) \land \dach{\tau}} = \one_{\menge{n \le \dach{\tau}}} (\underbrace{\EW[S_n \mid \F_{n-1}] - \EW[S_n \mid \F_{n-1}]}_{=0}) = 0
+			\EW[S_{n \land \dach{\tau}} \mid \F_{n-1}] - S_{(n-1) \land \dach{\tau}} = \one_{\menge{n \le \dach{\tau}}} (\underbrace{\EW[S_n \mid \F_{n-1}] - \EW[S_n \mid \F_{n-1}]}_{=0}) = 0
 		\end{equation*}
 		für alle $n \in [N]$, d.h. $\folge{S_{n \land \dach{\tau}}}{n \in [N]}$ ist ein Maringal.
 	\end{itemize}
@@ -166,7 +166,7 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 \begin{proof}
 	Es gilt
 	\begin{equation*}
-		S_0 = S_{0 \land \dach{\tau}} \overset{\cref{lemma: 5.4}}{=} \EW[S_{N \land \dach{\tau}}] = \EW[S_{\dach{\tau}}] \overset{\text{Def.}}{=} \EW[Z_{\dach{\tau}}]
+		S_0 = S_{0 \land \dach{\tau}} \overset{\text{\cref{lemma: 6.4}}}{=} \EW[S_{N \land \dach{\tau}}] = \EW[S_{\dach{\tau}}] \overset{\text{Def.}}{=} \EW[Z_{\dach{\tau}}]
 	\end{equation*}
 	Sei $\tau$ eine beliebige Stoppzeit  mit $\tau \le N$
 	\begin{equation*}

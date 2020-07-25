@@ -112,18 +112,18 @@ Für den Beweis verwenden wir den folgenden Trennungssatz für konvexe Mengen:
 	Betrachte folgende Teilmengen von $\R^N = \R^{m+p+1}$
 	\begin{equation*}
 		\begin{aligned}
-			\mathcal{G} &\defeq \menge{(u,v,t) \in \R^N : \exists x \in \Rn \text{ mit } f_i(x) = 0 \ \forall i \in [m] , Ax - b = v, f_0(x) = t} \\
+			\mathcal{G} &\defeq \menge{(u,v,t) \in \R^N : \exists x \in \Rn \text{ mit } f_i(x) = u_i \ \forall i \in [m] , Ax - b = v, f_0(x) = t} \\
 			\mathcal{A} &\defeq \menge{(u,v,t) \in \R^N : \exists x \in \Rn \text{ mit } f_i(x) \le u_i \ \forall i \in [m], Ax - b = v, f_0(x) \le t} \\
 			&= \mathcal{G} \oplus \Rm_{\ge 0} \times \menge{0}^p \times \R_{\ge 0} \\
-			\mathcal{B} &\defeq \menge{(0,0,t) \in \R^N : t \le p_\ast}
+			\mathcal{B} &\defeq \menge{(0,0,t) \in \R^N : t < p_\ast}
 		\end{aligned}
 	\end{equation*}
 	Es gilt: $\mathcal{A}$ und $\mathcal{B}$ sind konvex. \\
 	Behauptung: $A \cap B = \emptyset$ --- Beweis mit Widerspruch. Angenommen es existiert $(u,v,t) \in \mathcal{A} \cap \mathcal{B}$, dann gilt (wegen $\mathcal{B}$) $u = 0$, $v=0$ und $t < p_\ast$ sowie (wegen $\mathcal{A}$), dass ein $x \in \Rn$ existiert mit 
 	\begin{itemize}
 		\item $f_i(x) \le u_i = 0$ für alle $i \in [m]$ 
-		\item $h_i(x) \le v_i = 0$ für alle $i \in [p]$
-		\item $f_(x) \le t < p_\ast$ 
+		\item $h_i(x) = v_i = 0$ für alle $i \in [p]$
+		\item $f_0(x) \le t < p_\ast$ 
 	\end{itemize}
 	d.h. $x$ ist zulässig für \eqref{eq: k-opt} und besser als optimal.
 	Somit ist $\mathcal{A} \cap \mathcal{B} = \emptyset$.
