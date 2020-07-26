@@ -4,20 +4,18 @@
 \end{itemize}
 
 Wir betrachten ein Zeitintervall $[0,T]$. Für jedes $N \in \N$ geteilt in Schritte der Länge $\Delta_N \defeq \frac{T}{N}$. Wähle Parameter $r \in \R$, $\mu \in \R$ (Trendparameter), $\sigma > 0$ (Volatilität).
-Definiere eine Folge von CRR-Modellen $\folge{S^N}{n \in \N}$ eingebettet in $[0,T]$ mit Parametern $r_N = r * \Delta_N$
+Definiere eine Folge von CRR-Modellen $\folge{S^N}{N \in \N}$ eingebettet in $[0,T]$ mit Parametern $r_N = r * \Delta_N$
 \begin{equation*}
 b_N \defeq \mu \Delta_N + \sigma \sqrt{\Delta_N} \qquad a_N \defeq \mu \Delta_N - \sigma \sqrt{\Delta_N} \qquad p \in (0,1) \qquad s > 0
 \end{equation*}
 d.h. 
-\begin{equation*}
-S_0^N = s, \quad S_{t_k}^N = s * \prod_{i=1}^{k} \brackets{1 + R_i^N} \mit t_k = k * \Delta_N 
+\begin{align}
+S_0^N &= s, & S_{t_k}^N &= s * \prod_{i=1}^{k} \brackets{1 + R_i^N} \mit t_k = k * \Delta_N 
 \tag{CRR-N}
 \label{eq: crrn}
-\end{equation*} 
-bzw.
-\begin{equation*}
-\schlange{S}_0^N = s, \schlange{S}_{t_k}^N = s * \prod_{i=1}^k \frac{1 + R_i^N}{1 + r_N}
-\end{equation*}
+\intertext{bzw.}
+\schlange{S}_0^N &= s, & \schlange{S}_{t_k}^N &= s * \prod_{i=1}^k \frac{1 + R_i^N}{1 + r_N} \nonumber
+\end{align}
 wobei
 \begin{equation*}
 \P(R_i^N = b_N) = p \und \P(R_i^N = a_N) = 1-p
@@ -33,7 +31,7 @@ mit $\lambda \defeq \frac{\mu - r}{\sigma}$.
 \begin{*bemerkung}
 	\begin{itemize}
 		\item Für $\mu = r$ gilt $q_N = \frac{1}{2}$, im Allgemeinen $\lim_{N \to \infty} q_N = \frac{1}{2}$.
-		\item $\lambda = \frac{\mu - r}{\sigma}$ heißt ''Sharpe-Ratio`` oder Marktrisikopreis. (großes $\lambda$ heißt entweder hoher Ertrag oder geirnges Riskio)
+		\item $\lambda = \frac{\mu - r}{\sigma}$ heißt ''Sharpe-Ratio`` oder Marktrisikopreis. (großes $\lambda$ heißt entweder hoher Ertrag oder geringes Risiko)
 	\end{itemize}
 \end{*bemerkung}
 

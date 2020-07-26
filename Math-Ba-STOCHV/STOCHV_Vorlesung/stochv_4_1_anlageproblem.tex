@@ -22,7 +22,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 \begin{description}
 	\item[\fbox{Toy-Model 1:}] Einperiodenmodell, eine risikofreie und eine risikobehaftete Anlagemöglichkeit \linebreak
 	Wir setzen den Zeithorizont auf $T = 1$. Für die risikofreie Anlage sei $S_0^0 = 1$ und $S_T^0 = (1+r)$. Für die risikobehaftete Anlage gelte $S_0^1 = 1$ und $S_T^1 = (1+R)$, wobei $R$ stochastisch ist mit Erwartungswert $\mu = \EW[R]$ (Ertrag) und Standardabweichung $\sigma = \sqrt{\Var[R]} > 0$ (Risiko).
-	Mit $s \defeq \mu  - r$ bezeichnen wir die Überrendite [excess return]. Ist $s \le 0$, dann sollte alles in $S^0$ investiert werden (Pareto-optimal). Sei $s > 0$: teile das Vermögen $w$ auf in zwei Teile $(w_0, w - w_0)$ auf $(S^0, S^1)$\footnote{investiere also $w_0$ in $S^0$ und den Rest in $w_1$}. Dabei entspricht $w - w_0 < 0$ einem Leerverkauf und $w_0 < 0$ einer Kreditaufnahme. Gelte $w=1$. 
+	Mit $s \defeq \mu  - r$ bezeichnen wir die Überrendite [excess return]. Ist $s \le 0$, dann sollte alles in $S^0$ investiert werden (Pareto-optimal). Sei $s > 0$: teile das Vermögen $w$ auf in zwei Teile $(w_0, w - w_0)$ auf $(S^0, S^1)$\footnote{investiere also $w_0$ in $S^0$ und den Rest in $S^1$}. Dabei entspricht $w - w_0 < 0$ einem Leerverkauf und $w_0 < 0$ einer Kreditaufnahme. Gelte $w=1$. 
 	\begin{itemize}[nolistsep]
 		\item Endvermögen: $P_T = w_0 (1+r) + (1-w_0) (1+R)$
 		\item zu erwartende Rendite\footnote{Rendite $= \frac{P_T - P_0}{P_0}$}: $\mu_P = \EW[P_T - 1] = w_0 (1+r) + (1-w_0)(1+\mu) -1 = w_0 r + (1-w_0) \mu$
@@ -31,7 +31,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 	\end{itemize}
 	Somit ist jede Strategie Pareto-optimal und das Pareto-Prinzip hilft nicht bei der Auswahl. Insbesondere ist \begriff{Sharpe-Ratio}:
 	\begin{equation*}
-		\SR(w_0) = \frac{\text{''Überrendite``}}{\text{''Risiko``}} = \frac{s_p}{\sigma_p} = \frac{\mu - r}{\sigma} = \text{const.}
+		\SR(w_0) = \frac{\text{''Überrendite``}}{\text{''Risiko``}} = \frac{s_P}{\sigma_P} = \frac{\mu - r}{\sigma} = \text{const.}
 	\end{equation*}
 	Alternative zum Pareto-Prinzip: Festlegen von individueller Risikoaversion (mehr dazu später)
 	\item[\fbox{Toy-Model II:}] Einperiodenproblem, zwei risikobehaftete Anlagemöglichkeiten, Zeithorizont $T=1$, Vermögen $w=1$ mit
@@ -41,7 +41,7 @@ Zum Aufwärmen betrachten wir zwei Toy-Models, also stark vereinfachte Beispiele
 		S_0^2 &= 1 & S_T^2 = (1+R_2) &\mit \EW[R_2] &= \mu, \Var[R_2] = \sigma_2^2
 		\end{aligned}
 	\end{equation*}
-%	und $R_1 \upmodels R_2$. 
+	und $R_1 \upmodels R_2$. 
 	\begin{itemize}
 		\item Portfoliowert: $P_T = w_1 (1+R_1) + (1-w_1)(1+R_2)$
 		\item Rendite: $\mu_P = \EW[P_T - 1] = w_1 \EW[R_1] + (1-w_1) \EW[R_2] = \mu$

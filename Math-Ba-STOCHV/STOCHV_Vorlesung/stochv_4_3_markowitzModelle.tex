@@ -22,12 +22,12 @@ Risiko (Standardabweichung):
 	\sigma_p = \sqrt{\Var[\trans{p}R]} = \sqrt{\EW[(\trans{p} (R-\mu))^2]} = \sqrt{\EW[\trans{p}(R-\mu)\transpose{R-\mu} p]} = \sqrt{\trans{p} \Sigma p}
 \end{equation*}
 
-Optimales Anlageproblem:
+\fbox{\textbf{Optimales Anlageproblem:}}
 minimiere das Risiko gegeben einer Zielrendite $\mu_\ast$
 \begin{equation*}
 	\begin{aligned}
 	&\min \tfrac{1}{2} \trans{p} \Sigma p \text{ über } \Rn  \\
-	\text{unter NB } &\trans{p} \mu = \mu_\ast (\text{Zielrendite } \mu_\ast) \und \trans{p} \one = 1 \mit \one = \transpose{1, \dots, 1} \in \Rn
+	\text{unter NB } &\trans{p} \mu = \mu_\ast \und \trans{p} \one = 1 \mit \one = \transpose{1, \dots, 1} \in \Rn
 	\end{aligned}
 	\tag{Mark-1} \label{eq: mark-1}
 \end{equation*}
@@ -67,8 +67,10 @@ Maximiere $g$.
 	\partdiff{\lambda_2} g &= -b \lambda_1 -c \lambda_2 + 1 \overset{!}{=} 0 &\equivalent&& b \lambda_1 + c \lambda_2 &= 1
 \end{align*}
 Wir nehmen an, dass $ac > b^2$.
-$-b$I $+a$II: $(ac - b^2) \lambda_2 = a - b \mu_\ast \follows \lambda_2^\ast = \frac{a - b \mu_\ast}{ac - b^2}$.
-$c$I$-b$II: $(ac - b^2) \lambda_1 = c\mu_\ast - b \follows \lambda_1^\ast = \frac{c \mu_\ast - b}{ac - b^2}$
+\begin{itemize}
+	\item $-b$I $+a$II: $(ac - b^2) \lambda_2 = a - b \mu_\ast \follows \lambda_2^\ast = \frac{a - b \mu_\ast}{ac - b^2}$. 
+	\item $c$I$-b$II: $(ac - b^2) \lambda_1 = c\mu_\ast - b \follows \lambda_1^\ast = \frac{c \mu_\ast - b}{ac - b^2}$
+\end{itemize}
 
 Minimierer von \eqref{eq: mark-1}:
 \begin{equation*}
@@ -78,7 +80,7 @@ Minimierer von \eqref{eq: mark-1}:
 \begin{korollar}[Tobin's Two-Fund-Separation]
 	Jedes Pareto-optimale Portfolio für \eqref{eq: mark-1} kann (unabhängig von $n$) als Linearkombination der zwei Portfolios
 	\begin{equation*}
-		p^\ast = \Sigma^{-1} \mu \quad \und \quad p_2^\ast = \Sigma^{-1} \one
+		p_1^\ast = \Sigma^{-1} \mu \quad \und \quad p_2^\ast = \Sigma^{-1} \one
 	\end{equation*}
 	dargestellt werden.
 \end{korollar}
@@ -119,13 +121,13 @@ Risiko
 \begin{equation*}
 	\sigma_p = \sqrt{\Var[\trans{p}R]} = \sqrt{\trans{p} \Sigma p}
 \end{equation*}
-Anlageproblem
+\fbox{\textbf{Anlageproblem}}
 \begin{equation*}
-	\min \frac{1}{2} \trans{p} \Sigma p \qquad p \in \Rn unter NB: \trans{p} (\mu - r\one) = \mu_\ast - r (Zielrendite)
+	\min \tfrac{1}{2} \trans{p} \Sigma p \qquad (p \in \Rn) \qquad \text{unter NB: } \trans{p} (\mu - r\one) = \mu_\ast - r \text{ (Zielrendite)}
 	\tag{Mark-2} \label{eq: mark-2}
 \end{equation*}
 
-Lösung: UE
+Lösung: $\nearrow$ UE
 
 optimales Portfolio
 \begin{equation*}

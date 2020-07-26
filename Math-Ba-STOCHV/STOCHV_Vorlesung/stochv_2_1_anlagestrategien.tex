@@ -21,49 +21,51 @@ Annahmen an die Strategie:
 \begin{itemize}
 	\item Die Strategie darf nur von Beobachtungen der Vergangenheit abhängen, d.h. $(\eta_n, \xi_n)$ ist ein \textit{vorhersehbarer} Prozess.
 	\item Portfolio wird nur zwischen $S$ und $S_0$ umgeschichtet, d.h. es wird kein Kapital zugeschossen oder abgezogen:
-	
-	\item $\Pi_n = \eta_n S_n^0 + \xi_n S_n$ Wert zum Zeitpunkt $n$ vor dem Umschichten
-	\item $\Pi_n = \eta_{n+1} S_n^0 + \xi_{n+1}S_n$ Wert zum Zeitpunkt $n$ nach dem Umschichten
-	\item $\Pi_{n+1} = \eta_{n+1} S_{n+1}^0 + \xi_{n+1} S_{n+1}$ Wert zum Zeitpunkt $n+1$ vor dem Umschichten.
-	
-	\item Subtrahiere Gleichung 2 und 3: 
-	\begin{equation}
-		\begin{aligned}
-			\follows \Pi_{n+1} - \Pi_n &= \eta_{n+1} \brackets{S_{n+1}^0 - S_n^0} + \xi_{n+1} \brackets{S_{n+1} - S_n} \\
-			\text{kurz: } \Delta \Pi_n &= \eta_n \Delta S_n^0 + \xi_m \Delta S_n
-		\end{aligned}
-		\tag{SF} \label{eq: sf}
-	\end{equation}
-	Wir bezeichnen \eqref{eq: sf} als \begriff{Selbstfinanzierungseigenschaft}. Beachte: $\Delta \Pi_n \defeq \Pi_n - \Pi_{n-1}$
-	
-	Diskontieren:
-	\begin{equation}
-		\schlange{\Pi}_n = \frac{\Pi_n}{S_n^0} 
-		\tag{diskontierte Portfoliogleichung}
-	\end{equation}
-	Wir erhalten aus \eqref{eq: port}
-	\begin{equation}
-		\begin{aligned}
-		\schlange{\Pi}_n &= \eta_n + \xi_n \schlange{S}_n
-		\schlange{\Pi}_0 &= w
-		\end{aligned}
-		\tag{$\schlange{\text{Port}}$}
-	\end{equation}
-	
-	Aus \eqref{eq: sf} erhalten wir
-	\begin{equation}
-		\Delta \schlange{\Pi}_n = \xi_n \Delta \schlange{S}_n
-		\tag{$\schlange{\text{SF}}$}
-	\end{equation}
-	d.h.
-	\begin{align}
-			\schlange{\Pi}_n  &= w + \sum_{k=1}^n \brackets{\schlange\Pi_k - \schlange\Pi_{k-1} }
-			\overset{\eqref{eq: sf}}{=} w + \sum_{k=1}^n \xi_k \brackets{\schlange S_k - \schlange S_{k-1}} 
-			= w + \brackets{\xi \bullet \schlange{S}}_n \nonumber \\
-			\schlange\Pi_n &= w + \brackets{\xi \bullet \schlange{S}}_n
-			\tag{$\schlange{\text{Int}}$}
-	\end{align}
+	\begin{itemize}
+		\item $\Pi_n = \eta_n S_n^0 + \xi_n S_n$ Wert zum Zeitpunkt $n$ vor dem Umschichten
+		\item $\Pi_n = \eta_{n+1} S_n^0 + \xi_{n+1}S_n$ Wert zum Zeitpunkt $n$ nach dem Umschichten
+		\item $\Pi_{n+1} = \eta_{n+1} S_{n+1}^0 + \xi_{n+1} S_{n+1}$ Wert zum Zeitpunkt $n+1$ vor dem Umschichten.
+	\end{itemize}
 \end{itemize}
+
+Subtrahiere Gleichung 2 und 3: 
+\begin{equation}
+	\begin{aligned}
+		\follows \Pi_{n+1} - \Pi_n &= \eta_{n+1} \brackets{S_{n+1}^0 - S_n^0} + \xi_{n+1} \brackets{S_{n+1} - S_n} \\
+		\text{kurz: } \Delta \Pi_n &= \eta_n \Delta S_n^0 + \xi_n \Delta S_n
+	\end{aligned}
+	\tag{SF} \label{eq: sf}
+\end{equation}
+Wir bezeichnen \eqref{eq: sf} als \begriff{Selbstfinanzierungseigenschaft}. Beachte: $\Delta \Pi_n \defeq \Pi_n - \Pi_{n-1}$
+
+Diskontieren:
+\begin{equation}
+	\schlange{\Pi}_n = \frac{\Pi_n}{S_n^0} 
+	\tag{diskontierte Portfoliogleichung}
+\end{equation}
+Wir erhalten aus \eqref{eq: port}
+\begin{equation}
+	\begin{aligned}
+	\schlange{\Pi}_n &= \eta_n + \xi_n \schlange{S}_n \\
+	\schlange{\Pi}_0 &= w
+	\end{aligned}
+	\tag{$\schlange{\text{Port}}$}
+\end{equation}
+
+Aus \eqref{eq: sf} erhalten wir
+\begin{equation}
+	\Delta \schlange{\Pi}_n = \xi_n \Delta \schlange{S}_n
+	\tag{$\schlange{\text{SF}}$} \label{eq: sf-schlange}
+\end{equation}
+d.h.
+\begin{align}
+		\schlange{\Pi}_n  &= w + \sum_{k=1}^n \brackets{\schlange\Pi_k - \schlange\Pi_{k-1} }
+		\overset{\eqref{eq: sf}}{=} w + \sum_{k=1}^n \xi_k \brackets{\schlange S_k - \schlange S_{k-1}} 
+		= w + \brackets{\xi \bullet \schlange{S}}_n \nonumber \\
+		\follows \schlange\Pi_n &= w + \brackets{\xi \bullet \schlange{S}}_n
+		\tag{$\schlange{\text{Int}}$}
+\end{align}
+
 
 \begin{lemma} %2.2
 	Eine selbstfinanzierende Anlagestrategie $\folge{\eta_n, \xi_n}{n \in \N}$ mit Anfangskapital $w \in \R$ und ihr Werteprozess $\Pi_n$ sind durch $w$ und $\folge{\xi_n}{n \in \N}$ vollständig definiert. 

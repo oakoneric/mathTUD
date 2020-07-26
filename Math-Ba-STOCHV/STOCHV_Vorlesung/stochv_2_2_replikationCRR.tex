@@ -74,7 +74,7 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 	Mittels Rückwärtsinduktion über $n \in [N]_0$.
 	\begin{induction}
 		\ianfang Für $n = N$ gilt $\Pi_N = C = h(S_1, \dots, S_N)$ nach \eqref{eq: 2_2_rep}, also $\Pi_N = f_N(S_1, \dots, S_N)$ mit $f_N = h$.
-		\ischritt Aus Selbstfinanzierungsbedingung-Schlange folgt %TODO
+		\ischritt Aus \eqref{eq: sf-schlange} folgt
 		\begin{equation*}
 			\begin{aligned}
 				\schlange{\Pi}_{n+1} - \schlange{\Pi}_n &= \xi_{n+1} \brackets{\schlange{S}_{n+1} - \schlange{S}_n} \qquad\qquad | \ * (1+r)^{n+1} \\
@@ -87,11 +87,11 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 		\end{equation*}
 		Die zwei Fälle $R_{n+1} = b$ und $R_{n+1} = a$ können jeweils mit strikt positiver Wahrscheinlichkeit eintreten.
 		\begin{itemize}
-			\item Fall 1: $S_{n+1} = S_n (1+b)$ und $\Pi_{n+1} = f_{n+1}(S_1, \dots, S_n, S_n(1+b)) = f_{n+1}^b$. Setzen wir dies in \eqref{eq: 2_2_3_proof_star} ein, so erhalten wir $f_{n+1}^b - (1+r) \Pi_n = \xi_{n+1} S_n (b-r)$ (I).
-			\item Fall 2: $S_{n+1} = S_n (1+a)$ und $\Pi_{n+1} = f_{n+1}(S_1, \dots, S_n, S_n(1+a)) = f_{n+1}^a$. Setzen wir dies wieder in \eqref{eq: 2_2_3_proof_star} ein, so erhalten wir $f_{n+1}^a - (1+r) \Pi_n = \xi_{n+1} S_n (a-r)$ (II).
+			\item Fall 1: $S_{n+1} = S_n (1+b)$ und $\Pi_{n+1} = f_{n+1}(S_1, \dots, S_n, S_n(1+b)) = f_{n+1}^b$. Setzen wir dies in \eqref{eq: 2_2_3_proof_star} ein, so erhalten wir $f_{n+1}^b - (1+r) \Pi_n = \xi_{n+1} S_n (b-r)$. \hfill (I)
+			\item Fall 2: $S_{n+1} = S_n (1+a)$ und $\Pi_{n+1} = f_{n+1}(S_1, \dots, S_n, S_n(1+a)) = f_{n+1}^a$. Setzen wir dies wieder in \eqref{eq: 2_2_3_proof_star} ein, so erhalten wir $f_{n+1}^a - (1+r) \Pi_n = \xi_{n+1} S_n (a-r)$. \hfill (II)
 		\end{itemize}
-	Damit erhalten wir ein lineares Gleichungssystem $[I, II]$ in den Unbekannten $\Pi_n$ und $\xi_n$. 
-	$\Pi_n$ und $\xi_n$ sind $\F_n$-messbar, also unabhängig von $R_{n+1}$. Damit müssen (I) und (II) gleichzeitig erfüllt sein: Subtrahieren wir I - II, so erhalten wird $f_{n+1}^b - f_{n+1}^a = \xi_{n+1} S_n (b-a)$ und somit folgt \eqref{eq: 2_2_dhedge}
+	Damit erhalten wir ein lineares Gleichungssystem [I, II] in den Unbekannten $\Pi_n$ und $\xi_n$. 
+	$\Pi_n$ und $\xi_n$ sind $\F_n$-messbar, also unabhängig von $R_{n+1}$. Damit müssen (I) und (II) gleichzeitig erfüllt sein: Subtrahieren wir I -- II, so erhalten wird $f_{n+1}^b - f_{n+1}^a = \xi_{n+1} S_n (b-a)$ und somit folgt \eqref{eq: 2_2_dhedge}
 	\begin{equation*}
 		\follows \xi_{n+1} = \frac{f_{n+1}^b - f_{n+1}^a}{S_n (b-a)}
 	\end{equation*}
@@ -124,13 +124,14 @@ Gesucht ist nun eine replizierende Strategie $\folge{\xi_n}{n \in \N}$ und eine 
 \end{*bemerkung_inline}
 
 \begin{*beispiel}[Asiatische Call-Option]
+	Die Auszahlung ist gegeben durch $(\quer{S}_N - K)_+$ mit $\quer{S}_N = \frac{1}{1+N} \sum_{k=0}^{N} S_k$. Somit handelt es sich um ein pfadabhängiges Derivat (Summe hängt von allen $S_k$ ab). 
+	
 	\begin{center}
-		%TODO BILD PFADMODELL
-		\includegraphics[width=.5\textwidth]{example-image}
+%		TODO BILD PFADMODELL
+		\includegraphics[width=.3\textwidth]{example-image}
 		\captionof{figure}{Pfadmodell}
 	\end{center}
 
-	Die Auszahlung ist gegeben durch $(\quer{S}_N - K)_+$ mit $\quer{S}_N = \frac{1}{1+N} \sum_{k=0}^{N} S_k$. Somit handelt es sich um ein pfadabhängiges Derivat (Summe hängt von allen $S_k$ ab). 
 	Bewertung im CRR-Modell mit zwei Perioden ($N=2$) und Parametern $b = 0.3$, $a = -0.3$, $r=0.1$, $S_0 = 100$, $K=100$.
 		Es gilt $C = h(S_1, S_2)$, also
 	\begin{align*}

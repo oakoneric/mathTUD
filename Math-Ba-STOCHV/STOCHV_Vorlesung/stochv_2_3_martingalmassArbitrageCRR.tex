@@ -19,11 +19,11 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 \end{*definition}
 
 \begin{*bemerkung_inline}
-	Seien $\P, \Q$ Wahrscheinlichkeitsmaß auf $(\Omega, \F)$.
+	Seien $\P, \Q$ Wahrscheinlichkeitsmaße auf $(\Omega, \F)$.
 	\begin{itemize}
 		\item Äquivalenz: $\P \sim \Q \defequiv \brackets{\P(A) = 0 \equivalent \Q(A) = 0 \quad \forall A \in \F}$
-		\item Absolutstetigkeit: $\Q << \P  \defequiv \brackets{\P(A) = 0 \follows \Q(A) = 0 \quad \forall A \in \F}$
-		\item Es gilt $\Q \sim \P \equivalent \brackets{\Q << \P \land \P << \Q}$
+		\item Absolutstetigkeit: $\Q \ll \P  \defequiv \brackets{\P(A) = 0 \follows \Q(A) = 0 \quad \forall A \in \F}$
+		\item Es gilt $\Q \sim \P \equivalent \brackets{\Q \ll \P \land \P \ll \Q}$
 	\end{itemize}
 \end{*bemerkung_inline}
 
@@ -45,7 +45,7 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	Sei $\Q$ ein beliebiges Wahrscheinlichkeitsmaß auf $(\Omega, \F)$. Setze $q_n \defeq \Q(R_n = b \mid \F_{n-1}) \in [0,1]$.
 	\begin{equation*}
 		\begin{aligned}
-			\E^\Q\sqbrackets{\schlange{S}_n \mid \F_{n-1}} &= \E^\Q\sqbrackets{\schlange{S}_{n-1} * \brackets{\frac{1+R_n}{1-r}}  \mid \F_{n-1}} \\
+			\E^\Q\sqbrackets{\schlange{S}_n \mid \F_{n-1}} &= \E^\Q\sqbrackets{\schlange{S}_{n-1} * \brackets{\frac{1+R_n}{1+r}}  \mid \F_{n-1}} \\
 			&= \schlange{S}_{n-1} * \frac{1}{1+r} * \E^\Q\sqbrackets{1+R_n \mid \F_{n-1}} \\
 			&= \schlange{S}_{n-1} * \frac{1}{1+r} \brackets{q_n (1+b) + (1-q_n)(1+a)}
 		\end{aligned}

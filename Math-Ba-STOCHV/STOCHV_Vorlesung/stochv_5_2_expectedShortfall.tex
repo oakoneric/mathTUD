@@ -2,7 +2,7 @@
 \begin{*definition}
 	Für einen Verlust $L$ mit $\EW[L^+] < \infty$ ist der \begriff{Expected Shortfall} (ES) zum Level $\alpha \in (0,1)$ definiert als
 	\begin{equation*}
-	\ES_\alpha(L) \defeq \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diff{u}
+	\ES_\alpha(L) \defeq \frac{1}{1-\alpha} \int_\alpha^1 \VaR_u(L) \diffskip{u}
 	\end{equation*}
 \end{*definition}
 
@@ -24,7 +24,7 @@
 		\end{equation*}
 		\item Besitzt $L$ eine Dichte $f_L$, so gilt
 		\begin{equation*}
-			\ES_\alpha(L) = \frac{1}{1-\alpha} \int_{\VaR_\alpha(L)}^\infty u f_L(u)
+			\ES_\alpha(L) = \frac{1}{1-\alpha} \int_{\VaR_\alpha(L)}^\infty u f_L(u) \diffskip{u}
 		\end{equation*}
 	\end{enumerate}
 \end{theorem}
