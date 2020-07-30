@@ -195,15 +195,6 @@ Darstellung der Inputdaten oder zulässigen Punkte in folgenden Schemata:
 		\end{tabular}
 	\end{center}
 
-	\begin{center}
-		\begin{tabular}{r|rrrrr}
-			$\text{X}_{\text{NW}}$ & \cancel{12} \cancel{8} 0 &  \cancel{5} 0 &  \cancel{6} 0 &  \cancel{7} 0 &  \cancel{7} 9 \\ \hline
-			0 &  4 &  0 &  0 &  0 &  0 \\
-			0 \cancel{6} \cancel{11} \cancel{19} &  8 & 5 & 6 & 0 & 0 \\
-			0 \cancel{7} \cancel{14} &  0 & 0 &  0 &  7 & 7
-		\end{tabular}
-	\end{center}
-
 	Zielfunktionswert: $z(x_{\text{NW}}) = 4 * 12 + 8 * 10 + 5 * 16 + 6 * 17 + 7 * 8 + 7 * 10 = 436$
 	
 	\vspace{\parskip}
@@ -223,7 +214,7 @@ Darstellung der Inputdaten oder zulässigen Punkte in folgenden Schemata:
 	
 	\begin{center}
 		\begin{tabular}{r|rrrrr}
-			X & 12 &  5 &  6 &  7 &  7 \\ \hline
+			$\text{X}_{\text{V}}$ & 12 &  5 &  6 &  7 &  7 \\ \hline
 			4 &  &  4 &  &   &   \\
 			19 &  & 1 & 4 &  7 &  7 \\
 			14 &  12 &  &  2 &   & 
@@ -258,7 +249,7 @@ Ausgehend von einer Startlösung berechnet der Algorithmus zunächst ein Paar $(
 		x_{ik} & \text{ sonst}
 		\end{cases}
 	\end{equation*}
-	Aktualisere die Menge der Basiszellen
+	Aktualisiere die Menge der Basiszellen
 	\begin{equation*}
 		J_B^{\text{neu}} \defeq \brackets{J_B \cup \menge{(p,q)}} \setminus \menge{(g,h)}
 	\end{equation*}
