@@ -126,7 +126,7 @@ Für konvexe Optimierungsaufgaben sind lokale und globale Lösungen also äquiva
 	Seien $x,y \in G$ und $\lambda \in (0,1)$. $G$ ist genau dann konvex, wenn $x(\lambda) \in G$:
 	\begin{equation*}
 		\begin{aligned}
-		g_i(x(\lambda)) &= g_i(x + \lambda (y-x)) \le g_i(x) + \lambda \brackets{g_i(y) - g_i(x)} = \underbrace{1-\lambda}_{>0} \underbrace{g_i(x)}_{\le 0} + \underbrace{\lambda}_{>0} \underbrace{g_i(y)}_{\le 0} 
+		g_i(x(\lambda)) &= g_i(x + \lambda (y-x)) \le g_i(x) + \lambda \brackets{g_i(y) - g_i(x)} = \underbrace{(1-\lambda)}_{>0} \underbrace{g_i(x)}_{\le 0} + \underbrace{\lambda}_{>0} \underbrace{g_i(y)}_{\le 0} 
 		\le 0 \\
 		%
 		h_j(x(\lambda)) &= h_j(x + \lambda(y-x)) = A_j(x+\lambda(y-x)) + b_j = (1-\lambda) A_j x + \lambda A_j y + b_j \\

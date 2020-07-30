@@ -8,7 +8,7 @@ x_B &= (x_i)_{i \in I_B} & x_N &= (x_i)_{i \in I_N}
 \end{align*}
 Dann lässt sich \eqref{eq: 3.1} schreiben als
 \begin{equation}
-	z = \trans{c_B} x_B + \trans{c_N} x_N \to \min \bei A_B x_B + A_N x_N = b, x_b \ge 0, x_N \ge 0 \label{eq: 3.2}
+	z = \trans{c_B} x_B + \trans{c_N} x_N \to \min \bei A_B x_B + A_N x_N = b, x_B \ge 0, x_N \ge 0 \label{eq: 3.2}
 \end{equation}
 bzw. durch Auflösen der Gleichung nach $x_B$ (beachte: $A_B$ hat Vollrang) als
 \begin{equation}
@@ -71,7 +71,7 @@ Um dabei zu erkennen, ob Optimalität vorliegt, hilft folgendes Resultat:
 
 \begin{aussage}[Optimalitätskriterium] %3.4
 	\label{aussage: 3.4}
-	Gilt für die zuässige Basislösung $x = (x_B, x_N) = (A_B^{-1}b, 0)$ die Bedingung 
+	Gilt für die zulässige Basislösung $x = (x_B, x_N) = (A_B^{-1}b, 0)$ die Bedingung 
 	\begin{equation}
 		\trans{c_N} - \trans{c_B} A_B^{-1} A_N \ge 0 \label{eq: 3.4}
 	\end{equation}

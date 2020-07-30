@@ -72,7 +72,7 @@ bzw. $\quer{t} = \infty$, falls $P_{i \tau} \ge 0$ für alle $i \in I_B$.
 
 Im sogenannten nicht-entscheidbaren Fall, d.h. falls
 \begin{equation*}
-	\brackets{\exists \ \tau \in I_N \colon a_\tau < 0} \land \brackets{ \exists \ \sigma \in I_B \colon \quer{t} = -\frac{p_\sigma}{P_{\sigma \tau}} = \min \menge{-\frac{p_i}{P_{i \tau}} \colon P_{i \tau} < 0, i \in I_B} < \infty}
+	\brackets{\exists \ \tau \in I_N \colon q_\tau < 0} \land \brackets{ \exists \ \sigma \in I_B \colon \quer{t} = -\frac{p_\sigma}{P_{\sigma \tau}} = \min \menge{-\frac{p_i}{P_{i \tau}} \colon P_{i \tau} < 0, i \in I_B} < \infty}
 \end{equation*}
 ergibt die (maximale) Schrittweite $\quer{t}$ den Punkt
 \begin{equation*}
@@ -105,7 +105,7 @@ Um zu zeigen, dass die Matrix $\quer{A_B} \defeq \brackets{A^i}_{i \in \quer{I_B
 \end{proof}
 
 \begin{proof}[\cref{satz: 3.6}]
-	Der ''Austausch`` der Spalten $A^\tau$ und $A^\sigma$ kann durch ein dyadisches Produkt $u \trans{v}$ beschrieben werden:
+	Der \enquote{Austausch} der Spalten $A^\tau$ und $A^\sigma$ kann durch ein dyadisches Produkt $u \trans{v}$ beschrieben werden:
 	\begin{equation*}
 		\quer{A_B} = A_B + u \trans{v} \mit u = A^\tau - A^\sigma \und v = e^\sigma 
 	\end{equation*}

@@ -139,7 +139,7 @@ Innerhalb des Verzweigungsbaums ergeben sich die folgenden Teilprobleme (für be
 		\item Wurzelknoten \eqref{eq: rucksack-bsp-p}$=(\text{P}_0)$: Die stetige Relaxation besitzt die Lösung $x_1 = x_2 = 1$ und $x_3 = \frac{7}{9}$ sowie $x_4 = \dots = x_7 = 0$. Somit ist $b(\text{P}_0) = \lfloor 8 + 16 + 20 * \frac{7}{9} \rfloor = 39$. Die Abrundung ist dabei erlaubt, da $\trans{c} x \in \Z$ für alle zulässigen Punkte von \eqref{eq: rucksack-bsp-p}. Ein zulässiger Punkt für \eqref{eq: rucksack-bsp-p} ist gegeben durch $\quer{x}_1 = \quer{x}_2 = \quer{x}_4 = 1$, $\quer{x}_i = 0$ sonst. Dabei ist $z(\quer{x}) = 8 + 16 + 12 = 36 \defqe \quer{z}$. Wegen $36 < 39$ muss weiter verzweigt werden.
 		\item Verzweigung: $x_3 = 0$ vs. $x_3 = 1$.
 		\begin{itemize}
-			\item Teilproblem: $(P_1) = (P_{0,1})$. Setzt man $x_3 = 0$, so hat die stetige Relaxation die Lösung $x_1 = x_2 = x_4 = 1$, $x_5 = \frac{1}{3}$ und $x_6 = x_7 = 0$. Somit ist $b(P_1) = \lfloor 8 + 16 + 12 + 6 * \frac{1}{3} = 38$. Ein daraus ableitbarer Punkt ist gegeben durch $\quer{x}_1 = \quer{x}_2 = \quer{x}_4 = 1$ mit $z = 36$, d.h. $\quer{z}$ muss nicht aktualisiert werden.
+			\item Teilproblem: $(P_1) = (P_{0,1})$. Setzt man $x_3 = 0$, so hat die stetige Relaxation die Lösung $x_1 = x_2 = x_4 = 1$, $x_5 = \frac{1}{3}$ und $x_6 = x_7 = 0$. Somit ist $b(P_1) = \lfloor 8 + 16 + 12 + 6 * \frac{1}{3} \rfloor = 38$. Ein daraus ableitbarer Punkt ist gegeben durch $\quer{x}_1 = \quer{x}_2 = \quer{x}_4 = 1$ mit $z = 36$, d.h. $\quer{z}$ muss nicht aktualisiert werden.
 			\item $(P_2) = (P_{0,2})$. Setzt man $x_3 = 1$, so erhält man $x_1 = 1$, $x_2 = \frac{5}{7}$ mit $b = \lfloor 8 + 20 + 16 * \frac{5}{7} \rfloor = 39$ und einen zulässigen Punkt für \eqref{eq: rucksack-bsp-p} durch $\quer{x}_1 = \quer{x}_3 = \quer{x}_5 = \quer{x}_7 = 1$ mit $\quer{z} = 38$, d.h. $\quer{z}$ wurde verbessert.
 			\item Damit kann ($P_1$) abgeschlossen werden, da maximal noch der Zielfunktionswert $38$ möglich ist, der in ($P_2$) bereits erreicht worden ist.
 		\end{itemize}
@@ -213,7 +213,7 @@ mit $x^{\text{LP}}_j \notin \Z$ für mindestens einen Index $j$. Dann kann der (
 			\begin{tabular}{r|rr|r}
 				$T_3$ & $x_4$ & $x_3$ & $1$ \\ \hline
 				$x_2 = $ & $-\frac{1}{11}$ & $-\frac{5}{11}$ & $\frac{40}{11}$ \\
-				$x_1 = $ & $\frac{-2}{11}$ & $\frac{1}{11}$ & $\frac{26}{11}$ \\ \hline
+				$x_1 = $ & $\frac{-2}{11}$ & $\frac{1}{11}$ & $\frac{36}{11}$ \\ \hline
 				$z = $   & $\frac{16}{11}$ & $\frac{3}{11}$ & $-\frac{332}{11}$
 			\end{tabular}
 		\end{center}	
@@ -323,7 +323,7 @@ Gegeben seien $n$ Orte, eine Kostenmatrix $C = (c_{ik}) \in \R^{n \times n}$, wo
 	\label{eq: 4.3} \\
 	x_{ik} &\in \menge{0,1} \quad (i,k) \in I \times I 
 	\label{eq: 4.4} \\
-	\sum_{i,k} x_{ik} \in S &\le \card{S} - 1 \quad (S \subset I, 0 < \card{S})
+	\sum_{i,k\in S} x_{ik} &\le \card{S} - 1 \quad (S \subset I, 0 < \card{S})
 	\label{eq: 4.5} 
 \end{align}
 
@@ -376,7 +376,7 @@ Für das Problem \eqref{eq: 4.1} -- \eqref{eq: 4.5} kann man auf folgende Weise 
 	Die Schranke, die aus Zeilen- und anschließender Spaltenreduktion erhalten wird, weicht im Allgemeinen von der Schranke ab, die aus Spalten- und anschließender Zeilenreduktion gewonnen wird.
 \end{bemerkung}
 
-Unter Einbeziehung der reduzierten Kostenmatrix $D = (w_{ik})$ mit $w_{ik} = c_{ik} - u_i - v_i$ kann eine Verzweigungs- und Auswahlstrategie formuliert werden:
+Unter Einbeziehung der reduzierten Kostenmatrix $D = (w_{ik})$ mit $w_{ik} = c_{ik} - u_i - v_k$ kann eine Verzweigungs- und Auswahlstrategie formuliert werden:
 Dabei betrachten wir die Elemente mit $w_{ik} = 0$ und verzweigen gemäß $x_{ik} = 0$ vs. $x_{ik} = 1$.
 \begin{itemize}
 	\item Die Belegung $x_{ik} = 0$ ist gleichbedeutend mit der Änderung des aktuellen Kostenwertes auf $+\infty$.

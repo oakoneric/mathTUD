@@ -36,7 +36,7 @@ Für Optimierungsaufgaben ist der Kegel der zulässigen Richtungen von großer B
 \begin{proof}
 	Sei $\schlange{x}$ ein lokales Minimum und $d \in Z(\schlange{x})$ eine zulässige Richtung. Dann existiert gemäß Definition ein $\quer{t}$, sodass $\schlange{x} + td \in G$ für alle $t \in [0,\quer{t}]$ gilt. Weil außerdem $\quer{x}$ eine lokale Lösung ist, gibt es $\rho > 0$ mit $\rho < \quer{t}$ sodass $f(\schlange{x} + td) \ge f(\schlange{x})$ für $t \in (0,\rho)$ gilt. Aus dieser Ungleichung folgt
 	\begin{equation*}
-	\frac{f(\schlange{x} - td) - f(\schlange{x})}{t} \ge 0 \qquad \forall t \in (0,\rho)
+	\frac{f(\schlange{x} + td) - f(\schlange{x})}{t} \ge 0 \qquad \forall t \in (0,\rho)
 	\end{equation*}
 	Durch Grenzwertbildung $t \to 0$ auf beiden Seiten erhält man mithilfe der Definition der Richtungsableitung und der Stetigkeit von $f$ die Behauptung \eqref{eq: 2.2}.
 	Für konvexe Mengen gilt stets $x - \schlange{x} \in Z(\schlange{x})$ für $x \in G$, also folgt \eqref{eq: 2.3}.
@@ -63,7 +63,7 @@ Für konvexe Optimierungsaufgaben gilt auch die Umkehrung in \cref{bemerkung: 2.
 	Es seien $G \subseteq \Rn$ sowie $\abb{f}{G}{\R}$ konvex und stetig differenzierbar. Falls ein $\schlange{x} \in G$ existiert, welches der Bedingung \eqref{eq: 2.3} genügt, dann ist $\schlange{x}$ (globales) Minimum von \eqref{eq: 2.1}.
 \end{aussage}
 \begin{proof}
-	Wenn $f$ konvex und stetig differenzierbar ist und gilt
+	Wenn $f$ konvex und stetig differenzierbar ist, so gilt
 	\begin{equation*}
 	f(x) \ge f(\schlange{x}) + \nabla \trans{f(\schlange{x})} \brackets{x - \schlange{x}} \qquad \forall x \in G
 	\end{equation*}
