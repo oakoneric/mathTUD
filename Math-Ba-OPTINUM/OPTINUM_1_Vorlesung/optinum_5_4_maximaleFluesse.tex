@@ -2,7 +2,7 @@
 
 \subsection{Problemstellung}
 
-Sei $G = (V,E,k)$ ein gerichteter Graph mit \begriff{Kapazitätsschranken} $k_e \ge 0$ für alle $e \in E$. Weiterhin sei $q \in V$ einzige \begriff{Quelle} und $s \in V$ einzige \begriff{Senke}. Ohne Einschränkung seien ale Inputdaten ganzzahlig. Für jedes $v \in V$ definieren wir
+Sei $G = (V,E,k)$ ein gerichteter Graph mit \begriff{Kapazitätsschranken} $k_e \ge 0$ für alle $e \in E$. Weiterhin sei $q \in V$ einzige \begriff{Quelle} und $s \in V$ einzige \begriff{Senke}. Ohne Einschränkung seien alle Inputdaten ganzzahlig. Für jedes $v \in V$ definieren wir
 \begin{equation*}
 	E^+(v) \defeq \menge{e \in E : e = (v,p)} \qquad E^-(v) \defeq \menge{e \in E : e = (p,v)}
 \end{equation*}
@@ -26,6 +26,7 @@ Die Flusserhaltung impliziert
 wobei $f(x)$ die Flussstärke angibt.
 
 \begin{beispiel} \label{beispiel: 5.3}
+	Dargestellt ist ein zulässiger Fluss der Stärke $f(x) = 5$. Die Bogenmarkierungen entsprechen dabei \enquote{$x_e / k_e$}. Der angegebene Fluss ist nicht optimal.
 %	(1,2,0/7)
 %	(1,3,5/5)
 %	(2,3,0/4)
@@ -36,7 +37,9 @@ wobei $f(x)$ die Flussstärke angibt.
 %	(4,6,5/8)
 %	(5,6,0/4)
 
-	Dargestellt ist ein zulässiger Fluss der Stärke $f(x) = 5$. Die Bogenmarkierungen entsprechen dabei \enquote{$x_e / k_e$}. Der angegebene Fluss ist nicht optimal.
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{./optinum_abb/optinum_5_4_bsp5-3.jpg}
+	\end{center}
 \end{beispiel}
 
 Ein geeignetes Hilfsmittel zur Prüfung der Optimalität ist der \begriff{Residualgraph} (\enquote{Restgraph}). Ohne Einschränkung nehmen wir an, dass für alle $(u,v) \in E$ auch $(v,u) \in E$ gilt. Sofern dies nicht a priori erfüllt ist, ergänzen wir diese mit Kapazität $k_{(v,u)} = 0$.
@@ -72,6 +75,10 @@ Ein geeignetes Hilfsmittel zur Prüfung der Optimalität ist der \begriff{Residu
 	%   (6,4,/5)
 	%	(5,6,/4)
 	
+	\begin{center}
+		\includegraphics[width=.5\linewidth]{./optinum_abb/optinum_5_4_bsp5-4.jpg}
+	\end{center}
+
 	Offenbar gilt stets $r(e) \ge 0$ für alle $e \in E$. $G(x)$ enthält also all jene Bögen, die die Möglichkeit zur Flussvergrößerung modellieren, ergänzt um einige Rückwärtsbögen zur Verminderung von Flüssen auf bisher zu stark genutzten Verbindungen.
 \end{beispiel}
 
@@ -168,5 +175,5 @@ Wir betrachten den folgenden Graphen
 
 	\includegraphics[width=.3\linewidth]{./optinum_abb/optinum_5_4_bsp5-5.jpg}
 
-Flusstärke $= 7$
+Flussstärke $= 7$
 \end{beispiel}

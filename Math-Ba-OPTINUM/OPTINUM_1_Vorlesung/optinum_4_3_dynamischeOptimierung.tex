@@ -14,7 +14,7 @@ Für $k \in I \defeq \menge{1, \dots, n}$ und $y \in \menge{0,1,\dots, b}$ defin
 	F(k,y) \defeq \max\menge{\sum_{i=1}^k c_i x_i : \sum_{i=1}^k a_i x_i \le y, x_i \in \Z_+, 1 \le i \le k}
 \end{equation*}
 Dabei hat der Rucksack durch $y$ eine verminderte Kapazität und es liegen durch $k$ beschränkt weniger Teiletypen vor.
-Um \eqref{eq: p-4.3.1} muss also $F(n,b)$ bestimmt werden.
+Um \eqref{eq: p-4.3.1} zu lösen, muss also $F(n,b)$ bestimmt werden.
 Zunächst beobachten wir
 \begin{equation*}
 	F(1,y) = c_1 * \left\lfloor \frac{y}{a_1} \right\rfloor \quad \forall y \in {0, \dots, b}
@@ -26,7 +26,7 @@ Aufgrund der Linearität der Zielfunktion und der Nebenbedingung gilt für $k > 
 \end{equation*}
 bzw. äquivalent dazu (für $y \ge a_n$)
 \begin{equation}
-	F(k,y) = \max \Bigl\{  \underbrace{F(k-1,y)}_{\dach{=} x_k = 0}, \underbrace{c_k + F(k,y-a_n)}_{\dach{=} x_k \ge 1} \Bigr\}
+	F(k,y) = \max \Bigl\{  \underbrace{F(k-1,y)}_{\dach{=} x_k = 0}, \underbrace{c_k + F(k,y-a_k)}_{\dach{=} x_k \ge 1} \Bigr\}
 	\label{eq: 4.6}
 \end{equation}
 Der Optimalwert des Zustandes $(k,y)$ wird auf Optimalwerte \enquote{kleinerer} Zustände zurückgeführt. Diese müssen also zur Berechnung von $F(k,y)$ bereits bekannt sein.

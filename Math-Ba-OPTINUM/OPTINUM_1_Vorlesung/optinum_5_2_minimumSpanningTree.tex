@@ -27,9 +27,12 @@ Das Minimum-Spanning-Tree (MST) Problem besteht nun darin, einen Spannbaum zu fi
 Der Aufwand dieses Algorithmus wird maßgeblich von der Sortierung der Kantengewichte beeinflusst und lässt sich mit $\mathcal{O}(\card{E} * \log\card{E})$ abschätzen. Die Überprüfung der Kreisfreiheit ist bei geschickter Implementierung \enquote{schneller} durchführbar.
 
 \begin{beispiel}
-	\includegraphics[width=.3\textwidth]{optinum_abb/optinum_5_2_bsp5-1.pdf}
+	Betrachte folgenden gewichteten Graphen:
+	\begin{center}
+		\includegraphics[width=.3\textwidth]{optinum_abb/optinum_5_2_bsp5-1.pdf}
+	\end{center}
 	
-	Jeder minimale Spannbaum hat ein Gewicht von $c = 2+3+3+4+7 = 20$.
+	Jeder minimale Spannbaum hat ein Gewicht von $c = 2+3+3+5+7 = 20$.
 \end{beispiel}
 
 \subsection{Algorithmus von \person{Prim} \& \person{Dijkstra}}

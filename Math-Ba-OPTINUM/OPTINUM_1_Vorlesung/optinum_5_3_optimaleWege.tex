@@ -63,7 +63,7 @@ Sei $d_G(s,v)$ sei die Länge eines kürzesten Weges von $s$ nach $v$ in $G= (V,
 \end{proof}
 
 \begin{beispiel}
-	Graph
+	Betrachte folgenden Graphen:
 %	(1,2,3)
 %	(1,4,2)
 %	(1,3,1)
@@ -77,16 +77,22 @@ Sei $d_G(s,v)$ sei die Länge eines kürzesten Weges von $s$ nach $v$ in $G= (V,
 %	(6,7,1)
 %	(7,8,2)
 
-	\begin{tabular}{rccccccccc}
-		p = & 0 & $v_1$ & $v_1$ & $v_1$ & $v_4$ & $v_4$ & $v_4$ & \cancel{$v_5$} $v_7$ \\ \hline
-		    & $v_1$ & $v_2$ & $v_3$ & $v_4$ & $v_5$ & $v_6$ & $v_7$ & $v_8$ \\ \hline
-		d = & \fbox{0} & 3 & \uline{1} & 2 & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
-			&          & 3 &           & \uline{2} & &  & &  \\
-			&          & 3 &           &        & 3         & 4 & 3 & \\
-			&          &   &           &        & \uline{3} & 4 & 3 & \\
-			&          &   &           &        &           & 4 & \uline{3} & 6 \\
-			&          &   &           &        &           & \uline{4} &           & 5 \\
-	\end{tabular}
+	\begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
+		\centering
+		\includegraphics[width=\linewidth]{./optinum_abb/optinum_5_3_bsp5-2.jpg}
+	\end{minipage}
+	\begin{minipage}{\dimexpr0.5\linewidth-\fboxrule-\fboxsep}
+		\begin{tabular}{rccccccccc}
+			$p =$ & 0 & $v_1$ & $v_1$ & $v_1$ & $v_4$ & $v_4$ & $v_4$ & \cancel{$v_5$} $v_7$ \\ \hline
+			    & $v_1$ & $v_2$ & $v_3$ & $v_4$ & $v_5$ & $v_6$ & $v_7$ & $v_8$ \\ \hline
+			$d =$ & \fbox{0} & 3 & \uline{1} & 2 & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+				&          & 3 &           & \uline{2} & &  & &  \\
+				&          & 3 &           &        & 3         & 4 & 3 & \\
+				&          &   &           &        & \uline{3} & 4 & 3 & \\
+				&          &   &           &        &           & 4 & \uline{3} & 6 \\
+				&          &   &           &        &           & \uline{4} &           & 5 \\
+		\end{tabular}
+	\end{minipage}
 
 	Ein minimaler Weg von $v_1$ nach $v_8$ lautet als
 	\begin{equation*}
@@ -133,7 +139,7 @@ Nach Abschluss von Schritt 2 symbolisieren die Mengen $A$ und $B$ diejenigen Kno
 %(3,2,3)
 %(3,4,4)
 
-Da hierbei die Gewichte $c(e)$ auch negativ sein durften, kann eine modifizierte Variante des Algorithmus zum Auffinden kürzester Wege ich beliebigen Graphen genutzt werden.
+Da hierbei die Gewichte $c(e)$ auch negativ sein durften, kann eine modifizierte Variante des Algorithmus zum Auffinden kürzester Wege in beliebigen Graphen genutzt werden.
 
 \subsection{Netzplantechnik}
 
@@ -153,7 +159,7 @@ Längste Wege sind vor allem dann von Interesse, wenn die Wege eines Graphen ein
 Wir betrachten zwei Fälle:
 \begin{enumerate}[label=(\arabic*), nolistsep]
 	\item $\AZ_j \ge \AZ_i + \tau_{ij}$ mit $\tau_{ij} \ge 0$: Teilprojekt $\TP_j$ darf frühestens $\tau_{ij}$ Zeiteinheiten nach Beginn von Teilprojekt $\TP_i$ starten
-	\item $\AZ_j \le \AZ_u + \tau_{ji}$ mit $\tau_{ji} \ge 0$: Teilprojekt $\TP_j$ muss spätestens $\tau_{ji}$ Zeiteinheiten nach Beginn von Teilprojekt $\TP_i$ starten
+	\item $\AZ_j \le \AZ_i + \tau_{ji}$ mit $\tau_{ji} \ge 0$: Teilprojekt $\TP_j$ muss spätestens $\tau_{ji}$ Zeiteinheiten nach Beginn von Teilprojekt $\TP_i$ starten
 \end{enumerate}
 
 Modellierung als Graph $G = (V,E,c)$:
