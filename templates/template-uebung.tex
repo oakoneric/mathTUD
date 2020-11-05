@@ -1,0 +1,334 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+% (c) Eric Kunze, 2020
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for exercises and homework at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 11pt]{article}
+
+\usepackage[ngerman]{babel}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+
+\usepackage{parskip}    % split paragraphs by vspace instead of intendations
+\usepackage[onehalfspacing]{setspace} % increase row-space
+
+\usepackage{xifthen}
+\usepackage{xparse}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SCHRIFTEN
+\usepackage[utf8]{inputenc}
+\usepackage{chngcntr}
+\usepackage{eufrak}
+
+\usepackage{lmodern}
+\usepackage[normalem]{ulem}
+
+\usepackage[autostyle=true,english=british]{csquotes}
+
+% new font OpenSans
+\usepackage[scale=1]{opensans}
+\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\osfamily}
+
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EIGENSCHAFTEN
+\newcommand{\name}{Eric Kunze}
+\newcommand{\matnr}{4679202}
+\newcommand{\email}{\href{mailto:eric.kunze@mailbox.tu-dresden.de}{\ttfamily eric.kunze@mailbox.tu-dresden.de}}
+
+\newcommand{\modul}{Modul}
+\newcommand{\semester}{Sommersemester 2020}
+
+%\renewcommand{\tutor}{TUTOR}
+%\renewcommand{\gruppe}{Tag x. DS, (un)gerade Woche}
+
+\newcommand{\professor}{Prof. Dr. A B}
+\newcommand{\fakultaet}{Mathematik}
+\newcommand{\institut}{Institut}
+\newcommand{\lehrstuhl}{Lehrstuhl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GRAPHICS
+\usepackage{graphicx}
+\usepackage[table,dvipsnames]{tudscrcolor} % package xcolor loaded automatically
+\usepackage[font=small,labelfont=bf]{caption} % captions of non-floated figures
+
+\usepackage{tcolorbox}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix, patterns,arrows,calc,decorations.pathmorphing,backgrounds, positioning,fit,petri,decorations.fractals}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}   % in my packages used compat=1.15
+\usepgfplotslibrary{fillbetween}
+
+% tabulars
+\usepackage{tabularx}   % tabularx-environment (explicitly set width of columns)
+\usepackage{multirow}
+\usepackage{booktabs}   % improved rules
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENUMERATIONS
+\usepackage{enumerate}
+\usepackage[inline]{enumitem}       % customize label
+
+\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.4}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\renewcommand{\labelenumii}{\alph{enumii}.}
+\renewcommand{\labelenumiii}{\roman{enumiii}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PAGE LAYOUT
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+\newpairofpagestyles[scrheadings]{firstpage}{\ohead*{}\cfoot*{\pagemark}}
+\newpairofpagestyles[scrheadings]{normalpage}{
+    \ihead*{\fosfamily\color{cdgray}\small\modul}
+    \ohead*{\fosfamily\color{cdgray}\small\name~ (\matnr)}
+    \cfoot*{\pagemark}}
+
+\pagestyle{normalpage}
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLEPAGE
+\newcommand{\makeTUtitle}[1][]{%
+    \begin{titlepage}
+        \pagecolor{cddarkblue!90} \color{white}%
+        \raggedright \fosfamily%
+        \setlength{\parindent}{0pt}%
+    % Logo / Kopf
+        \hspace{-18.6mm} %
+        \includegraphics[scale=0.6]{TUD-white.pdf} \\
+        \vspace{3mm}
+        \begin{tabular}{m{\textwidth}}
+            \hline
+            \hspace{-4pt}\small{\textbf{Fakultät \fakultaet} Institut für \institut, Professur für \lehrstuhl} \\
+            \hline
+        \end{tabular} \\
+    % Titel
+        \vspace{5cm}
+        {\Huge\bfseries \MakeUppercase \modul \par}
+        \vspace{0.5cm}%
+        {\Large \itshape Übungen} \\%
+        \vspace{1.5cm}
+        \textbf{{\Large \professor}} \par
+        \vspace{0.5cm}
+        {\large \semester}
+    % Fußzeile
+        \vfill%
+        \begin{tabular}{lll}
+            Autor  & : & \name \\
+            E-Mail & : & \email \\
+        \end{tabular}%
+    \end{titlepage}
+    \nopagecolor
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COUNTER
+\usepackage{chngcntr}
+
+\newcounter{taskcount}
+\newcounter{blattcount}
+\newcounter{thmcount}
+
+\counterwithin{page}{blattcount}
+\counterwithin{equation}{blattcount}
+\counterwithin{figure}{blattcount}
+\counterwithin{table}{blattcount}
+
+% automatic reset of task counter in each blatt
+%\pretocmd{\exercisePage}{\setcounter{taskcount}{0}}{}{}
+
+%\counterwithin{taskcount}{blattcount}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXERCISE PAGE
+\newcommand{\header}{%
+        {\fosfamily%
+            \fcolorbox{cddarkblue}{cdblue!20}{%
+                \begin{minipage}{\dimexpr0.7\linewidth-\fboxrule-\fboxsep}
+                    {\huge \textbf{Hausaufgaben}} \vspace{3pt} \\
+                    \textbf{\modul} -- Übungsblatt \theblattcount
+                \end{minipage}%
+                \begin{minipage}{\dimexpr0.3\linewidth-\fboxrule-\fboxsep}
+                    \flushright \textbf{\name} \\
+                    Matr.-Nr. \matnr
+                \end{minipage}%
+        }}%
+    }%
+
+\NewDocumentEnvironment{exercisePage}{O{}}{%
+    \pagebreak%
+    \stepcounter{blattcount} \setcounter{page}{1}%
+    \thispagestyle{firstpage}
+    \header \\[6pt]
+    \setcounter{figure}{0}
+    \setcounter{equation}{0}%
+    \setcounter{table}{0}%
+    \setcounter{thmcount}{0}
+    %
+    \ifthenelse{\isempty{#1}}{}{%
+        {\fosfamily \itshape Thema: #1} \par%\\[12pt]%
+    }
+}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATH ENVIRONMENTS
+\usepackage{../../mathoperatorsMathTUD}
+
+\usepackage[ntheorem,framemethod=TikZ]{mdframed}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage[amsmath,thmmarks,framed]{ntheorem}
+
+\setlength\abovedisplayshortskip{0pt plus 3pt}%
+\setlength\belowdisplayshortskip{4pt plus 2pt minus 2pt}%
+\setlength\abovedisplayskip{1pt plus 1pt minus 2pt}%
+\setlength\belowdisplayskip{1pt plus 1pt minus 2pt}%
+
+\newcommand{\skiparound}{10pt}
+
+% >> Exercises
+\theoremstyle{plain}
+\theoremheaderfont{\fosfamily\normalsize\bfseries\upshape}
+\theorembodyfont{\normalsize}
+\theoremseparator{.}
+\theoremsymbol{}
+
+\newmdtheoremenv[%
+    backgroundcolor=cdblue!5,%
+    linecolor=cddarkblue,%
+    skipabove=\skiparound,%
+    skipbelow=\skiparound,%
+    nobreak,%
+]{exercise}[taskcount]{Übung}
+
+\newmdtheoremenv[%
+    backgroundcolor=cdblue!5,%
+    linecolor=cddarkblue,%
+    skipabove=\skiparound,%
+    skipbelow=\skiparound,%
+    nobreak,%
+]{homework}[taskcount]{Hausaufgabe}
+
+\newmdtheoremenv[%
+    backgroundcolor=cdblue!5,%
+    linecolor=cddarkblue,%
+    skipabove=\skiparound,%
+    skipbelow=\skiparound,%
+    nobreak,%
+]{task}[taskcount]{Aufgabe}
+
+\newmdtheoremenv[%
+backgroundcolor=cdblue!5,%
+linecolor=cddarkblue,%
+skipabove=\skiparound,%
+skipbelow=\skiparound,%
+nobreak,%
+]{zusatz}[taskcount]{Zusatzaufgabe}
+
+% >> Lemma
+\theoremstyle{plain}
+\theoremheaderfont{\fosfamily\normalsize\bfseries\upshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{6pt}
+\theorempostskip{6pt}
+\newtheorem{lemma}{Lemma}
+\counterwithin{lemma}{blattcount}
+
+% >> proof
+\makeatletter
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+\makeatother
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{0pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+% >> solutions
+\newtheorem{solution}{Lösung}
+
+% >> Equivalences
+\newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
+\newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
+\newenvironment{equivalence}[1][]{%
+        \ifthenelse{\isempty{#1}}%
+        {\begin{description}} % no optional argument
+            {\begin{description}[topsep=-\parskip]} % any optional argument
+    }{ \end{description} }%
+
+    % >> inductions (needs description environment)
+    \newcommand{\ianfang}[1][]{%
+        \ifthenelse{\isempty{#1}}{%
+            \item[\textbf{(IA)}] % no parameter
+        }{  \item[\textbf{(IA)}] {#1 :}  } % parameter exists
+    }
+
+    \newcommand{\ivorraussetzung}{\item[\bfseries (IV)]}
+
+    \newcommand{\ischritt}[1][]{%
+        \ifthenelse{\isempty{#1}}{%
+
+            \item[\textbf{(IS)}] % no parameter
+        }{  \item[\textbf{(IS)}] {#1 :} } % parameter exists
+    }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYPERLINKS
+\usepackage[unicode,bookmarks=true]{hyperref}
+\hypersetup{
+    % pdfborder={0 0 0}         % no boxed around links
+    pdfborderstyle={/S/U/W 1},  % underlining insteas of boxes
+    linkbordercolor=cdblue,
+    urlbordercolor=cdblue
+    %   colorlinks,
+    %   citecolor=black,
+    %   filecolor=cddarkblue!80,
+    %   linkcolor=black,
+    %   urlcolor=cddarkblue!80
+}
+\usepackage{bookmark}       % pdf-bookmarks
+
+\usepackage{cleveref}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+\crefname{wiederholung}{Wiederholung}{Wiederholungen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HIGHLIGHTING
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ADDITIONAL COMMANDS
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\makeTUtitle[Übungen]
+
+\include{modul-uebungen-4}
+
+\end{document}
