@@ -1,0 +1,396 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+Sei $X \colon (\Omega,\A,\P) \to \R$ eine reelle Zufallsvariable mit Verteilungsfunktion $F_X\colon \R \to [0,1]$, d.\,h.
+\begin{align*}
+	F_X(x) \defeq \P(X \le x) 
+	\defeq \P(\menge{\omega \in \Omega : X(\omega) \le x})
+	= \P\brackets{X^{-1}\brackets{(-\infty, x]}},
+\end{align*}
+also $X \sim F_X$. Definiere
+\begin{align}
+	Y(t) &\defeq \E(\abs{X-t}) \label{eq: DefY} \tag{1.0} \\ \nonumber
+	&= \int_\Omega \abs{X(\omega)-t} \, \P(\diff\omega) \\ \nonumber
+	\overset{\cref{eqTrafoR}}&{=} \int_\R \abs{x-t} \, (\P \circ X^{-1})(\diff x) \\ \nonumber
+	&= \int_\R \abs{x-t} \, F_X(\diff x) \qquad \forall t \in \R \\
+	\intertext{und}
+	m &\in \argmin_{t \in \R} Y(t) \label{eq: MedianDef} \tag{M}
+\end{align}
+als (irgendeine) Minimalstelle der Funktion $Y$.
+
+\begin{definition}
+	Hierbei heißt $m \in \R$ \begriff{Median} von der Zufallsgröße $X$.
+\end{definition}
+
+Wir haben den \begriff{Korrespondenzsatz} genutzt, der besagt, dass das Bildmaß $\P \circ  X^{-1}$ eindeutig von der Verteilungsfunktion $F$ bestimmt ist. Das heißt also wir schreiben
+$F(\dx)$ und meinen $\P \circ X^{-1} (\dx)$
+
+\textbf{Notation:} $F(m-) \defeq F(m-0) \defeq \lim_{t \uparrow m} F(t)$. Der Ausdruck ist wohldefiniert für Verteilungsfunktionen, denn diese sind rechtsseitig stetig und haben linksseitige Limiten.
+
+
+In folgendem kleinen Lemma wollen wir die Menge aller Mediane charakterisieren.
+\setcounter{thmcount}{-1}
+\begin{lemma}\label{lemma: median}
+	Sei $X \sim F_X \defqe F$ integrierbar und $m \in \R$. Dann sind äquivalent:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:medianHalf} $F(m-)\le \frac{1}{2} \le F(m)$
+		\item \label{it:medianMin} $\E\sqbrackets{\abs{X-t}}\ge\E{\abs{X-m}} \qquad\forall t \in \R$
+		\item \label{it:medianMedian} $m$ ist Median
+	\end{enumerate}
+\end{lemma}
+\begin{beispiel}
+	Für $F$, $a < b \in \R$ mit
+	\begin{align*}
+		F(x) \begin{cases}
+			< \frac12, &\text{ für } x < a \\
+			= \frac12, &\text{ für } a \le x < b \\
+			> \frac12, &\text{ für } x \ge b
+		\end{cases}
+	\end{align*}
+	ist die Menge der Mediane genau das Intervall $[a, b]$.
+	% Bild: Diagramm mit Funktion F mit Plateau bei 1/2 (1/2 eingetragen auf y-Achse
+	% Punkt 1 exkl. unter 1/2, von Punkt 1 inkl. bis Punkt 2 exkl. Plateau,
+	% an Punkt 2 Sprung, dann ansteigend
+	% auf x-Achse Intervall [Punkt 1, Punkt 2] farbig = alle Mediane
+\end{beispiel}
+
+\begin{proof}
+	\begin{description}
+		\item[\ref{it:medianHalf} $\Rightarrow$ \ref{it:medianMin}:] Sei $\Q \defeq \P \circ X^{-1}$ das zu $F$ gehörige Bildmaß. Setze
+		\begin{equation*}
+			h(t) \defeq \E\sqbrackets{\abs{X - t} - \abs{X - m}} \overset{lin.}{=} Y(t) - Y(m)
+		\end{equation*}
+		Dann ist \ref{it:medianMin} äquivalent zu $h(t) \ge 0$ für alle $t\in\R$. Dies wollen wir nun zeigen.
+		\begin{enumerate}[label=Fall \Alph*:] 
+			\item Sei $t < m$.
+			\begin{align*}
+					h(t) 
+					\overset{\text{Trafo}}&{=}
+					\int_{\R} \abs{x-t}-\abs{x-m} \, F(\dx)\\
+					&=\int_{(-\infty,t]} \underbrace{\abs{x-t}-\abs{x-m}}_{= t-x-(m-x)=-(m-t)} \, F(\dx)
+					+ \int_{(t,m)} \underbrace{\underbrace{\abs{x-t}-\abs{x-m}}_{\underbrace{x-t}_{\ge 0}-\underbrace{(m-x)}_{\le m-t}}}_{\ge-(m-t)} \, F(\dx)\\
+					&\phantom{=}
+					+\int_{[m,\infty)}\underbrace{\abs{x-t}-\abs{x-m}}_{x-t-(x-m)=m-t} \, F(\dx) \\
+					&\ge-(m-t) * \underbrace{Q((-\infty,t])}_{F(t)}+
+					\brackets{-(m-t) * F(m-)-F(t)}
+					+(m-t) * \underbrace{\Q([m,\infty))}_{1-\underbrace{\Q((-\infty,m))}_{F(m-)}}\\
+					&=-\underbrace{(m-t)}_{\ge 0} * (\underbrace{1-2 * F(m-)}_{\text{wegen 1.\ Ungl. in }\ref{it:medianHalf}: \ge 0})\\
+					&\ge0
+				\end{align*}
+			\item Sei $t > m$.  Wir verfahren ganz ähnlich:
+				\begin{align*}
+					h(t)&=	\int_{(-\infty,m]} \abs{x-t} - \abs{x-m} F(\dx)
+						+ \int_{(m,t]} \abs{x-t} - \abs{x-m} F(\dx) \\
+					&\phantom{=}\ + \int_{(t,\infty)} \abs{x-t} - \abs{x-m} F(\dx) \\
+					&= \int_{(-\infty,m]} t - x - (m-x) F(\dx)
+						+ \int_{(m,t]} t - x - (x - m) F(\dx) \\
+					&\phantom{=}\ + \int_{(t,\infty)} x - t - (x - m) F(\dx) \\
+					&\ge (t-m)F(m) - (t-m)(F(t) - F(m)) + (m - t)(1 - F(t)) \\
+					&= (t-m)(F(m) - F(t) + F(m) - 1 + F(t)) \\
+					&=\underbrace{(t-m)}_{> 0}*(\underbrace{2 * F(m)-1}_{\text{wegen 2.\ Ungl.\ in }\ref{it:medianHalf}\ge0})\\
+					&\ge 0
+				\end{align*}
+			\item Für $t = m$ ist die Aussage trivial.
+		\end{enumerate}
+		\item[\ref{it:medianMin} $\Rightarrow$ \ref{it:medianHalf}:]
+			Nach Annahme ist $h(t) \ge 0$ für alle $t \in \R$.
+			\begin{enumerate}[label=Fall \Alph*:] 
+				\item Sei $t<m$. Die obige Rechnung im Fall 1 bei $\Rightarrow$ zeigt
+				\begin{align*}
+					0 \le h(t)
+					&= -(m-t) * F(t)+ \int_t^m \underbrace{\underbrace{x}_{<m}-t-(m-x) }_{=2x-t-m \le m-t} F(\dx)+(m-t) * (1-F(m-)) \\
+					& \le -(m-t)* \Big( F(t)-1 \underbrace{+F(m-)-F(m-)}_{=0}+F(t) \Big) \\
+					&=\underbrace{(m-t)}_{>0}*(1-2* F(t)) \\
+					&\Rightarrow\forall t<m: \enskip 0 \le(m-t)*(1-2* F(t))\\
+					&\Rightarrow\forall t<m: \enskip 0 \le 1-2* F(t)\\
+					&\Rightarrow\forall t<m: \enskip F(t) \le \frac{1}{2}\\
+					&\overset{t \uparrow m}{\Rightarrow} F(m-)\le\frac{1}{2} \tag{Def. linksseitiger Limes}
+				\end{align*}
+			\item Sei $t > m$. Siehe 2. Fall, analog:
+			\begin{align*}
+				0 \le h(t)
+				&= (t-m)* F(m) + \int_m^t \underbrace{t - x - (x - m) }_{=t + m - 2x \le t-m} F(\dx) + (m-t)*(1-F(t)) \\
+				&\le (t-m)*\brackets{F(m)+ F(t) - F(m)-1 + F(t)} \\
+				&= \underbrace{(t-m)}_{>0}(2F(t) - 1) \\
+				&\Rightarrow \forall t<m: \enskip 0\le 2F(t) - 1\\
+				&\Rightarrow \forall t<m: \enskip F(t) \ge \frac{1}{2}\\
+				&\overset{t\downarrow m}{\Rightarrow} F(m) \ge \frac{1}{2} \tag{Rechtsstetigkeit von $F$}
+			\end{align*}
+			\end{enumerate}
+		\item[\ref{it:medianMin} $\Rightarrow$ \ref{it:medianMedian}:]
+			Die Aussage \ref{it:medianMin} ist offensichtlich äquivalent zur Definition des Medians.
+	\end{description}
+\end{proof}
+
+\begin{bemerkung}~
+	\begin{enumerate}[label=(\arabic*), leftmargin=*]
+		\item Aussage \cref{it:medianHalf} in \cref{lemma: median} besagt, dass $\menge{ m \in \R : m \text{ erfüllt } \eqref{eqMedianDef}}$ die Menge aller Mediane von $F$ ist. Der Median ist im Allgemeinen nicht eindeutig bestimmt.
+		\item Im Allgemeinen gibt es mehrere Mediane. Üblicherweise \textit{wählt} man $m \defeq F^{-1} \brackets{\frac{1}{2}}$, wobei
+			\begin{align*}
+				F^{-1}(u) \defeq \inf\menge{ x \in \R: F(x) \ge u} \quad \forall u \in (0,1)
+			\end{align*}
+			die \begriff{Quantilfuntion} oder auch \begriff{verallgemeinerte Inverse} ist. Für weiterführende Literatur siehe \cite[Seite 20]{witting1985mathStat}. Da
+			\begin{align*}
+				F\brackets{F^{-1}(u)-} \le u \le F\brackets{F^{-1}(u)} \qquad \forall u \in (0,1),
+			\end{align*}
+			erfüllt $m = F^{-1}\brackets{\frac{1}{2}}$ die Bedingung \ref{it:medianHalf} in \cref{lemma: median} und ist somit ein Median, nämlich der kleinste.
+		\item Die obige Funktion \eqref{eq: DefY}
+			\begin{align*}
+				Y \colon \R \to \R \text{ mit } Y(t) = \int_\R \abs{x-t}~F(\dx) \qquad \forall t\in\R
+			\end{align*}
+			ist stetig\footnote{zur Stetigkeit von $Y$: nutze Folgenkriterium + dominierte Konvergenz mit Majorante $\abs{X} + \abs{t}$}, aber im Allgemeinen nicht differenzierbar, z.\,B.\ falls $F \sim X$ eine diskrete Zufallsvariable ist. In diesem Fall ist somit die Minimierung über Differentiation nicht möglich.
+		\item Sei $\mu = \E(X)$ der Erwartungswert von $X$. Dann gilt (Übung):
+			\begin{equation*}
+				\mu = \argmin_{t \in \R} \E\sqbrackets{(X-t)^2} = \argmin_{t \in \R} \E\sqbrackets{(X-t)^2 - X^2}.
+			\end{equation*}
+			(Das zweite $X^2$ wird abgezogen, da das $\argmin$ nicht davon betroffen ist und so die Bedingung $\E\sqbrackets{X^2}<\infty$ entfällt.)
+			Begründung:
+			\begin{align*}
+				\E\sqbrackets{(X-t)^2) - X^2}
+				&= \E\sqbrackets{X^2 - 2tX + t^2 - X^2} \\
+				&= \E\sqbrackets{X^2} - 2t\mu + t^2 - \E\sqbrackets{X^2}
+				= t^2 - 2t\mu
+			\end{align*}
+			Minimiere nun diese quadratische Funktion und erhalte die gewünschte Resultat.
+	\end{enumerate}
+\end{bemerkung}
+
+%\begin{notation}
+	In der Statistik identifizieren wir oft stillschweigend Zufallsgrößen mit ihren Realisationen, also $X \leftrightsquigarrow x$ was sich formal $X(\omega_0) = x$ schreiben lässt.
+%\end{notation}
+
+Zur Schätzung von $m$ seien $X_1,\dots, X_n \sim F$ iid Zufallsvariablen mit zugehöriger \begriff{empirischer Verteilungsfunktion}
+\begin{equation*}
+	F_n \colon \R \to [0,1] 
+	\quad \text{ mit } \quad
+	F_n(x) \defeq \frac{1}{n} * \sum_{i=1}^n \one_{\menge{ x_i \le x}}(x) \qquad \forall x \in \R.
+\end{equation*}
+Tatsächlich ist $F_n$ die Verteilungsfunktion zum \begriff{empirischen Maß}
+\begin{equation*}
+	Q_n \colon \borel\R \to [0,1]
+	\quad \text{ mit } \quad
+	Q_n(B)\defeq\frac{1}{n}*\sum_{i=1}^n\delta_{x_i}(B)
+\end{equation*}
+wobei das \begriff{Dirac-Maß} in $t$ definiert ist als
+\begin{equation*}
+	\delta_t \colon \borel\R \to [0,1]
+	\quad \text{ mit } \quad
+	\delta_t(B) \defeq
+	\begin{cases}
+		0, &\falls t \notin B \\
+		1, &\falls t \in B
+	\end{cases}
+	\qquad\forall B \in \borel\R \enskip \forall t \in \R
+\end{equation*}
+
+Gemäß dem Satz von Gliwenko-Cantelli gilt:
+\begin{equation*}
+	\sup_{x \in \R} \abs{F_n(x)-F(x)} \overset{n \to \infty}{\longrightarrow} 0 \qquad \P\text{-fast sicher für alle Verteilungsfunktionen } F
+\end{equation*}
+Die empirische Verteilungsfunktion konvergiert also gegen die wahre Verteilungsfunktion.
+
+\begin{*erinnerung}
+	Für das Dirac-Maß $\delta_x \colon \A \to \R_+$ mit $\delta_x(A) \defeq \one_A(x)$ gilt:
+	\begin{equation}\label{eq: dirac} \tag{Dir}
+		\int_\R f(t) \, \delta_x(\diff{t}) = f(x) \qquad \forall x \in \R
+	\end{equation}
+\end{*erinnerung}
+
+\begin{*notation}
+	Wir identifizieren eine Verteilung $\P\circ X^{-1}$ mit der zugehörigen Verteilungsfunktion $F_X$, also $\P \circ X^{-1} \leftrightarrow F_X$ und $F_X(\dx) \defeq (\P\circ X^{-1} \, \dx)$.
+\end{*notation}
+
+\begin{*erinnerung}
+	Das Lebesgue-Maß ist linear im Maß, d.\,h.:
+	\begin{align}\label{eqLinMasse}\tag{Lin}
+		\int_\omega f \diff{(a*\mu + b*\nu)} = a*\int_\omega f \diff{\mu} + b*\int_\omega f \, \diff{\nu}
+	\end{align}
+\end{*erinnerung}
+%
+%Ein vages Stetigkeitsargument motiviert folgenden Schätzer für $m$,
+%den wir durch Ersetzen von $F$ in $Y$ durch $F_n$ erhalte (\define{plug-in}-Methode):
+%\begin{align*}
+%	\hat{m}_n&\defeq\argmin_{t\in\R}Y_n(t)\defeq\text{ (irgendeine) Minimalstelle der Funktion}\\
+%	Y_n(t)&\defeq\int_\R \abs{x-t}F_n(\d x)\\
+%	&=\int_\R \abs{x-t}Q_n(\d x)\\
+%	\overset{\Def~Q+\eqref{eqLinMasse}}&=
+%	\frac{1}{n}*\sum_{i=1}^n\int_\R \abs{x-t}~\delta_{X_i}(\d x)\\
+%	\overset{\eqref{eq: dirac}}&=
+%	\frac{1}{n}*\sum_{i=1}^n\abs{X_i-t}
+%\end{align*}
+%
+%$\hat{m}_n$ heißt \define{empirischer Median} von $X_1,\dots,X_n$ mit üblicher Auswahl $\hat{m}_n=F_n^{-1}\klammern{\frac{1}{2}}$ gemäß Lemma \ref{lemma: median} (da empirische Verteilungsfunktion eine Verteilungsfunktion ist).
+%
+%\begin{bemerkung}\
+%	\begin{itemize}
+%		\item Wenn man eine ungerade Anzahl von Daten hat, ist der Median der mittlere Wert, nachdem man die Daten der Größe nach geordnet hat.
+%		\item Hat man hingegen eine gerade Anzahl an Daten, dann ist der Median der kleinere der beiden mittleren Werte.
+%	\end{itemize}
+%\end{bemerkung}
+%
+%Mit dem starken \undefine{Gesetz der großen Zahlen (SGGZ)} gilt
+%\begin{align}\label{eq1.1}\tag{1.1}
+%	\forall t \in \R: \klammern{Y_n(t)\ntoinf \Earg{\abs{X_1 - t}} = \int_{\R} \abs{x-t} F(\d x) = Y(t) \text{ $\P$-fast sicher}}
+%\end{align}
+%Problem: Folgt aus \eqref{eq1.1} bereits, dass
+%\begin{align*}
+%	\argmin_{t\in\R} Y_n(t)
+%	\ntoinf
+%	% CHECKED: '\longrightarrow' used.
+%	\argmin_{t\in\R}
+%	Y(t)\text{ fast sicher?}
+%\end{align*}
+%Wenn ja, dann hätten wir:
+%\begin{align*}
+%	\hat{m}_n
+%	\ntoinf
+%	% CHECKED: '\longrightarrow' used.
+%	m\text{ fast sicher (\define{starke Konsistenz})}
+%\end{align*}
+%(Hierbei stellt sich auch wieder die Frage, was wir genau meinen, wenn $m$ nicht eindeutig ist.)
+%
+%Wir formalisieren und verallgemeinern:
+%\begin{align*}
+%	&X_i:(\omega, \A,P)\to(\R,\B(\R))\text{ messbar},\qquad\omega↦ X_i(\omega)\\
+%	&\Rightarrow
+%	Y_n(t)\defeqY_n(t,\omega)=
+%	\frac{1}{n}*\sum_{i=1}^n\abs{X_i(\omega)-t}\\
+%	&\Rightarrow
+%	Y_n(t,*):(\omega,\A)\to(\R,\B(\R))\text{ messbar }\forall t\in\R
+%\end{align*}
+%
+%\begin{defi}
+%	Die \define{Kollektion}
+%	\begin{align*}
+%		Y_n\defeq\set{ Y_n(t,*):t\in\R}
+%		=\set{ Y_n(t):t\in\R}
+%	\end{align*}
+%	heißt \define{stochastischer Prozess (SP)}. (Ein stochastischer Prozess
+%	ist etwas allgemeiner eine Kollektion von Zufallsvariablen, die von
+%	einem Parameter abhängen, hier $t\in\R$.) Die Abbildung
+%	\begin{align*}
+%		Y_n(*,\omega):\R\to\R,\qquad t↦ Y_n(t,\omega)
+%	\end{align*}
+%	heißt \define{Trajektorie/ Pfad} des SP $Y_n$ zu festem $\omega\in\omega$.
+%\end{defi}
+%
+%In unserem Beispiel sind für \emph{alle} $\omega\in\omega$ die Pfade stetig auf $\R$. Die Abbildung
+%\begin{align*}
+%	Y_n:\omega\to C(\R;\R),\qquad\omega↦ Y_n(*,\omega)
+%\end{align*}
+%heißt \define{Pfadabbildung} des SP $Y_n$. Wir identifizieren also den SP $Y_n$ mit seiner Pfadabbildung. Damit ist $Y_n$ eine Abbildung von $\omega$ in den Funktionenraum
+%\begin{align*}
+%	C(\R)\defeqC(\R;\R)\defeq\set{ f:\R\to\R: f\text{ ist stetig}}.
+%\end{align*}
+%
+%Sei $d:C(\R)× C(\R) → \R$ die Metrik der gleichmäßigen Konvergenz auf Kompakta auf $C(\R)$ (formale Definition kommt später) und sei
+%\begin{align*}
+%	\B(C(\R))
+%	\defeq\B_d\klammern[\big]{C(\R)}
+%	% CHECKED: '\big' used.
+%	\defeq σ \klammern[\big]{\set{ G⊆ C(\R):G\text{ ist offen bzgl. }d}}
+%	% CHECKED: '\big' used.
+%\end{align*}
+%die von $d$ induzierte \define{Borel-$σ$-Algebra}.
+%
+%Wir werden sehen, dass die Abbildung
+%\begin{align*}
+%	Y_n:(\omega,\A,\P)\to\klammern[\Big]{C(\R),\B\klammern[\big]{C(\R)}}
+%	% CHECKED: '\big' '\Big' used.
+%\end{align*}
+%messbar ist. $Y_n$ ist also eine Zufallsvariable mit Werten im metrischen Raum $(C(\R),d)$.
+%
+%\paragraph{Formulierung des Problems im allgemeinen Rahmen}
+%Seien $Y_n,~n\inℕ$ mit $Y$ SP mit stetigen Pfaden (\define{stetige SP}).
+%Was lässt sich sagen über die Gültigkeit der folgenden Implikation?
+%\begin{align}\label{eq1.2}\tag{1.2}
+%	Y_n
+%	\ntoinf
+%	% CHECKED: '\longrightarrow' used.
+%	Y\text{ fast sicher }
+%	\Rightarrow
+%	\argmin_{t\in\R} Y_n(t)
+%	\ntoinf
+%	% CHECKED: '\longrightarrow' used.
+%	\argmin_{t\in\R} Y(t)\text{ fast sicher}
+%\end{align}
+%\subparagraph{Ziel} Welche Art der Konvergenz $Y_n\ntoinf  Y$ reicht für obige Implikation aus? Gleichmäßige Konvergenz, gleichmäßige Konvergenz auf Kompakta, punktweise Konvergenz oder sogar nur \eqref{eq1.1}?
+%% CHECKED: '\longrightarrow' used.
+%
+%$Y$ besitzt womöglich (mit positiver Wahrscheinlichkeit) keine eindeutige Minimalstelle. Und dann?
+%
+%Betrachten wir nun wieder eine andere Art der Konvergenz:
+%Für die Konstruktion von (asymptotischen) Konfidenzintervallen für $m$ benötigt man (in der Statistik) \define{Verteilungskonvergenz} (Wiederholung: $\distrto $ ist die Notation für \undefine{konvergiert in Verteilung}):
+%\begin{align}\label{eq1.3}\tag{1.3}
+%	a_n(\hat{m}_n-m)
+%	\distrto ζ\text{ in }\R
+%	% CHECKED: '\longrightarrow' used.
+%\end{align}
+%wobei $a_n\to\infty$ eine normalisierende Folge ist und $ζ$ eine Grenzvariable ist, die es zu identifizieren gilt.
+%
+%\begin{beispiel}[Zentraler Grenzwertsatz für den Durchschnitt]
+%	Für den Mittelwert von $\overline{X_n}$ von integrierbaren ZV $(X_n)_n$ mit Mittelwert $\mu$ ist diese Folge $a_n = √{n}$. Dafür besagt das Gesetz der großen Zahlen, dass
+%	\begin{equation*}
+%		\overline{X_n} - \mu → 0 \text{ fast sicher}.
+%	\end{equation*}
+%	Der \undefine{zentrale Grenzwertsatz} liefert uns
+%	\begin{equation*}
+%		√{n}\klammern{\overline{X_n} - \mu} \overset{\L}{→} N(0, σ^2)
+%	\end{equation*}
+%	also die Konvergenz in Verteilung gegen die Normalverteilung.
+%\end{beispiel}
+%Für die Herleitung von \eqref{eq1.3} favorisiere wieder einen \undefine{funktionalen Ansatz}. Sei
+%\begin{align*}
+%	Z_n(t)\defeqβ_n*\klammern{ Y_n\klammern{m+\frac{t}{a_n}}-Y_n(m)}\qquad t\in\R
+%\end{align*}
+%der sogenannte \define{reskalierte Prozess zu $Y_n$}, wobei $β_n$ (zunächst) irgendeine positive Folge ist. Damit folgt
+%\begin{align}\label{eq1.4}\tag{1.4}
+%	σ_n \defeq a_n(\hat{m}_n-m) \in \argmin_{t\in\R} Z_n(t),
+%\end{align}
+%denn:
+%\begin{proof}
+%  Zu zeigen ist:
+%	\begin{align*}
+%		&& Z_n(σ_n) &\le Z_n(t) & \forall t \in \R \\
+%		&⇔& β_n \klammern{Y_n\klammern{m + \frac{σ_n}{a_n}} - Y_n(m)} &\le Z_n(t) & \forall t \in \R\\
+%		&⇔& β_n \klammern{Y_n\klammern{m + \hat{m}_n - m} - Y_n(m)}
+%		&\le β_n \klammern{Y_n\klammern{ m + \frac {t}{a_n}}- Y_n(m)} & \forall t \in \R \\
+%		&⇔& β_n\klammern{Y_n(\hat m_n) - Y_n(m)}
+%		&\le β_n \klammern{Y_n\klammern{ m + \frac {t}{a_n}} - Y_n(m)} & \forall t \in \R \\
+%		&⇔& Y_n(\hat m_n) &\le Y_n\klammern{m + \frac t {a_n}} & \forall t \in \R \\
+%		&⇔& Y_n(\hat m_n) &\le Y_n(u) & \forall u \in \R.
+%	\end{align*}
+%	Das gilt aber, weil $\hat m_n \in \argmin_{t \in \R} Y_n(t)$.
+%\end{proof}
+%Klar: $Z_n$ ist wieder ein stetiger stochastischer Prozess und damit $(Z_n)_{n\inℕ}$ eine Folge von Zufallsvariablen in $(C(\R),d)$.
+%% CHECKED: '\big' used.
+%Wünschenswert auch hier wäre die Gültigkeit folgender Implikation:
+%\begin{align}\label{eq1.5}\tag{1.5}
+%	% CHECKED: ist Tatsächlich das L hier bei den argmin gemeint? Macht das Sinn, sind die argmin auch eine Folge von Zufallsvariablen? -> ja, sind sie
+%	Z_n
+%	\distrto
+%	% CHECKED: '\longrightarrow' used.
+%	Z\text{ in } (C(\R),d)
+%	\Rightarrow
+%	\argmin_{t\in\R} Z_n(t)
+%	\distrto
+%	% CHECKED: '\longrightarrow' used.
+%	\argmin_{t\in\R} Z(t)
+%\end{align}
+%Da wir $σ_n = a_n(\hat m_n - m) → ζ$ zeigen wollen und $\argmin_{t\in\R}Z_n(t) = σ_n$, haben wir jetzt die erste Charakterisierung von $ζ$ gefunden.
+%
+%Für die Aussage \ref{eq1.5} ist erforderlich, das Konzept der \define{Verteilungskonvergenz von Zufallsvariablen in metrischen Räumen}, damit \eqref{eq1.5} eine wohldefinierte Bedeutung erhält.
+%Dies folgt später.
+%
+%Natürlich auch hier wieder das Problem: $Z$ besitzt mit positiver Wahrscheinlichkeit mindestens 2 Minimalstellen.
+%Und dann?
+%
+%Im Falle einer fast sicher eindeutigen Minimalstelle von $Z$ würde aber aus \eqref{eq1.4} und \eqref{eq1.5} folgen:
+%\begin{align*}
+%	a_n(\hat{m}_n-m)
+%	\distrto
+%	% CHECKED: '\longrightarrow' used.
+%	\argmin_{t\in\R} Z(t)
+%\end{align*}

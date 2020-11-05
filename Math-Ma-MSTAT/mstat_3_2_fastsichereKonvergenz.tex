@@ -1,0 +1,150 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Fast sichere Konvergenz}
+\begin{definition} \label{definition: 3.6}
+	Seien $X, X_n$ ($n \in \N$) Zufallsvariablen in einem separablen, metrischen Raum $(\S,d)$ über $(\Omega,\A,\P)$.
+	\begin{equation*}
+		X_n \ntoinf X \quad \P\text{-fast sicher}
+		\defequiv
+		\P\bigg( \underbrace{\menge{\omega \in \Omega : d\brackets{X_n(\omega),X(\omega)} \ntoinf 0}}_{\defqe M} \bigg) = 1
+	\end{equation*}
+\end{definition}
+
+Beachte: Die Definition von $M$ mengentheoretisch aufgeschrieben (Schnitt $\leadsto$ \enquote{für alle}; Vereinigung $\leadsto$ \enquote{Es gibt}):
+\begin{equation*}
+	M =
+	\bigcap_{0 < \epsilon \in \Q}
+	\bigcup_{m \in \N}
+	\bigcap_{n \ge m}
+	\Big\{ \underbrace{d(X_n,X)}_{\defqe \zeta_n} < \epsilon \Big\} \overset{\text{\cref{satz: 3.5}}}{\in} \A
+	\text{, denn }\zeta_n^{-1} \brackets{(-\infty,\epsilon)} \in  \A
+\end{equation*}
+Hierbei gilt $M \in \A$ aufgrund der Abzählbarkeit der beteiligten Schnitte und Vereinigungen. 
+Man schreibt auch:
+\begin{align*}
+	\P\brackets{ \lim_{n \to \infty} X_n = X} = 1 \quad \text{ oder } \quad d(X_n, X) \to  0 \enskip (n \to \infty) \enskip \text{ $\P$-f.\,s.}
+\end{align*}
+
+Die bekannten Regeln (Ergebnisse) für \textit{reelle} Zufallsvariablen lassen sich mühelos verallgemeinern; so zum Beispiel der folgende Satz.
+\begin{satz} \label{satz: 3.7}
+	Der fast-sichere Grenzwert ist $\P$-fast sicher eindeutig:
+	\begin{equation*}
+		X_n \ntoinf X \quad \P\text{-fast sicher } \und 
+		X_n \ntoinf X' \quad\P\text{-fast sicher }
+		\follows 
+		X = X' \quad \P\text{-fast sicher}
+	\end{equation*}
+\end{satz}
+\begin{proof} 
+	Es ist $\menge{ X\neq X'} \subseteq \menge{X_n \not\to  X} \cup \menge{X_n \not\to  X'}$ und $\P(X_n \not\to X) + \P(X_n \not\to X') = 0+0$. Also ist auch $\P(X \neq X') = 0$ und mit dem Gegenereignis gilt $\P\brackets{X = X'} = 1-\P\brackets{X\neq X'} = 1$.
+\end{proof}
+
+\begin{satz} \label{satz: 3.8}
+	Seien $X, X_n$ ($n \in \N$) Zufallsvariablen im separablen, metrischen Raum $(\S,d)$ und sei $f \colon (\S,d) \to (\S',d')$ $\B_d(S)$ - $\B_{d'}(S')$-messbar und stetig in $X$ $\P$-fast sicher.
+	\footnote{\enquote{stetig in $X$ $\P$-fast sicher} bedeutet,
+		dass $\P(\menge{\omega  \in  \Omega : f \text{ in } X(\omega) \text{ stetig}}) = 1$. Insbesondere ist $\menge{\omega  \in  \Omega : f \text{ in } X(\omega) \text{ stetig}}$ messbar, was keine Selbstverständlichkeit ist.}
+	Dann gilt:
+	\begin{equation*}
+		X_n \ntoinf	X \quad \P\text{-fast sicher }
+		\follows f(X_n) \ntoinf f(X) \quad \P\text{-fast sicher}
+	\end{equation*}
+\end{satz}
+
+\begin{proof}
+	Aufgrund der Folgenstetigkeit gilt
+	\begin{equation*}
+		\menge{X_n \ntoinf  X} \cap \menge{f \text{ stetig in }X}
+		\subseteq
+		\menge{f(X_n) \ntoinf f(X)}
+	\end{equation*}
+	Da abzählbare Schnitte von Einsmengen stets Einsmengen sind, d.\,h.
+	\begin{equation*}
+		\forall i \in \N : \, \P(E_i)=1
+		\follows \P\brackets{\bigcap_{i \in \N} E_i}=1
+		\qquad \forall \menge{E_i} \subseteq \Omega \mit \P(E_i)=1
+	\end{equation*}
+	folgt $1 = \P\brackets{\menge{X_n \ntoinf X \text{ und $f$ stetig in } X}} \le\P\brackets{\menge{f(X_n) \ntoinf  f(X)}} \le 1$ und somit schon $\P\brackets{\menge{f(X_n) \ntoinf  f(X)}} = 1$.
+\end{proof}
+
+%\begin{satz}[Konvergenz-Kriterium]\label{Satz3.9}
+%	\begin{align*}
+%		X_n
+%		\ntoinf
+%		% CHECKED: '\longrightarrow' used.
+%		X\quad\P\text{-fast sicher}
+%		\Leftrightarrow
+%		\forall\epsilon>0:\limn\P\brackets{\sup_{m\ge n} d(X_m,X)>\epsilon}=0
+%	\end{align*}
+%\end{satz}
+%\begin{proof}
+%	Man ersetze im Beweis für den Fall reeller Zufallsvariablen $\abs{X_n-X}$ durch $d(X_n,X)$.
+%	Und beachte, dass alle Schlussfolgerungen bestehen bleiben. Hier ausführlich:
+%	\begin{align*}
+%		X_n \overset{n\to \infty}{\longrightarrow} X~\P \text{-fast sicher}
+%		&\Leftrightarrow 1 = \P\brackets{\bigcup_{0 < \epsilon} \bigcap_{m  \in  \N} \bigcup_{n \ge m} d(X_n, X) < \epsilon} \\
+%		&\Leftrightarrow 0 = \P\brackets{\bigcap_{0 < \epsilon} \bigcup_{m  \in  \N} \bigcap_{n \ge m} d(X_n, X) \ge \epsilon} \\
+%		&\Leftrightarrow \forall \epsilon > 0: 0 = \P\brackets{\bigcup_{m  \in  \N} \bigcap_{n \ge m} d(X_n, X) \ge \epsilon}
+%	\end{align*}
+%	Da für $m \to  \infty$ die Mengen $\menge{\bigcap_{n \ge m} d(X_n, X) \ge \epsilon}$ kleiner werden,
+%	ist dies äquivalent zu
+%	\begin{align*}
+%		\forall \epsilon > 0\, \forall δ > 0 \,∃m  \in  \N: \P\brackets{\bigcap_{n \ge m} d(X_n, X) \ge \epsilon} &< δ \\
+%		\Leftrightarrow \forall \epsilon > 0: \lim_{m \to  \infty} \P\brackets{\bigcap_{n \ge m} d(X_n, X) \ge \epsilon} &= 0 \\
+%		\Leftrightarrow \forall \epsilon > 0: \lim_{m \to  \infty} \P\brackets{\sup_{n \ge m} d(X_n, X) \ge \epsilon} &= 0
+%		\qedhere
+%	\end{align*}
+%\end{proof}
+%Ein sehr nützliches Kriterium ist Folgendes:
+%\begin{satz}\label{Satz3.10}
+%	\begin{align*}
+%		\sum_{n \in \N_{\ge1}}\P\brackets{d(X_n,X)>\epsilon} < \infty \qquad \forall \epsilon>0
+%		\Rightarrow  X_n
+%		\ntoinf
+%		% CHECKED: '\longrightarrow' used.
+%		X\quad\P\text{-fast sicher}
+%	\end{align*}
+%	\begin{bemerkung}
+%		% noNumber
+%		Die $\P(d(X_n, X) > \epsilon)$ werden in der Statistik \define{Fehlerwahrscheinlichkeit}
+%		oder \define{tail probability} genannt.
+%		Um Fehlerwahrscheinlichkeiten abzuschätzen, also die Voraussetzung für diesen Satz für einen speziellen Fall zu zeigen, nutzt man häufig sogenannte Maximalungleichungen wie die Markov-Ungleichung und die Tschebychew-Ungleichung.
+%	\end{bemerkung}
+%\end{satz}
+%
+%\begin{proof}
+%	Setze
+%	\begin{align*}
+%		A_n(\epsilon):=\menge{d(X_n,X)>\epsilon}\overset{\ref{Satz3.5}}{ \in }\A
+%	\end{align*}
+%	Dann folgt aus dem \undefine{ersten Borel-Cantelli-Lemma}:
+%	\begin{align*}
+%		&\P\brackets{\limsup_{n\to\infty} A_n(\epsilon)}=0\qquad\forall\epsilon>0
+%	\end{align*}
+%		Mit
+%	\begin{align*}
+%		\liminf_{n\to\infty}\brackets{A_n(\epsilon)^C}
+%		\overset{\text{Def}}=
+%		\bigcup_{m \in \N}\bigcap_{n\ge m}\brackets{A_n(\epsilon)}^C
+%		&= \brackets{\bigcap_{m \in \N}\bigcup_{n\ge m}\menge{ d(X_n,X)>\epsilon}}^C \\
+%		&\overset{\Def}= \brackets{\limsup_{n \to  \infty} A_n(\epsilon)}^C
+%	\end{align*}
+%	folgt dann
+%	\begin{align*}
+%		1=\P\brackets{\brackets{\limsup_{n\to\infty} A_n(\epsilon)}^C}
+%		=\P\brackets{\liminf_{n\to\infty}\brackets{A_n(\epsilon)^C}}\qquad\forall\epsilon>0
+%	\end{align*}
+%	Da abzählbare Durchschnitte von Eins-Mengen (also Mengen mit $\P$-Maß 1) wieder Eins-Mengen sind, folgt schließlich:
+%	\begin{align*}
+%		\P\brackets[\Bigg]{\underbrace{
+%			\bigcap_{0<\epsilon \in \Q}\bigcup_{m \in \N}\bigcap_{n\ge m}\menge{d(X_n,X)\le\epsilon}
+%		}_{\menge{ X_n\to X}=\menge{ d(X_n,X)\to0}}}=1
+%		&
+%		\qedhere
+%	\end{align*}
+%\end{proof}
+%
+%Weitere Eigenschaften der fast sicheren Konvergenz von Zufallsvariablen in metrischen Räumen finden sich z.\,B.\ in \cite[Kapitel 8.2]{gaensslerstute1977Wahrscheinlichkeitstheorie}.
+%

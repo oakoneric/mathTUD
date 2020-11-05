@@ -1,0 +1,501 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+% (c) Eric Kunze, 2020
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 11pt]{report}
+
+\usepackage[ngerman]{babel}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+
+\usepackage{parskip}    % split paragraphs by vspace instead of intendations
+\usepackage[onehalfspacing]{setspace} % increase row-space
+
+\usepackage{xifthen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SCHRIFTEN
+\usepackage[utf8]{inputenc}
+\usepackage{chngcntr}
+\usepackage{eufrak}
+
+\usepackage{lmodern}
+\usepackage[normalem]{ulem}
+
+\usepackage[autostyle=true,english=british]{csquotes}
+
+% new font OpenSans
+\usepackage[scale=1]{opensans}
+\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\osfamily}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+\usepackage{tocloft}    % customize toc
+\renewcommand{\cfttoctitlefont}{\titlefont\Huge\bfseries}
+\setcounter{tocdepth}{1}
+\renewcommand{\cftbeforetoctitleskip}{0pt} % change appearence of heading of toc: 0 space above, bold, titlefont, huge toc-heading
+\renewcommand{\cftchapnumwidth}{2em} % change indentations due to width of capital roman numbers
+\renewcommand{\cftsecindent}{2em}
+\renewcommand{\cftsecnumwidth}{2em}
+\renewcommand{\cftsubsecindent}{4em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GRAPHICS
+\usepackage{graphicx}
+\usepackage[table,dvipsnames]{tudscrcolor} % package xcolor loaded automatically
+\usepackage[font=small,labelfont=bf]{caption} % captions of non-floated figures
+
+\usepackage{tcolorbox}
+\usepackage{tikz}
+
+\usepackage[table,dvipsnames]{tudscrcolor} % package xcolor loaded automatically
+
+% tabulars
+\usepackage{tabularx}   % tabularx-environment (explicitly set width of columns)
+\usepackage{multirow}
+\usepackage{booktabs}   % improved rules
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE STYLES
+\usepackage{titlesec}   % change title headings look
+\usepackage{relsize}    % relative font size (smaller[i], larger[i], ...)
+
+\newcommand{\titlefont}{\osfamily}
+\newcommand{\chaptersize}{\huge}
+\newcommand{\sectionsize}{\LARGE}
+
+\renewcommand{\thepart}{\Alph{part}}
+
+% \titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before-code>}[<after-code>]
+% \titlespacing*{<command>}{<left>}{<before-sep>}{<after-sep>}[<right-sep>]
+
+%%%%%%%%% framed chapter
+\titleformat{\chapter}[frame]{\bfseries\titlefont\color{cddarkblue}}{\enskip \chaptersize \smaller \chaptername\;\thechapter \enskip}{10pt}{\chaptersize\centering\MakeUppercase}%
+\titlespacing{\chapter}{0pt}{0pt}{10pt}%
+
+%%%%%%%%% chapter.section
+\counterwithin{section}{chapter}%
+\titleformat*{\section}{\bfseries\titlefont\sectionsize}%{\thesection}{8pt}{}%
+\titlespacing{\section}{0pt}{10pt}{5pt}
+\titleformat*{\subsection}{\bfseries\titlefont\sectionsize\smaller}
+
+\pretocmd{\chapter}{\setcounter{section}{0}}{}{} % automatic reset of section after chapter ended
+\pretocmd{\section}{\setcounter{equation}{0}}{}{} % automatic reset of equation counter in each section
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENUMERATIONS
+\usepackage{enumerate}
+\usepackage[inline]{enumitem}       % customize label
+
+\renewcommand{\labelitemi}{\raisebox{1pt}{\scalebox{.4}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\renewcommand{\labelenumii}{\alph{enumii}.}
+\renewcommand{\labelenumiii}{\roman{enumiii}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PAGE STYLES
+\newcommand*{\rightinfo}{Vorlesung \enquote{Mathematische Statistik} bei Prof. Dr. Ferger im Wintersemester 2020/21}
+
+\usepackage{fancyhdr}   % customize header / footer
+
+\fancypagestyle{myStyle}{%
+    \fancyhf{} %
+    \fancyfoot[C]{\thepage} %
+    \renewcommand{\headrulewidth}{0pt}     % Line at the header invisible
+    \renewcommand{\footrulewidth}{0pt}     % Line at the footer visible
+    \fancyhead[C]{\textcolor{gray}\leftmark} %
+    \fancyhead[R]{%
+        \begin{tikzpicture}[overlay,remember picture]
+            \node [
+                fill=none,  % Farbe des Randstreifens
+                text=gray,  % Textfarbe
+                font=\osfamily\normalsize,  % Einstellungen für die Schrift
+                inner xsep=\footskip,       % Abstand des Textes von unten
+                % maximale Textbreite = Papierhöhe - 2*Abstand des Textes von unten:
+                text width={\dimexpr\paperheight-2\footskip\relax},
+                align=center,
+                minimum height=7mm,% Breite des Randstreifens
+                anchor=south west,
+                rotate=90
+            ] at ($(current page.south east)+(-10mm,0mm)$)
+            {\rightinfo};
+        \end{tikzpicture}%
+    }
+}
+\fancypagestyle{rightinfo}{%
+    \fancyhf{} %
+    \fancyfoot[C]{\thepage} %
+    \renewcommand{\headrulewidth}{0pt}     % Line at the header invisible
+    \renewcommand{\footrulewidth}{0pt}     % Line at the footer visible
+    \fancyhead[R]{%
+        \begin{tikzpicture}[overlay,remember picture]
+            \node [
+                fill=none,  % Farbe des Randstreifens
+                text=gray,  % Textfarbe
+                font=\sffamily\normalsize,  % Einstellungen für die Schrift
+                inner xsep=\footskip,       % Abstand des Textes von unten
+                % maximale Textbreite = Papierhöhe - 2*Abstand des Textes von unten:
+                text width={\dimexpr\paperheight-2\footskip\relax},
+                align=center,
+                minimum height=7mm,% Breite des Randstreifens
+                anchor=south west,
+                rotate=90
+            ] at ($(current page.south east)+(-10mm,0mm)$)
+            {\rightinfo};
+        \end{tikzpicture}%
+    }
+}
+% changes pagestyle on first page of each chapter; instead of empty page the normal footer is printed
+\patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{rightinfo}}{}{}
+
+\pagestyle{myStyle}
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLEPAGE
+\newcommand{\makeTUtitle}[1][]{%
+    \begin{titlepage}
+        \pagecolor{cddarkblue!90}
+        \color{white}
+
+        \raggedright
+        \fosfamily
+        \setlength{\parindent}{0pt}
+
+        \hspace{-18.6mm} %
+        \includegraphics[scale=0.6]{TUD-white.pdf} \\
+        %       \includegraphics[scale=0.6]{TUD-blue.pdf} \\
+
+        \vspace{3mm}
+        \begin{tabular}{m{\textwidth}}
+            \hline
+            \hspace{-4pt}\small{\textbf{Fakultät Mathematik} Institut für Stochastik, Professur für Statistik} \\
+            \hline
+        \end{tabular} \\
+
+        \vspace{5cm}
+        {\Huge\bfseries \MakeUppercase Mathematische Statistik \par}
+        %
+        \ifthenelse{\isempty{#1}}{}{
+            \vspace{0.5cm}%
+            {\Large \itshape #1} \\%
+        }
+        %
+        \vspace{1.5cm}
+        \textbf{{\Large Prof. Dr. Dietmar Ferger}} \par
+        \vspace{0.5cm}
+        {\large Wintersemester 2020/21}
+
+        \vfill
+        \begin{tabular}{lll}
+            Mitschrift  & : & Eric Kunze \\
+            E-Mail      & : & \url{eric.kunze@mailbox.tu-dresden.de} \\
+        \end{tabular}
+    \end{titlepage}
+    \nopagecolor
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATH ENVIRONMENTS
+
+\usepackage{../mathoperatorsMathTUD}
+
+\usepackage[ntheorem,framemethod=TikZ]{mdframed}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage[amsmath,thmmarks,framed]{ntheorem}
+
+\newcommand{\skiparound}{10pt}
+
+\newcounter{thmcount}
+\newcounter{defcount}
+\counterwithin{thmcount}{chapter}
+\counterwithin{defcount}{chapter}
+
+% possible settings:
+% style=boxedtheorem,%
+% % backgroundcolor=cdpurple!5,%
+% % linecolor=cdpurple,%
+% innertopmargin=\boxskip,%
+% innerbottommargin=\boxskip,%
+% % innerleftmargin=4pt,%
+% % outerlinewidth=5pt,%
+% % topline=false,%
+% % rightline=true,%
+% % leftline=false,%
+% % bottomline=false,%
+% innertopmargin=3pt,%
+% innerbottommargin=3pt,%
+% % leftmargin=-4pt,%
+% rightmargin=-10pt,%
+% frametitlefont=\osfamily\bfseries,%
+% skipabove=5pt,%
+% skipbelow=5pt,%
+% % skipabove=6pt,%
+% % skipbelow=6pt,%
+% % nobreak,%
+
+\theorempreskip{\skiparound}
+\theorempostskip{\skiparound}
+
+\theoremstyle{nonumberplain}
+\theoremseparator{}
+\theoremheaderfont{\osfamily \bfseries \upshape}
+\theorembodyfont{}
+
+% DEFINTION
+\newmdtheoremenv[%
+	backgroundcolor=cdorange!10,%
+	linecolor=cdorange,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{definition}[thmcount]{Definition}
+
+\theoremstyle{plain}
+\theoremseparator{}
+
+% THEOREM
+\newmdtheoremenv[%
+	backgroundcolor=cdblue!10,%
+	linecolor=cddarkblue!90,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{theorem}[thmcount]{Theorem}
+
+% SATZ
+\newmdtheoremenv[%
+	backgroundcolor=cdblue!10,%
+	linecolor=cddarkblue!90,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+]{satz}[thmcount]{Satz}
+
+% LEMMA
+\newmdtheoremenv[%
+	backgroundcolor=cdindigo!4,%
+	linecolor=cdindigo!50,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{lemma}[thmcount]{Lemma}
+
+% PROPOSITION
+\newmdtheoremenv[%
+	backgroundcolor=cdindigo!4,%
+	linecolor=cdindigo!50,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{proposition}[thmcount]{Proposition}
+
+% KOROLLAR
+\newmdtheoremenv[%
+	backgroundcolor=cdpurple!5,%
+	linecolor=cdpurple,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{korollar}[thmcount]{Korollar}
+
+\theoremstyle{plain}
+\theoremheaderfont{\osfamily \bfseries}
+\theorembodyfont{}
+
+\newtheorem{beispiel}[thmcount]{Beispiel}
+\newtheorem{erinnerung}[thmcount]{Erinnerung}
+\newtheorem{wiederholung}[thmcount]{Wiederholung}
+\newtheorem{bemerkung}[thmcount]{Bemerkung}
+
+% theorems without numbers
+\theoremstyle{nonumberplain}
+\theoremheaderfont{\osfamily \bfseries}
+\theorembodyfont{}
+\theoremseparator{.}
+
+\newmdtheoremenv[%
+	backgroundcolor=cdorange!10,%
+	linecolor=cdorange,%
+	innerleftmargin=4pt,%
+	outerlinewidth=5pt,%
+	topline=false,%
+	rightline=true,%
+	leftline=false,%
+	bottomline=false,%
+	leftmargin=-4pt,%
+	skipabove=6pt,%
+	skipbelow=6pt,%
+	nobreak,%
+]{*definition}{Definition}
+
+\newtheorem{*interpretation}{Interpretation}
+\newtheorem{*bemerkung}{Bemerkung}
+\newtheorem{*beispiel}{Beispiel}
+\newtheorem{*erinnerung}{Erinnerung}
+\newtheorem{*notation}{Notation}
+
+% >> proof
+\makeatletter
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+\makeatother
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+% >> Equivalences
+\newcommand{\hinrichtung}{\item[\bfseries ($\boldsymbol{\Rightarrow}$)]}
+\newcommand{\rueckrichtung}{\item[\bfseries ($\boldsymbol{\Leftarrow}$)]}
+\newenvironment{equivalence}[1][]{%
+        \ifthenelse{\isempty{#1}}%
+        {\begin{description}} % no optional argument
+            {\begin{description}[topsep=-\parskip]} % any optional argument
+    }{ \end{description} }%
+
+    % >> inductions (needs description environment)
+    \newcommand{\ianfang}[1][]{%
+        \ifthenelse{\isempty{#1}}{%
+            \item[\textbf{(IA)}] % no parameter
+        }{  \item[\textbf{(IA)}] {#1 :}  } % parameter exists
+    }
+
+    \newcommand{\ivorraussetzung}{\item[\bfseries (IV)]}
+
+    \newcommand{\ischritt}[1][]{%
+        \ifthenelse{\isempty{#1}}{%
+
+            \item[\textbf{(IS)}] % no parameter
+        }{  \item[\textbf{(IS)}] {#1 :} } % parameter exists
+    }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYPERLINKS
+\usepackage[unicode,bookmarks=true]{hyperref}
+\hypersetup{
+    % pdfborder={0 0 0}         % no boxed around links
+    pdfborderstyle={/S/U/W 1},  % underlining insteas of boxes
+    linkbordercolor=cdblue,
+    urlbordercolor=cdblue
+    %   colorlinks,
+    %   citecolor=black,
+    %   filecolor=cddarkblue!80,
+    %   linkcolor=black,
+    %   urlcolor=cddarkblue!80
+}
+\usepackage{bookmark}       % pdf-bookmarks
+
+\usepackage{cleveref}
+\crefname{theorem}{Theorem}{Theoreme}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{proposition}{Proposition}{Propositionen}
+\crefname{folgerung}{Folgerung}{Folgerungen}
+\crefname{korollar}{Korollar}{Korollare}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\crefname{erinnerung}{Erinnerung}{Erinnerungen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HIGHLIGHTING
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ADDITIONAL COMMANDS
+
+\usepackage[numbers, square]{natbib}
+
+\renewcommand{\dx}{\mathrm{d}x}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\renewcommand{\S}{\mathcal{S}}
+\renewcommand{\G}{\mathcal{G}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\ntoinf}{\overset{n \to \infty}{\longrightarrow}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+    \makeTUtitle
+
+    \tableofcontents
+
+    \chapter{Median}
+    \label{chapter_1_median}
+    \input{mstat_1_intro}
+    \input{mstat_1_median}
+    
+    \chapter{Metrische Räume}
+    \label{chapter_2_metrischeRaeume}
+    \input{mstat_2_metrischeRaeume}
+
+	\chapter{Zufallsvariablen in metrischen Räumen}
+	\label{chapter_3_zufallsvariablenInMetrischenRaeumen}
+	\input{mstat_3_1_zufallsvariablenInMetrischenRaeumen}
+	\input{mstat_3_2_fastsichereKonvergenz}
+	
+    \vfill \hfill $\square$
+    
+    \nocite{*} % erstellt Literaturverzeichnus ohne Verweise
+   	\bibliographystyle{abbrvdin}
+    \bibliography{literatur}
+\end{document}

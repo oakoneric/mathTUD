@@ -1,0 +1,164 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Messbarkeit in metrischen Räumen}
+\label{sec: 3.1}
+
+\begin{definition}\label{definition: 3.1}
+	Die durch den metrischen Raum $(\S,d)$ induzierte $\sigma$-Algebra
+	\begin{align*}
+		\B \defeq \B(\S) \defeq \B_d(\S) \defeq \sigma \brackets{(\G(\S)} \defeq \sigma(\G).
+	\end{align*}
+	heißt \begriff{Borel-$\sigma$-Algebra}.
+	Elemente $B  \in  \B(\S)$ heißen \begriff{Borel-Mengen} in $\S$.
+\end{definition}
+
+Beachte: $\B(\S) = \B_d(\S)$ hängt im Allgemeinen von der Metrik $d$ ab.
+
+\begin{lemma}\label{lemma: 3.2}
+	Es gilt:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it: 3.2-OpenClosed} 
+		$\B(\S) = \sigma\brackets{\mathcal{F}(\S)}$
+		\item \label{it: 3.2-StetigMessbar} Ist $f \colon (\S,d) \to (\S',d)$ stetig, so ist $f$ auch $\B_d(\S)$-$\B_d(\S')$-messbar.
+		\item \label{it: 3.2-BasisSigmaErzeuger}
+			Sei $\G_0$ abzählbare Basis von $\G(\S)$. Dann gilt $\sigma(\G_0) = \B(\S)$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item \begin{itemize}
+			\item[$\subseteq$:] Sei $G \in \G(\S)$. Dann gilt ist $G^\complement \in \mathcal{F}(\S) \subseteq \sigma\brackets{\mathcal{F}(\S)}$. Da $\sigma\brackets{\mathcal{F}(\S)}$ stabil unter Bildung von Komplementen ist, ist auch $G = \brackets{G^\complement}^\complement \in \sigma(\mathcal{F}(\S))$. Weiter folgt aus $\G \subseteq \sigma(\mathcal{F})$ schon $\sigma(\G) \subseteq \sigma(\mathcal{F})$.
+			\item[$\supseteq$:] analog
+		\end{itemize}
+		\item Per Definition gilt $f^{-1}\brackets{\B_{d'}(\S')}
+		= f^{-1}\brackets{\sigma\brackets{\G(\S')}}$. 
+		Ein Satz aus der Maßtheorie liefert uns weiter $f^{-1}\brackets{\sigma\brackets{\G(\S')}} = \sigma\brackets{f^{-1}\brackets{\G(\S')}}$. 		
+		Bekannterweise sind für stetige Funktionen Urbilder offener Mengen wieder offen, d.h. es gilt $f^{-1}\brackets{\G(\S')} \subseteq \G(S)$. 
+		Somit ist $\sigma\brackets{f^{-1}\brackets{\G(\S')}} \subseteq \sigma\brackets{\G(\S)} = \borel{\S}$.
+		\item \begin{itemize}
+			\item[$\subseteq$:] klar wegen $\G_0 \subseteq \G(\S)$ und $\sigma$ monoton
+			\item[$\supseteq$:] Sei $G \in \G$. Dann existieren geeignete $G_i \in \G_0 \subseteq \sigma(\G_0)$, sodass $G = \bigcup_{i \in \N} G_i$. Damit ist $G \in \sigma(\G_0)$.
+			Aus der Stabilität unter Vereinigungen folgt die Behauptung:
+			\begin{align*}
+				G=\bigcup_{i \in \N} G_i \subseteq \sigma\brackets{\G_0}=\B(\S) \in \sigma(\G_0),
+			\end{align*}
+			da $\sigma$-Algebren \textit{abzählbar} vereinigungsstabil sind.
+		\end{itemize}
+	\end{enumerate} 
+\end{proof}
+
+\begin{satz}\label{satz: 3.3}
+	Sei $(\S,d)$ separabler metrischer Raum. Dann gilt:
+	\begin{align*}
+		\B_{d \times  d}(\S \times \S) = \B(S) \otimes \B(\S)
+	\end{align*}
+	Ohne Separabilität gilt nur \enquote{$\supseteq$}.
+	Für $S_1$ und $S_2$ separabel gilt $\B_{d_1  \times  d_2}(\S_1 \times  \S_2) = \B(S_1) \otimes \B(\S_2)$ analog, auch erweiterbar auf endliche Produkte.
+\end{satz}
+
+\begin{proof}
+	Seien
+	\begin{align*}
+		\pi_1 &\colon \S \times \S \to \S \mit \pi_1(x,y) \defeq x \qquad \forall(x,y) \in \S \times \S \\
+		\pi_2 &\colon \S \times \S \to \S \mit \pi_2(x,y) \defeq y \qquad \forall(x,y) \in \S \times \S 
+	\end{align*}
+	die \begriff{Projektionsabbildungen}. Dann gilt
+	\begin{align*}
+		\B(\S) \otimes \B(\S)
+		&= \sigma(\pi_1,\pi_2) 
+		= \sigma \brackets{\pi_1^{-1} \brackets{\sigma(\G)} \cup \pi_2^{-1} \brackets{\sigma(\G)}} \tag{Definition} \\
+		&= \sigma\brackets{\sigma\brackets{\pi_1^{-1}(\G)} \cup \sigma\brackets{\pi_2^{-1}(\G)}} \\
+		\overset{(\star)}&{=}
+		\sigma\brackets{\pi_1^{-1}(\G) \cup \pi_2^{-1}(\G)} \\
+		&= \sigma\brackets{\menge{ G \times  S,S \times  G' : G,G' \in \G}} \\
+		&= \sigma\brackets{\menge{ \overbrace{G \times  G'}^{=(G \times  S) \cap (S \times  G')} : G,G' \in \G}} 
+		&& \tag{\enquote{$\subseteq$}, da $S  \in  \G$ ; \enquote{$\supseteq$}, da $\sigma$-Algebra $\cap$-stabil} \\
+		\overset{(\star\star)}&=
+		\sigma\brackets{\menge{
+		\bigcup_{
+			\begin{subarray}{c}
+				G \in \mathcal{O}\\
+				G' \in \mathcal{O}'
+			\end{subarray}
+		}
+		G \times  G' : \mathcal{O} , \mathcal{O}' \subseteq \G
+		}} \\
+		&=
+		\sigma\brackets{\G(\S \times \S)} \tag{\cref{satz: 2.10}, \cref{it: produktbasis}} \\
+		\overset{\text{Def}}&{=}
+		\B(\S \times \S)
+	\end{align*}
+	
+	Zum Nachweis von ($\star$):
+	\begin{itemize}
+		\item[$\supseteq$:] Setze $\mathcal{E} \defeq
+		\underbrace{\sigma\brackets{\pi_1^{-1}(\G)}}_{\supseteq \pi_1^{-1}(\G)}
+		\cup \underbrace{\sigma\brackets{\pi_2^{-1}(\G)}}_{\supseteq \pi_2^{-1}(\G)}
+		\supseteq \pi_1^{-1}(\G) \cup \pi_2^{-1}(\G) \defqe \mathcal{H}$. Dann ist $\sigma(\mathcal{E}) \supseteq \sigma(\mathcal{H})$.
+		\item[$\subseteq$:] Es ist $\pi_1^{-1}(\G) \subseteq \brackets{\pi_1^{-1}(\G) \cup \pi_2^{-1}(\G)} = \mathcal{H}$. Also ist auch $\sigma\brackets{\pi_1^{-1}(\G)} \subseteq \sigma(\mathcal{H})$. Analog erhalten wir auch $\sigma\brackets{\pi_2^{-1}(\G)} \subseteq \sigma(\mathcal{H})$. Dann gilt
+		\begin{equation*}
+			\mathcal{E} = 		\underbrace{\sigma\brackets{\pi_1^{-1}(\G)}}_{ \subseteq \sigma(\mathcal{H})}
+			 \cup \underbrace{\sigma\brackets{\pi_2^{-1}(\G)}}_{ \subseteq \sigma(\mathcal{H})}
+			 \subseteq \sigma(\mathcal{H}) \enskip\text{,}
+		\end{equation*}
+		also auch $\sigma(\mathcal{E}) \subseteq \sigma(\mathcal{H})$.
+	\end{itemize}
+
+	Bleibt Nachweis von ($\star\star$):
+	
+	\begin{itemize}
+		\item[$\subseteq$:] ist klar mit $\mathcal{O}$ und $\mathcal{O}'$ einelementig (gilt auch ohne Separabilität)
+		\item[$\supseteq$:] Gemäß \cref{satz: 2.9} existiert abzählbare Basis $\G_0$ von $\G$. Seien $\mathcal{O}, \mathcal{O}* \subseteq \G$. Sei
+		\begin{align*}
+			G^\ast &=\bigcup_{\begin{subarray}{c}
+					G \in \mathcal{O}\\
+					G' \in \mathcal{O}'
+			\end{subarray}}G \times  G'
+			=
+			\bigcup_{\begin{subarray}{c}
+					G,G'\text{ offen}\\
+					G \times G' \subseteq G^\ast
+			\end{subarray}}
+			G \times  G' 
+			\overset{(!)}{=}
+			\bigcup_{\begin{subarray}{c}
+					G_0,G_0' \in \G_0\\
+					G \times  G_0' \subseteq  G^\ast
+			\end{subarray}}
+			G_0 \times  G_0'
+		\end{align*}
+		eine abzählbare Vereinigung, da $\G_0$ Basis ist, also abzählbar. Somit gilt dann $G^\ast \in \sigma (\{G \times  G' : G,G' \in \G \})$.
+	\end{itemize}
+\end{proof}
+
+\begin{definition} \label{definition: 3.4}
+	Sei $(\Omega,\A)$ ein Messraum.
+	Eine Abbildung $X \colon \Omega \to \S$, die $\A$-$\B(\S)$-messbar ist, heißt \begriff{Zufallsvariable} (ZV) in dem metrischen Raum $(\S,d)$ über $(\Omega,\A)$.
+
+	Sei $\P$ ein Wahrscheinlichkeitsmaß auf $(\Omega,\A)$, also $(\Omega,\A,\P)$ ein Wahrscheinlichkeitsraum.
+	Das Bildmaß
+	\begin{align*}
+		\P \circ  X^{-1} &\defeq \P_X \defeq \L(X) \defeq \L(X\,|\;\P) \\
+		\brackets{\P \circ X^{-1}}(B)
+		&\defeq \P\brackets{X^{-1}(B)}
+		=\P\brackets{\menge{\omega \in \Omega : X(\omega) \in  B}}
+		\defqe \P(X \in  B) \qquad\forall B \in \B(\S)
+	\end{align*}
+	heißt \begriff{Verteilung} von $X$ unter $\P$.
+\end{definition}
+
+\begin{satz} \label{satz: 3.5}
+	Sei $(\S,d)$ ein separabler metrischer Raum und seien $X,Y$ Zufallsvariablen in $(\S,d)$ über $(\Omega,\A)$.
+	Dann ist $d(X,Y)$ eine reelle Zufallsvariable.
+\end{satz}
+
+\begin{proof}[gute Prüfungsfrage]
+	Die Abbildungen $X,Y \colon (\Omega,\A) \to (\S,\B(\S))$ sind messbar genau dann, wenn die Abbildung $(X,Y) \colon (\Omega,\A) \to \big( \S \times \S,\underbrace{\B(\S) \otimes \B(\S)}_{= \B(\S \times \S)}\big)$ messbar ist.
+	Jede Metrik ist bekanntlich stetig, also auch $d \colon \brackets{\S \times \S , \G(\S \times \S)} \to \R$\footnote{$\R$ sei mit der natürlichen Topologie versehen}.
+	Dann folgt aus \cref{lemma: 3.2}, dass $d \colon \B(\S \times \S) \to \B(\R)$	messbar ist. Damit folgt die Behauptung, denn $d(X,Y) = d \circ (X,Y)$ ist messbar als Komposition von messbaren Abbildungen.
+\end{proof}
+

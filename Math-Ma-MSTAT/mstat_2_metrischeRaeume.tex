@@ -1,0 +1,293 @@
+
+Sei $(\S,d)$ ein metrischer Raum.
+%
+\begin{beispiel}[Supremums-Metrik] %2.1
+	\begin{align*}
+		\S = C([0,1]) & \defeq \menge{f \colon [0,1] \to \R : f\text{ stetig}} \\
+		d(f,g) &\defeq \sup_{t \in [0,1]} \abs{f(t)-g(t)} \qquad \forall f,g \in C([0,1])
+	\end{align*}
+\end{beispiel}
+
+\begin{definition}
+	\begin{enumerate}[label={(\arabic*)}]
+		\item Für $x \in\S$ und $r>0$ ist
+		\begin{align*}
+			B(x,r) \defeq B_d(x,r) \defeq \menge{y \in \S : d(x,y) < r}
+		\end{align*}
+		die \begriff{offene Kugel um Mittelpunkt $x$ und Radius $r$}.
+		\item Sei $A \subseteq \S$. Dann ist:
+		\begin{itemize}[nolistsep]
+			\item $\inner A \dots$ das \begriff{Innere} von $A$
+			\item $\abschluss{A} \dots$ die \begriff{abgeschlossene Hülle} von $A$
+			\item $\rand A \defeq \abschluss{A} \cap \abschluss{A^C} =  \abschluss{A} \setminus \inner A \dots$ der \begriff{Rand} von $A$
+			\item $A^\complement \defeq \S \setminus A \dots$ das \begriff{Komplement} von $A$
+		\end{itemize}
+		\item Die durch $d$ induzierte \begriff{Topologie} ist
+		\begin{align*}
+			\mathcal{G} \defeq \mathcal{G}(\S) &\defeq \menge{G \subseteq \S: G \text{ ist offen bzgl. } d} \\
+			&\phantom{:}= \menge{G \subseteq \S: \forall x \in G: \exists \, r > 0 : B_d(x,r) \subseteq G}
+			%
+			\intertext{und}
+			%
+			\mathcal{F} \defeq \mathcal{F}(\S) 
+			&\defeq \menge{F \subseteq \S : F \text{ ist abgeschlossen}} 
+			= \menge{F : F = G^\complement, G \in \mathcal{G}}
+		\end{align*}
+		ist die \begriff{Menge der abgeschlossenen Mengen}.
+		\item Sei $\emptyset \neq A \subseteq \S$ und $x \in \S$. Dann ist $d(x,A) \defeq \inf\menge{d(x,a) : a \in A} \ge 0$ der \begriff{Abstand von $x$ zu $A$}.
+		\item Es ist
+		\begin{align*}
+			C(\S) &\defeq \menge{f \colon S \to \R : f \text{ stetig}} \\
+			C^b(\S) &\defeq \menge{f \in C(\S) : f \text{ beschränkt}} \\
+			\norm{f} &\defeq \norm{ f}_\infty \defeq \sup_{x\in\S} \abs{f(x)}
+		\end{align*}
+	\end{enumerate}
+\end{definition}
+
+\begin{lemma} \label{lemma: 2.3} Sei $A \neq \emptyset$.
+	\begin{enumerate}[label={(\arabic*)}]
+		\item \label{it: distCharakterisierung} Es ist $x \in\abschluss{A} \equivalent d(x,A)=0$.
+		\item \label{it: distDreieck} Für alle $x,y \in \S$ gilt $\abs{d(x,A)-d(y,A)} \le d(x,y)$.
+		\item \label{it: distStetig} Die Abbildung $d(*, A) \colon \S \to [0,\infty)$, $x \mapsto d(x,A)$ ist gleichmäßig stetig.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \arabic*), leftmargin=*]
+		\item \begin{equivalence}
+			\hinrichtung Sei $x \in \abschluss{A}$. Dann existiert für alle $\epsilon > 0$ ein $a \in A$ mit $d(x,a) < \epsilon$. Somit 
+			\begin{equation*}
+				0 \le d(x,A) \le d(x,a) < \epsilon \quad \forall \epsilon > 0 
+				\overset{\epsilon \to 0}{\follows} d(x,A) = 0
+			\end{equation*}
+			\rueckrichtung Sei $d(x,A)=0$. Dann folgt aus der Infimumseigenschaft:
+			\begin{equation*}
+				\forall \epsilon > 0 \enskip \exists \, a \in A : \quad 0 \le d(x,a) \le 0 + \epsilon = \epsilon \\
+				\follows x \in \abschluss{A}
+			\end{equation*}
+		\end{equivalence}
+		\item Seien $x,y \in \S$. Dann gilt $d(x,a) \le d(x,y) + d(y,a)$ mit der Dreiecksungleichung für alle $a \in A$ und somit
+		\begin{equation*}
+			d(x,A) \le d(x,y) + d(y,A) 
+			\follows d(x,A) - d(y,A) \le d(x,y)
+		\end{equation*}
+		Vertauschen von $x$ und $y$ liefert $d(y,A) - d(x,A) \le d(y,x) = d(x,y)$ und daraus folgt die Behauptung.
+		\item Folgt aus \cref{it: distDreieck} da die Funktion $d(\cdot,A)$ Lipschitz-stetig und damit gleichmäßig stetig ist.
+	\end{enumerate}
+\end{proof}
+
+\begin{satz}[Stetige Approximation von Indikatorfunktionen] \label{satz: 2.4}
+	Zu $A \subseteq \S$ und $\epsilon > 0$ existiert eine gleichmäßig stetige Funktion
+	\begin{equation*}
+		f \colon \S \to [0,1] \quad \text{ mit der Eigenschaft} \quad f(x) =
+		\begin{cases}
+			1 & \falls x \in A \\
+			0 & \falls d(x,A) \ge \epsilon
+		\end{cases}
+	\end{equation*}
+\end{satz}
+\begin{proof}
+	Setze
+	\begin{equation*}
+		\phi \colon \R \to [0,1] 
+		\quad \mit \quad 
+		\phi(t) \defeq
+		\begin{cases}
+			1    & \falls t \le 0 \\
+			1-t  & \falls 0 < t < 1 \\
+			0    & \falls t \ge 1
+		\end{cases}
+	\end{equation*}
+	Dann ist $\phi$ gleichmäßig stetig auf $\R$. Sei
+	\begin{equation*}
+		f(x) \defeq \phi \brackets{\frac{1}{\epsilon} *  d(x,A)} \qquad \forall x \in \S
+	\end{equation*}
+	Dann hat dieses $f$ die gewünschte Eigenschaft wegen \cref{lemma: 2.3}.
+\end{proof}
+%
+\begin{definition}\label{def: 2.5}
+	Ein metrischer Raum $(\S,d)$ heißt \begriff{separabel}
+	\begin{align*}
+		&:\Leftrightarrow \exists \text{ abzählbares } S_0 \subseteq \S :\S \subseteq \abschluss{S_0} \\
+		&\phantom{:} \Leftrightarrow \exists \text{ abzählbares } S_0 \subseteq \S : \S = \abschluss{S_0} \\
+		&\phantom{:}\Leftrightarrow \exists \text{ abzählbares } S_0 \subseteq \S : S_0 \text{ liegt dicht in } \S
+	\end{align*}
+\end{definition}
+
+\begin{beispiel} \label{bsp: 2.6}
+	Der metrische Raum $C([0,1])$ mit Supremums-Metrik ist separabel.
+\end{beispiel}
+\begin{proof}
+	Die Menge $S_0 \defeq \menge{P : P \text{ ist Polynom mit rationalen Koeffizienten}}$ ist abzählbar. Aus dem \textit{Approximationssatz von Weierstraß} und der Dichtheit von $\Q$ folgt die Behauptung.
+\end{proof}
+
+\begin{definition} %2.7
+	$\G_0 \subseteq \G$ heißt \begriff{Basis} von $\G$ genau dann, wenn sich jedes $G \in \G$ als Vereinigung von Mengen aus $\G_0$,
+	so genannte \begriff{$\G_0$-Mengen}, darstellen lässt.
+\end{definition}
+%
+\begin{beispiel}\label{bsp: 2.8} %2.8
+	Die Menge $\menge{ B(x,r) : x \in \S, 0 < r \in \Q}$ ist Basis von $\G$.
+\end{beispiel}
+\begin{proof}
+	Sei $G \in \G$. Dann gilt:
+	\begin{equation*}
+		\forall x \in G \enskip \exists \,  0 < r_x \in \Q : B(x,r_x) \subseteq G 
+		\follows
+		G = \bigcup_{x\in G} \menge{x}
+		\subseteq \bigcup_{x \in G} \underbrace{B(x,r_x)}_{\subseteq G} \subseteq G 
+%		\follows 
+%		G = \bigcup_{x\in G} \underbrace{B(x,r_x)}_{\in \G_0}
+	\end{equation*}
+	Damit gilt also Gleichheit.
+\end{proof}
+
+
+\begin{satz} \label{satz: 2.9}
+	$\S$ separabel $\Leftrightarrow$ $\G$ hat eine abzählbare Basis
+\end{satz}
+
+\begin{proof}
+	\begin{equivalence}
+		\hinrichtung Sei $S_0\subseteq \S$ abzählbar und dicht in $\S$. Wir zeigen, dass
+		\begin{equation*}
+			\G_0 \defeq \menge{ B(x,r) : x \in S_0 , 0 < r \in \Q}\subseteq \G
+		\end{equation*}
+		eine Basis ist.
+		Sei also $G$ offen. Dann folgt aus Beispiel \cref{bsp: 2.8}, dass
+		\begin{equation} \label{proof: 2.9-sternchen} \tag{$\star$}
+			G = \bigcup_{x \in G} B(x,r_x), \qquad 0 < r_x \in\Q \enskip \forall x \in G
+		\end{equation}
+		Da $\quer{S_0} = \S$ gilt:
+		\begin{align*}
+			&\forall x \in G:\exists y_x \in S_0: d(x,y_x) < \frac{r_x}{2} \\
+			&\Rightarrow \quad d(x,y)
+			\overset{\triangle-\text{Ungl.}}{\le}
+			d(x,y_x) + d(y_x,x) < \frac{r_x}{2} + \frac{r_x}{2} = r_x
+			\qquad \forall y \in B\brackets{y_x,\frac{r_x}{2}} \\
+			&\Rightarrow \quad B\brackets{y_x,\frac{r_x}{2}} \subseteq B(x,r_x)
+			\qquad \forall x \in G \\
+			&\Rightarrow \quad G \overset{\eqref{proof: 2.9-sternchen}}{\supseteq}
+			\bigcup_{x \in G} \underbrace{ B\brackets{y_x,\frac{r_x}{2}} }_{\supseteq \menge{x}}
+			\supseteq \bigcup_{x \in G} \menge{x} = G % \\
+%			&\Rightarrow \quad G = \bigcup_{x\in G} \underbrace{B\brackets{y_x,\frac{r_x}{2}}}_{\in \G_0}
+		\end{align*}
+		Damit gilt also Gleichheit und $\G_0$ ist eine Basis. Da $S_0$ abzählbar ist, ist $\G_0$ abzählbar. 
+		%
+		\rueckrichtung Sei $\G_0$ abzählbare Basis von $\G$ und sei oBdA $\emptyset \notin \G_0$. Wähle für jedes $G \in \G_0$ ein $x_G \in G$ fest aus. Setze
+		$S_0 \defeq \menge{x_G : G \in \G_0}$. Dann ist $S_0$ auch abzählbar. Es verbleibt die Dichtheit zu zeigen.
+		Sei $x \in \S$ und $\epsilon > 0$ beliebig. Da $B(x,\epsilon)$ offen und $\G_0$ eine Basis ist, gilt:
+		\begin{equation*}
+			\exists \, \G_{x,\epsilon}\subseteq\G_0\mit B(x,\epsilon)=\bigcup_{G\in\G_{x,\epsilon}} G
+			\follows  G\subseteq B(x,\epsilon)\qquad\forall G\in\G_{x,\epsilon}
+		\end{equation*}
+		Wähle ein $G$ von diesen aus. Dann gilt:
+		\begin{equation*}
+			x_G \in G \subseteq B(x,\epsilon)
+			\follows  x_G\in B(x,\epsilon)
+			\follows  d(\underbrace{x_G}_{\in S_0},x) < \epsilon
+		\end{equation*}
+	\end{equivalence}	
+\end{proof}
+
+\begin{satz}\label{satz: 2.10} %2.10
+	Seien $(\S,d)$ und $(\S',d')$ metrische Räume.
+	\begin{enumerate}[label={(\arabic*)}]
+		\item \label{it: produktmetrik} Auf $\S \times \S'$ sind Metriken definiert durch
+			\begin{align*}
+				d_1 \brackets{(x,x'),(y,y')}
+				&\defeq \brackets{ \brackets{d(x,y)}^2 + \brackets{d'(x',y')}^2}^{\frac{1}{2}}
+				&\forall(x,x'),(y,y') \in \S \times \S'\\
+				d_2 \brackets{(x,x'),(y,y')}
+				&\defeq \max\menge{ d(x,y),d'(x',y')}
+				&\forall(x,x'),(y,y')\in \S \times \S' \\
+				d_3\brackets{(x,x'),(y,y')}
+				&\defeq d(x,y) + d'(x',y')
+				&\forall(x,x'),(y,y') \in \S \times \S'
+			\end{align*}
+		\item \label{it: produkttopologie} Die Metriken $d_1$, $d_2$ und $d_3$ induzieren dieselbe Topologie $\mathcal{G}(\S \times \S')$ auf $\S\times\S'$,
+			die sogenannte \begriff{Produkttopologie} von $\mathcal{G}(\S)$ und $\mathcal{G}(\S')$.
+		\item \label{it: produktbasis}
+			$\mathcal{G}(\S\times\S')=\menge{\bigcup_{
+					\begin{subarray}{c} G\in\mathcal{O}\\ G'\in\mathcal{O}' \end{subarray}
+				} G\times G': \mathcal{O}\subseteq\mathcal{G}(\S), \mathcal{O}'\subseteq\mathcal{G}(\S')
+				}$, d.h.
+			\begin{equation}
+				\menge{ G \times G' : G \in \mathcal{G}(\S), G' \in \mathcal{G}(\S')}
+				\tag{Menge offener Rechtecke}
+			\end{equation}
+			bildet eine Basis von $\mathcal{G}(S\times\S')$.
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \arabic*), leftmargin=*]
+		\item \label{it: zu_ref_it_produktmetrik}
+		Überprüfung der Eigenschaften einer Metrik (zur Übung).
+%		
+		\item \label{par:zu_ref_it_produkttopologie}
+			Punktweise gelten die Beziehungen:
+			\begin{equation*}
+				d_2 \le d_1 \le\sqrt{2}* d_2,
+				\qquad
+				\frac{1}{\sqrt{2}} * d_3 \le d_1 \le d_3,
+				\qquad
+				d_2 \le d_3 \le 2 * d_2
+			\end{equation*}
+			Beachte beim Nachweis, dass die $d_i$'s als Metriken größer oder gleich Null sind. Aus obigen Beziehungen folgt u.\,a.:
+			\begin{equation*}
+				B_{d_2}\brackets{x,\frac{r}{\sqrt{2}}} \subseteq  B_{d_1}(x,r)
+			\end{equation*}
+			denn
+			\begin{equation}
+				r > \sqrt{2} * d_2(y,x) \ge d_1(y,x) \label{eq: metrikvergleich}
+			\end{equation}
+			Damit folgt aus $G$ $d_1$-offen schon, dass $G$ $d_2$-offen ist, denn für $x \in G$ existiert $r > 0$ mit $B_{d_1}(x, r) \subseteq G$ und \eqref{eq: metrikvergleich} liefert
+			$B_{d_2}(x, \frac{r}{\sqrt{2}}) \subseteq G$. Damit ist $x$ auch ein ein $d_2$-innerer Punkt. Die anderen Relationen gelten analog.
+			%
+		\item \begin{description}
+				\item[$\subseteq$:] 
+				\label{it: zu_ref_it_produktbasis}
+				Sei $G^\ast \in \mathcal{G}(\S \times \S')$ eine offene Menge in der Produkttopologie. Dann gilt
+				\begin{equation*}
+					\forall x^\ast = (x,x') \in G^\ast: \, \exists r = r_{x^\ast} > 0: \enskip 
+					G^\ast = \bigcup_{x^\ast \in G^\ast} B\brackets{x^\ast,r_{x^\ast}}.
+				\end{equation*}
+				Wegen \cref{it: produkttopologie} sei oBdA. $\S^\ast \defeq \S \times \S'$ versehen mit der Metrik $d_2$. Dann gilt:
+				\begin{align*}
+					B_{d_2}\brackets{x^\ast,r_{x^\ast}}
+					&= \menge{(y,y')\in \S \times \S': \max \menge{d(x,y),d'(x',y')} < r_{x^\ast}} \\
+					&= \menge{(y,y') \in \S \times \S': d(x,y) < r_{x^\ast} \land d'(x',y') < r_{x^\ast}} \\ 
+					&=  \underbrace{B_d\brackets{x,r_{x^\ast}}}_{\in \mathcal{G}(\S)} \times \underbrace{B_{d'}\brackets{x', r_{x^\ast}}}_{\in\mathcal{G}(\S')}
+				\end{align*}
+				\item[$\supseteq$:] Sei zunächst $G \times G'$ $G,G'$ offen und $x^\ast = (x,x') \in G \times G'$. Also ist $x \in G$ und $x' \in G'$ und somit
+				\begin{equation*}
+					\exists \, r,r' > 0: B_d(x,r) \subseteq G \land B_{d'}(x',r') \subseteq G'
+				\end{equation*}
+				Setze $r^\ast \defeq \min\menge{ r,r'}>0$. Damit folgt
+				\begin{align*}
+					B_{d_2}\brackets{x^\ast,r^\ast}
+					&\subseteq B_d(x,r) \times B_{d'}\brackets{x',r'} \\
+					&\subseteq G \times G' = G^\ast \\
+					&\Rightarrow G\times G' \in \mathcal{G}(\S \times \S')\\
+					&\Rightarrow  \bigcup_{\begin{subarray}{c} G \in \mathcal{O} \\ G' \in \mathcal{O}' \end{subarray}} G \times G'\subseteq \mathcal{G}(\S\times\S')
+					\qquad \forall \mathcal{O} \subseteq \mathcal{G}(\S), \mathcal{O}' \subseteq \mathcal{G}(\S')
+				\end{align*}
+				da die Produkttopologie vereinigungsstabil ist.
+			\end{description}
+	\end{enumerate}		
+\end{proof}
+
+\begin{definition}
+	Die Metriken $d_1, d_2$ und $d_3$ heißen \begriff{Produktmetriken}.
+	Daher alternative Schreibweise $d \times d'$, also z.\,B.\ $d\times d' \defeq \max\menge{d, d'}$ usw.
+\end{definition}
+
+\begin{bemerkung} %2.11
+	Analog zu obigen Definitonen lassen sich Produktmetriken für endlich viele metrische Räume $(\S_i, d_i)_{i \in \menge{1, \dots ,k}}$ definieren, z.\,B.
+	\begin{equation*}
+		d_1 \times \dots \times d_k \defeq \brackets{\sum_{i=1}^k d_i^2}^{\frac{1}{2}},
+	\end{equation*}
+	die wiederum dieselbe Produkttopologie induzieren.
+	Die bisherigen Resultate gelten analog.
+\end{bemerkung}

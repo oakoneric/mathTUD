@@ -1,0 +1,7 @@
+Viele Schätzer in der Statistik sind definiert als Minimal- oder Maximalstelle von bestimmten \begriff{Kriteriumsfunktionen}, z.\,B. der \begriff{Maximum-Likelihood-Schätzer (MLS)} oder \begriff{Mi\-ni\-mum-Quadrat-Schätzer (MQS, KQS)} oder \begriff{Bayes-Schätzer}. Allgemein nennt man solche Schätzer \begriff{M-Schätzer}.
+
+\begin{beispiel}[Maximum-Likelyhood-Schätzer]
+	Gegeben seien $X_1, ..., X_n$ iid. $\sim f_\theta$. Dann ist $\hat{\theta}_n$ die Maximumstelle von der Funktion $l \colon \theta \mapsto \sum_{i = 0}^n \log f_{\theta}(X_i)$ (sogenannte Log-Likelyhood-Funktion). Dabei kommen alle $\theta$ aus einer möglichen Menge $\Theta$ in Frage.
+\end{beispiel}
+
+Ziel: Untersuchung des asymptotischen Verhaltens ($n \to \infty$) von M-Schätzern über einen funktionalen Ansatz. Als Beispiel betrachten wir nun den Median
