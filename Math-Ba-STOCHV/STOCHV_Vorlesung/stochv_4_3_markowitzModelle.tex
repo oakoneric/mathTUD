@@ -108,6 +108,8 @@ Zuletzt wollen wir noch das Risiko der optimalen Strategie $p_\ast$ berechnen.
 Der Graph von $(\sigma_\ast, \mu_\ast)$ ist ein Hyperbelast.
 %TODO Graph
 
+\pagebreak
+
 \subsection{Markowitz-Modell II: optimale Anlage mit risikofreier Anlage}
 Wir betrachten Anlagegüter $S = (S^1, \dots, S^n)$ mit stochastischen Einperioden-Renditen $R=\trans{(R^1, \dots, R^n)}$ und zusätzlich einer \textit{risikofreien} Anlage $S^0$ mit Verzinsung $r$.
 
@@ -123,7 +125,10 @@ Risiko
 \end{equation*}
 \fbox{\textbf{Anlageproblem}}
 \begin{equation*}
-	\min \tfrac{1}{2} \trans{p} \Sigma p \qquad (p \in \Rn) \qquad \text{unter NB: } \trans{p} (\mu - r\one) = \mu_\ast - r \text{ (Zielrendite)}
+	\begin{aligned}
+		\min \, &\tfrac{1}{2} \trans{p} \Sigma p \qquad (p \in \Rn) \\
+		\text{unter NB: } &\trans{p} (\mu - r\one) = \mu_\ast - r \qquad\text{(Zielrendite)}
+	\end{aligned}
 	\tag{Mark-2} \label{eq: mark-2}
 \end{equation*}
 

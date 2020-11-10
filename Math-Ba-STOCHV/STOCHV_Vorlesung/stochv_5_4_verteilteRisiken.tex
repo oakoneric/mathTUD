@@ -86,26 +86,28 @@ Als Hilfsmittel verwenden wir den Satz von \person{Euler} über homogene Funktio
 		\tag{EU} \label{eq: eu}
 	\end{equation*}
 \end{theorem}
-\begin{proof_equiv}
-	\hinrichtung Sei $f$ homogen vom Grad $k$. Fixiere $x \in X^\circ$ und definiere
-	\begin{equation*}
-		g_x(\lambda) \defeq f(\lambda x) - \lambda^k f(x) \qquad (\lambda > 0)
-	\end{equation*}
-	Ableiten liefert
-	\begin{equation*}
-		g_x'(\lambda) = \sum_{i = 1}^n \partdiff{x_i} f(\lambda x) * x_i - k \lambda^{k-1} f(x)
-	\end{equation*}
-	Da $f$ homogen ist, ist $g_x(\lambda) = 0$ für alle $\lambda > 0$ und insbesondere ist damit auch $g_x'(\lambda) = 0$ für alle $\lambda > 0$. Dies gilt folglich auch für $\lambda = 1$, d.h. $g_x'(1) = 0$, woraus schließlich \eqref{eq: eu} folgt.
-	\rueckrichtung Es gelte \eqref{eq: eu}. Definiere wie oben $g_x(\lambda) \defeq f(\lambda x) - \lambda^k f(x)$ und es gilt $g_x(1) = f(x) - f(x)$. Leite analog ab, d.h. 
-	\begin{equation*}
-		g_x'(\lambda) = \sum_{i = 1}^n \partdiff{x_i} f(\lambda x) * x_i - k \lambda^{k-1} f(x) \overset{\eqref{eq: eu}}{=} \frac{1}{\lambda} k f(\lambda x) - k \lambda^{k-1} f(x) = \frac{k}{\lambda} g_x(\lambda)
-	\end{equation*}
-	Somit erhalten wir eine Differentialgleichung für $g_x(\lambda)$. Wir wollen zeigen, dass $g_x(\lambda) = 0$ für alle $\lambda > 0$. Falls $g_x(\lambda) \neq 0$ für ein $\lambda \in U$
-	\begin{equation*}
-		\frac{g_x'(\lambda)}{g_x(\lambda)} = \frac{k}{\lambda} \follows \brackets{\log g_x(\lambda)}' = \frac{k}{\lambda} \follows\log g_x(\lambda) = k * \log(\lambda) + c
-	\end{equation*}
-	Somit ist $g_x(\lambda) = c' * \lambda^k$ die allgemeine Lösung der Differentialgleichung. Wegen $g_x(1) = 0$ erhalten wir $c' = 0$ und folglich auch $g_x(\lambda) = 0$ für alle $\lambda > 0$. Daraus folgt nun \eqref{eq: h}.
-\end{proof_equiv}
+\begin{proof}
+	\begin{equivalence}
+		\hinrichtung Sei $f$ homogen vom Grad $k$. Fixiere $x \in X^\circ$ und definiere
+		\begin{equation*}
+			g_x(\lambda) \defeq f(\lambda x) - \lambda^k f(x) \qquad (\lambda > 0)
+		\end{equation*}
+		Ableiten liefert
+		\begin{equation*}
+			g_x'(\lambda) = \sum_{i = 1}^n \partdiff{x_i} f(\lambda x) * x_i - k \lambda^{k-1} f(x)
+		\end{equation*}
+		Da $f$ homogen ist, ist $g_x(\lambda) = 0$ für alle $\lambda > 0$ und insbesondere ist damit auch $g_x'(\lambda) = 0$ für alle $\lambda > 0$. Dies gilt folglich auch für $\lambda = 1$, d.h. $g_x'(1) = 0$, woraus schließlich \eqref{eq: eu} folgt.
+		\rueckrichtung Es gelte \eqref{eq: eu}. Definiere wie oben $g_x(\lambda) \defeq f(\lambda x) - \lambda^k f(x)$ und es gilt $g_x(1) = f(x) - f(x)$. Leite analog ab, d.h. 
+		\begin{equation*}
+			g_x'(\lambda) = \sum_{i = 1}^n \partdiff{x_i} f(\lambda x) * x_i - k \lambda^{k-1} f(x) \overset{\eqref{eq: eu}}{=} \frac{1}{\lambda} k f(\lambda x) - k \lambda^{k-1} f(x) = \frac{k}{\lambda} g_x(\lambda)
+		\end{equation*}
+		Somit erhalten wir eine Differentialgleichung für $g_x(\lambda)$. Wir wollen zeigen, dass $g_x(\lambda) = 0$ für alle $\lambda > 0$. Falls $g_x(\lambda) \neq 0$ für ein $\lambda \in U$
+		\begin{equation*}
+			\frac{g_x'(\lambda)}{g_x(\lambda)} = \frac{k}{\lambda} \follows \brackets{\log g_x(\lambda)}' = \frac{k}{\lambda} \follows\log g_x(\lambda) = k * \log(\lambda) + c
+		\end{equation*}
+		Somit ist $g_x(\lambda) = c' * \lambda^k$ die allgemeine Lösung der Differentialgleichung. Wegen $g_x(1) = 0$ erhalten wir $c' = 0$ und folglich auch $g_x(\lambda) = 0$ für alle $\lambda > 0$. Daraus folgt nun \eqref{eq: h}.
+	\end{equivalence}
+\end{proof}
 
 Anwendung auf das Allokationsproblem: Für $x \in [0,\infty)^n$ betrachten wir $L(x) = x_1 * L_1 + \dots + x_n * L_n$, d.h. 
 \begin{equation*}

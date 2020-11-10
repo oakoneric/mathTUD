@@ -123,7 +123,7 @@ L_p(\Omega, \F, \P) \defeq \menge{\abb{X}{\Omega}{\R} \enskip \F\text{-messbar},
 Dabei identifizieren wir Zufallsvariablen, die sich nur auf $\P$-Nullmengen unterscheiden miteinander, d.h. $\P(X \neq X') = 0 \follows X = X'$ in $L_p$. Aus der Maßtheorie bekannt: Die Räume $L_p(\Omega,\F,\P)$ mit Norm $\norm{\dots}_p$ mit $p \in [1,\infty)$ sind
 \begin{itemize}
 	\item Banachräume, d.h. vollständige, normierte Vektorräume.
-	\item für $p=2$ auch Hilbertraum mit inneren Produkt 
+	\item für $p=2$ auch Hilbertraum mit innerem Produkt 
 	\begin{equation*}
 	\scal{X}{Y} = \EW[XY] = \int_\Omega X(\omega) Y(\omega) \diffskip{\P(\omega)}
 	\end{equation*}
@@ -184,27 +184,27 @@ In allen Fällen kann $\EW[X|\cdot]$ interpretiert werden als \textit{beste Vorh
 
 \subsection{Martingale}
 
-Prototyp eines ''neutralen`` stochastischen Prozesses, der weder Aufwärts- noch Abwärtstrend besitzt. Wir betrachten hier den Prozess nur in diskreter Zeit $I = \N_0$.
+Prototyp eines \enquote{neutralen} stochastischen Prozesses, der weder Aufwärts- noch Abwärtstrend besitzt. Wir betrachten hier den Prozess nur in diskreter Zeit $I = \N_0$.
 
 \begin{definition}
 	Sei $\folge{X}{n \in \N_0}$ ein stochastischer Prozess. Wenn gilt
-	\begin{equation}
-	\begin{alignedat}{2}
-		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0 \\
-		\EW[X_{n+1}|X_1,\dots,X_n] &= X_n \qquad &\forall n \in \N_0 \\
-	\end{alignedat}
-	\end{equation}
+	\begin{subequations}
+		\begin{alignat}{2}
+			\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0  \label{eq: martingal-a}\\
+			\EW[X_{n+1}|X_1,\dots,X_n] &= X_n \qquad &\forall n \in \N_0 \label{eq: martingal-b}
+		\end{alignat}
+	\end{subequations}
 	dann heißt $\folge{X_n}{n \in \N_0}$ \begriff{Martingal}.
 \end{definition}
 
-Wenn wir $\F_n^X = \sigma(X_1,\dots,X_n)$ definieren, können wir (b) schreiben als 
+Wenn wir $\F_n^X = \sigma(X_1,\dots,X_n)$ definieren, können wir \eqref{eq: martingal-b} schreiben als 
 \begin{equation*}
 	\EW[X_{n+1}|\F_n^X] = X_n \qquad \forall n \in \N
 \end{equation*}
 
 \textbf{Konvention}: Alle stochastischen Prozesse $\folge{X_n}{n \in \N_0}$ haben deterministischen Startwert $X_0$.
 
-Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$ basierend auf Vergangenheit $\sigma(X_1,\dots,X_n)$ ist der momentane Wert $X_n$.
+Interpretation: Die beste Vorhersage für den zukünftigen Wert $X_{n+1}$ basierend auf der Vergangenheit $\sigma(X_1,\dots,X_n)$ ist der momentane Wert $X_n$.
 Aus der Turmregel folgt:
 \begin{equation*}
 	\EW[X_{n+k}|\F_n^X] = X_n \qquad \forall n,k \in \N_0 %b''
@@ -214,27 +214,27 @@ denn
 	\EW[X_{n+k}|\F_n^X] = \EW[\underbrace{\EW[X_{n+k}|\F_{n+k-1}^X]}_{=X_{n+k-1}}|\F_n^X] = \EW[X_{n+k-1}|\F_n^X] \overset{k \text{ mal}}{=} X_n
 \end{equation*}
 
-Man kann von $\folge{\F_n^X}{n \in \N}$ auf beliebige Filtrationen $\folge{\F_n}{n \in \N_0}$ erweitert werden.
+Man kann von $\folge{\F_n^X}{n \in \N}$ auf beliebige Filtrationen $\folge{\F_n}{n \in \N_0}$ erweitern.
 
 \begin{*definition}
 	Sei $\folge{X_n}{n \in \N_0}$ ein stochastischer Prozess, adaptiert an eine Filtration $\folge{\F_n}{n \in \N_0}$. Wenn gilt
-	\begin{alignat*}{2}
-		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0 \\ % (a)
-		\EW[X_{n+1}|\F_n] &= X_n \qquad &\forall n \in \N_0    % (b)
-	\end{alignat*}
+	\begin{alignat}{2}
+		\EW[\abs{X_n}] &< \infty \qquad &\forall n \in \N_0 \tag{a} \label{eq: martingal-ad-a}\\
+		\EW[X_{n+1}|\F_n] &= X_n \qquad &\forall n \in \N_0  \tag{b} \label{eq: martingal-ad-b}
+	\end{alignat}
 	dann heißt $\folge{X_n}{n \in \N_0}$ Martingal bezüglich der Filtration $\folge{\F_n}{n \in \N_0}$.
 \end{*definition}
 
 Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf verfügbarer Information $\F_n$ ist der momentane Wert $X_n$.
 
 \begin{*definition}
-	Falls in Punkt (b) statt ''$=$`` die Ungleichung ''$\le$`` oder ''$\ge$`` gilt, so heißt $\folge{X_n}{n \in \N}$ \begriff{Super- bzw. Submartingal}.
+	Falls in Punkt \eqref{eq: martingal-ad-b} statt ''$=$`` die Ungleichung ''$\le$`` oder ''$\ge$`` gilt, so heißt $\folge{X_n}{n \in \N}$ \begriff{Super- bzw. Submartingal}.
 \end{*definition}
 
 \begin{itemize}
 	\item Wenn $X=\folge{X_n}{n \in \N}$ ein Martingal ist, dann gilt $\EW[X_n] = X_0$, d.h. $n \mapsto \EW[X_n]$ ist konstant. Begründung:
 	\begin{equation*}
-	\EW[X_{n+1}|\F_n] = X_n \follows \underbrace{\EW[{\EW[X_{n+1}|\F_n]}]}_{= \EW[X_{n+1}]} = \EW[X_n] \overset{n \text{ mal}}{\follows} \EW[X_n] = X_0
+		\EW[X_{n+1}|\F_n] = X_n \follows \underbrace{\EW[{\EW[X_{n+1}|\F_n]}]}_{= \EW[X_{n+1}]} = \EW[X_n] \overset{n \text{ mal}}{\follows} \EW[X_n] = X_0
 	\end{equation*}
 	\item $X$ Submartingal $\follows n \mapsto \EW[X_n]$ ist monoton steigend
 	\item $X$ Supermartingal $\follows n \mapsto \EW[X_n]$ ist monoton fallend
@@ -294,36 +294,38 @@ Interpretation: Beste Vorhersage für zukünftigen Wert $X_{n+1}$, basierend auf
 
 Das heißt, dass das stochastische Integral die Martingaleigenschaft erhält.
 
-\begin{proof_equiv}
-	\hinrichtung $(H \bullet X)_n = \sum_{k=1}^n H_k (X_k - X_{k-1})$.
-	\begin{itemize}
-		\item Adaptiertheit: klar
-		\item Integrierbarkeit: $H$ lokal beschränkt, d.h. $\abs{H_k} \le c_k < \infty$ für alle $k$.
-		\begin{equation*}
-			\EW[\abs{H_k (X_k - X_{k-1})}] \le c_k * \brackets{\EW[\abs{X_k}] + \EW[\abs{X_{k-1}}]} < \infty
-		\end{equation*}
-		Mit der Dreiecksungleichung folgt daraus $\EW[\abs{(H \bullet X)_n}] < \infty$.
-		\item Martingaleigenschaft: 
-		\begin{equation*}
-			\begin{aligned}
-				\EW[(H \bullet X)_n \mid \F_{n-1}] &
-				= (H \bullet X)_{n-1} + \EW[H_n (X_n - X_{n-1}) \mid \F_{n-1}] \\
-				& = (H \bullet X)_{n-1} + H_n * \underbrace{\brackets{\EW[X_n \mid \F_{n-1}] - X{n-1}}}_{=0} \\
-				& = (H \bullet X)_{n-1} \quad \forall n \in \N
-			\end{aligned}
-		\end{equation*}
-		Damit ist also auch $(H \bullet X)$ ein Martingal.		
-	\end{itemize}
-	\rueckrichtung Fixiere $N \in \N$. Setze $H_n \defeq \one_{n = N}$, dieser ist lokal beschränkt und deterministisch (also auch vorhersehbar). Man stellt fest, dass $(H \bullet X)_n = 0$ für alle $n \le N-1$. Für alle $n \ge N$ gilt dagegen $(H \bullet X)_n = X_N - X_{N-1}$. Wir überprüfen nur die Martingaleigenschaft (Integrierbarkeit folgt aus Dreiecksungleichung). Wir wissen, dass $(H \bullet X)$ ein Martingal ist. 
-	\begin{align*}
-		0 = (H \bullet X)_{N-1} 
-		= \EW[(H \bullet X)_N \mid \F_{N-1}]
-		& = \EW[X_N - X_{N-1} \mid \F_{N-1}] \\
-		& = \EW[X_N \mid \F_{N-1}] - X_{N-1} \\
-		\follows X_{N-1} &= \EW[X_N \mid \F_{N-1}] \mit N \in \N \text{ beliebig}
-	\end{align*}
-	Somit ist $X$ ein Martingal.
-\end{proof_equiv}
+\begin{proof}
+    \begin{equivalence}
+        \hinrichtung $(H \bullet X)_n = \sum_{k=1}^n H_k (X_k - X_{k-1})$.
+        \begin{itemize}
+            \item Adaptiertheit: klar
+            \item Integrierbarkeit: $H$ lokal beschränkt, d.h. $\abs{H_k} \le c_k < \infty$ für alle $k$.
+            \begin{equation*}
+                \EW[\abs{H_k (X_k - X_{k-1})}] \le c_k * \brackets{\EW[\abs{X_k}] + \EW[\abs{X_{k-1}}]} < \infty
+            \end{equation*}
+            Mit der Dreiecksungleichung folgt daraus $\EW[\abs{(H \bullet X)_n}] < \infty$.
+            \item Martingaleigenschaft: 
+            \begin{equation*}
+                \begin{aligned}
+                    \EW[(H \bullet X)_n \mid \F_{n-1}] &
+                    = (H \bullet X)_{n-1} + \EW[H_n (X_n - X_{n-1}) \mid \F_{n-1}] \\
+                    & = (H \bullet X)_{n-1} + H_n * \underbrace{\brackets{\EW[X_n \mid \F_{n-1}] - X{n-1}}}_{=0} \\
+                    & = (H \bullet X)_{n-1} \quad \forall n \in \N
+                \end{aligned}
+            \end{equation*}
+            Damit ist also auch $(H \bullet X)$ ein Martingal.		
+        \end{itemize}
+        \rueckrichtung Fixiere $N \in \N$. Setze $H_n \defeq \one_{n = N}$, dieser ist lokal beschränkt und deterministisch (also auch vorhersehbar). Man stellt fest, dass $(H \bullet X)_n = 0$ für alle $n \le N-1$. Für alle $n \ge N$ gilt dagegen $(H \bullet X)_n = X_N - X_{N-1}$. Wir überprüfen nur die Martingaleigenschaft (Integrierbarkeit folgt aus Dreiecksungleichung). Wir wissen, dass $(H \bullet X)$ ein Martingal ist. 
+        \begin{align*}
+            0 = (H \bullet X)_{N-1} 
+            = \EW[(H \bullet X)_N \mid \F_{N-1}]
+            & = \EW[X_N - X_{N-1} \mid \F_{N-1}] \\
+            & = \EW[X_N \mid \F_{N-1}] - X_{N-1} \\
+            \follows X_{N-1} &= \EW[X_N \mid \F_{N-1}] \mit N \in \N \text{ beliebig}
+        \end{align*}
+        Somit ist $X$ ein Martingal.
+    \end{equivalence}
+\end{proof}
 
 \begin{korollar} %1.7
 	Sei $X = \folge{X_n}{n=1 , \dots, N}$ ein adaptierter stochastischer Prozess bezüglich einer Filtration $\folge{\F_n}{n=1 , \dots, N}$. Wenn $\EW[(H \bullet X)_N] = 0$ für alle lokal beschränkten vorhersehbaren Prozesse $H$, dann ist $X$ ein Martingal bezüglich $\folge{\F_n}{}$.

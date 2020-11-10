@@ -18,14 +18,14 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	\end{enumerate}
 \end{*definition}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Seien $\P, \Q$ Wahrscheinlichkeitsmaße auf $(\Omega, \F)$.
 	\begin{itemize}
 		\item Äquivalenz: $\P \sim \Q \defequiv \brackets{\P(A) = 0 \equivalent \Q(A) = 0 \quad \forall A \in \F}$
 		\item Absolutstetigkeit: $\Q \ll \P  \defequiv \brackets{\P(A) = 0 \follows \Q(A) = 0 \quad \forall A \in \F}$
 		\item Es gilt $\Q \sim \P \equivalent \brackets{\Q \ll \P \land \P \ll \Q}$
 	\end{itemize}
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \begin{theorem}
 	\begin{enumerate}[label=(\alph*)]
@@ -37,9 +37,9 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	\end{enumerate}
 \end{theorem}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	$q$ und $1-q$ sind genau die risikoneutralen Gewichte, die in \eqref{eq: 2_2_rek} auftauchen.
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \begin{proof}
 	Sei $\Q$ ein beliebiges Wahrscheinlichkeitsmaß auf $(\Omega, \F)$. Setze $q_n \defeq \Q(R_n = b \mid \F_{n-1}) \in [0,1]$.
@@ -90,7 +90,7 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	\end{equation*}
 \end{proof}
 
-\begin{*bemerkung_inline}[Martingalbedingung für $\Q$]
+\begin{*bemerkung}[Martingalbedingung für $\Q$]
 	Wir schreiben (etwas umständlich) $q_b = \Q(R_n = b)$ und $q_a = \Q(R_n = a)$. Da $\Q$ ein Wahrscheinlichkeitsmaß sein soll, muss $q_a + q_b = 1$, oder äquivalent dazu $q_b (1+r) + q_a (1+r) = 1+r$ gelten. Die Martingalbedingung liefert $(1+b) q_b + (1+a) q_a = 1+r$. Beide Gleichungen zusammen sind äquivalent zu $q_b (b-r) + q_a (a-r) = 0$. Als lineares Gleichungssystem geschrieben ergibt sich als
 	\begin{equation*}
 		\begin{pmatrix}
@@ -111,21 +111,24 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	Vergleicht man dies mit \eqref{eq: 2_2_lgs-1}, dann stellt man fest, dass die Matrizen gleiche Einträge haben, aber transponiert zueinander sind. 
 	\eqref{eq: 2_2_lgs-1} ist also eine Bedingung für die Replikationsstrategie, \eqref{eq: 2_3_lgs-2} dagegen eine Bedingung für äquivalente Martingalmaße.
 	Multinomial würden Spalten hinzukommen, also wäre das LGS unterbestimmt und es gäbe mehrere EMM.
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Das äquivalente Martingalmaß ist genau dann eindeutig, wenn ein vollständiges Modell vorliegt.
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \subsection{Arbitrage im CRR-Modell}
 
 \begin{*definition}
 	Eine Anlagestrategie $\folge{\xi_n}{n \in [N]}$ mit Zeithorizont $N$ und diskretem Werteprozess $\folge{\schlange{\Pi}_n}{n \in [N]}$ heißt Arbitrage, wenn gilt
-	\begin{enumerate}
-		\item $\schlange{\Pi}_0 = 0$ (kein Anfangskapital)
-		\item $\P(\schlange{\Pi}_N \ge 0) = 1$ (kein Verlustrisiko)
-		\item $\P(\schlange{\Pi}_N > 0) > 0$ (positiver Gewinn mit positiver Wahrscheinlichkeit)
-	\end{enumerate} (Arb)
+	\begin{equation*}
+		\begin{aligned}
+			\schlange{\Pi}_0 &= 0 	&&\text{(kein Anfangskapital)} \\
+			\P(\schlange{\Pi}_N \ge 0) &= 1 &&\text{(kein Verlustrisiko)} \\
+			\P(\schlange{\Pi}_N > 0) &> 0 &&\text{(positiver Gewinn mit positiver Wahrscheinlichkeit)}
+		\end{aligned}
+		\tag{Arb} \label{eq: Arb}
+	\end{equation*}
 \end{*definition}
 
 \begin{theorem}
@@ -136,18 +139,24 @@ Das bedeutet nun, dass wir die Baumstruktur unverändert lassen, jedoch die Übe
 	\end{enumerate}
 \end{theorem}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Dieser Satz gilt im Wesentlichen in allen Finanzmarktmodellen und heißt dann auch ''Erster Hauptsatz der Preistheorie``.
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
-\begin{proof_equiv}
-	\rueckrichtung via Widerspruch. Sei $\Q$ ein EMM und es existiere eine Arbitrage $\folge{\xi_n}{}$. Wegen $\Q \sim \P$ folgt (Arb):
-	\begin{equation*}
-		\begin{aligned}
-			\Q(\schlange{\Pi}_N \ge 0) = 1 \\
-			\Q(\schlange{\Pi}_N > 0) > 0
-		\end{aligned}
-	\end{equation*}
-	Aus beiden Bedingungen folgt $\E^\Q\sqbrackets{\schlange{\Pi}_N} > 0$ ($\star$).
-	Andererseits gilt $\schlange{\Pi}_N = 0 + \folge{\xi \bullet \schlange{S}}{N}$. Da $\schlange{S}$ ein $\Q$-Martingal ist, ist auch $(\xi \bullet S)$ ein $\Q$-Martingal. Dann gilt $\E^\Q \sqbrackets{\schlange{\Pi}_N} = \E^\Q\sqbrackets{\folge{\xi \bullet \schlange{S}}{N}} = 0$ im Widerspruch zu ($\star$).
-\end{proof_equiv}
+\begin{proof}
+	\begin{equivalence}
+		\rueckrichtung via Widerspruch. Sei $\Q$ ein EMM und es existiere eine Arbitrage $\folge{\xi_n}{}$. Wegen $\Q \sim \P$ folgt \eqref{eq: Arb}:
+		\begin{equation*}
+			\begin{aligned}
+				\Q(\schlange{\Pi}_N \ge 0) = 1 \\
+				\Q(\schlange{\Pi}_N > 0) > 0
+			\end{aligned}
+		\end{equation*}
+		Aus beiden Bedingungen folgt 
+		\begin{equation*}
+			\E^\Q\sqbrackets{\schlange{\Pi}_N} > 0
+			\tag{$\star$} \label{eq: thm2.8-star}
+		\end{equation*}
+		Andererseits gilt $\schlange{\Pi}_N = 0 + \folge{\xi \bullet \schlange{S}}{N}$. Da $\schlange{S}$ ein $\Q$-Martingal ist, ist auch $(\xi \bullet S)$ ein $\Q$-Martingal. Dann gilt $\E^\Q \sqbrackets{\schlange{\Pi}_N} = \E^\Q\sqbrackets{\folge{\xi \bullet \schlange{S}}{N}} = 0$ im Widerspruch zu \eqref{eq: thm2.8-star}.
+	\end{equivalence}
+\end{proof}

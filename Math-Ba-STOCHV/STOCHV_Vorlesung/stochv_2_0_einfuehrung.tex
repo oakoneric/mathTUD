@@ -61,7 +61,7 @@ Wir modellieren Wertpapiere $\folge{S_k}{k \in [N]}$ und Verrechnungskonto $\fol
 \end{proposition}
 
 \begin{proof}
-	\begin{enumerate}[label=(zu \alph*), leftmargin=\zulength]
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
 		\item klar
 		\item $\frac{\schlange{S}_n}{S_0} = \brackets{\frac{1+b}{1+a}}^{U_n} * \brackets{\frac{1+a}{1+r}}^n \follows \log\brackets{\frac{\schlange{S}_n}{S_0}} = U_n \log\brackets{\frac{1+b}{1+a}} + n \log\brackets{\frac{1+a}{1+r}}$
 		\item Es ist $S_n = S_0 (1+b)^{U_n}(1+a)^{n-U_n} $. Also
@@ -71,7 +71,7 @@ Wir modellieren Wertpapiere $\folge{S_k}{k \in [N]}$ und Verrechnungskonto $\fol
 	\end{enumerate}
 \end{proof}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Teil (b) suggeriert Konvergenz von $\log\brackets{\frac{\schlange{S}_n}{S_0}}$ gegen Normalverteilung für $n \to \infty$ (nach Skalierung) 
 	$\leadsto$ Black-Scholes-Modell ($\nearrow$ Kapitel 3).
-\end{*bemerkung_inline}
+\end{*bemerkung}

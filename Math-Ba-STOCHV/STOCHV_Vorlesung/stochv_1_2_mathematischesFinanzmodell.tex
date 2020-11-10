@@ -24,15 +24,15 @@ Wir betrachten
 	 	\end{equation*}
 	 \end{definition}
  	\begin{*interpretation}
- 		$\F_t$ beschreibt die den Marktteilnehmern zum Zeitpunkt $t$ bekannte bzw. verfügbare Information. Ein Ereignis $A \in \F_t$ gilt als ''zum Zeipunkt $t$ bekannt``.
+ 		$\F_t$ beschreibt die den Marktteilnehmern zum Zeitpunkt $t$ bekannte bzw. verfügbare Information. Ein Ereignis $A \in \F_t$ gilt als \enquote{zum Zeipunkt $t$ bekannt}.
  	\end{*interpretation}
 	
-	\begin{*erinnerung_inline}
+	\begin{*erinnerung}
 		Eine $\Rd$-wertige Zufallsvariable $X$ heißt $\F_t$-messbar, wenn
 		\begin{equation*}
 		X^{-1}(B) \in \F_t \quad \forall \text{ Borelmengen } B \subseteq \Rd
 		\end{equation*}
-	\end{*erinnerung_inline}
+	\end{*erinnerung}
 
 	\begin{beispiel}
 		Sei $S$ ein stochastischer Prozess. Dann heißt
@@ -46,12 +46,14 @@ Wir betrachten
 		Ein stochastischer Prozess $\folge{S_t}{t \in I}$ auf $(\Omega, \F)$ heißt \begriff{adapiert} bezüglich einer Filtration $\folge{\F_t}{t \in I}$, wenn gilt $S_t$ ist $\F_t$-messbar für alle $t \in I$.
 	\end{definition}
 	
-	Interpretation: Der Wert $S_t$ ist zum Zeitpunkt $t$ ''bekannt``.
+	\begin{*interpretation}
+		Der Wert $S_t$ ist zum Zeitpunkt $t$ \enquote{bekannt}.
+	\end{*interpretation}
 	
 	Warum Filtrationen in der Finanzmathematik?
-	\begin{itemize}[nolistsep, topsep=-\parskip]
-		\item Unterscheidung Zunkunft/Vergangenheit
-		\item Unterscheidung Informationen (Insider/Outsider) Unterscheidung Filtration $\folge{\F_t}{t \in I}$ bzw. $\folge{\G_t}{t \in I}$
+	\begin{itemize}[nolistsep]
+		\item Unterscheidung zwischen Zunkunft und Vergangenheit
+		\item Unterscheidung Informationen (Insider/Outsider) -- Unterscheidung Filtration $\folge{\F_t}{t \in I}$ bzw. $\folge{\G_t}{t \in I}$
 	\end{itemize}
 	
 	\item Anlagegüter [assets]: $\R^{d+1}$-wertiger stochastischer Prozess mit Komponenten
@@ -59,15 +61,15 @@ Wir betrachten
 		\bigabb{S^i}{(\Omega \times I)}{\R}{(\omega, t)}{S_t^i(\omega)} \quad (i \in \menge{0, 1, \dots , d})
 	\end{equation*}
 	$S_t^i$ beschreibt dabei den Preis des $i$-ten Anlageguts zum Zeitpunkt $t$. $S^i$ ($i \in \menge{1, \dots , d}$) ist typischerweise
-	\begin{itemize}[nolistsep, topsep=-\parskip]
-		\item Aktien [stock], Unternehmensanteil
+	\begin{itemize}[nolistsep]
+		\item Aktie [stock], Unternehmensanteil
 		\item Währung [currency] bzw. Wechselkurs
 		\item Rohstoff [commodity] wie z.B. Öl, Edelmetall, Elektrizität
 		\item Anleihe [bond] $\dots$ Schuldverschreibung
 	\end{itemize}
 	
-	Hauptannahme: $S^i$ ist liquide gehandelt (z.B. Börse), d.h. der Kauf und Verkauf zum Preis $S_t^i$ ist jederzeit möglich. 
-	Der ''Numeraire`` $S^0$ hat eine Sonderrolle und beschreibt die Verzinsung von nicht in $(S^1, \dots , S^d)$ angelegtem Kapital. Er wird als risikolos betrachtet.
+	\textbf{Hauptannahme:} $S^i$ ist liquide gehandelt (z.B. Börse), d.h. der Kauf und Verkauf zum Preis $S_t^i$ ist jederzeit möglich. 
+	Der \enquote{Numeraire} $S^0$ hat eine Sonderrolle und beschreibt die Verzinsung von nicht in $(S^1, \dots , S^d)$ angelegtem Kapital. Er wird als risikolos betrachtet.
 \end{enumerate}
 
 \begin{definition}
@@ -98,7 +100,7 @@ Wir betrachten
 	\begin{equation*}
 		\begin{aligned}
 		S_t^0 &= e^{rt} && (\text{Verzinsung mit konstanter Rate } r) \\
-		S_t^1 &= S_0^1 * \exp\brackets{(\mu-\frac{\sigma^2}{2}) + \sigma B_t} &&\mit \mu \in \R, \sigma > 0, S_0^1 > 0
+		S_t^1 &= S_0^1 * \exp\brackets{(\mu-\tfrac{\sigma^2}{2}) + \sigma B_t} &&\mit \mu \in \R, \sigma > 0, S_0^1 > 0
 		\end{aligned}
 	\end{equation*}
 	Der Term $\mu-\frac{\sigma^2}{2}$ beschreibt dabei eine Trendkomponenten, $B_t$ eine ''Brownsche Bewegung`` (zeitstetiger Prozess).

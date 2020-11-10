@@ -29,13 +29,13 @@ Ein $x \in \Rn$, welches \eqref{eq: nb} erfüllt, heißt \begriff{zulässig}, ei
 	heißt (Lagrange-)duale Funktion für \eqref{eq: opt}
 \end{*definition}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Als Infimum von (in $\lambda, \nu$) linearen Funktionen ist $g$ konkav\footnote{Wir wissen, dass jede konvexe Funktion sich darstellen lässt als Supremum von (affin) linearen Funktionen.}. Die duale Funktion $g(\lambda, \nu)$ erzeugt eine untere Schranke für $p_\ast$. Begründung: Sei $\quer{x} \in \Rn$ zulässig für \eqref{eq: opt}, d.h. $f_i(\quer{x}) \le 0$ für alle $i \in [m]$ und $h_i(\quer{x}) = 0$ für alle $i \in [p]$.  Somit ist
 	\begin{equation*}
 		\mathcal{L} = f_0(\quer{x}) + \underbrace{\sum_{i=1}^m f_i(\quer{x}) \lambda_i + \sum_{i=1}^p h_i(\quer{x})}_{\le 0} \le f_0(\quer{x})
 	\end{equation*}
 	Also ist $g(\lambda, \nu) = \inf_{x \in \Rn} \mathcal{L}(x,\lambda,\nu) \le \mathcal{L}(\quer{x}, \lambda, \nu) \le f_0(\quer{x})$ für alle zulässigen $\quer{x}$. Somit ist $g(\lambda, \nu) \le p_\ast$ für alle $\lambda \in \Rm_{\ge 0}$ und $\nu \in \R^p$. Die beste untere Schranke erhalten wir durch Maximieren über $\lambda$ und $\nu$.
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \begin{*definition}
 	Das duale Optimierungsproblem zu \eqref{eq: opt} ist
@@ -118,7 +118,8 @@ Für den Beweis verwenden wir den folgenden Trennungssatz für konvexe Mengen:
 			\mathcal{B} &\defeq \menge{(0,0,t) \in \R^N : t < p_\ast}
 		\end{aligned}
 	\end{equation*}
-	Es gilt: $\mathcal{A}$ und $\mathcal{B}$ sind konvex. \\
+	Es gilt: $\mathcal{A}$ und $\mathcal{B}$ sind konvex.
+	
 	Behauptung: $A \cap B = \emptyset$ --- Beweis mit Widerspruch. Angenommen es existiert $(u,v,t) \in \mathcal{A} \cap \mathcal{B}$, dann gilt (wegen $\mathcal{B}$) $u = 0$, $v=0$ und $t < p_\ast$ sowie (wegen $\mathcal{A}$), dass ein $x \in \Rn$ existiert mit 
 	\begin{itemize}
 		\item $f_i(x) \le u_i = 0$ für alle $i \in [m]$ 

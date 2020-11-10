@@ -120,7 +120,7 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 \end{theorem}
 \begin{proof}
 	Mit \eqref{eq: snell-rek} gilt $S_n \ge \EW[S_{n+1} \mid \F_n]$ für alle $n \in [N-1]$, d.h. $S$ ist ein Supermartingal. Ebenfalls aus \eqref{eq: snell-rek} folgt $S_n \ge Z_n$ für alle $n \in [N]$, also dominiert $S$ den Prozess $Z$. Sei $Y$ nun ein weiteres Supermartingal, welches $Z$ dominiert. Wir zeigen $S_n \le Y_n$ für alle $n \in [N]$ mittels Rückwärtsinduktion:
-	\begin{induction}
+	\begin{description}
 		\ianfang[$n = N$] $S_N = Z_N \le Y_N$
 		\ischritt[$n+1 \to n$] Aus
 		\begin{equation*}
@@ -130,7 +130,7 @@ Sei $\folge{X_n}{n \in \N}$ ein stochastischer Prozess. Mit der Notation $\tau \
 			\end{aligned}
 		\end{equation*}
 		folgt nun $Y_n \ge \max\menge{\EW[S_{n+1} \mid \F_n], Z_n} = S_n$ für alle $n \in [N]$.
-	\end{induction}
+	\end{description}
 \end{proof}
 
 \begin{lemma} \label{lemma: 6.4}

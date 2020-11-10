@@ -18,7 +18,7 @@ als Risikomaße geeignet sind.
 	\end{enumerate}
 \end{*definition}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Translationsinvarianz beschreibt eine Kapitalanforderung; Subadditvität belohnt Risikostreuung/Diversifikation
 	\begin{itemize}[nolistsep]
 		\item Es gilt (c) $+$ (d) $\follows$ (e), denn
@@ -30,7 +30,7 @@ als Risikomaße geeignet sind.
 		\rho(L_1 + L_2) \overset{(d)}{=} 2 * \rho \brackets{\tfrac{L_1}{2} + \tfrac{L_2}{2}} \overset{(e)}{\le} \rho(L_1) + \rho(L_2)
 		\end{equation*}
 	\end{itemize}
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \begin{*definition}
 	\begin{enumerate}[label=(\arabic*), nolistsep]
@@ -40,12 +40,12 @@ als Risikomaße geeignet sind.
 	\end{enumerate}
 \end{*definition}
 
-\begin{*bemerkung_inline}
+\begin{*bemerkung}
 	Offensichtlich gilt:
 	\begin{equation*}
 	\text{kohärente Risikomaße } \subseteq \text{ konvexe Risikomaße } \subseteq \text{ monetäre Risikomaße }
 	\end{equation*}
-\end{*bemerkung_inline}
+\end{*bemerkung}
 
 \begin{*beispiel}
 	\begin{itemize}
@@ -200,7 +200,7 @@ Eigenschaften von Risikomaßen $\rho$ können über $A_\rho$ beschrieben werden:
 \end{theorem}
 \begin{proof}
 	Wir zeigen hier exemplarisch nur die Aussage (Ia):
-	\begin{proof-equivalence}
+	\begin{equivalence}
 		\hinrichtung Sei $\rho$ konvexes Risikomaß, $L_1, L_2 \in A_\rho$, $\gamma \in [0,1]$, $L_\gamma = \gamma L_1 + (1-\gamma) L_2$. Wir müssen nun zeigen, dass $L_\gamma \in A_\rho$.
 		\begin{equation*}
 			\rho(L_\gamma) = \rho(\gamma L_1 + (1-\gamma) L_2) \overset{\text{konvex}}{\le} \gamma \rho(L_1) + (1-\gamma) \rho(L_2) \le 0 \follows L_\gamma \in A_\rho
@@ -213,7 +213,7 @@ Eigenschaften von Risikomaßen $\rho$ können über $A_\rho$ beschrieben werden:
 			\end{aligned}
 		\end{equation*}
 		Somit ist $\rho$ konvex.
-	\end{proof-equivalence}
+	\end{equivalence}
 	Die anderen Aussagen folgen analog.
 \end{proof}
 
