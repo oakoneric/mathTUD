@@ -1,0 +1,282 @@
+\begin{exercisePage}
+	
+% AUFGABE 1	
+	\begin{task}
+		Seien $X,Y \in L^2(\mathcal{A})$ und $\F$ eine Unter-$\sigma$-Algebra von $\mathcal{A}$. Bedingte
+		Varianz und bedingte Kovarianz von $X$ bzw. $X,Y$ bezüglich $\F$ sind definiert als
+		\begin{align*}
+			\Var(X | \F) &\defeq \EW[{(X - \EW[X | \F])^2 \mid \F}] \\
+			\Cov(X,Y | \F) &\defeq \EW[ {(X  \EW[X | \F]) (Y - \EW[Y | \F]) \mid \F} ]
+		\end{align*}
+		Zeige die Sätze von der totalen Varianz bzw. totalen Kovarianz:
+		\begin{align*}
+			\Var(X) = \EW[\Var(X | \F)] + \Var(\EW[X | \F]) \\
+			\Cov(X,Y) = \EW[ \Cov(X,Y | \F) ] + \Cov( \EW[X | \F] , \EW[Y | \F])
+		\end{align*}
+	\end{task}
+
+	Sei $U \defeq \EW[X | \F]$ und $V \defeq \EW[Y | \F]$. Mit der Turmregel gilt $\EW[U] = \EW[X]$ bzw. $\EW[V] = \EW[Y]$. Mit dem Verschiebungssatz gilt $\Var(U) = \EW[U^2] - \EW[X]^2$ und analog für $V$.
+	Offenbar sind $U$ und $V$ nun $\F$-messbar.
+	Es ist
+	\begin{equation*}
+		\Var(X | \F) = \EW[(X - U) | \F]
+		= \EW[X^2 - 2XU + U^2 | \F] 
+		= \EW[X^2 | \F] - 2U \underbrace{\EW[X | \F]}_{= U} + \EW[U^2]
+	\end{equation*}
+	und somit
+	\begin{align*}
+		\EW[\Var(X | \F)] 
+		= \EW[ {\EW[X^2 | \F] - 2U \EW[X | \F] + \EW[U^2]} ] 
+		&= \EW[X^2] - 2 \EW[U^2] + \EW[U^2] \\
+		&= \EW[X^2] - \EW[U^2]
+	\end{align*}
+	Weiterhin gilt
+	\begin{align*}
+		\Var(U) &= \EW[ {(U- \EW[U])^2} ] = \EW[ {U^2 - 2 U \EW[X] + \EW[X]^2} ] 
+		= \EW[U^2] - 2 \EW[X] \EW[U] + \EW[X]^2 \\
+		&= \EW[U^2]- \EW[X]^2 
+	\end{align*}
+	Damit gilt schließlich 
+	\begin{align*}
+		\EW[\Var(X | \F)] + \Var(\EW[X | \F]) 
+		&= \EW[X^2] - \EW[U^2] + \EW[U^2]- \EW[X]^2  
+		= \EW[X^2] - \EW[X]^2 \\
+		&= \Var(X)
+	\end{align*}
+	
+	Analog verfahren wir beim Satz von der totalen Kovarianz:
+	Es gilt
+	\begin{align*}
+		\EW[ \Cov(X,Y | \F) ] 
+		&= \EW[ {\EW[ (X-U)(Y-V) \mid \F]} ] \\
+		&= \EW[ {\EW[ XY | \F] - \EW[VX | \F] - \E[UY | \F] + \EW[UV | \F]} ] \\
+		&= \EW[XY]- \E[UV]- \E[UV]+ \E[UV] \\
+		&= \E[XY]- \E[UV]
+	\intertext{sowie}
+		\Cov(U,V) 
+		&= \EW[{(U-\EW[U])(V-\EW[V])}] \\
+		&= \EW[{UV- U*\EW[Y] - V*\EW[X] + \EW[X]*\EW[Y]}] \\
+		&= \EW[UV] - \EW[X]*\EW[Y] - \EW[X]*\EW[Y] + \EW[X]*\EW[Y]  \\
+		&= \EW[UV] - \EW[X]*\EW[Y]
+	\end{align*}
+	und damit schlussendlich
+	\begin{equation*}
+		\Cov\left( \EW[X | \F], \EW[Y | \F] \right) + \EW[ \Cov(X,Y | \F)] = \EW[XY] - \EW[X]\EW[Y] = \Cov(X,Y)
+	\end{equation*}
+	
+	
+% AUFGABE 2	
+	\begin{task}
+		\begin{enumerate}[label=(\alph*)]
+			\item In einer bestimmten Population sei das Alter $X$ bei erstmaliger Berufsunfähigkeit exponentialverteilt mit Parameter $\lambda > 0$. Für eine Versicherungsgesellschaft die gegen Berufsunfähigkeit versichert, ist das mittlere Alter bei Eintritt der Berufsunfähigkeit von Bedeutung, unter der Bedingung, dass die Berufsunfähigkeit zwischen den Altersgrenzen $0 \le a < b$ eintritt. Bestimme diesen bedingten Erwartungswert $\EW[X | a \le X \le b]$.
+			\item Welche der folgenden in der Vorlesung definierten mathematischen Objekte sind reelle Zahlen, Zufallsvariablen oder messbare Funktionen von $\R$ nach $\R$?
+			\begin{equation*}
+				\EW[X|\F], \quad \P(A|B), \quad \EW[X|Y=y], \quad \P(A|\F), \quad \EW[X|Y]
+			\end{equation*}
+			Wie üblich bezeichnet $\F$ eine $\sigma$-Algebra, $X$ und $Y$ sind reellwertige Zufallsvariablen, $y$ eine reelle Zahl und $A$ und $B$ sind Ereignisse.
+		\end{enumerate}
+	\end{task}
+
+	\begin{enumerate}[label=(\alph*)]
+		\item Es sei $X \sim \Exp(\lambda)$, d.h. $X$ hat die Dichte $f(x) = \lambda e^{-\lambda x} * \one_{[0,\infty)}(x)$.
+		Da $[a,b] \subseteq [0,\infty]$ können wir rechnen
+		\begin{align*}
+			\EW[X \mid a \le X \le b] &= \int_\R x * \lambda e^{-\lambda x} *\one_{[0,\infty)}(x) * \one_{[a,b]}(x) \dx 
+			= \int_a^b x * \lambda e^{-\lambda x} \dx \\
+			&= \sqbrackets{-x * e^{-\lambda x}}_a^b + \int_a^b e^{-\lambda x} \dx \tag{partielle Integration} \\
+			&= \sqbrackets{-x * e^{-\lambda x}}_a^b - \sqbrackets{\frac{1}{\lambda} e^{-\lambda x}}_a^b \\
+			&= \brackets{a + \frac{1}{\lambda}} * e^{-\lambda a} - \brackets{b + \frac{1}{\lambda}} * e^{-\lambda b}
+		\end{align*}
+		\item Es sind
+		\begin{itemize}
+			\item $\EW[X | \F]$ und $\EW[X | Y]$ Zufallsvariablen,
+			\item $\P(A | B)$ und $\P(A | \F)$ reelle Zahlen sowie
+			\item $\EW[X | Y=y]$ eine messbare Funktion von $\R$ nach $\R$.
+		\end{itemize}
+	\end{enumerate}
+
+
+% AUFGABE 3
+	\newcommand{\xy}{\left(\begin{smallmatrix} x \\ y \end{smallmatrix}\right)}
+	
+	\begin{task}
+		Sei $M = \left(\begin{smallmatrix} A & B \\ C & D \end{smallmatrix} \right)$ eine quadratische, in Blöcke unterteilte Matrix von vollem Rang, wobei $A$ und $D$ ebenfalls quadratisch und von vollem Rang seien. Die Ausdrücke
+		\begin{equation*}
+			(M/A) \defeq (D - CA^{-1} B) \quad \und \quad (M/D) \defeq (A - BD^{-1} C)
+		\end{equation*}
+		heißen \textit{Schurkomplement} von $A$ in $M$ bzw. $D$ in $M$. Folgende Formel für die blockweise Inversion von $M$ dürfen Sie als gegeben betrachten:
+		\begin{equation*}
+			M^{-1} = \begin{pmatrix}
+				(M/D)^{-1} & -A^{-1}B(M/A)^{-1} \\
+				-D^{-1}C(M/D)^{-1} & (M/A)^{-1}
+			\end{pmatrix}
+		\end{equation*}
+		Verwenden Sie die Formel um folgende Teilaufgaben zu lösen:
+		\begin{enumerate}[label=(\alph*)]
+			\item \label{it: ue1-aufgabe3a}
+			Sei $M$ nun symmetrisch, d.h. $A$ und $D$ sind symmetrisch und $C = B^\top$. Zeige
+			\begin{equation*}
+				\brackets{x^\top, y^\top} M^{-1} \xy - y^\top D^{-1} y 
+				=
+				\schlange{x}^\top (M/D)^{-1} \schlange{x}
+			\end{equation*}
+			mit $\schlange{x} = (x - BD^{-1}y)$ für alle $x,y$ mit passender Dimension.
+			\item Es sei $(X,Y)$ multivariat normalverteilt mit Erwartungswert $0$ und positiv definiter Kovarianzmatrix $\Sigma = \left(\begin{smallmatrix} \Sigma_X & \Sigma_{XY} \\ \Sigma_{XY} & \Sigma_Y \end{smallmatrix}\right)$. Dann ist $X$ bedingt auf $Y$ normalverteilt mit $\EW[X|Y] = \Sigma_{XY}\Sigma_Y^{-1}$ und Kovarianzmatrix $(\Sigma/\Sigma_Y)$. \\
+			Hinweis: Es gilt $\det(\Sigma) = \det(\Sigma_Y) * \det(\Sigma/\Sigma_Y)$.
+		\end{enumerate}
+	\end{task}
+
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir notieren $M^{-1} = T = (T_{ij})_{i,j}$. Dabei ist $T$ wieder symmetrisch, da zum Einen
+		\begin{equation*}
+			(M/D)^\top
+			= (A - BD^{-1}C)^\top 
+			= A^\top - C^\top \transpose{D^{-1}} B^\top
+			= A - BD^{-1}C 
+			= (M/D)
+		\end{equation*}
+		sowie $(M/A)^\top = (M/A)$ analog und zum Anderen
+		\begin{equation}
+			\begin{alignedat}{2}
+				&& A^{-1} B(M/A)^{-1} &= (M/D)^{-1} BD^{-1} \\
+				\Leftrightarrow &\quad& (M/D)A^{-1}B &= BD^{-1} (M/A) \\
+				\Leftrightarrow &\quad& (A-BD^{-1}C)A^{-1}B  &= BD^{-1}(D-CA^{-1}B) \\
+				\Leftrightarrow &\quad& B-BD^{-1}CA^{-1}B &= B-BD^{-1}CA^{-1}B 
+			\end{alignedat}
+			\tag{$\star$} \label{eq: ue1-aufgabe3b-taut1}
+		\end{equation}
+		tautologisch ist.
+		Betrachten wir nun $q(x,y) = \brackets{x^\top, y^\top} T \xy - y^\top D^{-1} y$, so erhalten wir
+		\begin{align*}
+			q(x,y) 
+			&= x^\top T_{11} x + x^\top T_{12} y + y^\top T_{21} x + y^\top (T_{22} - D^{-1}) y
+		\end{align*}
+		Mit einer Matrix $\Lambda$ können wir dies in die Form
+		\begin{equation*}
+			q(x,y) 
+			= (x^\top - y^\top \Lambda^\top) T_{11} (x + \Lambda y)
+			= x^\top T_{11} x - x^\top \underbrace{(T_{11} \Lambda)}_{=T_{12}} y - y^\top \underbrace{(\Lambda^\top T_{11})}_{= T_{21}} x + y^\top \underbrace{(\Lambda^\top T_{11} \Lambda)}_{= T_{22} - D^{-1}} y
+		\end{equation*}
+		Aus $-T_{11} \Lambda = T_{12}$ erhalten wir $\Lambda = -T_{11} T_{12} = (M/D) * A^{-1} B (M/A)^{-1} \overset{{\eqref{eq: ue1-aufgabe3b-taut1}}}{=} BD^{-1}$. Außerdem gilt damit $T_{12} = T_{21}$ und
+		\begin{alignat*}{2}
+			&& (M/A)^{-1}-D^{-1} &= D^{-1} C(M/D)^{-1} BD^{-1} \\
+			\Leftrightarrow &\quad& (M/A)^{-1} DB^{-1} - B^{-1} &= D^{-1} C(M/D)^{-1} \\
+			\Leftrightarrow &\quad& DB^{-1} (M/D) -(M/A)B^{-1} (M/D) &= (M/A)D^{-1}C \\
+			\Leftrightarrow &\quad& DB^{-1}A-C-DB^{-1}A+C+C-CA^{-1}BD^{-1}C &= C- CA^{-1}BD^{-1}C
+		\end{alignat*}
+		tautologisch. Somit ist mit $\schlange{x} \defeq (x - BD^{-1}y)$ schließlich 
+		\begin{equation*}
+			q(x,y) = \schlange{x}^\top (M/D)^{-1} \schlange{x}
+		\end{equation*}
+		und die Behauptung bewiesen.
+		
+		
+		
+		\item Sei $f_{XY}$ die gemeinsame Dichte von $(X,Y)$ gegeben durch
+		\begin{align*}
+			f_{XY}(x,y) 
+			&= \frac{1}{\sqrt{(2\pi)^p \det(\Sigma)}} * \exp\brackets{-\frac{1}{2} \brackets{(x^\top, y^\top) - (\mu_X^\top, \mu_Y^\top)} * \Sigma^{-1} * \brackets{\left(\begin{smallmatrix} x \\ y \end{smallmatrix}\right) - \left(\begin{smallmatrix} \mu_X \\ \mu_Y \end{smallmatrix} \right)}} \\
+			&= \frac{1}{\sqrt{(2\pi)^p \det(\Sigma)}} * \exp\brackets{-\frac{1}{2} (x^\top, y^\top) * \Sigma^{-1} * \left(\begin{smallmatrix} x \\ y \end{smallmatrix}\right)}
+		\end{align*}
+		Die Randverteilung von $Y$ ist gegeben durch
+		\begin{equation*}
+			f_Y(y) = \frac{1}{\sqrt{(2\pi)^{p_Y} \det(\Sigma_Y)}} * \exp\brackets{-\frac{1}{2} y^\top * \Sigma_Y^{-1} * y}
+		\end{equation*}
+		Damit erhalten wir die bedingte Dichte $f_{X|Y}$ als
+		\begin{align*}
+			f_{X|Y=y}(x) &= \frac{f_{XY}(x,y)}{f_Y(y)} 
+			= \sqrt{(2\pi)^{p - p_Y} * \frac{\det(\Sigma_Y)}{\det(\Sigma)}} * \exp\brackets{-\frac{1}{2} (x^\top, y^\top) * \Sigma^{-1} * \xy - y^\top * \Sigma_Y^{-1} * y} \\
+			&= \frac{1}{\sqrt{(2\pi)^{p - p_Y} \det(\Sigma / \Sigma_Y)}} * \exp\brackets{-\frac{1}{2} (x^\top, y^\top) * \Sigma^{-1} * \xy - \frac{1}{2} y^\top * \Sigma_Y^{-1} * y}
+		\end{align*}
+		Mit \cref{it: ue1-aufgabe3a} erhalten wir
+		\begin{equation*}
+			(x^\top, y^\top) * \Sigma^{-1} * \xy - y^\top * \Sigma_Y^{-1} * y
+			= \schlange{x} (\Sigma / \Sigma_Y)^{-1} \schlange{x}
+		\end{equation*}	
+		mit $\schlange{x} = x - \Sigma_{XY}\Sigma_Y^{-1} y$. Definieren wir $\schlange{\mu} \defeq \Sigma_{XY}\Sigma_Y y$, so hast $f_{X|Y=y}$ die Form
+		\begin{equation*}
+			f_{X|Y=y}(x) = c * \exp\brackets{-\frac{1}{2} (x - \schlange{\mu}) * (\Sigma / \Sigma_Y)^{-1} * (x - \schlange{\mu})}
+		\end{equation*}
+		Dies ist die Dichte einer Realisation von $X|Y$. Für $X|Y$ erhalten wir folglich
+		\begin{equation*}
+			\EW[X | Y=y] = \schlange{\mu} \follows \mu = \EW[X | Y] = \Sigma_{XY} \Sigma_Y^{-1} 
+			\quad \und \quad
+			\Cov(X | Y) = (\Sigma / \Sigma_Y)
+		\end{equation*}
+	\end{enumerate}
+	
+	\undef\xy
+	
+% AUFGABE 4
+	\begin{task}
+		Seien $(X_n)_{n \in \N}$ und $(Y_n)_{n \in \N}$ zwei Martingale bezüglich $(\F_n)_{n \in \N}$ mit $X_n, Y_n \in L^2$ für alle $n \in \N$. Beweisen Sie:
+		\begin{enumerate}[label=(\alph*)]
+			\item $\EW[X_m Y_n | \F_m] = X_m Y_m$ fast sicher für alle $m \le n$
+			\item $\EW[X_n Y_n] - \EW[X_0 Y_0] = \sum_{j=1}^n \EW[(X_j - X_{j-1})(Y_j - Y_{j-1})]$
+			\item $\Var(X_n) = \Var(X_0) + \sum_{j=1}^n \Var(X-j - X_{j-1})$
+			\item die Zufallsvariablen $X_0, X_1 - X_0, X_2 - X_1, \dots X_j - X_{j-1}$ sind paarweise orthogonal
+		\end{enumerate}
+	\end{task}
+	
+	\begin{enumerate}[label=(\alph*), leftmargin=*]
+		\item \label{it: ue1-aufgabe4a} Seien $(X_n)_n$ und $(Y_n)_n$ Martingale bezüglich $F_n$. Da $X_m$ $\F_m$-messbar ist, gilt für alle $m \le n$
+		\begin{equation*}
+			\E[X_m Y_n | \F_m ] 
+			= X_m * \E[Y_n\mid \F_m] 
+			= X_m Y_m \quad \text{fast sicher}
+		\end{equation*}
+		\item \label{it: ue1-aufgabe4b} Für $1 \le j \le n$ betrachten wir
+		\begin{align*}
+			&\E[(X_j - X_{j-1})(Y_j - Y_{j-1})] \\
+			= \enskip &\E[\E[X_j Y_j - X_j Y_{j-1} - X_{j-1} Y_j + X_{j-1} Y_{j-1} | \F_{j-1}]] \tag{Turmregel} \\
+			= \enskip &\E[X_j Y_j] - \E[X_{j-1} Y_{j-1}] - \E[X_{j-1} Y_{j-1}] + \E[X_{j-1} Y_{j-1}] \tag{\ref{it: ue1-aufgabe4a} \& Turmregel} \\
+			= \enskip &\E[X_j Y_j] - \E[X_{j-1} Y_{j-1}]
+		\end{align*}
+		Damit gilt
+		\begin{equation*}
+			\sum_{j=1}^n \E[(X_j - X_{j-1}) (Y_j - Y_{j-1})] 
+			= \sum_{j=1}^n \E[X_j Y_j] - \E[X_{j-1} Y_{j-1}] 
+			= \E[X_n Y_n] - \E[X_0 Y_0]
+		\end{equation*} 
+		mithilfe einer Teleskopsumme.
+		\item Für Martingale $(X_n)_n$ gilt $\E[X_n] = \text{const.}$ für alle $n \in \N$, da $\EW[X_0] = \EW[{\EW[X_n | \F_0]}] = \EW[X_n]$ für alle $n \ge 0$. Damit gilt dann unter Nutzung des Verschiebunssatzes
+		\begin{equation*}
+			\Var(X_n) - \Var(X_0) = \E[X_n^2] - \E[X_n]^2 - \E[X_0^2] + \E[X_0]^2 = \E[X_n^2] - \E[X_0^2] 
+		\end{equation*}
+		sowie auch $\Var(X_j - X_{j-1}) = \E[(X_j - X_{j-1} -\E[X_j - X_{j-1}])^2] = \E[(X_j-X_{j-1})^2]$ für $1 \le j \le n$.
+		Mit der Überlegung aus \cref{it: ue1-aufgabe4b} und $Y_j = X_j$ erhalten wir $\Var(X_j - X_{j-1}) = \E[X_j^2] - \E[X_{j-1}^2]$.
+		Mit einem Teleskopsummenargument gilt dann
+		\begin{equation*}
+			\sum_{j=1}^n \Var(X_j - X_{j-1}) = \sum_{j=1}^n \E[X_j^2] - \E[X_{j-1}^2] = \E[X_n^2]-\E[X_0^2]
+		\end{equation*}
+		Damit ist also
+		\begin{equation*}
+			\Var(X_n) - \Var(X_0) = \sum_{j=1}^n \Var(X_j - X_{j-1})
+		\end{equation*}
+		woraus die Behauptung folgt.
+		\item Seien $i,j \in \N$, wobei wir annehmen, dass $i \leq j$. Es gilt
+		\begin{equation*}
+			\scal{X_0}{X_j - X_{j-1}} 
+			= \EW[X_0(X_j - X_{j-1})] 
+			= \EW[X_0 X_j - X_0 X_{j-1}] 
+			= \EW[X_0 X_j] - \EW[X_0 X_{j-1}]
+		\end{equation*}
+		Mit der Turmregel und \cref{it: ue1-aufgabe4a} erhalten wir
+		\begin{equation*}
+			\EW[X_0 X_j] - \EW[X_0 X_{j-1}]
+			= \E[\EW[X_0 X_j | \F_0]] - \E[\EW[X_0 X_{j-1} | \F_0]]
+			= \EW[X_0^2] - \EW[X_0^2] = 0
+		\end{equation*}
+		für alle $j \ge 1$.
+		Außerdem gilt mit analogem Vorgehen
+		\begin{align*}
+			\scal{X_i- X_{i-1}}{X_j -X_{j-1}} 
+			&= \E[(X_i- X_{i-1}) (X_j -X_{j-1})] \\
+			&= \E[ X_i X_j - X_i X_{j-1} - X_{i-1} X_j + X_{i-1} X_{j-1}] \\
+			&= \E[X_i^2] -\E[X_i^2]-\E[X_{i-1}^2]+\E[X_{i-1}^2] \tag{\ref{it: ue1-aufgabe4a} \& Turmregel} \\
+			&= 0
+		\end{align*}
+	\end{enumerate}
+
+\end{exercisePage}
+
