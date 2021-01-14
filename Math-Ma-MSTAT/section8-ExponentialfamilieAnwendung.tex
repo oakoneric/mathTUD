@@ -1,0 +1,99 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung}
+
+Sei $X_1,…,X_n$ \iid\ Kopien von $X$ mit $μ$-Dichte
+\begin{align*}
+	f_θ(x)&=c(θ)· h(x)·\exp\klammern[\big]{q(θ)· T(x)}\qquad∀ x∈\X,∀θ∈Θ=ℝ
+\end{align*}
+Sei $θ_0$ der wahre Parameter.
+Dann gilt:
+%
+\begin{align}\label{eqAnwendung_1}\tag{1}
+	\text{MLS $\hat{θ}_n$ für $θ_0$ ist }\hat{θ}_n&=\argmin_{t∈ℝ}M_n(t)\qquad\mit\\
+	M_n(t) &= -\log \argu[\big]{c(t)} - q(t) · \overline{T}_n, \qquad
+	\overline{T}_n = \frac{1}{n} · \sum_{i=1}^n T(X_i) \nonumber
+\end{align}
+Ziel: Nachweis von
+\begin{align*}
+	√{n}·\klammern[\big]{\hat{θ}_n-θ_0}\distrto ζ
+\end{align*}
+und Identifizierung von $ζ$.
+
+Dazu: Sei
+\begin{align*}
+	Z_n(t):=n·\klammern{M_n \argu{θ_0 + \frac{t}{√{n}}} - M_n\argu[\big]{θ_0}} \qquad ∀ t ∈ ℝ
+\end{align*}
+der \define{reskalierte Prozess} zu $M_n$.
+Offenbar ist $Z_n$ stetiger stochastischer Prozess \emph{und}
+\begin{align}\label{eqAnwendung_2}\tag{2}
+	\underbrace{√{n}·\klammern[\big]{\hat{θ}_n-θ_0}}_{=:σ_n}
+	&=\argmin_{t∈ℝ} Z_n(t)
+\end{align}
+denn:
+Zu zeigen:
+\begin{align*}
+	Z_n(σ_n)≤ Z_n(t)\qquad∀ t∈ℝ
+\end{align*}
+Dazu nutze Äquivalenzen:
+\begin{align*}
+	&Z_n(σ_n)≤ Z_n(t) &∀& t∈ℝ\\
+	\overset{t=σ_n}%
+	&{⇔}
+	n \klammern[\bigg]{M_n· \argu[\bigg]{\underbrace{θ_0+\frac{σ_n}{√{n}}}_{
+		\begin{subarray}{c}		
+			=θ_0+\frac{√{n}\klammern[\big]{\hat{θ}_n-θ_n}}{√{n}}\\
+			=θ_n
+		\end{subarray}
+	}} - M_n(θ_0) }
+	≤ n·\klammern{M_n \argu{θ_0 + \frac{t}{√{n}}} - M_n(θ_0)}
+	& ∀ & t ∈ ℝ \\
+	&⇔ n·\klammern[\Big]{M_n\argu[\big]{\hat{θ}_n} - M_n\argu[\big]{θ_0} }
+	≤ n· \klammern{M_n \argu{θ_0 + \frac{t}{√{n}} } - M_n(θ_0) } & ∀ & t ∈ ℝ \\
+	&⇔ M_n \argu[\big]{\hat{θ}_n}
+	≤ M_n \argu{θ_0+\frac{t}{√{n}}} &∀&t∈ℝ\\
+	&⇔ M_n \argu[\big]{\hat{θ}_n}
+	≤ M_n \argu{θ_0+\frac{t}{√{n}}} &∀& t∈ℝ\\
+	&⇔ M_n \argu[\big]{\hat{θ}_n}≤ M_n(u) &∀& u∈ℝ\\
+	\overset{\eqref{eqAnwendung_1}}&{⇔} \text{ Wahr}
+\end{align*}
+Wegen \eqref{eqAnwendung_2} versuche Satz \ref{satz8.8} anzuwenden:
+
+Man kann zeigen:
+\begin{align}\label{eqAnwendung_i}\tag{i}
+	Z_n\distrto  Z\text{ in }\klammern[\big]{C(ℝ),d}
+\end{align}
+wobei
+\begin{align*}
+	Z(t)
+	&=-q'(θ_0)· N· t+\frac{1}{2}·\klammern[\big]{q'(θ_0)}^2·σ^2(θ_0)· t^2 \qquad∀ t∈ℝ
+\end{align*}
+wobei wir fordern:
+\begin{align*}
+	σ^2(θ_0):=\Var_{θ_0}\klammern[\big]{T(X)}\overset{\text{Forderung}}&>0\\
+	q'(θ_0)\overset{\text{Forderung}}&\neq0\\
+	N &\sim \Nor \argu[\big]{0,σ^2(θ_0)}
+\end{align*}
+Also ist $Z$ eine zufällige nach oben geöffnete Parabel.
+\begin{align*}
+	0
+	&=Z'(t)
+	=-q'(θ_0)· N+\klammern[\big]{q'(θ_0)}^2·σ^2(θ_0)· t\\
+	ζ
+	&=\frac{1}{q'(θ_0)·σ^2(θ_0}· N
+	\text{ ist die eindeutige Minimalstelle von }Z.
+\end{align*}
+Man kann zeigen:
+\begin{align*}
+	\limsup_{n⟶∞}\P \argu{√{n}·\abs[\big]{\hat{θ}_n-θ_0}≥ j}
+	≤\frac{4}{\klammern[\big]{q'(θ_0)}^2·σ^2(θ_0)}·\frac{1}{j^2}\qquad∀ n∈ℕ
+\end{align*}
+Grenzübergang $j⟶∞$ liefert, dass zweite Bedingung \eqref{eqSatz8.9_2} in Satz \ref{satz8.8} erfüllt ist.
+Somit liefert Satz \ref{satz8.8}:
+\begin{align*}
+	√{n}·\klammern[\big]{\hat{θ}_n-θ_0}\distrto ζ
+\end{align*}

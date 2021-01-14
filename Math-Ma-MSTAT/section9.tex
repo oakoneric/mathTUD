@@ -1,0 +1,248 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Verteilungskonvergenz im Raum konvexer Funktionen} %9
+
+\begin{definition}\label{def9.1}\
+	\begin{enumerate}[label=(\arabic*)]
+		\item Eine Menge $∅\neq O⊆ℝ$ heißt \define{konvex}
+		\begin{align*}
+			:⇔ x, y ∈ O ⇒ ∀ λ ∈ \intervallO01 : λ x+(1-λ) y ∈ O
+		\end{align*}
+		Konvexe Teilmengen von $ℝ$ sind genau die Intervalle.
+		\item Sei $O$ konvex. Eine Funktion $f \colon O ⟶ ℝ$ heißt \define{konvex}
+		\begin{align*}
+			:⇔
+			f\argu[\big]{λ x+(1-λ) y} ≤ λ f(x) + (1 - λ) f(y) \qquad ∀ x, y ∈ O, ∀ λ ∈ \intervallO01
+		\end{align*}
+		\item $\begin{aligned}
+			C_c(O):=\set[\big]{ f\colon O ⟶ ℝ : f\text{ konvex}}
+		\end{aligned}$ (Erinnerung: Jede konvexe Funktion ist stetig!)
+		\item Ein stochastischer Prozess
+		\begin{align*}
+			X=\set[\big]{ X(t):t∈ O}
+		\end{align*}
+		über $(Ω,\A)$ mit Pfaden in $C_c(O)$ heißt \define{konvexer stochastischer Prozess} auf $O$.
+	\end{enumerate}
+\end{definition}
+
+Im Folgenden sei $O = \intervall{a}{b}$ mit $-∞ ≤ a < b ≤ ∞$
+und $d$ die Metrik der gleichmäßigen Konvergenz auf $C_c(O)$.
+Bekanntlich ist $C_c(O) ⊆ C(O)$, also $\klammern[\big]{C_c(O),d}$
+als Unterraum von $\klammern[\big]{C(O),d}$ ebensfalls separabel.
+Seien $π_t$ und $π_T$ die Projektionen eingeschränkt auf $C_c(O)$.
+
+\begin{satz}\label{satz9.2}
+	\begin{align*}
+		\B_d\klammern[\big]{C_c(O)}=σ\klammern[\big]{π_t:t∈ O}=σ \argu[\big]{π_T:T⊆ O\text{ endlich}}
+	\end{align*}
+\end{satz}
+
+\begin{proof}
+	Analog zu Satz \ref{satz7.2}.
+\end{proof}
+
+%Ferger: "Ich bin zu gut für diese Welt." (also er einen Satz nochmals anschrieb, weil einige Stundenten nicht hinterher kamen)
+
+Wir erhalten folgende Korollare:
+
+\begin{korollar}\label{korollar9.3}
+	Sei $X$ konvexer stochastischer Prozess über $(Ω,\A)$ auf $O$.
+
+	Dann ist die Pfadabbildung
+	\begin{align*}
+		X \colon(Ω, \A) ⟶ \klammern[\Big]{C_c(O), \B_d\klammern[\big]{C_c(O)}}
+	\end{align*}
+	messbar.
+\end{korollar}
+
+\begin{korollar}\label{korollar9.4} %9.3 in VL
+	Seien $X,Y$ Zufallsvariablen in $\klammern[\big]{C_c(O),d}$.
+	Dann gilt:
+	\begin{align*}
+		X\overset{\L}{=} Y⇔
+		\klammern[\big]{X(t_1),…,X(t_k)}
+		\overset{\L}{=}
+		\klammern[\big]{Y(t_1),…,Y(t_k)}
+		\qquad∀ t_1,…,t_k∈ O,∀ k∈ℕ
+	\end{align*}
+	(Die endlich dimensionalen Randverteilungen sind gleich.)
+\end{korollar}
+
+\begin{beispiel}\label{beispiel9.5}\
+	\begin{enumerate}[label=(\arabic*)]
+		\item $f(x):=\abs{x}$, $x ∈ ℝ$ ist konvex.
+		\begin{proof}
+			Folgt aus Dreiecksungleichung.
+		\end{proof}
+		\item Sei $f\colonℝ⟶ℝ$ konvex und $a∈ℝ$.
+		Dann ist auch $f_a(x):=f(x-a)$, $x∈ℝ$ konvex.
+		\begin{proof}
+			Nachrechnen.
+		\end{proof}
+	\end{enumerate}
+\end{beispiel}
+
+\begin{lemma}\label{lemma9.6}
+	Sei $F$ Verteilungsfunktion auf $ℝ$ mit
+	\begin{align*}
+		∫_ℝ \abs{x}~F(\d x)<∞
+	\end{align*}
+	Dann ist die Funktion
+	\begin{align*}
+		M\colonℝ⟶ℝ,\qquad M(t):=∫_ℝ\abs{x-t}~F(\d x)\qquad∀ t∈ℝ
+	\end{align*}
+	konvex.
+\end{lemma}
+
+\begin{proof}
+	Folgt aus Beispiel \ref{beispiel9.5} und der Monotonie und Linearität des Integrals.
+\end{proof}
+
+Erinnere an:
+$m$ ist \define{Median} von $F$
+\begin{align*}
+	:⇔ m∈ A(M)
+\end{align*}
+$\hat{m}_n$ ist \define{empirischer Median} zu $X_1,…,X_n$
+\begin{align*}
+	:⇔&\hat{m}_n∈ A(M_n)
+	\qquad\mit\qquad
+	\hat{M}_n(t):=∫_ℝ\abs{x-t} F_n(\d x)
+\end{align*}
+wobei $F_n$ die \undefine{empirische Verteilungsfunktion} zu $X_1,…,X_n$ ist.
+Also:
+\begin{align*}
+	M_n(t) = \frac{1}{n} \sum_{i=1}^n \abs[\big]{X_i-t} \qquad ∀ t ∈ ℝ
+\end{align*}
+Gemäß \ref{korollar9.3} sind $M_n$, $n ∈ ℕ$ und $M$ als konvexe stochastische Prozesse Zufallsvariablen in $\klammern[\big]{C_c(ℝ),d}$.
+
+\begin{satz}\label{satz9.7}
+	Sei $D ⊆ O$ dicht in $O= \intervallO{a}{b} ⊆ ℝ$ (z.\,B.\ $D=ℚ ∩ O$) und $K ⊆ O$ kompakt.
+	Dann existieren eine universelle Konstante $c$ und Punkte $b_1, …, b_m ∈ D$ so,
+	dass für jede konvexe Funktion $f \colon O ⟶ ℝ$ gilt:
+	\begin{align*}
+		\abs[\big]{f(x)-f(y)} ≤ c \sum_{i=1}^n \abs[\big]{f(b_i)} · \abs{x-y} \qquad ∀ x, y ∈ O
+	\end{align*}
+	% todo: K kommt nicht nochmal vor. Vermutlich ist da ein Fehler drin!
+\end{satz}
+
+\begin{proof}
+	Siehe \cite[Seite 402 bis 403]{hand2008statistical}. % Liese und Mischka (2008) \undefine{Statistical decision theory} Seite 402 bis 403.
+\end{proof}
+
+% Ferger: "Da sehe ich mich noch Samstagsmittags nach einem gut gekühlten Weißwein und blättere in dem Buch und stoße auf dieses Ergebnis. Da bin ich erst mal vor Freude hin und her gehopst."
+
+\begin{theorem}\label{theorem9.8}
+	Seien $f_n,n∈ℕ$ konvexe Funktionen auf $O$, $D⊆ O$ dicht in $O$.
+	Sei $f\colon O⟶ℝ$ eine Funktion.
+	Falls
+	\begin{align}\label{eqtheorem9.8Stern}\tag{$\ast$}
+		f_n(x)\ntoinf  f(x)\qquad∀ x∈ D
+	\end{align}
+	gilt, so gilt:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			f(x)=\limn f_n(x)\text{ existiert }\qquad∀ x∈ O
+		\end{aligned}$
+		\item $f$ ist konvex.
+		\item $\begin{aligned}
+			\norm[\big]{ f_n-f}_K\ntoinf 0\qquad∀ K⊆ O
+		\end{aligned}$ kompakt
+	\end{enumerate}
+\end{theorem}
+
+% Ferger kommt aus Westerwald, Westerburg
+
+\begin{proof}
+	Siehe \cite[Theorem 10.8]{rockafellar1972convex}.% Rockafellar (1972) \undefine{Convex Analysis} Theorem 10.8.
+\end{proof}
+
+\begin{satz}\label{satz9.9}
+	Seien $X_n,n∈ℕ$ konvexe stochastische Prozesse und sei $X$ stetiger stochastischer Prozess auf $ℝ$ über $(Ω,\A,\P)$.
+	Dann gilt \ref{it:9.9fd} $⇔$ \ref{it:9.9distr} $⇒$ \ref{it:9.9konvex}:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:9.9fd} $\begin{aligned}
+			X_n\fdto X\qquad\text{Konvergenz der fidis}
+		\end{aligned}$
+		\item \label{it:9.9distr} $\begin{aligned}
+			X_n\distrto  X\text{ in }\klammern[\big]{C(ℝ),d}
+		\end{aligned}$
+	\item \label{it:9.9konvex} In jedem Fall ist $X$ ein \emph{konvexer} stochastischer Prozess.
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}~
+	\paragraph{Zeige \ref{it:9.9fd} $⇒$ \ref{it:9.9distr}:}
+	Gemäß Satz \ref{satz7.23} ist zu zeigen:
+	\begin{align}\label{eqProofSatz9.9Stern}\tag{$\ast$}
+		X_n^{(j)}\distrto  X^{(j)}\text{ in }\klammern[\big]{C(I_j),d_j}\qquad∀ j∈ℕ\mit I_j:=[-j,j]
+	\end{align}
+	Nachweis von \eqref{eqProofSatz9.9Stern} mit Satz \ref{satz7.9}.
+	Voraussetzung \ref{it:7.9fd} in Satz \ref{satz7.9} ist nach Voraussetzung erfüllt.
+	Betrachte den \define{Oszillationsmodul}
+	\begin{align*}
+		q\klammern{X_n^{(ij)},δ}
+		\overset{\text{Def}}&=
+		\sup\set[\Big]{\abs[\big]{X_n(s) - X_n(t)} : s, t ∈ I_j, \abs{s - t} ≤ δ}\\
+		&≤ \underbrace{c \sum_{i=1}^m \abs[\big]{X_n(b_i)}}_{=: Z_n} δ \mit c > 0 \text{ und } b_1, …, b_m ∈ I_j
+	\end{align*}
+
+	Wegen \ref{it:9.9fd} gilt
+	\begin{align*}
+		\klammern[\big]{X_n(b_1), …, X_n(b_m)} \overset{\L}&{\longrightarrow}
+		\klammern[\big]{X(b_1), …, X(b_m)} \\
+		\overset{\ref{satz4.10ContinuousMappingTheorem}}{⇒}
+		Z_n \distrto  Z &= c \sum_{i=1}^m \abs[\big]{X(b_i)} \\
+		⇒
+		0 &≤ \limsup_{n⟶∞} \P \argu[\Big]{\underbrace{w\argu{X_n^{(j)},δ_k }}_{≤ Z_n δ_k} ≥ ε } \\
+		&≤ \limsup_{n⟶∞} \P \argu{Z_n ≥ \frac{ε}{δ_k}} \\
+		\overset{\text{Portmanteau}}&{≤}
+		\P\klammern{Z≥\frac{ε}{δ_k}}
+		\qquad ∀ ε > 0, ∀ (δ_k)_{k∈ℕ} ⊆ \intervallO{0}{∞}
+	\end{align*}
+	Für $δ_k\downarrow0$ folgt $\frac{ε}{δ_k}\overset{k⟶∞}{\longrightarrow}+∞$, also
+	\begin{align*}
+		\P\argu{Z ≥ \frac{ε}{δ_k}} \overset{k⟶∞}{\longrightarrow} 0
+	\end{align*}
+	Somit ist Voraussetzung \ref{it:7.9limlimsup} in Satz \ref{satz7.9} erfüllt.
+	Daraus folgt \ref{it:9.9distr}.
+	\paragraph{Zeige \ref{it:9.9distr} $⇒$ \ref{it:9.9fd}:}
+	Folgt direkt aus dem CMT \ref{satz4.10ContinuousMappingTheorem}.
+	\paragraph{Zeige \ref{it:9.9distr} $⇒$ \ref{it:9.9konvex}:}
+	Ohne Beweis.
+\end{proof}
+
+\begin{lemma}[Subspace-Lemma]\label{lemma9.10SubspaceLemma}
+	Sei $U⊆\S$ ein Unterraum des metrischen Raumes $(\S,d)$.
+	Seien $Z,Z_n$, $n ∈ ℕ$ Zufallsvariablen in $\klammern[\big]{U, \B_d(U)}$.
+	Dann gilt:
+	\begin{align*}
+		Z_n\distrto  Z\text{ in }(\S,d)
+		⇔
+		% todo: vermutlich ist wohl eher ⇒
+		Z_n\distrto  Z\text{ in }(U,d)
+	\end{align*}
+\end{lemma}
+
+\begin{proof}
+	Siehe \cite[Lemma 3.2]{kallenberg2006foundations}. % Kallenberg (1997) \undefine{Foundations of modern probability}, Lemma 3.2
+\end{proof}
+
+\begin{korollar}\label{korollar9.11}
+	Seien $X,X_n,n∈ℕ$ konvexe stochastische Prozesse über $(Ω,\A)$ auf $ℝ$ nach $ℝ$ mit
+	\begin{align*}
+		X_n\fdto X
+	\end{align*}
+	Dann folgt
+	\begin{align*}
+		X_n\distrto  X\text{ in }\klammern[\big]{C_c(ℝ),d}
+	\end{align*}
+\end{korollar}
+
+\begin{proof}
+	Folgt aus Satz \ref{satz9.9} und Lemma \ref{lemma9.10SubspaceLemma}.
+\end{proof}

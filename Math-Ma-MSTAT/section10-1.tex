@@ -1,0 +1,52 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung: Starke Konsistenz des empirischen Medians} %noNumber
+
+\begin{align*}
+	M_n(t) &:= \frac{1}{n} \sum_{i=1}^n \abs[\big]{X_i - t} &∀& t ∈ ℝ \\
+	\overset{\text{SGGZ}}{⇒}
+	M_n(t) \overset{n⟶∞}&{\longrightarrow} \Earg[\Big]{\abs[\big]{X_1-t}}
+	\overset{\text{Def}}= M(t)\text{ f.\,s.} &∀& t∈ℝ^d
+\end{align*}
+Falls der Median $m$ von $F$ \emph{eindeutig}, d.\,h.\ $A(M)=\set{ m}$
+(Beachte: hier ist $M$ deterministisch, also konstanter stochastischer Prozess),
+so folgt aus Satz \ref{satz10.3} sofort für jede messbare Auswahl $\hat{m}_n∈ A(M_n)$:
+\begin{align*}
+	\hat{m}_n\ntoinf  m~~\P\text{-f.\,s.}
+\end{align*}
+Zum Beispiel $\hat{m}_n:=F^{-1}\klammern{\frac{1}{2}}$.
+
+Das Argmin-Theorem für Verteilungskonvergenz ist:
+
+\begin{satz}\label{satz10.4}
+	Seien $Z,Z_n$, $n∈ℕ$ konvexe stochastische Prozesse auf $ℝ$ über $(Ω, \A, \P)$.
+	Es gelte:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:10.4argminEindeutig} $\begin{aligned}
+			A(Z)=\set{σ}
+		\end{aligned}$ f.\,s. für eine Zufallsvariable $σ$.
+		\item \label{it:10.4fd} $\begin{aligned}
+			Z_n\fdto  Z
+		\end{aligned}$
+	\end{enumerate}
+	Dann gilt für jede messbare Auswahl $σ_n∈ A(Z_n)$:
+	\begin{align*}
+		σ_n \distrto σ \qquad \klammern{\argmin(Z_n) \distrto σ}
+	\end{align*}
+\end{satz}
+
+\begin{proof}[Beweisskizze]
+	\begin{align*}
+		\ref{it:10.4fd}
+		&⇒ Z_n\ntoinf Z\text{ in }\klammern[\big]{C(ℝ),d}\\
+		&⇒ \limsup_{n⟶∞} \P\argu[\big]{σ_n ∈ K}
+		≤ \P \argu{\set{σ} ∩ K \neq ∅}
+		=\P \argu[\big]{σ ∈ K} \qquad ∀ K ∈ \mathcal{K}
+		\qedhere
+	\end{align*}
+\end{proof}
+

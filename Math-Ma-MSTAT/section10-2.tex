@@ -1,0 +1,256 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung: Verteilungskonvergenz des Medians} %nonumber
+Seien $X_1, …, X_n$ \iid\ $\sim F$.
+$F$ besitze Median $m∈ℝ$ und erfülle
+\begin{align}\label{eqAnwendungVerteilungskonv_B}\tag{B}
+	∃ψ\colonℝ⟶ℝ,∃(a_n)_{n∈ℕ}\mit a_n⟶∞:
+	\limn√{n} \klammern{ F \argu{m + \frac{t}{a_n} } - F(m)} = ψ(t)
+	~~ ∀ t ∈ ℝ
+\end{align}
+
+\begin{beisp} %nonumber
+	Sei $F$ differenzierbar an der Stelle $m$.
+	Dann gilt:
+	\begin{align*}
+		\underbrace{\frac{F\klammern{m+\frac{t}{√{n}}}-F(m)}{\frac{1}{√{n}}· t}}_{
+			\ntoinf F'(m)
+		}· t
+		\ntoinf F'(m)· t\\
+		ψ(t)=
+		\begin{cases}
+			F_+'(m)· t, & \falls t≤ 0\\
+			F_-'(m)· t, & \falls t<0
+		\end{cases}
+	\end{align*}
+\end{beisp}
+
+Erinnerung:
+\begin{align*}
+	\hat{m}_n&:=\argmin_{t∈ℝ} M_n(t),\qquad
+	M_n(t)=\frac{1}{n} \sum_{i=1}^n\abs[\big]{X_i-t}
+\end{align*}
+Idee: Betrachte den \define{reskalierten Prozess zu $a_n$}:
+\begin{align*}
+	Z_n(t)&:=a_n·√{n}·\klammern{M_n \argu{m + \frac{t}{a_n} } - M_n(m) } \qquad ∀ t ∈ ℝ
+\end{align*}
+Dann gilt (bereits gesehen):
+\begin{align*}
+	a_n\klammern[\big]{\hat{m}_n-m}
+	&=\argmin_{t∈ℝ} Z_n(t)
+\end{align*}
+Die $T_n$ sind konvexe stochastische Prozesse.
+\paragraph{Ziel:} Konvergenz der fidis $Z_n\fdto Z$.
+
+Dazu verwende
+
+\begin{lemma}[Keith Knight]\label{lemma10.5KeithKnight}
+	\begin{align*}
+	\abs{x - y} - \abs{x} &= -y \klammern{1 - 2 \indi_{\set{x ≤ 0}}} + R(x,y)
+		\qquad∀ x\neq y∈ℝ\quad\mit\\
+		R(x,y)&:=2·∫_0^y\indi_{(∞,s]}(x)-\indi_{(-∞,0]}(x)~λ(\d s)
+	\end{align*}
+\end{lemma}
+
+Somit folgt für uns:
+\begin{align*}
+	Z_n(t)
+	&=a_n √{n} \klammern{M_n \argu{m + \frac{t}{a_n}} - M_n(m)} \\
+	&=\frac{a_n}{√{n}} \sum_{i=1}^n \abs[\bigg]{
+		\underbrace{X_i-m}_{\hat{=}x}
+		- \underbrace{\frac{t}{a_n}}_{\hat{=}y}} - \abs[\big]{\underbrace{X_i-m}_{\hat{=}x}} \\
+	\overset{\ref{lemma10.5KeithKnight}}&=
+	\frac{a_n}{√{n}} \sum_{i=1}^n
+	- \frac{t}{a_n} \klammern{1 - 2 \indi_{\set{X_i ≤ m}}} + R\argu{X_i - m_i \frac{t}{a_n}} \\
+	&= \underbrace{\frac{-t}{√{n}} \sum_{i=1}^n \klammern{1 - 2 \indi_{\set{X_i ≤ m}}}}_{
+		=:S_n(t)
+	} + \underbrace{\frac{a_n}{√{n}} \sum_{i=1}^m R\argu{X_i - m_i \frac{t}{a_n}}}_{
+		:=D_n(t)
+	}
+\end{align*}
+Mit
+\begin{align*}
+	ζ_i &:= 1 - 2 \indi_{\set{X_i ≤ m}} \qquad ⇒ ζ_i \text{ i.\,i.\,d.}
+\end{align*}
+gilt
+\begin{align*}
+	\Earg[\big]{ζ_i}
+	&= 1 - 2 \underbrace{F(m)}_{=\frac{1}{2}} = 0
+\end{align*}
+Hier geht Lemma \ref{lemmaMedian}
+ein. Das $F$ stetig ist, folgt aus \eqref{eqAnwendungVerteilungskonv_B}.
+\begin{align*}
+	\Var(ζ_i)
+	&= 4 F(m) \klammern[\big]{1-F(m)}=1 \\
+	\overset{\text{ZGWS}}&{⇒}
+	\frac{1}{√{n}} \sum_{i=1}^n ζ_i
+	\distrto \Nor(0,1)\\
+	\overset{\text{CMT}}&{⇒}
+	S_n(t)
+	\distrto -N· t\qquad∀ t∈ℝ
+\end{align*}
+
+Für die Behandlung von $D_n(t)$ verwende:
+
+\begin{lemma}\label{lemma10.6}
+	Seien $U_n$, $n ∈ ℕ$ reelle Zufallsvariablen mit
+	\begin{align*}
+		 \Earg[\big]{U_n}\ntoinf
+		 % todo: to was?
+		 \qquad\text{und}\qquad
+		 \Var(U_n)\ntoinf 0.
+	\end{align*}
+	Dann gilt
+	\begin{align*}
+		U_n \stochto μ.
+	\end{align*}
+\end{lemma}
+
+\begin{proof}
+	\begin{align*}
+		\P\argu{\abs[\big]{U_n - \Earg{U_n}} > ε }
+		\overset{\text{Markov}}&{≤}
+		ε^{-2} \Var\klammern[\big]{U_n}\ntoinf 0\\
+		U_n - \Earg{U_n} \stochto 0
+		⇒ U_n &= \underbrace{(U_n - \Earg{U_n}}_{\stochto0}
+		+ \underbrace{\Earg{U_n}}_{→ μ}
+		\qedhere
+	\end{align*}
+\end{proof}
+
+Somit erhalten wir (hier der Fall $t>0$):
+\begin{align*}
+	\Earg[\big]{D_n(t)}
+	&= a_n √{n} \, \Earg{R\argu{X_1 - m, \frac{t}{a_n}}} \\
+	&= -2 a_n √{n}\, \Earg[\Bigg]{∫_0^{\frac{t}{a_n}}
+		\underbrace{\indi_{\set{X_1 ≤ s + m}} - \indi_{\set{X_1 ≤ m}}}_{
+		≥ 0,~\falls t≥0
+	}~λ(\d s) } \\
+	\overset{\text{Fubini}}&=
+	2 a_n √{n} \, ∫_0^{\frac{t}{a_n}} F(m + s) - F(m) ~ \underbrace{λ(\d s}_{=\d s}) \\
+	\overset{\text{Subs}}&=
+	2 a_n √{n} \frac{1}{a_n} ∫_0^{t}F\argu{m + \frac{u}{a_n}} - F(m) \d u \\
+	&= 2 ∫_0^t \underbrace{√{n} \klammern{F\argu{m + \frac{u}{a_n}}-F(m)}}_{
+		\ntoinf ψ(u)\text{ gemäß }\eqref{eqAnwendungVerteilungskonv_B}
+	} \d u \\
+\end{align*}
+Bei der Substitution wurde benutzt:
+$u= s a_n$, $s=\frac{u}{a_n}$, $\frac{\d s}{\d u} = \frac{1}{a_n}$.
+
+Da $ψ$ integrierbar auf $\intervall{0}{t}$ (vergleiche Bemerkung \ref{bemerkung10.7} unten) folgt mit dem Satz der dominierten Konvergenz:
+\begin{align*}
+	\limn \Earg[\Big]{D_n(t)} = 2 ∫_0^t ψ(u) \d u
+\end{align*}
+Betrachte nun die Varianz
+\begin{align*}
+	&\Var\klammern[\Big]{D_n(t)}\\
+	\overset{\text{unab}}&=
+	a_n^2·\frac{1}{n} n \Var\argu{R\argu{X_1-m,\frac{t}{a_n}}}\\
+	&=a_n^2 \Var\argu{R\argu{X_1 - m, \frac{t}{a_n} }} \\
+	&≤ a_n^2 \Earg{ \klammern{ R \argu{X_1 - m, \frac{t}{a_n}} }^2 } \\
+	\overset{\ref{lemma10.5KeithKnight}}&=
+	a_n^2·4 \Earg{
+		∫_0^{\frac{t}{a_n}} ∫_0^{\frac{t}{a_n}} \klammern{
+		\indi_{\set{ X_1≤ m+s}}
+		-\indi_{\set{ X_1≤ m}}
+		}· \klammern{
+		\indi_{\set{X_1 ≤ m + u}}
+		- \indi_{\set{X_1 ≤ m}}
+	} \d s\d u}\\
+	\overset{s,u≥0}&{=}
+	a_n^2·4 \Earg{
+		∫_0^{\frac{t}{a_n}} ∫_0^{\frac{t}{a_n}}
+			\indi_{\set{X_1 ≤ m + \min(s, u)}} - \indi_{\set{X_1 ≤ m}}
+		\d s \, \d u
+	} \\
+	\overset{\text{Fubini}}&=
+	4· a_n^2 ∫_0^{\frac{t}{a_n}} ∫_0^{\frac{t}{a_n}}
+		F\argu[\big]{m + \min(s, u)} - F(m) \d s \, \d u \\
+	\overset{\text{2x Subs}}&=
+	4 ∫_0^t ∫_0^t \underbrace{F\argu{m + \frac{\min(s, u)}{a_n}} - F(m)}_{
+		\ntoinf 0\text{, da $F$ stetig in }m
+	}\d s \, \d u \\
+	\overset{n⟶∞}&{\longrightarrow}0 \text{ gemäß dominierter Konvergenz} \\
+	\overset{\ref{lemma10.6}}&{⇒}
+	D_n(t) \stochto 2 ∫_0^t ψ(u) \d u =: D(t) \\
+	&⇒
+	Z_n(t) = \underbrace{S_n(t)}_{\distrto -N· t} + \underbrace{D_n(t)}_{\stochto D(t)}
+	\distrto -N· t + D(t) := Z(t)
+\end{align*}
+Die letzte Verteilungskonvergenz geht wegen Cramér-Slutsky \ref{satz4.15CramerSlutsky} und CMT \ref{satz4.10ContinuousMappingTheorem}.
+
+Oben geht auch ein allgemeines Prinzip ein:
+\begin{align*}
+	\klammern{∫_0^af(u)\d u}^2=∫_0^a∫_0^a f(u)· f(y)\d u \, \d y
+\end{align*}
+
+%Ferger: "Die jungen Studentinnen hätten mir zum Geburtstag doch mal einen Kuchen backen können. Oder eine Flasche Bier."
+%Ferger: "Kennen Sie den Kollegen Matthies? Da will ich modisch auch noch hin! Der Kollege Matthies so einen Wischer. Die wünsche ich mir zu Weihnachten."
+
+Also haben wir insgesamt gezeigt $(t≤ 0$ geht analog):
+\begin{align*}
+	Z_n(t) \distrto Z(t) \overset{\text{Def}}{=} -N t + 2 ∫_0^t ψ(u)\d u \qquad ∀ t ∈ ℝ
+\end{align*}
+
+Dies zeigt die Konvergenz der \emph{eindimensionalen} fidis.
+Mit dem Cramér-Wold-Device \ref{satz5.4CramerWoldDevice} folgt tatsächlich
+\begin{align*}
+	\klammern[\Big]{Z_n(t_1),…,Z_n(t_k)}
+	\distrto
+	\klammern[\Big]{Z(t_1),…,Z(t_k)}
+	\qquad∀ t_1,…,t_2∈ℝ,∀ k∈ℕ
+\end{align*}
+
+Es ist $ψ$ insbesondere (zwei Mal) stetig differenzierbar auf $ℝ\setminus\set{0}$ (vergleiche Bemerkung \ref{bemerkung10.7} unten) und streng monoton wachsend.
+Dann folgt
+\begin{align*}
+	Z'(t)&=- N+2·ψ(t),\qquad N\sim\Nor(0,1)\\
+	Z'(t)\overset{!}&{=}0⇒ψ(t)=\frac{1}{2} N\\
+	&⇒ σ:=ψ^{-1}\argu{\frac{1}{2} N}\text{ ist Nullstelle von }Z'\\
+	Z''(t)&=2·ψ'(t)\overset{\text{strenge Monotonie}}{>0}\qquad∀ t\neq 0\\
+	% CHECKED: '''' used.
+	&⇒ Z''(σ)>0\quad\P\text{-f.\,s.}
+	% CHECKED: '''' used.
+\end{align*}
+Also ist $σ$ f.\,s.\ eindeutige Minimalstellen von $Z$.
+Aus Satz \ref{satz10.4} folgt schließlich Satz \ref{satz10.8}.
+
+\begin{bemerkungnr}[Smirnov]\label{bemerkung10.7}\enter
+	$F$ besitze eindeutigen Median $m∈ℝ$ und erfülle die Bedingung \eqref{eqAnwendungVerteilungskonv_B}.
+	Dann gilt:
+	\begin{align*}
+		∃ β,c,d>0:ψ(t)=
+		\begin{cases}
+			c t^β, &\falls t ≥ 0 \\
+			-d\abs{t}^β, &\falls t < 0
+		\end{cases}
+	\end{align*}
+\end{bemerkungnr}
+
+\begin{satz}\label{satz10.8}
+	\begin{align*}
+		a_n \klammern{\hat{m}_n-m} \distrto ψ^{-1}\argu{\frac{1}{2} N(0,1)}
+	\end{align*}
+\end{satz}
+
+\begin{beispiel}\label{beispiel10.9}
+	Es gelte für beliebig kleines $δ>0$:
+	\begin{align*}
+		F(x):=
+		\begin{cases}
+			c \abs{x-m}^β + \frac{1}{2}, &\falls m ≤ x ≤ m + δ \\
+			-d \abs{x-m}^β + \frac{1}{2}, &\falls m - δ ≤ x < m
+		\end{cases}
+		\qquad ∀ x ∈ ℝ
+	\end{align*}
+	Dann erfüllt $F$ die Bedingung \eqref{eqAnwendungVerteilungskonv_B} mit $a_n = n^{\frac{1}{2 β}}$ und $ψ$ wie in Bemerkung \ref{bemerkung10.7}.
+	Dann gilt
+	\begin{align*}
+		n^{\frac{1}{2 β}} \klammern[\Big]{\hat{m}_n - m} \distrto ψ^{-1}\argu{\frac{1}{2} N}
+	\end{align*}
+\end{beispiel}
+

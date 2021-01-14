@@ -1,0 +1,86 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\documentclass[]{scrreprt}
+
+\input{../latex/packages}
+\input{../latex/theoremenvironments}
+\input{../latex/font}
+\input{../latex/commands}
+\input{../latex/commands_Willi}
+\input{../latex/commands_Felix}
+\input{commands_MSTAT}
+
+\renewcommand{\thesection}{\arabic{section}}  % section counting is highest in document
+
+%\setlength{\parindent}{0px} %dieser Befehl verhindert das Einrücken eines Absatzes bei einer leeren Codezeile.
+
+\title{
+  Vorlesung\\
+  Mathematische Statistik \\
+  }
+\subtitle{Wintersemester 2019/2020}
+\author{
+	Vorlesung: Prof. Dr. Dietmar Ferger\\
+	Mitschrift: Willi Sontopski, Felix Hilsky
+}
+\publishers{\url{https://github.com/LostInDarkMath/MatheMaster}}
+
+\begin{document}
+	% begin hack: fix overfull hbox warning caused by \tableofcontents when exceeding 100 pages
+	\makeatletter
+  	\renewcommand{\@pnumwidth}{2em}
+  	%\renewcommand{\@tocrmarg}{3em} % currently unnecessary
+  	\makeatother
+	% end hack
+
+	\pagenumbering{gobble}	% disable pagenumbering
+	\maketitle
+	\doclicenseThis
+	\tableofcontents        % Inhaltsverzeichnis
+	\pagenumbering{arabic}	% enable pagenumbering
+
+	\input{section1}
+	\input{section2}
+	\input{section3}
+	\input{section3-2}
+	\input{section3-3}
+	\input{section3-4}
+	\input{section3-5}
+	\input{section4}
+	\input{section4-1}
+	\input{section4-2}
+	\input{section4-3}
+	\input{section5}
+	\input{section6}
+	\input{section7}
+	\input{section7-0}
+	\input{section7-1}
+	\input{section7-2}
+	\input{section8}
+	\input{section8-1}
+	\input{section8-2}
+	\input{section8-3}
+	% Exponentialfamilien 2020 nicht behandelt
+	% Kapitel 9 und 10 2020 nicht behandelt
+	% \input{section9}
+	% \input{section10}
+	% \input{section10-1}
+	% \input{section10-2}
+
+	\appendix
+	% \chapter{Übersicht aller Argmin-Theoreme}
+	% \input{zusammenfassendeTabelle}
+
+	\input{anhang}
+
+	\listoffigures
+	%\listoftables
+	\input{zusammenfassendeTabelle}
+
+	\nocite{*} % erstellt Literaturverzeichnus ohne Verweise
+	\bibliography{literatur}
+\end{document}

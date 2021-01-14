@@ -1,0 +1,459 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+Nächstes Ziel: Handhabbare Kriterien für den Nachweis der Verteilungskonvergenz in $C$. Dazu:
+
+\begin{definition} %7.7
+	Für eine Funktion $f \colon I ⟶ ℝ$ und $δ > 0$ definiere den \define{Stetigkeitsmodul/ Oszillationsmodul}
+	\begin{align*}
+		ω(f,δ):=\sup \set[\Big]{\abs{f(s)-f(t)}:s, t ∈ I \mit \abs{s-t} ≤ δ}
+	\end{align*}
+\end{definition}
+
+Aus der Analysis ist bekannt:
+\begin{align*}
+	f∈ C(I)⇔ω(f,δ)\overset{δ⟶0}{\longrightarrow}0
+\end{align*}
+
+\begin{lemma}\label{lemma7.8}
+	$ω(·,δ)\colon (C,d)⟶ℝ$ ist stetig für jedes $δ>0$ und damit gemäß Lemma \ref{Lemma3.2} \ref{it:3.2StetigMessbar} auch $\B(C)$-$\B(ℝ)$-messbar.
+\end{lemma}
+
+\begin{proof}
+	Sei $g∈ C$ und $s,t∈ I$ mit $\abs{s-t}≤δ$.
+	Dann gilt:
+	\begin{align*}
+		\abs{f(s)-f(t)}
+		&= \abs[\big]{f(s)-g(s)+g(s)-g(t)+g(t)-f(t)}\\
+		\overset{\text{DU}}&{≤}
+		\underbrace{\abs{f(s)-g(s)}}_{≤ d(f,g)}
+		+ \underbrace{\abs{g(s)-g(t)}}_{ ≤ ω(g,δ)}
+		+ \underbrace{\abs{ g(t)-f(t)}}_{≤ d(f,g)}\\
+		& ≤
+		ω(g,δ)+2· d(f,g)\\
+		\overset{\sup}&{⇒}
+		ω(f,δ)
+		≤ ω(g,δ) + 2 d(f,g)\\
+		&⇒ ω(f,δ)-ω(g,δ)
+		≤ 2 d(f,g) %& ∀ f,g
+		\\
+		&⇒ ω(g,δ) - ω(f,δ)
+		≤ 2 d(g,f) = 2 d(f,g)
+		\\
+		&⇒
+		\abs{ω(f,δ)-ω(g,δ)}≤ 2 d(f,g)
+	\end{align*}
+	Das heißt, $ω(·,δ)$ ist sogar Lipschitz-stetig.
+\end{proof}
+
+%Ferger: "Ich war übrigens gestern in der Stadt. Da bin ich eigentlich nie. Ich war in mindestens 7 oder Schuhgeschäften. Es war noch jemand dabei. Ich selber habe kein Schuhe gekauft. Und in jedem Geschäft war die Verweildauer sehr lang. Und jedes Schuhgeschäft wurde GESCANNT: Jeder Schuh wurde angefasst und begutachtet. [...] Weihnachten ist was Schönes!"
+
+%Ferger: "Wenn man sich rote Schuhe kauft, muss man dazu auch noch eine passende rote Tasche kaufen. Wussten Sie das?"
+
+% Dieses Jahr regt sich Ferger über die Rente auf. Die Franzosen protestieren, was er
+% prinzipiell richtig findet, aber sich wundert, da die Franzosen bisher mit 62 in Rente gehen
+% während er als erster Jahrgang mit 67 in Rente gehen wird.
+% Das geht noch eine ganze Weile weiter.
+% Schließlich regt er sich über Merz auf, der die SPD eine 11%-Partei genannt hat Ferger dachte, Merz
+% sei in der FDP. Aber Merz ist CDU.
+% Ferger ist Grünen-Wähler.
+Erstes Kriterium für Verteilungskonvergenz in:
+
+\begin{satz}\label{satz7.9}
+	Seien $X,X_n,n∈ℕ$ Zufallsvariablen in $C$ über $(Ω,\A,\P)$. Falls
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:7.9fd}
+			$X_n\fdto  X$, das heißt
+			\begin{align*}
+				 \underbrace{\klammern[\big]{X_n(t_1),…,X_n(t_k)}}_{=π_T∘ X_n} \distrto \underbrace{\klammern[\big]{X(t_1),…,X(t_k)}}_{=π_T∘ X}
+				\quad∀ t_1,…,t_k∈ I\,∀ k∈ℕ,
+			\end{align*}
+			die so genannte \define{Konvergenz der fidis} (finite dimensional distributions, gesprochen \enquote{feidies}).
+		\item \label{it:7.9limlimsup}
+			$\begin{aligned}
+				\lim_{k⟶∞}\limsup_{n⟶∞}\P\klammern[\Big]{ω\klammern[\big]{X_n,δ_k}>ε}=0\qquad∀ε>0
+			\end{aligned}$\\
+			für eine Folge $(δ_k)_{k∈ℕ}$ in $(0,∞)$ mit $δ_k \downarrow 0$
+	\end{enumerate}
+	so folgt:
+	\begin{align*}
+		X_n\distrto X\text{ in }(C,d)
+	\end{align*}
+\end{satz}
+% Dieses Kriterium ist häufig nützlich für Martingale mit Maximalungleichungen.
+% In seiner Dissertation hat er sich mit diesem Kriterium und den Stetigkeitsmoduln herumgeplagt.
+% Das war schwierig.
+\begin{proof}
+	Siehe \cite[Seite 348]{gaensslerstute1977Wahrscheinlichkeitstheorie}.
+\end{proof}
+\begin{proof}[Felix' Beweis]\footnote{Nicht in der Vorlesung behandelt.}
+	Laut Portmanteau-Theorem \ref{satz4.2} genügt es für $f \colon C(I) → ℝ$ gleichmäßig stetig
+	und beschränkt zu zeigen,
+	dass
+	\begin{equation} \label{eq:7.9Ziel}
+		∫_{C(I)} f \d (\P ∘ X_n^{-1}) → ∫_{C(I)} f \d (\P ∘ X^{-1}).
+	\end{equation}
+	Mit \ref{it:7.9fd} haben wir diese Konvergenz erstmal nur für spezielle $f$,
+	nämlich solche der Form $f = \tilde{f} ∘ π_T$ mit $T ⊂ I$, $T$ endlich,
+	mit $\tilde f \colon ℝ^{\measure{T}} → ℝ$ gleichmäßig stetig und beschränkt.
+
+	Um \eqref{eq:7.9Ziel} auf die fidis zurückzuführen, betrachten wir den Fehler,
+	den wir machen, wenn wir statt $f$ nur endlich viele Punkte betrachten:
+	\begin{equation}
+		\text{Sei } \tilde{f}_T (x_1, ..., x_{\measure{T}})
+		:= f \argu[\Big]{\operatorname{Poly} \argu[\Big]{ (t_1, x_1), ..., (t_{\measure{T}}, x_{\measure{T}}) }},
+	\end{equation}
+	wobei $T = \set{t_1, ..., t_{\measure{T}}}$, $\inf I = t_1 < ... < t_{\measure{T}} = \sup I$,
+	und $\operatorname{Poly}$ der Polygonzug durch die angegebenen Punkte ist,
+	analog zur Konstruktion in Donsker \ref{satz7.9}.
+	Für $h ∈ C(I)$ sei $\operatorname{Poly}(h, T)$ der Polygonzug, der als Stützpunkte
+	die Elemente von $T$ hat und in diesen mit $h$ übereinstimmt.
+
+	Zu $δ_k$ wähle nun $T_k ⊂ I$ so, dass die Abstände aufeinanderfolgender Punkte
+	kleiner ist als $δ_k$ (z.\,B.\ gleichverteilt).
+
+	Dann gilt
+	\begin{equation} \label{eq:7.9Polyannaehrung}
+		\norm{h - \operatorname{Poly}(h, T_k)}_{∞} ≤ 2 ω(h, δ_k) \quad (h ∈ C(I)).
+	\end{equation}
+	Dies lässt sich sehen, wenn man sich einen Abschnitt zwischen zwei Elementen
+	betrachtet:
+	\begin{align*}
+		\text{Für } s ∈ \intervall{t_i}{t_{i + 1}}:
+	  \abs{h(t_i) - X(s)} &< ω(h, δ_k) \\
+		\text{und }
+		\abs{h(t_i) - \operatorname{Poly}(h, T_k)(s)} &=
+		\abs{\operatorname{Poly}(h, T_k)(t_i) - \operatorname{Poly}(h, T_k)(s)} \\
+		&≤ \abs{\operatorname{Poly}(h, T_k)(t_i) - \operatorname{Poly}(h, T_k)(t_{i+1})} \\
+		&= \abs{h(t_i) - h(t_{i + 1})} < ω(h, δ_k) \\
+		⇒ \abs{h(s) - \operatorname{Poly}(h, T_k)(s)} &< 2 ω(h, δ_k)
+	\end{align*}
+	%
+	Betrachte nun den Fehler durch Diskretisierung für einen stochastischen Prozess $Y \colon Ω → C(I)$
+	\begin{align*}
+		\abs{ ∫_{C(I)} \tilde f ∘ π_{T_k} - f \, \d (\P ∘ Y^{-1})}
+		\overset{Δ\neq}&{≤} ∫_{Ω} \abs{ f(\operatorname{Poly}(Y, δ_k)) - f(Y) } \, \d \P \\
+		\overset{\eqref{eq:7.9Polyannaehrung}}&{≤} ∫_{Ω} ω(f, 2 ω(Y, δ_k)) \, \d \P
+	\end{align*}
+	Da $f$ nach Annahme gleichmäßig stetig und $\P$ ein Wahrscheinlichkeitsmaß ist, ist die rechte Seite endlich. (Die Beträge entfallen, da der Stetigkeitsmodul immer nicht-negativ ist.)
+
+	Diese Abschätzung kann nun für $X_n$ und $X$ genutzt werden:
+	\begin{align}
+		\abs{ ∫_{Ω} f \d (\P ∘ X_n^{-1}) - ∫_{Ω} f \d (\P ∘ X^{-1}) }
+		\overset{Δ\neq}&{≤}
+		∫_{Ω} ω(f, 2ω(X_n, δ_k)) \d \P \label{eq:7.9Xnpart} \\
+		&\, +
+		∫_{Ω} ω(f, 2ω(X, δ_k)) \d \P \label{eq:7.9Xpart} \\
+		&\, +
+		\klammern{ ∫_{Ω} \tilde f ∘ π_{T_k} ∘ X_n \d \P
+		- ∫_{Ω} \tilde f ∘ π_{T_k} ∘ X \d \P } \label{eq:7.9discretePart}
+	\end{align}
+	Die drei Summanden möchten wir nun nach oben abschätzen. Gebe dafür ein $ε > 0$ vor.
+
+	Betrachte \eqref{eq:7.9Xnpart}. $f$ ist beschränkt nach Voraussetzung, das heißt
+	$ω(f, δ) < 2 \norm{f}_{∞}$ für alle $δ$. Wähle nun $η > 0$ so klein, dass
+	$ω(f, η) < \frac{ε}{6}$. Dies geht, da $f$ gleichmäßig stetig ist.
+
+	Wähle des weiteren $k_0 ∈ ℕ$ so groß, dass \ref{it:7.9limlimsup} für alle $k ≥ k_0$ liefert:
+	$\P(2 ω(X_n, δ_k ≥ η) < \frac{ε}{6 · 2\norm{f}_{∞}}$ für alle $n ≥ n_0$, $n_0 ∈ ℕ$.
+	Dann kann das Integral \eqref{eq:7.9Xnpart} aufgespalten werden, falls $k > k_0$:
+	\begin{align*}
+		∫_{Ω} ω(f, 2ω(X_n, δ_k)) \, \d \P
+		& ≤ ∫_{\set{2 ω(X_n, δ_k) < η}} ω(f, 2ω(X_n, δ_k)) \, \d \P \\
+		& \phantom{≤} + ∫_{\set{2 ω(X_n, δ_k) ≥ η}} ω(f, 2ω(X_n, δ_k)) \, \d \P \\
+		& ≤ 1 · ω(f, η) + \frac{ε}{6 \norm{f}_{∞}} ω(f, 2ω(X_n, δ_k)) \\
+		& ≤ \frac{ε}{6} + \frac{ε}{6 · 2 \norm{f}_{∞}} · 2 \norm{f}_{∞} = \frac{ε}{3}
+	\end{align*}
+	%
+	$η$ ergibt auch für \eqref{eq:7.9Xpart} Sinn. Da $X$ ein stetiger stochastischer Prozess
+	ist, gilt $ω(X, δ_k) → 0$ für $k → ∞$ (und damit $δ_k → 0$) (nicht nur fast) sicher.
+	Damit konvergiert dies auch stochastisch, das heißt, es gibt ein $k_1 ∈ ℕ$, sodass
+	für alle $k ≥ k_1$ wir $\P(2ω(X, δ_k) > η) < \frac{ε}{6}$ haben.
+	Damit ergibt das gleiche Argument wie für \eqref{eq:7.9Xnpart}, dass \eqref{eq:7.9Xpart}
+	kleiner als $\frac{ε}{3}$ ist für $k ≥ k_0$.
+
+	Wegen der Konvergenz der fidis \ref{it:7.9fd} geht für jedes feste $δ_k$ \eqref{eq:7.9discretePart} gegen $0$.
+	Wähle also $k_2 = \max \set{k_0, k_1}$ und $n_1 ≥ n_0$ so, dass $\eqref{eq:7.9discretePart} < \frac{ε}{3}$ für alle $n ≥ n_1$.
+	Damit ist
+	\begin{equation*}
+		\abs{ ∫_{Ω} f \d (\P ∘ X_n^{-1}) - ∫_{Ω} f \d (\P ∘ X^{-1}) }
+		< \frac{ε}{3} + \frac{ε}{3} + \frac{ε}{3} = ε \quad ∀ n ≥ n_1
+	\end{equation*}
+	Damit gilt $X_n \distrto X$.
+\end{proof}
+
+\begin{beispiel}\label{beispiel7.10} Sei
+	\begin{align*}
+		X_n(t):=A_n+B_n· t+C_n· t^2\quad∀ t∈ I = \intervall {α}{β}
+		\quad\mit \klammern[\big]{A_n,B_n,C_n}\distrto (A,B,C)∈ℝ^3
+	\end{align*}
+	Dann gilt:
+	\begin{align*}
+		X_n\ntoinf  X\text{ in }(C,d)\qquad\mit\qquad X(t)=A+B· t+C· t^2
+	\end{align*}
+	Man sagt: $X_n$ und $X$ sind quadratische Funktionen mit zufälligen Koeffizienten.
+
+	\begin{proof}[1. Beweis] Anwendung von \ref{satz7.9}, zur Übung. Hier der Beweis vom Jahr 2018:
+
+		Seien $t_1,…,t_k∈ I$ beliebig.
+		Für Voraussetzung \ref{it:7.9fd} in Satz \ref{satz7.9} reicht es gemäß Cramér-Wold-Device \ref{satz5.4CramerWoldDevice} zu zeigen:
+		\begin{align*}
+			\sum_{j=1}^k λ_j · X_n(t_j)
+			\distrto \sum_{j=1}^n λ_j· X(t_j) \text{ in } ℝ
+			\qquad ∀ λ = \klammern[\big]{λ_1,…,λ_k} ∈ ℝ^k
+		\end{align*}
+		%Ich wurde von Prof Ferger bemitleidet, weil ich in Tex nicht alles umsetzen kann, was er an der Tafel durch Wisch-Technik erzeugt.
+		Dazu:
+		\begin{align*}
+			\sum_{j=1}^kλ_j· X_n(t_j)
+			&=A_n·\sum_{j=1}^nλ_j+B_n·\sum_{j=1}^kλ_j· t_j+C_n·\sum_{j=1}^kλ_j· t_j^2\\
+			\overset{\L,\ref{satz4.10ContinuousMappingTheorem}}&{\longrightarrow}
+			A·\sum_{j=1}^kλ_j+B·\sum_{j=1}^kλ_j· t_j+C·\sum_{j=1}^kλ_j· t_j^2
+			=\sum_{j=1}^kλ_j· X(t_j)
+		\end{align*}
+		Zu Voraussetzung \ref{it:7.9limlimsup} in Satz \ref{satz7.9}:
+		\begin{align*}
+			\abs{X_n(s)-X_n(t)}
+			&=\abs[\Big]{B_n·(s-t)+C_n·\underbrace{\klammern[\big]{s^2-t^2}}_{(s-t)·(s+t)}}\\
+			\overset{Δ\neq}&{≤}
+			\abs{B_n}·\underbrace{\abs{s-t}}_{≤δ}+\abs{C_n}·\underbrace{\abs{s-t}}_{≤δ}·\underbrace{\abs{s+t}}_{≤\abs{s}+\abs{t}≤:K}\\
+			&≤
+			\abs{B_n}·δ+K·\abs{C_n}·δ\qquad∀ s,t∈ I\mit \abs{s-t}≤δ\\
+			\overset{\sup}{⇒}
+			ω(X_n,δ)
+			&≤\abs{B_n}·δ+K·\abs{C_n}·δ\\
+			⇒
+			\P\klammern[\Big]{ω\klammern[\big]{X_n,δ}>ε}
+			&≤\P\argu[\Big]{\abs{B_n} · δ + K · \abs{C_n} · δ > ε}\\
+			\overset{\eqref{eqProofBeispiel7.10}}&{≤}
+			\P\argu[\Big]{\abs{B_n}·δ>\frac{ε}{2}}+\P\argu[\Big]{K·\abs{C_n}·δ>\frac{ε}{2}}\\
+			&=
+			\P\argu[\Big]{\abs{B_n}>\frac{ε}{2 δ}}+\P\argu[\Big]{\abs{C_n}>\frac{ε}{2 K δ}}\\
+			&=
+			1-F_n\klammern{\frac{ε}{2 δ}}+1-G_n\klammern{\frac{ε}{2 K δ}}
+		\end{align*}
+		%Ferger: "Warum habe ich das eigentlich so gemacht!?"
+		Hierbei ist $F_n$ die Verteilungsfunktion von $\abs{B_n}$ %\distrto \abs{B}$
+		und $G_n$ die Verteilungsfunktion von $\abs{C_n}$.
+		Erinnerung:
+		\begin{align}\label{eqProofBeispiel7.10}
+			\set[\big]{ U+V>ε}⊆\set{ U>\frac{ε}{2}}∪\set{ V>\frac{ε}{2}}
+		\end{align}
+		Mit Korollar \ref{korollar4.5} folgt, dass es eine Folge $(δ_k)_{k∈ℕ}$  mit $δ_k\downarrow0$,
+		so dass $\frac{ε}{2 δ_k}$ und $\frac{ε}{2 K δ_k}$ Stetigkeitsstellen der jeweiligen Grenz-Verteilungfunktionen sind,
+		%Ferger: "Na gut, einen Nobelpreis für Literatur kriege ich jetzt nicht."
+		\begin{align*}
+			\limsup_{n⟶∞} \P\argu[\big]{ω \argu{X_n,δ_k} > ε}
+			≤ \P\argu[\Big]{\abs{B} > \underbrace{\frac{ε}{2 δ_k}}_{\overset{k⟶∞}{\longrightarrow}∞}}
+			+\P\argu[\Big]{\abs{C} > \underbrace{\frac{ε}{2 K δ_k}}_{\overset{k⟶∞}{\longrightarrow}∞}}
+			\qquad∀ k∈ℕ
+		\end{align*}
+		%Ferger: "Hach ich bin so doof. Ich hätte mir das Leben leichter machen können."
+		$k⟶∞$ liefert dann \ref{it:7.9limlimsup}.
+	\end{proof}
+	\begin{proof}[2. Beweis]
+		Sei $h \colon ℝ^3 → C$, $(a, b, c) ↦ h(a, b, c) \colon I → ℝ : t ↦ h(a, b, c)(t) := a + bt + ct^2$.
+		$h$ ist stetig auf $ℝ^3$, denn: Sei $(a_n, b_n, c_n) → (a, b, c)$.
+		Dann
+		\begin{align*}
+			d(h(a_n, b_n, c_n), h(a, b, c))
+			&= \sup_{t ∈ I} \abs{a_n + b_n + c_n t^2 - (a + bt + c^2)} \\
+			&≤ \sup_{t ∈ I} \abs[\big]{a_n - a} + \abs[\big]{(b_n - b) t} + \abs{(c_n - n) t^2} \\
+			&≤ \abs{a_n - a} + \abs{b_n - b} L + \abs{c_n -c} L^2 \quad L := \max(\abs{α}, \abs{β}) \\
+			&→ 0 + 0 · L + 0 · L^2 = 0
+		\end{align*}
+		Damit ist $h$ stetig.
+		Mit dem CMT \ref{satz4.10ContinuousMappingTheorem} folgt
+		wegen der Voraussetzung $(A_n, B_n, C_n) \distrto (A, B, C)$
+		\begin{align*}
+			X_n = h(A_n, B_n, C_n) \distrto h(A, B, C) = X & \qedhere
+		\end{align*}
+	\end{proof}
+\end{beispiel}
+
+Zweite handlicherere Möglichkeit für den Nachweis der Verteilungskonvergenz in $C$ liefert:
+
+\begin{satz}[Momentenkriterium von Kolmogoroff]\label{satz7.11MomentenkriteriumVonKolmogoroff}\enter
+	Seien $X,X_n,n∈ℕ$ Zufallsvariablen in $C$ mit
+	\begin{align}\label{eqSatz7.11Vor1}\tag{cfd}
+		X_n\fdto  X\qquad\text{(vgl.\ \ref{it:7.9fd} in Satz \ref{satz7.9})}
+	\end{align}
+	Falls es eine Konstante $γ>0$ und $α>1$ sowie eine stetige und monoton wachsende Funktion $F:I⟶ℝ$ gibt, derart, dass
+	\begin{align}\label{eqSatz7.11VorM}\tag{M}
+		\Earg[\Big]{\abs{X_n(s)-X_n(t)}^γ} ≤ \klammern[\big]{F(s)-F(t)}^α \qquad ∀ s, t ∈ I \mit s>t
+	\end{align}
+	(\define{Momentenbedingung}).
+	Dann gilt:
+	\begin{align*}
+		X_n\distrto  X\text{ in }\klammern[\big]{C(I),d}
+	\end{align*}
+\end{satz}
+
+\begin{proof}
+	Siehe \cite[Seite 96]{billingsley2013convergence} % B illingsley (1968), \undefine{Convergence of probability measures}, Seite 96.
+	%Ferger: "Das Buch hier war früher meine Fibel."
+	%Ferger: "Jim Morrison von den Doors. Das war mein Held. Neben Skorokott."
+\end{proof}
+
+\paragraph{Ziel:} Verteilungskonvergenz der Partialsummenprozesse $X_n$ aus dem Beispiel \ref{beispiel7.4}.
+Dazu:
+
+\begin{definition}[Brownsche Bewegung] \label{def7.12} %7.12
+	Sei $I=[0,b]\mit b>0$ und $B:=\set[\big]{ B(t):=B(t,ω), t ∈ I}$ ein stetiger stochastischer Prozess über $(Ω,\A,\P)$ mit
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:7.12begin0} $\begin{aligned}
+			B(0)=B(0,ω)=0\qquad∀ω∈Ω
+		\end{aligned}$
+	\item \label{it:7.12independantchanges} $∀\, 0=:t_0≤ t_1<…<t_r≤ b$, $r ∈ ℕ$
+		sind die Zuwächse $B(t_i)-B(t_{i-1})$, $1≤ i≤ r$ \emph{unabhängig}
+	\item \label{it:7.12normal} $\begin{aligned}
+			0≤ s<t≤ b⇒ B(t)-B(s)\sim\mathcal{N}(0,t-s)
+		\end{aligned}$
+	\end{enumerate}
+	Dann heißt $B$ \define{Brownsche Bewegung (BB)} auf $I$.
+
+	Vollkommen analog definiert man eine BB auf $I= ℝ_{+} = [0,∞)$.
+\end{definition}
+
+%Ferger: "Das ist wie so ein Wunschzettel. Es gelte 1, 2 und 3. Passend zur Weihnachtszeit. Wenn's dumm läuft, kann es noch sein, dass mein Wunsch nicht erfüllt wird, weil er nicht erfüllt werden kann."
+%Ferger: "In der Hoffnung das Sie nicht schonmal hier gesessen haben: Weil ich immer dieselben Geschichten erzähle. Ich bin jetzt in so einem Alter wo man alles mehrfach erzählt."
+%Ferger: "Da hat mal jemand eine Doktorarbeit geschrieben über eine tolle Funktionenklasse. Und dann kam jemand daher, dass die Funktionenklasse nur aus der Eins-Funktion besteht. Das war echt ein Griff ins Klo. Wäre noch heftiger gewesen, wenn die Funktionenklasse leer gewesen wäre. Aber: So sind wir ja auch alle gestrickt. So werden wir konditionert. Weil, wenn der Mathematiker irgendwas hört, fragt der Mathematiker ständig "Existiert das?""
+
+\begin{satz}[Lévy]\label{satz7.13Levy}
+	Eine Brownsche Bewegung existiert.
+\end{satz}
+
+\begin{proof}
+	Siehe Vorlesung \undefine{Stochastische Prozesse}.
+	%Ferger: "Es gibt einen konstruktiven Beweis, der ist auch lehrrreich, aber da haben wir jetzt keine Zeit für.
+	%Anmerkung des Autors: Geschichten erzählen ist wohl wichtiger.
+\end{proof}
+
+\begin{lemma}\label{lemma7.14}
+	Sei $B$ eine BB auf $I$ und $t_1<…<t_r$ aus $I$. Dann gilt:
+	\begin{align*}
+		\klammern[\Big]{B(t_1),…, B(t_r)}^T\sim\mathcal{N}_r(0,Γ)\text{ wobei }\\
+		Γ:= \klammern[\Big]{\Cov\klammern[\big]{B(t_i),B(t_j)}}_{1≤ i,j≤ r}
+	=\klammern[\big]{\min(t_i, t_j)}_{1≤ i,j,≤ r}
+	\end{align*}
+\end{lemma}
+
+\begin{proof}
+	Sei $t_0:=0$. Dann gilt:
+	\begin{align*}
+		B(t_j)
+		\overset{\ref{def7.12}\ref{it:7.12begin0}}=
+		B(t_j)-\underbrace{B(t_0)}_{=0}
+		\overset{\text{Teles}}{=}
+		\sum_{i=1}^j\klammern[\big]{B(t_i)-B(t_{i-1})}
+		=\sum_{i=1}^j√{t_i-t_{i-1}}·\underbrace{\frac{B(t_i)-B(t_{i-1})}{√{t_i-t_{i-1}}}}_{=:Z_i}
+	\end{align*}
+	Da $B(t_i)-B(t_{i-1})\sim\mathcal{N}(0,t_i-t_{i-1})$ folgt, dass die $Z_i$ \iid\ $\sim\mathcal{N}(0,1)$ sind.
+	Also ist der Vektor
+	\begin{align*}
+		\begin{pmatrix}
+			B(t_1)\\
+			\vdots\\
+			B(t_r)
+		\end{pmatrix}&=\begin{pmatrix}
+			√{t_1} & 0 & \hdots & \hdots & 0\\
+			√{t_1} & √{t_2-t_1} & 0 & \hdots & 0\\
+			\vdots & \vdots & \ddots & \ddots & \vdots\\
+			√{t_1} & √{t_2-t_1} & √{t_3-t_2} & \hdots & √{t_r - t_{r - 1}} \\
+			% TOCHECK in der Vorlesung: sollte rechts unten nicht √{t_r - t_{r - 1}} statt 0 stehen?
+		\end{pmatrix} \begin{pmatrix}
+			Z_1\\
+			\vdots\\
+			Z_r
+		\end{pmatrix} \\ ⇒\begin{pmatrix}
+			B(t_1)\\
+			\vdots\\
+			B(t_r)
+		\end{pmatrix} & \sim \mathcal{N}_r(μ,Γ) \quad \text{Def.\ normaler Vektor} \\
+		μ_i &:= \Earg[\Big]{B(t_i)}
+		= \Earg[\Big]{ \underbrace{B(t_i) - B(t_0)}_{\sim \mathcal{N}(0, t_i - t_0)} } \qquad ∀ i \\
+		⇒ μ_i &:= \klammern[\big]{μ_1,…,μ_r}=0
+	\end{align*}
+	Ferner sei $i≤ j$. Dann gilt:
+	\begin{align*}
+		\Cov\klammern[\big]{B(t_i),B(t_j)}
+		&=\Earg[\Big]{B(t_i)· B(t_j)}\\
+		&=\Earg[\Big]{B(t_i)·\klammern[\big]{ B(t_j)-B(t_i)+B(t_i)}}\\
+		&=\Earg{B(t_i)·\klammern[\big]{B(t_j)-B(t_i)} + \klammern[\big]{B(t_i)}^2} \\
+		&=\Earg[\big]{\underbrace{B(t_i)·\klammern[\big]{B(t_j)-B(t_i)}}_{\text{beide Faktoren sind unabh.}}}
+		+\Earg{\klammern[\big]{B(t_i)}^2}\\
+		\overset{\text{unab}}&=
+		\underbrace{\Earg[\big]{B(t_i)}}_{=0}
+		· \underbrace{\Earg[\big]{B(t_j)-B(t_i)}}_{=0}
+		+ \underbrace{\Earg[\Big]{\klammern[\big]{B(t_i)}^2}}_{= \Var \argu[\big]{B(t_i)}} \\
+		\overset{\text{Vert}}&=
+		\Var\klammern[\big]{\mathcal{N}(0,t_i)}\\
+		&=t_i\\
+		\overset{i≤ j}&{=}
+		\min(t_i, t_j)
+	\end{align*}
+	Analog behandle den Fall $i≥ j$.
+\end{proof}
+
+\begin{korollar}\label{korollar7.15Folgerung}
+	Die Verteilung einer BB ist eindeutig bestimmt.
+\end{korollar}
+
+\begin{proof}
+	Seien $B$ und $\tilde{B}$ zwei BBs (i.\,d.\,R.\ über unterschiedlichen Wahrscheinlichkeitsräumen definiert). Dann gilt:
+	\begin{align*}
+		B \stackeq{\L} \tilde{B}
+		\overset{\ref{satz7.5}}&{⇔}
+		% todo: uncomment. Attention: wrong utf8-sequence
+		\klammern[\big]{B(t_1), …, B(t_r)}^T
+		\stackeq{\L}\klammern{\tilde{B}(t_1), …, \tilde{B}(t_r)}^T
+		& ∀ t_1 < … < t_r ∈ I, ∀ r ∈ ℕ\\
+		\overset{\ref{lemma7.14}}&{⇔}
+		\mathcal{N}_r(0,Γ)=\mathcal{N}_r(0,Γ)
+		&∀ t_1 < … < t_r ∈ I, ∀ r ∈ ℕ
+	\end{align*}
+	Die letzte Aussage gilt aber, weil jede mehrdimensionale Normalverteilung $\mathcal{N}_r(μ,Γ)$ eindeutig durch $μ$ und $Γ$ festgelegt ist:
+	\begin{align*}
+		\mathcal{N}(μ,σ^2)=\mathcal{N}(m,s^2)⇔ m=μ\text{ und }s^2=σ^2
+		&
+		\qedhere
+	\end{align*}
+\end{proof}
+
+Die Verteilung $\P∘ B^{-1}=:W$ von  einer Brownschen Bewegung $B$ heißt \define{Wiener-Maß} (nach Norbert Wiener).
+%Ferger: "Absoluter Schlaukopf. Ein Ammi. Ein US-Amerikaner. Der hat 21 promoviert. Da wo wir noch mit den Klötzchen spielen, hat der schon promoviert."
+\begin{align*}
+	B:(Ω,\A,\P)⟶\klammern[\Big]{C(I),\B_d\klammern[\big]{C(I)}}
+\end{align*}
+%Ferger: "Die Brownsche Bewegung wird genannt Brownsche Bewegeung, weil folgendes passiert ist:
+% es gab einen schottischen Bonatiker.
+% Der hat also eine Flüssigkeit genommen,
+% z.\,B.\ Wasser und dann ganz kleine Pollenkörner oder Staubkörnchen,
+% also so was ganz klitzekleines oder eie kleine Minischuppe in sein Töpfchen getan,
+% in seine Flüssigkeit und hat draufgeguckt und gesagt "Boah, da ist ja was los." [...]
+% Ja ich erzähl das so wie bei der Sendung mit der Maus, weil man das so gut versteht. [...]
+% Und er stellt fest, dass da viel los ist.
+% Die Beobachtung hatten andere Leute wohl auch schon gemacht.
+% Die ersten Leute, jeder von denen hat sich natürlich gefragt: Was steckt dahinter
+% Die ersten Leute haben als erklärungsversuch gegeben, dass es biologische Energie in sich hat.
+% Der Robert Braun hat gesagt: Nein, das ist nicht so. Können Sie ja mal googeln.
+% Entscheidend ist Folgendes: Das war ca. 182?.
+% Dann kam Albert Einstein und hat gesagt: Nenene bzw.\ jajaja, was hier passiert ist Folgendes:
+% So eine Flüssigkeit besteht ja aus ganz vielen Molekülen, die in Bewegung sind.
+% Und die schießen wie wild hin und her. Die Moleküle sind aber klitzeklitzeklein.
+% Das kleine Teilchen ist aber im mikroskopischen Bereich,
+% also im Vergleich zu den Molekülen ein Riesen-Oschi.
+% Und die kleinen Teilchen hauen die ganze Zeit dagegen.
+% Der Einstein ist hergegangen und hat das für Physiker-Verhältnisse sehr mathematisch beschrieben.
+% Der Wiener hat das nochmal auf saubere, mathematische Füße gestellt
+% (Funtionenraum, Verteilungen und solche Sachen...)
+% Die haben das ein oder andere wohl handwaving gemacht und
+% Norbert Wiener hat das dann mal mathematisch sauber gemacht.
+% Deshalb heißt die Verteilung einer Brownschen auch Wiener Maß.
+
+% Ferger: Sind ja immernoch 7 Minuten. Mist. Na da kann ich ja noch eine Geschichte erzählen.
+
+\input{section7-0-Donsker}

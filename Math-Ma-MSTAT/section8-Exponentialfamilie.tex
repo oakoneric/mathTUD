@@ -1,0 +1,171 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung in der Statistik} %nonumber
+\paragraph{Maximum-Likelihood-Schätzung in $\mathbf{1}$-parametrigen Exponentialfamilien}
+Sei $(X_n)_{n≥1}$ \iid\ eine Folge von Kopien der Zufallsvariablen $X$, (d.\,h.\ $X_i\sim X$ bzw.\ $X_i\overset{\L}{=}X$)
+% CHECKED: 'bzw.' used.
+mit Werten im Maßraum $(\X,\F, μ)$ und mit $μ$-Dichte % ist μ das Maß auf (\X, \F)?
+\begin{align*}
+	f_θ(x) &= c(θ) h(x) \exp\argu[\big]{q(θ) T(θ)}
+	% TODO: was ist T?, weiß man etwas zu c, q?
+	\qquad ∀ x ∈ \X, θ ∈ Θ ⊆ ℝ
+\end{align*}
+
+% Ferger:
+% In der Statistik werden Beobachtungen als Realisierungen von Zufallsvariablen aufgefasst, also X(ω)=Beobachtung für ein ω∈Ω
+% X_i kann das Befragungsergebnis des $i$-ten Probanden sein
+% Kann man die $X_i$ in der Theorie als Unabhhängigkeit annehmen? -> siehe Zeitreihenanalyse
+% Natürlich ist es nicht immer gegeben, unabhängige Daten zu betrachten. Mann muss sich in jeder Situation fragen, ob diese Modellierung sinnvoll ist.
+
+% Ferger zu mir: "Schreiben Sie auch meine Späße mit?"
+% Ich: "Ja, natürlich!"
+% Ferger: "Das ist bedenklich..."
+
+Erinnere an Maximum-Likelihood-Schätzer (MLS/ MLE):
+\begin{align*}
+	\ul{X}_n := \klammern[\big]{X_1,…,X_n}
+	% CHECKED: '\ul' used.
+\end{align*}
+hat \define{Likelihood-Funktion}
+\begin{align*}
+	L_n(θ,\ul{X}_n)&:=\prod_{i=1}^n L\klammern[\big]{θ,X_i}
+	% CHECKED: '\ul' used.
+	\qquad\mit\qquad
+	L(θ,x):=f_θ(x)
+\end{align*}
+Zugehörige \define{$\operatorname{\mathbf{log}}$-Likelihood-Funktion} ist
+% TODO: find better solution for dirty hack
+\begin{align*}
+	l_n \argu[\big]{θ, \ul{X}_n} &:= \log \argu[\Big]{L_n \argu[\big]{θ, \ul{X}_n}}
+	% CHECKED: '\ul' used.
+	= \sum_{i=1}^n \log \argu[\big]{θ, X_i}
+	= \sum_{i=1}^n l \argu[\big]{θ, X_i} \qquad \mit
+	\\
+	l(θ,x)&:=\log\klammern[\big]{L(θ,x)}=\log\klammern[\big]{f_θ(x)}
+\end{align*}
+Der MLS für $θ$ ist definiert durch
+\begin{align*}
+	\hat{θ}_n
+	:= \argmax_{θ ∈ Θ} L_n \argu[\big]{θ, \ul{X}_n}
+	% CHECKED: '\ul' used.
+	%\overset{x↦\log(x)\text{ streng monoton wachsend}}{=}
+	\overset{(\ast)}{=}
+	\argmax_{θ ∈ Θ} l_n \argu[\big]{θ, \ul{X}_n}
+	% CHECKED: '\ul' used.
+	= \argmin_{θ ∈ Θ} \underbrace{ -\frac1n l_n \argu[\big]{θ, \ul{X}_n} }_{=: S_n(θ)}
+	% CHECKED: '\ul' used.
+\end{align*}
+Die $(\ast)$-Gleichheit gilt, weil $x↦\log(x)$ streng monoton wachsend und stetig ist.
+\begin{align*}
+	l(θ,x)&=\log\klammern[\big]{c(θ)}+\log\klammern[\big]{h(x)}+q(θ)· T(x)\\
+	⇒ S_n(θ) &= - \log\argu[\big]{c(θ)}
+		\underbrace{ -\frac1n \sum_{i=1}^n \log \argu[\big]{h(X_i)}
+			}_{\text{hängt \emph{nicht} von $θ$ ab}}
+		- q(θ) \underbrace{\frac1n \sum_{i=1}^n T(X_i)}_{=: \overline{T}_n} \\
+	&= \underbrace{-\klammern[\Big]{\log \argu[\big]{c(θ)} + q(θ) \overline{T}_n}}_{=: M_n(θ)}
+		-\frac1n \sum_{i=1}^n \log\argu[\big]{h(X_i)} \\
+	⇒ \hat{θ}_n
+	&= \argmin_{θ ∈ Θ} M_n(θ)
+\end{align*}
+
+% Ferger zu den Schülern von Uni-Live: "Ich mach' auch sonst keine Späße. Und die Studenten sind auch immer leise."
+%Ferger: "Ich komme aus einem 400-Einwohner Dorf."
+
+\paragraph{Annahme:}
+\begin{enumerate}[label=(\arabic*)]
+	\item $Θ⊆ℝ$ ist kompaktes Intervall
+	\item $q$ ist stetig auf $Θ$ ($⇒ c$ stetig, $c>0$).
+	\item Sei $θ_0$ der \define{wahre} Parameter, d.\,h.\ $X_i\sim f_{θ_0}$
+\end{enumerate}
+
+\paragraph{Ziel:} {Zeige}
+\begin{align*}
+	\hat{θ}_n\ntoinf θ_0
+	\quad\P\text{-fast sicher}
+	\qquad∀ θ_0∈Θ
+\end{align*}
+Das ist die sogenannte \define{starke Konsistenz} der Schätzerfolge $(\hat{θ}_n)_{n∈ℕ}$.
+
+% Ferger zu den Schülern: "Liebe Kinder, bitte nicht rauchen! Rauchen ist ungesund."
+%Ferger: "Ich rauche in meinem Zimmer. Das ist verboten. Da ist ziviler ungehorsam. Ich warte immer noch, dass jemand zu mir kommt und sagt, dass das verboten. Und jetzt? Werfen Sie mich jetzt raus?
+% Ich habe auch einen Hund in meinem Zimmer. Ist auch verboten."
+
+Gemäß SGGZ gilt:
+\begin{align}\label{eqUnderStarkeKonsistenz}
+	\overline{T}_n\ntoinf &\E_{θ_0}\eckigeKlammern[\big]{T(X)}\quad\P\text{-fast sicher}\\
+	\E_{θ_0}\eckigeKlammern[\big]{T(X)}
+	&=∫_Ω T(X)\d\P_{θ_0}
+	\overset{\eqref{eqTrafo}}{=}
+	∫_{\X}T(x)\underbrace{\P_{θ_0}∘ X^{-1}}_{\text{hat $μ$-Dichte}}(\d x)
+	= ∫_{\X} T(x) f_{θ_0}(x) ~ μ(\d x) \nonumber
+\end{align}
+
+Erinnerung:
+\begin{align*}
+	X_i \colon \klammern[\big]{Ω, \A, \P_θ} ⟶ \klammern[\big]{\X,\F}
+	\qquad
+	X_i(ω) ∈ \X \overset{\text{z.\,B.}}{=} ℝ
+	\qquad
+	\ul{X}_n := \klammern[\big]{X_1,…,X_n} : Ω ⟶ \X^n
+	% CHECKED: '\ul' used.
+\end{align*}
+
+Aus \eqref{eqUnderStarkeKonsistenz} folgt:
+\begin{align*}
+	M_n(θ)\overset{n⟶∞}&{\longrightarrow}
+	\underbrace{-\klammern[\Big]{\log \argu[\big]{c(θ)} + q(θ) \E_{θ_0}\eckigeKlammern[\big]{T(X)}}}_{=:M(θ)=:M_{θ_0}(θ)}
+	\quad\P\text{-f.\,s.}
+	\qquad∀θ_0∈Θ\\
+	\abs{M_n(θ) - M_{θ_0}(θ)}
+	&= \abs{q(θ) \klammern[\Big]{\overline{T}_n - \E_{θ_0} \eckigeKlammern[\big]{T(X)}}} \\
+	⇒
+	\sup_{θ ∈ Θ} \abs{M_n(θ) - M_{θ_0}(θ)}
+	&= \underbrace{\klammern{\sup_{θ ∈ Θ} \, \abs[\big]{q(θ)}}}_{=: c < ∞}
+	· \underbrace{ \abs{ \overline{T}_n - \E_{θ_0} \eckigeKlammern[\big]{T(X)} } }_{\ntoinf 0 \text{ f.\,s.}}
+\end{align*}
+Die Bedingung \ref{it:8.6fskonvergenz} in Satz \ref{satz8.6} ist also erfüllt.
+
+% Ferger hat am 18.01. Geburtstag
+
+Falls $θ_0$ eindeutige Minimalstelle von $M_{θ_0}$ ist, so liefert Satz \ref{satz8.6} die starke Konsistenz von $(\hat{θ}_n)_{n∈ℕ}$.
+Zusammenfassung in:
+
+\begin{satz}\label{satz8.7}
+	Im Modell (Exponential-Familie) sei $Θ⊆ℝ$ kompaktes Intervall,
+	$q$ sei stetig und der wahre Parameter $θ_0$ sei eindeutige Minimalstelle der Funktion
+	\begin{align*}
+		M_{θ_0}(θ)
+		&= -\log\argu[\big]{c(θ)}-q(θ) c(θ) ∫ T(x) h(x) \exp\argu[\big]{q(θ_0) T(x)} ~ μ(\d x)
+		% Todo: wirkt zu kompliziert, ist erstes T eigentlich ein c?
+		\qquad∀θ∈Θ
+	\end{align*}
+	(Das ist eine implizite Forderung an die Verteilungsannahmen (VA).)
+	Und sei
+	\begin{align*}
+		\hat{θ}_n=\argmin_{θ∈Θ} M_n(θ)
+		\qquad\mit\qquad
+		M_n(θ)= - \log \argu[\big]{c(θ)} - q(θ) \frac1n \sum_{i=1}^n T(X_i)
+	\end{align*}
+	Dann gilt:
+	\begin{align*}
+		\hat{θ}_n\ntoinf
+		θ_0 \quad \P \text{-f.\,s.} \qquad ∀ θ_0 ∈ Θ
+	 \end{align*}
+\end{satz}
+
+\begin{proof}
+	Folgt aus Satz \ref{satz8.6}.
+\end{proof}
+
+%Ferger: "Stellen wir uns mal konkret einen Hilbertraum vor."
+
+Vom theoretischen Standpunkt aus ist die Kompaktheitsannahme an $Θ$ sehr stark.
+Allerdings ist dies für den Anwender keine signifikante Einschränkung.
+Dafür aber neben der Stetigkeit von $q$ \emph{keine} weitere \enquote{Glattheitsannahmen}.
+Sind solche Glattheitsannahmen aber gegeben, so lässt sich zeigen, dass $θ_0$ tatsächlich eindeutige (und im Fall $Θ=ℝ$ wohl-separierte) Minimalstelle von $M_{θ_0}$ ist.
+
+

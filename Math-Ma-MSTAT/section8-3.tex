@@ -1,0 +1,518 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung: Verteilungskonvergenz von Change-Point-Schätzern}
+
+Betrachten Change-Point Modell aus Kapitel \ref{sec:AnwendungCPA}
+\begin{align*}
+	X_{in} \sim P_n, \quad 1 \leq i \leq \tau_n \\
+	X_{in} \sim Q_n, \quad \tau_n < i \leq n
+\end{align*}
+wobei $P_n$, $Q_n$ Verteilungen derart, dass für
+\begin{align*}
+	\mu_n &:= ∫ x\, \d P_n = \Earg{X_{\tau_n, n}} = \text{ pre-change-mean} \\
+	\nu_n &:= ∫ x\, \d Q_n = \Earg{X_{\tau_{n+1}, n}} = \text{ post-change-mean}
+\end{align*}
+gilt.
+
+\paragraph{Annahme 1:}
+\begin{enumerate}[label=(\alph*)]
+	\item $\mu_n < \nu_n \quad ∀ n ∈ ℕ$ \label{it:Ann1Mittelwerte}
+	\item $\delta_n := ν_n - μ_n → 0$, $√n δ_n → ∞$ (diminishing disorders) \label{it:Ann1konv}
+\end{enumerate}
+Sei wieder $τ_n = \floor{n \theta}$, $\theta ∈ \intervallO{0}{1}$, $\theta_n := \frac{\floor{n \theta}}{n}$,
+$S_k := \sum_{i = 1}^k X_i - \overline{X_n}$, $k ∈ ℕ_0$ ($X_i \equiv X_{in}$)
+Erinnere an \eqref{eqUnder8.2_1} in Kapitel \ref{sec:AnwendungCPA}
+\begin{align}\tag{8.1}\label{eq:8.1}
+	\Earg{S_k} &=
+	\begin{cases}
+		k (1- \theta_n)(\mu_n - \nu_n), & 1 \leq k \leq \tau_n \\
+		(n-k) \theta_n (\mu_n - \nu_n), & \tau_n < k \leq n
+	\end{cases}
+	\\ \nonumber
+	\overset{1. \ref{it:Ann1Mittelwerte}}{⇒} \tau_n &= \argmin_{0 \leq k \leq n} \Earg{S_k}
+\end{align}
+liefert plausible Schätzer:
+\begin{align*}
+	\tau_n^* &= \argmin_{0 \leq k \leq n} S_k = \text{Schätzer für } \tau_n \\
+	\theta_n^* &:= \frac{\tau_n^*}{n} = \text{Schätzer für } \theta_n
+\end{align*}
+Sei wieder $M_n$ der Polygonzug durch $\klammern{\frac{k}{n}, \frac{1}{n} S_k}$,
+$0 \leq k \leq n$. Wie in Kapitel \ref{sec:AnwendungCPA}
+
+folgt:
+\begin{equation}\tag{8.2}\label{eq:8.2}
+	\theta_n^* = \argmin_{0 \leq t \leq 1} M_n(t)
+\end{equation}
+Ferner wie gesehen (2-Punkte-Formel):
+\begin{equation}\tag{8.3}\label{eq:8.3}
+	M_n(t) = \frac{1}{n} S_{\floor{t n}}
+	+ \klammern{ t - \frac{\floor{nt}}{n} } \klammern{ X_{\floor{nt} + 1} - \overline{X_n} }
+\end{equation}
+\paragraph{Ziel:} Verteilungskonvergenz von $n \delta_n^2 ( \theta_n^* - \theta_n)$.
+\begin{align*}
+	\text{Sei } Z_n(t) &:= n \delta_n \klammern{ M_n \argu{ \theta_n + \frac{t}{n \delta_n^2} } - M_n(\theta_n) }, \quad t ∈ ℝ \\
+	⇒ Z_n & \text{ stetiger stochastischer Prozess und } \\
+	\sigma_n &:= n \delta_n^2 \klammern{ \theta_n^* - \theta_n } ∈ A(Z_n) \\
+	\text{denn } Z_n(\sigma_n) &= n \delta_n ( M_n(\theta_n^*) - M_n(\theta_n))
+	\leq n\delta_n ( M_n(u) - M_n( \theta_n ))
+	= Z_n(s) \\ & \text{ für beliebiges } u = \theta_n^* + \frac{s}{n \delta_n^*}
+\end{align*}
+Also ist unser Zwischenziel: Verteilungskonvergenz $Z_n \distrto Z$ in $\klammern[\big]{C(ℝ), d}$.
+
+Aus \eqref{eq:8.3} folgt (da $n \theta_n = \floor{n \theta})$:
+\begin{align*}
+	M_n \argu{ \theta_n + \frac{t}{n \delta_n^2} } - M_n(\theta_n)
+	&= \frac{1}{n} \sum_{i = \floor{n \theta} + 1}^{\floor{n \theta_n + \frac{t}{\delta_n^2}}}
+	( X_i - \overline{X_n} ) \\
+	& \quad + \klammern{ \theta_n + \frac{t}{n \delta_n^2} - \frac{\floor{n \theta_n + \frac{t}{δ_n^2}}}{n} }
+	\klammern{ X_{\floor{n \theta_n + \frac{t}{\delta_n^2}} + 1} - \overline{X_n} }
+\end{align*}
+mit der Konvention $\sum_{i = l + 1}^m := - \sum_{i = m + 1}^{l}$, wenn $m \leq l$.
+
+Setze $u_n(t) := n \theta_n + \frac{t}{\delta_n^2}$, $\overline{u}_n(t) := \floor{u_n(t)}$.
+Zusammenfassen der $\overline{X_n}$-Terme liefert (nachrechnen!)
+\begin{align*}
+	M_n \argu{\theta_n + \frac{t}{n \delta_n^2 }} - M_n( \theta_n )
+	= \frac{1}{n} \sum_{i = \floor{n \theta} + 1}^{\overline{u}_n(t)}
+	X_i +  \frac{u_n(t) - \overline{u}_n(t)}{n}  X_{\overline{u}_n(t) + 1}
+	- \frac{t}{n \delta_n^2} \overline{X_n}
+\end{align*}
+Dann
+\begin{align}\tag{8.4}\label{eq:8.4}
+	Z_n(t) = \delta_n \sum_{i = \floor{n \theta} + 1}^{\overline{u}_n(t)} X_i
+	+ \delta_n ( u_n(t) - \overline{u}_n(t) ) X_{\overline{u}_n(t) + 1} - \frac{t}{\delta_n} \overline{X_n}
+\end{align}
+Da stets $\floor{x} \leq x < \floor{x} + 1$ für alle $x ∈ ℝ$, folgt
+\begin{align*}
+	\overline{u}_n ( t ) = k
+	&⇔ k \leq n \theta_n + \frac{t}{δ_n^2} = \floor{n \theta} + \frac{t}{δ_n^2} < k + 1 \\
+	&⇔ δ_n^2( k - \floor{n \theta}) \leq t < \delta_n^2 ( k + 1 - \floor{n \theta})
+\end{align*}
+Somit gilt (leichtes nachprüfen!)
+\begin{align*} \tag{8.4$\frac12$} \label{eq:8.4einhalb}
+	\begin{aligned}
+		t \geq 0 ⇔ \overline{u}_n(t) \geq \floor{n \theta} \\
+		t < 0 ⇔ \overline{u}_n(t) < \floor{n \theta}
+	\end{aligned}
+\end{align*}
+Führe die Mittelwertsfunktion ein um später zu zentrieren
+\begin{align*}
+	\overline{Z_n}(t) := \Earg{Z_n(t)}, \quad t ∈ ℝ
+\end{align*}
+Da
+\begin{align*}
+	\Earg{\overline{X_n}}
+	&= \Earg{\frac{1}{n} \sum_{i = 1}^n X_i}
+	= \frac{1}{n} \klammern{ \sum_{i = 1}^{\floor{n \theta}} \Earg{X_i} + \sum_{i = \floor{n \theta} + 1}^n \Earg{X_i} }
+	= \frac{1}{n} \klammern{ \floor{n \theta} \mu_n + (n - \floor{n \theta} ) \nu_n } \\
+	&= \frac{\floor{n \theta}}{n} \mu_n + \frac{n - \floor{n \theta}}{n} \nu_n
+	= \theta_n \mu_n + ( 1 - \theta_n ) \nu_n
+\end{align*}
+folgt
+aus \eqref{eq:8.4} und \eqref{eq:8.4einhalb} (Nachrechnen!)
+\begin{equation} \tag{8.5} \label{eq:8.5}
+	\overline{Z_n}(t) =
+	\begin{cases}
+		\theta_n t, & t \geq 0 \\
+		- (1 - \theta_n) t, & t < 0
+	\end{cases}
+	\ntoinf D(t) =
+	\begin{cases}
+		\theta t, & t \geq 0 \\
+		- ( 1 - \theta) t & t < 0
+	\end{cases}
+\end{equation}
+
+\begin{lemma} \label{thm:8.9}
+	\begin{align*}
+		\sup_{-j \leq t \leq j} \abs{\overline{Z_n}(t) - D(t)} \ntoinf 0 \quad \forall j > 0
+	\end{align*}
+\end{lemma} % end lemma
+\begin{proof}
+	Für $j \geq t \geq 0$ gilt
+	$\abs{\overline{Z_n}(t) - D(t)}
+	\overset{\eqref{eq:8.5}}{=} \abs{\theta_n t - \theta t}
+	= \abs{\theta_n - \theta} \abs {t} \leq \frac {j}{n}$.
+
+	Für $- j \leq t \leq 0$ gilt
+	$\abs{\overline{Z_n}(t) - D(t)}
+	\overset{\eqref{eq:8.5}}{=} \abs{- (1- \theta_n) t - (- (1 - \theta) t)}
+	= \abs{\theta_n - \theta} \abs {t} \leq \frac {j}{n}$.
+
+	$⇒ \norm{\overline{Z_n} - D}_{\intervall{-j}{j}} \leq \frac{j}{n} \ntoinf 0$
+\end{proof}
+Wir zentrieren den Prozess $Z_n$ und erhalten
+\begin{align*}
+	W_n(t) &:= Z_n(t) - \Earg{Z_n(t)} = Z_n(t) - \overline{Z_n}(t) \\
+	\overset{\eqref{eq:8.4}}&{=}
+	\underbrace{
+		δ_n \sum_{i = \floor{n \theta} + 1}^{\overline{u}_n (t)}
+		\overbrace{(X_i - \Earg{X_i})}^{=: \xi_i \equiv \xi_{in}}
+		+ δ_n (u_n(t) - \overline{u}_n(t) ) \xi_{\overline{u}_n(t) + 1}
+	}_{=: V_n(t)}
+	\underbrace{- \frac{t}{δ_n} \overline{\xi}_{in}}_{=: r_n(t)}
+\end{align*}
+mit $\overline{\xi}_n := \frac{1}{n} \sum_{i = 1}^{n} (X_i - \Earg{X_i})$
+\paragraph{Annahme 2:} Es gibt es $δ > 0$ mit
+\begin{align*}
+	\sup_{n ∈ ℕ} ∫ \abs{x}^{2 + δ} P_n(\d x) = \Earg{\abs{X_{\tau_n, n}}^{2 + δ}}=: L_1 < ∞ \\
+	\sup_{n ∈ ℕ} ∫ \abs{x}^{2 + δ} Q_n(\d x) = \Earg{\abs{X_{\tau_n + 1, n}}^{2 + δ}} =: L_2 < ∞
+\end{align*}
+Da
+\begin{align}
+	\nonumber
+	\Earg{\abs{\xi_{in}}^{2 + δ}}
+	&= \Earg{\abs{X_i - \Earg{X_i}}^{2 + δ}}
+	\overset{\text{\eqref{eqCrUngleichung}-$\neq$}}{\leq}
+	\Earg{2^{1 + δ} \klammern{ \abs{X_i}^{2 + δ} + \abs{\Earg{X_i}}^{2 + δ} } } \\
+	\nonumber
+	\overset{\text{Jensen} \neq}&{\leq}
+	2^{1 + δ} \klammern{ \Earg{\abs{X_i}^{2 + δ}} + \Earg{\abs{X_i}^{2 + δ}} }
+	\overset{\text{Ann.\ 2}}{\leq} 2^{1 + δ} · 2 \max \set{L_1, L_2} < ∞ \\
+	% tocheck: was kommt da am Ende wirklich hin? max, min, + ?, ist die · 2 richtig?
+	\tag{8.6} \label{eq:8.6}
+	⇒ \Earg{\abs{\xi_{in}}^{2 + δ}} &\leq C \quad \forall 1 \leq i \leq n \: \forall n ∈ ℕ
+\end{align}
+Erinnere an unser Ziel:
+\begin{align*}
+	Z_n \distrto Z \text{ in } \klammern[\big]{C(ℝ), d} \\
+	⇔ Z_n^{(j)} \distrto Z^{(j)} \text{ in } \klammern[\big]{C(\intervall{-j}{j}), d_j} ∀ j ∈ ℕ \\
+	W_n := Z_n - \overline{Z}_n = V_n + r_n \\
+	r_n(t) = - \frac{1}{δ_n} \overline{\xi}_n t, \, t ∈ ℝ, \, \overline{\xi}_n = \frac{1}{n} \sum_{i = 1}^n \xi_i = \frac{1}{n} \sum_{i = 1}^n X_i - \Earg{X_i}
+\end{align*}
+
+\begin{thm}[CLT von Ljapunov] \label{thm:clt_von_ljapunov}
+	Sei $\set{\eta_{ni} : 1 \leq i \leq i_n ∈ ℕ, n ∈ ℕ}$
+	ein Dreiecksschema von zentrierten reellen Zufallsvariablen, die zeilenweise
+	unabhängig sind. Falls
+	\begin{align} \tag{Lj} \label{eq:Lj}
+		\sum_{i = 1}^{i_n} \Earg{\abs{\eta_{ni}}^{2 + δ}} \ntoinf 0 \text{ für ein $δ > 0$ und} \\
+		\sum_{i = 1}^{ivn} \Var(\eta_{ni}) \ntoinf \sigma^2 \geq 0,
+	\end{align}
+	so folgt
+	\begin{equation*}
+		\sum_{i = 1}^{i_n} \distrto \Nor(0, \sigma^2)
+	\end{equation*}
+\end{thm} % end theorem CLT von Ljapunov
+\begin{proof}
+	Satz \ref{satz6.1Lindeberg1922} gilt auch für $i_n$ anstelle von $n$ dort.
+	Da
+	\begin{align*}
+		\sum_{i = 1}^{i_n} \Earg{\eta_{ni}^2 \indi_{\set{\abs{\eta_{ni}} > ε}}}
+	\end{align*}
+	Nun gilt $\eta_{ni}^2 \indi_{\set{\abs{\eta_{ni}} > ε}} \leq ε^{- δ} \abs{\eta_{ni}}^{2 + δ}$.
+	Betrachte dafür den Fall $\abs{\eta_{ni}(ω)} \leq ε$. Dieser ist trivial, denn die linke Seite ist $0$.
+	Im Fall % todo: 2. Fall
+	\begin{align*}
+		\leq ε^{-δ} \sum{i = 1}^{i_n} \Earg{\abs{\eta_{ni}}^{2 + δ}} \ntoinf 0 \quad ∀ ε > 0
+	\end{align*}
+	Mit Satz \ref{satz6.1Lindeberg1922} folgt die Behauptung.
+\end{proof}
+
+\begin{lemma} \label{thm:8.10}
+	\begin{align*}
+		\sup_{\abs{t} \leq j} \abs{r_n(t)} \stochto 0 \quad ∀ j > 0
+	\end{align*}
+\end{lemma} % end lemma
+\begin{proof}
+	\begin{align*}
+		\sup_{\abs{t} \leq j} \leq j \frac{1}{δ_n} \abs{\overline{\xi}_n} = j \underbrace{\frac{1}{√{n} δ_n}}_{→ 0 \text{ Ann.\ 1}} \underbrace{\abs{\frac{1}{√{n}} \sum_{i = 1}^{n} \xi_i}}_{\abs{\distrto \Nor(0, s^2)}}
+	\end{align*}
+	\begin{align*}
+		\frac{1}{√{n}} \sum_{i = 1}^n \xi_i = \sum_{i = 1}^n \eta_{ni} \mit \eta_{ni} := \frac{1}{√{n}} \xi_{in} \\
+		\sum_{i = 1}^{n} \Earg{\abs{\eta_{ni}}^{2 + δ}} = n^{- \frac{1}{2}(2 + δ)} \sum_{i = 1}^{n} \underbrace{\Earg{\xi_{in}}^{2 + δ}}_{\leq C \, ∀i \, ∀n \text{ gemäß } \ref{eq:8.5}}
+		\leq C n^{-1} n^{- \frac{δ}{2}} n → 0 \\
+		\sum_{i = 1}^{n} \Var(\eta_{ni}) = \frac{1}{n} \sum_{i = 1}^{n} \Var(\xi_{in})
+		= \frac{1}{n} \sum_{i = 1}^{n} \Var(X_{in})
+		= \frac{1}{n} \sum_{i = 1}^{\floor{n \theta}} \Var(X_{in})
+		+ \frac{1}{n} \sum_{i = \floor{n \theta} + 1}^{n} \Var(X_{in})
+	\end{align*}
+	Die $X_{in}$ in der ersten Summe sind alle verteilt nach $P_n$, die in der zweiten
+	Summe verteilt nach $Q_n$.
+	\paragraph{Annahme 3}%
+	\label{par:8_annahme_3}
+	\begin{align*}
+		\sigma_n^2 := \Var(X_{\floor{n \theta}, n} \equiv \Var(P_n) → \sigma_1^2 ∈ \intervallO{0}{∞} \\
+		\gamma_n^2 := \Var(X_{\floor{n \theta} + 1, n} \equiv \Var(Q_n) → \sigma_2^2 ∈ \intervallO{0}{∞}
+	\end{align*}
+	Dann folgt
+	\begin{align*}
+		\sum_{i = 1}^{n} \Var(\eta_{ni}) =
+		\underbrace{\frac{1}{n} \floor{n \theta}}_{→ \theta} \underbrace{\sigma_n^2}_{→ \sigma_1^2} + \underbrace{\frac{1}{n} (n - \floor{n \theta})}_{→ 1 - \theta} \underbrace{\gamma_n^2}_{→ \sigma_2^2}
+		→ \theta \sigma_1^2 + (1 - \theta_2^2) =: s^2
+	\end{align*}
+	Aus Satz \ref{beisp4.18} \ref{it:4.18einDim}
+	folgt
+	\begin{align*}
+		\underbrace{\frac{1}{√{n} δ_n}}_{→ 0} \underbrace{\abs{\frac{1}{√n} \sum_{i = 1}^n \xi_{in}}}_{\distrto \abs{\Nor(0, s^2)}} & \distrto 0 \\
+		\overset{\ref{satz4.13}}{⇒} j \frac{1}{√n δ_n} \abs{\frac{1}{√n} \sum_{i = 1}^n \xi_{in}} & \stochto 0 \\
+		⇒ 0 \leq \P \argu{ \sup_{\abs t \leq j} \abs{ r_n(t) } \geq ε }
+		\leq \P \argu{ j \frac{1}{√n δ_n} \abs{\frac 1{√n} \sum ...} \geq ε } & \ntoinf 0 \, ∀ ε > 0
+	\end{align*}
+	Also gilt mit dem Einschließungskriterium, dass der mittlere Term gegen $0$ geht.
+\end{proof}
+
+Erinnere daran, dass
+\begin{align} \nonumber
+	Z_n &= Z_n - \overline{Z}_n + \overline{Z}_n = W_n + \overline{Z}_n \\ \nonumber
+	W_n &= V_n + r_n, \text{ wobei} \\
+	\tag{8.5$\frac{1}{2}$} \label{eq:8.5einhalb}
+	V_n(t) &=
+	\underbrace{
+		δ_n \sum_{i = \floor{n \theta} + 1}^{\overline u_n(t)} \xi_{in}
+	}_{=: \Gamma_n(t)}
+	+ \underbrace{
+		δ_n (u_n(t) - \overline{u}_n(t)) \xi_{\overline{u}_n(t) + 1}
+	}_{=: \rho_n(t) \text{ (Rest)}}
+	\\ \nonumber
+	W_n &= Z_n - \overline Z_n ⇒ W_n \text{ stetig}, r_n \text{ stetig} ⇒ V_n \text{ stetig}
+\end{align}
+Gemäß Lemma \ref{thm:8.10} sind
+\begin{align*} \tag{8.6'} \label{eq:8.6-2tes}
+	W_n^{(j)} \equiv \restr{W_n}{\intervall{-j}{j}} \text{ und }
+	V_n^{(j)} \equiv \restr{V_n}{\intervall{-j}{j}} \text{ sind stochastisch äquivalent } ∀ j > 0 \\
+	\nonumber
+	\text{wobei die Metrik ist } d( W_n^{(j)}, V_n^{(j)} )
+	= \sup_{\abs{t} \leq j} \abs{V_n(t) - W_n(t)}
+	= \sup_{\abs t \leq j} \abs{- r_n(t)} \stochto 0
+\end{align*}
+Wegen \ref{satz4.14Cramer} ist nun das Ziel:
+\begin{align*}
+V_n^{(j)} \distrto V^{j} \text{ in } \klammern[\big]{C(\intervall{-j}{j}), d_j} ∀ j
+\end{align*}
+Dazu betrachte erstmal die Konvergenz der fidis. Zunächst
+\begin{align*}
+	\abs{\rho_n(t)} &= δ_n \abs{u_n(t) - \overline u_n(t)} \abs{\xi_{\overline u_n(t) + 1}} \\
+	⇒ \P \argu{ \abs{\rho_n(t)} \geq ε }
+	&\leq \P \argu{ δ_n \abs{\xi_{\overline u_n(t) + 1}} \geq ε } \\
+	&= \P \argu{ \abs{\xi_{\overline u_n(t) + 1}} \geq \frac{ε}{δ_n} } \\
+	&= \P \argu{ \abs{\xi_{\overline u_n(t) + 1}}^{2 + δ} \geq \klammern{\frac{ε}{δ_n}}^{2 + δ} } \\
+	&= ε^{- 2 - δ} \underbrace{δ^{2 + δ}}_{→ 0 \text{ (Ann.\ 1)}} \underbrace{\Earg{ \abs{\xi_{\overline u_n(t) + 1}}^{2 + δ}}}_{\leq C \: \eqref{eq:8.5}} \quad \text{(Markovungleichung)} \\
+	⇒ \rho_n (t) & \stochto 0 \quad ∀ t ∈ ℝ \\
+	\overset{\ref{satz3.15} \ref{it:3.15koordKonvprob}}{⇒}
+	\pi_T( \rho_n) & \stochto 0 \quad ∀ T \subseteq ℝ \text{ endlich} \\
+	⇒ \pi_T( V_n ) & \distrto \pi_T( V ) \quad ∀ T \subseteq ℝ \text{ endlich, falls} \\
+	\pi_T( \Gamma_n) & \distrto \pi_T(V) \quad \text{wegen \ref{satz4.14Cramer} und } \pi_T(V_n) - \pi_T(\Gamma_n) = \pi_T(\rho_n) \stochto 0
+\end{align*}
+Dazu seien $s_l < s_{l - 1} < ... < s_1 < 0 \leq t_1 < ... < t_k$ endlich viele Punkte.
+Aus \eqref{eq:8.4einhalb} folgt mit der Konvention über falschrummes addieren
+\begin{align*}
+	Γ_n(s_i) = - δ_n \sum_{j = \overline u_n(s_i) + 1}^{\floor{n \theta}}
+	\underbrace{\xi_j}_{∈ \set{\xi_j : j \leq \floor{n \theta}}} \quad 1 \leq i \leq  \\
+	Γ_n(t_i) = δ_n \sum_{j = 1 + \floor{n \theta}}^{\overline u_n(t_i)}
+	\underbrace{\xi_j}_{∈ \set{\xi_j : j \geq \floor{n \theta} + 1}} \quad 1 \leq i \leq k \\
+\end{align*}
+Da $\set{\xi_j : j \leq \floor{n \theta} }$, $\set{\xi_j : j \geq \floor{n \theta} + 1 }$ unabhängig sind, folgt mit dem Blockungslemma:
+\begin{align} \tag{8.8} \label{eq:8.8}
+	( Γ_n(s_i) )_{1 \leq i \leq l}, ( Γ_n(t_i))_{1 \leq i \leq k} \text{ unabhängig}
+\end{align}
+Mit $s_0 := 0$ ist
+\begin{align*}
+	Γ_n(s_i) - Γ_n(s_{i - 1}) = - \delta_n \sum_{j = \overline u_n(s_ii) + 1}^{\overline u_n(s_{i - 1})} \xi_j
+	= \sum_{j = 1}^{\overline u_n(s_{i - 1}) - \overline u_n(s_i) =: i_n}
+	\underbrace{(- δ_n) \xi_{\overline u_n(s_i) + j}}_{=: \eta_{nj}}
+\end{align*}
+\begin{align} \tag{$*$} \label{eq:8-3stern}
+	-1 + δ_n^{-2} (s_{i - 1} - s_i) \leq i_n \leq δ_n^{-2} (s_{i - 1} - s_i) + 1
+\end{align}
+\begin{align*}
+	⇒ \sum_{j = 1}^{i_n} \Earg{\abs{\eta_{nj}}^{2 + δ}}
+	&= δ_n^{2 + δ} \sum_{j = 1}^{i_n}
+	\underbrace{
+		\Earg{ \abs{ \xi_{\overline u_n(s_i) + j} }^{2 + δ}}
+	}_{\overset{\eqref{eq:8.5}}{\leq} C ∀ j ∀ n}
+	\leq C δ_n^{2 + δ} i_n \\
+	\overset{\eqref{eq:8-3stern}}&{\leq} C ( \underbrace{δ_n^{+ δ}}_{→ 0} (s_{i - 1} - s_i) + \underbrace{δ_n^{2 + δ}}_{→ 0}) \ntoinf 0
+\end{align*}
+\begin{align}
+	\nonumber
+	\sum_{j = 1}^{i_n} \Var (\eta_{nj})
+	= δ_n^2 \sum_{j = 1}^{i_n}
+	\overbrace{
+		\Var(\underbrace{X_{jn}}_{\sim P_n})
+	}^{γ_n^2}
+	= \underbrace{
+		δ_n^2 i_n
+	}_{\overset{\eqref{eq:8-3stern}}{→} s_{i-1} - s_i}
+	\underbrace{γ_n^2}_{→ \sigma_1^2 \text{ (Ann.\ 3)}}
+	→ \sigma_1^2(s_{i - 1} - s_i) \\
+	\stackrelnew{\text{CLT}}{\text{Ljapunov}}{⇒}
+	% checked: ref CLT nicht möglich, da Theorem bewusst keine Nummer bekommen hat
+	\tag{$+$} \label{eq:8-3plus}
+	%todo some klammern
+	Γ_n(s_i) - Γ_n(s_{i - 1})
+	\distrto \sigma_1 \Nor \argu{0, \sigma_1^2(s_{i - 1} - s_i)}
+	\overset{\L}{=}
+	\sigma_1 \klammern{B_1(s_{i - 1}) - B_1(s_i)},
+\end{align}
+wobei $B_1$ eine Brownsche Bewegung auf $\intervallOH{-∞}{0}$ ist.
+%wo kommt das hin: $∀ 1 \leq i \leq l$. ?
+
+Da die Zuwächse unabhängig sind, folgt mit Satz \ref{satz4.21} und \eqref{eq:8-3plus}
+\begin{align*}
+	\klammern[\big]{Γ_n(s_i) - Γ_n(s_{i - 1}}_{1 \leq i \leq l}
+	\distrto \sigma_1 \klammern[\big]{
+	\underbrace{
+		B_1(s_{i - 1}) - B(s_i)
+		}_{
+		\overset{\L}{=}
+		B(s_i) - B(s_{i - 1})
+		}}_{1 \leq i \leq l}
+	\overset{\L}{=}
+	\sigma_1 \klammern{ B(s_i) - B(s_{i - 1}) }
+\end{align*}
+Da die Abbildung $(x_1, ..., x_l) ↦ (x_1, x_1 + x_2, ..., x_1 + ... + x_l)$
+stetig auf $ℝ^l$ folgt daraus mit dem CMT \ref{satz4.10ContinuousMappingTheorem}
+\begin{align*}
+	\klammern[\big]{Γ_n(s_i)} _{1 \leq i \leq l}
+	\distrto \sigma_1 \klammern[\big]{ B(s_i) }_{1 \leq i \leq l}
+\end{align*}
+Analog zeigt man:
+\begin{align*}
+	\klammern[\big]{Γ_n(t_i)}_{1 \leq i \leq k}
+	\distrto \sigma_2 \klammern[\big]{B_2(t_i)}_{1 \leq i \leq k},
+\end{align*}
+wobei $B_2$ eine BB auf $\intervallHO{0}{∞}$, die unabhängig von $B_1$ ist
+wegen Unabhängigkeit $\eqref{eq:8.8}$ liefert erneute Anwendung von
+Satz \ref{satz4.21} die Konvergenz %\eqref{eq:8.7} % wurde nie definiert und scheint mir auch nicht nötig
+der fidis der $Γ_n$, also
+\begin{align} \tag{8.9} \label{eq:8.9}
+	\pi_T(V_n) \distrto \pi_T(V) \quad ∀ T \subseteq ℝ \text{ endlich}
+\end{align}
+wobei
+\begin{align*}
+	V(t) =
+	\begin{cases}
+		\sigma_1 B_1(t), & t < 0 \\
+		\sigma_2 B_2(t), & t \geq 0
+	\end{cases}
+\end{align*}
+eine zweiseitige BB ist.
+\paragraph{Momentenkriterium}
+Erinnere an \eqref{eq:8.4einhalb}:
+\begin{align*}
+	\overline u_n(t) = k
+	⇔ t ∈ \intervallHO{δ_n^2 (k - \floor{n \theta})}{δ_n^2( k + 1 - \floor{n \theta})}
+	=: I_n(k) \text{ hat Länge $δ_n^2$}
+\end{align*}
+Seien $s > t$ aus $\intervall{-j}{j}$
+\subparagraph{1. Fall} $0 \leq t < s$ Dann
+\begin{equation} \tag{8.10} \label{eq:8.10}
+	\begin{aligned}
+		V_n(s) - V_n(t)
+		\overset{\eqref{eq:8.5einhalb}}&{=}
+		δ_n \sum_{i = \overline u_n(t) + 1}^{\overline u_n(s)} \xi_i  + δ_n( u_n(s) - \overline u_n(s)) \xi_{\overline u_n(s) + 1} \\
+		& \phantom{= δ_n \sum \qquad}
+		- δ_n(u_n(t) - \overline u_n(t)) \xi_{\overline u_n(t) + 1}
+	\end{aligned}
+\end{equation}
+Betrachte nun den Fall
+\begin{align}
+	\tag{Fall i} \label{eq:8-3i} s-t & < δ_n^2 \\
+	\tag{Fall ia} \label{eq:8-3ia}
+	s, t & \text{ liegen im selben Intervall $I_n(k)$} \\
+	\nonumber
+	⇒ \overline u_n(s) & = k = \overline u_n(t) \\
+	\nonumber
+	\overset{\eqref{eq:8.10}}{⇒}
+	δ_n (u_n(s) - k) \xi_{k + 1}
+	- δ_n (u_n(t) - k) \xi_{k + 1}
+	&= δ_n(\underbrace{u_n(s) - u_n(t)}_{= δ_n^{-2}(s-t)}) \xi_{k + 1}
+	 \\ \nonumber
+	& \leq δ_n^{-1} (s-t) \xi_{k + 1} \\ \nonumber
+	 % ⇒ \abs{V_n(s) - V_n(t)}^{2 + δ} \\ \nonumber % no idea if this line was supposed to have meaningfull content
+	 ⇒ \Earg{ \abs{ V_n(s) - V_n(t) }^{2 + δ} }
+	 &= δ_n^{-(2 + δ)} (s - t)^{2 + δ}
+	 \underbrace{
+		 \Earg{ \abs{ \xi_{k + 1} }^{2 + δ} }
+	 }_{\leq C \text{ wegen \eqref{eq:8.5}}} \\ \nonumber
+	 &= C δ_n^{- (2 + δ)}
+	 \underbrace{ (s-t)^{1 + \frac{δ}{2}} }_{\overset{\eqref{eq:8-3i}}{\leq} (δ_n^2)^{1 + \frac{δ}{2}} = δ_n^{2 + δ}}
+	 (s - t)^{1 + \frac{δ}{2}} \\ \nonumber
+	 &\leq C (s-t)^{1 + \frac{δ}{2}}
+\end{align}
+Betrachte nun den Fall
+\begin{align}
+	t & ∈ I_n(k), s ∈ I_n(k + 1) \tag{Fall ib} \label{eq:8-3ib} \\
+	\nonumber
+	⇒ \overline u_n(t) &= k, \: \overline{u}_n(s) = k + 1 \\
+	\nonumber
+	⇒ V_n(s) - V_n(t)
+	& = δ_n \xi_{k + 1}
+	+ δ_n (u_n(s) - (k + 1)) \xi_{k + 2}
+	- δ_n (u_n(t) - k) \xi_{k + 1} \\
+	\nonumber
+	& = δ_n( k + 1 - u_n(t)) \xi_{k + 1}
+	+ δ_n( u_n(s) - (k + 1)) \xi_{k + 2}
+\end{align}
+Nimmt man diese Ungleichung hoch $2 + δ$ wende die \ref{eqCrUngleichung}-Ungleichung an:
+\begin{align*}
+	\abs{ \sum_{i = 1}^{m} a_i }^r \leq m^{r - 1} \sum_{i = 1}^m \abs{a_i}^r \quad ∀ r \geq 1
+\end{align*}
+\begin{align*}
+	\abs{ V_n(s) - V_n(t) }^{2 + δ}
+	& \leq 2^{1 + δ}
+	\big( δ_n^{2 + δ} \abs{k + 1 - u_n(t)}^{2 + δ} \abs{\xi_{k + 1}}^{2 + δ} \\
+	& \phantom{\leq 2^{1 + δ} ()}
+	+ δ_n^{2 + δ} \abs{u_n(s) - (k + 1)}^{2 + δ} \abs{\xi_{k + 2}}^{2 + δ} \big)
+\end{align*}
+Wendet man nun den Erwartungswert an, erhält man
+\begin{align*}
+	\Earg{\abs{ V_n(s) - V_n(t) }^{2 + δ}}
+	& \leq 2^{1 + δ}
+	\Big( δ_n^{2 + δ} \abs{k + 1 - u_n(t)}^{2 + δ}
+	\underbrace{\Earg{\abs{\xi_{k + 1}}^{2 + δ}}}_{\leq C} \\
+	& \phantom{\leq 2^{1 + δ} ()}
+	+ δ_n^{2 + δ} \abs{u_n(s) - (k + 1)}^{2 + δ}
+	\underbrace{\Earg{ \abs{\xi_{k + 2}}^{2 + δ}}}_{\overset{\eqref{eq:8.5}}{\leq} C} \Big) \\
+	&\leq 2 C δ_n^{2 + δ} 2^{1 + δ}
+	\klammern[\Big]{
+		{\underbrace{\abs{k + 1 - u_n(t)}}_{\leq δ_n^{-2} (s-t)}} ^{2 + δ}% todo: ub nur unter |·|
+		+ {\underbrace{\abs{u_n(s) - (k + 1}}_{δ_n^{-2}(s-t)}}^{2 + δ}
+	} \\
+	% ⇒ \Earg{\abs{V_n(s) - V_n(t)}^{2 + δ}}
+	&\leq 4 \, C \, 2^{1 + δ} \, δ_n^{2 + δ} \, δ_n^{-2 (2 + δ)} (s-t)^{2 + δ} \\
+	&\leq \, c_0 \, δ_n^{-2 - δ} (s-t)^{1 + \frac{δ}{2}} (s-t)^{1 + \frac{δ}{2}} \\
+	\overset{\eqref{eq:8-3i}}&{\leq} c_0 (s - t)^{1 + \frac{δ}{2}}
+\end{align*}
+Im \eqref{eq:8-3i} können nur die Fälle \eqref{eq:8-3ia} und \eqref{eq:8-3ib} auftreten,
+denn sonst läge mindestens ein Intervall der Länge $δ_n^2$ zwischen
+$s$ und $t$, also wäre $s - t \geq δ_n^2$.
+
+Betrachte nun den Fall
+\begin{align*}
+	\tag{Fall ii} \label{eq:8-3ii}
+	s - t \geq δ_n^2
+\end{align*}
+Nenne die drei Summanden in \eqref{eq:8.10} $a_1$, $a_2$, $a_3$ und wende die \ref{eqCrUngleichung}
+mit $r = 2 + δ$ und $m = 3$ an und erhalte
+mit den Beobachtungen und der Anwendung des Erwartungswerts
+\begin{align*}
+	\abs{u_n(s) - \overline u_n(s)} \leq 1 \\
+	\abs{u_n(t) - \overline u_n(t)} \leq 1 \\
+\end{align*}
+\begin{align*}
+	\Earg{\abs{V_n(s) - V_n(t)}^{2 + δ}}
+	\leq
+	3^{1 + δ}
+	\klammern[\bigg]{ δ_n^{2 + δ} \Earg[\bigg]{ \abs{ \sum\nolimits_{i = \overline u_n(t) + 1}^{\overline u_n(s)} \xi_i}^{2 + δ}
+		% nolimits since its too big otherwise
+		+ 2 \underbrace{δ_n^{2 + δ}}_{\overset{\eqref{eq:8-3ii}}{\leq}} C }
+	}
+	\overset{\eqref{eq:8-3ii}}{\leq}
+	% \leq 3^{1 + δ}
+\end{align*}
+
+Dieses Kapitel ist hier unvollständig, da Professor Ferger in der letzten Woche krank war
+und daher die Vorlesung nicht halten konnte. Seine Vorlesungsnotizen hat er veröffentlicht
+und können unter \url{https://flugit.hilsky.de/nonpublished/MSTAT-Kapitel-8-3.pdf} heruntergeladen
+werden. Ich würde mich freuen, wenn du dieses Skript mithilfe dieser Notizen vervollständigst.
+Bitte gib mir (\url{felix.h@hilsky.de}) in diesem Fall Bescheid.
+
+Da meine Prüfung bereits vorbei ist, werde ich mir diese Arbeit des Abschreibens nicht mehr machen.
+
+Kapitel 9 und 10 wurden im Gegensatz zum vorherigen Jahr nicht behandelt.

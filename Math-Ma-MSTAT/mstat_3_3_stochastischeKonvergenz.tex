@@ -1,0 +1,82 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Stochastische Konvergenz}
+
+\begin{definition} \label{definition: 3.11}
+	$X_n$ \begriff{konvergiert stochastisch} bzw. \begriff{in Wahrscheinlichkeit} gegen $X$, in Symbolen:
+	\begin{equation*}
+		X_n \probto X \defequiv \forall \epsilon > 0:
+		\P\brackets{\menge{d(X_n,X) > \epsilon}} \ntoinf 0
+	\end{equation*}
+	d.\,h.\ $d(X_n, X) \probto 0$.
+\end{definition}
+
+\begin{satz} \label{satz: 3.12}
+	$\displaystyle X_n \ntoinf X \quad \P\text{-fast sicher} \follows X_n \probto X$
+\end{satz}
+
+\begin{proof}
+	Gemäß \cref{satz: 3.9} gilt
+	\begin{equation*}
+		\forall \epsilon > 0 : \enskip 
+		0 \le \P\brackets{d(X_n,X) > \epsilon}
+		\le \P\brackets{\sup_{m \ge n} d(X_m,X) > \epsilon}
+		\ntoinf	0
+	\end{equation*}
+\end{proof}
+
+Die Umkehrung von \cref{satz: 3.12} gilt im Allgemeinen \textit{nicht}, aber es gilt das folgende Teilfolgenkriterium.
+
+\begin{satz}[Teilfolgenkriterium für stochastische Konvergenz] 
+	\label{satz: 3.13}
+	Folgende Aussagen sind äquivalent:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it: 3.13WahrKonv} $\begin{aligned} X_n \probto	X \end{aligned}$
+		\item \label{it: 3.13TFfsKonv} Zu jeder Teilfolge (TF) $(X_{n'})$ von $(X_n)_{n \in \N}$ existiert eine Teilfolge $(X_{n''})$ von $(X_{n'})$ derart, dass $X_{n''} \overset{n''\to \infty}{\longrightarrow} X$ $\P$-fast sicher.
+	\end{enumerate}
+\end{satz}
+
+Die Notation $(X_{n''})$ stammt aus \cite{billingsley2008probability}.
+%Der folgende Beweis nutzt sie nicht, da er nicht aus der Vorlesung, sondern
+%aus der Feder des Mitschreibers stammt, der sie unsauber findet.
+
+\begin{proof}
+	Wir verfahren wie im Reellen:
+	Es gelte \cref{it: 3.13WahrKonv}. Sei $\epsilon > 0$ beliebig und $(X_{n_k})_k$ eine Teilfolge von $(X_n)_n$.
+	Da $\P\brackets{\menge{d(X_n, X) > \epsilon}} \to 0$, können wir eine Teilteilfolge $(X_{n_{k_i}})_i \defeq (Y_i)_i$ finden mit $\P\brackets{\menge{d(Y_i, X) > \epsilon}} < i^{-2}$. Dann ist für alle $n \in \N$ und mit $n \to \infty$
+	\begin{align*}
+		\P\brackets{\sup_{i \ge n} d(Y_i, X) < \epsilon}
+		= \P\brackets{\bigcup_{i \ge n} \menge{d(Y_i, X) < \epsilon}}
+		\leq \sum_{i = n}^{\infty} \P\brackets{\menge{d(Y_i, X) < \epsilon}}
+		\leq \sum_{i = n}^{\infty} i^{-2} \to 0 
+	\end{align*}
+	Laut dem Konvergenz-Kriterium in \cref{satz: 3.9} bedeutet das $Y_i \to X$ $\P$-fast sicher.
+
+	Gelte nun \cref{it: 3.13TFfsKonv} und wir nehmen an, es gäbe ein $\epsilon > 0$ und eine Teilfolge $(X_{n_k})_k$ von $(X_n)_n$, sodass $\P\brackets{\menge{d(X_{n_k}, X) > \epsilon}} > \delta > 0$ für ein passendes $\delta$.
+	Dann konvergiert nach $\cref{it: 3.13TFfsKonv}$ eine Teilteilfolge $(X_{n_{k_i}})_i$ $\P$-fast sicher gegen $X$, also laut \cref{satz: 3.12} auch stochastisch. 
+	Das widerspricht aber der obigen Annahme über $(X_{n_k})_k$, die sich
+	auch auf $(X_{n_{k_i}})_i$ überträgt.
+\end{proof}
+
+Mit dem Teilfolgenkriterium lassen sich Rechenregeln für fast sichere Konvergenz auf stochastische Konvergenz übertragen.
+
+\begin{korollar} \label{korollar: 3.14}
+	\begin{enumerate}[label=(\alph*)]
+		\item \label{it: 3.14probConvEq} $X_n \probto X$ und $X_n \probto X'
+			\follows X = X'\quad\P\text{-fast sicher}$
+		\item \label{it: 3.14probConvCont} Gelte $X_n \probto X$ in $(\S,d)$ und $f \colon (\S,d) \to (\S',d')$ messbar mit $f$ stetig in $X$ $\P$-fast sicher. Dann gilt auch $f(X_n) \probto f(X)$.
+	\end{enumerate}
+\end{korollar}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item Wegen $X_n \probto X$ existiert nach \cref{satz: 3.13} eine Teilfolge $(X_{n'}) \subseteq(X_n)_{n \in \N}$ mit $X_{n'}
+		\overset{n' \to \infty}{\longrightarrow} X$ $\P$-fast sicher.
+		Zu $(X_{n'})$ existiert (wegen $X_n\probto X'$ und \cref{satz: 3.13}) eine Teilfolge $(X_{n''})$ von $(X_{n'})$, sodass aus $X_{n''}	\ntoinf  X' \enskip \P\text{-fast sicher}$ mit \cref{satz: 3.7} schon $X = X'$ fast sicher folgt.
+		\item Zu einer beliebigen Teilfolge $(X_{n'})$ von $(X_n)$ existiert eine Teilfolge $(X_{n''})$ von $(X_{n'})$ mit $X_{n''} \to X$ $\P$-fast sicher.
+		Mit \cref{satz: 3.8} folgt $f(X_{n''}) \to f(X)$ $\P$-fast sicher und mit \cref{satz: 3.13} angewendet auf $(f(X_n))_n$ gilt $f(X_n) \probto f(X)$.
+	\end{enumerate}
+\end{proof}

@@ -1,0 +1,434 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\newcommand{\directoryPrefix}{../latex/} % Je nach Ordnertiefe muss dieser Command angepasst werden. Bei Fragen mich anschreiben.
+\input{\directoryPrefix templates}
+\TemplateSummary{Felix Hilsky, Basis: Willi Sontopski}{MSTAT}
+\input{\directoryPrefix commands_Felix}
+\setlist{nosep}
+\hfuzz=1.5cm  % silence overfull hboxes less than 2cm
+\begin{document}
+Alle Beweise und Sätze, die Prof.\ Ferger als typische Prüfungsfragen bezeichnet hat, finden sich durch eine Suche nach \enquote{Prüfung} im Skript.
+	\section{Der Median}
+	\begin{itemize}
+		\item $m$ Median $\gdw m=\argmin_{t}(\Earg{\abs{X-t}})\gdw F(m-)≤\frac{1}{2}≤ F(m)\gdw \Earg{\abs{X-t}}≥\Earg{\abs{X-m}}~∀ t∈ℝ$
+		% \item Trafo: $∫_Ω g(X(ω))~\P(\dω)  % keine Ahnung, was das hier sucht
+		% =∫_ℝ g(x)~\P_X(\d x)
+		% =∫_ℝ g(x)· f_X(x)\ds x$ ($f_X$ Dichte von $P_{X} = P ∘ X^{-1}$)
+	\item Median i.\,A.\ \betone{nicht} eindeutig, wähle $m:=F^{-1}(\frac12)\mit F^{-1}(u):=\inf\set{ x∈ℝ:F(x)≥ u}$ \define{verallg.\ Inverse / Quantilfunktion}; $Y$ stetig, aber nicht diffbar; Minimierung über Ableiten unmöglich
+		\item empir.\ Median $\hat{m_n}:=\argmin_{t∈ℝ}Y_n(t)\mit Y_n(t) := \frac{1}{n} \sum_{i=1}^n \abs{x_i-t}$
+		\item SGGZ sagt: $Y_n(t) \ntoinf Y(t) := ∫_ℝ \abs{x-t} ~ F(\d x)$ f.\,s.\ $∀ t ∈ ℝ$.
+	\end{itemize}
+
+	\section{Konzepte aus metrischen Räumen}
+	\begin{itemize}
+		\item $\S$ metrischer Raum; $\F$ Menge der offenen Teilmengen und $\G$ Menge der geschlossenen Teilmengen
+		\item \enquote{Bump-Function}: $∀ A⊆\S,∀ε:∃ f_A:\S⟶[0,1]$ glm.\ stetig s.\,d.\ $f_A \approx \indi_A$ ($f_A(x) = 0$ für $d(x, A) ≥ ε$)
+		\item MR \define{separabel} $:\gdw ∃ S_0 ⊆ \S$ abzählbar s.\,d.\ $\abschluss{S_0} = \S \gdw ∃ S_0 ⊆ \S$ abzählbar mit $S_0$ liegt dicht in $\S$
+		% CHECKED: '\abschluss' used.
+		\item $\G_0⊆\G$ \define{Basis} $:\gdw∀ G∈\G:G$ ist $\Union$ von Mengen aus $\G_0$; $\S$ separabel $\gdw\G(\S)$ hat abzählbare Basis
+		\item \define{Produktmetriken}: $d_1× d_2:∈\set[\big]{ √{d_1^2+d_2^2}, d_1+d_2,\max(d_1,d_2)}$; sind äquivalent, erzeugen selbe Topo
+	\end{itemize}
+
+	\section{Zufallsvariablen in metrischen Räumen}
+	\begin{itemize}
+		\item Borel-$σ$-Algebra auf $\S$ ist $\B(\S):=σ(\G(\S))=σ(\F(\S))\overset{\G_0\text{ abz- Basis}}{=}σ(\G_0)$, hängt. i.\,A.\ von $d$ ab.
+		\item $\B_{d_1 × d_2}(\S_1 × \S_2) = \B_{d_1}(\S_1) \tens \B_{d_2}(\S_2)$ für \emph{separable} MR
+		\item \define{Zufallsvariable} ist $X\colonΩ⟶\S$ die $\A$-$\B(\S)$-messbar ist ($(Ω,\A)$ Messraum, $(\S,d)$ MR).
+		\item \define{Verteilung} von $X$ unter $\P$ ($(Ω,\A,\P)$ WR) ist
+		$(\P∘ X^{-1})(B):=\P[X∈ B]~∀ B∈\B(\S)$
+		\item $(\S,d)$ separabel, $X,Y$ ZV $⇒ d(X,Y)$ ist reelle ZV (jede Metrik stetig)
+		\item $X_n\ntoinf  X~\P\text{ f.\,s.}
+			:\gdw \P\argu{\set{ω ∈ Ω : d \argu{X_n(ω), X(ω)} \ntoinf 0}} = 1 \gdw d(X_n, X) \ntoinf 0 \text{ f.\,s.}
+			\overset{\text{satz3.9}}{\gdw} ∀ ε > 0: \P\argu{\sup_{m ≥ n} d(X_m, X) > ε} \ntoinf 0$
+		\item $X_n \ntoinf X$ f.\,s.\ und $f$ messbar und stetig in $X$ $\P$-f.\,s.\ $⇒ f(X_n) \ntoinf f(X)$ f.\,s.
+		\item
+		$X_n
+		\stackrelnew{n⟶∞}{\P}{\longrightarrow}
+		X: \gdw ∀ ε > 0:
+		\P \argu{\set{d(X_n, X) > ε}}
+		\ntoinf
+		0$
+		\define{stochastische K./ K.\ in Wahrscheinlichkeit}
+		\item Konvergenz f.\,s.\ $⇒$ Konvergenz in W.; Umkehrung nicht wegen \enquote{wandernden Hüten}
+		\item $X_n \stochto X \gdw$ Zu jeder TF $X_n'$ existiert TTF $(X_n'')$ s.\,d.\ $X_{n''} → X$ f.\,s.
+		% CHECKED: '''' used.
+		\item $X_n \stochto X$ und $f$ messbar und stetig in $X$ $\P$-f.\,s.\ $⇒ f(X_n) \stochto f(X)$
+		\item $(\S_1, d_1)$, $(\S_2, d_2)$ separabel $⇒$ Produktraum $(\S_1 × \S_2, d_1 × d_2)$ separabel
+		\item Für beide Konvergenzarten gilt koordinatenweise Konvergenz.
+		\item $X,Y$ \define{gleich in Verteilung}:
+			$X \overset{\L}{=} Y
+			:\gdw \P ∘ X^{-1} = \P∘ Y^{-1}
+			\gdw \Earg{f(X)} = \Earg{f(Y)} ~ ∀ f ∈ C^b(\S)$ glm.
+		\item $\P_1=\P_2\gdw∫ f\d\P_1=∫ f\d\P_2~∀ f∈ C^b(\S)$ glm. stetig (gilt wegen Bump functions)
+	\end{itemize}
+
+	\section{Verteilungskonvergenz von Zufallsvariablen in metrischen Räumen}
+
+	\begin{itemize}
+		\item $\P_n\stackrelnew{w}{n⟶∞}{\longrightarrow} \P
+			:\gdw
+			∫ f\d \P_n\ntoinf ∫ f\d \P~∀ f∈ C^b(\S)$
+			\define{schwache Konvergenz von Maßen}
+		\item $X_n\distrto  X\text{ in }(\S,d)
+			:\gdw
+			\P∘ X_n^{-1}\stackrelnew{w}{n⟶∞}{\longrightarrow}\P∘ X^{-1}$
+			\define{Konvergenz in Verteilung}
+
+		\item $\P_n\overset{w}{\longrightarrow}\P\gdw F_n\rightharpoonup F:\gdw F_n(x)\ntoinf  F(x)~∀ x∈ C_F$ (Stetigkeitsstelle) \define{schwache Konvergenz von Verteilungsfunktionen} ($\P_n$ zu $F_N$ assoziiert)
+		\item $X_n\distrto  X
+			\overset{\text{Def}}{\gdw}
+			P_n = \P∘ X_n^{-1}
+			\weakto  \P∘ X^{-1} =P
+			\gdw
+			F_n (x) = \P(X_n≤ x)
+			\ntoinf
+			\P(X≤ x) =F(x)$ $∀ x ∈ C_F$
+	\end{itemize}
+\begin{minipage}{0.49\textwidth}
+	\define{Portmanteau-Theorem 1}: Äquivalent:
+		\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			\P_n\weakto  \P
+		\end{aligned}$
+		\item $\begin{aligned}
+			∫ f\d \P_n\overset{}{\longrightarrow}∫ f\d \P~∀ f∈ C^b(\S)\text{ glm.\ stetig}
+		\end{aligned}$
+		\item $\begin{aligned}
+			\limsup_{n⟶∞} \P_n(F)≤ \P(F)~∀ F∈\F(\S)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\liminf_{n⟶∞} \P_n(G)≥ \P(G)~∀ G∈\G(\S)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\limn \P_n(B)=\P(B)~∀ B∈\B(\S)
+		\end{aligned}$\\ $\mit \P(∂ B)=0$, also \define{$\P$-randlos}.
+	\end{enumerate}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	\define{Portmanteau 2}: Äquivalent:
+		\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			X_n\distrto  X\text{ in }(\S,d)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\Earg[\big]{f(X_n)}\ntoinf \Earg[\big]{f(X)}~∀ f∈ C^b(\S)
+		\end{aligned}$ glm.\ stetig
+		\item $\begin{aligned}
+			\limsup_{n⟶∞}\P(X_n∈ F)≤\P(X∈ F)~∀ F∈\F
+		\end{aligned}$
+		\item $\begin{aligned}
+			\liminf_{n⟶∞}\P(X_n∈ G)≥\P(X∈ G)~∀ G∈\G
+		\end{aligned}$
+		\item $\begin{aligned}
+			\P(X_n∈ B)\ntoinf \P(X∈ B)~∀ B∈\B(\S)
+		\end{aligned}$ $\mit\P(X∈∂ B)=0$
+	\end{enumerate}
+\end{minipage}
+
+\begin{itemize}
+	\item Portmanteau 1: (1) $⇒$ (2): Def, (2) $⇒$ (3): Bump fs;
+	Portmanteau 2 folgt aus 1 mit $P_n:=\P∘ X_n^{-1}$ und $P:=\P∘ X^{-1}$.
+	\item \define{CMT}: Für $h\colon(\S,d)⟶(\S',d')$ $\B(\S)$-$\B(\S')$-messbar gilt ($D_h$ Menge der Unstetigkeitsstellen von $h$):
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			P_n\weakto  P∧ P(D_h)=0
+			⇒ P_n∘ h^{-1}\weakto  P∘ h^{-1}
+		\end{aligned}$
+		\item $\begin{aligned}
+			X_n\distrto X\text{ in }(\S,d)∧\P(X∈ D_h)=0
+			⇒ h(X_n)\distrto  h(X)\text{ in }(\S',d')
+		\end{aligned}$ (\enquote{$h$ stetig in $X$})
+	\end{enumerate}
+	\item \undefine{Beweis.} (2) folgt direkt aus (1) nach Definition.
+	Nutze Portmanteau 1, ((1) $\gdw$ (3)):\\
+	$\limsup_{n⟶∞} \P_n∘ h^{-1}(F)
+	=\limsup_{n⟶∞} \P_n \argu[\big]{\underbrace{h^{-1}(F)}_{⊆ \overline{h^{-1}(F)}}}
+	≤ \limsup_{n⟶∞} \P_n \argu[\big]{\underbrace{\overline{h^{-1}(F)}}_{∈\F(\S)}}
+		\overset{\text{Portm}}{≤}
+		\P\klammern[\big]{\overline{h^{-1}(F)}}\\
+		\overset{(*)}{≤}
+		\P\klammern[\big]{h^{-1}(F)∪ D_h}
+		≤ \P\klammern[\big]{h^{-1}(F)}+\underbrace{\P(D_h)}_{\overset{\Vor}{=}0}
+		=\P∘ h^{-1}(F)
+		$
+		Bei $(*)$: Sei $x∈\overline{h^{-1}(F)}$. Falls $x∈ D_h$ trivial, $x\not∈ D_h\leadsto h$ stetig in $x$.
+		Sei $(x_n)_{n∈ℕ}⊆\S\mit x_n\longrightarrow x$ (existiert nach Def des Abschlusses) $\leadsto h(x_n)=h(x)\overset{!}{∈} \overline{F}=F\leadsto x∈ h^{-1}(F)$ \hfill $\square$
+	\item TF-Prinzip für schwache Konvergenz:
+	\subitem $\begin{aligned}
+			Q_n\weakto  Q
+			⇔
+			\text{Jede TF }(Q_{n'})⊆(Q_n)_{n∈ℕ}\text{ enthält TF }(Q_{n''})⊆(Q_{n'}):Q_{n''}\weakto  Q
+			% CHECKED: '''' used.
+		\end{aligned}$
+	\subitem $\begin{aligned}
+			X_n\distrto  X⇔\text{Jede TF }(X_{n'})⊆(X_n)_{n∈ℕ}\text{ enthält TF }(X_{n''})⊆(X_{n'}):X_{n''}\distrto  X
+			% CHECKED: '''' used.
+		\end{aligned}$
+	\item $X_n\stochto X⇒ X_n\distrto  X$; Umkehrung i.\,A.\ nicht, nur falls $X$ f.\,s.\ konstant
+	\item \define{Cramér}: Seien $(X_n)_{n∈ℕ},(Y_n)_{n∈ℕ}$ Folgen im separablen metrischen Raum $(\S,d)$, die \define{stochastisch äquivalent sind}, d.\,h.\ $d(X_n,Y_n)\stochto0$
+	Dann gilt:
+	$X_n\distrto  X⇔ Y_n\distrto  X$
+	\item \define{Cramér-Slutsky} (Koordinatenweise Konvergenz): $(\S,d),(\S',d')$ separable MR, $X_n\distrto X$ in $(\S,d)$, $Y_n\distrto Y$ in $(\S',d')$ und  $Y$ f.\,s.\ konstant. Dann gilt: $(X_n,Y_n)\distrto (X,Y)$ in $(\S×\S',d× d')$. (folgt aus Cramér)
+	\item $\begin{aligned}
+			\P_n\stackrelnew{ω}{}{\longrightarrow} \P
+		\end{aligned}\gdw\begin{aligned}
+			\P_n(A_1× A_2)\ntoinf  \P(A_1× A_2)~∀ A_i∈\B(\S_i)~\P_i\text{-randlos mit } i=1,2
+		\end{aligned}$ für $(\S,d)$ separabel
+\item $\klammern[\big]{\P_n^{(1)}\otimes\P_n^{(2)}} \weakto \P^{(1)} \otimes \P^{(2)} ⇔
+	\begin{aligned}
+			\P_n^{(1)}\weakto \P^{(1)}∧
+			\P_n^{(2)}\weakto \P^{(2)}
+		\end{aligned}$ im separablem Produktraum $\S=\S_1×\S_2$
+	\item $X_n\distrto  X\text{ in }\S_1∧ Y_n\distrto  Y\text{ in }\S_2
+		⇔ (X_n,Y_n)\distrto (X,Y)\text{ in }\S_1×\S_2$ für $\S=\S_1×\S_2$ separabel, $X_n$ und $Y_n$ sind unabhängig für alle $n∈ℕ$; $X$ und $Y$ sind unabhängig
+	\item Sei $(X_n)_{n∈ℕ}$ i.\,i.\,d.\ mit $\Earg{X_i}=:μ$ und $σ^2:=\Var(X_i)∈(0,∞)$.
+	Dann (SGGZ + ZGWS + CMT): $√{n}·(\overline{X}-μ)\distrto \Nor(0,σ^2)$ mit $\overline{X}$ emp. Erwartung;
+	$\klammern[\big]{\overline{X}_n,S_n^2}\ntoinf \klammern[\big]{μ,σ^2}\text{ in }ℝ^2$ f.\,s.
+	\item Also: $(\overline{X}_n)_{n∈ℕ}$ und $(S_n^2)_{n∈ℕ}$ \define{asymptotisch normal}, d.\,h.
+	$√{n}·\klammern[\big]{\overline{X}_n-μ}\distrto \mathcal{N}(0,σ^2),\qquad
+	√{n}·\klammern[\big]{S_n^2-σ^2}\distrto \mathcal{N}(0,τ^2)$
+\end{itemize}
+
+\section{Verteilungskonvergenz in \texorpdfstring{$ℝ^d$}{Rd}}
+\define{CF} $φ_X(t):=\E[\exp(\ii·\scaProd{t}{X})]$; Eindeutigkeitssatz: $X\overset{\L}{=}Y\gdwφ_X=φ_Y$;\\
+Stetigkeitssatz (SSS): $X_n\distrto X$ in $ℝ^d\gdw∀ t∈ℝ^d:φ_{X_n}(t)\ntoinf φ_X(t)$\\
+\define{Cramér-Wold-Device}: $X_n\distrto X$ in $ℝ^d ⇔ \scaProd{t}{X_n} \distrto \scaProd{t}{X}$ in $ℝ$ für alle $t∈ℝ^d$\\
+\undefine{Beweis.} \enquote{(1) $⇒$ (2)} folgt aus CMT, da $x ↦ \scaProd{x}{t}$ stetig.\\
+\enquote{(2) $⇒$ (1)}:
+$	φ_{X_n}(t)
+\stackeq{\text{Def}}\Earg[\Big]{\exp\argu[\big]{i · \scaProd{t}{X_n} · 1}}
+\stackeq{\text{Def}}φ_{\scaProd{t}{X_n}}(1)
+\stackrelnew{\text{SSS+(2)}}{n⟶∞}{\longrightarrow}\underbrace{φ_{\scaProd{t}{X}}(1)}_{=φ_X(t)}
+	\leadstoφ_{X_n}\ntoinf φ_X
+	\overset{\text{SSS}}{⇒}(1)$
+
+\section{Der multivariate zentrale Grenzwertsatz (ZGWS) für Dreiecksschemata}
+\begin{itemize}
+	\item \define{$\triangle$-Schema} ist $\set{ X_{n,k}:1≤ k≤ n,n∈ℕ}$ mit $X_{n,k}$ unabhängige reelle ZV.
+	\item \define{Lindeberg-ZGWS}: $\triangle$ mit $\Earg{X_{n,k}}=0$, $σ_{n,k}^2:=\Earg{X_{n,k}^2}<∞$ und $s_n^2:=\sum_{k=1}^nσ_{n,k}^2=\Var\klammern[\Big]{\sum_{k=1}^n X_{n,k}}$ und \define{LB}
+	$\sum_{k=1}^n\Earg[\Big]{X_{n,k}^2·\indi_{\set{\abs{X_{n,k}}>ε}}} \ntoinf 0~∀ε>0$ und $s_n^2\ntoinf σ^2∈(0,∞)$ Dann: $\sum_{k=1}^n X_{n,k}\distrto \Nor(0,σ^2)$
+	\item multivariater Fall: $\set{X_{n,k} = \klammern{X_{n,k}^{(1)},…,X_{n,k}^{(d)}}: k ≤ n, n ∈ ℕ}$ $Δ$-Schema
+	% $X_{n,k}=\klammern{X_{n,k}^{(1)},…,X_{n,k}^{(d)}}\text{ in }ℝ^d$
+	mit \define{zeilenweiser Unabhängigkeit}:
+	$X_{n,1},…,X_{n,n}\text{ sind unabhängig} ~ ∀ n ∈ ℕ$
+	% (Also die Vektoren seien unabhängig. Daraus folgt nicht, dass deren Komponenten unabhängig sind.)
+	und
+	$\Earg[\big]{X_{n,k}} = 0 ∈ ℝ^d$ und $\Var \argu{X_{n, k}^{(j)}} < ∞$
+	$∀ k,n, j$.
+	%und
+	%$\Earg{\klammern{X_{n,k}^{(j)}}} < ∞
+	%~∀ 1≤ j≤ d,∀ n,k∈ℕ$
+	%(Kovarianzmatrix?)
+	Es gelte LB
+	$\sum_{k=1}^n \Earg[\Big]{ \norm{X_{n,k}}^2 · \indi_{ \set{ \norm{X_{n,k}} > ε } } } \ntoinf 0 \quad ∀ ε > 0$
+	und Norm.beding.
+	$\sum_{k=1}^n \Cov \argu{X_{n,k}}
+	%\stackrelnew{\substack{\text{kompo-}\\\text{nentenweise}}}{n⟶∞}{\longrightarrow}
+	→
+	Γ$ mit $Γ ∈ ℝ^{d × d} \text{ positiv definit}
+	$
+	Dann MZGWS:
+	$\sum_{k=1}^n X_{n,k}\distrto \mathcal{N}_d(0,Γ)\text{ in }ℝ^d$
+	\item Koro ($d=1$ ist klassischer ZGWS):
+	Sei $(X_i)_{i∈ℕ}$ i.\,i.\,d.\ in $ℝ^d$ mit
+	$\Earg[\Big]{(X_1^{(j)})^2}<∞~∀ 1≤ j≤ d
+	;\\
+	μ:=\Earg[\big]{X_1}=\klammern{\Earg{X_1^{(1)}}, …, \Earg{X_1^{(d)}} } ∈ ℝ^d, ~
+	Γ:=\Cov(X_1)
+	= \klammern{\Cov \argu{X_1^{(i)},X_1^{(j)} }}_{i,j=1}^d\\
+	= \klammern{ \Earg{ \klammern{X_1^{(i)} - μ_i } · \klammern{X_1^{(j)} - μ_j } } }_{i,j=1}^d \text{ positiv definit}
+	$
+	Dann:
+	$
+	\frac{1}{√{n}}·\sum_{i=1}^n(X_i-μ)\distrto \mathcal{N}_d(0,Γ)
+	$
+\end{itemize}
+
+\section{Verteilungskonvergenz im Raum stetiger Funktionen}
+\begin{itemize}
+	\item $\B(C)
+		=σ\argu{π_t:t∈ I}
+		=σ \argu{π_T:T⊆ I,T\text{ endlich}}
+		=σ \argu{\set[\big]{π_t^{-1}(B) : t ∈ I, B∈\B(ℝ)}}$ \\
+	\enquote{kleinste $σ$-Algebra, sodass alle $π_t$ messbar sind}
+	\item $X\colon I⟶ℝ,\qquad t↦ X(t,ω)$ heißt \define{Pfad} für jedes $ω∈Ω$
+	\item $X\colonΩ⟶ℝ,\qquadω↦ X(t,ω)$ ist eine einzelne ZV für jedes $t∈ I$
+	\item $X\colonΩ⟶ (I⟶ℝ),\qquad ω↦(t↦ X(t,ω))$ heißt \define{Pfadabbildung}
+	\item Falls alle Pfade stetig (also $X$ ein \define{stetiger stochastischer Prozess} ist) sind, gilt $I⟶ℝ=C(I)$.
+	\item Man kann einen (stetigen) stochastischen Prozess mit seiner Pfadabbildung identifizieren:
+	$\set[\big]{ X(t)\mid t∈ I, X(t)\colonΩ⟶ℝ}
+		\cong X\colonΩ⟶ C(I)
+	$
+	\item $X\text{ ist }\A\text{-}\B(C)\text{-messbar}⇔∀ t∈ I:π_t∘ X\text { ist }\A\text{-}\B(ℝ)\text{-messbar}$
+	% das ist irgendwie Quark:
+	% \item Alle Pfadabbildungen $X_t : Ω ⟶ C(I)$ eines stetigen SP sind $\A$-$\B(S)$-messbar.
+	% Es gibt nicht „alle“, sondern nur eine Pfadabbildung X_{·} und X_t is das der Zeile davor
+	\item Maße $P=Q\gdw∀ T⊆ I$ endlich$:P∘π_T^{-1}=Q∘π_T^{-1}$;
+	$X\overset{\L}{=}Y\gdwπ_T(X)\overset{\L}{=}π_T(Y)$
+	\item \define{endlich dim. Randverteilungen (fidis)}: $π_T∘ X:Ω⟶ℝ^d$ ist Zufallsvektor, genauer:\\
+		$π_T∘ X\colonΩ⟶ C⟶ℝ_k,~
+		π_T\klammern[\big]{X(ω)}= \klammern[\big]{X(ω)(t_1),…,X(ω)(t_k)} ∀ ω ∈ Ω, ∀ T= \set{t_1, …, t_k} ⊆ I$
+	\item \define{Stetigkeits- / Oszillationsmodul}
+		$ω(f,δ):=\sup\set{ \abs{f(s)-f(t)}:s,t∈ I\mit \abs{s-t}≤δ}$;
+		$f∈ C(I)\gdwω(f,δ)\overset{δ⟶0}{\longrightarrow}0$
+	\item $X_n\overset{\fd}{\longrightarrow}X:\gdwπ_T∘ X_n\distrto π_T∘ X~∀ T⊆ I$ endlich \define{Konvergenz der fidis}
+	\item $X_n\overset{\fd}{\longrightarrow}X$ und $∃$ Folge
+		$(δ_k)_{k∈ℕ}⊆(0,∞)\mitδ_k\downarrow0$, s.\,d.\ $∀ε>0:
+		\lim\limits_{k⟶∞} \limsup\limits_{n⟶∞} \P \argu[\Big]{ω \argu[\big]{X_n,δ_k} > ε} = 0$.
+		Dann gilt:
+		$X_n\distrto X\text{ in }(C,d)$
+	\item \define{Momentenkriterium von Kolmo}: $X_n \fdto X$ und $∃γ>0,∃α>1$ und $F\colon I⟶ℝ$ stetig + monoton wachsend mit
+		$\Earg[\Big]{\abs{X_n(s) - X_n(t)}^γ } ≤ \klammern[\big]{F(s) - F(t)}^α ~ ∀ s > t, s, t ∈ I$ Dann:
+		$X_n\distrto  X\text{ in }\klammern[\big]{C(I),d}$
+	\item Konvergenz von SP $⇐$ Konvergenz der fidis + \enquote{Straffheit} (Momentenkriterium); bei konvexen SP reicht Konvergenz der fidis (Straffheit automatisch erfüllt)
+	\item \define{BB}: $I=[0,b]$ und $B:=\set[\big]{ B(t):=B(t,ω)}$ stetiger SP mit $B(0)=B(0,ω)=0$, unabhängige Zuwächse:
+		$B(t_i)-B(t_{i-1}),~1≤ i≤ r~∀~ 0=:t_0≤ t_1<…<t_r≤ b$;
+		Normalverteile Zuwächse $0≤ s<t≤ b⇒ B(t)-B(s)\sim\mathcal{N}(0,t-s)$; BB existiert nach Lévy; Verteilung einer BB eindeutig bestimmt
+	\item \define{Donsker}: Sei $(ζ_i)_{i∈ℕ}$ i.\,i.\,d\ mit $\Earg{ζ_1}=0$ und $\Var(ζ_1)=1$, $S_k:=\sum_{i=1}^kζ_i$ (RW!) und $X_n(t)$ der Polygonzug durch die Punkte $\klammern{\frac{k}{n}, \frac{S_k}{√{n}}}_{0≤ k≤ b· n}$ Dann: $X_n \distrto$ BB in $(C([0,b]), d)$. (folgt aus Mom.\ von Kolmo);\\
+		Standardisierung $\hat{ζ}:=\frac{ζ_i-μ}{σ}$ kann helfen; BB hängt \betone{nicht} von Verteilung ab
+	\item \define{Change-Point-Problem:} $X_{1,n},…,X_{n,n},n∈ℕ$ unabhängig mit
+		$\begin{cases}
+			X_{i,n}\text{ i.\,i.\,d.}\sim(μ,σ^2), &\falls 1≤ i≤τ_n\\
+			X_{i,n}\text{ i.\,i.\,d.}\sim(ν,τ^2), &\falls τ_n< i≤ n
+		\end{cases}$
+		wobei $τ_n∈\set{1,…,n}$ der \emph{unbekannte} \define{Change-point} \enquote{$\triangle$-Schema, damit change-point mitwandern kann}
+	\item $H_0: τ_n = n$, $H_1: τ_n < n$. \define{Asymptotischer Niveau-$α$-Test für $H_0$} gesucht mit Signifikanzniveau $\intervallO01 \ni α \ll 1$ heißt:
+		Fehler 1.\ Art $ := \lim_{n → ∞} \P_{H_0}(H_0 \text{ wird verworfen}) = α$.
+		Tests sind von Bauart $H_0 \text{ verwerfen } \gdw T_n ≥ k_{α}$ mit versch.\ $T_n$, $k_{α}$.
+% \end{itemize}
+
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2$ bekannt, $ν, τ^2$ unb., $ν > μ$ \\ $\rightsquigarrow$
+	$T_n := \max_{0 ≤ k ≤ n} S_k$\\
+	F.\ 1.\ Art $\ntoinf \P(\abs{\mathcal{N}(0,1)} ≤ k_{α})$\\
+	$⇒ k_{α} = Φ^{-1}(1- \frac{α}{2}) =: u_{1- \frac{α}{2}}$ \\
+	($Φ$ Vtl.fkt.\ von $\Nor(0, 1)$)
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2$ bekannt, $ν, τ^2$ unb., $ν \neq μ$ \\ $\rightsquigarrow$
+	$T_n := \max_{0 ≤ k ≤ n} \abs{S_k}$\\
+	F.\ 1.\ Art $\ntoinf \P(\norm{B}_{∞} ≤ k_{α})$\\
+	$H(x) = \frac{4}{π} \sum\limits_{k ∈ ℕ_0} \frac{(-1)^k}{2k + 1} \exp\argu{\frac{-(2k + 1)^2 π^2}{8 x^2}}$ \\
+	$⇒ k_{α} = H^{-1}(1- α)$
+\end{minipage}
+
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2, ν, τ^2$ unb., $ν \neq μ$ \\ $\rightsquigarrow$
+	Nutze Schätzer. \\
+	$T_n^* \! := \! (\hat {σ}_n^2 n)^{-\frac12} \max\limits_{0 ≤ k ≤ n} \abs{\sum\limits_{i = 1}^k(X_{i, n} \!-\! \overline{X_n})}$\\
+	% CHECKED \overline
+	F.\ 1.\ Art $\ntoinf \P(\norm{B_0}_{∞} ≤ k_{α})$\\
+	$H_0(x) = 1 - \sum\limits_{k≥ 1}(-1)^{k+1} \exp\argu{-2 k^2 x^2}$ \\
+	$⇒ k_{α} = H_0^{-1}(1- α)$
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2, ν, τ^2$ unb., $ν > μ$ \\ $\rightsquigarrow$
+	Nutze Schätzer. \\
+	$\tilde{T}_n^* \! := \! (\hat {σ}_n^2 n)^{-\frac12} \max\limits_{0 ≤ k ≤ n} \sum\limits_{i = 1}^k(X_{i, n} \!-\! \overline{X_n})$\\
+	% CHECKED \overline
+	F.\ 1.\ Art $\ntoinf \P(\sup_t B_0(t)) ≤ k_{α})$\\
+	$H_0^+(x) = 1 - \exp(-2 x^2)$ \\
+	$⇒ k_{α} = (H_0^+)^{-1}(1 - α) = √{-\frac 12 \log(α)}$
+\end{minipage}
+
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2, ν, τ^2$ unb., $ν \neq μ$ (mit Gumbel) \\
+	$\rightsquigarrow$
+	$U_n^* := \hat{σ}_n^{-1}√n \max_{1 ≤ k ≤ n-1} \frac{\abs{\sum_{i = 1}^k (X_i - \overline{X}_n)}}{√{k (n - k)}}$ \\
+	F.\ 1.\ Art $= \P_{H_0}(U_n^* > \frac{t_{α} + D_n}{A_n}) \ntoinf 1 - G(t_{α})$ \\
+	$G(x) = e^{-2 e^{-t}} ⇒ t_{α} = -\log(-\frac12 \log(1 - α))$
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	$μ, σ^2, ν, τ^2$ unb., $ν \neq μ$ (mit Ferger) \\
+	$\rightsquigarrow$
+	$R_n := \hat{σ}_n^{-1}√n \frac{\max_{1 ≤ k ≤ n-1} \abs{\sum_{i = 1}^k (X_i - \overline{X}_n)}}{√{k (n - k)}}$ \\
+	mit $\hat k_n = \min \set{1 ≤ k ≤ n : \abs{C_k} = \max\limits_{1 ≤ j ≤ n - 1} \abs{C_j}}$,\\
+	\text{wobei } $C_j = \sum_{i = 1}^j (X_i - \overline{X}_n)$ \\
+	F.\ 1.\ Art $\ntoinf \P_{H_0} \argu{\frac{\norm{B_0}_{∞}}{√{\argmax \abs{B_0}(1 - \argmax \abs{B_0})}} > k_{α}}$ \\
+	$k_{α} = Φ^{-1}(1- α)$ \\
+	für $ν > μ$: ohne $\abs{·}$
+\end{minipage}
+
+% \begin{itemize}
+	\item \define{Brownsche Brücke} ist SP $B_0(t) := B(t) - t · B(1) \qquad ∀ t ∈ \intervall01$ für BB auf $\intervall01$ ($B_0(0) = 1$ und $B_0(1) = 0$)
+	\item Der bisherige Fall $C(I)$ mit $I = \intervall ab$ deckt $C(ℝ)$ nicht ab.
+		$C(ℝ)$ ist vollständiger separabler MR; $\B_d(C(ℝ))=σ(π_t:t∈ℝ)=σ(π_T:T⊆ℝ$ endlich) (analog);
+		$X$ $\A$-$\B_d(C)$-messbar $\gdw∀ t∈ℝ:π_t∘ X$ $\A$-$\B(ℝ)$-messbar
+	\item Für $X,Y$ ZV in $(C(ℝ),d)$ gilt: $X\overset{\L}{=}Y\gdwπ_T∘ X\overset{\L}{=}π_T∘ Y\gdw\klammern[\big]{X(t_1),…,X(t_k)}\stackeq{\L}\klammern[\big]{Y(t_1),…,Y(t_k)}~∀ t_j$
+	\item $X_n\distrto X\text{ in }\klammern[\big]{C(ℝ),d}
+		⇔∀ j∈ℕ:
+		\restr{X_n}{I_j}\distrto  \restr{X}{I_j} \text{ in } \klammern[\big]{C(I_j),d_j} \mit I_j:=\intervall{-j}j$
+\end{itemize}
+
+\section{Argmin-Theoreme in \texorpdfstring{$C(ℝ)$}{C(R)}} %8
+\begin{itemize}
+	\item Wann überträgt sich die Konvergenz (f.\,s.\ oder in Verteilung) von stetigen stochastischen Prozessen auf deren Minimalstellen?
+	\item Für $f∈ C(ℝ)$: $A(f):=\argmin(f):=\set[\big]{ t∈ℝ:f(t)=\inf_{s∈ℝ}f(s)}$ Menge aller Min-Stellen;\\
+	$τ∈ A(f)$ \define{wohl-separiert} $:\gdw\inf\set{ f(t):\abs{t-τ}≥ε}>f(τ)~∀ 0<ε∈ℚ⇒τ$ eindeutig (siehe Bild)
+	\item 8.3: $f,f_n,n∈ℕ$ aus $C(ℝ)$, $τ_n∈ A(f_n)\neq∅~∀ n$ und $τ∈ A(f)$ wohlsepariert und $\norm{ f_n-f}_∞\ntoinf 0$ Dann: $τ_n\ntoinf τ$; lässt sich übertragen auf offene und kompakte Intervalle (da muss $τ$ nur eindeutig sein)
+	\item 8.4: $f,f_n,n∈ℕ$ aus $C([a,b])$. Dann: $A(f_n)\neq∅$ (da kompakt) und:
+	Falls $\set{τ}=A(f)$ und $\norm{ f_n-f}_∞\ntoinf 0$ so gilt für \emph{jede} Auswahl $τ_n∈ A(f_n):τ_n\ntoinf τ$
+	\item 8.5: $M,M_n,n∈ℕ$ SP mit Pfaden in $C(ℝ)$ (d.\,h.\ $M(ω)\colon ℝ⟶ℝ$ stetig), $τ(ω)∈ A\klammern[\big]{M(·,ω)}$ %\overset{\Def}{=}			\set{t∈ R:\inf_{s∈ℝ}M(s,ω)=M(t,ω)}$
+	f.\,s.\ für ZV $τ\colonΩ⟶ℝ$; $\inf\set[\big]{ M(t):\abs{t-τ}≥ε}>M(τ)\text{ f.\,s.\ } ∀ 0 < ε ∈ ℚ$;
+	$\norm[\big]{M_n-M}_∞\ntoinf 0$ f.\,s.;
+$∀(τ_n)_{n∈ℕ}$ von ZV mit $τ_n∈ A(M_n)$ f.\,s.:
+Dann: $τ_n\ntoinf τ$ f.\,s.
+\undefine{Beweis.} Abzählbare Schnitte von 4 Einsmengen + 8.3 $\square$
+	\item 8.6: $M$,$M_n$, $n∈ℕ$ SP mit Pfaden in $C(I)$, $I$ kompakt, $∃τ$ ZV eindeutige Minstelle f.\,s.; $\norm{M_n-M}_∞$ f.\,s.; $(τ_n)_{n∈ℕ}$ mit $τ_n∈ A(M_n)$ f.\,s.\ beliebig.
+	Dann: $τ_n\ntoinf τ$ (folgt aus 8.4)
+	% \item 8.7: Exponential-Familie, $Θ⊆ℝ$ kompakt. Dann MLE stark konsistent (nach 8.6), also $\hat{θ}_n\ntoinf θ_0$ f.\,s. → nicht in WiSe 2019/20 behandelt
+	\item CPP: Schätzer $\hat{τ}_n:=\argmax_{0≤ k≤ n}\abs{S_k}$ mit $S_k:=\sum_{i=1}^k(X_i-\overline{X}_n)$ für Wechselzeitpunkt $τ$. Bedingung: $p$te Momente von $X_k$ müssen endlich sein für ein $p > 2$.
+	\item $(σ_n)_{n∈ℕ}$ \define{stochastisch beschränkt} $:\gdw\lim_{t⟶∞}\limsup_{n⟶∞}\P(\abs{σ_n}>j)=0$
+	\item Argmin für $\stochto$: $Z_n \stochto Z$ in $C(ℝ)$. Dann $\limsup_{n → ∞} \P(σ_n ∈ K) ≤ \P( A(Z) ∩ K \neq ∅ ) =: μ^*(K)  = \text{Hitting-probability}$ für alle $K ⊂ ℝ$ kompakt.
+		\subitem Wenn $(σ_n)_n$ stochastisch beschränkt sind, so folgt $\limsup_{n → ∞} \P( σ_n ∈ F ) ≤ μ^*(F)$ für $F ∈ ℝ$ abgeschlossen.
+		\subitem Falls zusätzlich $A(Z) = \set{ σ }$ ($σ$ ZV), also eindeutige Minimalstelle, so gilt $σ_n \stochto σ$.
+\end{itemize}
+
+\section{Verteilungskonvergenz im Raum konvexer Funktionen}
+\begin{itemize}
+	\item $O⊆ℝ$ \define{konvex} $:\gdw x,y∈ O⇒∀λ∈(0,1):λ x+(1-λ)y∈ O$ (Intervall);
+	$f\colon O⟶ℝ$ \define{konvex} $:\gdw f(λ x+(1-λ)y)≤λ f(x)+(1-λ) f(y)~∀ x,y∈ O,λ∈(0,1)$;
+	$C_c(O):=\set{f\colon O⟶ℝ:f\text{ konvex}}$ (konvex $⇒$ stetig);
+	SP $X = \set{X(t) : t ∈ O}$ mit Pfaden in $C_c(O)$ heißt \define{konvex}.
+	\item $C_c(O)$ separabel;
+		$\B_d\argu[\big]{C_c(O)} = σ\argu[\big]{π_t:t∈ O}=σ \argu[\big]{π_T:T⊆ O\text{ endlich}}$
+	\item $X\overset{\L}{=}Y\gdwπ_T∘ X=π_T∘ Y$ (fidis gleich)
+	\item $f_n$ konvex, $f\colon O⟶ℝ$, $D⊆ O$ dicht, $f_n(x)\ntoinf f(x)~∀ x∈ D$ Dann: Konvergenz $∀ x∈ O$, $f$ konvex und $\norm{f_n-f}_∞\ntoinf 0~∀ K∈ O$ kompakt
+	\item  $X_n,n∈ℕ$ konvexe SP und sei $X$ stetiger SP auf $ℝ$.
+	Dann: $X_n\fdto X\gdw X_n\distrto  X\text{ in }\klammern[\big]{C(ℝ),d}⇒ X$ konvexer SP
+	\undefine{Beweis.}
+	(1) $⇒$ (2): Portmanteau; (2) $⇒$ (1): CMT $\square$
+	\item \define{Subspace}: $Z_n\distrto  Z\text{ in }(\S,d)
+	⇔
+	Z_n\distrto  Z\text{ in }(U,d)$
+	\item Koro: $X_n$ konvexer SP: $X_n\fdto X⇒
+	X_n\distrto  X\text{ in }\klammern[\big]{C_c(ℝ),d}$ (folgt aus Subspace-Lemma + vorherigem)
+\end{itemize}
+
+\section{Argmin-Theoreme in \texorpdfstring{$C_c(ℝ)$}{CcR}}
+\begin{itemize}
+	\item 10.2: Sei $D⊆ℝ^d$ dicht in $ℝ^d$ (z.\,B.\ $D=ℚ^d$) und seien $f,f_n,n∈ℕ$ konvexe Funktionen auf $ℝ^d$, wobei $f$ eine eindeutige Minimalstelle $τ$ besitze ($A(f)=\set{τ}$).
+	Seien $τ_n∈ A(f_n)\neq∅$ $∀ n≥ N_0∈ℕ$.
+	Dann: $\klammern{f_n(t) \ntoinf f(t) \qquad ∀ t ∈ D} ⇒ τ_n \ntoinf τ$
+	\item 10.3: Seien $M,M_n,n∈ℕ$ konvexe SP auf $ℝ^d$ mit
+	$A(M)=\set{τ}$ f.\,s.\ für eine Zufallsvariable $τ$;
+	$M_n(t)\ntoinf  M(t)~\P\text{-f.\,s.\ } ∀ t ∈ ℝ^d$;
+	Seien $τ_n$ ZV mit $τ_n∈ A(M_n)$ f.\,s.\ $∀ n∈ℕ$.
+Dann: $τ_n\ntoinf τ~\P\text{-f.\,s.\ in } ℝ^d$ (folgt aus 10.2 über Einsmengen)
+	\item 10.4: $Z,Z_n,n∈ℕ$ konvexe SP auf $ℝ$ mit $A(Z)=\set{σ}$ f.\,s.\ für eine ZV $σ$ und $Z_n\overset{\fd}{\longrightarrow}Z$.
+	Dann gilt für jede Auswahl $σ_n∈ A(Z_n)$: $\argmin(Z_n)=σ_n\distrto σ$
+	\item Sei $U_n,n∈ℕ$ reelle ZV mit $\Earg{U_n}\ntoinf μ$ und $\Var(U_n)\ntoinf 0$. Dann: $U_n\stochtoμ$.
+\end{itemize}
+
+\section{Rekapitulation des Einführungskapitels}
+Der Median ist $m:=\argmin_{t∈ℝ}Y(t)$, $Y∈ C(ℝ)$, $Y(t):=\Earg{\abs{X-t}}\overset{\text{Trafo}}{=}∫_ℝ\abs{x-t}~(F\d x)$, Schätzer\\ $Y_n(t):=∫_ℝ\abs{x-t}~(F_n\d x)\overset{\text{emp}}=\sum_{i=1}^n\abs{X_i-t}\underset{\text{SGGZ}}{\ntoinf }\Earg{\abs{X_1-t}}~∀ t∈ℝ$\\
+$M:=Y$ und $M_n:=Y_n$ lassen sich als SP auffassen, sind sogar konvex. Aus Argmin-Theorem 10.3 folgt \emph{sofort} die Konvergenz des $\argmin$'s, ohne weitere Voraussetzungen an die starke Konsistenz des Medians (abgesehen Eindeutigkeit der Minimalstelle): $\hat{m}_n\ntoinf  m$\\
+Um die Verteilungskonvergenz des Medians zu zeigen, betrachte den \define{reskalierten Prozess}\\ $Z_n(t):=a_n·√{n}·\klammern[\big]{M_n\klammern[\big]{m+\frac{t}{a_n}}-M_n(m)}$.
+Dann gilt: $a_n(\hat{m}_n-m)=\argmin_{t∈ℝ}Z_n(t)$ und Konvergenz der fidis $Z_n\overset{\fd}{\longrightarrow}Z$
+
+\input{zusammenfassendeTabelle}
+
+\end{document}

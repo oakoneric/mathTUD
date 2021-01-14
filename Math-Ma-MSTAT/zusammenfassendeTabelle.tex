@@ -1,0 +1,27 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+Folgende Tabelle zeigt die Übersicht über die Voraussetzungen der verschiedenen\\ Argmin-Theoreme:\nl
+\begin{tabular}{c|c|c|c}
+	& $C(\R)$ & $C(I)$ mit $I$ kompakt & $C_c(\R)$ konvex \\
+	\hline
+		\makecell{$f,f_n$\\ Fkt.} &
+		\makecell{$\tau\in A(f)$ wohlsepariert\\ $A(f_n)\neq\emptyset\forall n\geq N_0\in\N$\\ $f_n\to f$ glm.} &
+		\makecell{$\tau\in A(f)$ eindeutig\\ $f_n\to f$ glm.} &
+		\makecell{$\tau\in A(f)$ eindeutig\\ $A(f_n)\neq\emptyset~\forall n\geq N_0\in\N$\\ $f_n\to f$ pktw. $D\overset{\text{dicht}}{\subseteq}\R^d$}\\
+	\hline
+		\makecell{$M,M_n$\\ SP} &
+		\makecell{$\tau\in A(M)$ wohlsep. f.s.\\ $A(M_n)\neq\emptyset$ f.s. \\ $M_n\to M$ glm. f.s.} &
+		\makecell{$\tau\in A(f)$ eindeutig f.s.\\ $M_n\to M$ glm. f.s.} &
+		\makecell{$\tau\in A(M)$ eindeutig f.s.\\ $A(f_n)\neq\emptyset$ f.s.\\ $M_n(t)\to M(t)$ pktw. f.s.}\\
+	\hline
+		\makecell{$Z_n,Z$\\ SP} &
+		\makecell{$\sigma\in A(Z)$ eindeutig f.s.\\ $Z_n\overset{\L}{\to}Z$\\ $(\sigma_n)_{n\in\N}$ stoch. besch.} &
+		------ &
+		\makecell{$\sigma\in A(Z)$ eindeutig f.s.\\ $Z_n\overset{\fd}{\to}Z$ \\ $A(Z_n)\neq\emptyset$}\\
+	\end{tabular}\nl
+	Hierbei folgt für die letzte Zeile stets Konvergenz in Verteilung des Argmins, bei den anderen Zellen nur fast sichere Konvergenz.
+	Als Faustregel kann man sich auch merken, dass bei stochastischen Prozessen alle Voraussetzungen nur $\P$-fast sicher gelten müssen.

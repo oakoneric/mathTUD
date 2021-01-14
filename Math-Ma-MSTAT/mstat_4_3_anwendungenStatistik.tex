@@ -1,0 +1,366 @@
+﻿% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Anwendung in der Statistik}
+Seien $X_i$, $i \in \N$ \iid\ über $(Ω,\A,\P)$, quadrat-integrierbar mit Erwartungswert $\mu\defeq\Earg{X_i}\in\R$ und Varianz $\sigma^2\defeq\Var(X_i)\in(0,\infty)$. ($\sigma^2 = 0$ ist uninteressant, da dann die Zufallsgrößen fast sicher deterministisch sind.)
+
+Das arithmetische Mittel konvergiert fast sicher gegen den Erwartungswert gemäß dem \textit{starken Gesetz der großen Zahlen (SGGZ/ SLLN, Kolmogorov)}, also gilt die \begriff{starke Konsistenz des arithmetischen Mittels}
+\begin{align*}
+	\quer{X}_n=\frac{1}{n}·\sum_{i=1}^n X_i \to \mu~\P\text{-fast sicher}
+\end{align*}
+%fast sichere Konvergenz => stochastische Konvergenz => Verteilungskonvergenz?
+Folglich gilt
+\begin{equation}
+	\label{eqAnwendungInDerStatistik}
+	\begin{aligned}
+		\sqrt{n}·\brackets{\quer{X}_n-\mu}
+		&=\sqrt{n}·\frac{1}{n}·\sum_{i=1}^n(X_i-\mu)\\
+		&=\frac{1}{\sqrt{n}}·\sum_{i=1}^n(X_i-\mu)\\
+		&=\sigma·\underbrace{\frac{1}{\sqrt{n}}·\sum_{i=1}^n\brackets{\frac{X_i-\mu}{\sigma}}}_{\distto \mathcal{N}(0,1)}
+		\distto \sigma·\mathcal{N}(0,1)\stackeq{\L}\mathcal{N}(0,\sigma^2)
+	\end{aligned}
+\end{equation}
+wobei die Konvergenz aus dem \textit{zentralen Grenzwertsatz (ZGWS/ CLT)}
+und die letzte Gleichheit auf dem CMT \ref{satz4.10ContinuousMappingTheorem} folgt (da $x \mapsto \sigma· x$ stetig). Also folgt die \begriff{die asymptotische Normalität des arithmetischen Mittels}:
+\begin{align}\label{eqAnwendungInDerStatistikStern}\tag{$\ast$}
+	\sqrt{n}·\brackets{\quer{X}_n-\mu}\distto \mathcal{N}(0,\sigma^2)
+\end{align}
+% Ferger redet ausführlich über seinen Einsatz neuer Medien, aber weil es
+% zu aufwendig ist, stellen wir uns das nur vor.
+% Mit dem Computer kann man \textit{Monte-Carlo-Simulation} durchführen
+% und die Ergebnisse schön graphisch darstellen und damit die Konvergenz
+% des Mittelwerts erkennen.
+Die \begriff{empirische Varianz} ist
+\begin{align*}
+	S_n^2
+	&\defeq\frac{1}{n}·\sum_{i=1}^n(X_i-\quer{X}_n)^2\\
+	&=\frac{1}{n}·\sum_{i=1}^n\brackets{(X_i-\mu)-(\quer{X}_n-\mu)}^2\\
+	&=\frac{1}{n}·\sum_{i=1}^n\brackets{(X_i-\mu)^2-2·(X_i-\mu)·(\quer{X}_n-\mu)+(\quer{X}_n-\mu)^2}\\
+	&=\frac{1}{n}·\sum(X_i-\mu)^2-2·\underbrace{\frac{1}{n}·\sum_{i=1}^n(X_i-\mu)}_{=(\quer{X}_n-\mu)}·(\quer{X}_n-\mu)+\underbrace{\frac{1}{n}·\sum_{i=1}^n(\quer{X}_n-\mu)^2}_{=(\quer{X}_n-\mu)^2}
+\end{align*}
+Man erhält schließlich:
+\begin{align}\label{eqEmpVarAlternativePlus}\tag{+}
+	S_n^2
+	&= \underbrace{
+		\frac{1}{n} \sum_{i=1}^n (X_i - \mu)^2 }_{
+		\overset{\text{SGGZ}}{\longrightarrow}
+		\E{(X_1-\mu)^2} = \sigma^2 ~ \P \text{-f.\,s.}}
+	- \underbrace{
+		(\quer{X}_n-\mu)^2}_{
+		\overset{\text{SGGZ + \ref{Satz3.8}}}{\longrightarrow}
+		0 \text{ f.\,s.}} \\ \nonumber
+	&\follows
+	S_n^2 \overset{\ref{satz3.15} + \ref{Satz3.8}}{\longrightarrow} \sigma^2
+\end{align}
+(Hierbei wird bei der Anwendung der Sätze \ref{satz3.15} und \ref{Satz3.8} benutzt, dass $(x,y)\mapsto x+y$ stetig ist)
+
+%Skorokhod (russischer Mathematiker), cadlag, rcll (right continues with left limit), in einem Skorokhod-Raum ist die Addtion NICHT stetig. Also ist obiger Schluss i.\,A.\ nicht richtig.
+Und ähnlich: ($\sqrt{n}$ ist die \begriff{normalisierende Folge})
+\begin{align*}
+	T_n&\defeq\sqrt{n}·\brackets{S_n^2-\sigma^2}
+	\stackeq{\eqref{eqEmpVarAlternativePlus}}
+	\underbrace{\frac{1}{\sqrt{n}}·\sum_{i=1}^n\brackets{(X_i-\mu)^2-\sigma^2}}_{=:V_n}\underbrace{-\sqrt{n}·\brackets{\quer{X}-\mu}^2}_{=:R_n}
+	=V_n+R_n
+\end{align*}
+Mit CLT folgt (analog zur Herleitung von \eqref{eqAnwendungInDerStatistik})
+\begin{align*}
+	V_n\distto \mathcal{N}(0,\tau^2),\qquad\tau^2\defeq\Var\brackets{(X_1-\mu)^2} \overset{\text{Forderung}}{<} \infty
+\end{align*}
+falls $\E{\abs{X-1}}^4<\infty$. (Dies ist nötig um den zentralen Grenzwertsatz anzuwenden.)
+\begin{align*}
+	-R_n&=
+	\underbrace{\brackets{\sqrt{n}·(\quer{X}_n-\mu)}}_{
+	\stackrelnew{\eqref{eqAnwendungInDerStatistikStern}}{\L}{\longrightarrow}\mathcal{N}(0,\sigma^2)}
+	\underbrace{(\quer{X}_n-\mu)}_{
+	\stackrelnew{\ref{Satz3.12}}{\P}{\longrightarrow}0}
+	\stackrelnew{\ref{beisp4.18} \ref{it:4.18einDim}}{\L}{\longrightarrow} 0\\
+	\overset{\ref{satz4.13}}&{\follows} \underbrace{R_n}_{=\abs{T_n-V_n}} \stochto 0\\
+	&\follows(T_n)_{n\in\N},~ (V_n)_{n\in\N}\text{ sind stochastisch äquivalent}\\
+	&\overset{\ref{satz4.14Cramer}}{\follows}
+	\sqrt{n}(S_n^2 - \sigma^2) = T_n\distto \mathcal{N}(0,\tau^2)
+\end{align*}
+\begriff{Zusammenfassung:}
+\begin{align*}
+	\brackets{\quer{X}_n,S_n^2} \ntoinf  \brackets{\mu,\sigma^2} \text{ in } \R^2 \text{ fast sicher}
+\end{align*}
+d.\,h.\ $\brackets{\quer{X}_n,S_n^2}_{n\in\N}$ ist eine \begriff{stark konsistente Schätzerfolge} für den Parameter $(\mu,\sigma^2)$.
+Ferner sind $(\quer{X}_n)_{n\in\N}$ und $(S_n^2)_{n\in\N}$ \begriff{asymptotisch normal}, d.\,h.
+%FUN: Der persönliche Held von Ferger ist Skorokhot. Er hat ihn ca. 2000 mal auf einer Tagung und es gab sogar ein Foto von den beiden, dass aber durch Datenverlust verloren ging
+\begin{align*}
+	\sqrt{n}·\brackets{\quer{X}_n-\mu} \distto \mathcal{N}(0,\sigma^2),\qquad
+	\sqrt{n}·\brackets{S_n^2-\sigma^2} \distto \mathcal{N}(0,\tau^2)
+\end{align*}
+Wie sieht es aus mit dem Vektor
+\begin{align*}
+	\begin{pmatrix}
+		\sqrt{n}·\brackets{\quer{X}_n-\mu}\\
+		\sqrt{n}·\brackets{S_n^2-\sigma^2}
+	\end{pmatrix}
+	=\sqrt{n}·\begin{pmatrix}
+		\quer{X}_n-\mu\\
+		S_n^2-\sigma^2
+	\end{pmatrix}
+	\distto ?
+\end{align*}
+$\quer{X_n}$ und $S_n$ sind weder konstant noch unabhängig, also
+können wir die bisherigen Sätze nicht nutzen.
+Antwort kommt später mit multivariaten zentralen Grenzwertsatz
+übernächsten Kapitel \ref{sec:6mvZGWS}.
+
+\begin{satz}[Portmanteau-Theorem\footnote{auch Alexandrov-Theorem genannt}]\label{satz4.2}
+	Folgende Aussagen sind äquivalent:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:4.2weakConv} $\begin{aligned}
+			\P_n\weakto  \P
+		\end{aligned}$
+	\item \label{it:4.2f} $\begin{aligned}
+			\int f\d \P_n\overset{}{\longrightarrow}\int f\d \P\qquad\forall f\in C^b(\S)\text{ glm. stetig}
+			% Standardfrage für die Prüfung: was sagt das Portmanteau-Theorem und was ist schwache Konvergenz?
+		\end{aligned}$
+	\item \label{it:4.2ClosedSets} $\begin{aligned}
+			\limsup_{n\to\infty} \P_n(F)\le \P(F)\qquad\forall F\in\F(\S)
+		\end{aligned}$
+	\item \label{it:4.2OpenSets} $\begin{aligned}
+			\liminf_{n\to\infty} \P_n(G)\ge \P(G)\qquad\forall G\in\G(\S)
+		\end{aligned}$
+	\item \label{it:4.2BorelSets} $\begin{aligned}
+			\limn \P_n(B)=\P(B)\qquad\forall B\in\B(\S)\mit \P(\underbrace{\partial B}_{\in\F(\S)})=0
+		\end{aligned}$\\
+		Mengen $B\in\B(\S)$ mit $\P(\partial B)=0$ heißen \begriff{$\P$-randlos}.
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}~
+	\paragraph{Zeige \ref{it:4.2weakConv} $\follows$ \ref{it:4.2f}:}
+	Folgt aus der Definition \ref{def4.1} \ref{it:4.1Pweak}.
+	\paragraph{Zeige \ref{it:4.2f} $\follows$ \ref{it:4.2ClosedSets}:}
+	Sei $F\in\F(\S)$ (also abgeschlossen).
+	Der Beweis von Satz \ref{satz3.17} zeigt:
+	Es gibt eine Folge $(f_k)_{k\in\N}$ von gleichmäßig stetigen, beschränkten Funktionen auf $\S$ mit $f_k\downarrow\indi_F$.
+	Dann gilt:
+	\begin{align*}
+		\limsup_{n\to\infty} \P_n(F)
+		&=\limsup_{n\to\infty}\int\underbrace{\indi_F}_{\le f_k~\forall k\in\N}\d \P_n
+		\overset{\text{Mono.}}{\le}
+		\limsup_{n\to\infty}\int f_k\;\d \P_n
+		\overset{\text{Vor.\ \ref{it:4.2f}}}{=}
+		\int f_k\;\d \P~~\forall k\in\N\\
+		\overset{\text{Mono.\ Konv.}}&{\follows}
+		\int f_k\;\d \P\,\overset{k\to\infty}{\longrightarrow}
+		\int\indi_F\;\d \P=\P(F)
+		\overset{k\to\infty}{\follows}
+		~\ref{it:4.2ClosedSets}
+	\end{align*}
+
+	\paragraph{Zeige \ref{it:4.2ClosedSets} $⇔$ \ref{it:4.2OpenSets}:}
+	Nutze Übergang zum Komplement sowie Rechenregeln für $\liminf$ und $\limsup$. Sei $G$ offen, das heißt $G \in \G(\S)$:
+	\begin{align*}
+		\liminf_{n\to\infty} \P_n(G)
+		&=\liminf_{n\to\infty} \brackets{1-\P_n(G^C)}\\
+		&=1-\underbrace{\limsup_{n\to\infty} \P_n(\underbrace{G^C}_{\in\F})}_{\le \P(G^C)}\\
+		&\ge 1-\P(G^C)\\
+		&=\P(G)
+	\end{align*}
+
+	\paragraph{Zeige \ref{it:4.2ClosedSets} $\follows$ \ref{it:4.2weakConv}:}
+	Sei $f\in C^b(\S)$ beliebig. Zeige zunächst:
+	\begin{align}\label{eqProof1.4.2Sternchen}\tag{$\ast$}
+		\limsup_{n\to\infty}\int f\d \P_n\le\int f\d \P
+	\end{align}
+	\subparagraph{1. Schritt:} Sei $0\le f<1$. Setze
+	\begin{align*}
+		F_i\defeq\menge{ f\ge\frac{i}{k}}=\menge{ x\in\S:f(x)\ge\frac{i}{k}}
+		= f^{-1}\brackets{\intervallHO{\frac1k}{\infty}},\qquad \forall\; 0\le i\le k,\;k\in\N
+	\end{align*}
+	($F_i$ hängt auch von $k$ ab, aber diese Abhängigkeit wird in der Notation nicht
+	demonstriert.)
+	Dann gilt $F_i\in\F~\forall i$, da $f$ stetig. Da
+	\begin{align*}
+		\int_{\S}f\d \P
+		\stackeq{\text{Lin}}
+		\sum_{i=1}^k\int\indi_{\menge{\frac{i-1}{k}\le f<\frac{i}{k}}}· f\d \P
+	\end{align*}
+	folgt wegen Monotonie des Integrals
+	\begin{align}\label{eqProof1.4.2Plus}\tag{+}
+		\sum_{i=1}^k\underbrace{\frac{i-1}{k}}_{=\frac{i}{k}-\frac{1}{k}}·
+	\P\brackets{\frac{i-1}{k}\le f<\frac{i}{k}}
+		\le
+		\int f\d \P
+		\le
+		\sum_{i=1}^k \frac{1}{k}· \P\brackets[\Bigg]{\underbrace{\frac{i-1}{k}\le f<\frac{i}{k}}_{F_{i-1}\setminus F_i}}
+	\end{align}
+	Die rechte Summe in \eqref{eqProof1.4.2Plus} ist gleich
+	\begin{align*}
+		&\frac{1}{k}·\sum_{i=1}^k i·\brackets{ \P(F_{i-1})-\P(F_i)}
+		\quad \text{da $F_i \subset F_{i-1}$}\\
+		&=\frac{1}{k}·\Big(\P(F_0)-\P(F_1)+2· \P(F_1)-2· \P(F_2)+3· \P(F_2)-3· \P(F_3)+\\
+
+		&\qquad+\dots+(k-1)· \P(F_{k-2})-(k-1)· \P(F_{k-1})+k· \P(F_{k-1})-k· \P(F_k)\Big)\\
+		&=\frac{1}{k}·\brackets{\underbrace{\P(F_0)}_{=1}+\P(F_1)+\P(F_2)+\dots+\P(F_{k-1})- k· \underbrace{\P(F_k)}_{=0}} \quad (0 \le f < 1)\\
+		&=\frac{1}{k}+\frac{1}{k}·\sum_{i=1}^{k-1} \P(F_i)
+	\end{align*}
+	Da die linke Summe in \eqref{eqProof1.4.2Plus} gleich der rechten Summe in \eqref{eqProof1.4.2Plus} minus $\frac{1}{k}$ ist, folgt
+	\begin{align}\label{eqProof1.4.2DoppelSternchen}\tag{$\ast\ast$}
+		\sum_{i=1}^{k-1} \P(F_i)
+		\le\int f\d P
+		\le\frac{1}{k}+\frac 1k \sum_{i=1}^{k-1} \P(F_i)
+	\end{align}
+	Beachte, \eqref{eqProof1.4.2DoppelSternchen} gilt für \emph{jedes} Wahrscheinlichkeitsmaß $\P$, also auch für $\P_n$.
+	Damit folgt:
+	\begin{align*}
+		\limsup_{n\to\infty}\int f\d \P_n
+		\overset{\eqref{eqProof1.4.2DoppelSternchen}}&{\le}
+		\frac{1}{k}+\frac 1k \sum_{i=1}^{k-1}\underbrace{
+			\limsup_{n\to\infty} \P_n(F_i)
+		}_{\overset{\ref{it:4.2ClosedSets}}{\le}\P(F_i)~\forall i}\\
+		\overset{\ref{it:4.2ClosedSets}}&{\le}
+		\frac{1}{k}+\underbrace{\frac 1k \sum_{i=1}^{k-1} \P(F_i)}_{
+			\overset{\eqref{eqProof1.4.2DoppelSternchen}}{\le}\int f\d \P
+		}\\
+		\overset{\eqref{eqProof1.4.2DoppelSternchen}}&{\le}
+		\frac{1}{k}+\int f\d \P\qquad\forall k\in\N
+	\end{align*}
+	Grenzwertbildung $k\to\infty$ liefert \eqref{eqProof1.4.2Sternchen}.
+	\paragraph{2. Schritt:} Da $f\in C^b(\S)$ beliebig, gilt wegen Beschränktheit von $f$:
+	\begin{align*}
+		\exists a<b:a\le f<b
+		\follows g(x)\defeq\frac{f(x)-a}{b-a}\text{ ist stetig und } 0\le g<1
+	\end{align*}
+	Daraus folgt
+	\begin{align*}
+		\limsup_{n\to\infty}\int f\d \P_n
+		&=\limsup_{n\to\infty}\int (b-a)· g+a\,\d \P_n\\
+		&=\limsup_{n\to\infty}\brackets{(b-a)·\int g\,\d \P_n+a}\\
+		&\le(b-a)·\underbrace{\limsup_{n\to\infty}\int g\d \P_n}_{\le\int g\d P\text{, wg.\ 1.\ Schritt}}+a\\
+		&\le(b-a)·\int g\d \P + a\\
+		\overset{\text{Lin}}&=
+		\int f\d \P
+	\end{align*}
+	Damit ist \eqref{eqProof1.4.2Sternchen} gezeigt. Übergang zu $-f$ in \eqref{eqProof1.4.2Sternchen} liefert
+	\begin{align*}
+		\liminf_{n\to\infty}\int f\d \P_n
+		&=\liminf_{n\to\infty}-\int -f\d \P_n\\
+		&=-\limsup_{n\to\infty}\int \underbrace{-f}_{\in C^b(\S)}\d \P\\
+		\overset{\eqref{eqProof1.4.2Sternchen}}&{\ge}
+		-\int -f\d \P\\
+		\overset{\text{Lin}}&=
+		\int f\d \P
+		\qquad\forall f\in C^b(\S)\\
+		\follows \intf \d\P &\le \liminf_{n \to \infty} \intf\d\P_n \le \limsup_{n \to \infty} \intf\d\P_n \overset{\eqref{eqProof1.4.2Sternchen}}{\le} \intf \d\P \\
+		\follows \lim_{n \to \infty} \int f \d\P_n &= \intf \d\P \quad \forall f \in C^b(S) \\
+		&\follows\ref{it:4.2weakConv}
+	\end{align*}
+
+	\subparagraph{Zeige \ref{it:4.2ClosedSets} $\follows$ \ref{it:4.2BorelSets}:}
+	Sei $B\in\B(\S)\mit \P(\partial B)=0$. Dann gilt:
+	\begin{align*}
+		\P(\quer{B})
+		\overset{\ref{it:4.2ClosedSets}}&{\ge}
+		\limsup_{n\to\infty} \underbrace{\P_n(\overbrace{\quer{B}}^{⊇ B})}_{\ge \P_n(B)}
+		\ge\limsup_{n\to\infty} \P_n(B)
+		\overset{\text{stets}}{\ge}
+		\liminf_{n\to\infty} \underbrace{\P_n(\overbrace{B}^{⊇\overset{∘}{B}})}_{
+			\ge \P_n(\inner B)
+		}\\
+		\overset{\ref{it:4.2ClosedSets}⇔ \ref{it:4.2OpenSets}}&{\ge}
+		\P\brackets{\inner B}
+		=\P(\quer{B})
+		=\P(B),
+	\end{align*}
+	denn:
+	\begin{align*}
+		0
+		=\P(\overbrace{\partial B}^{\quer{B}\setminus \inner B})
+		=\P(\quer{B})-\P(\inner B)
+		\follows
+		\P(\inner B)\le \P(B)\le \P(\quer{B})=\P(\inner B)
+	\end{align*}
+	Damit folgt $\liminf=\limsup$ und folglich $\limn \P_n(B)=\P(B)$.
+	\paragraph{Zeige \ref{it:4.2BorelSets} $\follows$ \ref{it:4.2ClosedSets}:}
+	Sei $F\in\F$ (abgeschlossen) beliebig. Dann gilt $\forall\epsilon>0:$
+	\begin{align}\label{eqProof1.4.2SternchenUnten}\tag{$\ast$}
+		\partial\,\menge{ x\in\S:d(x,F)\le\epsilon}
+		\subseteq\menge{ x\in\S:d(x,F)=\epsilon}
+	\end{align}
+	denn: Sei $x\in\partial\menge{ x\in\S:d(x,F)\le\epsilon}$. Dann gilt:
+	\begin{align*}
+		&\exists (x_n)_{n\in\N}:\forall n\in\N:d(x_n,F)\le\epsilon\und \limn x_n=x\\
+		&\exists (\zeta_n)_{n\in\N}:\forall n\in\N:d(\zeta_n,F)>\epsilon\und \limn \zeta_n=x
+	\end{align*}
+	Da $d(·,F)$ stetig ist gemäß \ref{lemma2.3} \ref{it:distStetig}, folgt
+	\begin{align*}
+		\epsilon \le \lim_{n \to \infty} d(\zeta_n, F) = d(x,F) = \lim_{n \to \infty} d(x_n, F) \le \epsilon.
+	\end{align*}
+	Wegen \eqref{eqProof1.4.2SternchenUnten} sind
+	\begin{align*}
+		A_\epsilon\defeq\partial\menge{ x\in\S:d(x,F)\le\epsilon}\qquad\forall\epsilon>0
+	\end{align*}
+	paarweise disjunkt, da bereits die Obermengen paarweise disjunkt sind. Dann folgt
+	\begin{align}\label{eqProof1.4.2DoppelSternchenUnten}\tag{$\ast\ast$}
+		E\defeq\menge{\epsilon>0:\P(A_\epsilon)>0}\text{ ist höchstens abzählbar},
+	\end{align}
+	denn:
+	\begin{align*}
+		E=\bigcup_{m \in \N} \underbrace{\menge{\epsilon>0: \P(A_\epsilon) \ge \frac1m}}_{=:E_m}
+	\end{align*}
+	Wir möchten eine Obergrenze für die Größe der $E_m$ finden. Dafür beachte
+	\begin{align*}
+		1\ge \P\brackets{\bigcup_{\epsilon \in E_m} A_{\epsilon}}
+		\stackeq{\text{pw.\,disj.}}
+		\sum_{\epsilon \in E_m}\underbrace{\P(A_{\epsilon})}_{\ge\frac{1}{m}} \ge \abs{E_m}·\frac{1}{m} \follows \abs{E_m} \le m.
+	\end{align*}
+	% Fergers Variante:
+	% Es gilt $\abs{E_m}\le m$, weil: Angenommen es existieren $0<\epsilon_1<\dots<\epsilon_{m+1}$ mit
+	% % CHECKED: '|'
+	% \begin{align*}
+	% 	&\P(A_{\epsilon_i})\ge\frac{1}{m}\qquad\forall 1\le i\le m+1\\
+	% 	&\follows
+	% 	1\ge \P\left(\bigcup_{i=1}^{m+1} A_{\epsilon_i}\right)
+	% 	\stackeq{\text{pw. disj.}}
+	% 	\sum_{i=1}^{m+1}\underbrace{\P\brackets{A_{\epsilon_i}}}_{\ge\frac{1}{m}}\ge(m+1)·\frac{1}{m}>1
+	% \end{align*}
+	% Das ist ein Widerspruch.
+	Damit ist $E$ abzählbare Vereinigung endlicher Mengen, also höchstens abzählbar unendlich.
+	Damit liegt das Komplement
+	\begin{align*}
+		E^C=\menge{\epsilon>0: \P(A_\epsilon)=0}
+	\end{align*}
+	dicht in $[0,\infty)$.
+	(Dies kann man durch Widerspruch zeigen: in $E$ kann kein Intervall positiver Länge enthalten sein, denn diese enthalten überabzählbar viele Elemente)
+	Daraus folgt insbesondere:
+	\begin{align*}
+		\exists(\epsilon_k)_{k\in\N}\subseteq\R\mit\epsilon_k\downarrow0:\forall k\in\N:
+		F_k\defeq\menge{ x\in\S:d(x,F)\le\epsilon_k}\text{ ist $\P$-randlos}
+	\end{align*}
+	Beachte $A_{\epsilon_k}=\partial F_k$. Wähle also $\epsilon_k \in E^C$ für alle $k \in \N$. Da $F\subseteq F_k~\forall k\in\N$, gilt:
+	\begin{align*}
+		\limsup_{n\to\infty} \P_n(F)
+		\le\limsup_{n\to\infty} \underbrace{\P_n(F_k)}_{\text{konv.}}
+		\overset{\ref{it:4.2BorelSets}}&{=}
+		\P(F_k)\qquad\forall k\in\N\\
+		\overset{k\to\infty}{\follows}
+		\limsup_{n \to \infty} \P_n(F)
+		\le\lim_{k\to\infty} \P(F_k)
+		&=\P(F)
+	\end{align*}
+	Die letzte Gleichheit gilt, weil $\P$ $\sigma$-stetig von oben ist und $F_k\downarrow F$.
+	$F_k\downarrow F$, denn $F_1⊇ F_2⊇\dots$, da $\epsilon_k$ monoton fallende Folge ist und
+	\begin{align*}
+		\bigcap_{k\in\N}F_k=F,
+	\end{align*}
+	denn:
+	\begin{align*}
+		x\in\bigcap_{k\in\N}F_k
+		&⇔
+		x\in F_k & \forall k\in\N\\
+		&⇔
+		d(x,F)\le\epsilon_k & \forall k\in\N\\
+		&\follows
+		d(x,F)=0\\
+		\overset{\ref{lemma2.3}~\ref{it:distCharakterisierung}}&{⇔}
+		x\in \quer{F}\stackeq{F\in\F}F
+		&& \qedhere
+	\end{align*}
+\end{proof}

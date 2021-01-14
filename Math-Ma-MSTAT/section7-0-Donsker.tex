@@ -1,0 +1,410 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\begin{satz}[Donsker]\label{satz7.16Donsker}%\enter
+	Seien $(ξ)_{i∈ℕ}$ \iid\ mit $\Earg{ξ_1}=0$ und $\Var(ξ_1)=1$.
+	\begin{align*}
+		S_k &:= \sum_{i=1}^k ξ_i & ∀ & k ∈ ℕ_0 \\
+		X_n(t) &:= \frac{1}{√{n}} S_{\floor{n t}}
+		+ \frac{1}{√{n}} \klammern[\big]{n t - \floor{n t}} ξ_{\floor{n t} + 1} & ∀ & t ∈ I = \intervall{[0}{b}
+	\end{align*}
+	($b>0$ fest), d.\,h.\ $X_n$ ist der Polygonzug durch die Punkte $\klammern{\frac{k}{n}, \frac{1}{√{n}} S_k}_{0 ≤ k ≤ bn}$. Dann gilt:
+	\begin{align*}
+		X_n\distrto  B\text{ in }\klammern[\big]{C(I),d}
+	\end{align*}
+	wobei $B$ eine BB auf $I=[0,b]$ ist.
+\end{satz}
+% Vielleicht erzähle ich doch die Geschichte.
+% Der Donsker hat die Geschichte 1952 gemacht. Motiviert durch eine andere Arbeit von 1949
+% von Duqe (oder so ähnlich). Der hat da ausgerechnet, was die Verteilung des Funktionals
+% Brownsche Brücke
+% \sup_{0 ≤ t ≤ 1} \abs{B(t)} ist. Wird Ferger uns auch noch zeigen.
+% Dann haben Leute wie Kolmogoroff oder Smirnoff sich
+% \sup_{0 ≤ t ≤ 1} √n \abs{F_n(t) - F(t)}
+% angeschaut und für jedes feste n die Verteilungsfunktion H_n ausgerechnet
+% und gesehen, dass dieses schwach gegen eine Verteilung H konvergiert.
+% Duqe bemerkt dann seine Verteilung genau dieses H ist.
+% Die Vermutung war dann, dass die stochastischen Prozesse auch in irgendeiner Form konvergieren.
+\begin{proof}
+	Anwendung von Satz \ref{satz7.11MomentenkriteriumVonKolmogoroff}.
+	Zeige also dessen Voraussetzungen:
+	\paragraph{Zeige Konvergenz der fidis \eqref{eqSatz7.11Vor1}:}
+	Seien $0 = t_0 ≤ t_1<…<t_r≤ b$.
+	Um den Satz \ref{satz4.14Cramer} von Cramér zu nutzen, betrachte:
+	\begin{align*}
+		% \norm{\klammern[\big]{X_n(t_i)}_{1≤ i≤ r}-\left(\frac{1}{√{n}}·\sum_{j=1}^{\floor{n· t_i}}ξ_j\right)_{1≤ i≤ r}}
+		\norm{\klammern[\big]{X_n(t_i)}_{1≤ i≤ r}
+			-\klammern{\frac{1}{√{n}}S_{\floor{nt_i}}}_{1≤ i≤ r}
+		}
+		% &=\Bigg(\sum_{i=1}^r\underbrace{\left|X_n(t_i)-\frac{1}{√{n}}·\sum_{j=1}^{\floor{n t_i}}ξ_j\right|^2}_{\frac{1}{√{n}}·\underbrace{\big|n· t_i-\floor{n t_i}\big|}_{≤1}·ξ_{\floor{n t_i}}}\Bigg)^{\frac{1}{2}}\\
+		&=\klammern[\Bigg]{
+			\sum_{i=1}^r
+				\underbrace {\abs{X_n(t_i)-\frac{1}{√{n}} S_{\floor{nt_i}}}^2}
+				_{ \frac1{√n} \abs[\Big]{
+					\underbrace {(n t_i - \floor{n t_i})}
+						_{≤ 1}
+					ξ_{\floor{n t_i} + 1}
+				}
+				}
+		}^{\frac{1}{2}}\\
+		&≤
+		\frac1{√n} \klammern{\sum_{i=1}^r ξ_{\floor{n t_i} + 1}^2}^{\frac12}
+		% \\⇒
+		% \P\klammern{\norm{\klammern[\big]{X_n(t_i)}_{1 ≤ i ≤ r} - \klammern{\frac{1}{√{n}} \sum_{j=1}^{\floor{n t_i}} ξ_j}_{1≤ i≤ r}}}
+		% &≤ \P \argu{\sum_{i=1}^r ξ_{\floor{n t_i} + 1}^2 > n ε^2}\\
+		% \overset{\text{Markov}}&{≤}
+		% \frac1n ε^{-2} \sum_{i=1}^r\underbrace{\Earg{ξ^2_{\floor{n t_i} + 1}}}_{=1~∀ i}\\
+		% &=
+		% \frac1n ε^{-2} r\ntoinf 0 \qquad ∀ ε > 0 \\
+		% ⇒ \norm{(...) - (...)} &≤
+		% \frac 1{√n} \klammern{\sum_{i = 1}^r ξ_{\floor{n t_i} + 1} ^2}^{\frac 12}
+		\\
+		⇒ \P( \norm{...} > ε)
+		&≤ \P\argu{ (...)^{\frac 12} > ε √n} %\\
+		%&
+		= \P\argu{\sum_{i = 1}^r ξ_{\floor{nt_i} + 1} ^2 > ε^2 n} \\
+		\overset{\text{Markov}\neq}&{≤}
+		\frac 1n ε^{-2} \Earg{\sum_{i = 1}^r ξ^2_{\floor{n t_i} + 1}} \\
+		&= \frac 1n ε^{-2} r \ntoinf 0 \quad
+		∀\, ε > 0
+	\end{align*}
+	% $⇒ \klammern[\big]{X_n(t_i)}_{1 ≤ i ≤ r}$ und $\klammern{\frac 1{√n} S_{\floor{n t_i}}}_{1 ≤ i ≤ r}$ sind stochastisch äquivalent. Wegen \ref{satz4.14Cramer} reicht es zu zeigen:
+	% \begin{align*} \tag{$*$} % do not know if we use this somewhere
+	% 	\klammern{\frac 1{√n} S_{\floor{n t_i}}}_{1 ≤ i ≤ r}
+	% 	&\distrto \klammern{B(t_1), ..., B(t_r)} \text{ in } ℝ^r \\
+	% 	\overset{\text{CMT} \ref{satz4.10ContinuousMappingTheorem}}{⇔}
+	% 	\frac 1{√n} \klammern[\big]{S_{\floor{n t_i}} - S_{\floor{n t_{i-1}}}}_{1 ≤ i ≤ r}
+	% 	&\distrto \klammern[\big]{B_{t_i} - B_{t_{i-1}}}_{1 ≤ i ≤ r} \text{ in } ℝ^r
+	% \end{align*}
+	% denn: $h \colon ℝ^r → ℝ^r$ mit $h(x_1, ..., x_r) = (x_1, x_2-x_1, x_3- x_2, ..., x_r - x_{r-1})$
+	% ist stetig auf $ℝ^r$ mit Inverse ... s. unten
+  %
+	Folglich sind die beiden Folgen
+	\begin{align*}
+		\klammern[\big]{X_n(t_i)}_{1 ≤ i ≤ r} \qquad \text{und} \qquad
+		\klammern{\frac1{√n} \sum_{j=1}^{\floor{n t_i}} ξ_j}_{1≤ i≤ r}
+	\end{align*}
+	stochastisch äquivalent.
+	Wegen Cramér (Satz \ref{satz4.14Cramer}) genügt es
+	\begin{align}\label{eqProof7.16fd}\tag{fd}
+		\klammern{ \frac1{√n} S_{\floor{n t_i}}}_{1≤ i≤ r}
+		\distrto \klammern[\big]{B(t_1),…,B(t_r)}
+	\end{align}
+	zu zeigen.
+	Aber \eqref{eqProof7.16fd} ist äquivalent zu
+	\begin{align}\label{eqProof7.16Stern}\tag{$\ast$}
+		\frac1{√n} \klammern{S_{\floor{n t_i}} - S_{\floor{n t_{i-1}}}}_{1≤ i≤ r}
+		\distrto \klammern[\big]{B(t_i)-B(t_{i-1})}_{1 ≤ i ≤ r}
+	\end{align}
+	denn:
+	\begin{align*}
+		h \colon ℝ^r ⟶ ℝ^r, \qquad
+		h(x_1,…,x_r) := \klammern{x_1, x_2 - x_1, x_3 - x_2, … , x_r - x_{r-1}}
+	\end{align*}
+	ist stetig auf $ℝ^r$ und hat stetige Inverse $h^{-1}$ mit
+	\begin{align*}
+		h^{-1}(y_1,…,y_r) = \klammern{y_1, y_1 + y_2, …, y_1 + … + y_r}
+	\end{align*}
+	Also ist \eqref{eqProof7.16fd} äquivalent zu \eqref{eqProof7.16Stern} gemäß CMT \ref{satz4.10ContinuousMappingTheorem}.
+
+	Beachte wegen \undefine{Blockungslemma}\footnote{%
+		Erläuterung von Felix:
+		Die Zuwächse $\frac1{√n} \klammern{S_{\floor{n t_i}}-S_{\floor{n t_{i-1}}}}_{1≤ i≤ r}$
+		sind Summen von disjunkten Teilmengen von den $(ξ_k)_k$.
+		Die $(ξ_k)_k$ sind unabhängig, damit mit dem Blockungslemma auch die
+		Tupel aus mehreren $ξ_{\floor{n t_{i-1}}}$ bis $ξ_{\floor{n t_i}}$
+		und damit auch die Summen, da Summenbildung eine messbare Abbildung von
+		$ℝ^{\floor{n t_{i - 1}} - \floor{n t_i}}$ nach $ℝ$ ist.
+	}
+		sind die Zuwächse
+	$\frac1{√n} \klammern{S_{\floor{n t_i}}-S_{\floor{n t_{i-1}}}}_{1≤ i≤ r}$ \emph{unabhängig}
+	und gemäß \ref{def7.12} \ref{it:7.12independantchanges} sind auch
+	$\klammern[\big]{B(t_i)-B(t_{i-1})}$, $1 ≤ i ≤ r$ unabhängig.
+	Somit ist gemäß Satz \ref{satz4.21} \eqref{eqProof7.16Stern} äquivalent zu
+	\begin{align}\label{eqProof7.16SternStern}\tag{$\ast\ast$}
+		\frac1{√n} \klammern{S_{\floor{n t_i}}-S_{\floor{n t_{i-1}}}}
+		\distrto
+		\klammern[\big]{B(t_i) - B(t_{i-1})} \text{ in } ℝ \qquad ∀ 1 ≤ i ≤ r
+	\end{align}
+	Dazu setze $k_n:=\floor{n t_i} - \floor{n t_{i-1}}$. Dann gilt:
+	\begin{align*}
+		&\frac1{√n} \klammern{S_{\floor{n t_i}}-S_{\floor{n t_{i-1}}}}\\
+		&=\frac1{√n} \sum_{j=\floor{n t_{i-1}} + 1}^{\floor{n t_i}}ξ_j
+		=\frac1{√n} \sum_{j=1}^{k_n}ξ_{\floor{n t_{i-1}} + j}
+		\overset{\L}{=}
+		\frac1{√n} \sum_{j=1}^{k_n} ξ_j\\
+		&= %\underbrace{
+		√{\frac{k_n}{n}} %}_{=√{\frac{\floor{n t_i} - \floor{n t_{i-1}}}{n}}}
+		· \frac{1}{√{k_n}} \sum_{j=1}^{k_n}ξ_j\\
+		&= \underbrace{√{\frac{\floor{n t_i} - \floor{n t_{i-1}}}{n}}}_{\ntoinf √{t_i-t_{i-1}}}
+		· \underbrace{\frac1{√{k_n}} \sum_{j=1}^{k_n} ξ_j}_{
+				\stackrelnew{\text{ZGWS}}{n⟶∞}{\longrightarrow}
+				\mathcal{N}(0,1)}
+			\stackrelnew{\ref{beisp4.18} \ref{it:4.18einDim}}{\L}{\longrightarrow}
+			√{t_i-t_{i-1}} \mathcal{N}(0,1)
+			\overset{\L}{=} \underbrace{\mathcal{N}(0,t_i-t_{i-1})}_{
+				\overset{\ref{def7.12}}{=}B(t_i)-B(t_{i-1})}
+	\end{align*}
+	Damit ist Voraussetzung \eqref{eqSatz7.11Vor1} aus \ref{lemma7.14} gezeigt.
+
+	\paragraph{Momentenbedingung} Wir zeigen \eqref{eqSatz7.11VorM} für $γ=4$ und $α=2$, \emph{falls} $μ_4:=\Earg[\big]{ξ_1^4}<∞$ (das ist eine stärkere Voraussetzung!)
+
+	Seien $s>t$ aus $I = \intervall0b$.
+	Dann gilt:
+	\begin{equation}\label{eqProof7.16Plus}\tag{+}
+		X_n(s) - X_n(t)
+		= \frac1{√n} \sum_{j = \floor{n t} + 1}^{\floor{n s}} ξ_j
+		+ \frac1{√n} \klammern{n s - \floor{n s}} ξ_{\floor{n s}+1}
+		- \frac1{√n} \klammern{n t - \floor{n t}} ξ_{\floor{n t}+1}
+	\end{equation}
+	Da
+	\begin{align}\label{eqProof7.16PlusPlus}\tag{++}
+		\floor{n t} ≤ n t < \floor{n t} + 1 \qquad ∀ t ≥ 0
+	\end{align}
+	folgt für
+	\begin{align*}
+		k := \floor{n t} \und l := \floor{n s}: \qquad
+		\frac kn ≤ t < \frac{k+1}n \und
+		\frac ln ≤ s < \frac{l+1}n
+	\end{align*}
+	\paragraph{Fall 1: $s - t ≤ \frac1n$}
+	\begin{enumerate}[label=(\roman*)]
+		\item \label{it:7.16proof1} $s$ und $t$ liegen im selben Intervall $\intervallHO{\frac kn}{\frac{k+1}n}$
+		\item \label{it:7.16proof2} $s$ und $t$ liegen in benachbarten Intervallen
+			$t ∈ \intervallHO{\frac kn}{\frac{k + 1}n}$,
+			$s ∈ \intervallHO{\frac{k + 1}n}{\frac{k+2}n}$
+	\end{enumerate}
+	%Ferger: Habe ich schon erwähnt, dass ich in Deutsch richtig schlecht war?
+	\subparagraph{Fall \ref{it:7.16proof1}:} $l = \floor{n s} = \floor{n t} = k$ und
+	\begin{align*}
+		X_n(s)-X_n(t)
+		&=\frac1{√n} (n  s - n t) ξ_{\floor{n t}+1}
+		=√n (s - t) ξ_{\floor{n t} + 1} \\
+		⇒
+		\Earg{\abs[\big]{X_n(s)-X_n(t)}^4}
+		&=n^2·(s-t)^4·μ_4
+		=μ_4·(s-t)^2·\underbrace{(s-t)^2}_{<\frac{1}{n^2}}· n^2\\
+		&≤μ_4·(s-t)^2
+	\end{align*}
+%Ferger: Sie haben vielleicht mitbekommen es wird momentan von der Digitalisierung geredet. Und der Bund will 5 mrd € zur Verfügung stellen. Aber die Lehrer sagen: "Wir müssen die Kinder in das Zeitalter der Digitalisierung bringen". Gestern, ich lag gerade so auf meiner Couch mit einem Glas Wein und ein Journalist sagte dann "Man darf nicht zurück in die Kreidezeit (Lehrer an der Tafel)" Ich bin so kurz zusammengezuckt und habe mir gedacht: "Ach du scheiße, was machst du denn in Dresden..." Also es gibt tatsächlich Leite, die sich auch damit beschäftigen und sagen das ist Mühsam mit der Tafel. Aber indem man schreibt, beschäftigt man sich schon intensiver mit Stoff.
+%Ferger: Manchmal ist weniger mehr.
+	\subparagraph{Fall \ref{it:7.16proof2}:} $k=\floor{n t}$ und $l=k+1=\floor{n s}$. Dann folgt aus \eqref{eqProof7.16Plus}:
+	\begin{align*}
+		X_n(s)-X_n(t)
+		&=\frac1{√n} ξ_{k+1}
+		+ \frac1{√n} \klammern[\big]{n s - (k+1)} ξ_{k+2}
+		- \frac1{√n} (n t - k) ξ_{k+1} \\
+		&=√n \klammern{s -\frac{k+1}n} ξ_{k+2}
+		+ √n \klammern{\frac{k+1}{n} - t} ξ_{k+1}
+	\end{align*}
+
+	\begin{lem}[$c_r$-Ungleichung]
+		Seien $a_1, …, a_m ∈ ℝ$ (paarweise verschieden) und $r ≥ 1$. Dann gilt:
+		\begin{align}\label{eqCrUngleichung}\tag{$c_r$}
+			\abs{\sum_{i=1}^m a_i}^r ≤ c_r \sum_{i=1}^m \abs{a_i}^r \mit c_r := m^{r-1}
+		\end{align}
+	\end{lem}
+
+	\begin{proof}
+		Sei $Z$ diskrete Zufallsvariable mit $\P(Z=a_i)=\frac{1}{m}$ für $1≤ i≤ m$. Dann gilt:
+		\begin{align*}
+			\abs{\frac1m \sum_{i=1}^m a_i}^r = \abs[\Big]{\Earg{Z}}^r
+			\overset{\text{Jensen}} &{≤}
+			\Earg[\big]{\abs{Z}^r}
+			= \frac{1}{m} \sum_{i=1}^m\abs{a_i}^r
+			⇒
+			\abs{\sum_{i=1}^m a_i}^r
+			≤ m^{r - 1} \sum_{i=1}^m \abs{a_i}^r
+			\qedhere
+		\end{align*}
+	\end{proof}
+
+	Mit $m=2$ und $r=4$ folgt:
+	\begin{align*}
+		\abs{X_n(s)-X_n(t)}^4
+		&≤ 8 \klammern[\bigg]{n^2 ξ^4_{k+2} \klammern[\Big]{\underbrace{s - \frac{k+1}n}_{≤ s - t}}^4
+		+n^2 ξ^4_{k+1} \klammern[\Big]{\underbrace{\frac{k+1}n - t}_{≤ s - t}}^4}\\
+		⇒
+		\Earg{\abs[\big]{X_n(s) - X_n(t)}^4}
+		&≤ 16 μ_4 \underbrace{n^2·(s-t)^2}_{≤ 1 ~ \text{(Fall 1)}} (s-t)^2
+		≤
+		16μ_4 (s-t)^2
+	\end{align*}
+
+	\paragraph{Fall 2: $s-t≥\frac1n$}
+	Aus \eqref{eqProof7.16Plus} und \eqref{eqCrUngleichung} mit $r=4$ und $m=3$ folgt wegen $\abs[\big]{n s - \floor{n s}} < 1$ und $\abs[\big]{n t - \floor{n t}} < 1$:
+	\begin{align} \label{eq:7.16proof2} \tag{$*$}
+		\Earg{\abs[\big]{X_n(s)-X_n(t)}^4}
+		\overset{}&{≤}
+		27 \klammern{\frac1{n^2} \Earg{\abs{\sum_{i = \floor{n t} + 1}^{\floor{n s}} ξ_i}^4}
+		+ \underbrace{\frac1{n^2}}_{≤ (s - t)^2} μ_4
+		+ \underbrace{\frac1{n^2}}_{≤ (s - t)^2} μ_4}
+		\\
+		&=
+		27 \klammern{\frac1{n^2} \Earg{\abs{\sum_{i = 1 }^{\floor{n s} - \floor{n t}} ξ_{\floor{n t} + 1}}^4}
+			+ 2 (s - t)^2 μ_4
+		}
+	\end{align}
+
+	\begin{lem}[Momentenungleichung]
+		Seien $ξ_1,…,ξ_n$ \iid, zentriert mit $μ_2 := \Earg{ξ_1^2}$ und $μ_4 := \Earg{ξ_1^4} < ∞$.
+		Dann gilt:
+		\begin{align*}
+			\Earg{\abs{\sum_{i=1}^nξ_i}^4} = nμ_4 + 3n(n-1)μ_2^2
+			≤ 4 μ_4 n^2
+		\end{align*}
+	\end{lem}
+
+	\begin{proof}[Induktionsbeweis vom zweiten Jahr]
+		Sei $S_n := \sum_{i = 1}^{n} ξ_i$. Dann $S_{n + 1} = S_n + ξ_{n + 1}$,
+		wobei $S_n$ und $ξ_{n + 1}$ unabhängig sind.
+		Zeige die Gleichheit per Induktion nach $n$.
+
+		Der Fall $n = 1$ ist trivial.
+		Induktionsschritt:
+		\begin{align*}
+			\Earg{\abs{S_{n + 1}}^4}
+			&= \Earg{(S_n + ξ_{n + 1})^4} \\
+			&= \Earg{S_n^4} + 3 \Earg{S_n^3 ξ_{n + 1}}
+			+ 6 \Earg{S_n^2 ξ_{n + 1}^2} + 3 \Earg{S_n ξ_{n + 1}^3}
+			+ \Earg{ξ_{n + 1}^4} \\
+			&= \Earg{S_n^4} + 3 \Earg{S_n^3} \underbrace{\Earg{ξ_{n + 1}}}_{= 0}
+			+ 6 \underbrace{\Earg{S_n^2}}_{=n μ_2}  \underbrace{\Earg{ξ_{n + 1}^2}}_{= μ_2}
+			+ 3 \underbrace{\Earg{S_n}}_{ = 0} \Earg{ξ_{n + 1}^3}
+			+ \underbrace{\Earg{ξ_{n + 1}^4}}_{= μ_4} \\
+			\overset{\text{IV}}&{=}
+			n μ_4 + 3n(n - 1) μ_2^2 + nμ_2 μ_2 + μ_4
+			= (n + 1)μ_4 + 3n(n - 1 + 1) μ_2^2 \\
+			&= (n + 1)μ_4 + 3n((n + 1) - 1) μ_2^2
+		\end{align*}
+		Zur Ungleichung:
+		\begin{align*}
+			% nμ_4 + 6μ_2^2 \binom n2 = nμ_4 + 6μ_2^2 \frac{n(n - 1)}{2} \\
+			\underbrace{n}_{≤ n^2} μ_4
+				+ 3 n \underbrace{(n-1)}_{≤ n} \underbrace{μ_2^2}_{=\klammern[\big]{\Earg{ξ_1^2}}^2\overset{\text{Jensen}}{≤} μ_4}
+				≤ 4 n^2 μ_4 & \qedhere
+	% 	μ_2^2 = (\Earg{ξ_1^2})^2
+		% 	\overset{\text{Jensen}}{≤}
+		% 	\Earg{ξ_1^4} = μ_4
+		% 	⇒ n
+		\end{align*}
+	\end{proof}
+	\begin{proof}[Beweis vom ersten Jahr]
+
+		Zeige zuerst das Gleichheitszeichen:
+		\begin{align*}
+			\Earg{\abs{\sum_{i=1}^n ξ_i}^4}
+			&=\Earg{\klammern{\sum_{i=1}^nξ_i}^4}\\
+			&=\Earg{\sum_{1 ≤ i,j,k,l ≤ n} ξ_i·ξ_j·ξ_k·ξ_l} \\
+			&=\sum_{1 ≤ i,j,k,l ≤ n} \underbrace{\Earg[\Big]{ξ_i·ξ_j·ξ_k·ξ_l}}_{=: μ_{i,j,k,l}}
+		\end{align*}
+		Die Tupel $(i,j,k,l)∈\set{1,…,n}^4$ mit mindestens drei verschiedenen Komponenten liefern $μ_{i,j,k,l}=0$,
+		denn z.\,B.\ (verschiedene Buchstaben repräsentieren verschiedene Zahlen):
+		\begin{align*}
+			μ_{i,j,k,j}
+			&=\Earg[\Big]{ξ_i·ξ_j·ξ_k·ξ_j}
+			=\Earg[\Big]{ξ_i·ξ_j^2·ξ_k}
+			=\underbrace{\Earg[\big]{ξ_i}}_{=0} · \Earg[\big]{ξ_i^2} \Earg[\big]{ξ_k}
+		\end{align*}
+		Folglich reduziert sich die obige auf (!)
+		\begin{align*}
+			&\sum_{i=1}^4 \underbrace{\Earg[\Big]{ξ_i^4}}_{=μ_4}
+			+ 6 \sum_{1 ≤ i ≤ j ≤ n}
+			\underbrace{\Earg[\Big]{ξ_i^2 ξ_j^2}}_{=μ_2^2}
+			+\underbrace{
+				16 \sum_{1 ≤ i ≤ j ≤ n}
+					\underbrace{\Earg[\Big]{ξ_i}}_{=0}
+					\Earg[\Big]{ξ_j^3}
+				+ 4 \sum_{1 ≤ i ≤ j ≤ n}
+					\Earg[\Big]{ξ_i^3}
+					· \underbrace{\Earg[\Big]{ξ_j}}_{=0}
+			}_{=0} \\
+			&= nμ_4 + 6μ_2^2 \binom n2 = nμ_4 + 6μ_2^2 \frac{n(n - 1)}{2} \\
+			&= \underbrace{n}_{≤ n^2} μ_4
+				+ 3 n \underbrace{(n-1)}_{≤ n} \underbrace{μ_2^2}_{=\klammern[\big]{\Earg{ξ_1^2}}^2\overset{\text{Jensen}}{≤} μ_4}\\
+			&≤ 4 n^2 μ_4
+		\end{align*}
+		Siehe auch \cite{ferger2014moment} %\undefine{Turkish Journal of Mathematics, Moment equalities via integer partitions} (2014) von Dietmar Ferger
+		für mehr Hintergründe.
+	\end{proof}
+
+	Mit diesem Lemma folgt:
+	\begin{align*}
+		% \frac1{n^2} \Earg{\abs{\sum_{i = \floor{n t}+1}^{\floor{n s}} ξ_i}^4}
+		% &=
+		\frac1{n^2} \Earg{\abs{\sum_{i=1}^{\floor{n s} - \floor{n t}} ξ_{i + \floor{n t}}}^4}
+		%\\
+		% &≤ \frac4{n^2} μ_4
+		% 	\klammern[\Big]{\underbrace{\floor{n s}-\overbrace{\floor{n t}}^{>n· t-1}}_{≤\underbrace{ n· s-n· t}_{=n·(s-t)}+\underbrace{1}_{\overset{\text{2. Fall}}{≤}n·(s-t)}≤2· n·(s-t)}}^2\\
+		% CHECKED: '\Big' used.
+		&≤ \frac4{n^2} μ_4 \klammern[\big]{\floor{n s} - \floor{n t}}^2 \\
+		&= \frac4{n^2} μ_4 \klammern{n s - n t + (nt - \floor{nt}) - (ns - \floor{ns})}^2 \\
+		&≤ \frac4{n^2} μ_4 \klammern{n (s-t) + 1 - 0}^2 \\
+		\overset{\text{Fall 2}}&{≤} \frac4{n^2} μ_4 \klammern{2 n (s-t)}^2 \\
+		% &= \frac1{n^2} 4μ_4 4 n^2·(s-t)^2\\
+		&= 16 μ_4 (s-t)^2\\
+		\overset{\eqref{eq:7.16proof2}}{⇒}
+		\Earg[\Big]{\abs[\big]{X_n(s) - X_n(t)}^4}
+		&≤ 27·18μ_4(s-t)^2 \qquad ∀ s e > t ∈ I \\
+		&=\klammern[\Big]{F(s)-F(t)}^2, \text{ wobei } F(s):=√{27·18μ_4} s
+	\end{align*}
+	Offenbar ist $F$ stetig und streng monoton wachsend auf $I = \intervall0b$.
+	Folglich ist \eqref{eqSatz7.11VorM} aus Satz \ref{satz7.11MomentenkriteriumVonKolmogoroff} erfüllt mit $μ=4$ und $α=2>1$.
+
+	Wir haben Donsker \ref{satz7.16Donsker} gezeigt, allerdings unter der \emph{stärkeren} Voraussetzung $\Earg[\big]{ξ_1^4} < ∞$.
+	Den allgemeinen Fall $\Earg{ξ_1^2}<∞$ zeigt man mit der sogenannten \undefine{Methode des Stutzens (truncation)},
+	vergleich \cite{klenke2006wahrscheinlichkeitstheorie}.
+	% vergleiche Achim Klenke (2008) \undefine{Wahrscheinlichkeitstheorie}
+\end{proof}
+
+%Ferger: Ich bin mit meinem Leben ja sehr zufrieden. [...] Das anstregendste als Professor ist das Tafelwischen. Ansonsten ist der Job leicht verdientes Geld.
+
+\setcounter{satz}{15}
+\begin{bemerkungnr}\label{bemerkung7.16Einhalb} %7.16. Einhalb
+%\begin{bemerkung}
+	Unser Beweis lässt sich sofort übertragen auf Dreiecksschemata:
+
+	$\set[\big]{ξ_{n,i}:1 ≤ i ≤ n, n ∈ ℕ}$ mit $ξ_{n,1}, …, ξ_{n,n}$ \iid\ $\sim H$ (verteilt nach Verteilungsfunktion $H$),
+	wobei die Verteilungsfunktion $H$ nicht von $n$ abhängt und
+	$\Earg[\big]{ξ_{n, i}} = 0$ und $\sup_{n ∈ ℕ} \Earg[\big]{ξ_{n,i}^4} < ∞$ und $\Var(ξ_{n,i}) = 1$.
+
+	\cite{prokhorov1956convergence}
+	% Prokhorov (1956), \undefine{Convergence of random processes and limit theorems in probability theory, Theory of Probability and its applications 1},
+	%Seite 157-214,
+	zeigt, dass auch hier die Existenz zweiter Momente $\sup_{n ∈ ℕ} \Earg[\big]{ξ_{n, i}^2} < ∞$ ausreicht.
+%\end{bemerkung}
+\end{bemerkungnr}
+
+% Das folgende in dieser Datei wurde 2019 nicht mehr erzählt.
+\footnote{Zusätzlich im Wintersemester 2018/19:
+
+	Seien $(ξ_i)_{i≥1}$ \iid\ $\sim F$ mit $\Earg[\big]{ξ_1} = μ ∈ ℝ$ und $σ^2 := \Var(ξ_1) ∈ (0,∞)$.
+	Dann ist Donsker \ref{satz7.16Donsker} anwendbar auf die \define{standardisierten Zufallsvariablen}
+	\begin{align*}
+		\tilde{ξ}_i:=\frac{ξ_i-μ}{σ},\qquad∀ i≥1
+	\end{align*}
+	Beachte: Die Grenzverteilung $W$ in Satz \ref{satz7.16Donsker} (also das Wiener-Maß) hängt \emph{nicht} von $F$ ab.
+	Die Grenzverteilung ist also invariant unter $F$. Deshalb heißt Satz \ref{satz7.16Donsker} auch \define{Invarianzprinzip}.
+	(Andere Formulierung: \define{Funktionaler Grenzwertsatz})
+
+	Sei $h\colon C\argu[\big]{\intervall0b} ⟶ ℝ$ messbar und $W$-fast überall stetig.
+	Dann gilt wegen Satz \ref{satz7.16Donsker} und \ref{satz4.10ContinuousMappingTheorem}:
+	\begin{align}\label{eqUnder7.16Eins}\tag{1}
+		h(X_n)\distrto  h(B)
+	\end{align}
+	Kennt man die Verteilung von $h(B)$ (= Funktional der Brownschen Bewegung, dazu existiert umfangreiche Literatur, z.\,B.\ \cite{borodin2012handbook}% Borodin und Salminen (2002),
+	%\undefine{Handbook of Brownian motion})
+	), so auch die Grenzverteilung von $h(X_n)$. Dies macht man sich in der asymptotischen Statistik zunutze
+	(siehe Beispiel später).
+	Umgekehrt lässt sich oft die Grenzverteilung $h(W)$ für besonders einfache Verteilungfunktionen $F$ bestimmen.
+	\begin{align*}
+		h\klammern[\big]{X_n}\distrto Z
+		\overset{\eqref{eqUnder7.16Eins}~\&~\ref{lemma4.6Einhalb}}{⇒}
+		h(B)=Z
+	\end{align*}
+	Damit ist der Satz \ref{satz7.16Donsker} von Donsker auch nützlich in der Wahrscheinlichkeitstheorie.
+}
+

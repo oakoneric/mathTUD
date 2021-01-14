@@ -1,0 +1,50 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Konvergenz in Produkträumen}
+
+Seien $(\S,d)$ und $(\S',d')$ separable metrische Räume. Dann ist auch $(\S \times \S',d \times  d')$ ein separabler metrischer Raum.
+Dies folgt z.\,B.\ aus dem \textit{Satz von der koordinatenweise Konvergenz}:
+
+\begin{equation}
+	\label{eq: 3.1KoordinatenweissKonvergenz}
+%	\tag{3.1}
+	\brackets{a_n, a_n'} \overset{d \times d'}{\longrightarrow} (a, a')
+	\equivalent
+	(a_n) \overset{d}{\longrightarrow} a
+	\und
+	(a_n') \overset{d'}{\longrightarrow} a'
+\end{equation}
+
+Es gibt auch eine \enquote{stochastische Versionen} dieses Satzes.
+
+\begin{satz}[Koordinatenweise Konvergenz vom Zufallsgrößen]
+	\label{satz: 3.15} ~
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it: 3.15koordKonvfs} 
+			$(X_n,X_n')
+			\overset{d \times d'}{\longrightarrow}
+			(X,X') \enskip ~\P\text{-f.\,s.}
+			\equivalent
+			X_n \overset{d}{\longrightarrow} X \enskip \P\text{-f.\,s.\ } 
+			\enskip \und \enskip
+			X_n' \overset{d'}{\longrightarrow} X' \enskip \P\text{-f.\,s.}$
+		\item \label{it: 3.15koordKonvprob} $(X_n,X_n') \probto (X,X')
+			\equivalent
+			X_n \probto X \enskip \und \enskip X_n' \probto X'$
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \arabic*), leftmargin=*]
+		\item Nach \cref{eq: 3.1KoordinatenweissKonvergenz} folgt aus $(X_n,X_n') \overset{d \times d'}{\longrightarrow} (X,X') \enskip \P$-fast sicher auch $X_n \to X$ und $X_n' \to X' \enskip \P$-fast sicher. Da der Schnitt von Eins-Mengen wieder eine Eins-Menge ist, ist dies wiederum äquivalent zu $X_n \to X \enskip \P$-fast sicher und $X_n' \to X' \enskip \P$-fast sicher. \textit{Achtung} -- die \enquote{Stellung} der Fast-Sicherheit spielt eine Rolle!
+		\item Die linke Seite ist wegen \eqref{eq: 3.1KoordinatenweissKonvergenz} und \cref{satz: 3.13} äquivalent dazu, dass für alle Teilfolgen $(X_{n'},X_{n'}') \subseteq (X_n,X_n')$ eine Teilteilfolge $(X_{n''},X_{n''}')$ existiert mit $(X_{n''},X_{n''}') \ntoinf 0$ fast sicher.
+		Also gilt wegen \cref{it: 3.15koordKonvfs}
+		\begin{align*}
+			X_{n''}\to X\text{ f.\,s.\ und }X_{n''}'\to X'\text{ f.\,s.}
+		\end{align*}
+		Somit existiert für alle Teilfolgen $(X_{n'}) \subseteq (X_n)$ eine Teilteilfolge $(X_{n''}) \subseteq (X_{n'})$ mit $X_{n''} \to X$ fast sicher. Dies ist wegen \eqref{eq: 3.1KoordinatenweissKonvergenz} äquivalent zu $X_n \probto X$. Analog gilt auch $X_n'\to X'$.
+	\end{enumerate}
+\end{proof}

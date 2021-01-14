@@ -1,0 +1,111 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Verteilungskonvergenz in \texorpdfstring{$C(ℝ)$}{C(R)}}
+Häufig hat man mit stochastischen Prozessen zu tun, deren Pfade in
+\begin{align*}
+	C(ℝ):=\set[\Big]{ f:ℝ⟶ℝ:f\text{ stetig}}
+\end{align*}
+liegen (siehe Beispiel \ref{lemmaMedian} Median ganz am Anfang). Die bisherige Theorie für $C(I)$ mit
+\emph{kompaktem} Intervall $I$ deckt das nicht ab. Wir versehen $C(ℝ)$ mit der Metrik
+\begin{align*}
+	d(f,g) &:= \sum_{j≥ 1} 2^{-j} \frac{d_j(f,g)}{1+d_j(f,g)} & ∀ f, g ∈ C(ℝ)\\
+	d_j(f,g) &:= \sup_{-j ≤ t ≤ j} \abs{f(t)-g(t)} & ∀ f, g ∈ C(ℝ)
+\end{align*}
+Aus der Analysis ist bekannt, dass $\klammern[\big]{C(ℝ),d}$ ein vollständiger separabler metrischer Raum ist. Ferner gilt:
+\begin{align*}
+	d(f_n,f)\ntoinf 0
+	⇔ ∀ j∈ℕ: d_j(f_n,f)\ntoinf 0
+	⇔\text{glm. Konvergenz auf Kompakta}
+\end{align*}
+Deshalb heißt $d$ die Metrik der gleichmäßigen Konvergenz auf Kompakta.
+
+Seien $π_t \colon C(ℝ) ⟶ ℝ$ und $π_T \colon C(ℝ) ⟶ ℝ^{\measure{T}}$ die Projektionsabbildungen, d.\,h.\ z.\,B.
+\begin{align*}
+	π_T(f)=\klammern[\big]{f(t)}_{t∈ T}=\klammern[\big]{f(t_1),…,f(t_k)}\qquad
+	T=\set{ t_1,…, t_k}
+\end{align*}
+
+\begin{theorem}\label{theorem7.20}
+	\begin{align*}
+		\B_d\klammern[\big]{C(ℝ)} &= σ \argu[\big]{π_t : t ∈ ℝ} = σ \argu[\big]{π_T : T ⊆ ℝ\text{ endlich}}
+	\end{align*}
+\end{theorem}
+
+\begin{proof}
+	Die Argumente im Beweis von Satz \ref{satz7.2} lassen sich problemlos übertragen,
+	da $C(ℝ)$ ebenfalls separabel ist.
+\end{proof}
+
+Ebenfalls analog (zu \ref{satz7.3}) beweist man:
+
+\begin{satz}\label{satz7.21}
+	 Sei $(Ω,\A)$ messbarer Raum und $C:=C(ℝ)$ versehen mit $\B_d(C)$.
+	 Dann gilt für eine Abbildung $X \colon Ω⟶ C(ℝ)$:
+	 \begin{align*}
+	 	X~\A\text{-}\B_d(C)\text{-messbar}
+	 	⇔∀ t∈ℝ:
+	 	π_t∘ X~\A\text{-}\B(ℝ)\text{-messbar }
+	 \end{align*}
+\end{satz}
+
+Konsequenz aus Satz \ref{satz7.21}: Jeder stetige stochastische Prozess indiziert nach $ℝ$ kann aufgefasst werden als Zufallsvariable in $\klammern[\big]{C(ℝ),d}$.
+
+\begin{satz}\label{satz7.22}
+	Seien $X,Y$ Zufallsvariablen in $\klammern[\big]{C(ℝ),d}$. Dann gilt:
+	\begin{align*}
+		X\stackeq{\L}Y⇔
+		\klammern[\Big]{X(t_1),…,X(t_k)}\stackeq{\L}\klammern[\Big]{Y(t_1),…,Y(t_k)}
+	\end{align*}
+	für jede Wahl von Punkten $t_1<…<t_k$ aus $ℝ$.
+\end{satz}
+
+\begin{proof}
+	Siehe Theorem \ref{theorem7.20} + Maßeindeutigkeitssatz.
+\end{proof}
+
+Der folgende Satz zeigt, dass sich der Nachweis der Verteilungskonvergenz in $\klammern[\big]{C(ℝ), d}$ zurückführen lässt auf den in $\klammern[\Big]{C \argu[\big]{\intervall{-j}{j}}, d_j} ~ ∀j ∈ ℕ$.
+
+Für $f∈ C(ℝ)$ sei
+\begin{align*}
+	I_j &:= \intervall{-j}j, & f^{(j)} &:= \restr{f}{I_j},\\
+	\text{ d.\,h.\ } f^{(j)} &\colon I_j ⟶ ℝ, & f^{(j)}(t) &:= f(t) & ∀ t ∈ I_j
+\end{align*}
+
+\begin{satz}[Ward Whitt, 1970] \label{satz7.23}
+	Seien $X,X_n,n∈ℕ$ Zufallsvariablen in $\klammern[\big]{C(ℝ),d}$. Dann gilt:
+	\begin{align*}
+		X_n\distrto X\text{ in }\klammern[\big]{C(ℝ),d}
+		⇔∀ j∈ℕ:
+		X_n^{(j)}\distrto  X^{(j)}\text{ in }\klammern[\big]{C(I_j),d_j}
+	\end{align*}
+\end{satz}
+
+Satz \ref{satz7.23} geht auf \cite{whitt1970weak} zurück. Ein (relativ) einfacher Beweis findet sich in \cite[Seite 260]{kallenberg2006foundations}.% Kallenberg (1997), \undefine{Foundations of modern probability}, Seite 260.
+
+\begin{bemerkungnr}\label{bemerkung7.24}\
+	\begin{enumerate}[label=(\alph*)]
+		\item \label{it:7.240inf} Die Resultate in \ref{theorem7.20},\ref{satz7.21},\ref{satz7.22} und \ref{satz7.23} gelten analog für $C\klammern[\big]{\intervallHO0{∞}}$ mit $I_j$ ersetzt durch $[0,j]$.
+		\item \label{it:7.24runterbrechen} Satz \ref{satz7.23} ermöglicht es insbesondere, auf die Konvergenzkriterien in \ref{satz7.9} und \ref{satz7.11MomentenkriteriumVonKolmogoroff} zurückzugreifen.
+	\end{enumerate}
+\end{bemerkungnr}
+
+\begin{beispiel}\label{beispiel7.25}
+	Seien $(ξ_i)_{i∈ℕ}$ \iid\ mit $\Earg{ξ_1}=0$, $\Var(ξ_1)=1$ und
+	\begin{align*}
+		S_k&:=\sum_{j=1}^kξ_j\qquad∀ k∈ℕ_0\\
+		X_n(t) &:= \frac1{√n} S_{\floor{n t}}
+		+ \frac1{√n} \klammern[\big]{n t - \floor{n t}} ξ_{\floor{n t} + 1}
+		\qquad ∀ t ∈ \intervallHO0{∞}
+	\end{align*}
+	D.\,h. $X_n$ ist Polygonzug durch $\klammern{ \frac kn, \frac1{√n} S_n }, k ∈ ℕ_0$.
+	Aus Satz \ref{satz7.16Donsker} folgt:
+	\begin{align*}
+		X_n^{(j)}\distrto B^{(j)} \quad ∀ j ∈ ℕ \quad
+		&\overset{\ref{bemerkung7.24}\ref{it:7.240inf} )+ \ref{satz7.23}}{⇔}
+		X_n\distrto  B \text{ in } \klammern[\Big]{C\argu[\big]{\intervallHO0{∞}},d}
+	\end{align*}
+\end{beispiel}

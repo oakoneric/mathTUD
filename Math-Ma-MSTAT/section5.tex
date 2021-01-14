@@ -1,0 +1,82 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Verteilungskonvergenz in \texorpdfstring{$ℝ^d$}{R\textasciicircum d}} %5
+% Korollar \ref{korollar4.5} bzw.\ dessen Erweiterungen \ref{lemma4.6Einhalb} \ref{it:4.6multiDim} liefern eine \define{analytische} Methode zum Nachweis von $X_n\distrto X\text{ in }ℝ^d$.
+% Eine weitere Methode fußt auf
+\paragraph{Ziel} Beschreibe $X_n \distrto X$ in $ℝ^d$. Dazu
+\begin{definition}\label{def5.1}
+	Sei $X$ Zufallsvariable in $ℝ^d$ über $(Ω,\A,\P)$ und
+	\begin{align*}
+		\scaProd xy :=:x'y:=\sum_{i=1}^d x_i· y_i\qquad x=(x_1,…,x_d),y=(y_1,…,y_d)∈ℝ^d
+	\end{align*}
+	das Standard-Skalarprodukt in $ℝ^d$. Dann heißt
+	\begin{align*}
+		φ_X(t):=\Earg[\big]{\exp\klammern[\big]{\ii \scaProd tX}}\qquad∀ t∈ℝ^d
+	\end{align*}
+	\define{charakteristische Funktion} von $X$.
+\end{definition}
+
+\begin{satz}[Eindeutigkeitssatz]\label{satz5.2Eindeutigkeitssatz}
+	\begin{align*}
+		X\stackeq{\L} Y⇔φ_X\equivφ_Y
+	\end{align*}
+\end{satz}
+
+\begin{proof}
+	Siehe Buch \cite[Seite 107f.]{jacod2012probability}.% \undefine{Essentials in Probability} von Jacod und Protter (2000), Seite 107-108.
+\end{proof}
+
+\begin{satz}[Stetigkeitssatz für charakteristische Funktionen]\label{satz5.3Stetigkeitssatz}
+	\begin{align*}
+		X_n\distrto  X\text{ in }ℝ^d⇔∀ t∈ℝ^d: φ_{X_n}(t)\ntoinf φ_X(t)
+	\end{align*}
+\end{satz}
+
+\begin{proof}
+	Siehe Vorlesung Wahrscheinlichkeitstheorie (Bachelor) oder \cite[Seite 163ff.]{jacod2012probability}.%Jacod und Protter (2000), Seite 163 ff.
+\end{proof}
+Der Satz \ref{satz5.3Stetigkeitssatz} wird üblicherweise genutzt um den zentralen
+Grenzwertsatz zu beweisen.
+
+Sehr nützlich ist:
+\begin{satz}[Cramér-Wold-Device]\label{satz5.4CramerWoldDevice}%
+	\footnote{Device bedeutet u.\,A.\ Trick. Das ist kein Name.}
+	\footnote{Beliebte Prüfungsfrage laut Prof.\ Ferger.}
+	Folgende Aussagen sind äquivalent:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:5.4X} $\begin{aligned}
+			X_n\distrto  X\text{ in }ℝ^d
+		\end{aligned}$
+	\item \label{it:5.4tX} $\begin{aligned}
+			\scaProd t{X_n} \distrto \scaProd tX \text{ in } ℝ \qquad ∀ t ∈ ℝ^d
+		\end{aligned}$
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}
+	Sei
+	\begin{align*}
+		φ_X(t)
+		&\stackeq{\text{Def}}\Earg{\exp\klammern[\big]{\ii·\scaProd tX}}
+		\stackeq{d=1}\Earg[\big]{\exp(\ii· X· t)}
+		\qquad∀ t∈ℝ^d
+	\end{align*}
+	\paragraph{Zeige \ref{it:5.4X} $⇒$ \ref{it:5.4tX}:}
+	Sei $t∈ℝ^d$. Dann ist $x ↦ \scaProd tx$ stetig auf $ℝ^d$.
+	Aus Satz \ref{satz4.10ContinuousMappingTheorem} (CMT) folgt \ref{it:5.4tX}.
+	\paragraph{Zeige \ref{it:5.4tX} $⇒$ \ref{it:5.4X}:}
+	\begin{align*}
+		&φ_{X_n}(t)
+		\stackeq{\text{Def}}\Earg[\Big]{\exp\klammern[\big]{\ii·\scaProd t{X_n}· 1}}
+		\stackeq{\text{Def}}φ_{\scaProd t{X_n}}(1)
+		\stackrelnew{\ref{satz5.3Stetigkeitssatz}+ \ref{it:5.4tX}}{n⟶∞}{\longrightarrow}
+		φ_{\scaProd tX}(1) = φ_X(t) \\
+		& ⇒ φ_{X_n}\ntoinf  φ_X \text{ auf } ℝ^d
+		\overset{\ref{satz5.3Stetigkeitssatz}}{⇒} \ref{it:5.4X}
+		\qedhere
+	\end{align*}
+\end{proof}

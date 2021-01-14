@@ -1,0 +1,75 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Gleichheit in Verteilung}
+\begin{definition} \label{definition: 3.16}
+	Seien $X_i$ ($i = 1,2$) Zufallsvariablen in $(\S,d)$ über $(\Omega_i,\A_i,\P_i)$. Sie heißen \begriff{gleich in Verteilung}, in Zeichen
+	\begin{align*}
+		X_1 \disteq X_2 \defequiv \P_1 \circ X_1^{-1} = \P_2 \circ X_2^{-1}
+	\end{align*}
+\end{definition}
+
+Wir wollen Verteilungsgleichheit in folgendem Satz charakterisieren.
+
+\begin{satz} \label{satz: 3.17}
+	Es gilt:
+	\begin{enumerate}[label=(\alph*)]
+		\item \label{it: 3.17f} Seien $\P,\Q$ Wahrscheinlichkeitsmaße auf $\B(\S)$. Dann gilt:
+		\begin{equation*}
+			\P \equiv \Q
+			\equivalent
+			\int f \diffskip\P = \int f \diffskip\Q \qquad \forall f \in C^b(\S) \text{ glm.\ stetig}
+		\end{equation*}
+		\item \label{it: 3.17E} Es gilt
+		\begin{equation*}
+			X \disteq Y \equivalent
+			\EW[f(X)] = \int_{\Omega_1} f(X_1)  \diffskip{\P_1} = \int_{\Omega_2} f(X_2)  \diffskip{\P_2} = \EW[f(Y)]
+		\end{equation*}
+		für all $f \in C^b(\S)$ gleichmäßig stetig.
+	\end{enumerate}
+\end{satz}
+
+\begin{proof}
+	\begin{enumerate}[label=(zu \alph*), leftmargin=*]
+		\item \begin{description}
+			\hinrichtung Klar.
+			\rueckrichtung Aus \cref{lemma: 3.2}, \cref{it: 3.2-OpenClosed} wissen wir, dass $\B(\S) = \sigma\brackets{\mathcal{F}(\S)}$ und $\F$ ist durchschnittsstabil. Wegen des \textit{Maßeindeutigkeitssatz} reicht es zu zeigen, dass $\P(F) = \Q(F)$ für alle $F \in \mathcal{F}(S)$. Sei nun $F \subseteq \S$ abgeschlossen. Setze $f_k (x) \defeq \phi \brackets{k * d(x,F)}$ (vgl.\ \cref{satz: 2.4}, $\phi$ wie dort). Aus \cref{lemma: 2.3} folgt, dass die $f_k$ beschränkt und gleichmäßig stetig sind mit $f_k \searrow \one_F$ für $k \to \infty$. Also gilt:
+			\begin{align*}
+				\P(F) 
+				&= \int \one_F \diffskip{\P}
+				= \int \lim_{k\to\infty} f_k  \diffskip\P
+				\intertext{und mit monotoner Konvergenz}
+				&= \lim_{k \to \infty} \int f_k \diffskip\P
+				= \lim_{k \to \infty} \int f_k \diffskip\Q
+				\intertext{Wiederum mit monotoner Konvergenz}
+				&= \int \lim_{k \to \infty} f_k \diffskip\Q
+				= \int \one_F \diffskip\Q
+				= \Q(F)
+			\end{align*}
+			Da $F$ beliebig war, folgt die Behauptung.
+		\end{description}
+		\item Dies folgt aus \cref{it: 3.17f} mit dem Transformationssatz \eqref{eqTrafo}:
+			\begin{align*}
+			X \disteq Y
+			&\overset{\ref{definition: 3.16}}{\Leftrightarrow}
+			\P \circ X^{-1} = \P \circ Y^{-1} \\
+			&\overset{\ref{it: 3.17f}}{\Leftrightarrow}
+			\int_{\S} f \diffskip{(\P\circ X^{-1})} = \int_{\S} f \diffskip{(\P\circ Y^{-1})}
+			&\forall f \in C^b(\S) \text{ glm. stetig} \\
+			\overset{\eqref{eq: Proof3.17}}&{\Leftrightarrow}
+			\EW[f(X)] = \EW[f(Y)]
+			&\forall f \in C^b(\S) \text{ glm. stetig}
+		\end{align*}
+		Verwende dafür:
+		\begin{equation}
+			\int_{\S} f \diffskip{(\P\circ X^{-1})}
+			\overset{\text{Trafo}}{=}
+			\int_{\Omega} \underbrace{f \circ X}_{\defqe f(X)} \diffskip\P
+			\overset{\text{Def}}{=}
+			\EW[f(X)]
+			\tag{$\ast$} \label{eq: Proof3.17} 
+		\end{equation}
+	\end{enumerate}
+\end{proof}

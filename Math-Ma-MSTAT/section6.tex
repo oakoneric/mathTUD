@@ -1,0 +1,251 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Der multivariate zentrale Grenzwertsatz (MZGWS) für Dreiecksschemata} \label{sec:6mvZGWS} %6
+Wir betrachen zunächst den \define{univariaten} Fall.
+Es gelte
+\begin{align}\label{eq6.1}\tag{6.1}
+	X_{n,1},X_{n,2},…,X_{n,n}\text{ sind unabhängige \emph{reelle} ZV }∀ n∈ℕ%
+	\footnote{Zeilenweise unabhängig, aber nicht unbedingt alle unabhängig!}
+\end{align}
+Die Kollektion
+\begin{align*}
+	\set{ X_{n,k}:1≤ k≤ n,n∈ℕ}
+\end{align*}
+heißt \define{Dreiecksschema/ $Δ$-Schema}.
+\begin{align*}
+	\begin{matrix}
+		X_{1,1}\\
+		X_{2,1} & X_{2,2}\\
+		X_{3,1} & X_{3,2} & X_{3,3}\\
+		\vdots & \vdots & \vdots & \ddots\\
+		X_{n,1} & X_{n,2} & \hdots & \hdots & X_{n,n}\\
+		\vdots &&&&\vdots & \ddots
+	\end{matrix}
+\end{align*}
+
+Sei
+\begin{align}\label{eq6.2}\tag{6.2}
+	\Earg{X_{n,k}}=0,~σ_{n,k}^2:=\Earg{X_{n,k}^2}<∞~∀ n,k∈ℕ\text{ und }
+	s_n^2:=\sum_{k=1}^nσ_{n,k}^2~∀ n∈ℕ
+\end{align}
+
+\begin{satz}[Lindeberg, 1922]\label{satz6.1Lindeberg1922}
+	Es gelten \eqref{eq6.1} und \eqref{eq6.2} sowie
+	\begin{align}\label{eqSatz6.1LindebergLB}\tag{LB}
+		\sum_{k=1}^n \Earg{X_{n,k}^2·\indi_{\set{\abs{X_{n,k}}>ε}}}
+		\ntoinf 0 \qquad ∀ ε>0.
+	\end{align}
+	Falls zusätzlich
+	\begin{align*}
+		s_n^2 \ntoinf σ^2∈(0,∞)
+	\end{align*}
+	gilt, so gilt:
+	\begin{align*}
+		\sum_{k=1}^n X_{n,k}\distrto \mathcal{N}(0,σ^2)
+	\end{align*}
+\end{satz}
+
+\begin{bemerkung}
+	Da die $X_{n, k}$ zeilenweise unabhängig und damit unkorreliert sind, gilt mit
+	dem Satz von Bienaymé\footnote{Der ist ganz einfach: für unkorrelierte ZV ist $\Var(\sum) = \sum \Var$, Beweis durch ausmultiplizieren.}
+	\begin{align*}
+		s_n^2=\Var\klammern{\sum_{k=1}^n X_{n,k}}
+	\end{align*}
+\end{bemerkung}
+
+\begin{proof}
+	So ähnlich wie Beweis von klassischem zentralen Grenzwertsatz in der Vorlesung Wahrscheinlichkeitstheorie (Bachelor), nur technisch etwas komplizierter.
+	Vergleiche auch \cite[Seite 359 ff.]{billingsley2008probability}.% Billingsley (1995), \undefine{Probability and Measure}, Seite 359 ff.
+
+	Hierbei ist der klassische zentralen Grenzwertsatz mit $X_{n, k} = \frac{X_k}{√n}$
+	ein Spezialfall.
+	Dann $\frac1{√n} \sum_{k=1}^n X_k \distrto \mathcal N(0, σ^2)$.
+\end{proof}
+
+Im Folgenden betrachten wir die Verallgemeinerung auf den \define{multivariaten} Fall.
+Sei $\set{ X_{n,k}:k≤ n,n∈ℕ}$ ein $Δ$-Schema von Zufallsvariablen (d.\,h.\ Zufallsvektoren)
+\begin{align*}
+	X_{n,k}=\klammern{X_{n,k}^{(1)},…,X_{n,k}^{(d)}} \text{ in } ℝ^d
+\end{align*}
+Es gelte die \define{zeilenweise Unabhängigkeit}:
+\begin{align}\label{eq6.3}\tag{6.3}
+	X_{n,1},…,X_{n,n}\text{ sind unabhängig}\qquad∀ n∈ℕ
+\end{align}
+%Ferger arbeitet auch am Buß- und Bettag in der Uni. Er ist evangelisch getauft worden und sogar konfirmiert.
+% Im Folgenden Jahr ist Buß- und Bettag schon etwas her.
+Also die Vektoren seien unabhängig. Daraus folgt nicht, dass deren Komponenten unabhängig sind.
+\begin{align}\label{eq6.4}\tag{6.4}
+	\Earg[\big]{X_{n,k}}
+	:=\klammern{\Earg{X_{n,k}^{(j)}}}_{1≤ j≤ d}
+		&= 0: =(0, …, 0)
+	&∀& n∈ℕ, 1 ≤ k ≤ n \\
+	\label{eq6.5}\tag{6.5}
+	\Earg{\klammern{X_{n,k}^{(j)}}^2}&<∞
+	&∀& n∈ℕ, 1 ≤ k ≤ n, 1 ≤ j ≤ d
+\end{align}
+Wegen \eqref{eq6.4}, \eqref{eq6.5} und der Cauchy-Schwarz-Ungleichung
+ist die so genannte \define{Kovarianzmatrix}
+\begin{align*}
+	\Cov\klammern{X_{n,k}}
+	:=\klammern[\Big]{\underbrace{\Cov\klammern{X_{n,k}^{(i)}, X_{n,k}^{(j)}}}_{
+		=\Earg{X_{n,k}^{(i)}· X_{n,k}^{(j)}}
+	}}_{1≤ i, j≤ d} ∈ ℝ^{d × d}
+\end{align*}
+% TODO: in anhang unter Dinge, die man wissen sollte erwähne \Cov
+eine wohldefinierte $d×d$-Matrix.
+
+\begin{satz}[Multivariater Zentraler Grenzwertsatz (MZGWS)]\label{satz6.2MultivariaterZGWS}
+	Es gelten \eqref{eq6.3}, \eqref{eq6.4}, \eqref{eq6.5} sowie
+	\begin{align}\label{eqSatz6.2LB}\tag{LB}
+		\sum_{k=1}^n \Earg{ \norm{ X_{n,k}}^2 · \indi_{\set[\big]{\norm{ X_{n,k}}>ε}} }
+		\ntoinf  0 \qquad ∀ ε>0
+	\end{align}
+	(Hierbei ist $\norm{·}$ die euklidische Norm auf $ℝ^d$, aber es würde auch jede andere Norm tun.)
+
+	Falls die \emph{Normierungsbedingung}
+	\begin{align}\label{eqSatz6.2NB}\tag{NB}
+		\sum_{k=1}^n \Cov \klammern{X_{n,k}}
+		\stackrelnew{\text{komponentenweise}}{n⟶∞}{\longrightarrow} Γ
+		\qquad \mit Γ ∈ ℝ^{d× d} \text{ symmetrisch, positiv definit}
+	\end{align}
+	erfüllt ist, so gilt:
+	\begin{align*}
+		\sum_{k=1}^n X_{n,k}\distrto N, \text{ wobei } N \sim \mathcal{N}_d(0,Γ)\text{ in }ℝ^d
+	\end{align*}
+	Hierbei ist $\mathcal{N}_d(0, Γ)$ die $d$-dimensionale Normalverteilung
+	mit Erwartungsvektor $0$ und Covarianzmatrix $Γ$.
+\end{satz}
+%Ferger kennt die Dichte die Normalverteilung im Mehrdimensionalen nicht und versucht sie trotzdem aus dem Gedächtnis an die Tafel zu schreiben. Wieder 5 Minuten weg :D
+%"Mir persönlich reicht es, dass das Ding hat eine Dichte!" :D
+%"Manchmal ist weniger mehr!"
+
+% Im zweiten Jahr probiert er es nicht.
+\begin{proof}\footnote{Der Grundgedanke ist eine übliche Prüfungsfrage.}
+	Sei $N\sim\mathcal{N}_d(0,Γ)$. Mit \ref{satz5.4CramerWoldDevice} bleibt zu zeigen:
+	\begin{align}
+		\label{eqProof6.2Stern}\tag{$\ast$}
+		\scaProd t {\sum_{k=1}^n X_{n,k}} \distrto \scaProd tN \text{ in } ℝ \qquad ∀ t ∈ ℝ^d
+	\end{align}
+	Sei $t∈ℝ^d\setminus\set{0}$ (für $t=0$ ist \eqref{eqProof6.2Stern} trivialerweise erfüllt). Es folgt
+	% zu "trivial" erzählt der Dietmar, dass es vermutlich keine gute Idee ist
+	% in der Kneipe der Dynamofans „Willis Eck“ nach einem verlorenen Spiel dieses
+	% Wort fallen zu lassen. Die Wortwahl muss immer angepasst sein.
+	\begin{align*}
+		\scaProd t{\sum_{k=1}^n X_{n,k}}
+		\overset{\text{Lin}}&=
+	\sum_{k=1}^n \underbrace{\scaProd t{X_{n,k}}}_{ =: Y_{n,k}(t) =: Y_{n,k} }
+		=\sum_{k=1}^n Y_{n,k}\\
+		Y_{n,k}
+		&=\sum_{j=1}^d t_j· X_{n,k}^{(j)}
+	\end{align*}
+	Zunächst gilt wegen \undefine{Blockungslemma}:
+	$(Y_{n, k})_{n, k}$ ist ein $Δ$-Schema und $Y_{n, 1}, ..., Y_{n, n}$ sind
+	unabhängig für alle $n ∈ ℕ$, sprich es gilt
+	$\set[\big]{ Y_{n,k} : 1 ≤ k ≤ n, n∈ℕ}$ erfüllt die Bedingung
+	\eqref{eq6.1}.
+
+	\eqref{eq6.2} gilt
+	wegen \eqref{eq6.4} und Linearität sowie Cauchy-Schwarz-Ungleichung:
+	%Hauptsatz des Mannschaftssport: "Jede Kombination von Nullen ist immer Null."
+	\begin{align}
+		Y_{n, k} &= \scaProd t{X_{n, k}^{(j)}} ⇒ \Earg{Y_{nk}} = 0 \label{eq:6.2plus} \tag{+}\\
+		Y_{n, k} \overset{\text{CSU}}&{≤} \norm t \norm{X_{n, k}}^2 \overset{\ref{eq:6.2plus}, \ref{eq6.5}}{⇒} \Earg {Y_{n,k}^2} < ∞
+	\end{align}
+	\begin{align*}
+		\abs{Y_{n,k}^2}&=\abs{\scaProd t{X_{n,k}}}^2
+		≤\norm{t}^2 · \norm{X_{n,k}}^2
+		=\norm{t}^2 · \sum_{j=1}^d \klammern{X_{n,k}^{(j)}}^2
+	\end{align*}
+
+	Da $\scaProd tN = t· N \sim \mathcal{N}(0,t·Γt)$ (\cite[Bsp.\ 13.2.2]{schmidt2011mass}, folgt \eqref{eqProof6.2Stern}, falls wir zeigen können, dass gilt
+	\begin{align}\label{eqProof6.2SternStern}\tag{$\ast\ast$}
+		\sum_{k=1}^n Y_{n,k}\distrto \mathcal{N}(0,t · Γt)
+	\end{align}
+	Der Nachweis von \ref{eqProof6.2SternStern}
+	erfolgt mit Satz \ref{satz6.1Lindeberg1922}.
+	Es gilt:
+	\begin{align*}
+		s_n^2
+		&=\sum_{k=1}^n\Earg{Y_{n,k}^2}\\
+		&=\sum_{k=1}^n\Earg{\sum_{i,j=1}^d t_i t_j X_{n,k}^{(i)} X_{n,k}^{(j)}}\\
+		&=\sum_{k=1}^n\sum_{i,j=1}^d t_i t_j \Earg{X_{n,k}^{(i)} X_{n,k}^{(j)}}\\
+		&=\sum_{k=1}^n\sum_{i,j=1}^d t_i \klammern[\Big]{\Cov(X_{n,k}}_{i,j} t_j\\
+		&=\sum_{k=1}^n t · \Cov(X_{n,k}) t\\
+		\overset{\text{Distri}}&=
+		t · \underbrace{\sum_{k=1}^n\Cov(X_{n,k})}_{\ntoinf Γ\text{ wg. \eqref{eqSatz6.2NB}}} t
+		\ntoinf  t · Γ t=:σ^2 \overset{Γ\text{ p.\,d.}}{>} 0
+	\end{align*}
+	Es verbleibt die Lindeberg-Bedingung \ref{eqSatz6.1LindebergLB} zu zeigen.
+	Gemäß Cauchy-Schwarz-Un\-glei\-chung (CSU) gilt:
+	\begin{align}\label{eqProof6.2t}\tag{t}
+		&\abs{Y_{n,k}}=\abs{\scaProd t{X_{n,k}}} \overset{\text{CSU}}{≤} \norm t · \norm{X_{n,k}}\\\nonumber
+		&⇒ \sum_{k=1}^n \Earg[\Big]{
+		%\underbrace{
+		\abs{Y_{n,k}}^2
+		%}_{ ≤ \norm t · \norm{X_{n,k}}}
+		·\indi_{ \set[\big]{\underbrace{\abs{Y_{n,k}}}_{≤\norm{ t}·\norm{ X_{n,k}}}>ε} }}
+		\overset{\eqref{eqProof6.2t}}{≤}
+		\norm t^2 · \sum_{k=1}^n \Earg[\Big]{\norm{ X_{n,k}}^2·\indi_{\set{\norm{ X_{n,k}} > \frac{ε}{\norm t} }}}
+		\ntoinf 0
+	\end{align}
+	Dies gilt gemäß \ref{satz6.1Lindeberg1922} für alle $ε>0$.
+	Hier geht ein, dass $t \neq 0$, so $\norm t > 0$.
+	Somit folgt aus Satz \ref{satz6.1Lindeberg1922} dann \eqref{eqProof6.2SternStern} und dadurch \eqref{eqProof6.2Stern} und mit \ref{satz5.4CramerWoldDevice} somit die Behauptung.
+\end{proof}
+
+\begin{korollar}\label{korollar6.3}
+	Sei $(X_i)_{i∈ℕ}$ mit $X_i$ \iid\ Zufallsvariable in $ℝ^d$ mit
+	\begin{align*}
+		&\Earg{\klammern{X_1^{(j)}}^2} < ∞ \qquad ∀ 1 ≤ j ≤ d\\
+		μ& := \Earg[\big]{X_1}
+		= \klammern{\Earg{X_1^{(1)}}, …, \Earg{X_1^{(d)}}} ∈ ℝ^d, \\
+		Γ&:=\Cov(X_1)
+		=\klammern{\Cov\klammern{X_1^{(i)},X_1^{(j)}}}_{i,j=1}^d
+		=\klammern{\Earg{\klammern{X_1^{(i)}-μ_i} · \klammern{X_1^{(j)}-μ_j}}}_{i,j=1}^d\\
+		&\text{ positiv definit}
+	\end{align*}
+	Dann gilt:
+	\begin{align*}
+		\frac{1}{√{n}}·\sum_{i=1}^n(X_i-μ)\distrto \mathcal{N}_d(0,Γ)
+	\end{align*}
+\end{korollar}
+
+\begin{proof}
+	\begin{align}\label{eqProof6.3Stern}\tag{$\ast$}
+		\frac{1}{√{n}}·\sum_{k=1}^n(X_k-μ)
+		&=\sum_{k=1}^n\underbrace{\frac{1}{√{n}}·(X_k-μ)}_{=:X_{n,k}}\qquad∀ 1≤ k≤ n,∀ n∈ℕ
+	\end{align}
+	Dann sind \eqref{eq6.3}, \eqref{eq6.4} und \eqref{eq6.5} erfüllt und es gilt
+	\begin{align*}
+		\Cov(X_{n,k})
+		&=\frac{1}{n}·Γ⇒\sum_{k=1}^n\Cov(X_{n,k})=Γ
+	\end{align*}
+	Somit ist \eqref{eqSatz6.2NB} erfüllt. Zu \eqref{eqSatz6.2LB}:
+	\begin{align*}
+		\sum_{k = 1}^n \Earg[\Big]{\norm{ X_{n,k}}^2·\indi_{\set[\big]{\norm{ X_{n,k}}>ε}}}
+		&\stackeq{\eqref{eqProof6.3Stern}}
+		\frac{1}{n} · \sum_{k=1}^n \Earg[\Big]{\norm{X_k - μ}^2 · \indi_{\set[\big]{\norm{ X_k-μ} > ε √{n}}}}\\
+		&\stackeq{\text{\iid}}
+		\frac{1}{n}·\sum_{k=1}^n \Earg[\Big]{\norm{X_1-μ}^2 · \indi_{\set[\big]{\norm{X_1 - μ} > ε √{n}}}}\\
+		&=\Earg[\Big]{\underbrace{\norm{ X_1-μ}^2·\indi_{\set[\big]{ \norm{ X_1-μ}>ε·√{n}}}}_{\ntoinf 0~∀ε>0}}
+		\stackrelnew{\text{dom.\ Konv}}{n⟶∞}{\longrightarrow}0
+	\end{align*}
+	Hierbei geht der Satz der dominierten Konvergenz ein, denn $\norm{ X_1-μ}^2$ ist Dominante und integrierbar, da
+	\begin{align*}
+		\norm{ X_1-μ}^2 ≤ \klammern[\big]{\norm{ X_1} + \norm{μ}}^2
+	≤ 2 \klammern{\norm{X_1}^2 + \norm{μ}^2}
+	\end{align*}
+	und
+	\begin{align*}
+		\Earg{\norm{ X_1}^2}
+		&=\Earg{\sum_{j=1}^d\klammern{X_1^{(j)}}^2}
+	=\sum_{j=1}^d \underbrace{\Earg{\klammern{X_1^{(j)}}^2}}_{< ∞ ~ ∀ j}<∞
+	\end{align*}
+	Somit ist \eqref{eqSatz6.2LB} erfüllt und es folgt mit \ref{satz6.2MultivariaterZGWS} die Behauptung.
+\end{proof}
+
+Für $d=1$ liefert Korollar \ref{korollar6.3} den klassischen ZGWS.

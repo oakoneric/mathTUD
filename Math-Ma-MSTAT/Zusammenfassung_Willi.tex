@@ -1,0 +1,353 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\newcommand{\directoryPrefix}{../latex/} % Je nach Ordnertiefe muss dieser Command angepasst werden. Bei Fragen mich anschreiben.
+\input{\directoryPrefix templates}
+\TemplateSummary{Willi Sontopski}{MSTAT}
+
+\begin{document}
+Alle Beweise und Sätze, die Prof.\ Ferger als typische Prüfungsfragen bezeichnet hat, finden sich durch eine Suche nach \enquote{Prüfung}.
+	\section{Der Median}
+	\begin{itemize}
+		\item $m$ Median $\gdw m=\argmin(\E[|X-t|])\gdw F(m-)\leq\frac{1}{2}\leq F(m)\gdw \E[|X-t|]\geq\E[|X-m|]~\forall t\in\R$
+		\item Trafo: $\int\limits_\Omega g(X(\omega))~\P(\d\omega)
+		=\int\limits_\R g(x)~\P_X(\d x)
+		=\int\limits_\R g(x)\cdot f_X(x)\ds x$
+		\item Median i.A. \betone{nicht} eindeutig, wähle $m:=F^{-1}(1/2)\mit F^{-1}(u):=\inf\lbrace x\in\R:F(x)\geq u\rbrace$ \define{verallg. Inverse / Quantilfunktion}; $Y$ stetig, aber nicht diffbar; Minimierung über Ableiten unmöglich
+		\item empir. Median $\hat{m_n}:=\argmin\limits_{t\in\R}Y_n(t)\mit Y_n(t):=\int_\R|x-t|~F_n(\d x)=\frac{1}{n}\sum\limits_{i=1}^n|x_i-t|$
+		\item SGGZ sagt: $Y_n(t)\overset{n\to\infty}{\longrightarrow}Y(t)$ f.s. $\forall t\in\R$.
+	\end{itemize}
+
+	\section{Konzepte aus metrischen Räumen}
+	\begin{itemize}
+		\item $\S$ metrischer Raum; $\F$ Menge der offenen Teilmengen und $\G$ Menge der geschlossenen Teilmengen
+		\item "Bump-Function": $\forall A\subseteq\S,\forall\varepsilon:\exists f_A:\S\to[0,1]$ glm. stetig s.d. $f_A\approx\indi_A$ ($f_A(x)=0$ für $d(x,A)\geq\varepsilon$)
+		\item MR \define{separabel} $:\gdw\exists S_0\subseteq\S$ abzählbar s.d $S_0=\S\gdw\exists S_0\subseteq\S$ abzählbar mit $S_0$ liegt dicht in $\S$
+		\item $\G_0\subseteq\G$ \define{Basis} $:\gdw\forall G\in\G:G$ ist $\bigcup$ von Mengen aus $\G_0$; $\S$ separabel $\gdw\G(\S)$ hat abzählbare Basis
+		\item \define{Produktmetriken}: $d_1\times d_2:\in\big\lbrace \sqrt{d_1^2+d_2^2}, d_1+d_2,\max(d_1,d_2)\big\rbrace$; sind äquivalent, erzeugen selbe Topo
+	\end{itemize}
+
+	\section{Zufallsvariablen in metrischen Räumen}
+	\begin{itemize}
+		\item Borel-$\sigma$-Algbra auf $\S$ ist $\B(\S):=\sigma(\G(\S))=\sigma(\F(\S))\overset{\G_0\text{ abz- Basis}}{=}\sigma(\G_0)$, hängt. i.A. von $d$ ab.
+		\item $\B_{d_1\times d_2}(\S\times\S)=\B_{d_1}(\S_1)\otimes\B_{d_2}(\S_2)$ für separable MR
+		\item \define{Zufallsvariable} ist $X\colon\Omega\to\S$ die $\A$-$\B(\S)$-messbar ist ($(\Omega,\A)$ Messraum, $(\S,d)$ MR).
+		\item \define{Verteilung} von $X$ unter $\P$ ($(\Omega,\A,\P)$ WR) ist
+		$(\P\circ X^{-1})(B):=\P[X\in B]~\forall B\in\B(\S)$
+		\item $(\S,d)$ separabel, $X,Y$ ZV $\implies d(X,Y)$ ist reelle ZV (jede Metrik stetig)
+		\item $X_n\stackrel{n\to\infty}{\longrightarrow} X~\P\text{ f.s.}
+		:\gdw\P\big(\big\lbrace\omega\in\Omega:d\big(X_n(\omega),X(\omega)\big)\stackrel{n\to\infty}{\longrightarrow} 0\big\rbrace\big)=1\gdw d(X_n,X)\overset{n\to\infty}{=}0$ f.s.
+		\item $X_n\overset{n\to\infty}{\longrightarrow}X$ f.s. und $f$ messbar und stetig in $X\implies f(X_n)\overset{n\to\infty}{\longrightarrow}f(X)$ f.s.
+		\item
+		$X_n
+		\stackrelnew{n\to\infty}{\P}{\longrightarrow}
+		X:\gdw\forall\varepsilon>0:
+		\P\Big(\big\lbrace d(X_n,X)>\varepsilon\big\rbrace\Big)
+		\stackrel{n\to\infty}{\longrightarrow}
+		0$
+		\define{stochastische K. / K. in Wahrscheinlichkeit}
+		\item Konvergenz f.s. $\implies$ Konvergenz in W.; Umkehrung nicht wegen "wandernden Hüten"
+		\item $X_n\overset{\P}{\longrightarrow}X\gdw$ Zu jeder TF $X_n'$ existiert TTF $(X_n'')$ s.d. $X_{n''}\overset{\text{f.s.}}{\longrightarrow}X$ f.s.
+		\item $X_n\overset{\P}{\longrightarrow}X$ und $f$ messbar und stetig in $X\implies f(X_n)\overset{\P}{\longrightarrow}f(X)$
+		\item $(\S_1,d_1),(\S_,d_2)$ separabel $\implies$ Produktraum $(\S_1\times\S_2,d_1\times d_2)$ separabel
+		\item Für beide Konvergenzarten gilt koordinatenweise Konvergenz.
+		\item $X,Y$ \define{gleich in Verteilung}, i.Z. $X\overset{\L}{=}Y:\gdw \P\circ X^{-1}=\P\circ Y^{-1}\gdw\E[f(X)]=\E[f(Y)]~\forall f\in C^b(\S)$ glm
+		\item $\P_1=\P_2\gdw\int f\d\P_1=\int f\d\P_2~\forall f\in C^b(\S)$ glm. stetig (gilt wegen Bump functions)
+	\end{itemize}
+
+	\section{Verteilungskonvergenz von Zufallsvariablen in metrischen Räumen}
+
+	\begin{itemize}
+		\item $\P_n\stackrelnew{w}{n\to\infty}{\longrightarrow} \P
+			:\gdw
+			\int\limits f\d \P_n\stackrel{n\to\infty}{\longrightarrow}\int\limits f\d \P~\forall f\in C^b(\S)$
+			\define{schwache Konvergenz von Maßen}
+		\item $X_n\stackrel{\mathcal{L}}{\longrightarrow} X\text{ in }(\S,d)
+			:\gdw
+			\P\circ X_n^{-1}\stackrelnew{w}{n\to\infty}{\longrightarrow}\P\circ X^{-1}$
+			\define{Konvergenz in Verteilung}
+
+		\item $\P_n\overset{\text{w}}{\longrightarrow}\P\gdw F_n\rightharpoonup F:\gdw F_n(x)\overset{n\to\infty}{\longrightarrow} F(x)~\forall x\in C_F$ (Stetigkeitsstelle) \define{schwache Konvergenz von Verteilungsfunktionen} ($\P_n$ zu $F_N$ assoziiert)
+		\item $X_n\stackrel{\L}{\longrightarrow} X
+			\stackrel{\text{Def}}{\Longleftrightarrow}
+			\underbrace{\P\circ X_n^{-1}}_{\hat{=}P_n}
+			\stackrelnew{w}{}{\longrightarrow} \underbrace{\P\circ X^{-1}}_{\hat{=}P}
+			\stackrel{}{\Longleftrightarrow}
+			\underbrace{\P(X_n\leq x)}_{\hat{=}F_n(x)}
+			\stackrel{n\to\infty}{\longrightarrow}
+			\underbrace{\P(X\leq x)}_{\hat{=}F(x)}$ für alle Stetigkeitsstellen $x$
+	\end{itemize}
+
+\begin{minipage}{0.49\textwidth}
+	\define{Portmanteau-Theorem 1}: Äquivalent:
+		\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			\P_n\stackrelnew{w}{}{\longrightarrow} \P
+		\end{aligned}$
+		\item $\begin{aligned}
+			\int\limits f\d \P_n\stackrel{}{\longrightarrow}\int\limits f\d \P~\forall f\in C^b(\S)\text{ glm. stetig}
+		\end{aligned}$
+		\item $\begin{aligned}
+			\limsup\limits_{n\to\infty} \P_n(F)\leq \P(F)~\forall F\in\F(\S)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\liminf\limits_{n\to\infty} \P_n(G)\geq \P(G)~\forall G\in\G(\S)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\limn \P_n(B)=\P(B)~\forall B\in\B(\S)
+		\end{aligned}$\\ $\mit \P(\partial B)=0$, also \textbf{$\P$-randlos}.
+	\end{enumerate}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+	\define{Portmanteau 2}: Äquivalent:
+		\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			X_n\stackrel{\L}{\longrightarrow} X\text{ in }(\S,d)
+		\end{aligned}$
+		\item $\begin{aligned}
+			\E\big[f(X_n)\big]\stackrel{n\to\infty}{\longrightarrow}\E\big[f(X)\big]~\forall f\in C^b(\S)
+		\end{aligned}$ glm stetig
+		\item $\begin{aligned}
+			\limsup\limits_{n\to\infty}\P(X_n\in F)\leq\P(X\in F)~\forall F\in\F
+		\end{aligned}$
+		\item $\begin{aligned}
+			\liminf\limits_{n\to\infty}\P(X_n\in G)\geq\P(X\in G)~\forall G\in\G
+		\end{aligned}$
+		\item $\begin{aligned}
+			\P(X_n\in B)\stackrel{n\to\infty}{\longrightarrow}\P(X\in B)~\forall B\in\B(\S)
+		\end{aligned}$ $\mit\P(X\in\partial B)=0$
+	\end{enumerate}
+\end{minipage}
+
+\begin{itemize}
+	\item Portmanteau 1: (1) $\Rightarrow$ (2): Def, (2) $\Rightarrow$ (3): Bump fs;
+	Portmanteau 2 folgt aus 1 mit $P_n:=\P\circ X_n^{-1}$ und $P:=\P\circ X^{-1}$.
+	\item \define{CMT}: Für $h\colon(\S,d)\to(\S',d')$ $\B(\S)$-$\B(\S')$-messbar gilt ($D_h$ Menge der Unstetigkeitsstellen von $h$):
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			P_n\stackrelnew{w}{}{\longrightarrow} P\wedge P(D_h)=0
+			\implies P_n\circ h^{-1}\stackrelnew{w}{}{\longrightarrow} P\circ h^{-1}
+		\end{aligned}$
+		\item $\begin{aligned}
+			X_n\stackrel{\L}{\longrightarrow}X\text{ in }(\S,d)\wedge\P(X\in D_h)=0
+			\implies h(X_n)\stackrel{\L}{\longrightarrow} h(X)\text{ in }(\S',d')
+		\end{aligned}$ ("$h$ stetig in $X$")
+	\end{enumerate}
+	\item \textit{Beweis.} (2) folgt direkt aus (1) nach Definition.
+	Nutze Portmanteau 1, ((1) $\gdw$ (3)):\\
+	$\limsup\limits_{n\to\infty} \P_n\circ h^{-1}(F)
+		=\limsup\limits_{n\to\infty} \P_n\big(\underbrace{h^{-1}(F)}_{\subseteq \overline{h^{-1}(F)}}\big)
+		\leq \limsup\limits_{n\to\infty} \P_n\big(\underbrace{\overline{h^{-1}(F)}}_{\in\F(\S)}\big)
+		\overset{\text{Portm}}{\leq}
+		\P\big(\overline{h^{-1}(F)}\big)\\
+		\stackrel{(*)}{\leq}
+		\P\Big(h^{-1}(F)\cup D_h\Big)
+		\leq \P\Big(h^{-1}(F)\Big)+\underbrace{\P(D_h)}_{\overset{\Vor}{=}0}
+		=\P\circ h^{-1}(F)
+		$
+		Bei $(*)$: Sei $x\in\overline{h^{-1}(F)}$. Falls $x\in D_h$ trivial, $x\not\in D_h\leadsto h$ stetig in $x$.
+		Sei $(x_n)_{n\in\N}\subseteq\S\mit x_n\longrightarrow x$ (existiert nach Def des Abschlusses) $\leadsto h(x_n)=h(x)\overset{!}{\in} \overline{F}=F\leadsto x\in h^{-1}(F)~\square$   TF-Prinzip für schwache Konvergenz:
+	\item $\begin{aligned}
+			Q_n\stackrelnew{w}{}{\longrightarrow} Q
+			\Longleftrightarrow
+			\text{Jede TF }(Q_{n'})\subseteq(Q_n)_{n\in\N}\text{ enthält TF }(Q_{n''})\subseteq(Q_{n'}):Q_{n''}\stackrelnew{w}{}{\longrightarrow} Q
+		\end{aligned}$
+	\item $\begin{aligned}
+			X_n\stackrel{\L}{\longrightarrow} X\Longleftrightarrow\text{Jede TF }(X_{n'})\subseteq(X_n)_{n\in\N}\text{ enthält TF }(X_{n''})\subseteq(X_{n'}):X_{n''}\stackrel{\L}{\longrightarrow} X
+		\end{aligned}$
+	\item $X_n\stackrel{\P}{\longrightarrow} X\implies X_n\stackrel{\L}{\longrightarrow} X$; Umkehrung i.A. nicht, nur falls $X$ f.s. konstant
+	\item \define{Cramér}: Seien $(X_n)_{n\in\N},(Y_n)_{n\in\N}$ Folgen im separablen metrischen Raum $(\S,d)$, die \textbf{stochastisch äquivalent sind}, d.h. $d(X_n,Y_n)\stackrel{\P}{\longrightarrow}0$
+	Dann gilt:
+	$X_n\stackrel{\L}{\longrightarrow} X\Longleftrightarrow Y_n\stackrel{\L}{\longrightarrow} X$
+	\item \define{Cramér-Slutsky} (Koordinatenweise Konvergenz): $(\S,d),(\S',d')$ separable MR, $X_n\overset{\L}{\longrightarrow}X$ in $(\S,d)$, $Y_n\overset{\L}{\longrightarrow}Y$ in $(\S',d')$ und  $Y$ f.s. konstant. Dann gilt: $(X_n,Y_n)\overset{\L}{\longrightarrow}(X,Y)$ in $(\S\times\S',d\times d')$. (folgt aus Cramér)
+	\item $\begin{aligned}
+			\P_n\stackrelnew{\omega}{}{\longrightarrow} \P
+		\end{aligned}\gdw\begin{aligned}
+			\P_n(A_1\times A_2)\stackrel{n\to\infty}{\longrightarrow} \P(A_1\times A_2)~\forall A_i\in\B(\S_i)~\P_i\text{-randlos mit } i=1,2
+		\end{aligned}$ für $(\S,d)$ separabel
+	\item $\big(\P_n^{(1)}\otimes\P_n^{(2)}\big)\stackrelnew{w}{}{\longrightarrow}\P^{(1)}\otimes\P^{(2)}\Longleftrightarrow
+	\begin{aligned}
+			\P_n^{(1)}\stackrelnew{w}{}{\longrightarrow}\P^{(1)}\wedge
+			\P_n^{(2)}\stackrelnew{w}{}{\longrightarrow}\P^{(2)}
+		\end{aligned}$ im separablem Produktraum $\S=\S_1\times\S_2$
+	\item $X_n\stackrel{\L}{\longrightarrow} X\text{ in }\S_1\wedge Y_n\stackrel{\L}{\longrightarrow} Y\text{ in }\S_2
+		\Longleftrightarrow (X_n,Y_n)\stackrel{\L}{\longrightarrow}(X,Y)\text{ in }\S_1\times\S_2$ für $\S=\S_1\times\S_2$ separabel, $X_n$ und $Y_n$ sind unabhängig für alle $n\in\N$; $X$ und $Y$ sind unabhängig
+	\item Sei $(X_n)_{n\in\N}$ iid mit $\E[X_i]=:\mu$ und $\sigma^2:=\Var(X_i)\in(0,\infty)$.
+	Dann (SGGZ + ZGWS + CMT): $\sqrt{n}\cdot(\overline{X}-\mu)\overset{\L}{\longrightarrow}\Nor(0,\sigma^2)$ mit $\overline{X}$ emp. Erwartung;
+	$\big(\overline{X}_n,S_n^2\big)\stackrel{n\to\infty}{\longrightarrow}\big(\mu,\sigma^2\big)\text{ in }\R^2$ f.s.
+	\item Also: $(\overline{X}_n)_{n\in\N}$ und $(S_n^2)_{n\in\N}$ \textbf{asymptotisch normal}, d.h.
+	$\sqrt{n}\cdot\big(\overline{X}_n-\mu\big)\stackrel{\L}{\longrightarrow}\mathcal{N}(0,\sigma^2),\qquad
+	\sqrt{n}\cdot\big(S_n^2-\sigma^2\big)\stackrel{\L}{\longrightarrow}\mathcal{N}(0,\tau^2)$
+\end{itemize}
+
+	\section{Verteilungskonvergenz in \texorpdfstring{$\R^d$}{Rd}}
+	\define{CF} $\varphi_X(t):=\E[\exp(\ii\cdot\langle t,X\rangle)]$; Eindeutigkeitssatz: $X\overset{\L}{=}Y\gdw\varphi_X=\varphi_Y$;\\
+	Stetigkeitssatz (SSS): $X_n\overset{\L}{\longrightarrow}X$ in $\R^d\gdw\forall t\in\R^d:\varphi_{X_n}(t)\overset{n\to\infty}{\longrightarrow}\varphi_X(t)$\\
+	\define{Cramér-Wold-Device}: $X_n\overset{\L}{\longrightarrow}X$ in $\R^d\Longleftrightarrow\langle t,X_n\rangle\overset{\L}{\longrightarrow}\langle t,X\rangle$ in $\R$ für alle $t\in\R^d$\\
+	\textit{Beweis.} "(1) $\Rightarrow$ (2)" folgt aus CMT, da $x\mapsto\langle x,t\rangle$ stetig.\\
+	"(2) $\Rightarrow$ (1)":
+	$	\varphi_{X_n}(t)
+		\stackeq{\text{Def}}\E\Big[\exp\big(i\cdot\langle t,X_n\rangle\cdot 1\big)\Big]
+		\stackeq{\text{Def}}\varphi_{\langle t,X_n\rangle}(1)
+		\stackrelnew{\text{SSS+(2)}}{n\to\infty}{\longrightarrow}\underbrace{\varphi_{\langle t,X\rangle}(1)}_{=\varphi_X(t)}
+		\leadsto\varphi_{X_n}\stackrel{n\to\infty}{\longrightarrow}\varphi_X
+		\stackrel{\text{SSS}}{\implies}(1)$
+
+	\section{Der multivariate zentrale Grenzwertsatz (ZGWS) für Dreiecksschemata}
+	\begin{itemize}
+		\item \define{$\triangle$-Schema} ist $\lbrace X_{n,k}:1\leq k\leq n,n\in\N\rbrace$ mit $X_{n,k}$ unabhängige reelle ZV.
+		\item \define{Lindeberg-ZGWS}: $\triangle$ mit $\E[X_{n,k}]=0$, $\sigma_{n,k}^2:=\E[X_{n,k}^2]<\infty$ und $s_n^2:=\sum\limits_{k=1}^n\sigma_{n,k}^2=\Var\Big(\sum\limits_{k=1}^n X_{n,k}\Big)$ und \define{LB}
+		$\sum\limits_{k=1}^n\E\Big[X_{n,k}^2\cdot\indi_{\lbrace|X_{n,k}|>\varepsilon\rbrace}\Big]\overset{n\to\infty}{\longrightarrow}0~\forall\varepsilon>0$ und $s_n^2\overset{n\to\infty}{\longrightarrow}\sigma^2\in(0,\infty)$ Dann: $\sum\limits_{k=1}^n X_{n,k}\overset{\L}{\longrightarrow}\Nor(0,\sigma^2)$
+		\item multivariater Fall: Sei $\lbrace X_{n,k}:k\leq n,n\in\N\big\rbrace$ ein $\Delta$-Schema von ZV
+		$X_{n,k}=\left(X_{n,k}^{(1)},\ldots,X_{n,k}^{(d)}\right)\text{ in }\R^d$
+		Es gelte die \textbf{zeilenweise Unabhängigkeit}:
+		$X_{n,1},\ldots,X_{n,n}\text{ sind unabhängig}\qquad\forall n\in\N$
+		(Also die Vektoren seien unabhängig. Daraus folgt nicht, dass deren Komponenten unabhängig sind.)
+		Gelte auch
+		$\E\big[X_{n,k}\big]:=\left(\E\left[X_{n,k}^{(j)}\right]\right)_{1\leq j\leq d}=0:=(0,\ldots,0)
+		~\forall k,n\in\N$ und
+		$\E\left[\left(X_{n,k}^{(j)}\right)\right]<\infty
+		~\forall 1\leq j\leq d,\forall n,k\in\N$
+		(Kovarianzmatrix?)
+		Gelte LB
+		$\sum\limits_{k=1}^n\E\Big[\Vert X_{n,k}\Vert^2\cdot\indi_{\big\lbrace\Vert X_{n,k}\Vert>\varepsilon\big\rbrace}\Big]\stackrel{n\to\infty}{\longrightarrow}0\qquad\forall\varepsilon>0$
+		und Normierungsbedingung
+		$\sum\limits_{k=1}^n\Cov\left(X_{n,k}\right)\stackrelnew{\text{komponentenweise}}{n\to\infty}{\longrightarrow}\Gamma\mit\Gamma\in\R^{d\times d}\text{ positiv definit}
+		$
+		Dann MZGWS:
+		$\sum\limits_{k=1}^n X_{n,k}\stackrel{\L}{\longrightarrow}\mathcal{N}_d(0,\Gamma)\text{ in }\R^d$
+		\item Koro ($d=1$ ist klassischer ZGWS):
+		Sei $(X_i)_{i\in\N}$ iid in $\R^d$ mit
+		$\E\Big[(X_1^{(j)})^2\Big]<\infty~\forall 1\leq j\leq d
+		;\\
+		\mu:=\E\big[X_1\big]=\left(\E\left(X_1^{(1)}\right),\ldots,\E\left(X_1^{(d)}\right)\right)\in\R^d,~
+		\Gamma:=\Cov(X_1)
+		=\left(\Cov\left(X_1^{(i)},X_1^{(j)}\right)\right)_{i,j=1}^d\\
+		=\left(\E\left[\left(X_1^{(i)}-\mu_i\right)\cdot\left(X_1^{(j)}-\mu_j\right)\right]\right)_{i,j=1}^d\text{ positiv definit}
+		$
+		Dann:
+		$
+		\frac{1}{\sqrt{n}}\cdot\sum\limits_{i=1}^n(X_i-\mu)\stackrel{\L}{\longrightarrow}\mathcal{N}_d(0,\Gamma)
+		$
+	\end{itemize}
+
+	\section{Verteilungskonvergenz im Raum stetiger Funktionen}
+	\begin{itemize}
+		\item $\B(C)
+			=\sigma\Big(\pi_t:t\in I\Big)=\sigma\Big(\pi_T:T\subseteq I,T\text{ endlich}\Big)
+			=\sigma\Big(\big\lbrace \pi_t^{-1}(B):t\in I,B\in\B(\R)\big\rbrace\Big)$\\
+		"kleinste $\sigma$-Algebra, sodass alle $\pi_t$ messbar sind"
+		\item $X\colon I\to\R,\qquad t\mapsto X(t,\omega)$ heißt \define{Pfad} für jedes $\omega\in\Omega$
+		\item $X\colon\Omega\to\R,\qquad\omega\mapsto X(t,\omega)$ ist eine einzelne ZV für jedes $t\in I$
+		\item $X\colon\Omega\to (I\to\R),\qquad \omega\mapsto(t\mapsto X(t,\omega))$ heißt \define{Pfadabbildung}
+		\item Falls alle Pfade stetig (also $X$ ein \define{stetiger stochastischer Prozess} ist) sind, gilt $I\to\R=C(I)$.
+		\item Man kann einen (stetigen) stochastischen Prozess mit seiner Pfadabbildung identifizieren:
+		$\big\lbrace X(t)\mid t\in I, X(t)\colon\Omega\to\R\big\rbrace
+			\cong X\colon\Omega\to C(I)
+		$
+		\item $	X\text{ ist }A\text{-}\B(C)\text{-messbar}\Longleftrightarrow\forall t\in I:\pi_t\circ X\text { ist }\A\text{-}\B(R)\text{-messbar}$;
+		Alle Pfadabbildungen $X_t:\Omega\to C(I)$ eines stetigen SP sind $\A$-$\B(S)$-messbar.
+		\item Maße $P=Q\gdw\forall T\subseteq I$ endlich$:P\circ\pi_T^{-1}=Q\circ\pi_T^{-1}$;
+		$X\overset{\L}{=}Y\gdw\pi_T(X)\overset{\L}{=}\pi_T(Y)$
+		\item \define{endlich dim. Randverteilungen (fidis)}: $\pi_T\circ X:\Omega\to\R^d$ ist Zufallsvektor, genauer:\\
+		$\pi_T\circ X\colon\Omega\to C\to\R_k,~
+		\pi_T\big(X(\omega)\big)=\big(X(\omega)(t_1),\ldots,X(\omega)(t_k)\big)\forall\omega\in\Omega,\forall T=\big\lbrace t_1,\ldots,t_k\rbrace\subseteq I$
+		\item \define{Stetigkeits- / Oszillationsmodul}
+	$\omega(f,\delta):=\sup\limits\lbrace |f(s)-f(t)|:s,t\in I\mit |s-t|\leq\delta\rbrace$;
+	$f\in C(I)\gdw\omega(f,\delta)\overset{\delta\to0}{\longrightarrow}0$
+		\item $X_n\overset{\fd}{\longrightarrow}X:\gdw\pi_T\circ X_n\overset{\L}{\longrightarrow}\pi_T\circ X~\forall T\subseteq I$ endlich \define{Konvergenz der fidis}
+		\item $X_n\overset{\fd}{\longrightarrow}X$ und
+	$\lim\limits_{k\to\infty}\limsup\limits_{n\to\infty}\P\Big(\omega\big(X_n,\delta_k\big)>\varepsilon\Big)=0~\forall\varepsilon>0$
+		für eine Folge $(\delta_k)_{k\in\N}\subseteq(0,\infty)\mit\delta_k\downarrow0$ Dann gilt:
+	$X_n\stackrel{\L}{\longrightarrow}X\text{ in }(C,d)$
+		\item \define{Momentenkriterium von Kolmo}: $X_n\stackrelnew{\text{fd}}{}{\longrightarrow} X$ und $\exists\gamma>0,\exists\alpha>1$ und $F\colon I\to\R$ stetig + monoton wachsende mit
+		$\E\Big[|X_n(s)-X_n(t)|^\gamma\Big]\leq\big(F(s)-F(t)\big)^\alpha~\forall s>t,s,t\in I$ Dann:
+	$X_n\stackrel{\L}{\longrightarrow} X\text{ in }\big(C(I),d\big)$
+		\item Konvergenz von SP $\Leftarrow$ Konvergenz der fidis + "Straffheit" (Momentenkriterium); bei konvexen SP reicht Konvergenz der fidis (Straffheit automatisch erfüllt)
+		\item \define{BB}: $I=[0,b]$ und $B:=\big\lbrace B(t):=B(t,\omega)\big\rbrace$ stetiger SP mit $B(0)=B(0,\omega)=0$, unabhängige Zuwächse:
+		$B(t_i)-B(t_{i-1}),~1\leq i\leq r~\forall~ 0=:t_0\leq t_1<\ldots<t_r\leq b$;
+		Normalverteile Zuwächse $0\leq s<t\leq b\implies B(t)-B(s)\sim\mathcal{N}(0,t-s)$; BB existiert nach Lévy; Verteilung einer BB eindeutig bestimmt
+		\item \define{Donsker}: Sei $(\xi_i)_{i\in\N}$ iid mit $\E[\xi_1]=0$ und $\Var(\xi_1)=1$, $S_k:=\sum\limits_{i=1}^k\xi_i$ (RW!) und $X_n(t)$ der Polygonzug durch die Punkte $\big(\frac{k}{n},\frac{S_k}{\sqrt{n}}\big)_{0\leq k\leq b\cdot n}$ Dann: $X_n\overset{\L}{\longrightarrow}$ BB in $(C([0,b]),d)$. (folgt aus Mom. von Kolmo);\\
+		Standardisierung $\hat{\xi}:=\frac{\xi_i-\mu}{\sigma}$ kann helfen; BB hängt \betone{nicht} von Verteilung ab
+		\item \define{Change-Point-Problem:} $X_{1,n},\ldots,X_{n,n},n\in\N$ unabhängig mit
+$\left\lbrace\begin{array}{cl}
+		X_{i,n}\text{ i.i.d.}\sim(\mu,\sigma^2), &\falls 1\leq i\leq\tau_n\\
+		X_{i,n}\text{ i.i.d.}\sim(\nu,\tau^2), &\falls \tau_n< i\leq n
+	\end{array}\right.$
+wobei $\tau_n\in\lbrace1,\ldots,n\rbrace$ der \ul{unbekannte} \define{Change-point} "$\triangle$-Schema, damit change-point mitwandern kann"
+		\item \define{Brownsche Brücke} ist SP $B_0(t):=B(t)-t\cdot B(1)\qquad\forall t\in[0,1]$ für BB auf $[0,1]$ ($B_0(0)=1$ und $B_0(1)=0$)
+		\item Der bisherige Fall $C(I)$ mit $I=[a,b]$ deckt $C(\R)$ nicht ab.
+	$C(\R)$ ist vollständiger separabler MR; $\B_d(C(\R))=\sigma(\pi_t:t\in\R)=\sigma(\pi_T:T\subseteq\R$ endlich) (analog);
+	$X$ $\A$-$\B_d(C)$-messbar $\gdw\forall t\in\R:\pi_t\circ X$ $\A$-$\B(\R)$-messbar
+		\item Für $X,Y$ ZV in $(C(\R),d)$ gilt: $X\overset{\L}{=}Y\gdw\pi_T\circ X\overset{\L}{=}\pi_T\circ Y\gdw\big(X(t_1),\ldots,X(t_k)\big)\stackeq{\L}\big(Y(t_1),\ldots,Y(t_k)\big)~\forall t_j$
+		\item $X_n\stackrel{\L}{\longrightarrow}X\text{ in }\big(C(\R),d\big)
+		\Longleftrightarrow\forall j\in\N:
+		X_n|_{I_j}\stackrel{\L}{\longrightarrow} X|_{I_j}\text{ in }\big(C(I_j),d_j\big)\mit I_j:=[-j,j]$
+	\end{itemize}
+
+	\section{Argmin-Theoreme in \texorpdfstring{$C(\R)$}{C(R)}} %8
+	\begin{itemize}
+		\item Wann überträgt sich die Konvergenz (f.s. oder in Verteilung) von stetigen stochastischen Prozessen auf deren Minimalstellen?
+		\item Für $f\in C(\R)$: $A(f):=\argmin(f):=\big\lbrace t\in\R:f(t)=\inf\limits_{s\in\R}f(s)\big\rbrace$ Menge aller Min-Stellen;\\
+		$\tau\in A(f)$ \define{wohl-separiert} $:\gdw\inf\lbrace f(t):|t-\tau|\geq\varepsilon\rbrace>f(\tau)~\forall 0<\varepsilon\in\Q\Rightarrow\tau$ eindeutig (siehe Bild)
+		\item 8.3: $f,f_n,n\in\N$ aus $C(\R)$, $\tau_n\in A(f_n)\neq\emptyset~\forall n_0\in\N$ und $\tau\in A(f)$ wohlsepariert und $\Vert f_n-f\Vert_\infty\overset{n\to\infty}{\longrightarrow}0$ Dann: $\tau_n\overset{n\to\infty}{\longrightarrow}\tau$; lässt sich übertragen auf offene und kompakte Intervalle (da muss $\tau$ nur eindeutig sein)
+		\item 8.4: $f,f_n,n\in\N$ aus $C([a,b])$. Dann: $A(f_n)\neq\emptyset$ (da kompakt) und:
+		Falls $\lbrace\tau\rbrace=A(f)$ und $\Vert f_n-f\Vert_\infty\overset{n\to\infty}{\longrightarrow}0$ so gilt für \underline{jede} Auswahl $\tau_n\in A(f_n):\tau_n\overset{n\to\infty}{\longrightarrow}\tau$
+		\item 8.5: $M,M_n,n\in\N$ SP mit Pfaden in $C(\R)$ (d.h. $M\colon \R\to\R$ stetig), $\tau(\omega)\in A\big(M(\cdot,\omega)\big)$%\overset{\Def}{=}			\set{t\in R:\inf\limits_{s\in\R}M(s,\omega)=M(t,\omega)}$
+		f.s. für ZV $\tau\colon\Omega\to\R$; $\inf\limits\big\lbrace M(t):|t-\tau|\geq\varepsilon\big\rbrace>M(\tau)\text{ f.s.}\qquad\forall 0<\varepsilon\in\Q$; $\norm[\big]{M_n-M}_\infty\overset{n\to\infty}{\longrightarrow}0$ f.s.;
+	$\forall(\tau_n)_{n\in\N}$ von ZV mit $\tau_n\in A(M_n)$ f.s.:
+	Dann: $\tau_n\overset{n\to\infty}{\longrightarrow}\tau$ f.s.
+	\textit{Beweis.} Abzählbare Schnitte von 4 Einsmengen + 8.3 $\square$
+		\item 8.6: $M$,$M_n$, $n\in\N$ SP mit Pfaden in $C(I)$, $I$ kompakt, $\exists\tau$ ZV eindeutige Minstelle f.s.; $\norm{M_n-M}_\infty$ f.s.; $(\tau_n)_{n\in\N}$ mit $\tau_n\in A(M_n)$ f.s beliebig.
+		Dann: $\tau_n\overset{n\to\infty}{\longrightarrow}\tau$ (folgt aus 8.4)
+		\item 8.7: Exponential-Familie, $\Theta\subseteq\R$ kompakt. Dann MLE stark konsistent (nach 8.6), also $\hat{\theta}_n\overset{n\to\infty}{\longrightarrow}\theta_0$ f.s.
+		\item $(\sigma_n)_{n\in\N}$ \define{stochastisch beschränkt} $:\gdw\lim\limits_{t\to\infty}\limsup\limits_{n\to\infty}\P(|\sigma_n|>j)=0$
+		\item CPP: Schätzer $\hat{\tau}_n:=\argmax\limits_{0\leq k\leq n}|S_k|$ mit $S_k:=\sum\limits_{i=1}^k(X_i-\overline{X}_n)$ ($S_n=0$)
+	\end{itemize}
+
+	\section{Verteilungskonvergenz im Raum konvexer Funktionen}
+	\begin{itemize}
+		\item $O\subseteq\R$ \define{konvex} $:\gdw x,y\in O\Rightarrow\forall\lambda\in(0,1):\lambda x+(1-\lambda)y\in O$ (Intervall);
+		$f\colon O\to\R$ \define{konvex} $:\gdw f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda) f(y)~\forall x,y\in O,\lambda\in(0,1)$;
+		$C_c(O):=\set{f\colon O\to\R:f\text{ konvex}}$ (konvex $\Rightarrow$ stetig);
+		SP $X=\lbrace X(t):t\in O)$ mit Pfaden in $C_c(O)$ heißt \define{konvex}
+		\item $C_c(O)$ separabel;
+		$\B_d\big(C_c(O)\big)=\sigma\big(\pi_t:t\in O\big)=\sigma\big(\pi_T:T\subseteq O\text{ endlich}\big)$
+		\item $X\overset{\L}{=}Y\gdw\pi_T\circ X=\pi_T\circ Y$ (fidis gleich)
+		\item $f_n$ konvex, $f\colon O\to\R$, $D\subseteq O$ dicht, $f_n(x)\overset{n\to\infty}{\longrightarrow}f(x)~\forall x\in D$ Dann: Konvergenz $\forall x\in O$, $f$ konvex und $\norm{f_n-f}_\infty\overset{n\to\infty}{\longrightarrow}0~\forall K\in O$ kompakt
+		\item  $X_n,n\in\N$ konvexe SP und sei $X$ stetiger SP auf $\R$.
+		Dann: $X_n\overset{\text{fd}}{\longrightarrow}X\gdw X_n\overset{\L}{\longrightarrow} X\text{ in }\big(C(\R),d\big)\Rightarrow X$ konvexer SP
+		\textit{Beweis.}
+		(1) $\Rightarrow$ (2): Portmanteau; (2) $\Rightarrow$ (1): CMT $\square$
+		\item \define{Subspace}: $Z_n\overset{\L}{\longrightarrow} Z\text{ in }(\S,d)
+		\Longleftrightarrow
+		Z_n\overset{\L}{\longrightarrow} Z\text{ in }(U,d)$
+		\item Koro: $X_n$ konvexer SP: $X_n\overset{\text{fd}}{\longrightarrow}X\implies
+		X_n\overset{\L}{\longrightarrow} X\text{ in }\big(C_c(\R),d\big)$ (folgt aus Subspace-Lemma + vorherigem)
+	\end{itemize}
+
+	\section{Argmin-Theoreme in \texorpdfstring{$C_c(\R)$}{CcR}}
+	\begin{itemize}
+		\item 10.2: Sei $D\subseteq\R^d$ dicht in $\R^d$ (z.B. $D=\Q^d$) und seien $f,f_n,n\in\N$ konvexe Funktionen auf $\R^d$, wobei $f$ eine eindeutige Minimalstelle $\tau$ besitze ($A(f)=\lbrace\tau\rbrace$).
+		Seien $\tau_n\in A(f_n)\neq\emptyset$ $\forall n\geq N_0\in\N$.
+		Dann: $\Big(f_n(t)\overset{n\to\infty}{\longrightarrow} f(t)\qquad\forall t\in D\Big)\implies \tau_n\overset{n\to\infty}{\longrightarrow}\tau$
+		\item 10.3: Seien $M,M_n,n\in\N$ konvexe SP auf $\R^d$ mit
+		$A(M)=\lbrace\tau\rbrace$ f.s. für eine Zufallsvariable $\tau$;
+		$M_n(t)\overset{n\to\infty}{\longrightarrow} M(t)~\P\text{-f.s.}~\forall t\in\R^d$; Seien $\tau_n$ ZV mit $\tau_n\in A(M_n)$ f.s. $\forall n\in\N$.
+	Dann: $\tau_n\overset{n\to\infty}{\longrightarrow}\tau~\P\text{-f.s.}\text{ in }\R^d$ (folgt aus 10.2 über Einsmengen)
+		\item 10.4: $Z,Z_n,n\in\N$ konvexe SP auf $\R$ mit $A(Z)=\lbrace\sigma\rbrace$ f.s. für eine ZV $\sigma$ und $Z_n\overset{\fd}{\longrightarrow}Z$.
+		Dann gilt für jede Auswahl $\sigma_n\in A(Z_n)$: $\argmin(Z_n)=\sigma_n\overset{\L}{\longrightarrow}\sigma$
+		\item Sei $U_n,n\in\N$ reelle ZV mit $\E[U_n]\overset{n\to\infty}{\longrightarrow}\mu$ und $\Var(U_n)\overset{n\to\infty}{\longrightarrow}0$. Dann: $U_n\overset{\P}{\longrightarrow}\mu$.
+	\end{itemize}
+
+	\section{Rekapitulation des Einführungskapitels}
+	Der Median ist $m:=\argmin\limits_{t\in\R}Y(t)$, $Y\in C(\R)$, $Y(t):=\E[|X-t|]\overset{\text{Trafo}}{=}\int_\R|x-t|~(F\d x)$, Schätzer\\ $Y_n(t):=\int_\R|x-t|~(F_n\d x)\overset{\text{emp}}=\sum\limits_{i=1}^n|X_i-t|\underset{\text{SGGZ}}{\overset{n\to\infty}{\longrightarrow}}\E[|X_1-t|]~\forall t\in\R$\\
+	$M:=Y$ und $M_n:=Y_n$ lassen sich als SP auffassen, sind sogar konvex. Aus Argmin-Theorem 10.3 folgt \underline{sofort} die Konvergenz des $\argmin$'s, ohne weitere Voraussetzungen an die starke Konsistenz des Medians (abgesehen Eindeutigkeit der Minimalstelle): $\hat{m}_n\overset{n\to\infty}{\longrightarrow} m$\\
+	Um die Verteilungskonvergenz des Medians zu zeigen, betrachte den \define{reskalierten Prozess}\\ $Z_n(t):=a_n\cdot\sqrt{n}\cdot\Big(M_n\big(m+\frac{t}{a_n}\big)-M_n(m)\Big)$.
+	Dann gilt: $a_n(\hat{m}_n-m)=\argmin\limits_{t\in\R}Z_n(t)$ und Konvergenz der fidis $Z_n\overset{\fd}{\longrightarrow}Z$
+
+	\input{zusammenfassendeTabelle}
+
+\end{document}

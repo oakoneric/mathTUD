@@ -1,0 +1,166 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\section{Argmin-Theoreme in \texorpdfstring{$C_c(ℝ)$}{C\_c(R)}} %10
+
+\begin{lemma}\label{lemma10.1}
+	Seien $f\colonℝ^d⟶ℝ$ konvex, $g\colonℝ^d⟶ℝ$ stetig, $A(f)\neq∅$, $A(g)=\set{σ}$.\\
+	Für $ε>0$ seien
+	\begin{align*}
+		\abschluss{B}(σ,ε)&:=\set[\big]{ t∈ℝ^d:\abs{t-σ}≤ε}\\
+		% CHECKED: '\abschluss' used.
+		m(ε)&:=\inf\set[\big]{ g(t):\abs{t-σ}=ε}\\
+		b(ε) &:= \frac{1}{2} \klammern[\big]{m(ε)-g(σ)}
+	\end{align*}
+	Dann gilt:
+	\begin{enumerate}[label=(\arabic*)]
+		\item \label{it:10.1bpos} $\begin{aligned}
+			%∃ε_0>0:∀ε∈(0,ε_0]:b(ε)>0 %wurde gestrichen
+			∀ε>0:b(ε)>0
+		\end{aligned}$
+		\item \label{it:10.1argminfclose} Für alle $ε>0$ gilt:
+			\begin{align*}
+				\norm{ f-g}_{\abschluss{B}(σ,ε)}<b(ε)
+				% CHECKED: '\abschluss' used.
+				⇒\abs{τ-σ}≤ε\qquad∀τ∈ A(f)
+			\end{align*}
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}~
+	\paragraph{Zeige \ref{it:10.1bpos}:}
+	Sei $ε>0$ und angenommen $b(ε)=0$.
+	Dann:
+	\begin{align*}
+		g(σ)=m(ε)=g(t_ε)
+		\text{ für ein }t_ε∈
+		\set[\big]{ t∈ℝ^d:\abs{t-σ}=ε}=:S(σ,ε),
+	\end{align*}
+	da $S(σ,ε)$ kompakt und $g$ stetig (stetige Funktionen nehmen auf kompakten Mengen ihr Infimum an!).
+	Somit ist $t_ε∈ A(g) = \set{σ}$ und $t_ε=σ$ im Widerspruch zu $t_ε∈ S(σ,ε)$.
+	\paragraph{Zeige \ref{it:10.1argminfclose}:}
+	Sei $t \not∈ \abschluss{B}(σ,ε)$ und $λ:=\frac{ε}{\norm{t - σ}} ∈ \intervallO{0}{1}$.
+	% CHECKED: '\abschluss' used.
+	Für
+	\begin{align*}
+		s := (1 - λ)σ + λ t
+		= σ + λ (t - σ)
+	\end{align*}
+	folgt
+	\begin{align}\label{eqProofLemma10.1Stern}\tag{$\ast$}
+		\norm{s - σ} = λ \norm{t - σ}
+		=ε
+	\end{align}
+	Da $f$ konvex, folgt
+	\begin{align}\nonumber
+		f(s)
+		&≤ (1 - λ) f(σ) + λ f(t) \\ \nonumber
+		&= f(σ) + λ \klammern[\big]{f(t) - f(σ)} \\ \nonumber
+		&= λ \klammern[\big]{f(t) - f(σ)} \\ \nonumber
+		&≥ f(s) - f(σ) \\ \nonumber
+		&= g(s) - g(σ) +
+		\underbrace{f(s) - g(s)}_{
+			\overset{s ∈ \abschluss{B}(σ,ε)}{≥} - \norm{f - g}_{\abschluss{B}(σ,ε)}
+			% CHECKED: '\abschluss' used.
+		} - \underbrace{\klammern[\big]{f(σ) - g(σ)}}_{
+			≤\norm{f - g}_{\abschluss{B}(σ,ε)}
+			% CHECKED: '\abschluss' used.
+		} \\ \nonumber
+		&≥ \underbrace{\underbrace{g(s)}_{
+			\overset{s ∈ S(σ,ε)}{≥} m(ε)
+		} - g(σ)}_{
+			≥ m(ε) - g(σ) = 2 b(ε)
+		} - 2 \norm{f - g}_{\abschluss{B}(σ,ε)} \\ \nonumber
+		% CHECKED: '\abschluss' used.
+		&≥ 2 \underbrace{\klammern{b(ε) - \norm{f - f}_{\abschluss{B}(σ,ε)}}}_{
+		% CHECKED: '\abschluss' used.
+			>0\text{ nach Annahme}
+		} \\
+		&⇒ f(t) > f(σ) \qquad ∀ t \not∈ \abschluss{B}(σ,ε)
+		% CHECKED: '\abschluss' used.
+		\label{eqProofLemma10.1Plus}\tag{+}
+	\end{align}
+	Somit folgt $τ∈\abschluss{B}(σ,ε)$, da sonst wegen \eqref{eqProofLemma10.1Plus} folgen würde, dass $f(τ)>f(σ)$.
+	% CHECKED: '\abschluss' used.
+	Dies ist aber ein Widerspruch, wann immer $τ∈ A(f)$.
+	Schließlich folgt $\abs{τ-σ}≤ε$.
+\end{proof}
+
+%Ferger: "Das schafft nicht einmal bis Chuck Norris."
+
+Lemma \ref{lemma10.1} geht zurück auf \cite{hjort2011asymptotics}.% Hjorth und Pollard (1993), Preprint.
+Wir erhalten folgendes Argmin-Theorem für konvexe Funktionen:
+
+\begin{satz}\label{satz10.2}
+	Sei $D⊆ℝ^d$ dicht in $ℝ^d$ (z.\,B.\ $D=ℚ^d$) und seien $f,f_n,n∈ℕ$ konvexe Funktionen auf $ℝ^d$, wobei $f$ eine eindeutige Minimalstelle $τ$ besitze ($A(f)=\set{τ}$).
+	Seien $τ_n∈ A(f_n)\neq∅$ $∀ n≥ N_0∈ℕ$.
+	Dann gilt:
+	\begin{align}\label{eqSatz10.2Stern}\tag{$\ast$}
+		\klammern{f_n(t) \ntoinf f(t) \qquad ∀ t ∈ D } ⇒ τ_n\ntoinf τ
+	\end{align}
+\end{satz}
+
+\begin{proof}
+	Konvexe Funktionen sind immer stetig, also ist $f$ stetig.
+	Lemma \ref{lemma10.1} mit $f\hat{=}f_n$, $g\hat{=}f$ liefert:
+	\begin{align*}
+		b(ε)>0\qquad∀ε>0
+	\end{align*}
+	Gemäß Theorem \ref{theorem9.8} folgt aus \eqref{eqSatz10.2Stern}:
+	\begin{align*}
+		\norm[\big]{ f_n-f}_{\abschluss{B}(τ,ε)}\ntoinf 0
+		% CHECKED: '\abschluss' used.
+	\end{align*}
+	(weil $\abschluss{B}(τ,ε)$ kompakt.)
+	% CHECKED: '\abschluss' used.
+	Somit folgt:
+	\begin{align*}
+		&∀ε>0:∃ n_0=n_0(ε):∀ n≥ n_0(ε):
+		\underbrace{\norm[\big]{ f_n-f}_{\abschluss{B}(τ,ε)}<b(ε)}_{\overset{\ref{lemma10.1} \ref{it:10.1argminfclose}}{⇒}\abs{τ_n-τ}≤ε}\\
+		% CHECKED: '\abschluss' used.
+		&⇒ τ_n\ntoinf τ
+	\end{align*}
+\end{proof}
+
+Satz \ref{satz10.2} liefert Argmin-Theorem für konvexe stochastische Prozesse bzgl. fast sicherer Konvergenz.
+
+\begin{satz}\label{satz10.3}
+	Seien $M,M_n,n∈ℕ$ konvexe stochastische Prozesse auf $ℝ^d$ über $(Ω,\A,\P)$.
+	Es gelte:
+	\begin{enumerate}[label=(\arabic*)]
+		\item $\begin{aligned}
+			A(M)=\set{τ}
+		\end{aligned}$ f.\,s.\ für eine Zufallsvariable $τ$.
+		% CHECKED: 'f.s.' used.
+		\item $\begin{aligned}
+			M_n(t)\ntoinf  M(t)~\P\text{-f.\,s.}\qquad∀ t∈ℝ^d
+			% CHECKED: 'f.s.' used.
+		\end{aligned}$
+	\end{enumerate}
+	Seien $τ_n$ Zufallsvariablen mit $τ_n ∈ A(M_n)$ f.\,s.\ $∀ n ∈ ℕ$.
+	Dann gilt:
+	\begin{align*}
+		τ_n \ntoinf τ~~\P\text{-f.\,s.\ in } ℝ^d
+	\end{align*}
+\end{satz}
+
+\begin{proof}
+	Seien
+	\begin{align*}
+		Ω_1&:=\set[\big]{ A(M)=τ}\\
+		Ω_2&:=\bigcap_{t∈ℚ^d}\set[\Big]{ M_n\ntoinf M(t)}\\
+		Ω_3&:=\bigcap_{n∈ℕ}\set[\big]{τ_n∈ A(M_n)}\\
+		Ω_0&:=Ω_1∩Ω_2∩Ω_3
+	\end{align*}
+	Aus den Voraussetzungen folgt, dass $Ω_0$ eine Einsmenge ist (abzählbare Schnitte von Einsmengen sind Einsmengen), d.\,h.\ $\P(Ω_0)=1$.
+	Aus Satz \ref{satz10.2} folgt (mit $f\hat{=}M_n(ω,·)$, $f\hat{=}M(ω,·)$, $τ\hat{=}τ(ω)$, $τ_n(ω)\hat{=}τ_n$):
+	\begin{align*}
+		Ω_0⊆\set[\Big]{τ_n\ntoinf τ}\\
+		⇒ \P\klammern[\Big]{τ\ntoinf τ}=1
+		& \qedhere
+	\end{align*}
+\end{proof}
+

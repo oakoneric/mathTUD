@@ -1,0 +1,226 @@
+% !TEX root = MSTAT19.tex
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\subsection{Argmin-Theoreme für Verteilungskonvergenz} % 8.2
+Nächstes Ziel: Unter welchen Bedingungen gilt
+\begin{align*}
+	Z_n \distrto Z \text{ in } \klammern[\big]{C(ℝ),d}
+	⇒\argmin_{t∈ℝ}Z_n(t)\distrto \argmin_{t∈ℝ}Z(t) \text{ in } ℝ?
+\end{align*}
+
+Folgender Satz gibt Antwort.
+
+\begin{satz}\label{satz8.8} % in WiSe 2018/19: 8.9
+	Seien $Z, Z_n$, $n ∈ ℕ$ stochastische Prozesse mit Pfaden in $C(ℝ)$ über $(Ω, \A, P)$. %,
+	%wobei $A(Z)$
+	%\footnote{$A(Z)$ ist eine \undefine{random closed set (RCS)}}
+	%und $A(Z_n)$ für alle $n∈ℕ$ nichtleer sind.
+	Ferner seien $σ_n$ reelle Zufallsvariablen mit $σ_n ∈ A(Z_n)$ f.\,s.\ für alle $n ∈ ℕ$.
+	($σ_n = $ \define{measurable selection})
+	Dann gilt: Falls
+	\begin{align}\label{eqSatz8.8_1}\tag{1}
+		Z_n\distrto  Z\text{ in }\klammern[\big]{C(ℝ),d}
+	\end{align}
+	so folgt
+	\begin{align}\label{eqSatz8.8_a}\tag{a}
+		\limsup_{n⟶∞} \P\argu[\big]{σ_n ∈ K} ≤ μ^\ast(K)
+		\qquad ∀ K ⊆ ℝ \text{ kompakt}
+	\end{align}
+	wobei $μ^\ast$
+	\footnote{$μ^\ast$ ist die \undefine{Kapazitätsfunktional von $A(Z)$} und ist eine \undefine{Choquet-Kapazität}.
+	Beachte, dass $μ^\ast$ i.\,d.\,R.\ \emph{kein} W-Maß ist.}
+	die sogenannte \define{hitting-probability} ist:
+	\begin{align*}
+		% μ^\ast:\mathcal{K}⟶[0,1],\qquad
+		μ^\ast(K) := \P\argu[\big]{ A(Z) ∩ K \neq ∅ }
+	\end{align*}
+	Gilt zusätzlich, dass $(σ_n)_{n∈ℕ}$ \define{stochastisch beschränkt} ist, d.\,h.
+	\begin{align}\label{eqSatz8.8_2}\tag{2}
+		\lim_{j⟶∞}\limsup_{n⟶∞}\P\klammern[\Big]{\abs[\big]{σ_n}>j}=0
+	\end{align}
+	so folgt
+	\begin{align}\label{eqSatz8.8_b}\tag{b}
+		\limsup_{n⟶∞}\P\klammern[\big]{σ_n∈ F}≤μ^\ast(F)\qquad∀ F∈\F(ℝ):=\set[\big]{ F⊆ℝ:F\text{ abgeschlossen}}
+	\end{align}
+	Falls zusätzlich $A(Z)=\set{σ}$ für eine Zufallsvariable $σ$
+	(d.\,h.\ $Z$ hat f.\,s.\ eine eindeutige Minimalstelle, nämlich $σ$), dann gilt
+	\begin{align}\label{eqSatz8.8_c}\tag{c}
+		σ_n\distrto σ\text{ in }ℝ.
+	\end{align}
+\end{satz}
+
+%Ferger: "Ich weiß nicht mehr wie ich drauf gekommen bin. Aber ich bin darauf gekommen. Da habe ich mich gefreut wie so ein Brötchen."
+%Ferger: "Müssen Sie nicht mitschreiben, ich will jetzt hier nur zu einer didaktischen Meisterleistung auflaufen."
+
+\begin{proof}~
+	\paragraph{Zeige \eqref{eqSatz8.8_a}:}
+	Sei $K$ kompakt. Dann gilt:
+	\begin{align}\label{eqProofSatz8.8_i}\tag{i}
+		\set[\big]{σ_n∈ K}
+		&⊆ \set{ \inf_{t ∈ K} Z_n(t) ≤ \inf_{t ∈ K^C} Z_n(t)} \\
+		% ^C = Komplement
+		&⊆\set{\inf_{t∈ K} Z_n(t)≤\inf_{t∈ K^C∩ I_j}Z_n(t)}\label{eqProofSatz8.8_ii}\tag{ii}
+	\end{align}
+	wobei $I_j := \intervall{-j}{j}$, $j ∈ ℕ$.
+	\subparagraph{Zeige \eqref{eqProofSatz8.8_i}:}
+	Sei $σ_n∈ K$ und angenommen
+	\begin{align}\label{eqProofSatz8.8Stern}\tag{$\ast$}
+		\inf_{t∈ K} Z_n(t)>\inf_{t∈ K^C} Z_n(t)
+	\end{align}
+	Dann gilt:
+	\begin{align*}
+		Z_n(σ_n)
+		\overset{σ_n∈ K}&{≥}
+		\inf_{t∈ K} Z_n(t)
+		\overset{\eqref{eqProofSatz8.8Stern}}>
+		\inf_{t∈ K^C} Z_n(t)
+		\overset{K^C⊆ℝ}{≥}
+		\inf_{t∈ℝ} Z_n(t)
+		\overset{σ_n∈ A(Z_n)}=
+		Z(σ_n)
+	\end{align*}
+	Das ist ein Widerspruch, weshalb \eqref{eqProofSatz8.8_i} folgt.
+
+	Gleichung \eqref{eqProofSatz8.8_ii} folgt aus
+	\begin{align*}
+		\inf_{t∈ K^C} Z_n(t)≤\inf_{t∈ K^C∩ I_j}Z_n(t).
+	\end{align*}
+	Sei $K_j:=[-k_j,k_j]$ mit $k_j∈ℕ$ so, dass $K_j⊇ K∪ I_j$.
+	Für jedes $M⊆ K_j$ gilt:
+	Die Abbildung $f↦\inf_{t∈ M} f(t)$ ist stetig auf $\klammern[\big]{C(K_j), d_{K_j}}$,
+	denn:
+	\begin{align*}
+		\abs{\inf_{t ∈ M} f(t) - \inf_{t ∈ M} g(t)}
+		&≤ \norm{ f-g}_M
+		≤\norm{ f-g}_{K_j}
+	\end{align*}
+	Daraus folgt, dass die Abbildung
+	\begin{align*}
+		H_j \colon C(K_j) ⟶ ℝ, \qquad
+		f ↦ \inf_{t ∈ K} f(t) - \inf_{t ∈ K^C ∩ I_j} f(t)
+	\end{align*}
+	stetig ist, denn $K^C∩ I_j⊆ I_j⊆ K∪ I_j⊆ K_j$.
+	Somit folgt aus Satz \ref{satz7.23} und aus dem CMT \ref{satz4.10ContinuousMappingTheorem}:
+	\begin{align}\label{eqProofSatz8.8_iii}\tag{iii}
+		H_j \argu{ Z_n^{(k_j)} } & \distrto  H_j \argu{ Z^{(k_j)} } \qquad ∀ j ∈ ℕ
+		\\
+	% \end{align}
+	% Aus \eqref{eqProofSatz8.8_i} und \eqref{eqProofSatz8.8_ii} folgt:
+	% \begin{align}
+		\nonumber
+		⇒
+		\P \argu[\Big]{\set[\big]{σ_n ∈ K}}
+		&≤ \P \argu[\Bigg]{\set[\Bigg]{\underbrace{
+				\inf_{t ∈ K} Z_n(t) - \inf_{t ∈ K^C ∩ I_j} Z_n(t)
+			}_{= H_j(Z_n)} ≤ 0
+		}}\\ \nonumber
+		⇒
+		\limsup_{n⟶∞}\P\argu[\big]{σ_n ∈ K}
+		\overset{\eqref{eqProofSatz8.8_i} + \eqref{eqProofSatz8.8_ii}}&{  % steht schon oben
+		≤}
+		\limsup_{n⟶∞}\P\argu[\Big]{H_j \argu{Z_n^{(k_j)} } ∈ \underbrace{\intervallOH{-∞}{0}}_{ \text{abg.} }}\\ \nonumber
+		\overset{\eqref{eqProofSatz8.8_iii} + \text{Portmanteau} \ref{satz4.2}}&{≤}
+		\P\argu[\Big]{H_j(Z) ∈ \intervallOH{-∞}{0}}\\
+		\overset{\text{Def }H_j}&{=}
+		\P \argu[\bigg]{\underbrace{
+				\set[\bigg]{\inf_{t ∈ K} Z(t) ≤ \inf_{t ∈ K^C ∩ I_j} Z(t)}
+			}_{=:E_j}
+		} \qquad ∀ j ∈ ℕ \label{eqProofSatz8.8_iv} \tag{iv}
+	\end{align}
+	Da $E_j$ monoton fallend ist, folgt (mit $σ$-Stetigkeit von oben):
+	% Jetzt kommt die Sendung mit der Maus in kurz.
+	% Erläuterung mit Studierendengrößen
+	% Das ist stark, also ich meine von der Didaktik.
+	\begin{align*}
+		\lim_{j⟶∞} \P(E_j)
+		&=\P\argu{\bigcap_{j∈ℕ}E_j}\\
+		&=\P \argu[\bigg]{ \inf_{t ∈ K} Z(t) ≤ \inf_{t ∈ K^C ∩ I_j} Z(t) ~ ∀ j ∈ ℕ }\\
+		&≤ \P\argu[\bigg]{\inf_{t ∈ K} Z(t) ≤ \underbrace{
+			\inf_{j ∈ ℕ} \inf_{t ∈ K^C ∩ I_j} Z(t)
+		}_{= \inf_{\Union_{j ∈ ℕ} \klammern[\big]{K^C ∩ I_j}} Z(t)}} \\
+		\overset{\substack{\Union_j(K^C ∩ I_j) = K^C ∩ \bigcap_j I_j \\ = K^C ∩ ℝ = K^C}}&{=}
+		\P \argu[\bigg]{\underbrace{
+			\set[\bigg]{\inf_{t ∈ K} Z(t) ≤ \inf_{t ∈ K^C} Z(t)}
+		}_{=: E}}
+	\end{align*}
+	% Dahinter steckt die allgemeine Rechenregel
+	% \begin{align*}
+	% 	\inf_{t∈ A∪ B}f(t)=\inf\set{\inf_A f,\inf_B f}.
+	% \end{align*}
+	% Schließlich gilt
+
+	%
+		Schließlich gilt
+	\begin{align}\label{eqProofSatz8.8_v}\tag{v}
+		E⊆\set[\big]{ A(Z)∩ K\neq∅}
+		% es gilt auch =
+	\end{align}
+	denn:
+	\begin{align*}
+		&\inf_{t∈ K}Z(t)
+		≤\inf_{t∈ K^C} Z(t)\\
+		&⇒
+		\inf_ℝ Z(t)=\inf_{K∪ K^C}Z(t)=\min\set{\inf_{t∈ K} Z(t),\inf_{t∈ K^C}Z(t)}=\inf_{t∈ K}Z(t)
+		=Z(τ)
+	\end{align*}
+	für ein $τ∈ K$, da $Z$ stetig und $K$ kompakt.
+	Also ist $τ$ eine Minimalstelle von $Z$, in Symbolen $τ∈ A(Z)$.
+	Da $τ∈ K$ ist, gilt
+	\begin{align*}
+		τ∈ A(Z)∩ K
+		⇒ A(Z)∩ K\neq∅
+	\end{align*}
+	Grenzübergang $j⟶∞$ in \eqref{eqProofSatz8.8_iv} liefert:
+	\begin{align*}%\label{eqProofSatz8.8Plus}\tag{+}
+		\limsup_{n⟶∞}\P\klammern[\big]{σ_n∈ K}
+		≤\lim_{j⟶∞}\P(E_j)≤\P(E)
+		\overset{\eqref{eqProofSatz8.8_v}}{≤}
+		\P \argu[\big]{A(Z) ∩ K \neq ∅} = μ^\ast(K)
+	\end{align*}
+	Das ist \eqref{eqSatz8.8_a}. % folgt aus \eqref{eqProofSatz8.8Plus}.
+	\paragraph{Zeige \eqref{eqSatz8.8_b}:}
+	Sei $F∈\F$, also abgeschlossen. Dann gilt:
+	\begin{align}\nonumber
+		\set[\big]{σ_n∈ F}
+		\overset{\text{Zerlegung}}&=
+		\set[\big]{σ_n∈ F,σ_n∈ I_j}
+		\dot{∪}\set[\big]{σ_n∈ F,σ_n\not∈ I_j}\\\nonumber
+		&\subset \set[\big]{σ_n∈ \underbrace{F∩ I_j}_{\text{kompakt}}} \dot{∪} \set[\big]{ \abs{σ_n} > j} & ∀ & j ∈ ℕ \\ \nonumber
+		⇒
+		\P \argu[\Big]{\set[\big]{σ_n∈ F}}
+		&≤\P \argu[\Big]{\set[\big]{σ_n∈ F∩ I_j}} + \P \argu[\Big]{\set[\big]{ \abs{σ_n}>j}}&∀& j∈ℕ\\
+		\limsup_{n⟶∞}\P(σ_n∈ F)
+		&≤ \underbrace{\limsup_{n⟶∞} \P \argu[\big]{σ_n ∈ F ∩ I_j}}_{
+			\overset{\eqref{eqSatz8.8_a}}{≤}
+			\P \argu[\big]{
+				\underbrace{\set[\big]{A(Z) ∩ (F ∩ I_j) \neq ∅}}_{=:B_j}
+		}}
+		+ \underbrace{\limsup_{n ⟶ ∞} \P\argu[\big]{\abs{σ_n} > j}}_{
+				\overset{j ⟶ ∞}{\longrightarrow} 0 \text{ wegen } \eqref{eqSatz8.8_2}
+			} &∀& j ∈ ℕ \label{eqProofSatz8.8PlusPlus}\tag{++}
+	\end{align}
+	Da
+	\begin{align*}
+		B_j\uparrow\set[\big]{ A(Z)∩ F\neq∅}
+	\end{align*}
+	(zur Übung), liefert Grenzübergang $j⟶∞$ in \eqref{eqProofSatz8.8PlusPlus} und $σ$-Stetigkeit von unten und \eqref{eqSatz8.8_2} die Behauptung \eqref{eqSatz8.8_b}.
+	\paragraph{Zeige \eqref{eqSatz8.8_c}:}
+	\begin{align*}
+		&A(Z) = \set{σ} \text{ f.\,s.} \\
+		&⇒ μ^\ast(F) = \P \argu[\big]{A(Z) ∩ F \neq ∅}
+		= \P \argu[\Big]{ \set[\big]{σ} ∩ F \neq ∅ }
+		=\P(σ ∈ F) \\
+		\overset{\eqref{eqSatz8.8_b}}&{⇒}
+		\limsup_{n⟶∞} \P\argu[\big]{σ_n ∈ F} ≤ μ^\ast(F)
+		= \P(σ ∈ F) \qquad ∀ F ∈ \F \\
+		\overset{\text{Portmanteau}}&{⇒}
+		σ_n\distrto σ
+		\qedhere
+	\end{align*}
+\end{proof}
+
+%Ferger: "Ich war früher so ein richtiger Sport-Paul. Aber jetzt bin ich einfach zu faul. Ist nicht so, dass ich keine Zeit habe.
+
