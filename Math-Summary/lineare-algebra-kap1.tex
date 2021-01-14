@@ -1,0 +1,269 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+% (c) Eric Kunze, 2019
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for lecture notes and exercises at TU Dresden.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[ngerman, a4paper, 12pt]{scrartcl}
+
+\KOMAoptions{
+	parskip=half,
+}
+
+%%% FONTS %%%
+\usepackage[utf8]{inputenc}
+\usepackage{cmap}			% damit man Text aus dem PDF korrekt rauskopieren kann
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{relsize}
+\usepackage[normalem]{ulem} 
+
+\usepackage[scale=0.95]{opensans}
+\usepackage{lmodern}
+%\renewcommand*{\familydefault}{\sfdefault}
+
+\usepackage{csquotes}
+
+%\addtokomafont{disposition}{\fosfamily}
+%\setkomafont{chapterprefix}{\smaller[2]\mdseries}
+%\RedeclareSectionCommand[innerskip=0pt]{chapter}
+
+%%% ABSÄTZE %%%
+\usepackage[onehalfspacing]{setspace}
+\usepackage{vmargin}
+
+
+% Layout: Kopf-/Fußzeilen, anderthalbfacher Zeilenabstand
+\usepackage[singlespacing=true]{scrlayer-scrpage} 
+%\pagestyle{scrheadings}
+%\clearscrheadfoot
+%\renewcommand*{\chaptermarkformat}{\chapappifchapterprefix~\thechapter: \ }
+%\chead{\headmark}
+%\cfoot[\pagemark]{\pagemark}
+%\automark[subsection]{section}
+%\setheadsepline{0.5pt}
+%\deffootnote{1em}{1em}{\textsuperscript{\thefootnotemark}}
+
+% Grafiken, Tabellen
+\usepackage{graphicx,xcolor}
+\usepackage{tudscrcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}	% improved rules
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             COUNTER                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chngcntr}   % modify counters
+\pretocmd{\chapter}{\setcounter{section}{0}}{}{}
+\pretocmd{\chapter}{\setcounter{equation}{0}}{}{}
+
+\usepackage{enumerate}
+\usepackage[inline]{enumitem} 		%customize label
+
+\renewcommand{\labelitemi}{\raisebox{2pt}{\scalebox{.4}{$\blacksquare$}}}
+\renewcommand{\labelitemii}{$\vartriangleright$}
+\renewcommand{\labelitemiii}{--}
+% Variantionen des Dreiecks als Aufzählungszeichen $\blacktriangleright$ / $\vartriangleright$ / $\triangleright$
+
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\renewcommand{\labelenumii}{\alph{enumii}.}
+\renewcommand{\labelenumiii}{\roman{enumiii}.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              MATHE                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amsfonts,amssymb}
+%\usepackage{mdsymbol}
+%\usepackage[cm]{sfmath}
+\usepackage{bm}
+
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
+%\usepackage{blkarray}
+\usepackage{latexsym}
+%\usepackage{marvosym} 	% lightning (contradiction)
+%\usepackage{stmaryrd} 	% Lightning symbol
+\usepackage{bbm} 		% unitary matrix
+%\usepackage{wasysym}	% add some symbols
+
+\usepackage{systeme}	% easy typesetting systems of equations
+\usepackage{witharrows} % arrows from one equation to another
+
+
+% further support for different equation setting
+\usepackage{cancel}
+\usepackage{xfrac}		% sfrac -> fractions e.g. 3/4
+\usepackage{units}		% units and fractions
+\usepackage{diagbox}
+
+\usepackage{../texmf/tex/latex/mathoperatorsMathTUD}
+
+\usepackage[amsmath,thmmarks]{ntheorem}
+
+\counterwithin{equation}{section}
+\newcounter{themcount}
+\counterwithin{themcount}{section}
+
+\newcommand{\skiparound}{10pt}
+\theorempreskip{\skiparound}
+\theorempostskip{\skiparound}
+
+\theoremstyle{plain}
+\theoremseparator{.}
+\theorembodyfont{}
+\newtheorem{definition}[themcount]{Definition}
+\newtheorem{lemma}[themcount]{Lemma}
+\newtheorem{satz}[themcount]{Satz}
+
+\newtheorem{beispiel}[themcount]{Beispiel}
+
+\theorembodyfont{\itshape}
+\newtheorem{bemerkung}[themcount]{Bemerkung}
+
+\makeatletter
+\newtheoremstyle{proofstyle}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\theorem@separator]}%
+{\item[\hskip\labelsep {\theorem@headerfont ##1}\ (##3)\theorem@separator]}
+\makeatother
+
+\theoremstyle{proofstyle}
+\theoremheaderfont{\normalsize\slshape}
+\theorembodyfont{}
+\theoremseparator{.}
+\theorempreskip{5pt}
+\theorempostskip{5pt}
+\theoremsymbol{$\square$}
+\newtheorem{proof}{Beweis}
+
+
+
+
+\newcommand{\begriff}[1]{\textbf{#1}}
+\newcommand{\person}[1]{\textsc{#1}}
+
+
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           REFERENCES                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+type={CC},
+modifier={by-nc-sa},
+version={4.0},
+]{doclicense}
+
+\usepackage[unicode,bookmarks=true]{hyperref}
+\hypersetup{
+	% pdfborder={0 0 0}			% no boxed around links
+	pdfborderstyle={/S/U/W 1},	% underlining insteas of boxes
+	linkbordercolor=cdblue,
+	urlbordercolor=cdblue
+	%	colorlinks,
+	%	citecolor=black,
+	%	filecolor=cddarkblue!80,
+	%	linkcolor=black,
+	%	urlcolor=cddarkblue!80
+}
+
+\usepackage{cleveref}
+\crefname{satz}{Satz}{Sätze}
+\crefname{lemma}{Lemma}{Lemmata}
+\crefname{definition}{Definition}{Definitionen}
+\crefname{bemerkung}{Bemerkung}{Bemerkungen}
+\crefname{beispiel}{Beispiel}{Beispiele}
+\usepackage{bookmark}		% pdf-bookmarks
+
+
+
+\renewcommand{\i}{\mathrm{i}}
+
+%\usepackage{mathpazo}
+
+\begin{document}
+	
+	\title{Komplexe Zahlen}
+	\subtitle{Lineare Algebra --- Kapitel 1}
+	\author{Eric Kunze}
+	\date{\today}
+	
+%	\begin{center}
+%		\fcolorbox{black}{cdblue!10}{\parbox{0.9\linewidth}{%
+%				\centering
+%				\sffamily {\larger \rule[0.8ex]{3cm}{0.4pt} Lineare Algebra \rule[0.8ex]{3cm}{0.4pt}} \\[6pt]%
+%				{\bfseries \larger[4] %
+%					Vektorräume%
+%				} \\[6pt]%
+%				\itshape Eric Kunze \hfill TU Dresden \\
+%				\url{eric.kunze@mailbox-tu-dresden.de} \hfill \today%		
+%		}} 
+%	\end{center}
+	
+	\maketitle
+	
+	{ \footnotesize \doclicenseThis }
+	
+	\begin{center}
+		\small \slshape Mit dieser Zusammenfassung ist keine Garantie auf Vollständigkeit und/oder Korrektheit verbunden!
+	\end{center}
+
+	
+	Bevor es mit der richtigen linearen Algebra losgeht wollen wir noch ein paar Grundlagen einführen, die später hilfreich sein können. 
+	
+
+\section{Definition}
+
+	In der Schule haben wir der Reihe nach immer mehr \enquote{Zahlen} kennengelernt, von den natürlichen Zahlen in der Grundschule, den ganzen Zahlen hinüber zu gebrochenen Zahlen und schließlich reellen Zahlen. Wollen wir nochmal kurz rekapitulieren:
+	\begin{itemize}
+		\item $\N = \menge{1,2,3, \dots}$ \dots natürliche Zahlen
+		\item $\Z = \menge{\dots, -2, -1, 0, 1, 2, \dots}$ \dots ganze Zahlen
+		\item $\Q = \menge{\frac{p}{q} : p \in \Z, q \in \N}$ \dots gebrochene Zahlen (Menge aller Brüche) 
+		\item $\R$ \dots Menge aller reellen Zahlen
+	\end{itemize}
+	Die Übergänge $\N \leadsto \Z$ und $\Z \leadsto \Q$ sind noch relativ einfach, aber bereits die reellen Zahlen sind nicht mehr so einfach zu konstruieren. Schauen wir uns dazu nochmal ein Beispiel an.
+	
+	\begin{beispiel}
+		Wir wollen die Gleichung $x^2 = 2$ lösen. Wenn wir annehmen, dass wir nur rationale Zahlen kennen, dann wird das ein großes Problem: wir finden nämlich keine Lösung, denn $\pm \sqrt{2}$ ist nicht als Bruch darstellbar -- insbesondere auch nicht als endlicher oder periodischer Dezimalbruch (der Beweis dazu ist nicht schwer, findet man leicht im Internet). Nehmen wir aber genau diese Zahlen hinzu, also alle unendlichen, nichtperiodischen Dezimalbrüche, dann erhalten wir eine größere Menge. Das werden dann die reellen Zahlen. 
+	\end{beispiel}
+
+	In der Mengenschreibweise mit Teilmengen können wir die bisherigen Kenntnisse schreiben als:
+	\begin{equation*}
+		\N \subseteq \Z \subseteq \Q \subseteq \R
+	\end{equation*}
+	Nun kann man sich fragen, ob das schon das Ende ist oder ob es noch größere Mengen gibt?  Die Antwort wollen wir in diesem ersten Kapitel herausfinden -- um es vorwegzunehmen: es gibt noch mehr.
+	
+	In der Schule gab es immer ein großes Problem: Wurzeln aus negativen Zahlen. Dieses gehen wir nun an, indem zu den reellen Zahlen noch imaginäre Zahlen hinzunehmen. 
+	
+	\begin{definition}
+		Die \begriff{imaginäre Einheit} $\i$ ist definiert durch $\i^2 = -1$. Die Menge der \begriff{komplexen Zahlen} ist damit definiert als
+		\begin{equation*}
+			\CC \defeq \menge{a + b \i : a,b \in \R}
+		\end{equation*}
+		Für eine komplexe Zahl $z = a + b \i \in \CC$ heißt
+		\begin{itemize}
+			\item $\Re(z) = a$ der \begriff{Realteil} von $z$ und
+			\item $\Im(z) = b$ der \begriff{Imaginärteil} von $z$.
+		\end{itemize}
+	\end{definition}
+	
+	\begin{bemerkung}
+		So wie in den reellen Zahlen die Standard-Variablen immer $x$ oder $y$ hießen, so nennen wir komplexe Zahlen meist $z$. Das hat folgenden Grund: in vielen Fällen arbeiten wir mit Real- und Imaginärteil einzeln und zerlegen die komplexe Zahl (standarmäßig) als $z = a + b \i$ oder $z = x + \i y$. 
+	\end{bemerkung}
+
+	Wie lösen wir damit nun das Problem mit den negativen Wurzeln? Wir nutzen dafür die Definition der imaginären Einheit (d.h. $\i^2 = -1$).
+	\begin{equation*}
+		\sqrt{-2} = \sqrt{-1 * 2} = \sqrt{\i^2 * 2} = \sqrt{\i^2} * \sqrt{2} = \i * \sqrt{2}
+	\end{equation*}
+	
+	
+	
+\end{document}
+
