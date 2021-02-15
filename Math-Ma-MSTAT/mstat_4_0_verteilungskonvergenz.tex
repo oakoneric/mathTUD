@@ -3,110 +3,101 @@
 % of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
 % send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-\section{Verteilungskonvergenz von Zufallsvariablen in metrischen Räumen} %4
+\section{Satz von Portmanteau}
 
-Seien $X$ und $X_n$ ($n\in\N$) Zufallsvariablen in $(\S,d)$ über $(\Omega,\A,\P)$.
+Seien $X$ und $(X_n)_{n \in \N}$ Zufallsvariablen in $(\S,d)$ über $(\Omega,\A,\P)$.
 Dann sind
 \begin{equation*}
-	P \defeq \P \circ X^{-1}, \qquad P_n \defeq \P \circ X_n^{-1} \qquad (n \in \N)
+	P \defeq \P \circ X^{-1} \qquad \und \qquad P_n \defeq \P \circ X_n^{-1} \qquad (n \in \N)
 \end{equation*}
 Wahrscheinlichkeitsmaße auf $\B(\S)$.
 
-\begin{definition}[Verteilungskonvergenz] \label{definition: 4.1}\
+\begin{definition} \label{definition: 4.1}
 	\begin{enumerate}[label=(\arabic*)]
-		\item \label{it: 4.1Pweak} Seien $\P$ und $\P_n$ ($n \in \N$) Wahrscheinlichkeitsmaße auf $\B(S)$.
-		Dann \begriff{konvergiert $\P_n$ schwach} gegen $\P$, in Zeichen
+		\item \label{it: 4.1Pweak} Seien $P$ und $(P_n)_{n \in \N}$ Wahrscheinlichkeitsmaße auf $\B(S)$.
+		Dann \begriff{konvergiert $P_n$ schwach} gegen $P$, in Zeichen
 		\begin{equation*}
-			\P_n \weakto \P \defequiv \int f \diffskip{\P_n} \ntoinf \int f \diffskip\P \qquad \forall f \in C^b(\S)
-		\end{align*}
-		\item \label{it: 4.1Xweak}$X_n$ \begriff{konvergiert in Verteilung} gegen $X$ in Raum $(\S,d)$, in Zeichen
+			P_n \weakto P \defequiv \int f \diffskip{P_n} \ntoinf \int f \diffskip P \qquad \forall f \in C^b(\S)
+		\end{equation*}
+		\item \label{it: 4.1Xweak} $X_n$ \begriff{konvergiert in Verteilung} gegen $X$ in Raum $(\S,d)$, in Zeichen
 			\begin{align*}
-				X_n \distto  X \text{ in }(\S,d) \defequiv \P \circ X_n^{-1} \weakto \P \circ X^{-1}
+				X_n \distto X \text{ in } (\S,d) \defequiv \P \circ X_n^{-1} \weakto \P \circ X^{-1}
 			\end{align*}
-			Das $\L$ steht für \enquote{law}. Alternative Schreibweise: $X_n \overset{\d}{\longrightarrow} X$.
+			Das $\text{d}$ steht für \enquote{distribution}. Alternative Schreibweise: $X_n \overset{\mathcal{L}}{\longrightarrow} X$.
 	\end{enumerate}
 \end{definition}
 
-Der folgende Satz gibt eine äquivalente Charakterisierung von $\weakto $ bzw.\ $\distto$.
+Der folgende Satz gibt eine äquivalente Charakterisierung von $\weakto$ bzw.\ $\distto$.
 
+\input{mstat_4_1_portmanteau-satz}
 
-% ist sehr lang und daher ausgelagert:
-\input{section4-Portmanteau}
-
-Falls $\mathcal{U} = \menge{B \in \B(S) : \P(\rand{B}) = 0}$, so besagt
-\cref{satz: 4.2}, \cref{it: 4.2BorelSets}, dass $P_n(B) \to P(B)$ für alle $B \in \mathcal{U}$, also punktweise Konvergenz auf der Klasse $\mathcal{U}$, die schwache Konvergenz $P_n \weakto P$ nach sich zieht.
+Falls $\mathcal{U} = \menge{B \in \B(S) : P(\rand{B}) = 0}$, so besagt \cref{satz: 4.2} in \cref{it: 4.2BorelSets}, dass $P_n(B) \to P(B)$ für alle $B \in \mathcal{U}$, also punktweise Konvergenz auf der Klasse $\mathcal{U}$, die schwache Konvergenz $P_n \weakto P$ nach sich zieht.
 Es gibt weitere solcher Klassen.
 % Der letzte Absatz ersetzt folgenden alten Satz:
 % Mitunter folgt schwache Konvergenz aus $\P_n(A)\ntoinf  \P(A)$ für eine spezielle Klasse von Mengen $A$.
 
 \begin{theorem} \label{theorem: 4.3}
-	Sei $\U \subseteq \B(\S)$ mit
+	Sei $\mathcal{U} \subseteq \B(\S)$ mit
 	\begin{enumerate}[label=(\roman*)]
-		\item \label{it: 4.3Schnittstabil} $\U$ ist endlich schnittstabil, d.h. $A,B \in \U \follows A \cap B \in \U$
-        \item \label{it: 4.3Basis} Jedes offene $G \subseteq \S$ ist abzählbare Vereinigung von Mengen aus $\U$.
+		\item \label{it: 4.3Schnittstabil} $\mathcal{U}$ ist endlich schnittstabil, d.h. mit $A,B \in \mathcal{U}$ ist auch $A \cap B \in \mathcal{U}$
+        \item \label{it: 4.3Basis} Jedes offene $G \subseteq \S$ ist abzählbare Vereinigung von Mengen aus $\mathcal{U}$.
 	\end{enumerate}
-	Dann gilt: $\forall A \in \U: \P_n(A)\ntoinf \P(A) \follows \P_n \weakto \P$
+	Dann gilt: $P_n(A) \ntoinf P(A) \enskip \forall A \in \mathcal{U} \follows P_n \weakto P$.
 \end{theorem}
 
 \begin{proof}
-	Seien $A_1,\dots,A_m \in \U$. Dann gilt:
+	Seien $A_1,\dots,A_m \in \mathcal{U}$. Dann gilt:
 	\begin{align*}
-		\P_n \brackets{\bigcup_{i=1}^m A_i}
-		&= \sum_{k=1}^m (-1)^{k-1}·\sum_{1 \le i_1 < \dots < i_k \le m} \underbrace{\P_n(\overbrace{A_{i_1} \cap \dots \cap A_{i_k}}^{\in\U})}_{\ntoinf  \P(A_{i_1}\cap\dots\cap A_{i_k})}\\
+		P_n \brackets{\bigcup_{i=1}^m A_i}
+		&= \sum_{k=1}^m (-1)^{k-1} * \sum_{1 \le i_1 < \dots < i_k \le m} \underbrace{P_n(\overbrace{A_{i_1} \cap \dots \cap A_{i_k}}^{\in\mathcal{U}})}_{\ntoinf  P(A_{i_1}\cap\dots\cap A_{i_k})}\\
 		\overset{n\to\infty}&{\longrightarrow}
-		\sum_{k=1}^m\sum_{1\le i_1<\dots<i_k\le m} \P\brackets{A_{i_1}\cap\dots\cap A_{i_k}}\\
+		\sum_{k=1}^m\sum_{1\le i_1<\dots<i_k\le m} P\brackets{A_{i_1}\cap\dots\cap A_{i_k}}\\
 		\overset{\text{allg.\ Add.}}&=
-		\P\brackets{\bigcup_{i=1}^m A_i}
+		P\brackets{\bigcup_{i=1}^m A_i}
 	\end{align*}
-	Sei $G\in\G$, also offen. Dann gilt wegen Voraussetzung \ref{it: 4.3Basis}:
-	\begin{align*}
-		&\exists(A_i)_{i\in\N}\subseteq\U:G=\bigcup_{i\in\N} A_i\\
-		&\follows
-		G_m\defeq\bigcup_{i=1}^m A_i\uparrow G,~m\to\infty\\
-		\overset{\P~\sigma\text{-stetig}}&{\follows}
-		\forall \epsilon>0:\exists m_0\in\N:\forallm > m_0:\P(G)-\P(G_{m_0})\le\epsilon\\
-		&\follows \forall\epsilon>0:\exists m_0\in\N:
-		\P(G)-\epsilon\le \P(G_{m_0})
-		\stackeq{\text{s.\,o.}}
-		\limn \P_n(\underbrace{G_{m_0}}_{\subseteq G})\le\liminf_{n\to\infty} \P_n(G)\\
-		\overset{\epsilon\to0}&{\follows}
-		\liminf_{n\to\infty} \P_n(G)\ge \P(G)
-	\end{align*}
-	Da $G \in \G$ beliebig war, folgt nun die Behauptung aus dem Theorem \ref{satz4.2} \ref{it:4.2OpenSets}.
+	Sei $G\in\G$, also offen. Wegen Voraussetzung \ref{it: 4.3Basis} ist $G$ darstellbar als $G=\bigcup_{i\in\N} A_i$ mit $(A_i){i \in \N} \subseteq \mathcal{U}$. Es gilt $G_m \defeq \bigcup_{i=1}^m A_i \uparrow G$ für $m\to\infty$. Mit der $\sigma$-Stetigkeit von $P$ gilt
+	\begin{equation*}
+		\begin{aligned}
+			&\forall \epsilon>0 \enskip \exists m_0\in\N \enskip \forall m > m_0: \enskip P(G)-P(G_{m_0})\le\epsilon \\
+			\follows &\forall\epsilon > 0 \enskip \exists m_0 \in \N: \enskip
+			P(G) - \epsilon \le P(G_{m_0})
+			\overset{\text{s.\,o.}}{=}
+			\lim_{n \to \infty} P_n(\underbrace{G_{m_0}}_{\subseteq G}) \le \liminf_{n \to \infty} P_n(G) \satzende
+		\end{aligned}
+	\end{equation*}
+	Mit $\epsilon \to 0$ folgt daraus $\liminf_{n \to \infty} P_n(G)\ge P(G)$.
+	Da $G \in \G$ beliebig war, folgt nun die Behauptung aus dem Theorem \cref{satz: 4.2} \ref{it:4.2OpenSets}.
 \end{proof}
 
-\begin{korollar}\label{korollar4.4}
-	Sei $\U\subseteq \B(S)$ endlich durchschnittsstabil mit
-	\begin{align}\label{eqKorollar4.4_i}\tag{i}
-		\forall x\in S : \forall\epsilon>0:\exists A\in\U:x\in \inner A\subseteq A\subseteq B(x,\epsilon)
-	\end{align}
+\begin{korollar} \label{korollar4.4}
+	Sei $\mathcal{U} \subseteq \B(S)$ endlich durchschnittsstabil mit
+	\begin{equation} \label{eqKorollar4.4_i}
+		\forall x\in S \enskip \forall \epsilon > 0 \enskip \exists A \in \mathcal{U} : \enskip x \in \inner A \subseteq A \subseteq B(x,\epsilon)
+		\satzende
+	\end{equation}
 	Ist $(\S,d)$ separabel, so gilt
 	\begin{align*}
-		\brackets{\forall A\in\U:\P_n(A)\ntoinf  \P(A)}
-		\follows \P_n\weakto  \P.
+		\brackets{\forall A \in \mathcal{U}: P_n(A) \ntoinf P(A)}
+		\follows P_n \weakto P
+		\satzende
 	\end{align*}
 \end{korollar}
 
 \begin{proof}
-	Gemäß Satz \ref{satz2.9} hat $\G$ eine abzählbare Basis.
-	Nach dem \textit{Satz von Lindelőf} (vergleiche \cite[]{schubert423277teubner}):
+	Gemäß \cref{satz: 2.9} hat $\G$ eine abzählbare Basis. Nach dem \textit{Satz von Lindelőf} (vergleiche \cite{schubert423277teubner}):
 	% wirklich ein Lindelöf mit witzigen ő-Strichen/Punkten
-	\begin{equation}\label{eqSatzVonLindelöf}\tag{L}
-		\begin{split}
-			&\text{Für jede offene Überdeckung einer beliebigen Teilmenge von $\S$ existiert}\\
-			&\text{eine \emph{abzählbare} Teilüberdeckung.}
-		\end{split}
-	\end{equation}
+	\begin{center}
+		Für jede offene Überdeckung einer beliebigen Teilmenge von $\S$ existiert eine \emph{abzählbare} Teilüberdeckung.
+	\end{center}
 	Sei nun $G\in\G$ beliebig.
 	Für alle $x\in G$ existiert ein $\epsilon_x>0$ mit $B(x,\epsilon_x)\subseteq G$.
-	Gemäß \eqref{eqKorollar4.4_i} findet man ein $A_x\in\U$ mit $x\in \inner{A_x}\subseteq A_x\subseteq B(x,\epsilon_x)\subseteq G$.
+	Gemäß \eqref{eqKorollar4.4_i} findet man ein $A_x\in\mathcal{U}$ mit $x\in \inner{A_x}\subseteq A_x\subseteq B(x,\epsilon_x)\subseteq G$.
 	Also folgt
 	\begin{align*}
 		G=\bigcup_{x\in G}\menge{ x}\subseteq\bigcup_{x\in G}\inner{A_x}\subseteq G
 	\end{align*}
 	Somit ist $\menge{ \inner{A_x}:x\in G}$ eine offene Teilüberdeckung von $G$.
-\taus \eqref{eqSatzVonLindelöf} folgt nun:
-	Es existieren $A_{x_i}\in\U,~i\in\N$ mit
+	Aus dem Satz von Lindelőf existieren nun $A_{x_i}\in\mathcal{U}$ ($i\in\N$) mit
 	\begin{align*}
 		G\subseteq\bigcup_{i\in\N} \inner{A_{x_i}}\subseteq
 		\bigcup_{i\in\N}A_{x_i}\subseteq
@@ -114,98 +105,93 @@ Es gibt weitere solcher Klassen.
 		\follows
 		G=\bigcup_{i\in\N}A_{x_i}
 	\end{align*}
-	Also erfüllt $\U$ die Voraussetzung \ref{it: 4.3Schnittstabil} und \ref{it: 4.3Basis} in Theorem \ref{theorem: 4.3} und es folgt die Behauptung.
+	Also erfüllt $\mathcal{U}$ die Voraussetzung \ref{it: 4.3Schnittstabil} und \ref{it: 4.3Basis} in \cref{theorem: 4.3} und es folgt die Behauptung.
 \end{proof}
 
 Als Anwendung/ Beschreibung der schwachen Konvergenz im $\S=\R$.
-Erinnere an \begriff{schwache Konvergenz von Verteilungsfunktionen (VF)} $(F_n)_{n\in\N}$ gegen $F$, in Zeichen
-\begin{align*}
-	F_n\weakVtlto F
-	:⇔
-	F_n(x)\ntoinf  F(x)\qquad\forall x\in C_F
-	\mit C_F\defeq\menge{ x\in\R:F\text{ ist stetig in }x}
-\end{align*}
+Wir erinnern uns an die \begriff{schwache Konvergenz von Verteilungsfunktionen} $(F_n)_{n\in\N}$ gegen $F$, in Zeichen
+\begin{equation*}
+	F_n \rightharpoonup F
+	\defequiv
+	F_n(x) \ntoinf  F(x) \qquad\forall x \in C_F \defeq \menge{ x \in \R: F \text{ ist stetig in }x}
+\end{equation*}
 
 \begin{korollar}\label{korollar4.5}
-	Seien $\P,\P_n,n\in\N$ Wahrscheinlichkeitsmaße auf $(\R, \B(\R))$ mit zugehörigen Verteilungsfunktionen $F$ und $F_n,n\in\N$ (d.\,h.\ $F(x) = \P(\intervallOH{-\infty}x)$, $F_n(x) = P_n(\intervallOH{-\infty}x)$, für alle $x \in \R$, $n \in \N$).
+	Seien $P$ und $(P_n)_{n\in\N}$ Wahrscheinlichkeitsmaße auf $(\R, \B(\R))$ mit zugehörigen Verteilungsfunktionen $F$ und $(F_n)_{n\in\N}$ (d.\,h.\ $F(x) = P((-\infty, x])$) für alle $x \in \R$, $n \in \N$).
 	Dann gilt:
-	\begin{align*}
-		\P_n\weakto\P
-		⇔
-		F_n\weakVtlto F
-	\end{align*}
+	\begin{equation*}
+		P_n \weakto P
+		\equivalent
+		F_n \rightharpoonup F
+	\end{equation*}
 \end{korollar}
 
-\begin{proof}~
-	\paragraph{Zeige \enquote{$\follows$}:}
-	Sei $x\in\R$, $B\defeq(-\infty,x],$.
-	Dann gilt:
-	\begin{align}\label{eq:4.5randlos}\tag{$*$}
-		\P(\underbrace{\partial B}_{=\menge{ x}})=0
-		&⇔ \P(\menge{ x})=F(x)-\underbrace{F(x-0)}_{\text{Grenzwert}}=0
-		\qquad\forall x\in C_F
-	\end{align}
-	Somit folgt für $x\in C_F$:
-	\begin{align*}
-		F_n(x)&\stackeq{\text{Def}}
-	\P_n\brackets{\underbrace{\intervallOH{-\infty}{x}}_{=B}}
-		=\P_n(B)\ntoinf  \P(B)\stackeq{\text{Def}} F(x)\qquad\forall x\in C_F
-	\end{align*}
-	gemäß Satz \ref{satz4.2} \ref{it:4.2BorelSets}, da $B$ $\P$-randlos ist für alle $x \in C_F$ gemäß \eqref{eq:4.5randlos}.
-	\paragraph{Zeige \enquote{$⇐$}:} Sei
-	\begin{align*}
-		\U\defeq\menge{ \intervallOH{a}{b} : a \le b \in C_F}.
-	\end{align*}
-	Dann ist $\U$ endlich durchschnittsstabil. Ferner: Die Menge
-	\begin{align*}
-		D_F\defeqC_F^C = \menge{ x\in\R: F\text{ \emph{nicht} stetig in }x}
-		=\menge{ x\in\R:\P(\menge{ x})>0}
-	\end{align*}
-	ist höchstens abzählbar (vgl.\ \eqref{eqProof1.4.2DoppelSternchen}
-	im Beweis von Satz \ref{satz4.2}). Damit ist $D_F^C = C_F$ dicht in $\R$.
-	Also folgt
-	\begin{align*}
-		\forall x\in\R:\forall\epsilon>0:\exists A&=(a,b]\in\U:\\
-		x\in (a,b)&=\inner A\subseteq A=(a,b]\subseteq B(x,\epsilon)=(x-\epsilon,x+\epsilon)
-	\end{align*}
-	denn mit der Dichtheit von $C_F$ gilt:
-	In $(x-\epsilon,x)$ muss ein $a\in C_F$ existieren und analog findet man ein $b\in(x,x+\epsilon)$.
-	Somit erfüllt $\U$ die Voraussetzungen von Korollar \ref{korollar4.4}.
-	Klar: $\S=\R$ ist separabel, da $ℚ$ abzählbar und dicht in $\R$.
-	Schließlich gilt:
-	\begin{align*}
-		\P_n\brackets{\intervallOH{a}{b}}&=
-		F_n(b)-F_n(a)\stackrelnew{a,\, b \in C_F}{n\to\infty}{\longrightarrow} F(b)-F(a)
-		=\P\brackets{\intervallOH{a}{b}}\qquad\forall a,b\in C_F\\
-		&\overset{\ref{korollar4.4}}{\follows}
-		\P_n\weakto \P
-		\qedhere
-	\end{align*}
+\begin{proof}
+	\begin{description}
+		\hinrichtung
+		Sei $x\in\R$ und $B\defeq(-\infty,x]$. Dann ist $\partial B = \menge{x}$ und somit
+		\begin{equation}\label{eq:4.5randlos}
+			P(\partial B) = 0
+			\equivalent P(\menge{ x})=F(x)-\underbrace{F(x-0)}_{\text{Grenzwert}}=0
+			\qquad\forall x\in C_F \satzende
+		\end{equation}
+		Damit folgt für $x\in C_F$
+		\begin{equation*}
+			F_n(x) \overset{\text{Def}}{=}
+			P_n\brackets{\underbrace{(-\infty,x]}_{=B}}
+			= P_n(B) \ntoinf  P(B) 
+			\overset{\text{Def}}{=} F(x) \qquad\forall x\in C_F
+		\end{equation*}
+		gemäß \cref{satz: 4.2} \ref{it:4.2BorelSets}, da $B$ $P$-randlos ist für alle $x \in C_F$ gemäß \eqref{eq:4.5randlos}.
+		%
+		\rueckrichtung
+		Das Mengensystem $\mathcal{U} \defeq \menge{ (a,b] : a, b \in C_F \mit a \le b}$ ist endlich durchschnittsstabil. Ferner ist die Menge
+		\begin{equation*}
+			D_F \defeq C_F^\complement = \menge{ x\in\R: F\text{ \textit{nicht} stetig in }x}
+			= \menge{ x\in\R:P(\menge{ x})>0}
+		\end{equation*}
+		höchstens abzählbar (vgl.\ \eqref{eqProof1.4.2DoppelSternchen}
+		im Beweis von \cref{satz: 4.2}). Damit ist $D_F^\complement = C_F$ dicht in $\R$.
+		Also folgt
+		\begin{align*}
+			\forall x\in\R:\forall\epsilon>0:\exists A&=(a,b]\in \mathcal{U}:\\
+			x\in (a,b)&=\inner A\subseteq A=(a,b]\subseteq B(x,\epsilon)=(x-\epsilon,x+\epsilon)
+		\end{align*}
+		denn mit der Dichtheit von $C_F$ gilt:
+		In $(x-\epsilon,x)$ muss ein $a\in C_F$ existieren und analog findet man ein $b\in(x,x+\epsilon)$.
+		Somit erfüllt $\mathcal{U}$ die Voraussetzungen von \cref{korollar4.4}.
+		Klar: $\S=\R$ ist separabel, da $\Q$ abzählbar und dicht in $\R$ ist.
+		Schließlich gilt:
+		\begin{equation*}
+			P_n\brackets{(a,b]} =
+			F_n(b)-F_n(a) \overset{a,b \in C_F}{\longrightarrow} F(b)-F(a)
+			=P\brackets{(a,b]} \qquad\forall a,b\in C_F
+		\end{equation*}
+		und mit \cref{korollar4.4} folgt daraus $P_n \weakto P$.
+	\end{description}
 \end{proof}
 
-\begin{bemerkungnr}\label{bemerkung4.6}\ %4.6
+\begin{bemerkung} \label{bemerkung4.6} %4.6
 	\begin{enumerate}[label=(\arabic*)]
-		\item Seien $X,X_n,n\in\N$ reelle Zufallsvariablen über $(\Omega,\A,\P)$ mit Verteilungsfunktionen $F_n$, bzw.\ $F$. Dann:
-		% CHECKED: 'bzw.' used.
+		\item Seien $X$ und $(X_n)_{n\in\N}$ reelle Zufallsvariablen über $(\Omega,\A,\P)$ mit Verteilungsfunktionen $F_n$ bzw.\ $F$. Dann gilt:
 			\begin{equation}
 				\label{eq:Bemerkung4.6}
-				\tag{$\ast$}
 				\begin{aligned}
 					X_n\distto  X
-					\overset{\text{Def}}&{⇔}
+					\overset{\text{Def}}&{\equivalent}
 					P_n = \P\circ X_n^{-1}
 					\weakto \P\circ X^{-1} = P \\
-					\overset{\ref{korollar4.5}}&{⇔}
+					\overset{\text{\cref{korollar4.5}}}&{\equivalent}
 					\P(X_n\le x)
 					\ntoinf
-					\P(X\le x) \forall x \in C_F
-					⇔ F_n \weakVtlto F
+					\P(X\le x) \qquad \forall x \in C_F \\
+					&\equivalent F_n \rightharpoonup F
 				\end{aligned}
 			\end{equation}
 			% für alle $x$, die Stetigkeitsstellen der Verteilungsfunktion von $X$ sind.
 			Damit ist das klassische Konzept der Verteilungskonvergenz reeller
-			Zufallsvariablen nur ein Spezialfall für $S = \R$.
-		\item \label{it:4.6multiDim} Es gibt Verallgemeinerung von \ref{korollar4.5} bzw \eqref{eq:Bemerkung4.6} auf $\S=\R^k$:
+			Zufallsvariablen nur ein Spezialfall für $\S = \R$.
+		\item \label{it:4.6multiDim} Es gibt Verallgemeinerung von \cref{korollar4.5} bzw \eqref{eq:Bemerkung4.6} auf $\S=\R^k$:
 			Seien
 			\begin{align*}
 				X=\brackets{X^{(1)},\dots, X^{(k)}},
@@ -214,55 +200,44 @@ Erinnere an \begriff{schwache Konvergenz von Verteilungsfunktionen (VF)} $(F_n)_
 			Zufallsvariablen in $\R^k$. Dann gilt:
 			\begin{align*}
 				X_n\distto  X\text{ in }\R^k
-				⇔
+				\equivalent
 				\P(X_n\le x)\ntoinf \P(X\le x)\qquad\forall x=\brackets{x_1,\dots,x_k}\in\R^k
 			\end{align*}
 		wobei $x_i$ Stetigkeitsstelle der Verteilungsfunktion von $X^{(i)}$ ist für alle $i\in\menge{1,\dots,k}$.
-		Beweis ist analog zu \ref{korollar4.5}, vergleiche \cite[Satz 5.58]{witting1995mathematische}.
+		Beweis ist analog zu \cref{korollar4.5}, vergleiche \cite[Satz 5.58]{witting1995mathematische}.
 	\end{enumerate}
-\end{bemerkungnr}
+\end{bemerkung}
 
-Der schwache Limes einer Folge $(P_n)_{n\in\N}$ ist eindeutig, denn es gilt:
+Der schwache Limes einer Folge $(P_n)_{n\in\N}$ ist eindeutig.
 
-\mengecounter{satz}{5} % dazwischen geschoben
 \begin{lemma}\label{lemma4.6Einhalb}
-	\begin{align*}
-		P_n\weakto  P,~P_n\weakto  Q\follows P=Q
-	\end{align*}
+	$\quad P_n \weakto  P \quad \und \quad P_n \weakto  Q \qquad \follows \qquad P=Q$
 \end{lemma}
 
 \begin{proof}
 	Gemäß Definition gilt:
-	\begin{align*}
-		\int f\d P_n&\overset{}{\longrightarrow}\int f\d P\qquad\forall f\in C^b(\S)\\
-		\int f\d P_n&\overset{}{\longrightarrow}\int f\d Q\qquad\forall f\in C^b(\S)
-	\end{align*}
-	Der Grenzwert von reellen Zahlenfolgen eindeutig ist, folgt
-	\begin{align*}
-		\int f\d P &= \int f\d Q\qquad\forall f\in C^b(\S)\\
-		\overset{\ref{satz3.17}}{\follows}
-		P &= Q
-		\qedhere
-	\end{align*}
+	\begin{equation*}
+		\int f \diffskip P_n \to \int f \diffskip P 
+		\quad \und \quad 
+		\int f \diffskip P_n \to \int f \diffskip Q \qquad \forall f\in C^b(\S)
+	\end{equation*}
+	Der Grenzwert von reellen Zahlenfolgen eindeutig ist, folgt $\int f \diffskip P = \int f \diffskip Q$ für alle $f \in C^b(\S)$ und mit \cref{satz: 3.17} folgt daraus schließlich $P = Q$.
 \end{proof}
 
-In Bemerkung \ref{bemerkung4.6} wurde Korollar \ref{korollar4.5} über Definition \ref{definition: 4.1} \ref{it: 4.1Xweak}
-übertragen in eine Version für Verteilungskonvergenz von reellen Zufallsvariablen.
-Analog lassen sich auch \ref{satz4.2} -- \ref{korollar4.4} und \ref{lemma4.6Einhalb} auf
-Zufallsvariablen übertragen. Konkret
-% Im Folgenden ist das Ziel die Übertragung unserer Resultate auf Verteilungskonvergenz.
+In \cref{bemerkung4.6} wurde \cref{korollar4.5} über \cref{definition: 4.1} übertragen in eine Version für Verteilungskonvergenz von reellen Zufallsvariablen.
+Analog lassen sich auch \cref{satz: 4.2}, \cref{theorem: 4.3} und \cref{korollar4.4} sowie \cref{lemma4.6Einhalb} auf Zufallsvariablen übertragen.
 
-\begin{satz}[Portmanteau-Theorem]\label{satz4.7}
+\begin{satz}[Portmanteau-Theorem] \label{satz4.7}
 	Folgende Aussagen sind äquivalent:
 	\begin{enumerate}[label=(\arabic*)]
 		\item $\begin{aligned}
-			X_n\distto  X\text{ in }(\S,d)
+			X_n \distto  X\text{ in }(\S,d)
 		\end{aligned}$
 		\item $\begin{aligned}
-			\E{f(X_n)}\ntoinf \E{f(X)}\qquad\forall f\in C^b(\S)
+			\EW[f(X_n)] \ntoinf \EW[f(X)] \qquad\forall f \in C^b(\S)
 		\end{aligned}$ gleichmäßig stetig
 		\item $\begin{aligned}
-			\limsup_{n\to\infty}\P(X_n\in F)\le\P(X\in F)\qquad\forall F\in\F
+			\limsup_{n\to\infty} \P(X_n\in F)\le\P(X\in F)\qquad\forall F \in \F
 		\end{aligned}$
 		\item $\begin{aligned}
 			\liminf_{n\to\infty}\P(X_n\in G)\ge\P(X\in G)\qquad\forall G\in\G
@@ -274,35 +249,36 @@ Zufallsvariablen übertragen. Konkret
 \end{satz}
 
 \begin{proof}
-	Wende Satz \ref{satz4.2} an auf $P_n\defeq\P\circ X^{-1}_n,~P\defeq\P\circ X^{-1}$ (wegen Def $\distto $).
+	Wende \cref{satz: 4.2} an auf $P_n \defeq \P \circ X^{-1}_n$ und $P \defeq \P \circ X^{-1}$.
 	Beachte z.\,B.
-	\begin{align*}
-		P_n(F)&=\P\circ X^{-1}_n(F)
-		\overset{\text{Def}}=
+	\begin{equation*}
+		P_n(F) = \P\circ X^{-1}_n(F)
+		\overset{\text{Def}}{=}
 		\P\brackets{X_n^{-1}(F)}
 		=\P\brackets{(\menge{\Omega\in\Omega:X_n(\Omega)\in F}}
-		=\P(X_n\in F)
-	\end{align*}
+		= \P(X_n \in F)
+	\end{equation*}
 	und
-	\begin{align*}
-		\int f\d P_n
+	\begin{equation*}
+		\int f \diffskip P_n
 		=
-		\int_{\S} f\d(\P\circ X_n^{-1})
-		\stackeq{\eqref{eqTrafo}}
-		\int_\Omega f(X_n)\d\P
-		=\E{f(X_n)}
-		&\qedhere
-	\end{align*}
+		\int_{\S} f\diffskip(\P\circ X_n^{-1})
+		\overset{\eqref{eqTrafo}}{=}
+		\int_\Omega f(X_n) \diffskip\P
+		= \E{f(X_n)}  
+		\satzende
+	\end{equation*}
 \end{proof}
 
-Ferner erhält man unter den jeweiligen Voraussetzungen in Theorem \ref{theorem: 4.3} bzw.\ Korollar \ref{korollar4.4}:
-% CHECKED: 'bzw.' used.
-\begin{align*}
-	\P(X_n\in A) &\ntoinf \P(X\in A)\qquad\forall A\in\U\\
-	\follows X_n &\distto  X\text{ in }(\S,d)
-\end{align*}
-Und aus Lemma \ref{lemma4.6Einhalb}:
-\begin{align*}
-	X_n\distto  X,X_n\distto  X'\follows X\overset{\L}= X'
-\end{align*}
-
+Ferner erhält man unter den jeweiligen Voraussetzungen in \cref{theorem: 4.3} bzw.\ \cref{korollar4.4}:
+\begin{equation*}
+	\P(X_n\in A) \ntoinf \P(X\in A)\qquad\forall A\in \mathcal{U}
+	\qquad \implies \qquad
+	X_n \distto  X\text{ in }(\S,d)
+\end{equation*}
+und aus \cref{lemma4.6Einhalb}:
+\begin{equation*}
+	X_n\distto  X, \quad X_n\distto  X' 
+	\quad \implies \quad
+	X \disteq X' \satzende
+\end{equation*}

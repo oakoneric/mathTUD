@@ -44,21 +44,24 @@ Die Notation $(X_{n''})$ stammt aus \cite{billingsley2008probability}.
 %aus der Feder des Mitschreibers stammt, der sie unsauber findet.
 
 \begin{proof}
-	Wir verfahren wie im Reellen:
-	Es gelte \cref{it: 3.13WahrKonv}. Sei $\epsilon > 0$ beliebig und $(X_{n_k})_k$ eine Teilfolge von $(X_n)_n$.
-	Da $\P\brackets{\menge{d(X_n, X) > \epsilon}} \to 0$, können wir eine Teilteilfolge $(X_{n_{k_i}})_i \defeq (Y_i)_i$ finden mit $\P\brackets{\menge{d(Y_i, X) > \epsilon}} < i^{-2}$. Dann ist für alle $n \in \N$ und mit $n \to \infty$
-	\begin{align*}
-		\P\brackets{\sup_{i \ge n} d(Y_i, X) < \epsilon}
-		= \P\brackets{\bigcup_{i \ge n} \menge{d(Y_i, X) < \epsilon}}
-		\leq \sum_{i = n}^{\infty} \P\brackets{\menge{d(Y_i, X) < \epsilon}}
-		\leq \sum_{i = n}^{\infty} i^{-2} \to 0 
-	\end{align*}
-	Laut dem Konvergenz-Kriterium in \cref{satz: 3.9} bedeutet das $Y_i \to X$ $\P$-fast sicher.
-
-	Gelte nun \cref{it: 3.13TFfsKonv} und wir nehmen an, es gäbe ein $\epsilon > 0$ und eine Teilfolge $(X_{n_k})_k$ von $(X_n)_n$, sodass $\P\brackets{\menge{d(X_{n_k}, X) > \epsilon}} > \delta > 0$ für ein passendes $\delta$.
-	Dann konvergiert nach $\cref{it: 3.13TFfsKonv}$ eine Teilteilfolge $(X_{n_{k_i}})_i$ $\P$-fast sicher gegen $X$, also laut \cref{satz: 3.12} auch stochastisch. 
-	Das widerspricht aber der obigen Annahme über $(X_{n_k})_k$, die sich
-	auch auf $(X_{n_{k_i}})_i$ überträgt.
+	Der Beweis verläuft wie in $\R$.
+	\begin{description}
+		\hinrichtung Sei $\epsilon > 0$ beliebig und $(X_{n_k})_k$ eine Teilfolge von $(X_n)_n$.
+		Da $\P\brackets{\menge{d(X_n, X) > \epsilon}} \to 0$, können wir eine Teilteilfolge $(X_{n_{k_i}})_i \defeq (Y_i)_i$ finden mit $\P\brackets{\menge{d(Y_i, X) > \epsilon}} < i^{-2}$. Dann ist für alle $n \in \N$ und mit $n \to \infty$
+		\begin{align*}
+			\P\brackets{\sup_{i \ge n} d(Y_i, X) < \epsilon}
+			= \P\brackets{\bigcup_{i \ge n} \menge{d(Y_i, X) < \epsilon}}
+			\leq \sum_{i = n}^{\infty} \P\brackets{\menge{d(Y_i, X) < \epsilon}}
+			\leq \sum_{i = n}^{\infty} i^{-2} \to 0 
+		\end{align*}
+		Laut dem Konvergenz-Kriterium in \cref{satz: 3.9} bedeutet das $Y_i \to X$ $\P$-fast sicher.
+		
+		\rueckrichtung Wir nehmen an, es gäbe ein $\epsilon > 0$ und eine Teilfolge $(X_{n_k})_k$ der Folge $(X_n)_n$, sodass $\P\brackets{d(X_{n_k}, X) > \epsilon} > \delta > 0$ für ein passendes $\delta$.
+		Dann konvergiert nach \cref{it: 3.13TFfsKonv} eine Teilteilfolge $(X_{n_{k_i}})_i$ $\P$-fast sicher gegen $X$, also laut \cref{satz: 3.12} auch stochastisch. 
+		Das widerspricht aber der obigen Annahme über $(X_{n_k})_k$, die sich
+		auch auf $(X_{n_{k_i}})_i$ überträgt.
+	\end{description}
+	~
 \end{proof}
 
 Mit dem Teilfolgenkriterium lassen sich Rechenregeln für fast sichere Konvergenz auf stochastische Konvergenz übertragen.

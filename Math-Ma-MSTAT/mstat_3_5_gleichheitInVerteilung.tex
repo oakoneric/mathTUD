@@ -16,18 +16,18 @@ Wir wollen Verteilungsgleichheit in folgendem Satz charakterisieren.
 \begin{satz} \label{satz: 3.17}
 	Es gilt:
 	\begin{enumerate}[label=(\alph*)]
-		\item \label{it: 3.17f} Seien $\P,\Q$ Wahrscheinlichkeitsmaße auf $\B(\S)$. Dann gilt:
+		\item \label{it: 3.17f} Seien $P$ und $Q$ Wahrscheinlichkeitsmaße auf $\B(\S)$. Dann gilt:
 		\begin{equation*}
-			\P \equiv \Q
+			P \equiv Q
 			\equivalent
-			\int f \diffskip\P = \int f \diffskip\Q \qquad \forall f \in C^b(\S) \text{ glm.\ stetig}
+			\int f \diffskip P = \int f \diffskip Q \qquad \forall f \in C^b(\S) \text{ glm.\ stetig}
 		\end{equation*}
 		\item \label{it: 3.17E} Es gilt
 		\begin{equation*}
 			X \disteq Y \equivalent
 			\EW[f(X)] = \int_{\Omega_1} f(X_1)  \diffskip{\P_1} = \int_{\Omega_2} f(X_2)  \diffskip{\P_2} = \EW[f(Y)]
 		\end{equation*}
-		für all $f \in C^b(\S)$ gleichmäßig stetig.
+		für alle $f \in C^b(\S)$ gleichmäßig stetig.
 	\end{enumerate}
 \end{satz}
 
@@ -58,18 +58,17 @@ Wir wollen Verteilungsgleichheit in folgendem Satz charakterisieren.
 			&\overset{\ref{it: 3.17f}}{\Leftrightarrow}
 			\int_{\S} f \diffskip{(\P\circ X^{-1})} = \int_{\S} f \diffskip{(\P\circ Y^{-1})}
 			&\forall f \in C^b(\S) \text{ glm. stetig} \\
-			\overset{\eqref{eq: Proof3.17}}&{\Leftrightarrow}
+			&\Leftrightarrow
 			\EW[f(X)] = \EW[f(Y)]
 			&\forall f \in C^b(\S) \text{ glm. stetig}
 		\end{align*}
-		Verwende dafür:
-		\begin{equation}
+		Verwende dafür im letzten Schritt den Transformationssatz, d.h.
+		\begin{equation*}
 			\int_{\S} f \diffskip{(\P\circ X^{-1})}
 			\overset{\text{Trafo}}{=}
-			\int_{\Omega} \underbrace{f \circ X}_{\defqe f(X)} \diffskip\P
+			\int_{\Omega} f \circ X \diffskip\P
 			\overset{\text{Def}}{=}
-			\EW[f(X)]
-			\tag{$\ast$} \label{eq: Proof3.17} 
-		\end{equation}
+			\EW[f \circ X] = \EW[f(X)]
+		\end{equation*}
 	\end{enumerate}
 \end{proof}

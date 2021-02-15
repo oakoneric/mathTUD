@@ -4,19 +4,19 @@
 % send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 Sei $X \colon (\Omega,\A,\P) \to \R$ eine reelle Zufallsvariable mit Verteilungsfunktion $F_X\colon \R \to [0,1]$, d.\,h.
-\begin{align*}
+\begin{equation*}
 	F_X(x) \defeq \P(X \le x) 
 	\defeq \P(\menge{\omega \in \Omega : X(\omega) \le x})
 	= \P\brackets{X^{-1}\brackets{(-\infty, x]}},
-\end{align*}
+\end{equation*}
 also $X \sim F_X$. Definiere
 \begin{align}
-	Y(t) &\defeq \E(\abs{X-t}) \label{eq: DefY} \tag{1.0} \\ \nonumber
+	Y(t) &\defeq \E(\abs{X-t}) \label{eq: DefY} \\ \nonumber
 	&= \int_\Omega \abs{X(\omega)-t} \, \P(\diff\omega) \\ \nonumber
 	\overset{\cref{eqTrafoR}}&{=} \int_\R \abs{x-t} \, (\P \circ X^{-1})(\diff x) \\ \nonumber
 	&= \int_\R \abs{x-t} \, F_X(\diff x) \qquad \forall t \in \R \\
 	\intertext{und}
-	m &\in \argmin_{t \in \R} Y(t) \label{eq: MedianDef} \tag{M}
+	m &\in \argmin_{t \in \R} Y(t) \label{eq: MedianDef}
 \end{align}
 als (irgendeine) Minimalstelle der Funktion $Y$.
 
@@ -31,7 +31,7 @@ $F(\dx)$ und meinen $\P \circ X^{-1} (\dx)$
 
 
 In folgendem kleinen Lemma wollen wir die Menge aller Mediane charakterisieren.
-\setcounter{thmcount}{-1}
+
 \begin{lemma}\label{lemma: median}
 	Sei $X \sim F_X \defqe F$ integrierbar und $m \in \R$. Dann sind äquivalent:
 	\begin{enumerate}[label=(\arabic*)]
@@ -58,7 +58,7 @@ In folgendem kleinen Lemma wollen wir die Menge aller Mediane charakterisieren.
 
 \begin{proof}
 	\begin{description}
-		\item[\ref{it:medianHalf} $\Rightarrow$ \ref{it:medianMin}:] Sei $\Q \defeq \P \circ X^{-1}$ das zu $F$ gehörige Bildmaß. Setze
+		\item[\ref{it:medianHalf} $\Rightarrow$ \ref{it:medianMin}:] Sei $Q \defeq \P \circ X^{-1}$ das zu $F$ gehörige Bildmaß. Setze
 		\begin{equation*}
 			h(t) \defeq \E\sqbrackets{\abs{X - t} - \abs{X - m}} \overset{lin.}{=} Y(t) - Y(m)
 		\end{equation*}
@@ -75,7 +75,7 @@ In folgendem kleinen Lemma wollen wir die Menge aller Mediane charakterisieren.
 					+\int_{[m,\infty)}\underbrace{\abs{x-t}-\abs{x-m}}_{x-t-(x-m)=m-t} \, F(\dx) \\
 					&\ge-(m-t) * \underbrace{Q((-\infty,t])}_{F(t)}+
 					\brackets{-(m-t) * F(m-)-F(t)}
-					+(m-t) * \underbrace{\Q([m,\infty))}_{1-\underbrace{\Q((-\infty,m))}_{F(m-)}}\\
+					+(m-t) * \underbrace{Q([m,\infty))}_{1-\underbrace{Q((-\infty,m))}_{F(m-)}}\\
 					&=-\underbrace{(m-t)}_{\ge 0} * (\underbrace{1-2 * F(m-)}_{\text{wegen 1.\ Ungl. in }\ref{it:medianHalf}: \ge 0})\\
 					&\ge0
 				\end{align*}
@@ -126,7 +126,7 @@ In folgendem kleinen Lemma wollen wir die Menge aller Mediane charakterisieren.
 
 \begin{bemerkung}~
 	\begin{enumerate}[label=(\arabic*), leftmargin=*]
-		\item Aussage \cref{it:medianHalf} in \cref{lemma: median} besagt, dass $\menge{ m \in \R : m \text{ erfüllt } \eqref{eqMedianDef}}$ die Menge aller Mediane von $F$ ist. Der Median ist im Allgemeinen nicht eindeutig bestimmt.
+		\item \cref{lemma: median} besagt, dass $\menge{ m \in \R : m \text{ erfüllt \cref{it:medianHalf}}}$ die Menge aller Mediane von $F$ ist. Der Median ist im Allgemeinen nicht eindeutig bestimmt.
 		\item Im Allgemeinen gibt es mehrere Mediane. Üblicherweise \textit{wählt} man $m \defeq F^{-1} \brackets{\frac{1}{2}}$, wobei
 			\begin{align*}
 				F^{-1}(u) \defeq \inf\menge{ x \in \R: F(x) \ge u} \quad \forall u \in (0,1)
@@ -193,7 +193,7 @@ Die empirische Verteilungsfunktion konvergiert also gegen die wahre Verteilungsf
 
 \begin{*erinnerung}
 	Für das Dirac-Maß $\delta_x \colon \A \to \R_+$ mit $\delta_x(A) \defeq \one_A(x)$ gilt:
-	\begin{equation}\label{eq: dirac} \tag{Dir}
+	\begin{equation}\label{eq: dirac}
 		\int_\R f(t) \, \delta_x(\diff{t}) = f(x) \qquad \forall x \in \R
 	\end{equation}
 \end{*erinnerung}
@@ -204,9 +204,9 @@ Die empirische Verteilungsfunktion konvergiert also gegen die wahre Verteilungsf
 
 \begin{*erinnerung}
 	Das Lebesgue-Maß ist linear im Maß, d.\,h.:
-	\begin{align}\label{eqLinMasse}\tag{Lin}
+	\begin{equation}\label{eqLinMasse}
 		\int_\omega f \diff{(a*\mu + b*\nu)} = a*\int_\omega f \diff{\mu} + b*\int_\omega f \, \diff{\nu}
-	\end{align}
+	\end{equation}
 \end{*erinnerung}
 %
 %Ein vages Stetigkeitsargument motiviert folgenden Schätzer für $m$,

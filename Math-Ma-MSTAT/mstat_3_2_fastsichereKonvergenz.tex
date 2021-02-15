@@ -9,18 +9,18 @@
 	\begin{equation*}
 		X_n \ntoinf X \quad \P\text{-fast sicher}
 		\defequiv
-		\P\bigg( \underbrace{\menge{\omega \in \Omega : d\brackets{X_n(\omega),X(\omega)} \ntoinf 0}}_{\defqe M} \bigg) = 1
+		\P\bigg( \menge{\omega \in \Omega : d\brackets{X_n(\omega),X(\omega)} \ntoinf 0} \bigg) = 1
 	\end{equation*}
 \end{definition}
 
-Beachte: Die Definition von $M$ mengentheoretisch aufgeschrieben (Schnitt $\leadsto$ \enquote{für alle}; Vereinigung $\leadsto$ \enquote{Es gibt}):
+Beachte: Die Definition von $M \defeq \menge{\omega \in \Omega : d\brackets{X_n(\omega),X(\omega)} \ntoinf 0}$ mengentheoretisch aufgeschrieben (Schnitt $\leadsto$ \enquote{für alle}; Vereinigung $\leadsto$ \enquote{es gibt}) ergibt
 \begin{equation*}
 	M =
 	\bigcap_{0 < \epsilon \in \Q}
 	\bigcup_{m \in \N}
 	\bigcap_{n \ge m}
-	\Big\{ \underbrace{d(X_n,X)}_{\defqe \zeta_n} < \epsilon \Big\} \overset{\text{\cref{satz: 3.5}}}{\in} \A
-	\text{, denn }\zeta_n^{-1} \brackets{(-\infty,\epsilon)} \in  \A
+	\Big\{ d(X_n,X) < \epsilon \Big\} \overset{\text{\cref{satz: 3.5}}}{\in} \A
+	\text{, denn }d(X_n,X)^{-1} \brackets{(-\infty,\epsilon)} \in  \A \satzende
 \end{equation*}
 Hierbei gilt $M \in \A$ aufgrund der Abzählbarkeit der beteiligten Schnitte und Vereinigungen. 
 Man schreibt auch:
@@ -43,7 +43,7 @@ Die bekannten Regeln (Ergebnisse) für \textit{reelle} Zufallsvariablen lassen s
 \end{proof}
 
 \begin{satz} \label{satz: 3.8}
-	Seien $X, X_n$ ($n \in \N$) Zufallsvariablen im separablen, metrischen Raum $(\S,d)$ und sei $f \colon (\S,d) \to (\S',d')$ $\B_d(S)$ - $\B_{d'}(S')$-messbar und stetig in $X$ $\P$-fast sicher.
+	Seien $(X_n)_{n \in \N}$ und $X$ Zufallsvariablen im separablen, metrischen Raum $(\S,d)$ und sei $f \colon (\S,d) \to (\S',d')$ $\B_d(S)$ - $\B_{d'}(S')$-messbar und stetig in $X$ $\P$-fast sicher.
 	\footnote{\enquote{stetig in $X$ $\P$-fast sicher} bedeutet,
 		dass $\P(\menge{\omega  \in  \Omega : f \text{ in } X(\omega) \text{ stetig}}) = 1$. Insbesondere ist $\menge{\omega  \in  \Omega : f \text{ in } X(\omega) \text{ stetig}}$ messbar, was keine Selbstverständlichkeit ist.}
 	Dann gilt:
@@ -54,17 +54,14 @@ Die bekannten Regeln (Ergebnisse) für \textit{reelle} Zufallsvariablen lassen s
 \end{satz}
 
 \begin{proof}
-	Aufgrund der Folgenstetigkeit gilt
-	\begin{equation*}
-		\menge{X_n \ntoinf  X} \cap \menge{f \text{ stetig in }X}
+	Wegen der Folgenstetigkeit gilt $\menge{X_n \ntoinf  X} \cap \menge{f \text{ stetig in }X}
 		\subseteq
-		\menge{f(X_n) \ntoinf f(X)}
-	\end{equation*}
+		\menge{f(X_n) \ntoinf f(X)}$.
 	Da abzählbare Schnitte von Einsmengen stets Einsmengen sind, d.\,h.
 	\begin{equation*}
 		\forall i \in \N : \, \P(E_i)=1
 		\follows \P\brackets{\bigcap_{i \in \N} E_i}=1
-		\qquad \forall \menge{E_i} \subseteq \Omega \mit \P(E_i)=1
+		\qquad \forall E_i \subseteq \Omega \mit \P(E_i)=1
 	\end{equation*}
 	folgt 
 	\begin{equation*}
@@ -106,10 +103,6 @@ Ein sehr nützliches Kriterium ist Folgendes:
 		\quad \implies \quad  X_n \ntoinf X \quad \P\text{-fast sicher}
 	\end{align*}
 \end{satz}
-\begin{*bemerkung}
-	Die $\P(d(X_n, X) > \epsilon)$ werden in der Statistik \begriff{Fehlerwahrscheinlichkeit} oder \begriff{tail probability} genannt.
-	Um Fehlerwahrscheinlichkeiten abzuschätzen, also die Voraussetzung für diesen Satz für einen speziellen Fall zu zeigen, nutzt man häufig sogenannte Maximalungleichungen wie die Markov-Ungleichung und die Tschebychew-Ungleichung.
-\end{*bemerkung}
 
 \begin{proof}
 	Setze $A_n(\epsilon) \defeq \menge{d(X_n,X)>\epsilon} \in \A$ wegen \cref{satz: 3.5}.
@@ -134,6 +127,11 @@ Ein sehr nützliches Kriterium ist Folgendes:
 		}_{\menge{ X_n\to X} = \menge{ d(X_n,X) \to 0}}}=1
 	\end{equation*}
 \end{proof}
+
+\begin{*bemerkung}
+	Die $\P(d(X_n, X) > \epsilon)$ werden in der Statistik \begriff{Fehlerwahrscheinlichkeit} oder \begriff{tail probability} genannt.
+	Um Fehlerwahrscheinlichkeiten abzuschätzen, also die Voraussetzung für diesen Satz für einen speziellen Fall zu zeigen, nutzt man häufig sogenannte Maximalungleichungen wie die Markov-Ungleichung und die Tschebychew-Ungleichung.
+\end{*bemerkung}
 
 Weitere Eigenschaften der fast sicheren Konvergenz von Zufallsvariablen in metrischen Räumen finden sich z.\,B.\ in \cite[Kapitel 8.2]{gaensslerstute1977Wahrscheinlichkeitstheorie}.
 %
