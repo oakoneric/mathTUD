@@ -1,0 +1,113 @@
+% This work is licensed under the Creative Commons
+% Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+% of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or
+% send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+\begin{itemize}[leftmargin=*]
+	\item $f: \R \to \R $ heißt \begriff{Borel-messbar}, wenn $f^{-1}(M) \in \B(\R)$ für alle $M \in \B(\R)$.
+	\item Sei $(\Omega,\A, \P)$ ein Wahrscheinlichkeitsraum und $(S,\B)$ ein Messraum. Eine \begriff{Zufallsvariable (ZV)} $X$ ist eine $(\A,\B)$-messbare Abbildung $X \colon \Omega \to S$. Wenn $S =\R $, dann heißt $X$ \begriff{Zufallsgröße (ZG)}.
+	\item Die \begriff{Verteilung} einer Zufallsgröße $X$ ist Wahrscheinlichkeitsmaß $\mu$ auf $\B$ definiert durch
+	\begin{equation*}
+		\mu_X \colon \B \to [0,1], \qquad 
+		\mu_X(B) \defeq \P(X \in B) \defeq \P(X^{-1}(B)) = \P(\menge{ \omega \in \Omega : X(\omega) \in B}) \satzende
+	\end{equation*}
+	\item Die \begriff{Dichte} ist
+	\begin{align*}
+		p \colon \R^n \to [0,\infty] \mit \mu_X(A) = \int_A p(x) \diffskip{\P(x)} \qquad \forall A \in \B(\R^n)
+	\end{align*}
+	\item \begriff{Verteilungsfunktion} von $X$ ist
+	\begin{equation*}
+		F_X \colon \R \to [0,1], \qquad F_X(x)=\P(X<x) = \mu_X((-\infty,x)) = \int_{-\infty}^x p(t) \diffskip t
+	\end{equation*}
+	mit der Eigenschaft $F'(x) = p(x)$ für alle $x \in \R$ fast überall.
+	\item Zwei Zufallsvariablen $X_1 \colon \Omega \to S_1$ und $X_2 \colon \Omega \to S_2$ heißen \begriff{unabhängig}, wenn
+	\begin{equation*}
+		\P(X_1\in B_1) * \P(X_2\in B_2) = \P(X_1\in B_1, X_2\in B_2) 
+		= \P\brackets{\menge{\omega \in \Omega : X_1(\omega)\in B_1 \und X_2(\omega) \in B_2}}
+	\end{equation*}
+	für alle $B_1 \in \B_1$ und alle $B_2 \in \B_2$.
+	\item Sei $X$ eine $\P$-integrierbare oder nichtnegative Zufallsgröße. Dann ist der \begriff{Erwartungswert von $X$} definiert als
+	\begin{align*}
+		\E[X] \defeq \int_\Omega X(\omega) \diffskip\P(\omega) \overset{\text{\ref{eqTrafo}}}{=}
+		\int_\R  x \diffskip{\mu_X(x)}
+		= \int_\R  x * p(x) \diffskip x
+	\end{align*}
+	und hat folgende Eigenschaften ($X,Y$ seien Zufallsgrößen):
+	\begin{enumerate}
+		\item Linearität: $\EW[aX + bY] = a * \EW[X] + b*\EW[Y]$
+		\item $X = c \in \R $ fast sicher konstant $\follows \EW[X] = c$
+		\item $a \le X \le b$ fast sicher konstant $\follows a \le\E(X) \le b$
+		\item $\abs{\EW[X]} \le \EW[\abs{X}]$
+		\item $X \ge 0$ fast sicher und $\E(X)=0 \follows X=0$ fast sicher
+		\item $X,Y$ unabhängig $\follows \EW[X*Y] = \EW[X] * \EW[Y]$
+	\end{enumerate}
+	\item Zwei ZG heißen \begriff{unkorreliert}, falls $\E[XY] = \EW[X] * \EW[Y]$.
+	\item Für $X \in L^2(\P)$ ist die \begriff{Varianz}
+	\begin{equation*}
+		\Var(X) \defeq \E[ (X - \E[X])^2] = \int_\Omega (X - \E[X])^2 \diffskip\P = E[X^2] - \E[X]^2
+	\end{equation*}
+	mit den Eigenschaften
+	\begin{align*}
+		\Var(a * X + b) &= a^2 * \Var(X) \komma \\
+		\Var(X) &=0 \equivalent X \text{ ist konstant fast sicher} \komma \\
+		\Var(X + Y) &= \Var(X) + \Var(Y) +\underbrace{2\E[(X-\E[X])*(Y-\E[Y])]}_{=0 \text{, falls $X,Y$ unkorreliert sind}} \satzende
+	\end{align*}
+\end{itemize}
+
+
+
+\begin{satz}[Korrespondenzsatz]\label{satzKorrespondenzsatz}
+	Jede Verteilungsfunktion $F$ ist Verteilungsfunktion eines eindeutigen Wahrscheinlichkeitsmaßes $\P$.
+	Dieses Maß $\P$ ist durch
+	\begin{equation*}
+		\P_F((-\infty,x]) \defeq F(x)
+	\end{equation*}
+	eindeutig bestimmt.
+	Umgekehrt bestimmt jedes Wahrscheinlichkeitsmaß eine eindeutige Verteilungsfunktion über
+	\begin{equation*}
+		F_{\P}(x) \defeq \P((-\infty,x]) \satzende
+	\end{equation*}
+	Somit ist die Zuordnung der Verteilungsfunktionen zu den Wahrscheinlichkeitsverteilungen bijektiv.
+\end{satz}
+
+\begin{bemerkung}[Notation]
+	$\P(\diff x) = \diff \P(x)$.
+	Außerdem bedeutet $F(\diff x)$ oftmals auch, dass man bzgl. jenem Maß $Q$ integriert, was durch $F$ eindeutig festgelegt ist.
+\end{bemerkung}
+
+\begin{satz}[Transformationssatz] \label{satzTransformationssatz}
+	Seien $(\Omega,\A,\P)$ ein Wahrscheinlichkeitsraum und $(S,\mathcal{F})$ ein Messraum.
+	Sei $g \colon S \to \R $ eine messbare Funktion und $X \colon \Omega \to S$ eine Zufallsvariable.
+	Dann gilt:
+	\begin{equation} \label{eqTrafo}
+		\int_\Omega g(X(\omega)) ~\P(\diff\omega) = \int_S g(s)~\P_X(\diff s)
+	\end{equation}
+	Hierbei ist $\P_X = \mu_X =\P \circ X^{-1}$ die Verteilung von $X$.
+	Für den Standardfall reeller Zahlen ergibt sich mit $f_X$ als Dichte von $X$:
+	\begin{equation} \label{eqTrafoR}
+		\int_\Omega g(X(\omega))~\P(\diff\omega)
+		= \int_\R  g(x)~\P_X(\d x)
+		= \int_\R  g(x) * f_X(x) \dx \satzende
+	\end{equation}
+\end{satz}
+
+\begin{satz}[majorisierte Konvergenz] 
+	\label{satzMajorisierteKonvergenz}
+	Sei $(\Omega,\A,\P)$ ein Maßraum und sei $(f_n)_{n \in \N}$ eine Folge von $\P$-mesbaren Funktionen (z.\,B.\ ZV) $f_n \colon \Omega \to \R \cup \menge{\infty}$.
+	Die Folge $(f_n)_{n \in \N}$ konvergiere $\P$-fast überall gegen eine $\P$-messbare Funktion $f$ und es gilt $\abs{f_n} \le g$ $\P$-fast überall für alle $n \in \N$ für eine $\P$-integrierbare Funktion $g \colon \Omega \to \R $.
+	Dann sind $f_n$ und $f$ $\P$-integrierbar und es gilt
+	\begin{align*}
+		\int_\Omega f(\omega) \diffskip{\P(\omega)} = \int_\Omega \lim_{n \to \infty} f_n(\omega) \diffskip{\P(\omega)}
+		= \lim_{n \to \infty}  \int_\Omega f_n(\omega) \diffskip{\P(\omega)}
+	\end{align*}
+\end{satz}
+
+\begin{satz}[Monotone Konvergenz] \label{satzMonotoneKonvergenz}
+	Sei $(\Omega,\A,\P)$ ein Maßraum. Ist $(f_n)_{n \in \N}$ eine Folge nichtnegativer, messbarer Funktionen $f_n \colon \Omega \to [0,\infty]$,
+	die $\P$-fast-überall monoton wachsend gegen eine messbare Funktion $f \colon \Omega \to [0,\infty]$ konvergiert, so gilt:
+	\begin{align*}
+		\int_\Omega f(\omega) \diffskip{\P(\omega)} = \int_\Omega \lim_{n \to \infty} f_n(\omega) \diffskip{\P(\omega)}
+		= \lim_{n \to \infty} \int_\Omega f_n(\omega) \diffskip{\P(\omega)}
+	\end{align*}
+\end{satz}
+
