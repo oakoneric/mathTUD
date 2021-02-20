@@ -4,217 +4,195 @@
 % send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 \subsection{Das Continuous Mapping Theorem (CMT)}
-Sei $h\colon(\S,d)\to(\S',d')$ messbar.
-\paragraph{Ziel:} Finde Bedingungen an $h$, so dass gilt:
+Sei $h \colon (\S,d) \to (\S',d')$ messbar.
+Wir wollen nun Bedingung an $h$ finden, sodass die beiden folgenden Implikationen gelten:
 \begin{enumerate}[label=(\arabic*)]
-	\item \label{it:4.1conditionhweakto} $\begin{aligned}
-		\P_n\weakto \P\follows \P_n∘ h^{-1}\weakto  \P∘ h^{-1}
+	\item \label{it: 4.1conditionhweakto} 
+	$\begin{aligned}
+		P_n \weakto P \follows P_n \circ h^{-1} \weakto P \circ h^{-1}
 	\end{aligned}$
-	\item \label{it:4.1conditionhDistrto} $\begin{aligned}
-		X_n\distto  X\text{ in }(\S,d)\follows h(X_n)\distto  h(X)\text{ in }(\S',d')
+	\item \label{it: 4.1conditionhDistrto} 
+	$\begin{aligned}
+		X_n \distto X \text{ in } (\S,d) \follows h(X_n) \distto  h(X) \text{ in }(\S',d')
 	\end{aligned}$
 \end{enumerate}
-Beachte:
+Man beachte dabei, dass
 \begin{align*}
-	\P∘\brackets{h(X_n)}^{-1}
-	&=\P∘\brackets{h∘ X_n}^{-1}
-	=\brackets{\P∘ X_n^{-1}}∘ h^{-1}\\
-	\P\brackets{h(X)}^{-1}
-	&=\brackets{\P∘ X^{-1}}∘ h^{-1}
+	P \circ \brackets{h(X_n)}^{-1}
+	&= P \circ \brackets{h \circ X_n}^{-1}
+	= \brackets{P \circ X_n^{-1}} \circ h^{-1} \\
+	P \circ \brackets{h(X)}^{-1}
+	&= \brackets{P \circ X^{-1}} \circ h^{-1}
 \end{align*}
-Also folgt \ref{it:4.1conditionhDistrto} aus \ref{it:4.1conditionhweakto}. Zunächst gilt \ref{it:4.1conditionhweakto}, wenn $h$ stetig auf $\S$  ist, denn: Sei $f\in C^b(\S')$ beliebig. Dann gilt:
+gilt. Also folgt \ref{it: 4.1conditionhDistrto} aus \ref{it: 4.1conditionhweakto}. 
+Ist $h$ stetig auf $\S$, dann gilt \ref{it: 4.1conditionhweakto} schon. Um das zu zeigen, sei $f\in C^b(\S')$ beliebig --- es gilt:
 \begin{align*}
-	\int_{\S'} f\d \brackets{\P_n∘ h^{-1}}
-	\stackeq{\eqref{eqTrafo}}
-	\int_{\S} \underbrace{ f∘ h}_{\in C^b(\S)}\d \P_n
-	\overset{\ref{def4.1}}&{\longrightarrow}\int f∘ h\;\d \P
-	\stackeq{\eqref{eqTrafo}}
-	\int f\d(\P∘ h^{-1})\\
-	\overset{\ref{def4.1}}{\follows}
-	\P_n∘ h^{-1} &\weakto  \P∘ h^{-1}
+	\int_{\S'} f \diffskip \brackets{P_n \circ h^{-1}}
+	\overset{\eqref{eqTrafo}}{=}
+	\int_{\S} \underbrace{f \circ h}_{\in C^b(\S)} \diffskip{P_n}
+	\overset{\text{Def.}}&{\longrightarrow} \int f \circ h \diffskip P
+	\overset{\eqref{eqTrafo}}{=}
+	\int f \diffskip{(P \circ h^{-1})} \\
+	\overset{\text{Def.}}{\follows}
+	P_n \circ h^{-1} &\weakto P \circ h^{-1} \satzende
 \end{align*}
-Auf Stetigkeit von $h$ kann i.\,A.\ nicht verzichtet werden, denn es gilt:%
+Auf Stetigkeit von $h$ kann im Allgemeinen nicht verzichtet werden, denn es gilt das nachfolgende Gegenbeispiel.
 %
 % Nebenbeibemerkung: Prof. Ferger ist bei research gate angemeldet, das Facebook der Wissenschaftler: dort bekommt er etwas Rückmeldung zu den Papern. Bei üblichen Veröffentlichungen gibt es das nicht. Schade.
 %
-\begin{beispiel}\label{beisiel4.8}
+\begin{beispiel}\label{beispiel: 4.8}
 	% Beweis unvollständig, als Übung belassen, hier vollständig
-	Sei $\S=\S'=[0,1]$, $h\colon[0,1]\to[0,1]$ mit
+	Sei $\S = \S' = [0,1]$ und $h \colon [0,1] \to [0,1]$ mit
 	\begin{align*}
 		h(x)\defeq
 		\begin{cases}
-			1, &\falls x\in\menge{0} ∪ \menge{\frac{1}{2· n}:n\in\N}\\
-			0, & \sonst
+			1, &\falls x \in \menge{0} \cup \menge{\frac{1}{2n} : n \in \N} \\
+			0, & \text{sonst} \satzende
 		\end{cases}
 	\end{align*}
-	Sei $P_n\defeqδ_{\frac{1}{n}}$, $n\in\N$, $\P\defeqδ_{0}$ wobei $δ_x$ das Dirac-Maß bezeichnet.
-	Dann gilt $\P_n\weakto  \P$, denn
+	Sei $P_n \defeq \delta_{\frac{1}{n}}$ ($n\in\N$) und $P \defeq \delta_{0}$, wobei $\delta_x$ das Dirac-Maß bezeichnet.
+	Dann gilt $P_n \weakto P$, denn
+	\begin{equation*}
+		\int f \diffskip{P_n} = f \brackets{\frac{1}{n}} \ntoinf f(0) = \int f \diffskip P \qquad \forall f \in C^b \brackets{[0,1]} \satzende
+	\end{equation*}
+	Aber wegen $\delta_x \circ h^{-1} = \delta_{h(x)}$ gilt für
 	\begin{align*}
-	\int f\d \P_n&=f\brackets{\frac{1}{n}}\ntoinf  f(0)=\int f\d \P\qquad\forall f\in C^b\brackets{\intervall01}
-	\end{align*}
-	Aber wegen
-	\begin{align*}
-		δ_x∘ h^{-1}=δ_{h(x)}
-	\end{align*}
-	gilt für
-	\begin{align*}
-		Q_n\defeq\P_n∘ h^{-1}=δ_{\frac{1}{n}}∘ h^{-1}=δ_{h\brackets{\frac{1}{n}}},\qquad Q\defeq\P∘ h^{-1}=δ_1
+		Q_n \defeq P_n \circ h^{-1} 
+		= \delta_{\frac{1}{n}} \circ h^{-1}
+		=\delta_{h\brackets{\frac{1}{n}}} 
+		\komma \qquad 
+		Q \defeq P \circ h^{-1} = \delta_1
 	\end{align*}
 	das Folgende:
-	\begin{align*}
-		\int f\d Q_n=f\brackets{h\brackets{\frac{1}{n}}}=
+	\begin{equation*}
+		\int f \diffskip{Q_n} = f \brackets{h \brackets{\frac{1}{n}}}
+		=
 		\begin{cases}
-			f(1), & \falls n\text{ gerade }\\
-			0, & \falls n\text{ ungerade }
+			f(1), & \falls n \text{ gerade }\\
+			0, & \falls n \text{ ungerade } \satzende
 		\end{cases}
-	\end{align*}
-	Sei $f\in C^b\brackets{\intervall01}$ mit $f(0)\neq f(1)$ (z.\,B.\ $f=\id$).
-	Folglich ist die Folge $\brackets{\int f\d Q_n}_{n\in\N}$ divergent.
-	Somit:
-	\begin{align*}
-		\follows\int f\d Q_n\nrightarrow\int f\d Q\follows Q_n\stackrelnew{w}{}{\nrightarrow} Q
-	\end{align*}
+	\end{equation*}
+	Sei $f \in C^b([0,1])$ mit $f(0) \neq f(1)$ (z.\,B.\ $f = \id$).
+	Folglich ist die Folge $\brackets{\int f \diffskip{Q_n}}_{n \in \N}$ divergent.
+	Somit ist $\int f \diffskip{Q_n} \to \int f \diffskip{Q}$, was $Q_n \weakto Q$ zeigt.
 \end{beispiel}
 
-Die Forderung der Stetigkeit lässt sich aber abschwächen so, dass \ref{it:4.1conditionhweakto} noch gilt.
-Dazu definiere die \begriff{Menge der Unstetigkeitsstellen}
-\begin{align*}
-	D_h\defeq\menge{ x\in\S: h\text{ \emph{nicht} stetig in }x}.
-\end{align*}
+Die Forderung der Stetigkeit lässt sich aber abschwächen so, dass \cref{it: 4.1conditionhweakto} noch gilt.
+Dazu definieren wir die \begriff{Menge der Unstetigkeitsstellen}
+\begin{equation*}
+	D_h \defeq \menge{ x \in \S : h \text{ nicht stetig in } x } \satzende
+\end{equation*}
 
-\begin{lemma}\label{lemma4.9}
-	\begin{align*}
-		D_h\in\B(\S)\qquad\forall h\colon \S\to\S'\text{ beliebig (nicht einmal messbar)}
-	\end{align*}
+\begin{lemma} \label{lemma: 4.9}
+	Für alle $h \colon \S \to \S'$ gilt $D_h \in \B(\S)$. $h$ muss insbesondere nicht einmal messbar sein.
 \end{lemma}
 
-\begin{proof}\footnote{Findet sich im Appendix von \cite{billingsley2013convergence}.}
+\begin{proof}[nach {\cite[Appendix]{billingsley2013convergence}}]
 	Mit der Dreiecksungleichung überlegt man sich leicht:
 	\begin{align*}
-		h\text{ stetig in }x
-		⇔
-		&\forall 0<\epsilon\inℚ:\exists 0<δ\inℚ:\forall y,z\in\S:\\
-		&d(x,y)<δ\und d(x,z)<δ
-		\follows d'\brackets{h(y),h(z)}<\epsilon
+		h \text{ stetig in } x
+		\equivalent
+		&\forall 0 < \epsilon \in \Q : \exists 0 < \delta \in \Q : \forall y,z \in \S : \\
+		&d(x,y) < \delta \und d(x,z) < \delta
+		\follows d'\brackets{h(y),h(z)} < \epsilon
+		\satzende
 	\end{align*}
-	Damit folgt:
-	\begin{align}\label{eqProof4.9Plus}\tag{+}
-		D_h=\bigcup_{0<\epsilon\inℚ}\bigcap_{0<δ\inℚ}\underbrace{\menge{x\in\S:
-		\exists y,z\in\S\mit d(x,y)<δ\und d(x,y)<δ\und d'\brackets{h(y),h(z)}\ge\epsilon}}_{=:A_{\epsilon,δ}}
-	\end{align}
-	Zeige
-	\begin{align}\label{eqProof4.9Stern}\tag{$\ast$}
-		A_{\epsilon,δ}\in\G(\S)\qquad\forall\epsilon,δ>0
-	\end{align}
-	Dazu sei $x_0\in A_{\epsilon,δ}$.
-	Dann existieren $y,z\in\S$ mit $d(x_0,y)<δ$ und $d(z_0,z)<δ$, aber $d'\brackets{h(y),h(z)}\ge\epsilon$.
+	Damit folgt
+	\begin{equation} \label{eqProof4.9Plus}
+		D_h = \bigcup_{ 0 < \epsilon \in \Q} \bigcap_{0 < \delta \in \Q} \underbrace{\menge{x \in \S :
+		\exists y,z \in \S \mit d(x,y) < \delta \und d(x,y) < \delta \und d'\brackets{h(y),h(z)} \ge \epsilon}}_{\defqe A_{\epsilon,\delta}} \satzende
+	\end{equation}
+	Zeige nun
+	\begin{equation}\label{eqProof4.9Stern}
+		A_{\epsilon,\delta} \in \G(\S) \qquad \forall \epsilon,\delta > 0 \satzende
+	\end{equation}
+	Dazu sei $x_0 \in A_{\epsilon,\delta}$.
+	Dann existieren $y,z \in \S$ mit $d(x_0,y) < \delta$ und $d(z_0,z) < \delta$, aber $d'\brackets{h(y),h(z)} \ge \epsilon$.
 	Wähle
-	\begin{align*}
-		δ_0\defeq\min\menge{δ- d(x_0,y),δ-d(x_0,z)}>0
-	\end{align*}
-	Ferner gilt:
-	\begin{align}\label{eqProof4.9i}\tag{i}
-		B(x_0,δ_0)\subseteq A_{\epsilon,δ},
-	\end{align}
-	denn: Sei $x\in B(x_0,δ_0)$.
-	Dann gilt
-	\begin{align*}
-		d(x,y)\le d(x,x_0)+d(x_0,y)<δ_0+d(x_0,y)<δ
-	\end{align*}
-	und analog
-	\begin{align*}
-		d(x,z)<δ.
-	\end{align*}
-	Also folgt $x\in A_{\epsilon,δ}$, denn $d'\brackets{(h(y),h(z)}\ge\epsilon$.
-	Wegen \eqref{eqProof4.9i} ist $x_0$ innerer Punkt von $A_{\epsilon,δ}$.
+	\begin{equation*}
+		\delta_0 \defeq \min\menge{\delta -  d(x_0,y), \delta - d(x_0,z)} > 0 \satzende
+	\end{equation*}
+	Ferner gilt
+	\begin{equation}\label{eqProof4.9i}
+		B(x_0,\delta_0) \subseteq A_{\epsilon,\delta},
+	\end{equation}
+	denn: Sei $x \in B(x_0,\delta_0)$.
+	Dann gilt $d(x,y) \le d(x,x_0) + d(x_0,y) < \delta_0 + d(x_0,y) < \delta$
+	und analog $d(x,z) < \delta$
+	Also folgt $x \in A_{\epsilon,\delta}$, denn $d'\brackets{(h(y),h(z)} \ge \epsilon$.
+	Wegen \eqref{eqProof4.9i} ist $x_0$ innerer Punkt von $A_{\epsilon,\delta}$.
 	Also folgt \eqref{eqProof4.9Stern} und mit \eqref{eqProof4.9Plus} dann die Behauptung.
 \end{proof}
 
-\begin{satz}[Continuous Mapping Theorem (CMT)]\enter\label{satz4.10ContinuousMappingTheorem}
-	Sei $h\colon(\S,d)\to(\S',d')$ $\B_d(\S)$-$\B_{d'}(\S')$-messbar.
+\begin{satz}[Continuous Mapping Theorem -- CMT] \label{satz: 4.10ContinuousMappingTheorem}
+	Sei $h \colon (\S,d) \to (\S',d')$ $\B_d(\S)$-$\B_{d'}(\S')$-messbar.
 	% hier ist D_h BDSM (B_d(\S) messbar)
 	Dann gilt:
 	\begin{enumerate}[label=(\arabic*)]
 		\item \label{it:4.10CMTweakto} $\begin{aligned}
-			\P_n\weakto  \P\und \P(D_h)=0
-			\follows \P_n∘ h^{-1}\weakto  \P∘ h^{-1}
+			P_n \weakto  P \und P(D_h) = 0
+			\follows P_n \circ h^{-1} \weakto P \circ h^{-1}
 		\end{aligned}$
 	\item \label{it:4.10CMTdistrto} $\begin{aligned}
-			X_n\distto X\text{ in }(\S,d)\und\P(X\in D_h)=0
-			\follows h(X_n)\distto  h(X)\text{ in }(\S',d')
+			X_n \distto X \text{ in }(\S,d) \und \P(X \in D_h) = 0
+			\follows h(X_n) \distto h(X)\text{ in } (\S',d')
 		\end{aligned}$
-	\item \label{it:4.10CMThcontinous} Sei $h$ stetig. Dann gilt: $X_n\distto X\text{ in }(\S,d)\follows h(X_n)\distto  h(X)\text{ in }(\S',d')$
+	\item \label{it:4.10CMThcontinous} Sei $h$ stetig. Dann gilt: $X_n \distto X \text{ in } (\S,d) \follows h(X_n) \distto h(X) \text{ in } (\S',d')$.
 	\end{enumerate}
 \end{satz}
 
 \begin{proof}
-	\footnote{Der Beweis ist eine beliebte Prüfungsfrage laut Prof.\ Ferger.}
-	Wegen des Portmanteau-Theorems \ref{satz4.2} zeigen wir die äquivalente Aussage über $\limsup$.
-	\paragraph{Zeige \ref{it:4.10CMTweakto}}
-	Sei $F\in\F(\S')$ (d.\,h.\ $F\subseteq\S'$ abgeschlossen) beliebig.
-	Dann gilt:
-	\begin{align}\label{eqProof1.4.10(i)}\tag{i}
-		\limsup_{n\to\infty} \P_n∘ h^{-1}(F)
-		&=\limsup_{n\to\infty} \P_n\brackets{\underbrace{h^{-1}(F)}_{\subseteq \abschluss{h^{-1}(F)}}}\\\nonumber
-		% CHECKED: '\abschluss' used.
-		&\le \limsup_{n\to\infty} \P_n\brackets{\underbrace{\abschluss{h^{-1}(F)}}_{\in\F(\S)}}\\\nonumber
-		% CHECKED: '\abschluss' used.
-		\overset{\ref{satz4.2}}&{\le}
-		\P\brackets{\abschluss{h^{-1}(F)}}
-		% CHECKED: '\abschluss' used.
-	\end{align}
-	Es gilt
-	\begin{align}\label{eqProof1.4.10(ii)}\tag{$*$}
-		\abschluss{h^{-1}(F)} \subseteq h^{-1}(F) ∪ D_h,
-		% CHECKED: '\abschluss' used.
-	\end{align}
-	denn: Sei $x\in\quer{h^{-1}(F)}$.
-	\subparagraph{Fall 1: $x\in D_h$}
-	\begin{align*}
-		x\in D_h\follows x\in h^{-1}(F)∪ D_h
-	\end{align*}
-	\subparagraph{Fall 2: $x\not\in D_h$}
-	Also ist %$x\in C_h$, d.\,h.\ %
-	$h$ %ist
-	stetig in $x$.
-	Also gilt für alle Folgen $(x_n)_{n\in\N}\subseteq h^{-1}(F)\subseteq\S$ mit $x_n\ntoinf x$ folgendes
-	(eine solche Folge existiert nach Definition des Abschlusses):
-	%Ferner existiert eine Folge $(x_n)_{n\in\N}\subseteq h^{-1}(F)$ mit $x_n\ntoinf  x$.
-	%Wegen der Stetigkeit gilt
-	\begin{align*}
-		\underbrace{h(x_n)}_{\in F~\forall n}\ntoinf  h(x)
-		\follows h(x)\in\abschluss{F}=F\follows x\in h^{-1}(F)
-		% CHECKED: '\abschluss' used.
-		\follows x\in h^{-1}(F)∪ D_h
-	\end{align*}
-	Mit \eqref{eqProof1.4.10(ii)} setzt sich die Ungleichungskette \eqref{eqProof1.4.10(i)} fort:
-	\begin{align*}
-		\P\brackets{\quer{h^{-1}(F)}}
-		\overset{\eqref{eqProof1.4.10(ii)}}{\le}
-		\P\brackets{h^{-1}(F)∪ D_h}
-		\le \P\brackets{h^{-1}(F)}+\underbrace{\P(D_h)}_{\overset{\Vor}{=}0}
-		=\P∘ h^{-1}(F)\\
-		\overset{\eqref{eqProof1.4.10(i)},\ref{satz4.2} \ref{it:4.2ClosedSets}}{\follows}
-		\P_n∘ h^{-1}\weakto  \P∘ h^{-1}
-	\end{align*}
-	\paragraph{Zeige \ref{it:4.10CMTdistrto}:} folgt direkt aus \ref{it:4.10CMTweakto} nach Definition \ref{def4.1}:
-	\begin{align*}
-		\P ∘ (h(X_n))^{-1} = \P∘ (h ∘ X_n)^{-1} = (\P ∘ X_n^{-1}) ∘ h^{-1}
-		&\weakto \P ∘ X^{-1} \quad \text{ (nach Vor.)} \\
-		&\weakto (\P ∘ X^{-1}) ∘ h^{-1} = \P ∘ (h(X))^{-1} \\
-		\overset{\text{Def}}{\follows} h(X_n) &\distto h(X)
-	\end{align*}
-	\paragraph{Zeige \ref{it:4.10CMThcontinous}:} folgt direkt aus \ref{it:4.10CMTdistrto}.
+	\textit{Der Beweis ist eine beliebte Prüfungsfrage laut Prof.\ Ferger.} \\
+	Wegen des Portmanteau-Theorems (\cref{satz: 4.2}) zeigen wir die äquivalente Aussage über den Limes superior.
+	\begin{enumerate}[label=(zu \arabic*), leftmargin=*]
+		\item 
+		Sei $F\in\F(\S')$ (d.\,h.\ $F\subseteq\S'$ abgeschlossen) beliebig.
+		Dann gilt:
+		\begin{align}\label{eqProof1.4.10(i)}
+			\limsup_{n \to \infty} P_n \circ h^{-1}(F)
+			&= \limsup_{n \to \infty} P_n \brackets{\underbrace{h^{-1}(F)}_{\subseteq \abschluss{h^{-1}(F)}}} \\\nonumber
+			&\le \limsup_{n \to \infty} P_n \brackets{\underbrace{\abschluss{h^{-1}(F)}}_{\in\F(\S)}} \\
+			\overset{\ref{satz: 4.2}}&{\le}
+			P\brackets{\abschluss{h^{-1}(F)}}
+		\end{align}
+		Wir zeigen nun, dass
+		\begin{equation} \label{eqProof1.4.10(ii)}
+			\abschluss{h^{-1}(F)} \subseteq h^{-1}(F) \cup D_h
+		\end{equation}
+		gilt. Sei dazu $x \in \quer{h^{-1}(F)}$.
+		\begin{enumerate}[label=\textbf{Fall \arabic*:}, leftmargin=*]
+			\item Sei $x \in D_h$. Dann folgt daraus schon, dass $x \in h^{-1}(F) \cup D_h$.
+			\item Sein nun $x \notin D_h$, d.h. $h$ ist stetig in $x$. Per Definition des Abschlusses existiert eine Folge $(x_n)_{n \in \N} \subseteq h^{-1}(F) \subseteq \S$ mit $x_n \ntoinf x$. Für jede solche Folge gilt
+			\begin{equation*}
+				\underbrace{h(x_n)}_{\in F} \ntoinf h(x)
+				\follows h(x) \in \abschluss{F} = F 
+				\follows x \in h^{-1}(F)
+				\follows x \in h^{-1}(F) \cup D_h \satzende
+			\end{equation*} 
+		\end{enumerate}
+		Mit \eqref{eqProof1.4.10(ii)} setzt sich die Ungleichungskette \eqref{eqProof1.4.10(i)} fort und wir erhalten
+		\begin{equation*}
+			P\brackets{\quer{h^{-1}(F)}}
+			\overset{\eqref{eqProof1.4.10(ii)}}{\le}
+			P\brackets{h^{-1}(F) \cup D_h}
+			\le P\brackets{h^{-1}(F)} + \underbrace{P(D_h)}_{= 0}
+			= P \circ h^{-1}(F) \satzende
+		\end{equation*}
+		Schließlich liefern  \eqref{eqProof1.4.10(i)} und \cref{satz: 4.2}\ref{it:4.2ClosedSets}  das gewünschte Resultat $P_n \circ h^{-1} \weakto  P \circ h^{-1}$.
+		%
+		\item Dies folgt direkt aus \ref{it:4.10CMTweakto} nach Definition \cref{definition: 4.1}, denn es ist
+		\begin{align*}
+			P \circ (h(X_n))^{-1} = P \circ (h \circ X_n)^{-1} = (P \circ X_n^{-1}) \circ h^{-1}
+			&\weakto P \circ X^{-1} \\
+			&\weakto (P  \circ X^{-1}) \circ h^{-1} = P \circ (h(X))^{-1} \\
+			\overset{\text{Def}}{\follows} h(X_n) &\distto h(X) \satzende
+		\end{align*}
+		%
+		\item Dies folgt wiederum direkt aus \ref{it:4.10CMTdistrto}, da für eine stetige Funktion $h$ die Menge $D_h$ stets leer ist.
+	\end{enumerate}
 \end{proof}
 
-\begin{bemerkung}[Choque-Kapazität]  \label{note:choque_kapazitat}
-  Es gibt eine Verallgemeinerung des Wahrscheinlichkeitsbegriffs,
-	nämlich die so genannte \begriff{Choque-Kapazität}. Auf der
-	Menge alle Choque-Kapazitätäten lässt sich eine Topologie $\tau_{\text{weak}}$
-	einführen (die so genannte \emph{schwache Topologie}) und ein
-	entsprechendenes Portmanteau-Theorems beweisen, vgl.
-	\enquote{Dietmar Ferger 2018 Weak convergence of probability measures to a Choquet-capacity, Turkish Journal of Mathematics}
-	% TODO: ordentliche Zitation
-	und
-	\enquote{Dietmar Ferger (2019) unveröffentlicht}
-\end{bemerkung} % end note Choque-Kapazität
+\begin{bemerkung}[Choque-Kapazität]  
+	\label{note: choque_kapazitat}
+	Es gibt eine Verallgemeinerung des Wahrscheinlichkeitsbegriffs: die so genannte \begriff{Choque-Kapazität}. Auf der Menge aller Choque-Kapazitätäten lässt sich eine Topologie $\tau_{\text{weak}}$ einführen (die so genannte \emph{schwache Topologie}) und ein entsprechendes Portmanteau-Theorems beweisen, vgl. \cite{Ferger2018WeakCO} und \enquote{Dietmar Ferger (2019): \textsl{unveröffentlicht}}.
+\end{bemerkung}
