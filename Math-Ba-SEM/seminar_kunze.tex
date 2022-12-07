@@ -59,6 +59,12 @@
 \usepackage{multirow}
 \usepackage{booktabs}	% improved rules
 \usepackage{colortbl}
+%\usepackage{subfigure}
+\usepackage{flafter,afterpage}
+\usepackage[section]{placeins}
+\usepackage[margin=8mm,font=small,labelfont=bf,format=plain,justification=centering]{caption}
+\usepackage[margin=8mm,font=small,labelfont=bf,format=plain]{subcaption}
+
 
 \newcommand{\begriff}[1]{\textbf{#1}}
 \newcommand{\person}[1]{\textsc{#1}}
@@ -313,20 +319,45 @@ version={4.0},
 	\end{center}
 	
 	Jedoch sind diese Klassen von Graphen auch schon die einzigen, die \cref{eq: chi-kleiner-delta+1} mit Gleichheit erfüllen.
-	
-	\begin{satz}[Brooks]
+	Somit kommt man in allen anderen Fällen in \cref{alg: faerbung} auch mit $\Delta(G)$ vielen Farben aus.
+	Die Idee dahinter ist eine clevere Anordnung der Knoten vor der Farbzuweisung. Kritisch sind nämlich nur die Fälle, in denen ein Knoten Maximalgrad hat, denn dann benötigt man bereits $\Delta(G)$ viele Farben für die Nachbarn und im Zweifelsfall eine weitere für den Knoten selbst. In vielen Fällen bleibt aber vor dem letzten Knoten eine Farbe übrig, sodass \cref{alg: faerbung} keine zusätzliche beanspruchen muss.
+ 	
+	\begin{satz}[Brooks]\label{satz: brooks}
 		Sei $G$ ein zusammenhängender Graph mit mehr als zwei Knoten.
 		\begin{enumerate}[label=(\roman*), nolistsep, topsep=-\parskip]
 			\item Ist $G$ vollständig oder ein Kreis ungerader Länge, dann gilt $\chi(G) = \Delta(G) + 1$.
 			\item Andernfalls gilt $\chi(G) \le \Delta(G)$.
 		\end{enumerate}
 	\end{satz}
-	\begin{proof}[Idee]
-		\begin{enumerate}[label=(zu \roman*), nolistsep, leftmargin=*]
-			\item klar
-			\item vollständige Induktion nach $\card{V}$ --- wähle im Induktionsschritt $v \in V$ mit $d(v) = \delta(v)$ und wende die Induktionsvoraussetzung auf den Graphen $G - v$ an
+	\begin{proof}
+		Die Aussage (i) ist mit den obigen Beispielen klar. Aussage (ii) zeigen wir in mehreren Schritten und folgen dabei \cite{Cranston2014}.
+		\begin{enumerate}[label=Fall \arabic* ---, leftmargin=*, itemindent=*]
+			\item Wir beschränken uns zunächst auf den Fall, dass $G$ nicht regulär ist, d.h. nicht alle Knoten Maximalgrad $\Delta \defeq \Delta(G)$ haben. 
+			Für $\Delta(G) \le 2$ ist $G$ ein Weg oder Kreis und die Aussage ist damit klar. Sei daher von nun an $\Delta(G) \ge 3$.
+			Vollständige Induktion nach $\card{V}$ --- Im Induktionsanfang betrachten wir $\card{V} = 3$, d.h. einen Graphen mit genau drei Knoten. Aufgrund der Annahme $\Delta(G) \ge 3$ ist hier nichts zu zeigen. 
+			
+			In der Induktionsvoraussetzung nehmen wir an, dass $\chi(H) \le \Delta(H)$ für alle Graphen $H$ mit $\card{H} < \card{G}$. 
+			
+			Im Induktionsschritt wählen wir einen Knoten $v \in V$ mit $d(v) < \Delta(G)$. Dieser existiert, weil gemäß unserer Annahme nicht alle Knoten Maximalgrad haben. 
+			Betrachten wir den Graphen $H \defeq G - v$. 
+			Dieser besitzt weniger Knoten als $G$, also hat auch kein Knoten in $H$ mehr Nachbarn als in $G$. Diese Einsicht liefert $\Delta(H) \le \Delta(G)$ und mit der Induktionsvoraussetzung $\chi(H) \le \Delta(H)$ existiert also insbesondere auch eine $\Delta$-Färbung von $H$. 
+			Es verbleibt nun noch der Knoten $v$ zu färben. Da $v$ nur $d(v) < \Delta$ viele Nachbarn hat, bleibt mindestens eine der $\Delta$ vielen Farben für $v$ übrig und wir erhalten damit eine $\Delta$-Färbung von $G$.
+		
+			\item Ist $G$ regulär, d.h. alle Knoten besitzen Maximalgrad $\Delta$, dann existiert ein Knoten $v$ wie oben nicht mehr. Ist $v$ aber zumindest ein Artikulationspunkt, d.h. $H \defeq G - v$ zerfällt in Komponenten, dann lässt sich das obige Verfahren noch retten. Sei dazu $H'$ eine Komponente von $H$. Diese besitzt gemäß Induktionsvoraussetzung wie oben eine $\Delta$-Färbung. Diese kann ebenso wie oben zu einer $\Delta$-Färbung von $H' + v$ fortgesetzt werden, weil $v$ in $H' + v$ nicht Maximalgrad hat (es fehlen die anderen Zusammenhangskomponenten, die \enquote{an $v$ hängen}). Setzt man dieses Verfahren für alle Komponenten von $H$ ein, erhält $v$ unter Umständen jedes Mal eine andere Farbe. Dies behebt man, indem die Farben so zyklisch vertauscht (permutiert), dass $v$ immer die gleiche Farbe bekommt. Dies stellt am Ende eine $\Delta$-Färbung von $G$ dar.
+		
+			\item Der verbleibende Fall beschäftigt sich nun mit $\Delta$-regulären Graphen, die zweifach zusammenhängend sind, also weder einen Artikulationspunkt noch einen Knoten $v$ mit $d(v) < \Delta(v)$ besitzen. In diesem Fall kann man zeigen, dass es einen induzierten Pfad\footnote{Ein induzierter Pfad ist ein Pfad, der gleichzeitig ein induzierter Teilgraph von $G$ ist. Er ist also eine Folge von Knoten, sodass zwei im Pfad benachbarte Knoten mit einer Kante in $G$ verbunden sind und zwei nicht-benachbarte Knoten im Pfad keine Kante in $G$ besitzen. Ein induzierter Pfad wird auch Schlange genannt.} $uvw$ in $G$ gibt, sodass $H \defeq G - \menge{u, w}$ zusammenhängend ist. Färbt man nun die Knoten $u$ und $w$ gleich und verfährt mit $H$ wie im ersten Fall, dann bleibt erneut eine der $\Delta$ Farben für $v$ übrig, da mit $u$ und $w$ zwei Nachbarn gleiche Farben haben.
 		\end{enumerate}
 	\end{proof}
+
+	\begin{figure}[hb]
+		\centering
+		\begin{tabular}{ccc}
+			\includegraphics[page=2]{brooks.pdf}
+			& \hspace{3em} &
+			\includegraphics[page=1]{brooks.pdf}
+		\end{tabular}
+		\caption{Variante von \cref{alg: faerbung} zum Beweis von \cref{satz: brooks}. Die Reihenfolge der Färbung ist durch die Zahlen dargestellt. Der Knoten $u$ hat Maximalgrad $d(u) = 3 = \Delta$. Da es auf dem Weg von $v$ zu $u$ aber den ungefärbten Nachbarn $w$ von $u$ gibt, bleibt mindestens eine Farbe übrig, diese erhält $u$.}
+	\end{figure}
 
 	Mithilfe von \cref{alg: faerbung} sieht man auch leicht das folgende Resultat.
 	

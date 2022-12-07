@@ -1,0 +1,102 @@
+\documentclass[tikz]{standalone}
+
+\usepackage[utf8]{inputenc}
+\usepackage{cmap}			% damit man Text aus dem PDF korrekt rauskopieren kann
+\usepackage[T1]{fontenc}
+\usepackage[english,ngerman]{babel}
+\usepackage{relsize}
+
+\usepackage[scale=0.95]{opensans}
+\usepackage{lmodern}
+%\renewcommand*{\familydefault}{\sfdefault}
+
+\usepackage{csquotes}
+
+\usepackage{amsmath,amsfonts,amssymb}
+%\usepackage{mdsymbol}
+%\usepackage[cm]{sfmath}
+\usepackage{bm}
+
+\usepackage{graphicx,xcolor}
+\usepackage{tudscrcolor}
+
+\usepackage{../texmf/tex/latex/mathoperatorsMathTUD}
+
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, calc}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning,automata, matrix, trees, fit}
+\usetikzlibrary{calc,backgrounds}
+\usetikzlibrary{arrows, arrows.meta}
+
+
+
+\tikzset{
+	node/.style={circle, draw=black, inner sep=0pt, minimum size=2em},
+	legend/.style={circle, draw=black, inner sep=0pt, minimum size=6pt},
+	distlabel/.style n args={2}{label={[font=\footnotesize, text=black, label distance=0pt]#1:${#2}$}},
+}
+
+\begin{document}
+	\begin{tikzpicture}[auto]
+		\node[node, fill=cdpurple!20, ultra thick] (1) {$v$};
+		
+		\node[node, fill=cdorange!20, below=of 1, distlabel={0}{1}] (2-1) {};
+		
+		\node[node, fill=cdpurple!20, below=of 2-1, distlabel={45}{2}] (3-2) {};
+		
+		\node[node, fill=cdgreen!20, right=of 1, distlabel={0}{1}] (2-2) {$w$};
+		\node[node, fill=cdpurple!20, below=of 2-2, distlabel={45}{2}] (3-4) {$u$};
+		
+		\node[node, fill=orange!20, below=of 3-4, distlabel={0}{3}] (4-1) {};
+		\node[node, fill=cdgreen!20, right=of 3-4, distlabel={45}{3}] (4-2) {};
+		
+		\node[node, fill=cdpurple!20, below=of 4-2, distlabel={45}{4}] (5-1) {};
+
+		\draw[] (1) -- (2-1)
+		        (2-1) -- (3-2)
+		        (1) -- (2-2) -- (3-4)
+		        (2-2) -- (2-1)
+		        (4-2) -- (5-1)
+		        (3-4) -- (4-1)
+		        (3-4) -- (4-2)
+        		(4-1) -- (4-2);
+        		
+        \node[right=of 2-2] (delta) {$\Delta = 3$};
+        \node[below=0pt of delta] (legend) {Farben:};
+        \node[legend, right=3pt of legend, anchor=west, fill=cdpurple!20] (purple) {};
+        \node[legend, right=3pt of purple, anchor=west, fill=cdgreen!20] (green) {};
+        \node[legend, right=3pt of green, anchor=west, fill=cdorange!20] (orange) {};
+	\end{tikzpicture}
+
+	\begin{tikzpicture}[auto]
+		\node[node, fill=none, ultra thick] (1) {$v$};
+		
+		\node[node, fill=none, below=of 1, distlabel={0}{1}] (2-1) {};
+		
+		\node[node, fill=cdpurple!20, below=of 2-1, distlabel={45}{2}] (3-2) {};
+		
+		\node[node, fill=none, right=of 1, distlabel={0}{1}] (2-2) {$w$};
+		\node[node, fill=none, below=of 2-2, distlabel={45}{2}] (3-4) {$u$};
+		
+		\node[node, fill=orange!20, below=of 3-4, distlabel={0}{3}] (4-1) {};
+		\node[node, fill=cdgreen!20, right=of 3-4, distlabel={45}{3}] (4-2) {};
+		
+		\node[node, fill=cdpurple!20, below=of 4-2, distlabel={45}{4}] (5-1) {};
+		
+		\draw[] (1) -- (2-1)
+		(2-1) -- (3-2)
+		(1) -- (2-2) -- (3-4)
+		(2-2) -- (2-1)
+		(4-2) -- (5-1)
+		(3-4) -- (4-1)
+		(3-4) -- (4-2)
+		(4-1) -- (4-2);
+		
+		\node[right=of 2-2] (delta) {$\Delta = 3$};
+		\node[below=0pt of delta] (legend) {Farben:};
+		\node[legend, right=3pt of legend, anchor=west, fill=cdpurple!20] (purple) {};
+		\node[legend, right=3pt of purple, anchor=west, fill=cdgreen!20] (green) {};
+		\node[legend, right=3pt of green, anchor=west, fill=cdorange!20] (orange) {};
+	\end{tikzpicture}
+\end{document}
