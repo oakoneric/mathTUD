@@ -8,13 +8,12 @@
 
 \makeatletter
 \@ifpackageloaded{opensans}{}{\usepackage[scale=1]{opensans}}
-\ifx\osfamily\undefined
-    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
-    \DeclareTextFontCommand{\textos}{\osfamily}
+\ifx\textos\undefined
+    \DeclareTextFontCommand{\textos}{\fosfamily}
 \fi
 \makeatother
 
-\newcommand{\titlefont}{\osfamily}
+\newcommand{\titlefont}{\fosfamily}
 \newcommand{\chaptersize}{\huge}
 \newcommand{\sectionsize}{\LARGE}
 

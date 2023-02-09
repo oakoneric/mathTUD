@@ -38,9 +38,9 @@
 
 % new font OpenSans
 \@ifpackageloaded{opensans}{}{\usepackage[scale=1]{opensans}}
-\ifx\osfamily\undefined
-    \newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
-    \DeclareTextFontCommand{\textos}{\osfamily}
+\ifx\fosfamily\undefined
+    \newcommand*{\fosfamily}{\fontfamily{fos}\selectfont}
+    \DeclareTextFontCommand{\textos}{\fosfamily}
 \fi
 % for more information: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

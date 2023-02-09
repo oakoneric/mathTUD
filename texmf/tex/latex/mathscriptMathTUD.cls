@@ -105,7 +105,7 @@
 
 \DeclareOptionX{titlefont}{%
     \ifthenelse{\equal{#1}{osfamily}}%
-        {\renewcommand{\titlefont}{\osfamily}}%
+        {\renewcommand{\titlefont}{\fosfamily}}%
         {\PackageWarning{mathscriptMathTUD}{Unknown Value for key `titlefont'}%
         }%
 }
@@ -192,8 +192,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New font OpenSans included
 \RequirePackage[scale=1]{opensans}
-\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
-\DeclareTextFontCommand{\textos}{\osfamily}
+%\newcommand*{\osfamily}{\fontfamily{fos}\selectfont}
+\DeclareTextFontCommand{\textos}{\fosfamily}
 % for more informations: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 
 
@@ -417,7 +417,7 @@
         \color{white}%
     }{}%
     \raggedright%
-    \osfamily%
+    \fosfamily%
     \setlength{\parindent}{0pt}%
 }
 
